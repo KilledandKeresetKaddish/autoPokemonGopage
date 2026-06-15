@@ -169,7 +169,7 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .cal-chip .spr{width:16px;height:16px;object-fit:contain;flex:none;image-rendering:pixelated;}
 .cal-chip .ct{font-weight:800;font-size:.56rem;letter-spacing:.04em;text-transform:uppercase;
   color:color-mix(in srgb, var(--c) 70%, #fff);flex:none;}
-.cal-chip .cn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--gold-bright);}
+.cal-chip .cn{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--gold-bright);}
 .cal-more{font-size:.62rem;color:var(--muted);padding-left:3px;font-weight:600;}
 
 /* spanning bars */
@@ -180,7 +180,7 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   box-shadow:0 2px 7px rgba(0,0,0,.34);}
 .cal-bar .spr{width:15px;height:15px;object-fit:contain;flex:none;image-rendering:pixelated;
   filter:drop-shadow(0 1px 1px rgba(0,0,0,.5));}
-.cal-bar .bn{overflow:hidden;text-overflow:ellipsis;}
+.cal-bar .bn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .cal-bar.l{border-top-left-radius:7px;border-bottom-left-radius:7px;}
 .cal-bar.r{border-top-right-radius:7px;border-bottom-right-radius:7px;}
 .cal-bar:not(.l)::before{content:'‹';opacity:.7;margin-right:1px;}
@@ -272,10 +272,11 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   :root{--cell-min:80px;}
   .cal-wd{padding:.45rem .3rem;font-size:.6rem;letter-spacing:.06em;}
   .cal-day{padding:3px 3px 5px;}
-  .cal-bar .bn{display:none;}
-  .cal-bar{padding:0 3px;}
-  .cal-chip .cn{display:none;}
-  .cal-chip{justify-content:center;}
+  /* Keep a truncated label rather than an anonymous colour strip: most bar
+     events carry no sprite, so the text is the only way to tell them apart. */
+  .cal-bar{padding:0 4px;font-size:.56rem;gap:3px;}
+  .cal-bar .spr{width:12px;height:12px;}
+  .cal-chip{font-size:.6rem;}
   .trk-row{grid-template-columns:1fr;}
   .trk-check{justify-content:flex-start;}
 }
