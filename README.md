@@ -138,8 +138,67 @@ some proxies/WAFs return `403 "Your request was blocked"` on the OpenAI SDK's
 mkdir -p ~/.pi/agent && cp examples/pi-models.json ~/.pi/agent/models.json   # edit baseUrl/id
 # cron line (set PI_PROVIDER to the provider id, PI_MODEL to a name pattern):
 ( crontab -l 2>/dev/null; \
-  echo "0 8 * * * cd /opt/pogo-agent && AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-6 TIER_METHOD=jina OPENAI_API_KEY=sk-... ./scripts/run-daily.sh" \
+  echo "0 8 */3 * * cd /opt/pogo-agent && AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina OPENAI_API_KEY=sk-... ./scripts/run-daily.sh" \
 ) | crontab -
 ```
 
 Rollback any bad day: `git -C /opt/pogo-agent revert <commit>` (or `checkout <good-sha> -- public`).
+
+---
+
+## Setup notes — this deployment (personal, single VPS)
+
+> 本仓库是 public,但本质是个人单机自用、只面向自己的 VPS。下面记录最终可用配置与踩过的坑,
+> 方便日后自己或其它 LLM 接手,不必重新趟一遍。The proxy host and API key are intentionally omitted.
+
+**Stack & flow.** `cron (every 3 days)` → `scripts/run-daily.sh` → **pi** (Pi Coding Agent,
+`AGENT_CLI=pi`) reads `AGENTS.md` + `tasks/daily-update.md`, runs `scripts/fetch.sh`
+(events/raids/gamemaster from raw GitHub; Hub tier pages via Jina Reader), rewrites
+`public/data/events.json` + the `AI:` regions of `public/index.html`, then `scripts/validate.sh`
+gates and `publish.sh` does a local `git commit` (no push by default). **Caddy** serves
+`/opt/pogo-agent/public`. pi talks to a self-hosted **OpenAI-compatible reverse proxy
+(Responses API)** backed by Claude.
+
+**Agent config (host/key redacted).** Clone to `/opt/pogo-agent`; `~/.pi/agent/models.json`
+registers the proxy as a provider — see `examples/pi-models.json`: `api:"openai-responses"`,
+`baseUrl` ends in `/v1`, `apiKey` via `$OPENAI_API_KEY` or a literal, a `headers` User-Agent
+override, and a `cost` block with `cacheRead`/`cacheWrite`. cron (set `PATH` so `pi`/`node` resolve):
+
+```
+0 8 */3 * * cd /opt/pogo-agent && AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=<slashless-substring> TIER_METHOD=jina OPENAI_API_KEY=... /opt/pogo-agent/scripts/run-daily.sh
+```
+
+**Gotchas (already solved — don't re-debug):**
+1. **ScrapedDuck** JSON lives on the `data` branch:
+   `raw.githubusercontent.com/bigfoott/ScrapedDuck/data/<events|raids|eggs|research>.json`.
+   **PvPoke** gamemaster: `.../pvpoke/pvpoke/master/src/data/gamemaster.min.json`. Sprites:
+   PokeAPI by dex id. All clean to `curl`.
+2. **pokemongohub.net is behind a Cloudflare *managed challenge*** — plain `curl` *and* a headless
+   browser get 403. The two tier pages are fetched via **Jina Reader** (`TIER_METHOD=jina` →
+   `https://r.jina.ai/<url>`), which returns clean markdown. **No headless browser is needed.**
+3. **pi `models.json`:** each model's `cost` MUST include `cacheRead` and `cacheWrite`, or pi
+   rejects the whole file and reports `Unknown provider`.
+4. **The proxy/WAF 403s the OpenAI SDK `User-Agent: OpenAI/JS`** ("Your request was blocked").
+   Body/tools/streaming are all fine — it is purely the UA header. Fix = the `headers` override in
+   `models.json` (set `User-Agent` to a plain value).
+5. **pi `--model` splits on `/`** (reads it as `provider/model`). The real model id contains a slash,
+   so select via `--provider myproxy --model <slashless substring>` — run-daily.sh does this through
+   `PI_PROVIDER`/`PI_MODEL`. Keep the slash OUT of `PI_MODEL`.
+6. **cron PATH is minimal** — set `PATH` so `pi` and `node` resolve (`which pi node`), else
+   "command not found".
+7. **Codex** was evaluated as an alternative agent: it needs the OpenAI *Responses* API
+   (`wire_api="responses"`; chat removed Feb 2026). Works against the same proxy; we chose pi
+   (native `AGENTS.md`, simpler, no sandbox). See `examples/codex-config.toml`.
+
+**⚠️ Editing the frontend (`app.js` / `style.css` / `index.html`).** The validate gate checks the
+`sha256` of `public/app.js` and `public/style.css` against `scripts/protected.sha256`, and requires
+the `AI:START/END` markers + key `id`s + `.rank-panel` wrappers in `index.html`. **After any change
+to `app.js` or `style.css`, regenerate the checksums**, or the next daily run fails validation and
+rolls back:
+
+```
+sha256sum public/app.js public/style.css > scripts/protected.sha256
+```
+
+The daily agent only edits `public/data/*.json` and the `AI:` regions of `index.html`; everything
+else is yours to edit (then re-checksum).

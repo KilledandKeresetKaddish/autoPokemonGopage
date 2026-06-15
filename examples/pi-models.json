@@ -1,7 +1,7 @@
 {
   "providers": {
     "myproxy": {
-      "baseUrl": "https://gproxy.adonais.cfd/v1",
+      "baseUrl": "https://YOUR-PROXY-HOST/v1",
       "apiKey": "$OPENAI_API_KEY",
       "api": "openai-responses",
       "headers": {
