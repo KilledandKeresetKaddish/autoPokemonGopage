@@ -1,12 +1,41 @@
 /* ============================================================================
- * pogo-agent frontend (PROTECTED — the daily agent must not edit this file).
- * Renders: calendar (from data/events.json), rankings sub-tab switching,
- * and the personal daily tracker (localStorage, auto-resets each day).
+ * pogo-agent frontend (PROTECTED — the daily content agent must not edit this).
+ * Renders: the month calendar (spanning bars + day chips, from data/events.json),
+ * the rankings sub-tab switching, and the personal daily tracker (localStorage,
+ * auto-resets each day). After editing this file or style.css, regenerate
+ * scripts/protected.sha256 or the next daily run fails validation.
  * ========================================================================== */
 'use strict';
 
 const state = { events: [], calYear: 0, calMonth: 0 };
 const WEEKDAYS = ['一', '二', '三', '四', '五', '六', '日']; // Monday-first
+
+/* ---------- calendar geometry (px) ---------- */
+const NUM_H = 30;   // height reserved for the day-number row
+const LANE_H = 23;  // vertical pitch of one spanning-bar lane
+
+/* ---------- event categories -------------------------------------------------
+ * Each LeekDuck event `type` maps to a colour + Chinese label + how it shows:
+ *   kind 'bar'  → a spanning bar across the days it covers (named events)
+ *   kind 'chip' → a small marker inside a single day cell (recurring/point events)
+ *   bg true     → a low-key background band (season / pass) so named events read.
+ * Unknown types fall back to a hashed colour and are barred unless single-day. */
+const CATEGORY = {
+  'pokemon-go-fest':        { color: '#a55bd6', fg: '#fff',     label: 'GO Fest',   kind: 'bar' },
+  'community-day':          { color: '#2bb673', fg: '#fff',     label: '社区日',     kind: 'bar' },
+  'raid-day':               { color: '#6b7a99', fg: '#fff',     label: '团战日',     kind: 'bar' },
+  'raid-battles':           { color: '#e2493f', fg: '#fff',     label: '团战 Boss',  kind: 'bar' },
+  'go-battle-league':       { color: '#3b76e8', fg: '#fff',     label: '对战联盟',   kind: 'bar' },
+  'event':                  { color: '#1fa6c9', fg: '#06222b',  label: '活动',       kind: 'bar' },
+  'research':               { color: '#16a394', fg: '#04231f',  label: '调查',       kind: 'bar' },
+  'choose-your-path':       { color: '#13b39c', fg: '#04231f',  label: '限时调查',   kind: 'bar' },
+  'go-pass':                { color: '#c69234', fg: '#241701',  label: 'GO Pass',    kind: 'bar', bg: true },
+  'season':                 { color: '#8c6f3e', fg: '#fbeccb',  label: '赛季',       kind: 'bar', bg: true },
+  'max-mondays':            { color: '#e0489b', fg: '#fff',     label: 'Max 周一',   kind: 'chip' },
+  'raid-hour':              { color: '#f5853a', fg: '#2a1402',  label: '团战时刻',   kind: 'chip' },
+  'pokemon-spotlight-hour': { color: '#f5c542', fg: '#2a2102',  label: '聚焦时刻',   kind: 'chip' },
+  'spotlight-hour':         { color: '#f5c542', fg: '#2a2102',  label: '聚焦时刻',   kind: 'chip' },
+};
 
 /* ---------- small helpers ---------- */
 function $(sel) { return document.querySelector(sel); }
@@ -26,15 +55,16 @@ function escapeHtml(s) {
 function spriteUrl(id) {
   return id ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png` : '';
 }
-function typeColor(type) {
-  const map = {
-    'community-day': '#58b368', 'raid-day': '#e3350d', 'raid-battles': '#e3350d',
-    'pokemon-go-fest': '#9b59b6', 'spotlight-hour': '#ffcb05', 'research': '#2a75bb',
-    'event': '#2a75bb', 'season': '#16a085', 'pokemon-spotlight-hour': '#ffcb05',
-  };
-  if (map[type]) return map[type];
-  let h = 0; for (const ch of String(type || '')) h = (h * 31 + ch.charCodeAt(0)) % 360;
-  return `hsl(${h}, 55%, 50%)`;
+function hashColor(s) {
+  let h = 0; for (const ch of String(s || '')) h = (h * 31 + ch.charCodeAt(0)) % 360;
+  return `hsl(${h}, 52%, 55%)`;
+}
+function dayDiff(a, b) { return Math.round((b - a) / 86400000); }
+function catOf(ev) {
+  const c = CATEGORY[ev.type];
+  if (c) return c;
+  const span = ev._s && ev._e ? dayDiff(ev._s, ev._e) : 0;
+  return { color: hashColor(ev.type), fg: '#fff', label: ev.heading || ev.type || '活动', kind: span >= 1 ? 'bar' : 'chip' };
 }
 function fmtDateTime(s) {
   const d = new Date(s); if (isNaN(d.getTime())) return s || '';
@@ -45,6 +75,10 @@ function fmtRange(start, end) {
   const s = fmtDateTime(start);
   if (!end || end === start) return s;
   return `${s} — ${fmtDateTime(end)}`;
+}
+function firstSprite(ev) {
+  const p = (ev.pokemon || [])[0];
+  return p && p.id ? spriteUrl(p.id) : '';
 }
 
 /* ---------- data ---------- */
@@ -65,65 +99,190 @@ async function loadData() {
 }
 
 /* ---------- calendar ---------- */
-function eventsOnDay(d) {
-  const day = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  return state.events.filter(ev => ev._s && day >= ev._s && day <= ev._e);
-}
-function renderCalendar() {
-  $('#cal-title').textContent = `${state.calYear}年${state.calMonth + 1}月`;
-  const grid = $('#calendar');
-  grid.innerHTML = '';
-
-  const head = document.createElement('div');
-  head.className = 'cal-grid cal-head';
-  WEEKDAYS.forEach(w => {
-    const c = document.createElement('div');
-    c.className = 'cal-cell cal-wd'; c.textContent = w; head.appendChild(c);
-  });
-  grid.appendChild(head);
-
-  const body = document.createElement('div');
-  body.className = 'cal-grid';
+// Build the 6-week (Monday-first) grid for the active month and return the
+// Date the grid starts on (the Monday on/before the 1st).
+function gridStartDate() {
   const first = new Date(state.calYear, state.calMonth, 1);
   const firstDow = (first.getDay() + 6) % 7; // Monday = 0
-  const start = new Date(state.calYear, state.calMonth, 1 - firstDow);
-  const today = ymd(new Date());
+  return new Date(state.calYear, state.calMonth, 1 - firstDow);
+}
 
-  for (let i = 0; i < 42; i++) {
-    const d = new Date(start); d.setDate(start.getDate() + i);
-    const cell = document.createElement('div');
-    cell.className = 'cal-cell day';
-    if (d.getMonth() !== state.calMonth) cell.classList.add('other-month');
-    if (ymd(d) === today) cell.classList.add('today');
+// Greedy interval-partition: assign each visible bar to the lowest lane whose
+// previous bar has already ended. Mutates each item with `.lane`.
+function packLanes(items) {
+  const laneEnd = []; // laneEnd[l] = last occupied grid index in lane l
+  items.forEach(it => {
+    let l = 0;
+    while (laneEnd[l] != null && laneEnd[l] >= it.si) l++;
+    it.lane = l; laneEnd[l] = it.ei;
+  });
+}
 
-    const num = document.createElement('div');
-    num.className = 'daynum'; num.textContent = d.getDate(); cell.appendChild(num);
+function renderCalendar() {
+  $('#cal-title').textContent = `${state.calYear}年${state.calMonth + 1}月`;
+  const root = $('#calendar');
+  root.innerHTML = '';
 
-    const evs = eventsOnDay(d);
-    evs.slice(0, 3).forEach(ev => {
-      const chip = document.createElement('button');
-      chip.className = 'event-chip';
-      chip.style.borderLeftColor = typeColor(ev.type);
-      const img = ev.image ? `<img class="chip-img" src="${escapeHtml(ev.image)}" alt="" loading="lazy">` : '';
-      chip.innerHTML = `${img}<span>${escapeHtml(ev.name)}</span>`;
-      chip.addEventListener('click', () => openDetail(ev));
-      cell.appendChild(chip);
-    });
-    if (evs.length > 3) {
-      const more = document.createElement('div');
-      more.className = 'more'; more.textContent = `+${evs.length - 3}`; cell.appendChild(more);
+  // weekday header
+  const dow = document.createElement('div');
+  dow.className = 'cal-dow';
+  WEEKDAYS.forEach((w, i) => {
+    const c = document.createElement('div');
+    c.className = 'cal-wd' + (i >= 5 ? ' weekend' : '');
+    c.textContent = w; dow.appendChild(c);
+  });
+  root.appendChild(dow);
+
+  const gridStart = gridStartDate();
+  const todayStr = ymd(new Date());
+  const present = new Set();
+
+  // map every event into grid indices, clipped to the visible 0..41 range
+  const bars = [], chipsByDay = {};
+  state.events.forEach(ev => {
+    if (!ev._s) return;
+    const si = dayDiff(gridStart, ev._s);
+    const ei = dayDiff(gridStart, ev._e);
+    if (ei < 0 || si > 41) return; // outside the visible grid
+    const cat = catOf(ev);
+    present.add(ev.type);
+    if (cat.kind === 'chip') {
+      for (let i = Math.max(0, si); i <= Math.min(41, ei); i++) {
+        (chipsByDay[i] = chipsByDay[i] || []).push({ ev, cat });
+      }
+    } else {
+      bars.push({ ev, cat, si: Math.max(0, si), ei: Math.min(41, ei), realStart: si, realEnd: ei });
     }
-    body.appendChild(cell);
+  });
+
+  // lane-pack bars: anchor longer events first so they settle into low lanes
+  bars.sort((a, b) => a.si - b.si || (b.ei - b.si) - (a.ei - a.si));
+  packLanes(bars);
+
+  const weeks = document.createElement('div');
+  weeks.className = 'cal-weeks';
+
+  for (let r = 0; r < 6; r++) {
+    const rs = r * 7, re = rs + 6;
+    // skip a trailing week that is entirely in another month
+    const startMon = new Date(gridStart.getTime() + rs * 86400000).getMonth();
+    const endMon = new Date(gridStart.getTime() + re * 86400000).getMonth();
+    if (r >= 4 && startMon !== state.calMonth && endMon !== state.calMonth) continue;
+
+    const week = document.createElement('div');
+    week.className = 'cal-week';
+
+    // how many lanes does this row need? → reserve that much vertical space
+    let maxLane = -1;
+    bars.forEach(b => { if (!(b.ei < rs || b.si > re)) maxLane = Math.max(maxLane, b.lane); });
+    const barsH = (maxLane + 1) * LANE_H;
+    week.style.setProperty('--bars-h', barsH + 'px');
+
+    for (let c = 0; c < 7; c++) {
+      const idx = rs + c;
+      const date = new Date(gridStart.getTime() + idx * 86400000);
+      const inMonth = date.getMonth() === state.calMonth;
+      const cell = document.createElement('div');
+      cell.className = 'cal-day'
+        + (inMonth ? '' : ' out')
+        + (c >= 5 ? ' weekend' : '')
+        + (ymd(date) === todayStr ? ' today' : '');
+
+      const num = document.createElement('div');
+      num.className = 'cal-daynum';
+      let tag = '';
+      if (ymd(date) === todayStr) tag = '<span class="tag">今天</span>';
+      else if (date.getDate() === 1) tag = `<span class="moy">${date.getMonth() + 1}月</span>`;
+      num.innerHTML = `<span class="dn">${date.getDate()}</span>${tag}`;
+      cell.appendChild(num);
+
+      const spacer = document.createElement('div');
+      spacer.className = 'cal-barspace';
+      cell.appendChild(spacer);
+
+      // day chips (point events), with overflow collapse
+      const list = (chipsByDay[idx] || []);
+      if (inMonth && list.length) {
+        const cw = document.createElement('div');
+        cw.className = 'cal-chips';
+        list.slice(0, 3).forEach(({ ev, cat }) => {
+          const sp = firstSprite(ev);
+          const chip = document.createElement('button');
+          chip.className = 'cal-chip';
+          chip.style.setProperty('--c', cat.color);
+          chip.title = `${ev.name} · ${fmtRange(ev.start, ev.end)}`;
+          chip.innerHTML = `<i class="dot"></i>${sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}`
+            + `<span class="ct">${escapeHtml(cat.label)}</span><span class="cn">${escapeHtml(ev.name)}</span>`;
+          chip.addEventListener('click', () => openDetail(ev));
+          cw.appendChild(chip);
+        });
+        if (list.length > 3) {
+          const more = document.createElement('div');
+          more.className = 'cal-more'; more.textContent = `+${list.length - 3}`;
+          cw.appendChild(more);
+        }
+        cell.appendChild(cw);
+      }
+      week.appendChild(cell);
+    }
+
+    // spanning bar overlay for this row
+    const layer = document.createElement('div');
+    layer.className = 'cal-barlayer';
+    bars.forEach(b => {
+      if (b.ei < rs || b.si > re) return;
+      const segS = Math.max(b.si, rs), segE = Math.min(b.ei, re);
+      const leftCol = segS - rs, span = segE - segS + 1;
+      const isL = b.realStart === segS, isR = b.realEnd === segE;
+      const bar = document.createElement('button');
+      bar.className = 'cal-bar' + (isL ? ' l' : '') + (isR ? ' r' : '') + (b.cat.bg ? ' bg' : '');
+      bar.style.left = `calc(${leftCol / 7 * 100}% + 3px)`;
+      bar.style.width = `calc(${span / 7 * 100}% - 6px)`;
+      bar.style.top = (NUM_H + b.lane * LANE_H) + 'px';
+      bar.style.background = b.cat.color;
+      bar.style.color = b.cat.fg;
+      const sp = isL && !b.cat.bg ? firstSprite(b.ev) : '';
+      bar.title = `${b.ev.name} · ${fmtRange(b.ev.start, b.ev.end)}`;
+      bar.innerHTML = (sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
+        + `<span class="bn">${escapeHtml(b.ev.name)}</span>`;
+      bar.addEventListener('click', () => openDetail(b.ev));
+      layer.appendChild(bar);
+    });
+    week.appendChild(layer);
+    weeks.appendChild(week);
   }
-  grid.appendChild(body);
+
+  root.appendChild(weeks);
+  renderLegend(present);
+}
+
+// Legend reflects only the categories actually present in the current month.
+function renderLegend(present) {
+  const box = $('#cal-legend');
+  if (!box) return;
+  const seen = new Set();
+  const items = [];
+  present.forEach(type => {
+    const cat = CATEGORY[type] || catOf({ type });
+    const key = cat.label + cat.color;
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push(cat);
+  });
+  items.sort((a, b) => (a.kind === b.kind ? 0 : a.kind === 'bar' ? -1 : 1));
+  box.innerHTML = items.map(c =>
+    `<span class="lg"><i class="${c.kind === 'chip' ? 'round' : ''}" style="background:${c.color}"></i>${escapeHtml(c.label)}</span>`
+  ).join('') || '';
 }
 
 function openDetail(ev) {
+  const cat = catOf(ev);
   const mons = (ev.pokemon || []).map(p =>
-    `<figure class="mon"><img class="mon-icon" src="${escapeHtml(spriteUrl(p.id))}" alt="${escapeHtml(p.name)}" loading="lazy">${p.shiny ? '<span class="shiny">✨</span>' : ''}<figcaption>${escapeHtml(p.name)}</figcaption></figure>`
+    `<figure class="mon"><img class="mon-icon" src="${escapeHtml(spriteUrl(p.id))}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'">${p.shiny ? '<span class="shiny">✨</span>' : ''}<figcaption>${escapeHtml(p.name)}</figcaption></figure>`
   ).join('');
   const bonuses = (ev.bonuses || []).map(b => `<li>${escapeHtml(b)}</li>`).join('');
   $('#detail-body').innerHTML = `
+    <span class="detail-cat" style="--c:${cat.color}">${escapeHtml(cat.label)}</span>
     ${ev.image ? `<img class="detail-img" src="${escapeHtml(ev.image)}" alt="">` : ''}
     <h3>${escapeHtml(ev.name)}</h3>
     <p class="muted">${escapeHtml(ev.heading || ev.type || '')} · ${escapeHtml(fmtRange(ev.start, ev.end))}</p>
@@ -216,6 +375,7 @@ function shiftMonth(delta) {
 }
 function setupDetail() {
   $('#detail-close').addEventListener('click', () => { $('#event-detail').hidden = true; });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') $('#event-detail').hidden = true; });
 }
 
 async function init() {
