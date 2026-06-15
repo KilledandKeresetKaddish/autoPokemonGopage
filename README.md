@@ -98,4 +98,24 @@ cat logs/daily-*.log
 ) | crontab -
 ```
 
+### Using Codex against an OpenAI-compatible reverse proxy
+
+`AGENT_CLI=codex` is supported. **Caveat:** current Codex (since Feb 2026) speaks
+only the OpenAI **Responses** API — your proxy must expose `/v1/responses`, not just
+`/v1/chat/completions`. Copy `examples/codex-config.toml` to `~/.codex/config.toml`
+and fill in `base_url`, `env_key`, `model`. It also sets
+`[sandbox_workspace_write] network_access = true` so `fetch.sh` can reach the network.
+
+```bash
+cp /opt/pogo-agent/examples/codex-config.toml ~/.codex/config.toml   # then edit it
+# cron line:
+( crontab -l 2>/dev/null; \
+  echo "0 8 * * * cd /opt/pogo-agent && AGENT_CLI=codex TIER_METHOD=jina OPENAI_API_KEY=sk-... ./scripts/run-daily.sh" \
+) | crontab -
+```
+
+`run-daily.sh` invokes `codex exec --sandbox workspace-write -a never` (no prompts,
+edits + network allowed). If the sandbox gets in the way, switch it to
+`codex exec --dangerously-bypass-approvals-and-sandbox`.
+
 Rollback any bad day: `git -C /opt/pogo-agent revert <commit>` (or `checkout <good-sha> -- public`).

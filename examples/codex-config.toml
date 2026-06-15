@@ -1,0 +1,27 @@
+# Example ~/.codex/config.toml for running pogo-agent's daily update with the
+# OpenAI Codex CLI against a self-hosted OpenAI-compatible reverse proxy.
+#
+# !!! IMPORTANT !!!
+# Since Feb 2026 Codex speaks ONLY the OpenAI *Responses* API. Your reverse
+# proxy MUST expose `/v1/responses` — plain Chat-Completions-only proxies
+# (`/v1/chat/completions`) will NOT work with current Codex. wire_api must be
+# "responses"; the old "chat" value was removed.
+
+model = "<the-model-your-proxy-serves>"
+model_provider = "myproxy"
+
+[model_providers.myproxy]
+name     = "My Reverse Proxy"
+base_url = "https://your-proxy.example.com/v1"   # OpenAI-compatible root, ends in /v1
+env_key  = "OPENAI_API_KEY"                       # Codex reads this env var, sends it as a Bearer token
+wire_api = "responses"                            # REQUIRED (must support /v1/responses)
+# http_headers = { "X-Title" = "pogo-agent" }     # optional extra headers
+
+# Unattended cron runs need outbound network INSIDE the workspace-write sandbox
+# (fetch.sh curls ScrapedDuck and Jina). Codex disables network by default.
+[sandbox_workspace_write]
+network_access = true
+
+# Optional: skip all approval prompts from config too (we also pass -a never on
+# the CLI in scripts/run-daily.sh).
+approval_policy = "never"

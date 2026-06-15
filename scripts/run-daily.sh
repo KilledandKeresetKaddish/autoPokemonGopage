@@ -36,7 +36,11 @@ run_agent() {
       gemini -p "$PROMPT" -y
       ;;
     codex)
-      codex exec "$PROMPT"
+      # Non-interactive. Needs file edits + outbound network (fetch.sh curls
+      # ScrapedDuck/Jina). The workspace-write sandbox blocks network by default;
+      # enable it in ~/.codex/config.toml:  [sandbox_workspace_write]\n network_access = true
+      # (If the sandbox fights you, swap for: codex exec --dangerously-bypass-approvals-and-sandbox "$PROMPT")
+      codex exec --sandbox workspace-write -a never "$PROMPT"
       ;;
     opencode)
       opencode run "$PROMPT"
