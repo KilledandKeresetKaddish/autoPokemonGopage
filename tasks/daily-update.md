@@ -29,6 +29,7 @@ Do this now:
    times/notes in `data/state.json`.
 8. Self-check (no duplicate ids, `links[]` aggregated, nothing >3 months old, long events flagged),
    then run `scripts/validate.sh` and fix whatever it reports until it passes.
+9. Delete any duplicated or placeholder(waiting for annocement) event when there is an update, be smart.
 
 Stay strictly within the files AGENTS.md allows. All user-facing text in 简体中文.
 If a source is unreachable, keep the last good content and note it in `data/state.json`.
