@@ -10,9 +10,9 @@
 #   scripts/fetch.sh events raids ...       # fetch specific sources
 #   scripts/fetch.sh all                    # fetch everything
 #
-# The two `tiers-*` sources come from pokemongohub.net, which sits behind a
-# Cloudflare "managed challenge" — a plain curl only gets the challenge page.
-# So tier pages are fetched through a CF-solver, selectable with TIER_METHOD:
+# Several sources (Hub tier/event pages, pokébase, the official site) sit behind
+# a Cloudflare "managed challenge" or heavy JS — a plain curl only gets the
+# challenge/shell page. Those are fetched through a CF-solver, set by TIER_METHOD:
 #   TIER_METHOD=jina          (default) https://r.jina.ai reader, zero install
 #   TIER_METHOD=flaresolverr  self-hosted solver at $FLARESOLVERR_URL
 #   TIER_METHOD=direct        plain curl (only works if the page is unprotected)
@@ -36,11 +36,20 @@ declare -A URLS=(
   [gamemaster]="https://raw.githubusercontent.com/pvpoke/pvpoke/master/src/data/gamemaster.min.json"
   [tiers-attackers]="https://pokemongohub.net/post/guide/max-attackers-tier-list/"
   [tiers-defenders]="https://pokemongohub.net/post/guide/max-defenders-tier-list/"
+  [tiers-pokebase]="https://pokebase.app/pokemon-go/tier-lists"
+  [events-hub]="https://pokemongohub.net/post/event/"
+  [events-pokebase]="https://pokebase.app/pokemon-go"
+  [events-official]="https://pokemongo.com/"
 )
-declare -A EXT=( [tiers-attackers]=txt [tiers-defenders]=txt )   # default: json
-is_tier() { [[ "$1" == tiers-* ]]; }
+# Rendered-page scrapes are .txt (markdown/HTML to parse); JSON sources stay .json.
+declare -A EXT=(
+  [tiers-attackers]=txt [tiers-defenders]=txt [tiers-pokebase]=txt
+  [events-hub]=txt [events-pokebase]=txt [events-official]=txt
+)   # default: json
+# Route through the CF-solver (Jina/FlareSolverr) when the source needs a browser.
+is_protected() { [[ "$1" == tiers-* || "$1" == events-hub || "$1" == events-pokebase || "$1" == events-official ]]; }
 ext_of()  { echo "${EXT[$1]:-json}"; }
-ALL=(events raids eggs research gamemaster tiers-attackers tiers-defenders)
+ALL=(events raids eggs research gamemaster tiers-attackers tiers-defenders tiers-pokebase events-hub events-pokebase events-official)
 
 list_status() {
   for k in "${ALL[@]}"; do
@@ -85,7 +94,7 @@ fetch_one() {
   local out="$RAW/$name.$(ext_of "$name")" tmp
   tmp="$(mktemp)"
   local ok=1
-  if is_tier "$name"; then fetch_tier "$url" "$tmp" || ok=0; else fetch_plain "$url" "$tmp" || ok=0; fi
+  if is_protected "$name"; then fetch_tier "$url" "$tmp" || ok=0; else fetch_plain "$url" "$tmp" || ok=0; fi
   if [ "$ok" = 1 ] && [ -s "$tmp" ]; then
     mv "$tmp" "$out"
     echo "OK   $name  $(wc -c <"$out")b  -> data/raw/$(basename "$out")"

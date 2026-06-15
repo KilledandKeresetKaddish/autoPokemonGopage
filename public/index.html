@@ -45,12 +45,24 @@
 
       <div id="calendar" class="calendar"></div>
 
+      <!-- Long-running events (season/pass/league/multi-week). Rendered by app.js
+           from the same events.json so the day grid stays focused on short events. -->
+      <div id="long-term" class="lt-band" hidden></div>
+
       <aside class="cal-notes panel">
         <div class="panel-head"><span class="dia">◆</span><h3>本月看点</h3></div>
         <!-- AI:START calendar-notes -->
         <p class="muted">本月看点将在每日更新后显示。</p>
         <!-- AI:END calendar-notes -->
       </aside>
+
+      <!-- 本月 Weekly Rotations — data-driven by app.js from public/data/rotations.json.
+           Owner-maintained structure; the daily agent only writes rotations.json. -->
+      <section class="rot-wrap panel">
+        <div class="panel-head"><span class="dia">◆</span><h3>本月 Weekly Rotations</h3></div>
+        <p id="rot-note" class="muted"></p>
+        <div id="rotations"></div>
+      </section>
 
       <!-- Event detail drawer (populated by app.js on click) -->
       <aside id="event-detail" class="drawer" hidden>

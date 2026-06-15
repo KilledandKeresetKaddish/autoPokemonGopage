@@ -27,6 +27,7 @@ req=(
   'id="view-calendar"' 'id="view-rankings"' 'id="view-tracker"'
   'id="calendar"' 'id="tracker"' 'id="main-tabs"' 'id="rank-subtabs"'
   'id="event-detail"' 'id="last-updated"' 'src="app.js"'
+  'id="long-term"' 'id="rotations"'
   'data-rank-panel="current"' 'data-rank-panel="attackers"'
   'data-rank-panel="defenders"' 'data-rank-panel="raid"'
 )
@@ -43,13 +44,35 @@ starts=$(grep -c 'AI:START' "$H"); ends=$(grep -c 'AI:END' "$H")
 [ "$starts" = "$ends" ] || { say "FAIL marker imbalance (START=$starts END=$ends)"; fail=1; }
 
 # 4) Data files the agent writes must be valid JSON.
-for j in public/data/events.json public/data/meta.json data/state.json; do
+for j in public/data/events.json public/data/meta.json public/data/rotations.json data/state.json; do
   if [ -f "$j" ]; then
     jq empty "$j" >/dev/null 2>&1 || { say "FAIL invalid JSON: $j"; fail=1; }
   else
     say "FAIL missing JSON file: $j"; fail=1
   fi
 done
+
+# 4b) events.json data hygiene — guards against unbounded growth and against
+#     duplicate / repeatedly-added events. Keep it bounded, ids unique, and
+#     prune events that ended well in the past (>100 days ~= 3 months).
+E=public/data/events.json
+if [ -f "$E" ] && jq empty "$E" >/dev/null 2>&1; then
+  n=$(jq 'length' "$E")
+  [ "$n" -le 250 ] || { say "FAIL events.json too large ($n entries > 250)"; fail=1; }
+  dups=$(jq '[.[].id] | group_by(.) | map(select(length > 1)) | length' "$E")
+  [ "$dups" = 0 ] || { say "FAIL events.json has $dups duplicate id(s)"; fail=1; }
+  cut=$(date -u -d '100 days ago' +%F 2>/dev/null || date -u -v-100d +%F 2>/dev/null || true)
+  if [ -n "$cut" ]; then
+    stale=$(jq --arg c "$cut" '[.[] | select(((.end // .start) | tostring | .[0:10]) < $c)] | length' "$E")
+    [ "$stale" = 0 ] || { say "FAIL events.json has $stale stale event(s) ended >100d ago (prune old events)"; fail=1; }
+  fi
+fi
+
+# 4c) rotations.json must carry a tracks array.
+R=public/data/rotations.json
+if [ -f "$R" ] && jq empty "$R" >/dev/null 2>&1; then
+  jq -e '.tracks | type == "array"' "$R" >/dev/null 2>&1 || { say "FAIL rotations.json missing tracks[]"; fail=1; }
+fi
 
 # 5) No stray <script> injected into the editable regions of index.html
 #    (agent-written HTML must be inert). app.js is the only allowed script.

@@ -16,14 +16,19 @@ UI text shown to users must be **Simplified Chinese (简体中文)**.
 ---
 
 ## The site (3 sections)
-1. **Calendar** (`#view-calendar`) — month grid, data-driven from `public/data/events.json`.
+1. **Calendar** (`#view-calendar`) — month grid **+ a 长期活动 band** (long-running events
+   pulled out of the grid) **+ a 本月 Weekly Rotations** section. Data-driven from
+   `public/data/events.json` and `public/data/rotations.json`: short headline events live in
+   the grid; season/pass/league/multi-week events render in the band; the 5★/Mega/Max weekly
+   boss rotation renders from `rotations.json`.
 2. **Rankings** (`#view-rankings`) — Max attackers / Max defenders / raid counters, plus
    a "本期推荐" panel tied to what's live right now.
 3. **Tracker** (`#view-tracker`) — the user's personal daily checkboxes. **Not your
    concern. Never read or touch it.**
 
 ## What you MAY edit — and nothing else
-- `public/data/events.json` — the normalized events array the calendar renders.
+- `public/data/events.json` — the normalized events array the calendar + 长期活动 band render.
+- `public/data/rotations.json` — the current month's 5★/Mega/Max weekly boss rotation.
 - `public/data/meta.json` — set `lastUpdated` (ISO 8601); the header shows it.
 - The AI regions inside `public/index.html`, **strictly between** these marker pairs:
   - `<!-- AI:START calendar-notes -->` … `<!-- AI:END calendar-notes -->`
@@ -55,12 +60,22 @@ refetch everything.** Then read the files in `data/raw/`.
 | `raids` | current raid bosses | older than ~1 day | `data/raw/raids.json` |
 | `eggs` / `research` | egg pools / field research | when relevant | `data/raw/*.json` |
 | `gamemaster` | Pokémon stats, types, moves (PvPoke) | older than ~7 days | `data/raw/gamemaster.json` |
-| `tiers-attackers` | Hub "Max Attackers Tier List" page | older than ~3 days | `data/raw/tiers-attackers.txt` |
+| `tiers-attackers` | Hub "Max Attackers Tier List" page (**含属性榜**, per-type picks) | older than ~3 days | `data/raw/tiers-attackers.txt` |
 | `tiers-defenders` | Hub "Max Defenders Tier List" page | older than ~3 days | `data/raw/tiers-defenders.txt` |
+| `tiers-pokebase` | pokébase tier lists (cross-check / second opinion) | older than ~3 days | `data/raw/tiers-pokebase.txt` |
+| `events-hub` | Hub events hub + monthly article (events **and** weekly rotations) | older than ~1 day | `data/raw/events-hub.txt` |
+| `events-pokebase` | pokébase events list | older than ~1 day | `data/raw/events-pokebase.txt` |
+| `events-official` | pokemongo.com official news/events | older than ~1 day | `data/raw/events-official.txt` |
 
-> Hub sits behind a Cloudflare challenge, so `fetch.sh` pulls these through a
-> solver (Jina Reader by default) — the saved `.txt` is the rendered page content
-> (markdown or HTML). Parse the tiers out of whatever form it's in.
+> The Hub tier/event pages, pokébase, and the official site sit behind a Cloudflare
+> challenge or heavy JS, so `fetch.sh` pulls them through a solver (Jina Reader by
+> default) — the saved `.txt` is the rendered page content (markdown or HTML). Parse
+> whatever form it's in; **never assume fixed positions — re-read every run.**
+>
+> **Source priority.** `events` (ScrapedDuck → LeekDuck, clean JSON) is the authoritative
+> backbone for the calendar. Hub / pokébase / official **enrich and corroborate**: extra
+> source links, Pokémon details, the weekly rotation schedule, date sanity-checks. If a
+> Jina source is flaky or empty, still build a complete calendar from `events` + Hub.
 
 **Sprites** need no fetch — build image URLs directly from a Pokémon's national-dex id:
 `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<dexId>.png`
@@ -73,33 +88,55 @@ refetch everything.** Then read the files in `data/raw/`.
 
 ## Daily procedure
 1. `scripts/fetch.sh list` + read `data/state.json` → decide what is stale.
-2. Fetch only what's needed, e.g. `scripts/fetch.sh events raids tiers-attackers`.
+2. Fetch only what's needed, e.g.
+   `scripts/fetch.sh events raids events-hub events-pokebase tiers-attackers`.
 3. Read the raw files; adapt to their **current** structure.
-4. **Calendar** → rewrite `public/data/events.json` (normalize ScrapedDuck → schema
-   below). Keep the current and next month; drop long-past events.
-5. **Rankings** → rewrite the regions in `index.html`:
+4. **Calendar** → rewrite `public/data/events.json` (schema below). Backbone = `events`
+   (ScrapedDuck); then **merge across sources**:
+   - **Dedup by event identity.** The same real-world event shows up in 2–4 sources
+     (LeekDuck / Hub / pokébase / official). Decide which entries are the *same* event and
+     emit **one** row — never two rows for one event.
+   - **Aggregate links.** Collect each source's URL for that event into `links[]` with a short
+     label (`LeekDuck` / `Hub` / `Pokébase` / `官方`). Keep `link` = the primary one.
+   - **Populate Pokémon & bonuses.** Fill `pokemon[]` (dex id + 简体中文 name + `shiny`) and
+     `bonuses[]` from the articles — so the calendar isn't empty and the detail drawer is useful.
+   - **Flag long-running events.** Set `longTerm:true` on season / GO Pass / GO Battle League and
+     anything spanning more than ~2 weeks — they render in the 长期活动 band, not the day grid
+     (this is what keeps headline short events visible). `longTerm:false` forces a borderline
+     event back onto the grid. (`display:"banner"|"bar"` are equivalent overrides.)
+   - **Retention.** Keep the **current month through the end of next month**; **drop events that
+     ended before the current month started**. Use a **stable `id`** (derived deterministically
+     from a source slug) so re-runs map the same event to the same row and can never accumulate
+     duplicates.
+5. **Rotations** → rewrite `public/data/rotations.json` (schema below): the **current month's**
+   5★ / Mega / Max weekly boss rotation, parsed from the Hub monthly article and corroborated
+   with `data/raw/raids.json`. Dex id per boss for the sprite; dates `YYYY-MM-DD`.
+   **Parse the bosses — never invent them.**
+6. **Rankings** → rewrite the regions in `index.html`:
    - `rankings-attackers` / `rankings-defenders` → parse the tier tables from
-     `data/raw/tiers-*.txt` (tiers like S/A/B, Pokémon, recommended moves). Render as
-     `.rank-list` / `.rank-item` with a `.tier tier-S|tier-A|…` badge and a sprite.
-     (The Jina output is markdown: `## S Tier` / `## A Tier` … section headers, each
-     followed by a table of Pokémon. A Pokémon's national-dex id is embedded in its
-     artwork image URL, e.g. `…/detail/861_gmax.png` → id 861. Use that id for the
-     PokeAPI sprite — strip form suffixes like `_gmax`. **Adapt if the layout changes.**)
-   - `rankings-raid` → from current bosses in `data/raw/raids.json`, list each boss with
-     a few top counters (justify with `gamemaster` stats/types — don't invent numbers).
-   - `rankings-current` (**highest value**) → synthesize what matters *today*: ongoing
-     events (from events.json) + current raid bosses, and surface the best attackers /
-     tanks to use for them (e.g. a Max/Dynamax event → point to the relevant Max picks).
-   - `calendar-notes` → a short 本月看点 summary (optional).
-6. Set `public/data/meta.json` `lastUpdated` to now (ISO 8601); record per-source fetch
-   times/notes in `data/state.json`.
-7. Run `scripts/validate.sh`. Fix whatever it reports until it passes.
+     `data/raw/tiers-*.txt` (S/A/B…, Pokémon, recommended moves); cross-check with
+     `tiers-pokebase`. Surface the attackers page's **per-type 属性榜** (best pick per type).
+     Render as `.rank-list` / `.rank-item` with a `.tier tier-S|tier-A|…` badge and a sprite.
+     (Jina output is markdown: `## S Tier` … headers + tables. A Pokémon's national-dex id is
+     embedded in its artwork URL, e.g. `…/detail/861_gmax.png` → id 861; strip suffixes like
+     `_gmax`. **Adapt if the layout changes. Parse the lists — do not decide rankings yourself.**)
+   - `rankings-raid` → from current bosses in `data/raw/raids.json`, list each boss with a few
+     top counters (justify with `gamemaster` stats/types — don't invent numbers).
+   - `rankings-current` (**free-form, highest value**) → synthesize what matters *today*
+     (see *Free-form synthesis* below).
+   - `calendar-notes` (**free-form**) → a short 本月看点 (see *Free-form synthesis*).
+7. Set `public/data/meta.json` `lastUpdated` to now (ISO 8601); record per-source fetch
+   times/notes in `data/state.json` (a fixed object keyed by source — **not** a growing log).
+8. **Self-check before validating:** one row per real event (no duplicate `id`s), `links[]`
+   aggregated, no event ended >3 months ago, long events flagged, rotations parsed not invented.
+9. Run `scripts/validate.sh`. Fix what it reports until it passes. (It hard-rejects duplicate
+   ids, >250 events, and events ended >100 days ago — so prune and dedup.)
 
 ---
 
 ## Schemas
 
-`public/data/events.json` — array the calendar renders:
+`public/data/events.json` — array the calendar + 长期活动 band render:
 ```json
 {
   "id": "slug-string",
@@ -110,17 +147,57 @@ refetch everything.** Then read the files in `data/raw/`.
   "end": "2026-06-01T13:00:00",
   "image": "https://cdn.leekduck.com/....png",
   "link": "https://leekduck.com/events/....",
+  "links": [
+    { "label": "LeekDuck", "url": "https://leekduck.com/events/...." },
+    { "label": "Hub", "url": "https://pokemongohub.net/post/event/...." }
+  ],
   "bonuses": ["双倍星尘", "..."],
-  "pokemon": [{ "name": "皮卡丘", "id": 25, "shiny": true }]
+  "pokemon": [{ "name": "皮卡丘", "id": 25, "shiny": true }],
+  "longTerm": false
 }
 ```
-- `start`/`end` ISO 8601; `end` may equal `start`. `bonuses`/`pokemon` optional.
-- `link` must point to the event's detail page so users can click through from the calendar.
+- `start`/`end` ISO 8601; `end` may equal `start`. `bonuses`/`pokemon`/`links`/`longTerm` optional.
+- `link` (single) is kept for back-compat; prefer `links[]` to point at **every** source for the event.
+- `longTerm:true` → renders in the 长期活动 band instead of the grid (auto for season/pass/league
+  and spans >~2 weeks; set `false` to force back onto the grid).
+
+`public/data/rotations.json` — the current month's weekly boss rotation:
+```json
+{
+  "month": "2026-06",
+  "note": "5★/超级团战每周三轮换 · Max 团战每周轮换",
+  "tracks": [
+    { "key": "5star", "label": "5★ 团战", "color": "#b16a5c",
+      "segments": [
+        { "name": "Zekrom", "cn": "捷克罗姆",
+          "pokemon": [{ "id": 644, "name": "捷克罗姆" }],
+          "start": "2026-06-10", "end": "2026-06-16" }
+      ] },
+    { "key": "mega", "label": "超级团战", "color": "#9c7bb0", "segments": [ "…" ] },
+    { "key": "max",  "label": "Max 团战", "color": "#bd7f97", "segments": [ "…" ] }
+  ]
+}
+```
+- The three tracks 5★ / Mega / Max. `cn` = displayed name; `pokemon[]` may hold >1 boss (dual
+  rotations). `start`/`end` = `YYYY-MM-DD`. Colors align with the calendar palette.
 
 `public/data/meta.json`:
 ```json
 { "lastUpdated": "2026-06-15T08:00:00Z", "note": "optional short status" }
 ```
+
+## Free-form synthesis (your creative space)
+`calendar-notes` (本月看点) and `rankings-current` (本期推荐) are **free-form inert-HTML
+canvases** — compose them freshly each run with judgment. The other regions
+(`rankings-attackers/defenders/raid`) stay structured: parse the sources, don't free-style.
+Use **only** these whitelisted, theme-correct classes (no inline colors, no `<style>`, no `<script>`):
+- containers: `.panel` / `.panel-head`, `.note-grid` (auto-responsive columns), `.callout` (highlight box)
+- lists/atoms: `.rank-list` / `.rank-item`, `.pill` / `.pillrow`, `.badge`, `.btn` / `.btn-primary`, `.muted`
+- Pokémon/tiers: `.mon-icon`, `.mon-row` / `.mon` / `.shiny`, `.tier` + `.tier-S|tier-A|tier-B|tier-C`
+- sprites: `<img class="spr">` (or `class="mon-icon"`) with the PokeAPI dex-id URL above.
+
+`rankings-current` should tie today's live events + current raid bosses to the best
+attackers/tanks to use (e.g. a Max/Dynamax event → the relevant Max picks).
 
 ## Ranking HTML pattern (use the existing CSS classes)
 ```html
