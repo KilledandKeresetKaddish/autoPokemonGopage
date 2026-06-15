@@ -81,6 +81,10 @@ refetch everything.** Then read the files in `data/raw/`.
    - `rankings-attackers` / `rankings-defenders` → parse the tier tables from
      `data/raw/tiers-*.txt` (tiers like S/A/B, Pokémon, recommended moves). Render as
      `.rank-list` / `.rank-item` with a `.tier tier-S|tier-A|…` badge and a sprite.
+     (The Jina output is markdown: `## S Tier` / `## A Tier` … section headers, each
+     followed by a table of Pokémon. A Pokémon's national-dex id is embedded in its
+     artwork image URL, e.g. `…/detail/861_gmax.png` → id 861. Use that id for the
+     PokeAPI sprite — strip form suffixes like `_gmax`. **Adapt if the layout changes.**)
    - `rankings-raid` → from current bosses in `data/raw/raids.json`, list each boss with
      a few top counters (justify with `gamemaster` stats/types — don't invent numbers).
    - `rankings-current` (**highest value**) → synthesize what matters *today*: ongoing
