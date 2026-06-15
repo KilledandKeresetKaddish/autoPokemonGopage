@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ---------------------------------------------------------------------------
-# publish.sh — commit the day's content change (nginx serves public/ in place,
+# publish.sh — commit the day's content change (Caddy serves public/ in place,
 # so the commit is for history + one-command rollback). Pushing to the remote
 # is optional: set PUBLISH_PUSH=1 to also push.
 # ---------------------------------------------------------------------------
