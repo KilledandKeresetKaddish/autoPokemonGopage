@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pokémon GO 面板</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- =====================================================================
+       PROTECTED structure. The daily content agent edits ONLY the data files
+       and the marked editable regions below. Everything else (masthead, nav,
+       calendar shell, tracker) is owner-maintained. Keep every required id and
+       every editable-region marker pair intact, or validation rolls the run back.
+       ===================================================================== -->
+
+  <div class="bg-orn" aria-hidden="true"></div>
+
+  <header class="masthead">
+    <div class="orn"><span class="dia">✦ &nbsp;◆&nbsp; ✦</span></div>
+    <p class="kicker">Pokémon GO · Codex</p>
+    <h1 class="site-title">Pokémon GO 面板</h1>
+    <p class="meta"><span id="last-updated" class="muted">加载中…</span></p>
+  </header>
+
+  <nav class="tabs" id="main-tabs">
+    <button data-view="calendar" class="active"><span class="t-ico">☾</span> 当月日历</button>
+    <button data-view="rankings"><span class="t-ico">⚔</span> 战力榜</button>
+    <button data-view="tracker"><span class="t-ico">✓</span> 我的打卡</button>
+  </nav>
+
+  <main>
+    <!-- ========================= VIEW 1: CALENDAR ========================= -->
+    <!-- Data-driven by app.js from public/data/events.json. Multi-day events
+         render as spanning bars; single-day point events render as day chips. -->
+    <section id="view-calendar" class="view active">
+      <div class="cal-toolbar">
+        <button id="cal-prev" class="btn" aria-label="上个月">‹</button>
+        <h2 id="cal-title">—</h2>
+        <button id="cal-next" class="btn" aria-label="下个月">›</button>
+        <button id="cal-today" class="btn btn-ghost">今天</button>
+      </div>
+
+      <div id="cal-legend" class="cal-legend" aria-hidden="true"></div>
+
+      <div id="calendar" class="calendar"></div>
+
+      <aside class="cal-notes panel">
+        <div class="panel-head"><span class="dia">◆</span><h3>本月看点</h3></div>
+        <!-- AI:START calendar-notes -->
+        <p class="muted">本月看点将在每日更新后显示。</p>
+        <!-- AI:END calendar-notes -->
+      </aside>
+
+      <!-- Event detail drawer (populated by app.js on click) -->
+      <aside id="event-detail" class="drawer" hidden>
+        <button id="detail-close" class="drawer-close" aria-label="关闭">×</button>
+        <div id="detail-body"></div>
+      </aside>
+    </section>
+
+    <!-- ========================= VIEW 2: RANKINGS ========================= -->
+    <!-- The agent writes HTML INSIDE the editable markers only. The .rank-panel
+         wrappers and sub-tab switching are protected structure. -->
+    <section id="view-rankings" class="view">
+      <nav class="subtabs" id="rank-subtabs">
+        <button data-rank="current" class="active">🔥 本期推荐</button>
+        <button data-rank="attackers">Max 攻手</button>
+        <button data-rank="defenders">Max 坦克</button>
+        <button data-rank="raid">团战 Counter</button>
+      </nav>
+
+      <div class="rank-body">
+        <div class="rank-panel active" data-rank-panel="current">
+          <!-- AI:START rankings-current -->
+          <p class="muted">本期推荐将在每日更新后显示。</p>
+          <!-- AI:END rankings-current -->
+        </div>
+        <div class="rank-panel" data-rank-panel="attackers">
+          <!-- AI:START rankings-attackers -->
+          <p class="muted">Max 攻手榜将在每日更新后显示。</p>
+          <!-- AI:END rankings-attackers -->
+        </div>
+        <div class="rank-panel" data-rank-panel="defenders">
+          <!-- AI:START rankings-defenders -->
+          <p class="muted">Max 坦克榜将在每日更新后显示。</p>
+          <!-- AI:END rankings-defenders -->
+        </div>
+        <div class="rank-panel" data-rank-panel="raid">
+          <!-- AI:START rankings-raid -->
+          <p class="muted">团战 Counter 将在每日更新后显示。</p>
+          <!-- AI:END rankings-raid -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= VIEW 3: TRACKER ========================= -->
+    <!-- Rendered entirely by app.js + localStorage. The content agent never
+         touches this. -->
+    <section id="view-tracker" class="view">
+      <div class="tracker-head">
+        <h2>我的打卡</h2>
+        <span id="tracker-progress" class="badge">0 / 0</span>
+      </div>
+      <p class="muted">5 个账号 · 每日金币 / Pass 点 / Raid · 跨日自动重置(按本机日期)</p>
+      <div id="tracker"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span class="muted">
+      数据来源:事件 <a href="https://leekduck.com/" target="_blank" rel="noopener">LeekDuck</a>
+      (via ScrapedDuck) · 属性 <a href="https://pvpoke.com/" target="_blank" rel="noopener">PvPoke</a>
+      · 图标 <a href="https://pokeapi.co/" target="_blank" rel="noopener">PokeAPI</a>
+    </span>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
