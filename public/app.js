@@ -7,7 +7,7 @@
  * ========================================================================== */
 'use strict';
 
-const state = { events: [], calYear: 0, calMonth: 0 };
+const state = { events: [], rotations: null, calYear: 0, calMonth: 0 };
 const WEEKDAYS = ['一', '二', '三', '四', '五', '六', '日']; // Monday-first
 
 /* ---------- calendar geometry (px) ---------- */
@@ -72,6 +72,18 @@ function catOf(ev) {
   const span = ev._s && ev._e ? dayDiff(ev._s, ev._e) : 0;
   return { color: hashColor(ev.type), fg: INK_DARK, label: ev.heading || ev.type || '活动', kind: span >= 1 ? 'bar' : 'chip' };
 }
+/* Long-running "background" events (season / pass / league, or anything that
+ * spans more than ~2 weeks) are pulled out of the day grid into a compact band
+ * so they don't bury the headline short events. The daily agent can override
+ * either way with an explicit longTerm (or display:'banner'|'bar') flag. */
+const LONG_TYPES = new Set(['season', 'go-pass', 'go-battle-league']);
+function isLongTerm(ev) {
+  if (ev.longTerm === true || ev.display === 'banner') return true;
+  if (ev.longTerm === false || ev.display === 'bar') return false;
+  if (LONG_TYPES.has(ev.type)) return true;
+  if (!ev._s || !ev._e) return false;
+  return dayDiff(ev._s, ev._e) >= 14;
+}
 function fmtDateTime(s) {
   const d = new Date(s); if (isNaN(d.getTime())) return s || '';
   return `${d.getMonth() + 1}月${d.getDate()}日 ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
@@ -81,6 +93,11 @@ function fmtRange(start, end) {
   const s = fmtDateTime(start);
   if (!end || end === start) return s;
   return `${s} — ${fmtDateTime(end)}`;
+}
+// Month/day only — the long-event band and rotation tracks don't need HH:MM.
+function fmtDateShort(s) {
+  const d = new Date(s); if (isNaN(d.getTime())) return s || '';
+  return `${d.getMonth() + 1}月${d.getDate()}日`;
 }
 function firstSprite(ev) {
   const p = (ev.pokemon || [])[0];
@@ -102,6 +119,9 @@ async function loadData() {
     const m = await (await fetch('data/meta.json?t=' + Date.now())).json();
     $('#last-updated').textContent = m && m.lastUpdated ? ('更新于 ' + fmtDateTime(m.lastUpdated)) : '尚未更新';
   } catch (e) { $('#last-updated').textContent = ''; }
+  try {
+    state.rotations = await (await fetch('data/rotations.json?t=' + Date.now())).json();
+  } catch (e) { state.rotations = null; }
 }
 
 /* ---------- calendar ---------- */
@@ -144,12 +164,14 @@ function renderCalendar() {
   const present = new Set();
 
   // map every event into grid indices, clipped to the visible 0..41 range
-  const bars = [], chipsByDay = {};
+  const bars = [], chipsByDay = {}, longTerm = [];
   state.events.forEach(ev => {
     if (!ev._s) return;
     const si = dayDiff(gridStart, ev._s);
     const ei = dayDiff(gridStart, ev._e);
     if (ei < 0 || si > 41) return; // outside the visible grid
+    // long-running background events leave the grid for the compact band below
+    if (isLongTerm(ev)) { longTerm.push(ev); return; }
     const cat = catOf(ev);
     present.add(ev.type);
     if (cat.kind === 'chip') {
@@ -260,6 +282,7 @@ function renderCalendar() {
 
   root.appendChild(weeks);
   renderLegend(present);
+  renderLongTerm(longTerm);
 }
 
 // Legend reflects only the categories actually present in the current month.
@@ -281,12 +304,80 @@ function renderLegend(present) {
   ).join('') || '';
 }
 
+// Compact band of long-running events (season / pass / league / multi-week),
+// shown under the grid so the day cells stay focused on headline events.
+function renderLongTerm(list) {
+  const box = $('#long-term');
+  if (!box) return;
+  if (!list.length) { box.hidden = true; box.innerHTML = ''; return; }
+  box.hidden = false;
+  box.innerHTML = '<span class="lt-title">长期活动</span>';
+  list.slice().sort((a, b) => a._s - b._s).forEach(ev => {
+    const cat = catOf(ev);
+    const sp = firstSprite(ev);
+    const pill = document.createElement('button');
+    pill.className = 'lt-pill';
+    pill.style.setProperty('--c', cat.color);
+    pill.title = `${ev.name} · ${fmtRange(ev.start, ev.end)}`;
+    pill.innerHTML = (sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
+      + `<span class="lt-name">${escapeHtml(ev.name)}</span>`
+      + `<span class="lt-range">${escapeHtml(fmtDateShort(ev.start))}–${escapeHtml(fmtDateShort(ev.end))}</span>`;
+    pill.addEventListener('click', () => openDetail(ev));
+    box.appendChild(pill);
+  });
+}
+
+// Weekly rotation tracks (5★ / Mega / Max) for the current month, from
+// data/rotations.json. Stacked card-per-track list — readable at any width.
+function renderRotations() {
+  const box = $('#rotations'); if (!box) return;
+  const note = $('#rot-note');
+  const data = state.rotations;
+  const tracks = (data && Array.isArray(data.tracks)) ? data.tracks : [];
+  if (note) note.textContent = (data && data.note) ? data.note : '';
+  box.innerHTML = '';
+  if (!tracks.length) {
+    box.innerHTML = '<p class="muted">本月轮换将在每日更新后显示。</p>';
+    return;
+  }
+  tracks.forEach(tr => {
+    const color = tr.color || '#b08a44';
+    const card = document.createElement('div');
+    card.className = 'rot-track';
+    const head = document.createElement('div');
+    head.className = 'rot-track-head';
+    head.innerHTML = `<i style="background:${escapeHtml(color)}"></i><span>${escapeHtml(tr.label || '')}</span>`;
+    card.appendChild(head);
+    (tr.segments || []).forEach(seg => {
+      const row = document.createElement('div');
+      row.className = 'rot-seg';
+      row.style.setProperty('--c', color);
+      const mons = (seg.pokemon || []).map(p =>
+        p && p.id ? `<img class="spr" src="${escapeHtml(spriteUrl(p.id))}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''
+      ).join('');
+      const range = (seg.start || seg.end)
+        ? `<span class="rot-range">${escapeHtml(fmtDateShort(seg.start))}${seg.end && seg.end !== seg.start ? '–' + escapeHtml(fmtDateShort(seg.end)) : ''}</span>`
+        : '';
+      row.innerHTML = `${mons}<span class="rot-name">${escapeHtml(seg.cn || seg.name || '')}</span>${range}`;
+      card.appendChild(row);
+    });
+    box.appendChild(card);
+  });
+}
+
 function openDetail(ev) {
   const cat = catOf(ev);
   const mons = (ev.pokemon || []).map(p =>
     `<figure class="mon"><img class="mon-icon" src="${escapeHtml(spriteUrl(p.id))}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'">${p.shiny ? '<span class="shiny">✨</span>' : ''}<figcaption>${escapeHtml(p.name)}</figcaption></figure>`
   ).join('');
   const bonuses = (ev.bonuses || []).map(b => `<li>${escapeHtml(b)}</li>`).join('');
+  // Prefer the aggregated multi-source links[]; fall back to the legacy single link.
+  const linkList = (ev.links && ev.links.length) ? ev.links
+    : (ev.link ? [{ label: '活动页', url: ev.link }] : []);
+  const links = linkList
+    .filter(l => l && l.url)
+    .map((l, i) => `<a class="btn ${i === 0 ? 'btn-primary' : ''}" href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.label || '链接')} ↗</a>`)
+    .join('');
   $('#detail-body').innerHTML = `
     <span class="detail-cat" style="--c:${cat.color}">${escapeHtml(cat.label)}</span>
     ${ev.image ? `<img class="detail-img" src="${escapeHtml(ev.image)}" alt="">` : ''}
@@ -294,7 +385,7 @@ function openDetail(ev) {
     <p class="muted">${escapeHtml(ev.heading || ev.type || '')} · ${escapeHtml(fmtRange(ev.start, ev.end))}</p>
     ${mons ? `<div class="mon-row">${mons}</div>` : ''}
     ${bonuses ? `<h4>加成</h4><ul>${bonuses}</ul>` : ''}
-    ${ev.link ? `<a class="btn btn-primary" href="${escapeHtml(ev.link)}" target="_blank" rel="noopener">打开活动页 ↗</a>` : ''}
+    ${links ? `<div class="detail-links">${links}</div>` : ''}
   `;
   $('#event-detail').hidden = false;
 }
@@ -391,6 +482,7 @@ async function init() {
   renderTracker();
   await loadData();
   renderCalendar();
+  renderRotations();
 }
 
 document.addEventListener('DOMContentLoaded', init);

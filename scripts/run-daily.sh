@@ -17,6 +17,9 @@ exec > >(tee -a "$LOG") 2>&1
 
 echo "===== daily run $(date -u +%FT%TZ) ====="
 
+# keep the log dir bounded — drop run logs older than ~30 days
+find logs -maxdepth 1 -name 'daily-*.log' -type f -mtime +30 -delete 2>/dev/null || true
+
 AGENT_CLI="${AGENT_CLI:-claude}"
 PROMPT="$(cat tasks/daily-update.md)"
 
