@@ -122,4 +122,22 @@ cp /opt/pogo-agent/examples/codex-config.toml ~/.codex/config.toml   # then edit
 edits + network allowed). If the sandbox gets in the way, switch it to
 `codex exec --dangerously-bypass-approvals-and-sandbox`.
 
+### Using Pi (Pi Coding Agent)
+
+`AGENT_CLI=pi` is supported and fits well — Pi reads `AGENTS.md` natively and has
+built-in read/write/edit/bash. `run-daily.sh` runs `pi -p` (non-interactive; tools
+run without prompts, and there's no OS sandbox so `fetch.sh` networks freely).
+
+Register your proxy in `~/.pi/agent/models.json` (copy `examples/pi-models.json`).
+It uses `api: "openai-responses"`, reusing the `/v1/responses` endpoint you already
+confirmed; `apiKey` interpolates `$OPENAI_API_KEY`:
+
+```bash
+mkdir -p ~/.pi/agent && cp examples/pi-models.json ~/.pi/agent/models.json   # edit baseUrl/id
+# cron line (set PI_PROVIDER to the provider id, PI_MODEL to a name pattern):
+( crontab -l 2>/dev/null; \
+  echo "0 8 * * * cd /opt/pogo-agent && AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-6 TIER_METHOD=jina OPENAI_API_KEY=sk-... ./scripts/run-daily.sh" \
+) | crontab -
+```
+
 Rollback any bad day: `git -C /opt/pogo-agent revert <commit>` (or `checkout <good-sha> -- public`).

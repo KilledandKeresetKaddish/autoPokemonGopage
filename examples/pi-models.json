@@ -1,0 +1,20 @@
+{
+  "providers": {
+    "myproxy": {
+      "baseUrl": "https://gproxy.adonais.cfd/v1",
+      "apiKey": "$OPENAI_API_KEY",
+      "api": "openai-responses",
+      "models": [
+        {
+          "id": "CC饼干/claude-opus-4-6",
+          "name": "Claude Opus 4.6 (proxy)",
+          "reasoning": true,
+          "input": ["text"],
+          "cost": { "input": 0, "output": 0 },
+          "contextWindow": 200000,
+          "maxTokens": 8192
+        }
+      ]
+    }
+  }
+}

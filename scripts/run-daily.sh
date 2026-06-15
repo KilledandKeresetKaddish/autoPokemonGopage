@@ -45,6 +45,16 @@ run_agent() {
     opencode)
       opencode run "$PROMPT"
       ;;
+    pi)
+      # Pi Coding Agent. Reads AGENTS.md automatically; -p = non-interactive print
+      # mode (built-in read/write/edit/bash run without prompts). No OS sandbox, so
+      # fetch.sh's network works out of the box. Pick the model via env (set in cron):
+      #   PI_PROVIDER=<provider id in ~/.pi/agent/models.json>   PI_MODEL=<pattern>
+      pi_args=(-p)
+      [ -n "${PI_PROVIDER:-}" ] && pi_args+=(--provider "$PI_PROVIDER")
+      [ -n "${PI_MODEL:-}" ] && pi_args+=(--model "$PI_MODEL")
+      pi "${pi_args[@]}" "$PROMPT"
+      ;;
     *)
       # Generic fallback: treat $AGENT_CLI as a command taking the prompt arg.
       "$AGENT_CLI" "$PROMPT"
