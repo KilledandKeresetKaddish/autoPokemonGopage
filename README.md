@@ -130,7 +130,9 @@ run without prompts, and there's no OS sandbox so `fetch.sh` networks freely).
 
 Register your proxy in `~/.pi/agent/models.json` (copy `examples/pi-models.json`).
 It uses `api: "openai-responses"`, reusing the `/v1/responses` endpoint you already
-confirmed; `apiKey` interpolates `$OPENAI_API_KEY`:
+confirmed; `apiKey` interpolates `$OPENAI_API_KEY`. It also sets a `headers` override:
+some proxies/WAFs return `403 "Your request was blocked"` on the OpenAI SDK's
+`User-Agent: OpenAI/JS` — overriding User-Agent to a plain value fixes it.
 
 ```bash
 mkdir -p ~/.pi/agent && cp examples/pi-models.json ~/.pi/agent/models.json   # edit baseUrl/id

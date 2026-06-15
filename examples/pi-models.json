@@ -4,6 +4,11 @@
       "baseUrl": "https://gproxy.adonais.cfd/v1",
       "apiKey": "$OPENAI_API_KEY",
       "api": "openai-responses",
+      "headers": {
+        "User-Agent": "curl/8.4.0",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Sec-Fetch-Mode": "same-origin"
+      },
       "models": [
         {
           "id": "CC饼干/claude-opus-4-8",
