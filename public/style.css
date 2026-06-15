@@ -189,6 +189,11 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   border:1px dashed rgba(255,255,255,.25);}
 .cal-bar:hover{filter:brightness(1.12);box-shadow:0 3px 12px rgba(0,0,0,.5);z-index:3;}
 
+/* shiny-boost / focus highlight (events flagged highlight:true) */
+.cal-bar.hl{box-shadow:inset 0 0 0 1px var(--gold-bright), 0 0 10px rgba(var(--gold-rgb),.55), 0 2px 7px rgba(0,0,0,.34);}
+.cal-chip.hl{border-color:var(--gold-bright);box-shadow:0 0 8px rgba(var(--gold-rgb),.4);}
+.hl-star{flex:none;font-size:.78em;line-height:1;filter:drop-shadow(0 0 3px rgba(var(--gold-rgb),.85));}
+
 /* notes panel */
 .cal-notes{padding:.85rem 1.05rem;margin-top:1rem;}
 .cal-notes :is(p,li){color:var(--ink);}

@@ -26,20 +26,28 @@ const LANE_H = 23;  // vertical pitch of one spanning-bar lane
  * is a single dark sepia ink (--ink-dark) for the "engraved gemstone" look. */
 const INK_DARK = '#17130b';
 const CATEGORY = {
+  // Flagship
   'pokemon-go-fest':        { color: '#9c7bb0', fg: INK_DARK, label: 'GO Fest',   kind: 'bar' },
+  // 社区日 + 聚焦时刻 → one grass-green family (both spotlight a featured Pokémon, often in sync)
   'community-day':          { color: '#74a06f', fg: INK_DARK, label: '社区日',     kind: 'bar' },
-  'raid-day':               { color: '#8089a0', fg: INK_DARK, label: '团战日',     kind: 'bar' },
+  'pokemon-spotlight-hour': { color: '#93b37e', fg: INK_DARK, label: '聚焦时刻',   kind: 'chip' },
+  'spotlight-hour':         { color: '#93b37e', fg: INK_DARK, label: '聚焦时刻',   kind: 'chip' },
+  // Raid family → warm. Weekly-rotation bosses (5★/Mega) + Raid Hour sit together…
   'raid-battles':           { color: '#b16a5c', fg: INK_DARK, label: '团战 Boss',  kind: 'bar' },
-  'go-battle-league':       { color: '#6f86ba', fg: INK_DARK, label: '对战联盟',   kind: 'bar' },
-  'event':                  { color: '#5b8fa6', fg: INK_DARK, label: '活动',       kind: 'bar' },
+  'raid-hour':              { color: '#c0824f', fg: INK_DARK, label: '团战时刻',   kind: 'chip' },
+  // …while a Raid Day / Mega Raid Day is a special single-day event — vivid red,
+  // deliberately set apart from the muted weekly-rotation rust above.
+  'raid-day':               { color: '#c85d4e', fg: INK_DARK, label: '团战日',     kind: 'bar' },
+  // 调查 family → teal
   'research':               { color: '#4f8f93', fg: INK_DARK, label: '调查',       kind: 'bar' },
-  'choose-your-path':       { color: '#5fa07d', fg: INK_DARK, label: '限时调查',   kind: 'bar' },
+  'choose-your-path':       { color: '#54979a', fg: INK_DARK, label: '限时调查',   kind: 'bar' },
+  // Standalone hues
+  'event':                  { color: '#5b8fa6', fg: INK_DARK, label: '活动',       kind: 'bar' },
+  'go-battle-league':       { color: '#7a7fb8', fg: INK_DARK, label: '对战联盟',   kind: 'bar' },
+  'max-mondays':            { color: '#bd7f97', fg: INK_DARK, label: 'Max 周一',   kind: 'chip' },
+  // Long-running bands (render muted in the 长期活动 band)
   'go-pass':                { color: '#b08a44', fg: '#1d1402', label: 'GO Pass',    kind: 'bar', bg: true },
   'season':                 { color: '#8c6f3e', fg: '#fbeccb', label: '赛季',       kind: 'bar', bg: true },
-  'max-mondays':            { color: '#bd7f97', fg: INK_DARK, label: 'Max 周一',   kind: 'chip' },
-  'raid-hour':              { color: '#c0824f', fg: INK_DARK, label: '团战时刻',   kind: 'chip' },
-  'pokemon-spotlight-hour': { color: '#ccb067', fg: INK_DARK, label: '聚焦时刻',   kind: 'chip' },
-  'spotlight-hour':         { color: '#ccb067', fg: INK_DARK, label: '聚焦时刻',   kind: 'chip' },
 };
 
 /* ---------- small helpers ---------- */
@@ -236,10 +244,11 @@ function renderCalendar() {
         list.slice(0, 3).forEach(({ ev, cat }) => {
           const sp = firstSprite(ev);
           const chip = document.createElement('button');
-          chip.className = 'cal-chip';
+          chip.className = 'cal-chip' + (ev.highlight ? ' hl' : '');
           chip.style.setProperty('--c', cat.color);
           chip.title = `${ev.name} · ${fmtRange(ev.start, ev.end)}`;
           chip.innerHTML = `<i class="dot"></i>${sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}`
+            + (ev.highlight ? '<span class="hl-star">✨</span>' : '')
             + `<span class="ct">${escapeHtml(cat.label)}</span><span class="cn">${escapeHtml(ev.name)}</span>`;
           chip.addEventListener('click', () => openDetail(ev));
           cw.appendChild(chip);
@@ -263,7 +272,7 @@ function renderCalendar() {
       const leftCol = segS - rs, span = segE - segS + 1;
       const isL = b.realStart === segS, isR = b.realEnd === segE;
       const bar = document.createElement('button');
-      bar.className = 'cal-bar' + (isL ? ' l' : '') + (isR ? ' r' : '') + (b.cat.bg ? ' bg' : '');
+      bar.className = 'cal-bar' + (isL ? ' l' : '') + (isR ? ' r' : '') + (b.cat.bg ? ' bg' : '') + (b.ev.highlight ? ' hl' : '');
       bar.style.left = `calc(${leftCol / 7 * 100}% + 3px)`;
       bar.style.width = `calc(${span / 7 * 100}% - 6px)`;
       bar.style.top = (NUM_H + b.lane * LANE_H) + 'px';
@@ -272,6 +281,7 @@ function renderCalendar() {
       const sp = isL && !b.cat.bg ? firstSprite(b.ev) : '';
       bar.title = `${b.ev.name} · ${fmtRange(b.ev.start, b.ev.end)}`;
       bar.innerHTML = (sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
+        + (isL && b.ev.highlight ? '<span class="hl-star">✨</span>' : '')
         + `<span class="bn">${escapeHtml(b.ev.name)}</span>`;
       bar.addEventListener('click', () => openDetail(b.ev));
       layer.appendChild(bar);

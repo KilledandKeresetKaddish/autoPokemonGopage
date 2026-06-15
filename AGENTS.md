@@ -104,6 +104,9 @@ refetch everything.** Then read the files in `data/raw/`.
      anything spanning more than ~2 weeks — they render in the 长期活动 band, not the day grid
      (this is what keeps headline short events visible). `longTerm:false` forces a borderline
      event back onto the grid. (`display:"banner"|"bar"` are equivalent overrides.)
+   - **Flag focus / shiny-boost events.** Set `highlight:true` on 社区日, 团战日, and any event with
+     **boosted shiny odds** → ✨ + gold ring on the calendar. Also set `pokemon[].shiny:true` for the
+     shiny-available mons and add a `bonuses[]` line like "✨ 闪光概率提升" so the detail drawer shows it.
    - **Retention.** Keep the **current month through the end of next month**; **drop events that
      ended before the current month started**. Use a **stable `id`** (derived deterministically
      from a source slug) so re-runs map the same event to the same row and can never accumulate
@@ -153,13 +156,17 @@ refetch everything.** Then read the files in `data/raw/`.
   ],
   "bonuses": ["双倍星尘", "..."],
   "pokemon": [{ "name": "皮卡丘", "id": 25, "shiny": true }],
-  "longTerm": false
+  "longTerm": false,
+  "highlight": false
 }
 ```
-- `start`/`end` ISO 8601; `end` may equal `start`. `bonuses`/`pokemon`/`links`/`longTerm` optional.
+- `start`/`end` ISO 8601; `end` may equal `start`. `bonuses`/`pokemon`/`links`/`longTerm`/`highlight` optional.
 - `link` (single) is kept for back-compat; prefer `links[]` to point at **every** source for the event.
 - `longTerm:true` → renders in the 长期活动 band instead of the grid (auto for season/pass/league
   and spans >~2 weeks; set `false` to force back onto the grid).
+- `highlight:true` → ✨ + gold ring on the calendar bar/chip. Set it for **focus events**: 社区日
+  (Community Day), 团战日 (Raid Day), and any event with **boosted shiny odds**. Put the shiny detail
+  in `pokemon[].shiny` (✨ on the sprite) and add a `bonuses[]` line like "✨ 闪光概率提升".
 
 `public/data/rotations.json` — the current month's weekly boss rotation:
 ```json
