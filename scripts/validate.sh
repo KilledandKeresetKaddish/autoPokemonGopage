@@ -26,7 +26,7 @@ H=public/index.html
 req=(
   'id="view-calendar"' 'id="view-rankings"' 'id="view-tracker"'
   'id="calendar"' 'id="tracker"' 'id="main-tabs"' 'id="rank-subtabs"'
-  'id="event-detail"' 'id="last-updated"' 'src="app.js"'
+  'id="event-detail"' 'id="last-updated"' 'src="app.js'
   'id="long-term"' 'id="rotations"'
   'data-rank-panel="current"' 'data-rank-panel="attackers"'
   'data-rank-panel="defenders"' 'data-rank-panel="raid"'
