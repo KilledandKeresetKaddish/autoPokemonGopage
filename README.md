@@ -1,3 +1,6 @@
+作者常用更新: AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina ./scripts/run-daily.sh
+
+
 # pogo-agent
 
 A self-contained **Pokémon GO dashboard** that a coding-agent CLI updates **once a
