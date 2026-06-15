@@ -29,6 +29,8 @@ UI text shown to users must be **Simplified Chinese (简体中文)**.
 ## What you MAY edit — and nothing else
 - `public/data/events.json` — the normalized events array the calendar + 长期活动 band render.
 - `public/data/rotations.json` — the current month's 5★/Mega/Max weekly boss rotation.
+- `public/data/categories.json` — register a NEW event `type` (palette key + 简体中文 label + kind)
+  when a source introduces one the built-ins don't cover. **Palette KEY only — never a raw colour.**
 - `public/data/meta.json` — set `lastUpdated` (ISO 8601); the header shows it.
 - The AI regions inside `public/index.html`, **strictly between** these marker pairs:
   - `<!-- AI:START calendar-notes -->` … `<!-- AI:END calendar-notes -->`
@@ -104,6 +106,12 @@ refetch everything.** Then read the files in `data/raw/`.
      anything spanning more than ~2 weeks — they render in the 长期活动 band, not the day grid
      (this is what keeps headline short events visible). `longTerm:false` forces a borderline
      event back onto the grid. (`display:"banner"|"bar"` are equivalent overrides.)
+   - **Flag focus / shiny-boost events.** Set `highlight:true` on 社区日, 团战日, and any event with
+     **boosted shiny odds** → ✨ + gold ring on the calendar. Also set `pokemon[].shiny:true` for the
+     shiny-available mons and add a `bonuses[]` line like "✨ 闪光概率提升" so the detail drawer shows it.
+   - **New event types.** If a source introduces a `type` that isn't styled yet (it would otherwise
+     fall back to a generic grey marker), register it in `public/data/categories.json` with a palette
+     key + 简体中文 label + kind (see schema). Assign the family colour that fits — you can't pick a hex.
    - **Retention.** Keep the **current month through the end of next month**; **drop events that
      ended before the current month started**. Use a **stable `id`** (derived deterministically
      from a source slug) so re-runs map the same event to the same row and can never accumulate
@@ -153,13 +161,17 @@ refetch everything.** Then read the files in `data/raw/`.
   ],
   "bonuses": ["双倍星尘", "..."],
   "pokemon": [{ "name": "皮卡丘", "id": 25, "shiny": true }],
-  "longTerm": false
+  "longTerm": false,
+  "highlight": false
 }
 ```
-- `start`/`end` ISO 8601; `end` may equal `start`. `bonuses`/`pokemon`/`links`/`longTerm` optional.
+- `start`/`end` ISO 8601; `end` may equal `start`. `bonuses`/`pokemon`/`links`/`longTerm`/`highlight` optional.
 - `link` (single) is kept for back-compat; prefer `links[]` to point at **every** source for the event.
 - `longTerm:true` → renders in the 长期活动 band instead of the grid (auto for season/pass/league
   and spans >~2 weeks; set `false` to force back onto the grid).
+- `highlight:true` → ✨ + gold ring on the calendar bar/chip. Set it for **focus events**: 社区日
+  (Community Day), 团战日 (Raid Day), and any event with **boosted shiny odds**. Put the shiny detail
+  in `pokemon[].shiny` (✨ on the sprite) and add a `bonuses[]` line like "✨ 闪光概率提升".
 
 `public/data/rotations.json` — the current month's weekly boss rotation:
 ```json
@@ -185,6 +197,21 @@ refetch everything.** Then read the files in `data/raw/`.
 ```json
 { "lastUpdated": "2026-06-15T08:00:00Z", "note": "optional short status" }
 ```
+
+`public/data/categories.json` — register NEW event types (colours are code, you assign a family, not a hex):
+```json
+{ "some-new-type-slug": { "palette": "blue", "label": "新活动类型", "kind": "bar" } }
+```
+- Only needed when a source introduces a `type` not already styled (the common ones —
+  community-day, raid-battles, raid-day, raid-hour, research, choose-your-path, event,
+  go-battle-league, spotlight-hour / pokemon-spotlight-hour, max-mondays, go-pass, season,
+  pokemon-go-fest — are **built in**; don't re-add them). Otherwise leave this `{}`.
+- `palette` MUST be one of the theme keys (assign the colour **family**, you cannot invent a hex):
+  `purple` 旗舰 · `green` 社区日 / `greenlt` 聚焦时刻 · `rust` 团战Boss / `orange` 团战时刻 /
+  `red` 团战日(特殊单日) · `teal` 调查 / `teallt` 限时调查 · `blue` 活动 · `indigo` 对战联盟 ·
+  `mauve` Max周一 · `gold`·`brown` 长期 band. Pick the family that matches the activity.
+- `kind`: `bar` (spans days) or `chip` (single-day marker); optional `bg:true` for a muted band.
+- Validation **rejects** off-palette colours or a bad `kind`, so you can't drift off-theme.
 
 ## Free-form synthesis (your creative space)
 `calendar-notes` (本月看点) and `rankings-current` (本期推荐) are **free-form inert-HTML

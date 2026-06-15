@@ -48,7 +48,7 @@ starts=$(grep -c 'AI:START' "$H"); ends=$(grep -c 'AI:END' "$H")
 [ "$starts" = "$ends" ] || { say "FAIL marker imbalance (START=$starts END=$ends)"; fail=1; }
 
 # 4) Data files the agent writes must be valid JSON.
-for j in public/data/events.json public/data/meta.json public/data/rotations.json data/state.json; do
+for j in public/data/events.json public/data/meta.json public/data/rotations.json public/data/categories.json data/state.json; do
   if [ -f "$j" ]; then
     jq empty "$j" >/dev/null 2>&1 || { say "FAIL invalid JSON: $j"; fail=1; }
   else
@@ -76,6 +76,17 @@ fi
 R=public/data/rotations.json
 if [ -f "$R" ] && jq empty "$R" >/dev/null 2>&1; then
   jq -e '.tracks | type == "array"' "$R" >/dev/null 2>&1 || { say "FAIL rotations.json missing tracks[]"; fail=1; }
+fi
+
+# 4d) categories.json: the agent may register NEW event types, but only with a
+#     palette key from the theme (no arbitrary colours) and a valid render kind.
+C=public/data/categories.json
+if [ -f "$C" ] && jq empty "$C" >/dev/null 2>&1; then
+  bad=$(jq '
+    ["purple","green","greenlt","rust","orange","red","teal","teallt","blue","indigo","mauve","gold","brown"] as $pal
+    | [ to_entries[] | .value as $v | select( ($pal | index($v.palette) | not) or (($v.kind // "bar") | (. != "bar" and . != "chip")) ) ]
+    | length' "$C")
+  [ "${bad:-0}" = 0 ] || { say "FAIL categories.json: $bad entry(ies) off-palette or bad kind (palettes: purple green greenlt rust orange red teal teallt blue indigo mauve gold brown; kind: bar|chip)"; fail=1; }
 fi
 
 # 5) No stray <script> injected into the editable regions of index.html
