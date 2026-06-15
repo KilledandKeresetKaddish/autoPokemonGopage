@@ -26,7 +26,7 @@ H=public/index.html
 req=(
   'id="view-calendar"' 'id="view-rankings"' 'id="view-tracker"'
   'id="calendar"' 'id="tracker"' 'id="main-tabs"' 'id="rank-subtabs"'
-  'id="event-detail"' 'id="last-updated"' 'src="app.js"'
+  'id="event-detail"' 'id="last-updated"'
   'id="long-term"' 'id="rotations"'
   'data-rank-panel="current"' 'data-rank-panel="attackers"'
   'data-rank-panel="defenders"' 'data-rank-panel="raid"'
@@ -34,6 +34,10 @@ req=(
 for t in "${req[@]}"; do
   grep -qF "$t" "$H" || { say "FAIL missing required token: $t"; fail=1; }
 done
+
+# 2b) app.js must be loaded as itself or a cache-busted URL (app.js?…), never a
+#     renamed/broken source like app.js.bak that would ship a blank dashboard.
+grep -qE 'src="app\.js(\?[^"]*)?"' "$H" || { say "FAIL app.js <script> src must be app.js or app.js?<cache-bust>"; fail=1; }
 
 # 3) AI editable-region markers must exist and be balanced.
 for region in calendar-notes rankings-current rankings-attackers rankings-defenders rankings-raid; do
