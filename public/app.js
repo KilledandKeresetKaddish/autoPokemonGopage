@@ -7,7 +7,7 @@
  * ========================================================================== */
 'use strict';
 
-const state = { events: [], rotations: null, calYear: 0, calMonth: 0 };
+const state = { events: [], rotations: null, categories: {}, calYear: 0, calMonth: 0 };
 const WEEKDAYS = ['一', '二', '三', '四', '五', '六', '日']; // Monday-first
 
 /* ---------- calendar geometry (px) ---------- */
@@ -25,30 +25,46 @@ const LANE_H = 23;  // vertical pitch of one spanning-bar lane
  * enamel inlaid in the gold-on-black deck instead of a rainbow. All bar text
  * is a single dark sepia ink (--ink-dark) for the "engraved gemstone" look. */
 const INK_DARK = '#17130b';
-const CATEGORY = {
-  // Flagship
-  'pokemon-go-fest':        { color: '#9c7bb0', fg: INK_DARK, label: 'GO Fest',   kind: 'bar' },
-  // 社区日 + 聚焦时刻 → one grass-green family (both spotlight a featured Pokémon, often in sync)
-  'community-day':          { color: '#74a06f', fg: INK_DARK, label: '社区日',     kind: 'bar' },
-  'pokemon-spotlight-hour': { color: '#93b37e', fg: INK_DARK, label: '聚焦时刻',   kind: 'chip' },
-  'spotlight-hour':         { color: '#93b37e', fg: INK_DARK, label: '聚焦时刻',   kind: 'chip' },
-  // Raid family → warm. Weekly-rotation bosses (5★/Mega) + Raid Hour sit together…
-  'raid-battles':           { color: '#b16a5c', fg: INK_DARK, label: '团战 Boss',  kind: 'bar' },
-  'raid-hour':              { color: '#c0824f', fg: INK_DARK, label: '团战时刻',   kind: 'chip' },
-  // …while a Raid Day / Mega Raid Day is a special single-day event — vivid red,
-  // deliberately set apart from the muted weekly-rotation rust above.
-  'raid-day':               { color: '#c85d4e', fg: INK_DARK, label: '团战日',     kind: 'bar' },
-  // 调查 family → teal
-  'research':               { color: '#4f8f93', fg: INK_DARK, label: '调查',       kind: 'bar' },
-  'choose-your-path':       { color: '#54979a', fg: INK_DARK, label: '限时调查',   kind: 'bar' },
-  // Standalone hues
-  'event':                  { color: '#5b8fa6', fg: INK_DARK, label: '活动',       kind: 'bar' },
-  'go-battle-league':       { color: '#7a7fb8', fg: INK_DARK, label: '对战联盟',   kind: 'bar' },
-  'max-mondays':            { color: '#bd7f97', fg: INK_DARK, label: 'Max 周一',   kind: 'chip' },
-  // Long-running bands (render muted in the 长期活动 band)
-  'go-pass':                { color: '#b08a44', fg: '#1d1402', label: 'GO Pass',    kind: 'bar', bg: true },
-  'season':                 { color: '#8c6f3e', fg: '#fbeccb', label: '赛季',       kind: 'bar', bg: true },
+/* The theme PALETTE is the only place raw hex lives. Categories — both the
+ * built-ins below and the agent-editable data/categories.json — reference a
+ * palette KEY, never a raw colour, so new event types can be registered in data
+ * without inventing off-theme colours. Families: warm rust/orange = raids,
+ * grass-green = 社区日/聚焦, teal = 调查, blue = 活动, indigo = 对战联盟, gold/brown = bands. */
+const PALETTE = {
+  purple:'#9c7bb0', green:'#74a06f', greenlt:'#93b37e', rust:'#b16a5c', orange:'#c0824f',
+  red:'#c85d4e', teal:'#4f8f93', teallt:'#54979a', blue:'#5b8fa6', indigo:'#7a7fb8',
+  mauve:'#bd7f97', gold:'#b08a44', brown:'#8c6f3e',
 };
+/* Built-in defaults: event `type` → palette key + 简体中文 label + render kind
+ * ('bar' spans the days it covers, 'chip' is a single-day marker; bg = muted
+ * long-running band). data/categories.json is merged OVER these for new types. */
+const CATEGORY_DEFAULTS = {
+  'pokemon-go-fest':        { palette:'purple',  label:'GO Fest',  kind:'bar' },
+  'community-day':          { palette:'green',   label:'社区日',    kind:'bar' },
+  'pokemon-spotlight-hour': { palette:'greenlt', label:'聚焦时刻',  kind:'chip' },
+  'spotlight-hour':         { palette:'greenlt', label:'聚焦时刻',  kind:'chip' },
+  'raid-battles':           { palette:'rust',    label:'团战 Boss', kind:'bar' },
+  'raid-hour':              { palette:'orange',  label:'团战时刻',  kind:'chip' },
+  'raid-day':               { palette:'red',     label:'团战日',    kind:'bar' },
+  'research':               { palette:'teal',    label:'调查',      kind:'bar' },
+  'choose-your-path':       { palette:'teallt',  label:'限时调查',  kind:'bar' },
+  'event':                  { palette:'blue',    label:'活动',      kind:'bar' },
+  'go-battle-league':       { palette:'indigo',  label:'对战联盟',  kind:'bar' },
+  'max-mondays':            { palette:'mauve',   label:'Max 周一',  kind:'chip' },
+  'go-pass':                { palette:'gold',    label:'GO Pass',   kind:'bar', bg:true, fg:'#1d1402' },
+  'season':                 { palette:'brown',   label:'赛季',      kind:'bar', bg:true, fg:'#fbeccb' },
+};
+// Resolve a category def ({palette,label,kind,bg?,fg?}) to render fields. An
+// unknown palette key falls back to a muted hashed colour (validation blocks it).
+function resolveCat(def) {
+  return {
+    color: PALETTE[def.palette] || hashColor(def.palette || def.label || ''),
+    fg: def.fg || INK_DARK,
+    label: def.label || def.palette || '活动',
+    kind: def.kind === 'chip' ? 'chip' : 'bar',
+    bg: !!def.bg,
+  };
+}
 
 /* ---------- small helpers ---------- */
 function $(sel) { return document.querySelector(sel); }
@@ -75,8 +91,8 @@ function hashColor(s) {
 }
 function dayDiff(a, b) { return Math.round((b - a) / 86400000); }
 function catOf(ev) {
-  const c = CATEGORY[ev.type];
-  if (c) return c;
+  const def = (state.categories && state.categories[ev.type]) || CATEGORY_DEFAULTS[ev.type];
+  if (def) return resolveCat(def);
   const span = ev._s && ev._e ? dayDiff(ev._s, ev._e) : 0;
   return { color: hashColor(ev.type), fg: INK_DARK, label: ev.heading || ev.type || '活动', kind: span >= 1 ? 'bar' : 'chip' };
 }
@@ -130,6 +146,9 @@ async function loadData() {
   try {
     state.rotations = await (await fetch('data/rotations.json?t=' + Date.now())).json();
   } catch (e) { state.rotations = null; }
+  try {
+    state.categories = (await (await fetch('data/categories.json?t=' + Date.now())).json()) || {};
+  } catch (e) { state.categories = {}; }
 }
 
 /* ---------- calendar ---------- */
@@ -302,7 +321,7 @@ function renderLegend(present) {
   const seen = new Set();
   const items = [];
   present.forEach(type => {
-    const cat = CATEGORY[type] || catOf({ type });
+    const cat = catOf({ type });
     const key = cat.label + cat.color;
     if (seen.has(key)) return;
     seen.add(key);
