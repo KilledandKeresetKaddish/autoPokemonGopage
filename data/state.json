@@ -1,0 +1,5 @@
+{
+  "lastUpdated": null,
+  "sources": {},
+  "notes": "agent bookkeeping: per-source last-fetch times, content hashes, and any source-format problems noticed during a run"
+}
