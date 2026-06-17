@@ -47,7 +47,9 @@ UI text shown to users must be **Simplified Chinese (简体中文)**.
   attributes intact.
 - The HTML you write must be **inert**: no `<script>`, no external CSS/JS.
 - Keep `public/data/*.json` valid JSON in the schemas below.
-- **Do not fetch from anywhere except the sources below.**
+- **Fetch only via `scripts/fetch.sh`**: the named sources below, plus ad-hoc detail pages on the
+  allowlisted domains via `scripts/fetch.sh url <URL>` (see *Looking things up*). Never fetch
+  off-allowlist domains.
 
 ---
 
@@ -85,6 +87,19 @@ refetch everything.** Then read the files in `data/raw/`.
 > If a fetch fails or a page comes back empty/unparyable (a source changed, or Hub is
 > unreachable), **keep the last good content in place**, record the problem in
 > `data/state.json`, and still pass validation. Never ship empty rankings.
+
+### Looking things up (ad-hoc, allowlisted)
+The named sources above are the backbone. When you need a **specific detail page** the bulk feeds
+don't cover — an individual LeekDuck event, a Hub article, a pokébase Pokémon/event page, an
+official news post — pull it on demand and read it:
+```
+scripts/fetch.sh url https://leekduck.com/events/<slug>/
+scripts/fetch.sh url https://pokemongohub.net/post/<...>
+```
+It prints the page to stdout (JS/Cloudflare hosts go through the solver; raw file/API hosts via
+plain curl). **Allowed hosts:** `leekduck.com · pokemongohub.net · pokebase.app · pokemongo.com ·
+raw.githubusercontent.com · pvpoke.com · pokeapi.co`. Off-allowlist URLs are refused. Stay
+**primarily on the named sources** — use `url` to enrich / corroborate / chase a detail, not to crawl.
 
 ---
 
