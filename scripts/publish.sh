@@ -4,7 +4,7 @@
 # so the commit is for history + one-command rollback). Pushing to the remote
 # is optional: set PUBLISH_PUSH=1 to also push.
 # ---------------------------------------------------------------------------
-set -uo pipefail
+set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 

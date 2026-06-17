@@ -4,10 +4,12 @@ You are the **coordinator** for this Pokémon GO dashboard. Your working directo
 this repository. **Read `AGENTS.md` first and follow it exactly** — it defines what
 you may edit, the hard rules, the data sources, schemas, and validation gate.
 
-This run is intentionally split into focused sub-agent workstreams. If your coding
-agent supports subagents / parallel workers, delegate the files below as bounded
-read-only analysis or write scopes. If it does not, execute the same phases yourself
-in order; the files are still the checklist of responsibilities.
+This run is intentionally split into focused sub-agent workstreams. In Claude Code,
+use the matching custom agents in `.claude/agents/` via the Task tool. In other
+agents that support subagents / parallel workers, delegate the files below as
+bounded read-only analysis or write scopes. If the active agent does not support
+subagents, execute the same phases yourself in order; the files are still the
+checklist of responsibilities.
 
 ## Sub-agent briefs
 
