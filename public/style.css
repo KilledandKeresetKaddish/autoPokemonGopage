@@ -243,6 +243,7 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   text-transform:uppercase;color:var(--c,#fff);border:1px solid var(--c,#fff);
   background:color-mix(in srgb, var(--c) 16%, transparent);padding:2px 9px;border-radius:999px;margin-bottom:.5rem;}
 .detail-img{width:100%;border-radius:10px;margin-bottom:.6rem;border:1px solid var(--line);}
+.detail-summary{margin:.5rem 0;color:var(--ink);line-height:1.55;}
 #detail-body h3{font-size:1.3rem;margin:.2rem 0;color:var(--h1);}
 #detail-body ul{margin:.3rem 0;padding-left:1.1rem;}
 .mon-row{display:flex;flex-wrap:wrap;gap:.6rem;margin:.5rem 0;}

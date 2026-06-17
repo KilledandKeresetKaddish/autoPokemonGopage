@@ -97,8 +97,9 @@ scripts/fetch.sh url https://leekduck.com/events/<slug>/
 scripts/fetch.sh url https://pokemongohub.net/post/<...>
 ```
 It prints the page to stdout (JS/Cloudflare hosts go through the solver; raw file/API hosts via
-plain curl). **Allowed hosts:** `leekduck.com · pokemongohub.net · pokebase.app · pokemongo.com ·
-raw.githubusercontent.com · pvpoke.com · pokeapi.co`. Off-allowlist URLs are refused. Stay
+plain curl). **Allowed hosts:** `leekduck.com · pokemongohub.net · pokebase.app · pokemongo.com · dialgadex.com ·
+raw.githubusercontent.com · pvpoke.com · pokeapi.co` (e.g. `dialgadex.com` for best-attacker-by-type
+cross-checks). Off-allowlist URLs are refused. Stay
 **primarily on the named sources** — use `url` to enrich / corroborate / chase a detail, not to crawl.
 
 ---
@@ -115,8 +116,9 @@ raw.githubusercontent.com · pvpoke.com · pokeapi.co`. Off-allowlist URLs are r
      emit **one** row — never two rows for one event.
    - **Aggregate links.** Collect each source's URL for that event into `links[]` with a short
      label (`LeekDuck` / `Hub` / `Pokébase` / `官方`). Keep `link` = the primary one.
-   - **Populate Pokémon & bonuses.** Fill `pokemon[]` (dex id + 简体中文 name + `shiny`) and
-     `bonuses[]` from the articles — so the calendar isn't empty and the detail drawer is useful.
+   - **Populate Pokémon, bonuses & a summary.** Fill `pokemon[]` (dex id + 简体中文 name + `shiny`),
+     `bonuses[]`, and a **concise 简体中文 `summary`** (1–2 sentences) for every event from the articles —
+     so the calendar isn't empty and the detail drawer is actually useful (not just a title + date).
    - **Flag long-running events.** Set `longTerm:true` on season / GO Pass / GO Battle League and
      anything spanning more than ~2 weeks — they render in the 长期活动 band, not the day grid
      (this is what keeps headline short events visible). `longTerm:false` forces a borderline
@@ -166,6 +168,7 @@ raw.githubusercontent.com · pvpoke.com · pokeapi.co`. Off-allowlist URLs are r
   "name": "活动名称",
   "type": "community-day",
   "heading": "Community Day",
+  "summary": "一句话简体中文说明(显示在详情抽屉)。",
   "start": "2026-06-01T10:00:00",
   "end": "2026-06-01T13:00:00",
   "image": "https://cdn.leekduck.com/....png",
@@ -180,7 +183,9 @@ raw.githubusercontent.com · pvpoke.com · pokeapi.co`. Off-allowlist URLs are r
   "highlight": false
 }
 ```
-- `start`/`end` ISO 8601; `end` may equal `start`. `bonuses`/`pokemon`/`links`/`longTerm`/`highlight` optional.
+- `start`/`end` ISO 8601; `end` may equal `start`. `summary`/`bonuses`/`pokemon`/`links`/`longTerm`/`highlight` optional.
+- `summary`: a **concise 简体中文** description (1–2 sentences), shown as a paragraph in the detail drawer
+  so the panel isn't just a title + date.
 - `link` (single) is kept for back-compat; prefer `links[]` to point at **every** source for the event.
 - `longTerm:true` → renders in the 长期活动 band instead of the grid (auto for season/pass/league
   and spans >~2 weeks; set `false` to force back onto the grid).

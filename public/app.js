@@ -412,6 +412,7 @@ function openDetail(ev) {
     ${ev.image ? `<img class="detail-img" src="${escapeHtml(ev.image)}" alt="">` : ''}
     <h3>${escapeHtml(ev.name)}</h3>
     <p class="muted">${escapeHtml(ev.heading || ev.type || '')} · ${escapeHtml(fmtRange(ev.start, ev.end))}</p>
+    ${ev.summary ? `<p class="detail-summary">${escapeHtml(ev.summary)}</p>` : ''}
     ${mons ? `<div class="mon-row">${mons}</div>` : ''}
     ${bonuses ? `<h4>加成</h4><ul>${bonuses}</ul>` : ''}
     ${links ? `<div class="detail-links">${links}</div>` : ''}
