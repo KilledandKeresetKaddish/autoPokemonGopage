@@ -114,14 +114,20 @@ cross-checks). Off-allowlist URLs are refused. Stay
    - **Dedup by event identity.** The same real-world event shows up in 2–4 sources
      (LeekDuck / Hub / pokébase / official). Decide which entries are the *same* event and
      emit **one** row — never two rows for one event.
-   - **Aggregate links.** Collect each source's URL for that event into `links[]` with a short
-     label (`LeekDuck` / `Hub` / `Pokébase` / `官方`). Keep `link` = the primary one.
+   - **Aggregate links — actively, for every event.** Do **not** just keep the LeekDuck link. For each
+     event, find its match in `events-hub` / `events-pokebase` / `events-official` (by name + date) and
+     add each **real** URL to `links[]` with a label (`LeekDuck` / `Hub` / `Pokébase` / `官方`). If a
+     source clearly covers the event but the bulk feed didn't surface the URL, fetch it on demand
+     (`scripts/fetch.sh url …`) and grab the real link. **Use real URLs only — never guess or construct
+     a link you haven't seen.** Most events should end up with ≥2 source links; LeekDuck-only is the
+     exception, not the default. Keep `link` = the primary one.
    - **Populate Pokémon, bonuses & a summary.** Fill `pokemon[]` (dex id + 简体中文 name + `shiny`),
      `bonuses[]`, and a **concise 简体中文 `summary`** (1–2 sentences) for every event from the articles —
      so the calendar isn't empty and the detail drawer is actually useful (not just a title + date).
    - **Inline the detail so users needn't click out.** For raid / mega / raid-day events, fill
-     `counters[]` (best attackers + moves) from the Hub raid guide or `db.pokemongohub.net`; put
-     paid/ticketed options or special-research steps in `sections[]`. Both render as collapsible blocks.
+     `counters[]` (best attackers + moves) from the Hub raid guide or `db.pokemongohub.net`. Put any
+     other useful detail in `sections[]` — **your call per event** (paid/ticketed options, special
+     research, habitat hours, reward lists…), not a fixed set. All render as collapsible blocks.
    - **Flag long-running events.** Set `longTerm:true` on season / GO Pass / GO Battle League and
      anything spanning more than ~2 weeks — they render in the 长期活动 band, not the day grid
      (this is what keeps headline short events visible). `longTerm:false` forces a borderline
@@ -194,8 +200,10 @@ cross-checks). Off-allowlist URLs are refused. Stay
 - `counters`: best raid/团战 counters (`id` for the sprite + 简体中文 `name` + optional `fast`/`charged`
   moves) → rendered as a collapsible "团战 Counter" block. Fill for raid / mega / raid-day events from the
   Hub raid guide or `db.pokemongohub.net`, justified by `gamemaster` — **don't invent**.
-- `sections`: extra collapsible blocks `[{ "title": "...", "items": ["..."] }]` (e.g. 付费内容/票务,
-  限时调查步骤) so heavy detail is one click away instead of forcing users out to the source link.
+- `sections`: **free-form** collapsible blocks `[{ "title": "...", "items": ["..."] }]` — **you decide
+  per event** what's worth surfacing (付费/票务、限时调查步骤、栖息地时段、Field Research 任务、奖励清单…).
+  Titles and contents are yours to choose; 付费内容 is just one example. Use them to bring the useful
+  detail inline instead of forcing users out to the source link.
 - **Icons:** inside `bonuses`/`sections` text you may use a `:token:` (e.g. `:stardust: 捕捉星尘 ×3`) →
   renders `public/assets/icons/token.png` if present (missing icons hide gracefully). Use sparingly.
 - `link` (single) is kept for back-compat; prefer `links[]` to point at **every** source for the event.
