@@ -29,7 +29,7 @@ run_agent() {
       # Headless Claude Code, sandboxed to this project dir.
       claude -p "$PROMPT" \
         --permission-mode acceptEdits \
-        --allowedTools "Task Bash Read Edit MultiEdit Write Glob Grep" \
+        --allowedTools "Bash Read Edit Write Glob Grep" \
         --add-dir "$ROOT"
       ;;
     aider)

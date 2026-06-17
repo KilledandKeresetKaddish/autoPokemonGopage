@@ -29,8 +29,7 @@ cron ──> scripts/run-daily.sh
 
 - **Agent-agnostic.** `run-daily.sh` picks the CLI via `AGENT_CLI` (claude / aider /
   gemini / codex / opencode / …). Instructions live in `AGENTS.md` (+ `CLAUDE.md`
-  symlink for Claude Code). Claude-specific subagents live in `.claude/agents/`; the
-  portable task briefs live in `tasks/subagents/`.
+  symlink for Claude Code); portable sub-agent briefs live in `tasks/subagents/`.
 - **The agent only edits** `public/data/*.json` and the `<!-- AI:START … -->` regions
   of `public/index.html`. `app.js` / `style.css` are checksum-protected; the tracker
   is rendered by `app.js` and off-limits. Anything outside the rules fails validation
@@ -45,7 +44,6 @@ scripts/       fetch.sh · run-daily.sh · validate.sh · publish.sh · protecte
 AGENTS.md      the agent's contract   (CLAUDE.md is a symlink to it)
 tasks/daily-update.md  the daily coordinator prompt
 tasks/subagents/      portable sub-agent briefs read by the coordinator
-.claude/agents/       Claude Code custom subagents mirroring those briefs
 ```
 
 ## Data sources
