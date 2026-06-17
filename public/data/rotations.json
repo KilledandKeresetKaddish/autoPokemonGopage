@@ -5,7 +5,8 @@
     {
       "key": "5star",
       "label": "5★ 团战",
-      "color": "#b16a5c",
+      "color": "#d8b25f",
+      "tag": "5★",
       "segments": [
         { "name": "Reshiram", "cn": "莱希拉姆", "pokemon": [{ "id": 643, "name": "莱希拉姆" }], "start": "2026-06-03", "end": "2026-06-09" },
         { "name": "Zekrom", "cn": "捷克罗姆", "pokemon": [{ "id": 644, "name": "捷克罗姆" }], "start": "2026-06-10", "end": "2026-06-16" },
@@ -17,6 +18,7 @@
       "key": "mega",
       "label": "超级团战",
       "color": "#9c7bb0",
+      "tag": "M",
       "segments": [
         { "name": "Mega Audino", "cn": "超级差不多娃娃", "pokemon": [{ "id": 531, "name": "差不多娃娃" }], "start": "2026-06-03", "end": "2026-06-09" },
         { "name": "Mega Lopunny", "cn": "超级长耳兔", "pokemon": [{ "id": 428, "name": "长耳兔" }], "start": "2026-06-10", "end": "2026-06-16" },

@@ -51,6 +51,10 @@ is_protected() { [[ "$1" == tiers-* || "$1" == events-hub || "$1" == events-poke
 ext_of()  { echo "${EXT[$1]:-json}"; }
 ALL=(events raids eggs research gamemaster tiers-attackers tiers-defenders tiers-pokebase events-hub events-pokebase events-official)
 
+# Domains the agent may pull AD-HOC pages from via `fetch.sh url <URL>` (beyond the
+# named sources above) — trusted Pokémon GO sources only, suffix-matched on host.
+ALLOW_HOSTS=(leekduck.com pokemongohub.net pokebase.app pokemongo.com dialgadex.com raw.githubusercontent.com pvpoke.com pokeapi.co)
+
 list_status() {
   for k in "${ALL[@]}"; do
     f="$RAW/$k.$(ext_of "$k")"
@@ -105,10 +109,39 @@ fetch_one() {
   fi
 }
 
-[ $# -eq 0 ] && { echo "usage: fetch.sh <list|all|${ALL[*]}>"; exit 1; }
+# Ad-hoc single-page fetch, restricted to ALLOW_HOSTS. Prints the page to stdout
+# (site domains go through the CF-solver; raw file/API hosts via plain curl).
+fetch_url() {
+  local url="$1" host authority rest
+  # Must be an explicit http(s) URL.
+  [[ "$url" =~ ^https?:// ]] || { echo "REFUSED non-http(s) URL: $url" >&2; return 2; }
+  # Authority = chars after scheme up to the first /, ? or #.
+  rest="${url#*://}"; authority="${rest%%/*}"; authority="${authority%%\?*}"; authority="${authority%%#*}"
+  # Reject userinfo — `host:x@evil.com` would otherwise smuggle a different real
+  # host past the allowlist (curl connects to the part after @).
+  if [[ "$authority" == *@* ]]; then echo "REFUSED URL with userinfo '@': $url" >&2; return 2; fi
+  host="${authority%%:*}"   # strip :port
+  local ok=0 d
+  for d in "${ALLOW_HOSTS[@]}"; do
+    [[ "$host" == "$d" || "$host" == *."$d" ]] && { ok=1; break; }
+  done
+  if [ "$ok" != 1 ]; then echo "REFUSED off-allowlist host: ${host:-?}  ($url)" >&2; return 2; fi
+  local tmp; tmp="$(mktemp)"
+  case "$host" in
+    raw.githubusercontent.com|*.githubusercontent.com|pokeapi.co|*.pokeapi.co)
+      fetch_plain "$url" "$tmp" || { rm -f "$tmp"; echo "FAIL url <- $url" >&2; return 1; } ;;
+    *)  # human-facing site domains (leekduck/hub/pokebase/official/pvpoke) → solver
+      fetch_tier "$url" "$tmp" || { rm -f "$tmp"; echo "FAIL url <- $url" >&2; return 1; } ;;
+  esac
+  cat "$tmp"; rm -f "$tmp"
+}
+
+[ $# -eq 0 ] && { echo "usage: fetch.sh <list|all|url <URL...>|${ALL[*]}>"; exit 1; }
 case "$1" in
   list)      list_status; exit 0 ;;
-  -h|--help) echo "sources: ${ALL[*]}"; exit 0 ;;
+  -h|--help) echo "sources: ${ALL[*]}"; echo "ad-hoc:  fetch.sh url <URL...>  (hosts: ${ALLOW_HOSTS[*]})"; exit 0 ;;
+  url)       shift; [ $# -eq 0 ] && { echo "usage: fetch.sh url <URL...>" >&2; exit 1; }
+             rc=0; for u in "$@"; do fetch_url "$u" || rc=1; done; exit $rc ;;
   all)       set -- "${ALL[@]}" ;;
 esac
 

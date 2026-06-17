@@ -1,0 +1,13 @@
+# Icon assets. Referenced in event text as :token: (iconify) or directly in the
+# free-form regions as <img class="ico" src="assets/icons/<file>">. Size is LOCKED
+# by the .ico (inline) / .ico-lg (standalone) CSS classes — always use one.
+#
+# IMPORTANT: git-commit any icons you add. run-daily.sh rollback runs
+# `git clean -fdq public`, which deletes untracked files under public/.
+#
+# token -> file (see the ICONS map in public/app.js):
+#  types: bug dark dragon electric fairy fighting fire flying ghost grass ground
+#         ice poison psychic rock steel water
+#  items: candy xl-candy rare-candy stardust xp lure incense incubator
+#         golden-razz silver-berry pokeball pokestop raid spawn rocket trading
+# Unknown tokens fall back to <token>.png; missing files hide gracefully.

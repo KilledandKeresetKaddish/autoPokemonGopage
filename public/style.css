@@ -18,7 +18,7 @@
   --line:rgba(199,154,79,.26);
   --line-soft:rgba(199,154,79,.14);
   --radius:12px;
-  --cell-min:118px;
+  --cell-min:112px;
   --serif:Georgia,Cambria,"Times New Roman","Songti SC","STSong",SimSun,"Source Han Serif SC","Noto Serif CJK SC",serif;
   --sans:system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;
   --display:"SF Pro Rounded",system-ui,-apple-system,"Segoe UI","PingFang SC",sans-serif;
@@ -151,10 +151,40 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .cal-daynum{height:30px;display:flex;align-items:center;gap:6px;}
 .cal-daynum .dn{font-family:var(--display);font-weight:700;font-size:1rem;color:var(--gold-bright);}
 .cal-day.out .cal-daynum .dn{color:var(--gold-dim);font-weight:600;}
-.cal-daynum .tag{font-size:.58rem;font-weight:800;letter-spacing:.08em;color:var(--bg);
-  background:var(--gold);padding:1px 6px;border-radius:6px;}
 .cal-daynum .moy{font-family:var(--sans);font-size:.62rem;font-weight:700;color:var(--gold-dim);
   text-transform:uppercase;letter-spacing:.06em;}
+
+/* weekly 5★/Mega rotation icons next to the day number (from rotations.json) */
+.daynum-raids{display:flex;align-items:center;gap:3px;margin-left:auto;flex:none;}
+.raid-ico{position:relative;width:22px;height:22px;border:0;padding:0;cursor:pointer;flex:none;
+  display:flex;align-items:center;justify-content:center;border-radius:6px;
+  background:rgba(var(--gold-rgb),.08);box-shadow:0 0 0 1.5px var(--ring,var(--gold-line));
+  transition:transform .14s ease, box-shadow .15s;}
+.raid-ico img{width:20px;height:20px;object-fit:contain;image-rendering:pixelated;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.5));}
+.raid-ico:hover{transform:scale(1.7);z-index:6;
+  box-shadow:0 0 0 2px var(--ring,var(--gold-line)),0 3px 12px -2px rgba(0,0,0,.7),0 0 14px -2px var(--ring,var(--gold-line));}
+.raid-ico.s5{--ring:#d8b25f;}
+.raid-ico.mega{--ring:#9c7bb0;}
+/* corner tier badge — hover only (≤2 chars, agent-set via track.tag) */
+.raid-ico .tg{position:absolute;bottom:-3px;left:-3px;font-size:.5rem;font-weight:800;line-height:1;
+  padding:0 2px;border-radius:4px;background:var(--ring,var(--gold-line));color:#1a1206;
+  box-shadow:0 0 4px rgba(0,0,0,.5);opacity:0;transition:opacity .12s;}
+.raid-ico:hover .tg{opacity:1;}
+/* multi-boss slideshow: stacked sprites take turns (negative delays = no startup overlap) */
+.raid-ico.slide img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
+.raid-ico.slide.n2 img{animation:raidcyc2 4s step-end infinite;}
+.raid-ico.slide.n2 img:nth-child(2){animation-delay:-2s;}
+.raid-ico.slide.n3 img{animation:raidcyc3 6s step-end infinite;}
+.raid-ico.slide.n3 img:nth-child(2){animation-delay:-4s;}
+.raid-ico.slide.n3 img:nth-child(3){animation-delay:-2s;}
+@keyframes raidcyc2{0%,50%{opacity:1}50.001%,100%{opacity:0}}
+@keyframes raidcyc3{0%,33.333%{opacity:1}33.334%,100%{opacity:0}}
+/* legend rings for the day icons */
+.lg .ring{width:13px;height:13px;border-radius:5px;display:inline-block;
+  background:rgba(var(--gold-rgb),.12);box-shadow:0 0 0 2px var(--gold-line);}
+.lg .ring.s5{box-shadow:0 0 0 2px #d8b25f;}
+.lg .ring.mega{box-shadow:0 0 0 2px #9c7bb0;}
 
 /* reserves vertical room for the absolutely-positioned spanning bars */
 .cal-barspace{height:var(--bars-h,0px);flex:none;}
@@ -167,14 +197,12 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .cal-chip:hover{background:color-mix(in srgb, var(--c) 28%, transparent);border-color:var(--c);}
 .cal-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--c);flex:none;box-shadow:0 0 6px var(--c);}
 .cal-chip .spr{width:16px;height:16px;object-fit:contain;flex:none;image-rendering:pixelated;}
-.cal-chip .ct{font-weight:800;font-size:.56rem;letter-spacing:.04em;text-transform:uppercase;
-  color:color-mix(in srgb, var(--c) 70%, #fff);flex:none;}
 .cal-chip .cn{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--gold-bright);}
 .cal-more{font-size:.62rem;color:var(--muted);padding-left:3px;font-weight:600;}
 
 /* spanning bars */
 .cal-barlayer{position:absolute;inset:0;pointer-events:none;}
-.cal-bar{position:absolute;height:20px;display:flex;align-items:center;gap:5px;
+.cal-bar{position:absolute;height:18px;display:flex;align-items:center;gap:5px;
   padding:0 7px;font-size:.7rem;font-weight:700;letter-spacing:.01em;white-space:nowrap;
   overflow:hidden;border:0;border-radius:2px;cursor:pointer;pointer-events:auto;
   box-shadow:inset 0 0 0 1px rgba(0,0,0,.16), 0 2px 7px rgba(0,0,0,.34);}
@@ -193,6 +221,14 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .cal-bar.hl{box-shadow:inset 0 0 0 1px var(--gold-bright), 0 0 10px rgba(var(--gold-rgb),.55), 0 2px 7px rgba(0,0,0,.34);}
 .cal-chip.hl{border-color:var(--gold-bright);box-shadow:0 0 8px rgba(var(--gold-rgb),.4);}
 .hl-star{flex:none;font-size:.78em;line-height:1;filter:drop-shadow(0 0 3px rgba(var(--gold-rgb),.85));}
+
+/* two-tier weight: regular bars are "quiet" (tint + left strip, like chips);
+   only highlight/band bars keep a solid fill. */
+.cal-bar.q{background:color-mix(in srgb, var(--c) 15%, transparent);color:var(--gold-bright);
+  border-left:3px solid var(--c);box-shadow:none;font-weight:600;}
+.cal-bar.q:hover{background:color-mix(in srgb, var(--c) 26%, transparent);}
+/* continuation segments (later week-rows of a multi-week bar): fade the repeated name */
+.cal-bar.cont .bn{opacity:.5;font-weight:600;}
 
 /* notes panel */
 .cal-notes{padding:.85rem 1.05rem;margin-top:1rem;}
@@ -243,6 +279,7 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   text-transform:uppercase;color:var(--c,#fff);border:1px solid var(--c,#fff);
   background:color-mix(in srgb, var(--c) 16%, transparent);padding:2px 9px;border-radius:999px;margin-bottom:.5rem;}
 .detail-img{width:100%;border-radius:10px;margin-bottom:.6rem;border:1px solid var(--line);}
+.detail-summary{margin:.5rem 0;color:var(--ink);line-height:1.55;}
 #detail-body h3{font-size:1.3rem;margin:.2rem 0;color:var(--h1);}
 #detail-body ul{margin:.3rem 0;padding-left:1.1rem;}
 .mon-row{display:flex;flex-wrap:wrap;gap:.6rem;margin:.5rem 0;}
@@ -252,6 +289,24 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .shiny{position:absolute;top:-4px;right:-2px;}
 .detail-links{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.7rem;}
 .detail-links .btn{text-decoration:none;}
+
+/* inline resource icons (assets/icons/<name> via :name: tokens) — size LOCKED */
+.ico{width:1.05em;height:1.05em;object-fit:contain;vertical-align:-.16em;margin-right:.1em;}
+.ico-lg{width:24px;height:24px;object-fit:contain;vertical-align:middle;flex:none;}
+
+/* collapsible detail sections (counters / paid options / …) */
+#detail-body details{margin:.5rem 0;border:1px solid var(--line);border-radius:8px;background:rgba(var(--gold-rgb),.04);}
+#detail-body summary{cursor:pointer;padding:.45rem .7rem;font-family:var(--serif);font-weight:600;color:var(--gold-bright);list-style:none;}
+#detail-body summary::-webkit-details-marker{display:none;}
+#detail-body summary::after{content:'▸';float:right;opacity:.65;}
+#detail-body details[open] summary::after{content:'▾';}
+#detail-body details[open] summary{border-bottom:1px solid var(--line);}
+#detail-body .det-body{padding:.45rem .7rem;}
+#detail-body .det-body ul{margin:.2rem 0;padding-left:1.1rem;}
+.ctr-row{display:flex;align-items:center;gap:.5rem;padding:.28rem 0;}
+.ctr-row .spr{width:32px;height:32px;object-fit:contain;image-rendering:pixelated;flex:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5));}
+.ctr-row strong{color:var(--h1);}
+.ctr-moves{color:var(--muted);font-size:.8rem;}
 
 /* ---------- Rankings ---------- */
 .subtabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.1rem;}
@@ -317,7 +372,6 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 @media (max-width:760px){
   :root{--cell-min:96px;}
   .cal-bar{font-size:.62rem;padding:0 5px;}
-  .cal-chip .ct{display:none;}
 }
 @media (max-width:560px){
   :root{--cell-min:80px;}
@@ -328,6 +382,9 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   .cal-bar{padding:0 4px;font-size:.56rem;gap:3px;}
   .cal-bar .spr{width:12px;height:12px;}
   .cal-chip{font-size:.6rem;}
+  .raid-ico{width:18px;height:18px;}
+  .raid-ico img{width:16px;height:16px;}
+  .daynum-raids{gap:2px;}
   .trk-row{grid-template-columns:1fr;}
   .trk-check{justify-content:flex-start;}
 }

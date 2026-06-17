@@ -73,6 +73,8 @@ function ymd(d) {
 }
 function parseDay(s) {
   if (!s) return null;
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  if (m) return new Date(+m[1], +m[2] - 1, +m[3]); // pure date → local (no UTC round-trip)
   const d = new Date(s);
   if (isNaN(d.getTime())) return null;
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -123,9 +125,14 @@ function fmtDateShort(s) {
   const d = new Date(s); if (isNaN(d.getTime())) return s || '';
   return `${d.getMonth() + 1}月${d.getDate()}日`;
 }
+// Sprite for a pokemon/counter/rotation entry: an explicit `sprite` URL wins
+// (needed for Mega/Primal/GMax/regional forms the base dex id can't represent),
+// else the national-dex sprite from `id`.
+function monSprite(p) {
+  return p ? (p.sprite || (p.id ? spriteUrl(p.id) : '')) : '';
+}
 function firstSprite(ev) {
-  const p = (ev.pokemon || [])[0];
-  return p && p.id ? spriteUrl(p.id) : '';
+  return monSprite((ev.pokemon || [])[0]);
 }
 
 /* ---------- data ---------- */
@@ -190,6 +197,24 @@ function renderCalendar() {
   const todayStr = ymd(new Date());
   const present = new Set();
 
+  // weekly 5★/Mega rotation bosses → one icon per track next to the day number
+  // (driven by rotations.json, which carries pokemon ids; events.json raids don't).
+  const raidsByDay = {};
+  (state.rotations && state.rotations.tracks || [])
+    .filter(t => t.key === '5star' || t.key === 'mega')
+    .forEach(t => (t.segments || []).forEach(seg => {
+      const si = dayDiff(gridStart, parseDay(seg.start));
+      const ei = dayDiff(gridStart, parseDay(seg.end || seg.start));
+      const mons = (seg.pokemon || []).filter(p => p && (p.id || p.sprite));
+      if (!mons.length || isNaN(si) || isNaN(ei) || ei < 0 || si > 41) return;
+      for (let i = Math.max(0, si); i <= Math.min(41, ei); i++) {
+        (raidsByDay[i] = raidsByDay[i] || []).push(
+          { tier: t.key, color: t.color, tag: t.tag, mons, name: seg.cn || seg.name, start: seg.start, end: seg.end });
+      }
+    }));
+  // only let the icons REPLACE the grid bars when we actually have icons this month
+  const hasRaidIcons = Object.keys(raidsByDay).length > 0;
+
   // map every event into grid indices, clipped to the visible 0..41 range
   const bars = [], chipsByDay = {}, longTerm = [];
   state.events.forEach(ev => {
@@ -199,6 +224,9 @@ function renderCalendar() {
     if (ei < 0 || si > 41) return; // outside the visible grid
     // long-running background events leave the grid for the compact band below
     if (isLongTerm(ev)) { longTerm.push(ev); return; }
+    // weekly 5★/Mega bosses show as day-number icons instead — but only drop the
+    // bar when we actually have those icons this month (else keep it as fallback).
+    if (ev.type === 'raid-battles' && hasRaidIcons) return;
     const cat = catOf(ev);
     present.add(ev.type);
     if (cat.kind === 'chip') {
@@ -245,10 +273,30 @@ function renderCalendar() {
 
       const num = document.createElement('div');
       num.className = 'cal-daynum';
-      let tag = '';
-      if (ymd(date) === todayStr) tag = '<span class="tag">今天</span>';
-      else if (date.getDate() === 1) tag = `<span class="moy">${date.getMonth() + 1}月</span>`;
-      num.innerHTML = `<span class="dn">${date.getDate()}</span>${tag}`;
+      const moy = date.getDate() === 1 ? `<span class="moy">${date.getMonth() + 1}月</span>` : '';
+      num.innerHTML = `<span class="dn">${date.getDate()}</span>${moy}`;
+      // weekly raid icons (one per track; cycles if the segment has >1 boss)
+      const raids = inMonth ? (raidsByDay[idx] || []) : [];
+      if (raids.length) {
+        const rbox = document.createElement('div');
+        rbox.className = 'daynum-raids';
+        raids.forEach(rd => {
+          const mons = rd.mons.slice(0, 3);
+          const b = document.createElement('button');
+          b.className = 'raid-ico ' + (rd.tier === '5star' ? 's5' : 'mega') + (mons.length > 1 ? ' slide n' + mons.length : '');
+          if (rd.color) b.style.setProperty('--ring', rd.color);
+          const badge = (rd.tag || (rd.tier === '5star' ? '5★' : 'M')).slice(0, 2);
+          b.title = `${rd.name} · ${fmtDateShort(rd.start)}–${fmtDateShort(rd.end)}`;
+          b.innerHTML = mons.map(p => `<img src="${escapeHtml(monSprite(p))}" alt="" loading="lazy" onerror="this.style.display='none'">`).join('')
+            + `<span class="tg">${escapeHtml(badge)}</span>`;
+          b.addEventListener('click', () => openDetail({
+            name: rd.name, heading: '团战 Boss', type: 'raid-battles',
+            start: rd.start, end: rd.end, pokemon: rd.mons
+          }));
+          rbox.appendChild(b);
+        });
+        num.appendChild(rbox);
+      }
       cell.appendChild(num);
 
       const spacer = document.createElement('div');
@@ -268,7 +316,7 @@ function renderCalendar() {
           chip.title = `${ev.name} · ${fmtRange(ev.start, ev.end)}`;
           chip.innerHTML = `<i class="dot"></i>${sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}`
             + (ev.highlight ? '<span class="hl-star">✨</span>' : '')
-            + `<span class="ct">${escapeHtml(cat.label)}</span><span class="cn">${escapeHtml(ev.name)}</span>`;
+            + `<span class="cn">${escapeHtml(ev.name)}</span>`;
           chip.addEventListener('click', () => openDetail(ev));
           cw.appendChild(chip);
         });
@@ -290,13 +338,19 @@ function renderCalendar() {
       const segS = Math.max(b.si, rs), segE = Math.min(b.ei, re);
       const leftCol = segS - rs, span = segE - segS + 1;
       const isL = b.realStart === segS, isR = b.realEnd === segE;
+      const quiet = !b.ev.highlight && !b.cat.bg;   // two-tier weight: solid only for highlight/bands
       const bar = document.createElement('button');
-      bar.className = 'cal-bar' + (isL ? ' l' : '') + (isR ? ' r' : '') + (b.cat.bg ? ' bg' : '') + (b.ev.highlight ? ' hl' : '');
+      bar.className = 'cal-bar' + (isL ? ' l' : '') + (isR ? ' r' : '') + (b.cat.bg ? ' bg' : '')
+        + (b.ev.highlight ? ' hl' : '') + (quiet ? ' q' : '') + (isL ? '' : ' cont');
       bar.style.left = `calc(${leftCol / 7 * 100}% + 3px)`;
       bar.style.width = `calc(${span / 7 * 100}% - 6px)`;
       bar.style.top = (NUM_H + b.lane * LANE_H) + 'px';
-      bar.style.background = b.cat.color;
-      bar.style.color = b.cat.fg;
+      if (quiet) {
+        bar.style.setProperty('--c', b.cat.color);   // .q renders tint + left strip from --c
+      } else {
+        bar.style.background = b.cat.color;
+        bar.style.color = b.cat.fg;
+      }
       const sp = isL && !b.cat.bg ? firstSprite(b.ev) : '';
       bar.title = `${b.ev.name} · ${fmtRange(b.ev.start, b.ev.end)}`;
       bar.innerHTML = (sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
@@ -310,12 +364,12 @@ function renderCalendar() {
   }
 
   root.appendChild(weeks);
-  renderLegend(present);
+  renderLegend(present, hasRaidIcons);
   renderLongTerm(longTerm);
 }
 
 // Legend reflects only the categories actually present in the current month.
-function renderLegend(present) {
+function renderLegend(present, hasRaids) {
   const box = $('#cal-legend');
   if (!box) return;
   const seen = new Set();
@@ -328,9 +382,13 @@ function renderLegend(present) {
     items.push(cat);
   });
   items.sort((a, b) => (a.kind === b.kind ? 0 : a.kind === 'bar' ? -1 : 1));
-  box.innerHTML = items.map(c =>
+  let html = items.map(c =>
     `<span class="lg"><i class="${c.kind === 'chip' ? 'round' : ''}" style="background:${c.color}"></i>${escapeHtml(c.label)}</span>`
-  ).join('') || '';
+  ).join('');
+  if (hasRaids) {
+    html += '<span class="lg"><i class="ring s5"></i>5★ 团战</span><span class="lg"><i class="ring mega"></i>超级团战</span>';
+  }
+  box.innerHTML = html || '';
 }
 
 // Compact band of long-running events (season / pass / league / multi-week),
@@ -381,9 +439,10 @@ function renderRotations() {
       const row = document.createElement('div');
       row.className = 'rot-seg';
       row.style.setProperty('--c', color);
-      const mons = (seg.pokemon || []).map(p =>
-        p && p.id ? `<img class="spr" src="${escapeHtml(spriteUrl(p.id))}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''
-      ).join('');
+      const mons = (seg.pokemon || []).map(p => {
+        const sp = monSprite(p);
+        return sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '';
+      }).join('');
       const range = (seg.start || seg.end)
         ? `<span class="rot-range">${escapeHtml(fmtDateShort(seg.start))}${seg.end && seg.end !== seg.start ? '–' + escapeHtml(fmtDateShort(seg.end)) : ''}</span>`
         : '';
@@ -394,12 +453,49 @@ function renderRotations() {
   });
 }
 
+/* Inline resource icons. Tokens map to the actual asset filenames in
+ * public/assets/icons/ (mixed .png/.webp, some capitalised/spaced). Unknown
+ * tokens fall back to <token>.png so new clean-named icons work without editing
+ * this map. Missing files hide gracefully; size is locked by CSS (.ico/.ico-lg). */
+const ICONS = {
+  // Pokémon types
+  bug:'bug.png', dark:'dark.webp', dragon:'dragon.png', electric:'electric.webp',
+  fairy:'fairy.webp', fighting:'fighting.png', fire:'fire.png', flying:'flying.png',
+  ghost:'ghost.webp', grass:'grass.webp', ground:'ground.webp', ice:'ice.webp',
+  poison:'poison.webp', psychic:'psychic.webp', rock:'rock.webp', steel:'steel.webp', water:'water.webp',
+  // items / activities
+  candy:'candy.png', 'xl-candy':'xl-candy.png', 'rare-candy':'rare-candy.png',
+  stardust:'stardust.png', xp:'xp.png', lure:'lure.png', incense:'incense.png',
+  incubator:'incubators.png', 'golden-razz':'golden-razz-berry.png', 'silver-berry':'silver_berry.webp',
+  pokeball:'poke-ball.png', pokestop:'pokestop.png', raid:'Raid.png', spawn:'Reward%20spawn.png',
+  rocket:'teamrocket_r.png', trading:'trading.png',
+};
+// Replace :name: tokens with a local icon. Text is escaped first, so tokens are
+// the only markup injected (and the token charset is constrained → safe).
+function iconify(s) {
+  return escapeHtml(s).replace(/:([a-z0-9_-]{1,24}):/g, (m, n) =>
+    `<img class="ico" src="assets/icons/${ICONS[n] || (n + '.png')}" alt="" onerror="this.style.display='none'">`);
+}
 function openDetail(ev) {
   const cat = catOf(ev);
   const mons = (ev.pokemon || []).map(p =>
-    `<figure class="mon"><img class="mon-icon" src="${escapeHtml(spriteUrl(p.id))}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'">${p.shiny ? '<span class="shiny">✨</span>' : ''}<figcaption>${escapeHtml(p.name)}</figcaption></figure>`
+    `<figure class="mon"><img class="mon-icon" src="${escapeHtml(monSprite(p))}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'">${p.shiny ? '<span class="shiny">✨</span>' : ''}<figcaption>${escapeHtml(p.name)}</figcaption></figure>`
   ).join('');
-  const bonuses = (ev.bonuses || []).map(b => `<li>${escapeHtml(b)}</li>`).join('');
+  const bonuses = (ev.bonuses || []).map(b => `<li>${iconify(b)}</li>`).join('');
+  // Best counters → collapsible, sprite + recommended moves.
+  const counters = (ev.counters || []).filter(c => c && (c.id || c.name || c.sprite)).map(c => {
+    const moves = [c.fast, c.charged].filter(Boolean).map(escapeHtml).join(' / ');
+    const csp = monSprite(c);
+    return `<div class="ctr-row">`
+      + (csp ? `<img class="spr" src="${escapeHtml(csp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
+      + `<div><strong>${escapeHtml(c.name || '')}</strong>${moves ? `<div class="ctr-moves">${moves}</div>` : ''}</div></div>`;
+  }).join('');
+  // Generic extra sections (paid/ticketed options, special research, …) → collapsible.
+  const sections = (ev.sections || []).filter(s => s && s.title).map(s => {
+    const items = (s.items || []).map(it => `<li>${iconify(it)}</li>`).join('');
+    const body = items ? `<ul>${items}</ul>` : (s.body ? `<p>${iconify(s.body)}</p>` : '');
+    return `<details><summary>${escapeHtml(s.title)}</summary><div class="det-body">${body}</div></details>`;
+  }).join('');
   // Prefer the aggregated multi-source links[]; fall back to the legacy single link.
   const linkList = (ev.links && ev.links.length) ? ev.links
     : (ev.link ? [{ label: '活动页', url: ev.link }] : []);
@@ -412,8 +508,11 @@ function openDetail(ev) {
     ${ev.image ? `<img class="detail-img" src="${escapeHtml(ev.image)}" alt="">` : ''}
     <h3>${escapeHtml(ev.name)}</h3>
     <p class="muted">${escapeHtml(ev.heading || ev.type || '')} · ${escapeHtml(fmtRange(ev.start, ev.end))}</p>
+    ${ev.summary ? `<p class="detail-summary">${escapeHtml(ev.summary)}</p>` : ''}
     ${mons ? `<div class="mon-row">${mons}</div>` : ''}
     ${bonuses ? `<h4>加成</h4><ul>${bonuses}</ul>` : ''}
+    ${counters ? `<details><summary>团战 Counter</summary><div class="det-body">${counters}</div></details>` : ''}
+    ${sections}
     ${links ? `<div class="detail-links">${links}</div>` : ''}
   `;
   $('#event-detail').hidden = false;
