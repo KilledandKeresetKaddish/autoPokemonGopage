@@ -27,15 +27,20 @@ in order; the files are still the checklist of responsibilities.
 1. Read `AGENTS.md`, `data/state.json`, and every sub-agent brief above.
 2. Run the Source Scout phase first. Do **not** blindly refetch everything; refresh
    by age / relevance using only `scripts/fetch.sh`.
-3. After the raw sources are available, run Calendar, Rotations, and Rankings as
-   separate workstreams. Keep write scopes disjoint:
+3. After the raw sources are available, run Calendar and Rotations as separate
+   workstreams. They may run in parallel because their write scopes are disjoint:
    - Calendar writes `public/data/events.json` and maybe `public/data/categories.json`.
    - Rotations writes `public/data/rotations.json`.
-   - Rankings writes only inside the five allowed AI markers in `public/index.html`.
-4. Run the State + Validator phase last: set `public/data/meta.json.lastUpdated`,
+4. Wait for Calendar and Rotations to finish, then start Rankings with the finalized
+   `public/data/events.json` and `public/data/rotations.json` (or pass those exact
+   results explicitly). Rankings must not build `calendar-notes` or
+   `rankings-current` from previous/stale calendar or rotation files while sibling
+   workstreams are still writing today's outputs. Rankings writes only inside the
+   five allowed AI markers in `public/index.html`.
+5. Run the State + Validator phase last: set `public/data/meta.json.lastUpdated`,
    record fixed per-source notes in `data/state.json`, self-check, and run
    `scripts/validate.sh` until it passes.
-5. If a source is unreachable or unparsable, keep the last good content, record the
+6. If a source is unreachable or unparsable, keep the last good content, record the
    issue in `data/state.json`, and still pass validation. Never ship empty rankings.
 
 Stay strictly within the files `AGENTS.md` allows during daily content updates. All

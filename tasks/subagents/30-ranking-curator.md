@@ -14,8 +14,10 @@ Inputs:
 - `data/raw/tiers-attackers.txt`, `data/raw/tiers-defenders.txt`,
   `data/raw/tiers-pokebase.txt`.
 - `data/raw/raids.json`, `data/raw/gamemaster.json`.
-- Fresh `public/data/events.json` and `public/data/rotations.json` from sibling
-  workstreams, or the last good files if they are not available yet.
+- Finalized `public/data/events.json` and `public/data/rotations.json` produced by
+  the Calendar and Rotation workstreams for this run, or an explicit coordinator
+  handoff containing those exact finalized results. Do not start from previous/stale
+  files while those sibling workstreams are still in progress.
 
 Checklist:
 1. Preserve every marker, wrapper, `.rank-panel`, and `id="…"` attribute outside the
@@ -27,11 +29,14 @@ Checklist:
 4. Build `.rank-list` / `.rank-item` rows with `.tier tier-S|tier-A|tier-B|tier-C`,
    sprites, names, and recommended moves.
 5. Build `rankings-raid` from current raid bosses and justified counters.
-6. Compose `rankings-current` around today's live events and bosses, connecting them
-   to useful attackers / tanks.
-7. Compose `calendar-notes` as concise 本月看点 in 简体中文.
-8. Never ship empty ranking panels. If parsing fails, keep last good content and
-   report the problem to State + Validator.
+6. Compose `rankings-current` only after reading this run's finalized events and
+   rotations; tie today's live events and bosses to useful attackers / tanks.
+7. Compose `calendar-notes` only from this run's finalized calendar and rotation
+   outputs, as concise 本月看点 in 简体中文.
+8. Never ship empty ranking panels. If tier or raid parsing fails, keep only the
+   affected structured ranking panel from last good content and report the problem
+   to State + Validator; do not mix stale calendar/rotation context into
+   `calendar-notes` or `rankings-current`.
 
 Output to the coordinator: edited marker names, source sections parsed, and any panels
 kept from last good content.
