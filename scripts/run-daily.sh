@@ -21,7 +21,23 @@ echo "===== daily run $(date -u +%FT%TZ) ====="
 find logs -maxdepth 1 -name 'daily-*.log' -type f -mtime +30 -delete 2>/dev/null || true
 
 AGENT_CLI="${AGENT_CLI:-claude}"
+
+# The agent prompt = the coordinator brief + every sub-agent brief, concatenated so
+# the coordinator (and the single-agent fallback) has the full delegated detail
+# in-context, not just file references. Briefs are ordered by their 00/10/20/30/90
+# filename prefixes. (When real sub-agents are used they still read their own brief
+# file directly; this just guarantees the coordinator sees everything.)
 PROMPT="$(cat tasks/daily-update.md)"
+for brief in tasks/subagents/*.md; do
+  [ -f "$brief" ] || continue
+  PROMPT+="
+
+===== begin $brief =====
+
+$(cat "$brief")
+
+===== end $brief ====="
+done
 
 run_agent() {
   case "$AGENT_CLI" in

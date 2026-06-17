@@ -2,6 +2,9 @@
 
 Goal: produce the current month's weekly boss rotation.
 
+Read first: `AGENTS.md` (rules · schemas · validation gate) — isolated sub-agents do
+not inherit the coordinator's context.
+
 Write scope:
 - `public/data/rotations.json`
 

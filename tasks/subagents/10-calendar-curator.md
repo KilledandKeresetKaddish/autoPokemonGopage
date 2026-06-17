@@ -2,6 +2,9 @@
 
 Goal: produce the normalized calendar dataset.
 
+Read first: `AGENTS.md` (rules · schemas · validation gate) — isolated sub-agents do
+not inherit the coordinator's context.
+
 Write scope:
 - `public/data/events.json`
 - `public/data/categories.json` only when a new event type needs registration
@@ -18,7 +21,9 @@ Checklist:
 1. Keep current month through end of next month; drop events that ended before the
    current month started.
 2. Deduplicate by real-world event identity. Emit one stable deterministic `id` per
-   event; never accumulate duplicates.
+   event; never accumulate duplicates. When a real event is confirmed, delete the old
+   placeholder ("待公布 / waiting for announcement") row it replaces — be smart, never
+   leave both.
 3. Aggregate real source URLs into `links[]` (`LeekDuck`, `Hub`, `Pokébase`, `官方`).
    Keep `link` as the primary URL. Never guess a URL you have not seen.
 4. Fill concise 简体中文 `summary`, useful `bonuses[]`, `pokemon[]`, and event-specific

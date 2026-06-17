@@ -14,8 +14,9 @@ Goal: make the raw source cache ready for the content curators without over-fetc
    - empty / flaky / changed formats;
    - likely monthly article sections for rotations;
    - event source coverage and any detail pages worth fetching later.
-6. Do not edit site content files. If you must record fetch problems immediately,
-   keep `data/state.json` as a fixed object keyed by source, not a growing log.
+6. Do not edit any site content or bookkeeping files — including `data/state.json`.
+   Report fetch problems in your output; State + Validator (90) is the sole writer of
+   `data/state.json` and records them for you.
 
 Output to the coordinator: fetched sources, skipped sources with reason, source
 health notes, and any format changes that downstream agents must adapt to.

@@ -2,6 +2,9 @@
 
 Goal: refresh the human-readable rankings and current recommendations.
 
+Read first: `AGENTS.md` (rules · schemas · validation gate) — isolated sub-agents do
+not inherit the coordinator's context.
+
 Write scope:
 - Only the contents between these markers in `public/index.html`:
   - `AI:START calendar-notes` / `AI:END calendar-notes`
@@ -29,14 +32,13 @@ Checklist:
 4. Build `.rank-list` / `.rank-item` rows with `.tier tier-S|tier-A|tier-B|tier-C`,
    sprites, names, and recommended moves.
 5. Build `rankings-raid` from current raid bosses and justified counters.
-6. Compose `rankings-current` only after reading this run's finalized events and
-   rotations; tie today's live events and bosses to useful attackers / tanks.
-7. Compose `calendar-notes` only from this run's finalized calendar and rotation
-   outputs, as concise 本月看点 in 简体中文.
-8. Never ship empty ranking panels. If tier or raid parsing fails, keep only the
-   affected structured ranking panel from last good content and report the problem
-   to State + Validator; do not mix stale calendar/rotation context into
-   `calendar-notes` or `rankings-current`.
+6. Build both free-form regions from **this run's** finalized `events.json` +
+   `rotations.json` only (never previous/stale files): `rankings-current` ties today's
+   live events and bosses to useful attackers / tanks; `calendar-notes` is a concise
+   本月看点 in 简体中文.
+7. Never ship empty ranking panels. If tier or raid parsing fails, keep only the
+   affected structured panel from last good content and report the problem to State +
+   Validator.
 
 Output to the coordinator: edited marker names, source sections parsed, and any panels
 kept from last good content.

@@ -5,9 +5,15 @@ this repository. **Read `AGENTS.md` first and follow it exactly** — it defines
 you may edit, the hard rules, the data sources, schemas, and validation gate.
 
 This run is intentionally split into focused sub-agent workstreams. If your coding
-agent supports subagents / parallel workers, delegate the files below as bounded
-read-only analysis or write scopes. If it does not, execute the same phases yourself
-in order; the files are still the checklist of responsibilities.
+agent supports sub-agents / parallel workers — e.g. Pi via a sub-agent extension
+(`pi-subagents` / `pi-sub-agent`), which runs each brief in an isolated `--no-session`
+subprocess (optionally worktree-isolated) — delegate each brief below as a bounded
+read-only or write scope. The only concurrent step is **Calendar ∥ Rotations** (2
+tasks, well within the default maxTasks 8 / concurrency 4); every other phase is
+sequential. Isolated sub-agents do **not** inherit this prompt, so each brief restates
+that it must read `AGENTS.md` first. If your agent has no sub-agent support, execute
+the same phases yourself in order; the briefs are still the checklist of
+responsibilities.
 
 ## Sub-agent briefs
 
@@ -37,9 +43,13 @@ in order; the files are still the checklist of responsibilities.
    `rankings-current` from previous/stale calendar or rotation files while sibling
    workstreams are still writing today's outputs. Rankings writes only inside the
    five allowed AI markers in `public/index.html`.
-5. Run the State + Validator phase last: set `public/data/meta.json.lastUpdated`,
-   record fixed per-source notes in `data/state.json`, self-check, and run
-   `scripts/validate.sh` until it passes.
+5. Run the State + Validator phase last: it sets `public/data/meta.json.lastUpdated`,
+   records fixed per-source notes in `data/state.json` (it is the **sole writer** of
+   `data/state.json`), self-checks, and runs `scripts/validate.sh`. **You (the
+   coordinator) own the fix loop:** if validation fails, read the reported failures,
+   re-dispatch the responsible owner (Calendar / Rotations / Rankings) to fix its own
+   scope, then re-run validation — repeat until it passes. State + Validator reports; it
+   never reaches into another owner's scope.
 6. If a source is unreachable or unparsable, keep the last good content, record the
    issue in `data/state.json`, and still pass validation. Never ship empty rankings.
 
