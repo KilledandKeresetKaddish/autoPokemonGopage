@@ -254,8 +254,9 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .detail-links{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.7rem;}
 .detail-links .btn{text-decoration:none;}
 
-/* inline resource icons (assets/icons/<name>.png via :name: tokens) */
+/* inline resource icons (assets/icons/<name> via :name: tokens) — size LOCKED */
 .ico{width:1.05em;height:1.05em;object-fit:contain;vertical-align:-.16em;margin-right:.1em;}
+.ico-lg{width:24px;height:24px;object-fit:contain;vertical-align:middle;flex:none;}
 
 /* collapsible detail sections (counters / paid options / …) */
 #detail-body details{margin:.5rem 0;border:1px solid var(--line);border-radius:8px;background:rgba(var(--gold-rgb),.04);}

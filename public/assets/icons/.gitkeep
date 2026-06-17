@@ -1,7 +1,13 @@
-# Drop common Pokémon GO icons here, named <token>.png, referenced in event text
-# as :token: (e.g. :stardust: -> assets/icons/stardust.png). Missing files hide
-# gracefully. IMPORTANT: git-commit any icons you add — run-daily.sh's rollback
-# runs `git clean -fdq public`, which deletes untracked files under public/.
+# Icon assets. Referenced in event text as :token: (iconify) or directly in the
+# free-form regions as <img class="ico" src="assets/icons/<file>">. Size is LOCKED
+# by the .ico (inline) / .ico-lg (standalone) CSS classes — always use one.
 #
-# Suggested tokens: stardust candy candy-xl xp incense lure megaenergy ticket
-# pokeball greatball ultraball luckyegg starpiece raidpass remoteraidpass
+# IMPORTANT: git-commit any icons you add. run-daily.sh rollback runs
+# `git clean -fdq public`, which deletes untracked files under public/.
+#
+# token -> file (see the ICONS map in public/app.js):
+#  types: bug dark dragon electric fairy fighting fire flying ghost grass ground
+#         ice poison psychic rock steel water
+#  items: candy xl-candy rare-candy stardust xp lure incense incubator
+#         golden-razz silver-berry pokeball pokestop raid spawn rocket trading
+# Unknown tokens fall back to <token>.png; missing files hide gracefully.

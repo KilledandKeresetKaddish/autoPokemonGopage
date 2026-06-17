@@ -204,8 +204,14 @@ cross-checks). Off-allowlist URLs are refused. Stay
   per event** what's worth surfacing (付费/票务、限时调查步骤、栖息地时段、Field Research 任务、奖励清单…).
   Titles and contents are yours to choose; 付费内容 is just one example. Use them to bring the useful
   detail inline instead of forcing users out to the source link.
-- **Icons:** inside `bonuses`/`sections` text you may use a `:token:` (e.g. `:stardust: 捕捉星尘 ×3`) →
-  renders `public/assets/icons/token.png` if present (missing icons hide gracefully). Use sparingly.
+- **Icons:** the repo ships icons in `public/assets/icons/`, **always at a locked size** via the `ico`
+  (inline) / `ico-lg` (standalone) class. In `bonuses`/`sections` text use a `:token:` (e.g.
+  `:stardust: 捕捉星尘 ×3`, `:water: 水属性`); in the free-form regions write
+  `<img class="ico" src="assets/icons/<file>">`. Tokens — types: `bug dark dragon electric fairy fighting
+  fire flying ghost grass ground ice poison psychic rock steel water`; items: `candy xl-candy rare-candy
+  stardust xp lure incense incubator golden-razz silver-berry pokeball pokestop raid spawn rocket trading`.
+  Unknown tokens fall back to `<token>.png`; missing files hide. Use where it adds clarity (e.g. a type
+  icon next to a counter, an item icon next to a bonus).
 - `link` (single) is kept for back-compat; prefer `links[]` to point at **every** source for the event.
 - `longTerm:true` → renders in the 长期活动 band instead of the grid (auto for season/pass/league
   and spans >~2 weeks; set `false` to force back onto the grid).
@@ -261,7 +267,8 @@ Use **only** these whitelisted, theme-correct classes (no inline colors, no `<st
 - containers: `.panel` / `.panel-head`, `.note-grid` (auto-responsive columns), `.callout` (highlight box)
 - lists/atoms: `.rank-list` / `.rank-item`, `.pill` / `.pillrow`, `.badge`, `.btn` / `.btn-primary`, `.muted`
 - Pokémon/tiers: `.mon-icon`, `.mon-row` / `.mon` / `.shiny`, `.tier` + `.tier-S|tier-A|tier-B|tier-C`
-- sprites: `<img class="spr">` (or `class="mon-icon"`) with the PokeAPI dex-id URL above.
+- sprites/icons: `<img class="spr">` or `class="mon-icon"` (PokeAPI dex-id URL); `<img class="ico">` /
+  `class="ico-lg"` for the local resource icons in `assets/icons/` (size locked).
 
 `rankings-current` should tie today's live events + current raid bosses to the best
 attackers/tanks to use (e.g. a Max/Dynamax event → the relevant Max picks).

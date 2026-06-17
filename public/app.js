@@ -394,11 +394,28 @@ function renderRotations() {
   });
 }
 
-// Replace :name: tokens with a local icon (assets/icons/name.png); missing files
-// hide gracefully. Text is escaped first, so tokens are the only markup injected.
+/* Inline resource icons. Tokens map to the actual asset filenames in
+ * public/assets/icons/ (mixed .png/.webp, some capitalised/spaced). Unknown
+ * tokens fall back to <token>.png so new clean-named icons work without editing
+ * this map. Missing files hide gracefully; size is locked by CSS (.ico/.ico-lg). */
+const ICONS = {
+  // Pokémon types
+  bug:'bug.png', dark:'dark.webp', dragon:'dragon.png', electric:'electric.webp',
+  fairy:'fairy.webp', fighting:'fighting.png', fire:'fire.png', flying:'flying.png',
+  ghost:'ghost.webp', grass:'grass.webp', ground:'ground.webp', ice:'ice.webp',
+  poison:'poison.webp', psychic:'psychic.webp', rock:'rock.webp', steel:'steel.webp', water:'water.webp',
+  // items / activities
+  candy:'candy.png', 'xl-candy':'xl-candy.png', 'rare-candy':'rare-candy.png',
+  stardust:'stardust.png', xp:'xp.png', lure:'lure.png', incense:'incense.png',
+  incubator:'incubators.png', 'golden-razz':'golden-razz-berry.png', 'silver-berry':'silver_berry.webp',
+  pokeball:'poke-ball.png', pokestop:'pokestop.png', raid:'Raid.png', spawn:'Reward%20spawn.png',
+  rocket:'teamrocket_r.png', trading:'trading.png',
+};
+// Replace :name: tokens with a local icon. Text is escaped first, so tokens are
+// the only markup injected (and the token charset is constrained → safe).
 function iconify(s) {
   return escapeHtml(s).replace(/:([a-z0-9_-]{1,24}):/g, (m, n) =>
-    `<img class="ico" src="assets/icons/${n}.png" alt="" onerror="this.style.display='none'">`);
+    `<img class="ico" src="assets/icons/${ICONS[n] || (n + '.png')}" alt="" onerror="this.style.display='none'">`);
 }
 function openDetail(ev) {
   const cat = catOf(ev);
