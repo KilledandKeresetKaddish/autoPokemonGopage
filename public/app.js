@@ -73,6 +73,8 @@ function ymd(d) {
 }
 function parseDay(s) {
   if (!s) return null;
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  if (m) return new Date(+m[1], +m[2] - 1, +m[3]); // pure date → local (no UTC round-trip)
   const d = new Date(s);
   if (isNaN(d.getTime())) return null;
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -195,6 +197,24 @@ function renderCalendar() {
   const todayStr = ymd(new Date());
   const present = new Set();
 
+  // weekly 5★/Mega rotation bosses → one icon per track next to the day number
+  // (driven by rotations.json, which carries pokemon ids; events.json raids don't).
+  const raidsByDay = {};
+  (state.rotations && state.rotations.tracks || [])
+    .filter(t => t.key === '5star' || t.key === 'mega')
+    .forEach(t => (t.segments || []).forEach(seg => {
+      const si = dayDiff(gridStart, parseDay(seg.start));
+      const ei = dayDiff(gridStart, parseDay(seg.end || seg.start));
+      const mons = (seg.pokemon || []).filter(p => p && (p.id || p.sprite));
+      if (!mons.length || isNaN(si) || isNaN(ei) || ei < 0 || si > 41) return;
+      for (let i = Math.max(0, si); i <= Math.min(41, ei); i++) {
+        (raidsByDay[i] = raidsByDay[i] || []).push(
+          { tier: t.key, color: t.color, tag: t.tag, mons, name: seg.cn || seg.name, start: seg.start, end: seg.end });
+      }
+    }));
+  // only let the icons REPLACE the grid bars when we actually have icons this month
+  const hasRaidIcons = Object.keys(raidsByDay).length > 0;
+
   // map every event into grid indices, clipped to the visible 0..41 range
   const bars = [], chipsByDay = {}, longTerm = [];
   state.events.forEach(ev => {
@@ -204,6 +224,9 @@ function renderCalendar() {
     if (ei < 0 || si > 41) return; // outside the visible grid
     // long-running background events leave the grid for the compact band below
     if (isLongTerm(ev)) { longTerm.push(ev); return; }
+    // weekly 5★/Mega bosses show as day-number icons instead — but only drop the
+    // bar when we actually have those icons this month (else keep it as fallback).
+    if (ev.type === 'raid-battles' && hasRaidIcons) return;
     const cat = catOf(ev);
     present.add(ev.type);
     if (cat.kind === 'chip') {
@@ -250,10 +273,30 @@ function renderCalendar() {
 
       const num = document.createElement('div');
       num.className = 'cal-daynum';
-      let tag = '';
-      if (ymd(date) === todayStr) tag = '<span class="tag">今天</span>';
-      else if (date.getDate() === 1) tag = `<span class="moy">${date.getMonth() + 1}月</span>`;
-      num.innerHTML = `<span class="dn">${date.getDate()}</span>${tag}`;
+      const moy = date.getDate() === 1 ? `<span class="moy">${date.getMonth() + 1}月</span>` : '';
+      num.innerHTML = `<span class="dn">${date.getDate()}</span>${moy}`;
+      // weekly raid icons (one per track; cycles if the segment has >1 boss)
+      const raids = inMonth ? (raidsByDay[idx] || []) : [];
+      if (raids.length) {
+        const rbox = document.createElement('div');
+        rbox.className = 'daynum-raids';
+        raids.forEach(rd => {
+          const mons = rd.mons.slice(0, 3);
+          const b = document.createElement('button');
+          b.className = 'raid-ico ' + (rd.tier === '5star' ? 's5' : 'mega') + (mons.length > 1 ? ' slide n' + mons.length : '');
+          if (rd.color) b.style.setProperty('--ring', rd.color);
+          const badge = (rd.tag || (rd.tier === '5star' ? '5★' : 'M')).slice(0, 2);
+          b.title = `${rd.name} · ${fmtDateShort(rd.start)}–${fmtDateShort(rd.end)}`;
+          b.innerHTML = mons.map(p => `<img src="${escapeHtml(monSprite(p))}" alt="" loading="lazy" onerror="this.style.display='none'">`).join('')
+            + `<span class="tg">${escapeHtml(badge)}</span>`;
+          b.addEventListener('click', () => openDetail({
+            name: rd.name, heading: '团战 Boss', type: 'raid-battles',
+            start: rd.start, end: rd.end, pokemon: rd.mons
+          }));
+          rbox.appendChild(b);
+        });
+        num.appendChild(rbox);
+      }
       cell.appendChild(num);
 
       const spacer = document.createElement('div');
@@ -321,12 +364,12 @@ function renderCalendar() {
   }
 
   root.appendChild(weeks);
-  renderLegend(present);
+  renderLegend(present, hasRaidIcons);
   renderLongTerm(longTerm);
 }
 
 // Legend reflects only the categories actually present in the current month.
-function renderLegend(present) {
+function renderLegend(present, hasRaids) {
   const box = $('#cal-legend');
   if (!box) return;
   const seen = new Set();
@@ -339,9 +382,13 @@ function renderLegend(present) {
     items.push(cat);
   });
   items.sort((a, b) => (a.kind === b.kind ? 0 : a.kind === 'bar' ? -1 : 1));
-  box.innerHTML = items.map(c =>
+  let html = items.map(c =>
     `<span class="lg"><i class="${c.kind === 'chip' ? 'round' : ''}" style="background:${c.color}"></i>${escapeHtml(c.label)}</span>`
-  ).join('') || '';
+  ).join('');
+  if (hasRaids) {
+    html += '<span class="lg"><i class="ring s5"></i>5★ 团战</span><span class="lg"><i class="ring mega"></i>超级团战</span>';
+  }
+  box.innerHTML = html || '';
 }
 
 // Compact band of long-running events (season / pass / league / multi-week),

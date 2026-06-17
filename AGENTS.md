@@ -230,19 +230,24 @@ cross-checks). Off-allowlist URLs are refused. Stay
   "month": "2026-06",
   "note": "5★/超级团战每周三轮换 · Max 团战每周轮换",
   "tracks": [
-    { "key": "5star", "label": "5★ 团战", "color": "#b16a5c",
+    { "key": "5star", "label": "5★ 团战", "color": "#d8b25f", "tag": "5★",
       "segments": [
         { "name": "Zekrom", "cn": "捷克罗姆",
           "pokemon": [{ "id": 644, "name": "捷克罗姆" }],
           "start": "2026-06-10", "end": "2026-06-16" }
       ] },
-    { "key": "mega", "label": "超级团战", "color": "#9c7bb0", "segments": [ "…" ] },
+    { "key": "mega", "label": "超级团战", "color": "#9c7bb0", "tag": "M", "segments": [ "…" ] },
     { "key": "max",  "label": "Max 团战", "color": "#bd7f97", "segments": [ "…" ] }
   ]
 }
 ```
-- The three tracks 5★ / Mega / Max. `cn` = displayed name; `pokemon[]` may hold >1 boss (dual
-  rotations). `start`/`end` = `YYYY-MM-DD`. Colors align with the calendar palette.
+- The three tracks 5★ / Mega / Max. `cn` = displayed name; `pokemon[]` may hold >1 boss (dual/triple
+  rotations — they **cycle** inside one day-number icon). `start`/`end` = `YYYY-MM-DD`.
+- **5★ and Mega weekly bosses render as small icons next to each day's number** (the grid no longer
+  draws weekly-raid bars). So keep rotations.json **complete for the whole month**, or those raids
+  vanish from the grid. `color` drives both the rotation section and the day-icon ring — 5★ = gold
+  `#d8b25f`, Mega = purple `#9c7bb0` (Max keeps its own; Max is not a day icon). `tag` (≤2 chars,
+  optional) is the icon's hover badge (default 5★ / M).
 
 `public/data/meta.json`:
 ```json

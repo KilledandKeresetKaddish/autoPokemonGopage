@@ -151,10 +151,40 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .cal-daynum{height:30px;display:flex;align-items:center;gap:6px;}
 .cal-daynum .dn{font-family:var(--display);font-weight:700;font-size:1rem;color:var(--gold-bright);}
 .cal-day.out .cal-daynum .dn{color:var(--gold-dim);font-weight:600;}
-.cal-daynum .tag{font-size:.58rem;font-weight:800;letter-spacing:.08em;color:var(--bg);
-  background:var(--gold);padding:1px 6px;border-radius:6px;}
 .cal-daynum .moy{font-family:var(--sans);font-size:.62rem;font-weight:700;color:var(--gold-dim);
   text-transform:uppercase;letter-spacing:.06em;}
+
+/* weekly 5★/Mega rotation icons next to the day number (from rotations.json) */
+.daynum-raids{display:flex;align-items:center;gap:3px;margin-left:auto;flex:none;}
+.raid-ico{position:relative;width:22px;height:22px;border:0;padding:0;cursor:pointer;flex:none;
+  display:flex;align-items:center;justify-content:center;border-radius:6px;
+  background:rgba(var(--gold-rgb),.08);box-shadow:0 0 0 1.5px var(--ring,var(--gold-line));
+  transition:transform .14s ease, box-shadow .15s;}
+.raid-ico img{width:20px;height:20px;object-fit:contain;image-rendering:pixelated;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.5));}
+.raid-ico:hover{transform:scale(1.7);z-index:6;
+  box-shadow:0 0 0 2px var(--ring,var(--gold-line)),0 3px 12px -2px rgba(0,0,0,.7),0 0 14px -2px var(--ring,var(--gold-line));}
+.raid-ico.s5{--ring:#d8b25f;}
+.raid-ico.mega{--ring:#9c7bb0;}
+/* corner tier badge — hover only (≤2 chars, agent-set via track.tag) */
+.raid-ico .tg{position:absolute;bottom:-3px;left:-3px;font-size:.5rem;font-weight:800;line-height:1;
+  padding:0 2px;border-radius:4px;background:var(--ring,var(--gold-line));color:#1a1206;
+  box-shadow:0 0 4px rgba(0,0,0,.5);opacity:0;transition:opacity .12s;}
+.raid-ico:hover .tg{opacity:1;}
+/* multi-boss slideshow: stacked sprites take turns (negative delays = no startup overlap) */
+.raid-ico.slide img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
+.raid-ico.slide.n2 img{animation:raidcyc2 4s step-end infinite;}
+.raid-ico.slide.n2 img:nth-child(2){animation-delay:-2s;}
+.raid-ico.slide.n3 img{animation:raidcyc3 6s step-end infinite;}
+.raid-ico.slide.n3 img:nth-child(2){animation-delay:-4s;}
+.raid-ico.slide.n3 img:nth-child(3){animation-delay:-2s;}
+@keyframes raidcyc2{0%,50%{opacity:1}50.001%,100%{opacity:0}}
+@keyframes raidcyc3{0%,33.333%{opacity:1}33.334%,100%{opacity:0}}
+/* legend rings for the day icons */
+.lg .ring{width:13px;height:13px;border-radius:5px;display:inline-block;
+  background:rgba(var(--gold-rgb),.12);box-shadow:0 0 0 2px var(--gold-line);}
+.lg .ring.s5{box-shadow:0 0 0 2px #d8b25f;}
+.lg .ring.mega{box-shadow:0 0 0 2px #9c7bb0;}
 
 /* reserves vertical room for the absolutely-positioned spanning bars */
 .cal-barspace{height:var(--bars-h,0px);flex:none;}
@@ -352,6 +382,9 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   .cal-bar{padding:0 4px;font-size:.56rem;gap:3px;}
   .cal-bar .spr{width:12px;height:12px;}
   .cal-chip{font-size:.6rem;}
+  .raid-ico{width:18px;height:18px;}
+  .raid-ico img{width:16px;height:16px;}
+  .daynum-raids{gap:2px;}
   .trk-row{grid-template-columns:1fr;}
   .trk-check{justify-content:flex-start;}
 }
