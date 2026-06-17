@@ -112,8 +112,15 @@ fetch_one() {
 # Ad-hoc single-page fetch, restricted to ALLOW_HOSTS. Prints the page to stdout
 # (site domains go through the CF-solver; raw file/API hosts via plain curl).
 fetch_url() {
-  local url="$1" host
-  host="$(printf '%s' "$url" | sed -E 's#^[a-zA-Z]+://([^/]+).*#\1#')"; host="${host%%:*}"
+  local url="$1" host authority rest
+  # Must be an explicit http(s) URL.
+  [[ "$url" =~ ^https?:// ]] || { echo "REFUSED non-http(s) URL: $url" >&2; return 2; }
+  # Authority = chars after scheme up to the first /, ? or #.
+  rest="${url#*://}"; authority="${rest%%/*}"; authority="${authority%%\?*}"; authority="${authority%%#*}"
+  # Reject userinfo — `host:x@evil.com` would otherwise smuggle a different real
+  # host past the allowlist (curl connects to the part after @).
+  if [[ "$authority" == *@* ]]; then echo "REFUSED URL with userinfo '@': $url" >&2; return 2; fi
+  host="${authority%%:*}"   # strip :port
   local ok=0 d
   for d in "${ALLOW_HOSTS[@]}"; do
     [[ "$host" == "$d" || "$host" == *."$d" ]] && { ok=1; break; }
