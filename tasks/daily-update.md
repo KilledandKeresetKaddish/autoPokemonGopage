@@ -55,3 +55,8 @@ responsibilities.
 
 Stay strictly within the files `AGENTS.md` allows during daily content updates. All
 user-facing text must be 简体中文.
+
+If an **OPERATOR NOTE** block is appended at the very end of this prompt, treat it as a
+one-off extra requirement for this run only: fold it into whichever workstream(s) it
+affects, still bound by every AGENTS.md hard rule — skip and note anything out of scope
+(e.g. a protected-file change) rather than forcing it through.

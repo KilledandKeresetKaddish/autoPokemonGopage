@@ -1,4 +1,19 @@
-作者常用更新: AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina ./scripts/run-daily.sh
+**作者常用指令 (cheat sheet)**
+
+```bash
+# 每日更新(默认:无附加指令)
+AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina ./scripts/run-daily.sh
+
+# 带附加指令(仅本次有效):把今天的额外要求作为第 1 个参数传入。它在"日常更新之外额外执行",
+# 仍受 AGENTS.md 硬规则约束;越界要求会被记录到 data/state.json 并跳过(不会强改受保护文件,
+# 因而也不会整次回滚)。
+AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
+  ./scripts/run-daily.sh "今天把社区日 counters 填全,本月看点写详细点"
+
+# 等价写法:改用环境变量 EXTRA_INSTRUCTIONS(适合多行/复用)
+EXTRA_INSTRUCTIONS="今天……" AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
+  ./scripts/run-daily.sh
+```
 
 
 # pogo-agent
