@@ -273,7 +273,7 @@ function renderCalendar() {
           chip.title = `${ev.name} · ${fmtRange(ev.start, ev.end)}`;
           chip.innerHTML = `<i class="dot"></i>${sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}`
             + (ev.highlight ? '<span class="hl-star">✨</span>' : '')
-            + `<span class="ct">${escapeHtml(cat.label)}</span><span class="cn">${escapeHtml(ev.name)}</span>`;
+            + `<span class="cn">${escapeHtml(ev.name)}</span>`;
           chip.addEventListener('click', () => openDetail(ev));
           cw.appendChild(chip);
         });
@@ -295,13 +295,19 @@ function renderCalendar() {
       const segS = Math.max(b.si, rs), segE = Math.min(b.ei, re);
       const leftCol = segS - rs, span = segE - segS + 1;
       const isL = b.realStart === segS, isR = b.realEnd === segE;
+      const quiet = !b.ev.highlight && !b.cat.bg;   // two-tier weight: solid only for highlight/bands
       const bar = document.createElement('button');
-      bar.className = 'cal-bar' + (isL ? ' l' : '') + (isR ? ' r' : '') + (b.cat.bg ? ' bg' : '') + (b.ev.highlight ? ' hl' : '');
+      bar.className = 'cal-bar' + (isL ? ' l' : '') + (isR ? ' r' : '') + (b.cat.bg ? ' bg' : '')
+        + (b.ev.highlight ? ' hl' : '') + (quiet ? ' q' : '') + (isL ? '' : ' cont');
       bar.style.left = `calc(${leftCol / 7 * 100}% + 3px)`;
       bar.style.width = `calc(${span / 7 * 100}% - 6px)`;
       bar.style.top = (NUM_H + b.lane * LANE_H) + 'px';
-      bar.style.background = b.cat.color;
-      bar.style.color = b.cat.fg;
+      if (quiet) {
+        bar.style.setProperty('--c', b.cat.color);   // .q renders tint + left strip from --c
+      } else {
+        bar.style.background = b.cat.color;
+        bar.style.color = b.cat.fg;
+      }
       const sp = isL && !b.cat.bg ? firstSprite(b.ev) : '';
       bar.title = `${b.ev.name} · ${fmtRange(b.ev.start, b.ev.end)}`;
       bar.innerHTML = (sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')

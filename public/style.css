@@ -18,7 +18,7 @@
   --line:rgba(199,154,79,.26);
   --line-soft:rgba(199,154,79,.14);
   --radius:12px;
-  --cell-min:118px;
+  --cell-min:112px;
   --serif:Georgia,Cambria,"Times New Roman","Songti SC","STSong",SimSun,"Source Han Serif SC","Noto Serif CJK SC",serif;
   --sans:system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;
   --display:"SF Pro Rounded",system-ui,-apple-system,"Segoe UI","PingFang SC",sans-serif;
@@ -167,14 +167,12 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .cal-chip:hover{background:color-mix(in srgb, var(--c) 28%, transparent);border-color:var(--c);}
 .cal-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--c);flex:none;box-shadow:0 0 6px var(--c);}
 .cal-chip .spr{width:16px;height:16px;object-fit:contain;flex:none;image-rendering:pixelated;}
-.cal-chip .ct{font-weight:800;font-size:.56rem;letter-spacing:.04em;text-transform:uppercase;
-  color:color-mix(in srgb, var(--c) 70%, #fff);flex:none;}
 .cal-chip .cn{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--gold-bright);}
 .cal-more{font-size:.62rem;color:var(--muted);padding-left:3px;font-weight:600;}
 
 /* spanning bars */
 .cal-barlayer{position:absolute;inset:0;pointer-events:none;}
-.cal-bar{position:absolute;height:20px;display:flex;align-items:center;gap:5px;
+.cal-bar{position:absolute;height:18px;display:flex;align-items:center;gap:5px;
   padding:0 7px;font-size:.7rem;font-weight:700;letter-spacing:.01em;white-space:nowrap;
   overflow:hidden;border:0;border-radius:2px;cursor:pointer;pointer-events:auto;
   box-shadow:inset 0 0 0 1px rgba(0,0,0,.16), 0 2px 7px rgba(0,0,0,.34);}
@@ -193,6 +191,14 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .cal-bar.hl{box-shadow:inset 0 0 0 1px var(--gold-bright), 0 0 10px rgba(var(--gold-rgb),.55), 0 2px 7px rgba(0,0,0,.34);}
 .cal-chip.hl{border-color:var(--gold-bright);box-shadow:0 0 8px rgba(var(--gold-rgb),.4);}
 .hl-star{flex:none;font-size:.78em;line-height:1;filter:drop-shadow(0 0 3px rgba(var(--gold-rgb),.85));}
+
+/* two-tier weight: regular bars are "quiet" (tint + left strip, like chips);
+   only highlight/band bars keep a solid fill. */
+.cal-bar.q{background:color-mix(in srgb, var(--c) 15%, transparent);color:var(--gold-bright);
+  border-left:3px solid var(--c);box-shadow:none;font-weight:600;}
+.cal-bar.q:hover{background:color-mix(in srgb, var(--c) 26%, transparent);}
+/* continuation segments (later week-rows of a multi-week bar): fade the repeated name */
+.cal-bar.cont .bn{opacity:.5;font-weight:600;}
 
 /* notes panel */
 .cal-notes{padding:.85rem 1.05rem;margin-top:1rem;}
@@ -336,7 +342,6 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 @media (max-width:760px){
   :root{--cell-min:96px;}
   .cal-bar{font-size:.62rem;padding:0 5px;}
-  .cal-chip .ct{display:none;}
 }
 @media (max-width:560px){
   :root{--cell-min:80px;}
