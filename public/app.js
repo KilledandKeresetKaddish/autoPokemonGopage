@@ -394,12 +394,31 @@ function renderRotations() {
   });
 }
 
+// Replace :name: tokens with a local icon (assets/icons/name.png); missing files
+// hide gracefully. Text is escaped first, so tokens are the only markup injected.
+function iconify(s) {
+  return escapeHtml(s).replace(/:([a-z0-9_-]{1,24}):/g, (m, n) =>
+    `<img class="ico" src="assets/icons/${n}.png" alt="" onerror="this.style.display='none'">`);
+}
 function openDetail(ev) {
   const cat = catOf(ev);
   const mons = (ev.pokemon || []).map(p =>
     `<figure class="mon"><img class="mon-icon" src="${escapeHtml(spriteUrl(p.id))}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'">${p.shiny ? '<span class="shiny">✨</span>' : ''}<figcaption>${escapeHtml(p.name)}</figcaption></figure>`
   ).join('');
-  const bonuses = (ev.bonuses || []).map(b => `<li>${escapeHtml(b)}</li>`).join('');
+  const bonuses = (ev.bonuses || []).map(b => `<li>${iconify(b)}</li>`).join('');
+  // Best counters → collapsible, sprite + recommended moves.
+  const counters = (ev.counters || []).filter(c => c && (c.id || c.name)).map(c => {
+    const moves = [c.fast, c.charged].filter(Boolean).map(escapeHtml).join(' / ');
+    return `<div class="ctr-row">`
+      + (c.id ? `<img class="spr" src="${escapeHtml(spriteUrl(c.id))}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
+      + `<div><strong>${escapeHtml(c.name || '')}</strong>${moves ? `<div class="ctr-moves">${moves}</div>` : ''}</div></div>`;
+  }).join('');
+  // Generic extra sections (paid/ticketed options, special research, …) → collapsible.
+  const sections = (ev.sections || []).filter(s => s && s.title).map(s => {
+    const items = (s.items || []).map(it => `<li>${iconify(it)}</li>`).join('');
+    const body = items ? `<ul>${items}</ul>` : (s.body ? `<p>${iconify(s.body)}</p>` : '');
+    return `<details><summary>${escapeHtml(s.title)}</summary><div class="det-body">${body}</div></details>`;
+  }).join('');
   // Prefer the aggregated multi-source links[]; fall back to the legacy single link.
   const linkList = (ev.links && ev.links.length) ? ev.links
     : (ev.link ? [{ label: '活动页', url: ev.link }] : []);
@@ -415,6 +434,8 @@ function openDetail(ev) {
     ${ev.summary ? `<p class="detail-summary">${escapeHtml(ev.summary)}</p>` : ''}
     ${mons ? `<div class="mon-row">${mons}</div>` : ''}
     ${bonuses ? `<h4>加成</h4><ul>${bonuses}</ul>` : ''}
+    ${counters ? `<details><summary>团战 Counter</summary><div class="det-body">${counters}</div></details>` : ''}
+    ${sections}
     ${links ? `<div class="detail-links">${links}</div>` : ''}
   `;
   $('#event-detail').hidden = false;

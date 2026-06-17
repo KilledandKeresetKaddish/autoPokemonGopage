@@ -1,0 +1,7 @@
+# Drop common Pokémon GO icons here, named <token>.png, referenced in event text
+# as :token: (e.g. :stardust: -> assets/icons/stardust.png). Missing files hide
+# gracefully. IMPORTANT: git-commit any icons you add — run-daily.sh's rollback
+# runs `git clean -fdq public`, which deletes untracked files under public/.
+#
+# Suggested tokens: stardust candy candy-xl xp incense lure megaenergy ticket
+# pokeball greatball ultraball luckyegg starpiece raidpass remoteraidpass

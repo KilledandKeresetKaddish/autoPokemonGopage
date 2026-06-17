@@ -254,6 +254,23 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .detail-links{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.7rem;}
 .detail-links .btn{text-decoration:none;}
 
+/* inline resource icons (assets/icons/<name>.png via :name: tokens) */
+.ico{width:1.05em;height:1.05em;object-fit:contain;vertical-align:-.16em;margin-right:.1em;}
+
+/* collapsible detail sections (counters / paid options / …) */
+#detail-body details{margin:.5rem 0;border:1px solid var(--line);border-radius:8px;background:rgba(var(--gold-rgb),.04);}
+#detail-body summary{cursor:pointer;padding:.45rem .7rem;font-family:var(--serif);font-weight:600;color:var(--gold-bright);list-style:none;}
+#detail-body summary::-webkit-details-marker{display:none;}
+#detail-body summary::after{content:'▸';float:right;opacity:.65;}
+#detail-body details[open] summary::after{content:'▾';}
+#detail-body details[open] summary{border-bottom:1px solid var(--line);}
+#detail-body .det-body{padding:.45rem .7rem;}
+#detail-body .det-body ul{margin:.2rem 0;padding-left:1.1rem;}
+.ctr-row{display:flex;align-items:center;gap:.5rem;padding:.28rem 0;}
+.ctr-row .spr{width:32px;height:32px;object-fit:contain;image-rendering:pixelated;flex:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5));}
+.ctr-row strong{color:var(--h1);}
+.ctr-moves{color:var(--muted);font-size:.8rem;}
+
 /* ---------- Rankings ---------- */
 .subtabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.1rem;}
 .subtabs button{font-family:var(--serif);font-size:.98rem;letter-spacing:.05em;font-weight:600;

@@ -119,6 +119,9 @@ cross-checks). Off-allowlist URLs are refused. Stay
    - **Populate Pokémon, bonuses & a summary.** Fill `pokemon[]` (dex id + 简体中文 name + `shiny`),
      `bonuses[]`, and a **concise 简体中文 `summary`** (1–2 sentences) for every event from the articles —
      so the calendar isn't empty and the detail drawer is actually useful (not just a title + date).
+   - **Inline the detail so users needn't click out.** For raid / mega / raid-day events, fill
+     `counters[]` (best attackers + moves) from the Hub raid guide or `db.pokemongohub.net`; put
+     paid/ticketed options or special-research steps in `sections[]`. Both render as collapsible blocks.
    - **Flag long-running events.** Set `longTerm:true` on season / GO Pass / GO Battle League and
      anything spanning more than ~2 weeks — they render in the 长期活动 band, not the day grid
      (this is what keeps headline short events visible). `longTerm:false` forces a borderline
@@ -179,6 +182,8 @@ cross-checks). Off-allowlist URLs are refused. Stay
   ],
   "bonuses": ["双倍星尘", "..."],
   "pokemon": [{ "name": "皮卡丘", "id": 25, "shiny": true }],
+  "counters": [{ "id": 248, "name": "班基拉斯", "fast": "齿突", "charged": "啃咬" }],
+  "sections": [{ "title": "付费内容", "items": [":ticket: 票务 4.99 美元", "..."] }],
   "longTerm": false,
   "highlight": false
 }
@@ -186,6 +191,13 @@ cross-checks). Off-allowlist URLs are refused. Stay
 - `start`/`end` ISO 8601; `end` may equal `start`. `summary`/`bonuses`/`pokemon`/`links`/`longTerm`/`highlight` optional.
 - `summary`: a **concise 简体中文** description (1–2 sentences), shown as a paragraph in the detail drawer
   so the panel isn't just a title + date.
+- `counters`: best raid/团战 counters (`id` for the sprite + 简体中文 `name` + optional `fast`/`charged`
+  moves) → rendered as a collapsible "团战 Counter" block. Fill for raid / mega / raid-day events from the
+  Hub raid guide or `db.pokemongohub.net`, justified by `gamemaster` — **don't invent**.
+- `sections`: extra collapsible blocks `[{ "title": "...", "items": ["..."] }]` (e.g. 付费内容/票务,
+  限时调查步骤) so heavy detail is one click away instead of forcing users out to the source link.
+- **Icons:** inside `bonuses`/`sections` text you may use a `:token:` (e.g. `:stardust: 捕捉星尘 ×3`) →
+  renders `public/assets/icons/token.png` if present (missing icons hide gracefully). Use sparingly.
 - `link` (single) is kept for back-compat; prefer `links[]` to point at **every** source for the event.
 - `longTerm:true` → renders in the 长期活动 band instead of the grid (auto for season/pass/league
   and spans >~2 weeks; set `false` to force back onto the grid).
