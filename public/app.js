@@ -123,9 +123,14 @@ function fmtDateShort(s) {
   const d = new Date(s); if (isNaN(d.getTime())) return s || '';
   return `${d.getMonth() + 1}月${d.getDate()}日`;
 }
+// Sprite for a pokemon/counter/rotation entry: an explicit `sprite` URL wins
+// (needed for Mega/Primal/GMax/regional forms the base dex id can't represent),
+// else the national-dex sprite from `id`.
+function monSprite(p) {
+  return p ? (p.sprite || (p.id ? spriteUrl(p.id) : '')) : '';
+}
 function firstSprite(ev) {
-  const p = (ev.pokemon || [])[0];
-  return p && p.id ? spriteUrl(p.id) : '';
+  return monSprite((ev.pokemon || [])[0]);
 }
 
 /* ---------- data ---------- */
@@ -381,9 +386,10 @@ function renderRotations() {
       const row = document.createElement('div');
       row.className = 'rot-seg';
       row.style.setProperty('--c', color);
-      const mons = (seg.pokemon || []).map(p =>
-        p && p.id ? `<img class="spr" src="${escapeHtml(spriteUrl(p.id))}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''
-      ).join('');
+      const mons = (seg.pokemon || []).map(p => {
+        const sp = monSprite(p);
+        return sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '';
+      }).join('');
       const range = (seg.start || seg.end)
         ? `<span class="rot-range">${escapeHtml(fmtDateShort(seg.start))}${seg.end && seg.end !== seg.start ? '–' + escapeHtml(fmtDateShort(seg.end)) : ''}</span>`
         : '';
@@ -420,14 +426,15 @@ function iconify(s) {
 function openDetail(ev) {
   const cat = catOf(ev);
   const mons = (ev.pokemon || []).map(p =>
-    `<figure class="mon"><img class="mon-icon" src="${escapeHtml(spriteUrl(p.id))}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'">${p.shiny ? '<span class="shiny">✨</span>' : ''}<figcaption>${escapeHtml(p.name)}</figcaption></figure>`
+    `<figure class="mon"><img class="mon-icon" src="${escapeHtml(monSprite(p))}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'">${p.shiny ? '<span class="shiny">✨</span>' : ''}<figcaption>${escapeHtml(p.name)}</figcaption></figure>`
   ).join('');
   const bonuses = (ev.bonuses || []).map(b => `<li>${iconify(b)}</li>`).join('');
   // Best counters → collapsible, sprite + recommended moves.
-  const counters = (ev.counters || []).filter(c => c && (c.id || c.name)).map(c => {
+  const counters = (ev.counters || []).filter(c => c && (c.id || c.name || c.sprite)).map(c => {
     const moves = [c.fast, c.charged].filter(Boolean).map(escapeHtml).join(' / ');
+    const csp = monSprite(c);
     return `<div class="ctr-row">`
-      + (c.id ? `<img class="spr" src="${escapeHtml(spriteUrl(c.id))}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
+      + (csp ? `<img class="spr" src="${escapeHtml(csp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
       + `<div><strong>${escapeHtml(c.name || '')}</strong>${moves ? `<div class="ctr-moves">${moves}</div>` : ''}</div></div>`;
   }).join('');
   // Generic extra sections (paid/ticketed options, special research, …) → collapsible.

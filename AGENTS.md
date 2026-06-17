@@ -197,6 +197,11 @@ cross-checks). Off-allowlist URLs are refused. Stay
 - `start`/`end` ISO 8601; `end` may equal `start`. `summary`/`bonuses`/`pokemon`/`links`/`longTerm`/`highlight` optional.
 - `summary`: a **concise 简体中文** description (1–2 sentences), shown as a paragraph in the detail drawer
   so the panel isn't just a title + date.
+- **Sprites & forms:** `pokemon[]` / `counters[]` / rotation segments take `id` (national-dex →
+  `…/sprites/pokemon/<id>.png`) + 简体中文 `name` (+ `shiny`). The base id shows the **base** sprite —
+  for **Mega / Primal / Gigantamax / regional** forms set the form's sprite instead: use the form's
+  PokeAPI *pokemon* id as `id`, or add `"sprite": "<url>"` from `pokeapi.co/api/v2/pokemon/<name>/`
+  (`sprites.front_default`; e.g. `scizor-mega`, `skarmory-mega`, `raichu-mega-x`). pokeapi.co is allowlisted.
 - `counters`: best raid/团战 counters (`id` for the sprite + 简体中文 `name` + optional `fast`/`charged`
   moves) → rendered as a collapsible "团战 Counter" block. Fill for raid / mega / raid-day events from the
   Hub raid guide or `db.pokemongohub.net`, justified by `gamemaster` — **don't invent**.
