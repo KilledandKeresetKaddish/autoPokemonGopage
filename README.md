@@ -16,6 +16,18 @@ EXTRA_INSTRUCTIONS="今天……" AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=clau
 ```
 
 
+推送用指令:
+```
+# 1) 先看这次跑产出了什么、本地比 GitHub 领先哪些提交
+git fetch origin main
+git log --oneline origin/main..main     # 应看到一条 chore(daily): content update 2026-06-…
+git status                               # 工作区应是 clean(raw/logs 是 gitignore,正常)
+
+# 2) 推送
+git push origin main
+```
+
+
 # pogo-agent
 
 A self-contained **Pokémon GO dashboard** that a coding-agent CLI updates **once a
