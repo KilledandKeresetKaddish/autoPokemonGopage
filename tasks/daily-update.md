@@ -1,35 +1,62 @@
-# 每日更新任务 (daily update)
+# 每日更新任务 (daily coordinator)
 
-You are the daily operator for this Pokémon GO dashboard. Your working directory is
+You are the **coordinator** for this Pokémon GO dashboard. Your working directory is
 this repository. **Read `AGENTS.md` first and follow it exactly** — it defines what
-you may edit, the hard rules, the data sources, and the schemas.
+you may edit, the hard rules, the data sources, schemas, and validation gate.
 
-Do this now:
+This run is intentionally split into focused sub-agent workstreams. If your coding
+agent supports sub-agents / parallel workers — e.g. Pi via a sub-agent extension
+(`pi-subagents` / `pi-sub-agent`), which runs each brief in an isolated `--no-session`
+subprocess (optionally worktree-isolated) — delegate each brief below as a bounded
+read-only or write scope. The only concurrent step is **Calendar ∥ Rotations** (2
+tasks, well within the default maxTasks 8 / concurrency 4); every other phase is
+sequential. Isolated sub-agents do **not** inherit this prompt, so each brief restates
+that it must read `AGENTS.md` first. If your agent has no sub-agent support, execute
+the same phases yourself in order; the briefs are still the checklist of
+responsibilities.
 
-1. Read `AGENTS.md` and `data/state.json`.
-2. Run `scripts/fetch.sh list`; fetch only what's stale or needed, e.g.
-   `scripts/fetch.sh events raids events-hub events-pokebase tiers-attackers`. Don't refetch blindly.
-3. Read the raw files in `data/raw/`. Adapt to their current structure.
-4. Rewrite `public/data/events.json` (schema in AGENTS.md). Backbone = `events` (ScrapedDuck),
-   then **merge the four event sources**: dedup the same real-world event to ONE row, aggregate
-   each source's URL into `links[]`, fill `pokemon[]`/`bonuses[]`, and flag long-running events
-   (`longTerm:true` for season / pass / league / >2-week). **Keep current + next month, drop
-   events that ended before this month, use stable ids — no duplicates, no unbounded growth.**
-5. Rewrite `public/data/rotations.json`: this month's 5★ / Mega / Max weekly boss rotation,
-   parsed from the Hub monthly article (+ `raids.json`). Parse the bosses — never invent them.
-6. Refresh the rankings regions in `public/index.html`:
-   - `rankings-attackers` / `rankings-defenders` ← parse `data/raw/tiers-*.txt` (+ `tiers-pokebase`
-     cross-check; surface the per-type 属性榜). Parse the lists — don't decide rankings yourself.
-   - `rankings-raid` ← current bosses from `data/raw/raids.json` + counters justified by
-     `data/raw/gamemaster.json`.
-   - `rankings-current` (**free-form, most important**) ← what matters today: ongoing events +
-     current raid bosses, and the best attackers/tanks to use for them.
-   - `calendar-notes` ← free-form 本月看点. (Both free-form regions: use only the whitelisted classes.)
-7. Update `public/data/meta.json` (`lastUpdated` = now, ISO 8601) and record per-source fetch
-   times/notes in `data/state.json`.
-8. Self-check (no duplicate ids, `links[]` aggregated, nothing >3 months old, long events flagged),
-   then run `scripts/validate.sh` and fix whatever it reports until it passes.
-9. Delete any duplicated or placeholder(waiting for annocement) event when there is an update, be smart.
+## Sub-agent briefs
 
-Stay strictly within the files AGENTS.md allows. All user-facing text in 简体中文.
-If a source is unreachable, keep the last good content and note it in `data/state.json`.
+- `tasks/subagents/00-source-scout.md` — inspect `data/state.json`, run
+  `scripts/fetch.sh list`, decide what is stale, fetch only needed sources, and
+  summarize source health / notable raw-file structure changes.
+- `tasks/subagents/10-calendar-curator.md` — own `public/data/events.json` and,
+  only if needed for new event types, `public/data/categories.json`.
+- `tasks/subagents/20-rotation-curator.md` — own `public/data/rotations.json`.
+- `tasks/subagents/30-ranking-curator.md` — own only the AI-marked ranking / notes
+  regions inside `public/index.html`.
+- `tasks/subagents/90-state-validator.md` — own `public/data/meta.json` and
+  `data/state.json`, then run validation after all content owners finish.
+
+## Coordinator sequence
+
+1. Read `AGENTS.md`, `data/state.json`, and every sub-agent brief above.
+2. Run the Source Scout phase first. Do **not** blindly refetch everything; refresh
+   by age / relevance using only `scripts/fetch.sh`.
+3. After the raw sources are available, run Calendar and Rotations as separate
+   workstreams. They may run in parallel because their write scopes are disjoint:
+   - Calendar writes `public/data/events.json` and maybe `public/data/categories.json`.
+   - Rotations writes `public/data/rotations.json`.
+4. Wait for Calendar and Rotations to finish, then start Rankings with the finalized
+   `public/data/events.json` and `public/data/rotations.json` (or pass those exact
+   results explicitly). Rankings must not build `calendar-notes` or
+   `rankings-current` from previous/stale calendar or rotation files while sibling
+   workstreams are still writing today's outputs. Rankings writes only inside the
+   five allowed AI markers in `public/index.html`.
+5. Run the State + Validator phase last: it sets `public/data/meta.json.lastUpdated`,
+   records fixed per-source notes in `data/state.json` (it is the **sole writer** of
+   `data/state.json`), self-checks, and runs `scripts/validate.sh`. **You (the
+   coordinator) own the fix loop:** if validation fails, read the reported failures,
+   re-dispatch the responsible owner (Calendar / Rotations / Rankings) to fix its own
+   scope, then re-run validation — repeat until it passes. State + Validator reports; it
+   never reaches into another owner's scope.
+6. If a source is unreachable or unparsable, keep the last good content, record the
+   issue in `data/state.json`, and still pass validation. Never ship empty rankings.
+
+Stay strictly within the files `AGENTS.md` allows during daily content updates. All
+user-facing text must be 简体中文.
+
+If an **OPERATOR NOTE** block is appended at the very end of this prompt, treat it as a
+one-off extra requirement for this run only: fold it into whichever workstream(s) it
+affects, still bound by every AGENTS.md hard rule — skip and note anything out of scope
+(e.g. a protected-file change) rather than forcing it through.

@@ -21,7 +21,48 @@ echo "===== daily run $(date -u +%FT%TZ) ====="
 find logs -maxdepth 1 -name 'daily-*.log' -type f -mtime +30 -delete 2>/dev/null || true
 
 AGENT_CLI="${AGENT_CLI:-claude}"
+
+# The agent prompt = the coordinator brief + every sub-agent brief, concatenated so
+# the coordinator (and the single-agent fallback) has the full delegated detail
+# in-context, not just file references. Briefs are ordered by their 00/10/20/30/90
+# filename prefixes. (When real sub-agents are used they still read their own brief
+# file directly; this just guarantees the coordinator sees everything.)
 PROMPT="$(cat tasks/daily-update.md)"
+for brief in tasks/subagents/*.md; do
+  [ -f "$brief" ] || continue
+  PROMPT+="
+
+===== begin $brief =====
+
+$(cat "$brief")
+
+===== end $brief ====="
+done
+
+# Optional one-off operator instruction for THIS run only. Priority: positional arg
+# $1 > $EXTRA_INSTRUCTIONS env > none. Appended AFTER the coordinator + briefs so it
+# reads as an addendum, not a replacement. Leave both empty for the plain daily update
+# (the default). Still bounded by AGENTS.md + validate.sh — out-of-scope asks are noted
+# and skipped, never forced through.
+EXTRA="${1:-${EXTRA_INSTRUCTIONS:-}}"
+if [ -n "$EXTRA" ]; then
+  PROMPT+="
+
+===== OPERATOR NOTE — THIS RUN ONLY =====
+
+The following is an extra request for this single run. Do it **in addition to** (never
+instead of) the normal daily update, and only **within the AGENTS.md hard rules**: if it
+conflicts with AGENTS.md, AGENTS.md wins and you skip the conflicting part. If it would
+require editing protected files (app.js / style.css / scripts / index.html outside the
+AI markers), do NOT attempt it — record it in data/state.json for a developer instead,
+so this run still passes validation.
+
+$EXTRA
+
+===== END OPERATOR NOTE ====="
+  echo "--- operator note injected (this run only) ---"
+  printf '%s\n' "$EXTRA"
+fi
 
 run_agent() {
   case "$AGENT_CLI" in

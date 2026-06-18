@@ -4,13 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pokémon GO 面板</title>
-  <link rel="stylesheet" href="style.css?v=10" />
+  <link rel="stylesheet" href="style.css?v=12" />
 </head>
 <body>
   <!-- =====================================================================
        PROTECTED structure. The daily content agent edits ONLY the data files
        and the marked editable regions below. Everything else (masthead, nav,
-       calendar shell, tracker) is owner-maintained. Keep every required id and
+       calendar shell) is owner-maintained. Keep every required id and
        every editable-region marker pair intact, or validation rolls the run back.
        ===================================================================== -->
 
@@ -18,7 +18,7 @@
 
   <header class="masthead">
     <div class="orn"><span class="dia">✦ &nbsp;◆&nbsp; ✦</span></div>
-    <p class="kicker">Pokémon GO · Codex</p>
+    <p class="kicker">Pokémon GO Calendar · Pi-agent</p>
     <h1 class="site-title">Pokémon GO 面板</h1>
     <p class="meta"><span id="last-updated" class="muted">加载中…</span></p>
   </header>
@@ -26,7 +26,8 @@
   <nav class="tabs" id="main-tabs">
     <button data-view="calendar" class="active"><span class="t-ico">☾</span> 当月日历</button>
     <button data-view="rankings"><span class="t-ico">⚔</span> 战力榜</button>
-    <button data-view="tracker"><span class="t-ico">✓</span> 我的打卡</button>
+    <button data-view="clock"><span class="t-ico">🕓</span> 世界时钟</button>
+    <button data-view="links"><span class="t-ico">🔗</span> 实用链接</button>
   </nav>
 
   <main>
@@ -79,7 +80,7 @@
         <button data-rank="current" class="active">🔥 本期推荐</button>
         <button data-rank="attackers">Max 攻手</button>
         <button data-rank="defenders">Max 坦克</button>
-        <button data-rank="raid">团战 Counter</button>
+        <button data-rank="raid">当前团战 Counter</button>
       </nav>
 
       <div class="rank-body">
@@ -100,22 +101,28 @@
         </div>
         <div class="rank-panel" data-rank-panel="raid">
           <!-- AI:START rankings-raid -->
-          <p class="muted">团战 Counter 将在每日更新后显示。</p>
+          <p class="muted">当前团战 Counter 将在每日更新后显示。</p>
           <!-- AI:END rankings-raid -->
         </div>
       </div>
     </section>
 
-    <!-- ========================= VIEW 3: TRACKER ========================= -->
-    <!-- Rendered entirely by app.js + localStorage. The content agent never
-         touches this. -->
-    <section id="view-tracker" class="view">
-      <div class="tracker-head">
-        <h2>我的打卡</h2>
-        <span id="tracker-progress" class="badge">0 / 0</span>
+    <!-- ========================= VIEW 3: WORLD CLOCK ========================= -->
+    <!-- Placeholder — owner-maintained (no AI region; the daily agent never fills it). -->
+    <section id="view-clock" class="view">
+      <div class="panel">
+        <div class="panel-head"><span class="dia">◆</span><h3>世界时钟</h3></div>
+        <p class="muted">世界时钟即将上线。</p>
       </div>
-      <p class="muted">5 个账号 · 每日金币 / Pass 点 / Raid · 跨日自动重置(按本机日期)</p>
-      <div id="tracker"></div>
+    </section>
+
+    <!-- ========================= VIEW 4: USEFUL LINKS ========================= -->
+    <!-- Placeholder — owner-maintained (no AI region; the daily agent never fills it). -->
+    <section id="view-links" class="view">
+      <div class="panel">
+        <div class="panel-head"><span class="dia">◆</span><h3>实用链接</h3></div>
+        <p class="muted">实用链接即将上线。</p>
+      </div>
     </section>
   </main>
 
@@ -125,8 +132,9 @@
       (via ScrapedDuck) · 属性 <a href="https://pvpoke.com/" target="_blank" rel="noopener">PvPoke</a>
       · 图标 <a href="https://pokeapi.co/" target="_blank" rel="noopener">PokeAPI</a>
     </span>
+    <div class="muted">by: adonais·anabiosis</div>
   </footer>
 
-  <script src="app.js?v=10" defer></script>
+  <script src="app.js?v=12" defer></script>
 </body>
 </html>

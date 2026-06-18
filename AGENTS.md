@@ -13,9 +13,16 @@ formats change: never assume fixed field positions; **re-read and adapt every ru
 
 UI text shown to users must be **Simplified Chinese (简体中文)**.
 
+**Never write a Pokémon name or move from memory.** Every 简体中文 Pokémon name and move you
+emit — events `pokemon[]`/`counters[]`, rotation segment names, ranking panels — must be
+confirmed against `data/raw/gamemaster.json` (dex → species / move) or an allowlisted
+`pokeapi.co` lookup *before* you write it. If you cannot verify it, omit it or keep the
+source's English/romanized form — a hallucinated or garbled name is worse than none, and
+`validate.sh` only checks **structure**, so it cannot catch a wrong name.
+
 ---
 
-## The site (3 sections)
+## The site (2 content sections + owner placeholders)
 1. **Calendar** (`#view-calendar`) — month grid **+ a 长期活动 band** (long-running events
    pulled out of the grid) **+ a 本月 Weekly Rotations** section. Data-driven from
    `public/data/events.json` and `public/data/rotations.json`: short headline events live in
@@ -23,8 +30,9 @@ UI text shown to users must be **Simplified Chinese (简体中文)**.
    boss rotation renders from `rotations.json`.
 2. **Rankings** (`#view-rankings`) — Max attackers / Max defenders / raid counters, plus
    a "本期推荐" panel tied to what's live right now.
-3. **Tracker** (`#view-tracker`) — the user's personal daily checkboxes. **Not your
-   concern. Never read or touch it.**
+The other two views — **世界时钟** (`#view-clock`) and **实用链接** (`#view-links`) — are
+**owner-maintained placeholders** (static, no AI markers). **Not your concern — never read
+or touch them.**
 
 ## What you MAY edit — and nothing else
 - `public/data/events.json` — the normalized events array the calendar + 长期活动 band render.
@@ -119,7 +127,9 @@ cross-checks). Off-allowlist URLs are refused. Stay
      add each **real** URL to `links[]` with a label (`LeekDuck` / `Hub` / `Pokébase` / `官方`). If a
      source clearly covers the event but the bulk feed didn't surface the URL, fetch it on demand
      (`scripts/fetch.sh url …`) and grab the real link. **Use real URLs only — never guess or construct
-     a link you haven't seen.** Most events should end up with ≥2 source links; LeekDuck-only is the
+     a link you haven't seen. Confirm each link is about THIS exact event/Pokémon — not a same-category
+     article for a different one (a Roggenrola Max Monday must NOT link Electabuzz's guide); if you
+     can't find the right-Pokémon URL, omit it rather than attach a wrong one.** Most events should end up with ≥2 source links; LeekDuck-only is the
      exception, not the default. Keep `link` = the primary one.
    - **Populate Pokémon, bonuses & a summary.** Fill `pokemon[]` (dex id + 简体中文 name + `shiny`),
      `bonuses[]`, and a **concise 简体中文 `summary`** (1–2 sentences) for every event from the articles —
@@ -154,15 +164,21 @@ cross-checks). Off-allowlist URLs are refused. Stay
      (Jina output is markdown: `## S Tier` … headers + tables. A Pokémon's national-dex id is
      embedded in its artwork URL, e.g. `…/detail/861_gmax.png` → id 861; strip suffixes like
      `_gmax`. **Adapt if the layout changes. Parse the lists — do not decide rankings yourself.**)
-   - `rankings-raid` → from current bosses in `data/raw/raids.json`, list each boss with a few
-     top counters (justify with `gamemaster` stats/types — don't invent numbers).
-   - `rankings-current` (**free-form, highest value**) → synthesize what matters *today*
-     (see *Free-form synthesis* below).
+   - `rankings-raid` (**当前团战 Counter**) → counters for what's **live right now**: current raid
+     bosses from `data/raw/raids.json` **and any active Max/Dynamax battle** (e.g. an in-event
+     Dynamax boss) — each with a few top counters (justify with `gamemaster` types — don't invent
+     numbers). Then add a **brief Mega Booster** line: which Mega to evolve to boost **candy** for
+     the relevant Pokémon (same-type Mega → +糖). Keep it short.
+   - `rankings-current` (本期推荐, **free-form, highest value**) → **editorial / priority**, not a
+     counter dump: which live events to do this period (社区日/团战日/Max周一/聚焦), bonuses, shiny
+     windows, and a directional "练哪类攻手". Full counter tables belong in 当前团战 Counter — point
+     there, don't duplicate them (see *Free-form synthesis* below).
    - `calendar-notes` (**free-form**) → a short 本月看点 (see *Free-form synthesis*).
 7. Set `public/data/meta.json` `lastUpdated` to now (ISO 8601); record per-source fetch
    times/notes in `data/state.json` (a fixed object keyed by source — **not** a growing log).
 8. **Self-check before validating:** one row per real event (no duplicate `id`s), `links[]`
-   aggregated, no event ended >3 months ago, long events flagged, rotations parsed not invented.
+   aggregated, no event ended >3 months ago, long events flagged, rotations parsed not invented,
+   **every 简体中文 name/move verified against `gamemaster` (no hallucinated or garbled names).**
 9. Run `scripts/validate.sh`. Fix what it reports until it passes. (It hard-rejects duplicate
    ids, >250 events, and events ended >100 days ago — so prune and dedup.)
 
