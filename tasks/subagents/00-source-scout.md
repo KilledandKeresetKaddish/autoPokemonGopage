@@ -13,7 +13,11 @@ Goal: make the raw source cache ready for the content curators without over-fetc
 5. Inspect refreshed `data/raw/*` enough to brief downstream agents on:
    - empty / flaky / changed formats;
    - likely monthly article sections for rotations;
-   - event source coverage and any detail pages worth fetching later.
+   - event source coverage and any detail pages worth fetching later;
+   - **missing per-event URLs** — when an event needs a page the bulk feeds don't carry (e.g. a
+     Hub per-boss raid guide), find it with `scripts/discover.sh "<english keywords>"`, verify
+     candidates with `scripts/fetch.sh url`, and hand the confirmed links to the Calendar curator
+     (never guess a URL).
 6. Do not edit any site content or bookkeeping files — including `data/state.json`.
    Report fetch problems in your output; State + Validator (90) is the sole writer of
    `data/state.json` and records them for you.

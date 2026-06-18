@@ -10,6 +10,11 @@ AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina ./scr
 AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
   ./scripts/run-daily.sh "今天把社区日 counters 填全,本月看点写详细点"
 
+# 只管下达自然语言指令 —— AI 自己 discover → fetch → verify(无需你手贴 URL)。缺链接/缺细节时,
+# 它先跑 scripts/discover.sh 找候选 URL,再用 scripts/fetch.sh url 抓取核对,最后才落库。
+AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
+  ./scripts/run-daily.sh "补上超级巨钳螳螂和超级大比鸟的 GOHub 团战指南链接,补全十周年庆典的加成/spawn/闪光,并强制复查本月所有事件链接"
+
 # 等价写法:改用环境变量 EXTRA_INSTRUCTIONS(适合多行/复用)
 EXTRA_INSTRUCTIONS="今天……" AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
   ./scripts/run-daily.sh

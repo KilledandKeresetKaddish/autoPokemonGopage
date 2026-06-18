@@ -13,6 +13,21 @@ formats change: never assume fixed field positions; **re-read and adapt every ru
 
 UI text shown to users must be **Simplified Chinese (简体中文)**.
 
+**You have full network access — use it, never refuse.** You reach the internet **only**
+through `scripts/fetch.sh` and `scripts/discover.sh` (plain Bash commands). You do **not** have
+a model-hosted browser or `web_search` tool — so don't wait for one, and **never tell the
+operator you "have no internet / network / search access."** That is false: those two scripts
+*are* your access, and on this host they run without a sandbox. Whenever a request needs anything
+you can't already confirm from the cache in `data/raw/*` — a link, a date, a bonus, a spawn, a
+shiny, a counter, a Pokémon/move name — **go get it yourself, before you edit or reply**, in this
+order:
+1. **Find the URL** — `scripts/discover.sh "<english keywords>"` returns candidate URLs on the
+   trusted sources. (This is the step `fetch.sh` can't do: `fetch.sh` only downloads URLs you
+   already know; `discover.sh` *finds* them.)
+2. **Open & read it** — `scripts/fetch.sh url <URL>` (or the relevant named bulk source).
+3. **Then edit**, using only what you actually read. **Never guess or hand-build a URL, and never
+   leave a placeholder that blames missing access** — discover, fetch, verify, or omit.
+
 **Never write a Pokémon name or move from memory.** Every 简体中文 Pokémon name and move you
 emit — events `pokemon[]`/`counters[]`, rotation segment names, ranking panels — must be
 confirmed against `data/raw/gamemaster.json` (dex → species / move) or an allowlisted
@@ -55,8 +70,9 @@ or touch them.**
   attributes intact.
 - The HTML you write must be **inert**: no `<script>`, no external CSS/JS.
 - Keep `public/data/*.json` valid JSON in the schemas below.
-- **Fetch only via `scripts/fetch.sh`**: the named sources below, plus ad-hoc detail pages on the
-  allowlisted domains via `scripts/fetch.sh url <URL>` (see *Looking things up*). Never fetch
+- **Fetch only via `scripts/fetch.sh` / `scripts/discover.sh`**: the named sources below, ad-hoc
+  detail pages on the allowlisted domains via `scripts/fetch.sh url <URL>`, and candidate-URL
+  search via `scripts/discover.sh "<keywords>"` (see *Looking things up*). Never fetch
   off-allowlist domains.
 
 ---
@@ -109,6 +125,20 @@ plain curl). **Allowed hosts:** `leekduck.com · pokemongohub.net · pokebase.ap
 raw.githubusercontent.com · pvpoke.com · pokeapi.co` (e.g. `dialgadex.com` for best-attacker-by-type
 cross-checks). Off-allowlist URLs are refused. Stay
 **primarily on the named sources** — use `url` to enrich / corroborate / chase a detail, not to crawl.
+
+**Don't know the URL? Discover it — don't guess.** The feeds give you every LeekDuck link and the
+Hub *index*, but not a specific Hub **guide/article** slug (e.g. a per-boss raid guide). When you
+need a page whose URL you don't already have, search the trusted sources first:
+```
+scripts/discover.sh "mega scizor raid guide"
+scripts/discover.sh "10th anniversary party"
+```
+It matches LeekDuck via the cached `events` feed and searches Pokémon GO Hub (its on-site search,
+through the same Jina solver), printing `SOURCE <tab> TITLE <tab> URL` candidates (also saved under
+`data/raw/discovery/`). **Candidates are leads, not facts:** open each promising one with
+`scripts/fetch.sh url <URL>`, confirm it is the *exact* same event/Pokémon (right boss, right
+month), and only then add it to `links[]`. If nothing fits, record the gap in `data/state.json` —
+never invent a link.
 
 ---
 

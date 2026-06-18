@@ -60,3 +60,9 @@ If an **OPERATOR NOTE** block is appended at the very end of this prompt, treat 
 one-off extra requirement for this run only: fold it into whichever workstream(s) it
 affects, still bound by every AGENTS.md hard rule — skip and note anything out of scope
 (e.g. a protected-file change) rather than forcing it through.
+
+When the note asks you to **add or fix a link, enrich or verify an event, fill in missing details,
+or force a recheck**, that is a fetch job, not a memory job: run `scripts/discover.sh "<english
+keywords>"` to find candidate URLs, open each with `scripts/fetch.sh url <URL>`, and edit only from
+what you read. Do **not** reply that you "can't access the network / search" — you can, via those
+scripts (see AGENTS.md, *"You have full network access — use it, never refuse."*).
