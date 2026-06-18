@@ -28,7 +28,10 @@ Checklist:
    Keep `link` as the primary URL. Never guess a URL you have not seen.
 4. Fill concise 简体中文 `summary`, useful `bonuses[]`, `pokemon[]`, and event-specific
    `sections[]`. For raid / mega / raid-day items, add justified `counters[]` when
-   source data supports it.
+   source data supports it. **Verify every 简体中文 Pokémon name and move against
+   `data/raw/gamemaster.json` (dex → species / move) or an allowlisted `pokeapi.co`
+   lookup before writing it — never from memory; if you can't verify it, omit it or keep
+   the source's English/romanized form rather than inventing one.**
 5. Set `longTerm:true` for season / GO Pass / GO Battle League and spans longer than
    ~2 weeks so they render in the 长期活动 band.
 6. Set `highlight:true` for 社区日, 团战日, and boosted-shiny events. Also mark shiny

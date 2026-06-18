@@ -26,6 +26,7 @@ Checklist:
    - long-running events are flagged;
    - source links are aggregated where available;
    - rotations are parsed / corroborated, not invented;
+   - every 简体中文 Pokémon name & move is verified against `gamemaster` (no hallucinated / garbled names);
    - ranking panels are not empty.
 4. Run `scripts/validate.sh` and report its exact result.
 5. You only report — you never edit another owner's scope. If validation fails, hand

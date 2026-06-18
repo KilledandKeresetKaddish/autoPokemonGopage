@@ -30,7 +30,10 @@ Checklist:
 3. Parse tiers from the source pages, including per-type 属性榜 from attackers. Do not
    decide rankings yourself.
 4. Build `.rank-list` / `.rank-item` rows with `.tier tier-S|tier-A|tier-B|tier-C`,
-   sprites, names, and recommended moves.
+   sprites, names, and recommended moves. **Verify every Pokémon name and move against
+   `data/raw/gamemaster.json` (the dex id is embedded in the source artwork URL → confirm
+   the species) — never write a Chinese name or move from memory; drop anything you can't
+   verify rather than guessing.**
 5. Build `rankings-raid` from current raid bosses and justified counters.
 6. Build both free-form regions from **this run's** finalized `events.json` +
    `rotations.json` only (never previous/stale files): `rankings-current` ties today's

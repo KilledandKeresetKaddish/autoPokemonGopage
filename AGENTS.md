@@ -13,6 +13,13 @@ formats change: never assume fixed field positions; **re-read and adapt every ru
 
 UI text shown to users must be **Simplified Chinese (简体中文)**.
 
+**Never write a Pokémon name or move from memory.** Every 简体中文 Pokémon name and move you
+emit — events `pokemon[]`/`counters[]`, rotation segment names, ranking panels — must be
+confirmed against `data/raw/gamemaster.json` (dex → species / move) or an allowlisted
+`pokeapi.co` lookup *before* you write it. If you cannot verify it, omit it or keep the
+source's English/romanized form — a hallucinated or garbled name is worse than none, and
+`validate.sh` only checks **structure**, so it cannot catch a wrong name.
+
 ---
 
 ## The site (3 sections)
@@ -162,7 +169,8 @@ cross-checks). Off-allowlist URLs are refused. Stay
 7. Set `public/data/meta.json` `lastUpdated` to now (ISO 8601); record per-source fetch
    times/notes in `data/state.json` (a fixed object keyed by source — **not** a growing log).
 8. **Self-check before validating:** one row per real event (no duplicate `id`s), `links[]`
-   aggregated, no event ended >3 months ago, long events flagged, rotations parsed not invented.
+   aggregated, no event ended >3 months ago, long events flagged, rotations parsed not invented,
+   **every 简体中文 name/move verified against `gamemaster` (no hallucinated or garbled names).**
 9. Run `scripts/validate.sh`. Fix what it reports until it passes. (It hard-rejects duplicate
    ids, >250 events, and events ended >100 days ago — so prune and dedup.)
 
