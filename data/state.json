@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-18T11:29:29Z",
+  "lastUpdated": "2026-06-18T14:29:00Z",
   "sources": {
     "events": { "lastFetch": "2026-06-18T11:00:00Z", "status": "ok", "note": "ScrapedDuck/LeekDuck JSON, 46 条 backbone" },
     "raids": { "lastFetch": "2026-06-18T11:00:00Z", "status": "ok", "note": "当前 boss:5★ 奈克洛兹玛、超级巨钳螳螂、暗影帝牙卢卡" },
@@ -11,5 +11,5 @@
     "tiers-defenders": { "lastFetch": "2026-06-18T11:00:00Z", "status": "ok", "note": "Hub Max Defenders;含招式与抗性" },
     "tiers-pokebase": { "lastFetch": "2026-06-18T11:00:00Z", "status": "ok", "note": "交叉对照参考" }
   },
-  "notes": "本次全量重新核对名字:rotations.json 段名、events.json pokemon/counters、战力榜中文名与招式均经 data/raw/gamemaster.json(dex→species)+ pokeapi.co(zh-hans / move zh-hans)确认。修正:rotations.json dex 797 安皇钢 → 铁火辉夜(pokeapi 权威名)。Mega 巨钳螳螂用 form 精灵图 id 10046。链接已确认指向同一宝可梦(石丸子 Max 周一未误挂 Electabuzz 指南)。"
+  "notes": "14:29Z 当日二次运行:缓存均 ~3h 新鲜(events/raids/hub<1d、tiers<3d、gamemaster 3d<7d),未重新抓取;校验已存在内容(events 36/0 重复 id、长期 9、高亮 7、rotations 6 月全月、五个排行区块均非空、当前 boss 奈克洛兹玛/超级巨钳螳螂/暗影帝牙卢卡与石丸子 Max 一致),validate.sh 通过,仅刷新 lastUpdated。上次全量重新核对名字:rotations.json 段名、events.json pokemon/counters、战力榜中文名与招式均经 data/raw/gamemaster.json(dex→species)+ pokeapi.co(zh-hans / move zh-hans)确认。修正:rotations.json dex 797 安皇钢 → 铁火辉夜(pokeapi 权威名)。Mega 巨钳螳螂用 form 精灵图 id 10046。链接已确认指向同一宝可梦(石丸子 Max 周一未误挂 Electabuzz 指南)。"
 }
