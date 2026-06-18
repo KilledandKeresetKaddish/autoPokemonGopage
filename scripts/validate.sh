@@ -24,7 +24,7 @@ fi
 H=public/index.html
 # 2) Required structural tokens must still be present.
 req=(
-  'id="view-calendar"' 'id="view-rankings"'
+  'id="view-calendar"' 'id="view-rankings"' 'id="view-clock"' 'id="view-links"'
   'id="calendar"' 'id="main-tabs"' 'id="rank-subtabs"'
   'id="event-detail"' 'id="last-updated"'
   'id="long-term"' 'id="rotations"'
