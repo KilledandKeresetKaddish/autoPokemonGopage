@@ -126,7 +126,9 @@ cross-checks). Off-allowlist URLs are refused. Stay
      add each **real** URL to `links[]` with a label (`LeekDuck` / `Hub` / `Pokébase` / `官方`). If a
      source clearly covers the event but the bulk feed didn't surface the URL, fetch it on demand
      (`scripts/fetch.sh url …`) and grab the real link. **Use real URLs only — never guess or construct
-     a link you haven't seen.** Most events should end up with ≥2 source links; LeekDuck-only is the
+     a link you haven't seen. Confirm each link is about THIS exact event/Pokémon — not a same-category
+     article for a different one (a Roggenrola Max Monday must NOT link Electabuzz's guide); if you
+     can't find the right-Pokémon URL, omit it rather than attach a wrong one.** Most events should end up with ≥2 source links; LeekDuck-only is the
      exception, not the default. Keep `link` = the primary one.
    - **Populate Pokémon, bonuses & a summary.** Fill `pokemon[]` (dex id + 简体中文 name + `shiny`),
      `bonuses[]`, and a **concise 简体中文 `summary`** (1–2 sentences) for every event from the articles —
@@ -161,10 +163,15 @@ cross-checks). Off-allowlist URLs are refused. Stay
      (Jina output is markdown: `## S Tier` … headers + tables. A Pokémon's national-dex id is
      embedded in its artwork URL, e.g. `…/detail/861_gmax.png` → id 861; strip suffixes like
      `_gmax`. **Adapt if the layout changes. Parse the lists — do not decide rankings yourself.**)
-   - `rankings-raid` → from current bosses in `data/raw/raids.json`, list each boss with a few
-     top counters (justify with `gamemaster` stats/types — don't invent numbers).
-   - `rankings-current` (**free-form, highest value**) → synthesize what matters *today*
-     (see *Free-form synthesis* below).
+   - `rankings-raid` (**当前团战 Counter**) → counters for what's **live right now**: current raid
+     bosses from `data/raw/raids.json` **and any active Max/Dynamax battle** (e.g. an in-event
+     Dynamax boss) — each with a few top counters (justify with `gamemaster` types — don't invent
+     numbers). Then add a **brief Mega Booster** line: which Mega to evolve to boost **candy** for
+     the relevant Pokémon (same-type Mega → +糖). Keep it short.
+   - `rankings-current` (本期推荐, **free-form, highest value**) → **editorial / priority**, not a
+     counter dump: which live events to do this period (社区日/团战日/Max周一/聚焦), bonuses, shiny
+     windows, and a directional "练哪类攻手". Full counter tables belong in 当前团战 Counter — point
+     there, don't duplicate them (see *Free-form synthesis* below).
    - `calendar-notes` (**free-form**) → a short 本月看点 (see *Free-form synthesis*).
 7. Set `public/data/meta.json` `lastUpdated` to now (ISO 8601); record per-source fetch
    times/notes in `data/state.json` (a fixed object keyed by source — **not** a growing log).

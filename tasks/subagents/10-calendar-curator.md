@@ -25,7 +25,9 @@ Checklist:
    placeholder ("待公布 / waiting for announcement") row it replaces — be smart, never
    leave both.
 3. Aggregate real source URLs into `links[]` (`LeekDuck`, `Hub`, `Pokébase`, `官方`).
-   Keep `link` as the primary URL. Never guess a URL you have not seen.
+   Keep `link` as the primary URL. Never guess a URL you have not seen. **Confirm each link is
+   about THIS exact event/Pokémon — not a same-category article for a different one (a Roggenrola
+   Max Monday must NOT link Electabuzz's guide); omit rather than attach a wrong link.**
 4. Fill concise 简体中文 `summary`, useful `bonuses[]`, `pokemon[]`, and event-specific
    `sections[]`. For raid / mega / raid-day items, add justified `counters[]` when
    source data supports it. **Verify every 简体中文 Pokémon name and move against

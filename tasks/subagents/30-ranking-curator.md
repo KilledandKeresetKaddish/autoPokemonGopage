@@ -34,11 +34,15 @@ Checklist:
    `data/raw/gamemaster.json` (the dex id is embedded in the source artwork URL → confirm
    the species) — never write a Chinese name or move from memory; drop anything you can't
    verify rather than guessing.**
-5. Build `rankings-raid` from current raid bosses and justified counters.
+5. Build `rankings-raid` (**当前团战 Counter**) from what's live now — current raid bosses **and any
+   active Max/Dynamax battle** (e.g. Dynamax Regice during its event) — each with justified counters.
+   Then add a **brief Mega Booster** line: which Mega to evolve to farm **candy** for the relevant
+   Pokémon (same-type Mega → +糖). Keep it short.
 6. Build both free-form regions from **this run's** finalized `events.json` +
-   `rotations.json` only (never previous/stale files): `rankings-current` ties today's
-   live events and bosses to useful attackers / tanks; `calendar-notes` is a concise
-   本月看点 in 简体中文.
+   `rotations.json` only (never previous/stale files): `rankings-current` (本期推荐) is
+   **editorial / priority** — which live events to do, bonuses, shiny windows, a directional
+   "练哪类攻手" — **not** full counter tables (those live in 当前团战 Counter); `calendar-notes`
+   is a concise 本月看点 in 简体中文.
 7. Never ship empty ranking panels. If tier or raid parsing fails, keep only the
    affected structured panel from last good content and report the problem to State +
    Validator.
