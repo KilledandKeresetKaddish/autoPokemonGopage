@@ -8,10 +8,44 @@
       "color": "#d8b25f",
       "tag": "5★",
       "segments": [
-        { "name": "Reshiram", "cn": "莱希拉姆", "pokemon": [{ "id": 643, "name": "莱希拉姆" }], "start": "2026-06-03", "end": "2026-06-09" },
-        { "name": "Zekrom", "cn": "捷克罗姆", "pokemon": [{ "id": 644, "name": "捷克罗姆" }], "start": "2026-06-10", "end": "2026-06-16" },
-        { "name": "Necrozma", "cn": "奈克洛兹玛", "pokemon": [{ "id": 800, "name": "奈克洛兹玛" }], "start": "2026-06-17", "end": "2026-06-23" },
-        { "name": "Kartana / Celesteela", "cn": "纸御剑 / 铁火辉夜", "pokemon": [{ "id": 798, "name": "纸御剑" }, { "id": 797, "name": "铁火辉夜" }], "start": "2026-06-24", "end": "2026-06-30" }
+        {
+          "name": "Tapu Fini",
+          "cn": "卡璞・鳍鳍",
+          "pokemon": [{ "id": 788, "name": "卡璞・鳍鳍" }],
+          "start": "2026-05-27",
+          "end": "2026-06-02"
+        },
+        {
+          "name": "Reshiram",
+          "cn": "莱希拉姆",
+          "pokemon": [{ "id": 643, "name": "莱希拉姆" }],
+          "start": "2026-06-03",
+          "end": "2026-06-09"
+        },
+        {
+          "name": "Zekrom",
+          "cn": "捷克罗姆",
+          "pokemon": [{ "id": 644, "name": "捷克罗姆" }],
+          "start": "2026-06-10",
+          "end": "2026-06-16"
+        },
+        {
+          "name": "Necrozma",
+          "cn": "奈克洛兹玛",
+          "pokemon": [{ "id": 800, "name": "奈克洛兹玛" }],
+          "start": "2026-06-17",
+          "end": "2026-06-23"
+        },
+        {
+          "name": "Kartana / Celesteela",
+          "cn": "纸御剑 / 铁火辉夜",
+          "pokemon": [
+            { "id": 798, "name": "纸御剑" },
+            { "id": 797, "name": "铁火辉夜" }
+          ],
+          "start": "2026-06-24",
+          "end": "2026-06-30"
+        }
       ]
     },
     {
@@ -20,10 +54,41 @@
       "color": "#9c7bb0",
       "tag": "M",
       "segments": [
-        { "name": "Mega Audino", "cn": "超级差不多娃娃", "pokemon": [{ "id": 10069, "name": "差不多娃娃" }], "start": "2026-06-03", "end": "2026-06-09" },
-        { "name": "Mega Lopunny", "cn": "超级长耳兔", "pokemon": [{ "id": 10088, "name": "长耳兔" }], "start": "2026-06-10", "end": "2026-06-16" },
-        { "name": "Mega Scizor", "cn": "超级巨钳螳螂", "pokemon": [{ "id": 10046, "name": "巨钳螳螂" }], "start": "2026-06-17", "end": "2026-06-23" },
-        { "name": "Mega Pidgeot", "cn": "超级大比鸟", "pokemon": [{ "id": 10073, "name": "大比鸟" }], "start": "2026-06-24", "end": "2026-06-30" }
+        {
+          "name": "Mega Medicham",
+          "cn": "超级恰雷姆",
+          "pokemon": [{ "id": 10054, "name": "恰雷姆" }],
+          "start": "2026-05-27",
+          "end": "2026-06-02"
+        },
+        {
+          "name": "Mega Audino",
+          "cn": "超级差不多娃娃",
+          "pokemon": [{ "id": 10069, "name": "差不多娃娃" }],
+          "start": "2026-06-03",
+          "end": "2026-06-09"
+        },
+        {
+          "name": "Mega Lopunny",
+          "cn": "超级长耳兔",
+          "pokemon": [{ "id": 10088, "name": "长耳兔" }],
+          "start": "2026-06-10",
+          "end": "2026-06-16"
+        },
+        {
+          "name": "Mega Scizor",
+          "cn": "超级巨钳螳螂",
+          "pokemon": [{ "id": 10046, "name": "巨钳螳螂" }],
+          "start": "2026-06-17",
+          "end": "2026-06-23"
+        },
+        {
+          "name": "Mega Pidgeot",
+          "cn": "超级大比鸟",
+          "pokemon": [{ "id": 10073, "name": "大比鸟" }],
+          "start": "2026-06-24",
+          "end": "2026-06-30"
+        }
       ]
     },
     {
@@ -31,10 +96,41 @@
       "label": "Max 团战",
       "color": "#bd7f97",
       "segments": [
-        { "name": "Electabuzz", "cn": "电击兽", "pokemon": [{ "id": 125, "name": "电击兽" }], "start": "2026-06-08", "end": "2026-06-14" },
-        { "name": "Roggenrola", "cn": "石丸子", "pokemon": [{ "id": 524, "name": "石丸子" }], "start": "2026-06-15", "end": "2026-06-21" },
-        { "name": "Hoothoot", "cn": "咕咕", "pokemon": [{ "id": 163, "name": "咕咕" }], "start": "2026-06-22", "end": "2026-06-28" },
-        { "name": "Pidove", "cn": "豆豆鸽", "pokemon": [{ "id": 519, "name": "豆豆鸽" }], "start": "2026-06-29", "end": "2026-06-30" }
+        {
+          "name": "Inkay",
+          "cn": "好啦鱿",
+          "pokemon": [{ "id": 686, "name": "好啦鱿" }],
+          "start": "2026-06-01",
+          "end": "2026-06-07"
+        },
+        {
+          "name": "Electabuzz",
+          "cn": "电击兽",
+          "pokemon": [{ "id": 125, "name": "电击兽" }],
+          "start": "2026-06-08",
+          "end": "2026-06-14"
+        },
+        {
+          "name": "Roggenrola",
+          "cn": "石丸子",
+          "pokemon": [{ "id": 524, "name": "石丸子" }],
+          "start": "2026-06-15",
+          "end": "2026-06-21"
+        },
+        {
+          "name": "Hoothoot",
+          "cn": "咕咕",
+          "pokemon": [{ "id": 163, "name": "咕咕" }],
+          "start": "2026-06-22",
+          "end": "2026-06-28"
+        },
+        {
+          "name": "Pidove",
+          "cn": "豆豆鸽",
+          "pokemon": [{ "id": 519, "name": "豆豆鸽" }],
+          "start": "2026-06-29",
+          "end": "2026-07-05"
+        }
       ]
     }
   ]

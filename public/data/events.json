@@ -60,7 +60,7 @@
     "end": "2026-06-18T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-06-18/",
-    "summary": "聚焦时刻:18:00–19:00 小山猪 大量出现,并有 捕捉经验 ×2 加成。",
+    "summary": "聚焦时刻:18:00–19:00 小山猪 大量出现,并有 转移糖果 ×2 加成。",
     "links": [
       {
         "label": "LeekDuck",
@@ -78,7 +78,7 @@
       }
     ],
     "bonuses": [
-      "捕捉经验 ×2"
+      "转移糖果 ×2"
     ]
   },
   {
@@ -90,7 +90,7 @@
     "end": "2026-06-25T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-06-25/",
-    "summary": "聚焦时刻:18:00–19:00 长翅鸥 大量出现,并有 捕捉糖果 ×2 加成。",
+    "summary": "聚焦时刻:18:00–19:00 长翅鸥 大量出现,并有 捕捉星尘 ×2 加成。",
     "links": [
       {
         "label": "LeekDuck",
@@ -108,7 +108,7 @@
       }
     ],
     "bonuses": [
-      "捕捉糖果 ×2"
+      "捕捉星尘 ×2"
     ]
   },
   {
@@ -120,15 +120,11 @@
     "end": "2026-07-02T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-02/",
-    "summary": "聚焦时刻:18:00–19:00 波波 大量出现,并有 捕捉星尘 ×2 加成。",
+    "summary": "聚焦时刻:18:00–19:00 波波 大量出现,并有 进化经验 ×2 加成。",
     "links": [
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/pokemonspotlighthour2026-07-02/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/spotlight-raid-hours/"
       }
     ],
     "pokemon": [
@@ -138,7 +134,7 @@
       }
     ],
     "bonuses": [
-      "捕捉星尘 ×2"
+      "进化经验 ×2"
     ]
   },
   {
@@ -150,15 +146,11 @@
     "end": "2026-07-16T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-16/",
-    "summary": "聚焦时刻:18:00–19:00 超音蝠 大量出现,并有 转移糖果 ×2 加成。",
+    "summary": "聚焦时刻:18:00–19:00 超音蝠 大量出现,并有 捕捉经验 ×2 加成。",
     "links": [
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/pokemonspotlighthour2026-07-16/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/spotlight-raid-hours/"
       }
     ],
     "pokemon": [
@@ -168,7 +160,7 @@
       }
     ],
     "bonuses": [
-      "转移糖果 ×2"
+      "捕捉经验 ×2"
     ]
   },
   {
@@ -180,15 +172,11 @@
     "end": "2026-07-23T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-23/",
-    "summary": "聚焦时刻:18:00–19:00 伊布 大量出现,并有 捕捉经验 ×2 加成。",
+    "summary": "聚焦时刻:18:00–19:00 伊布 大量出现,并有 捕捉糖果 ×2 加成。",
     "links": [
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/pokemonspotlighthour2026-07-23/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/spotlight-raid-hours/"
       }
     ],
     "pokemon": [
@@ -198,7 +186,7 @@
       }
     ],
     "bonuses": [
-      "捕捉经验 ×2"
+      "捕捉糖果 ×2"
     ]
   },
   {
@@ -210,15 +198,11 @@
     "end": "2026-07-30T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-30/",
-    "summary": "聚焦时刻:18:00–19:00 大牙狸 大量出现,并有 捕捉星尘 ×2 加成。",
+    "summary": "聚焦时刻:18:00–19:00 大牙狸 大量出现,并有 转移糖果 ×2 加成。",
     "links": [
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/pokemonspotlighthour2026-07-30/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/spotlight-raid-hours/"
       }
     ],
     "pokemon": [
@@ -228,7 +212,7 @@
       }
     ],
     "bonuses": [
-      "捕捉星尘 ×2"
+      "转移糖果 ×2"
     ]
   },
   {
@@ -720,14 +704,15 @@
       },
       {
         "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/current-go-raids/"
+        "url": "https://pokemongohub.net/post/guide/mega-scizor-raid-guide/"
       }
     ],
     "pokemon": [
       {
         "id": 212,
         "name": "巨钳螳螂",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10046.png"
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10046.png",
+        "shiny": true
       }
     ],
     "counters": [
@@ -743,6 +728,9 @@
         "fast": "火焰旋涡",
         "charged": "过热"
       }
+    ],
+    "bonuses": [
+      "✨ 可遇闪光"
     ]
   },
   {
@@ -762,13 +750,15 @@
       },
       {
         "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/current-go-raids/"
+        "url": "https://pokemongohub.net/post/guide/mega-pidgeot-raid-guide/"
       }
     ],
     "pokemon": [
       {
         "id": 18,
-        "name": "大比鸟"
+        "name": "大比鸟",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10073.png",
+        "shiny": true
       }
     ],
     "counters": [
@@ -778,6 +768,9 @@
         "fast": "咬住",
         "charged": "咬碎"
       }
+    ],
+    "bonuses": [
+      "✨ 可遇闪光"
     ]
   },
   {

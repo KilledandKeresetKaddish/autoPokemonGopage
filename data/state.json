@@ -1,67 +1,67 @@
 {
-  "lastUpdated": "2026-06-18T17:35:34Z",
+  "lastUpdated": "2026-06-18T18:15:26Z",
   "sources": {
     "events": {
       "lastFetch": "2026-06-18T11:00:00Z",
-      "lastChecked": "2026-06-18T17:35:34Z",
+      "lastChecked": "2026-06-18T18:15:26Z",
       "status": "ok",
-      "note": "Source Scout: 未重新抓取; 缓存新鲜且健康。ScrapedDuck/LeekDuck JSON 作为日历 backbone。"
+      "note": "Source Scout: 未执行 named refetch; 缓存新鲜且 source health ok。ScrapedDuck/LeekDuck JSON 作为日历 backbone; Calendar 已修正 spotlight bonuses。"
     },
     "raids": {
       "lastFetch": "2026-06-18T11:00:00Z",
-      "lastChecked": "2026-06-18T17:35:34Z",
+      "lastChecked": "2026-06-18T18:15:26Z",
       "status": "ok",
-      "note": "Source Scout: 未重新抓取; 缓存新鲜且健康。当前 boss 用于团战 Counter 与轮换交叉检查。"
+      "note": "Source Scout: 未执行 named refetch; 缓存新鲜且 source health ok。当前 boss 用于团战 Counter 与轮换交叉检查。"
     },
     "events-hub": {
       "lastFetch": "2026-06-18T11:00:00Z",
-      "lastChecked": "2026-06-18T17:35:34Z",
+      "lastChecked": "2026-06-18T18:15:26Z",
       "status": "ok",
-      "note": "Source Scout: 未重新抓取; 缓存新鲜且健康。用于活动详情链接、月度轮换与指南补充。"
+      "note": "Source Scout: 未执行 named refetch; 缓存新鲜且 source health ok。用于活动详情链接、June monthly rotations 与指南补充; Calendar 已补齐 mega links。"
     },
     "events-pokebase": {
       "lastFetch": "2026-06-18T11:00:00Z",
-      "lastChecked": "2026-06-18T17:35:34Z",
+      "lastChecked": "2026-06-18T18:15:26Z",
       "status": "ok",
-      "note": "Source Scout: 未重新抓取; 缓存新鲜且健康。作为活动/宝可梦信息交叉参考。"
+      "note": "Source Scout: 未执行 named refetch; 缓存新鲜且 source health ok。作为活动/宝可梦信息交叉参考。"
     },
     "events-official": {
       "lastFetch": "2026-06-18T11:00:00Z",
-      "lastChecked": "2026-06-18T17:35:34Z",
+      "lastChecked": "2026-06-18T18:15:26Z",
       "status": "ok",
-      "note": "Source Scout: 未重新抓取; 缓存新鲜且健康。官方新闻链接用于重点活动佐证。"
+      "note": "Source Scout: 未执行 named refetch; 缓存新鲜且 source health ok。官方新闻链接用于重点活动佐证。"
     },
     "gamemaster": {
       "lastFetch": "2026-06-15T15:55:43Z",
-      "lastChecked": "2026-06-18T17:35:34Z",
+      "lastChecked": "2026-06-18T18:15:26Z",
       "status": "ok",
-      "note": "Source Scout: 未重新抓取; 3 天内新鲜且健康。中文宝可梦名/招式名按 gamemaster 与 allowlisted pokeapi zh-hans 核对。"
+      "note": "Source Scout: 未执行 named refetch; 3 天内新鲜且 source health ok。中文宝可梦名/招式名按 gamemaster 与 allowlisted pokeapi zh-hans 核对。"
     },
     "tiers-attackers": {
       "lastFetch": "2026-06-18T11:00:00Z",
-      "lastChecked": "2026-06-18T17:35:34Z",
+      "lastChecked": "2026-06-18T18:15:26Z",
       "status": "ok",
-      "note": "Source Scout: 未重新抓取; 缓存新鲜且健康。Hub Max Attackers 页面用于攻手榜与属性方向。"
+      "note": "Source Scout: 未执行 named refetch; 缓存新鲜且 source health ok。Rankings 已刷新 all five AI markers; Hub Max Attackers 页面用于攻手榜与属性方向。"
     },
     "tiers-defenders": {
       "lastFetch": "2026-06-18T11:00:00Z",
-      "lastChecked": "2026-06-18T17:35:34Z",
+      "lastChecked": "2026-06-18T18:15:26Z",
       "status": "ok",
-      "note": "Source Scout: 未重新抓取; 缓存新鲜且健康。Rankings 已刷新防守榜区域。"
+      "note": "Source Scout: 未执行 named refetch; 缓存新鲜且 source health ok。Rankings 已刷新 all five AI markers; Hub Max Defenders 页面用于防守榜。"
     },
     "tiers-pokebase": {
       "lastFetch": "2026-06-18T11:00:00Z",
-      "lastChecked": "2026-06-18T17:35:34Z",
+      "lastChecked": "2026-06-18T18:15:26Z",
       "status": "ok",
-      "note": "Source Scout: 未重新抓取; 缓存新鲜且健康。用于 Max 攻防榜交叉对照。"
+      "note": "Source Scout: 未执行 named refetch; 缓存新鲜且 source health ok。用于 Max 攻防榜交叉对照。"
     }
   },
   "selfCheck": {
-    "checkedAt": "2026-06-18T17:35:34Z",
-    "events": "36 条; 无重复 id; 无早于 2026-06-01 结束的活动; 当前月至下月内容保留; 长期活动 9 条; 高亮 7 条; 所有活动含 links[]。",
-    "rotations": "2026-06 三条 track 均完整: 5★/超级/Max 各 4 段; Mega form sprite ids 已由 Rotations 更新。",
-    "rankings": "calendar-notes、rankings-current、rankings-attackers、rankings-defenders、rankings-raid 五个 AI 区块均非空; Rankings 已刷新 notes/current/defenders。",
-    "namesAndMoves": "沿用本轮已核对结果: 简体中文宝可梦名与招式名经 data/raw/gamemaster.json 及 allowlisted pokeapi.co zh-hans 确认; 未新增未核对名称。",
-    "sourceHealth": "Source Scout 报告无 fetches; 所有来源 fresh and healthy。"
+    "checkedAt": "2026-06-18T18:15:26Z",
+    "events": "36 条; 无重复 id; 无早于 2026-06-01 结束的活动; 当前月至下月内容保留; 长期活动 9 条; 高亮 7 条; 所有活动含 links[]; Calendar fixed spotlight bonuses and mega links。",
+    "rotations": "2026-06 三条 track 均完整: 5★/超级/Max 各 5 段; Rotation updated complete June coverage; boss data parsed/corroborated rather than invented。",
+    "rankings": "calendar-notes、rankings-current、rankings-attackers、rankings-defenders、rankings-raid 五个 AI 区块均非空; Rankings refreshed all five markers。",
+    "namesAndMoves": "沿用本轮已核对结果: 简体中文宝可梦名与招式名经 data/raw/gamemaster.json 及 allowlisted pokeapi.co zh-hans 确认; State + Validator 未新增名称或招式。",
+    "sourceHealth": "Source Scout notes folded in: no named refetch because fresh; source health ok。"
   }
 }
