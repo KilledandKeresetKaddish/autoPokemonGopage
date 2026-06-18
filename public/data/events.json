@@ -618,49 +618,6 @@
     ]
   },
   {
-    "id": "mega-scizor-in-mega-raid-battles-june-2026",
-    "name": "超级巨钳螳螂现身超级团战",
-    "type": "raid-battles",
-    "heading": "Mega Raid",
-    "start": "2026-06-17T06:00:00",
-    "end": "2026-06-23T22:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://pokemongohub.net/post/guide/current-go-raids/",
-    "summary": "超级巨钳螳螂(虫/钢)现身超级团战,4× 弱火系;击败后可捕捉巨钳螳螂。",
-    "links": [
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/current-go-raids/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 212,
-        "name": "超级巨钳螳螂"
-      }
-    ],
-    "counters": [
-      {
-        "id": 609,
-        "name": "水晶灯火灵",
-        "fast": "祸不单行",
-        "charged": "过热"
-      },
-      {
-        "id": 257,
-        "name": "火焰鸡",
-        "fast": "火焰旋涡",
-        "charged": "过热"
-      },
-      {
-        "id": 6,
-        "name": "喷火龙",
-        "fast": "火花",
-        "charged": "喷射火焰"
-      }
-    ]
-  },
-  {
     "id": "celesteela-kartana-in-5-star-raid-battles-june-2026",
     "name": "纸御剑 与 铁火辉夜 现身 5★ 团战",
     "type": "raid-battles",
