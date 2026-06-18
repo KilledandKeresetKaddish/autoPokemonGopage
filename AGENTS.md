@@ -140,10 +140,14 @@ cross-checks). Off-allowlist URLs are refused. Stay
    - **Populate Pokémon, bonuses & a summary.** Fill `pokemon[]` (dex id + 简体中文 name + `shiny`),
      `bonuses[]`, and a **concise 简体中文 `summary`** (1–2 sentences) for every event from the articles —
      so the calendar isn't empty and the detail drawer is actually useful (not just a title + date).
-   - **Inline the detail so users needn't click out.** For raid / mega / raid-day events, fill
-     `counters[]` (best attackers + moves) from the Hub raid guide or `db.pokemongohub.net`. Put any
-     other useful detail in `sections[]` — **your call per event** (paid/ticketed options, special
-     research, habitat hours, reward lists…), not a fixed set. All render as collapsible blocks.
+   - **Inline the detail so users needn't click out.** For raid / mega / raid-day events, fill a
+     **concise** `counters[]` (top picks + moves) from the Hub raid guide or `db.pokemongohub.net` —
+     keep the calendar drawer light; the **exhaustive** counters + Mega pairings belong in the ranking
+     当前团战 Counter tab. **Also emit the weekly Mega raid as its own `raid-battles` event** (Mega
+     form sprite, same boss dex id as its rotation segment) so the Mega day-icon opens a drawer with
+     counters + links, not just a name. Put any other useful detail in `sections[]` — **your call per
+     event** (paid/ticketed options, special research, habitat hours, reward lists…), not a fixed set.
+     All render as collapsible blocks.
    - **Flag long-running events.** Set `longTerm:true` on season / GO Pass / GO Battle League and
      anything spanning more than ~2 weeks — they render in the 长期活动 band, not the day grid
      (this is what keeps headline short events visible). `longTerm:false` forces a borderline
@@ -171,16 +175,19 @@ cross-checks). Off-allowlist URLs are refused. Stay
      embedded in its artwork URL, e.g. `…/detail/861_gmax.png` → id 861; strip suffixes like
      `_gmax`. **Adapt if the layout changes. Parse the lists — do not decide rankings yourself.**)
    - `rankings-raid` (**当前团战 Counter**) → counters for what's **live right now**: current raid
-     bosses from `data/raw/raids.json` **and any active Max/Dynamax battle**. Render **each boss as a
-     header with a large sprite** (`.raid-block` > `.raid-boss` with a `.boss-icon` + 简体中文 name +
-     a `.meta` line of its 属性 / 弱点), then its top counters in a **`.rank-list.mini`** (smaller
-     sprites) below — so the boss reads bigger than its counters. Justify counters with `gamemaster`
-     types; don't invent numbers.
+     bosses from `data/raw/raids.json` **and any active Max/Dynamax battle**. This tab is the
+     **detailed** reference (the calendar drawers stay concise). Render **each boss as a header with a
+     large sprite** (`.raid-block` > `.raid-boss` with a `.boss-icon` + 简体中文 name + a `.meta` line
+     of its 属性 / 弱点), then a **fuller** counter list in a **`.rank-list.mini`** (smaller sprites)
+     below — so the boss reads bigger than its counters. Justify counters with `gamemaster` types;
+     don't invent numbers.
    - Then a **Mega Booster** block. Get the mechanic right: an **active** Mega gives **+1 糖 when you
      catch a Pokémon sharing that Mega's 属性** (chance of extra / XL) — it is **not** "evolving yields
-     that species' candy" and has nothing to do with the act of evolving. Then **pair each live boss
-     to a same-属性 Mega** for farming that boss's candy (boss 属性 → a Mega of the same 属性). Build the
-     pairing from whatever bosses are live this run — never hard-code a fixed list.
+     that species' candy" and has nothing to do with the act of evolving. **Pair each live boss to a
+     same-属性 Mega** for farming that boss's candy (boss 属性 → a Mega of the same 属性), and render the
+     pairing as a **detailed `.rank-list`** (the recommended 超级 sprite + which boss's candy it farms),
+     not a one-liner. Build the pairing from whatever bosses are live this run — never hard-code a
+     fixed list.
    - `rankings-current` (本期推荐, **free-form, highest value**) → **editorial / priority**, not a
      counter dump: which live events to do this period (社区日/团战日/Max周一/聚焦), bonuses, shiny
      windows, and a directional "练哪类攻手". Full counter tables belong in 当前团战 Counter — point
