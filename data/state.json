@@ -1,5 +1,15 @@
 {
-  "lastUpdated": null,
-  "sources": {},
-  "notes": "agent bookkeeping: per-source last-fetch times, content hashes, and any source-format problems noticed during a run"
+  "lastUpdated": "2026-06-18T11:29:29Z",
+  "sources": {
+    "events": { "lastFetch": "2026-06-18T11:00:00Z", "status": "ok", "note": "ScrapedDuck/LeekDuck JSON, 46 条 backbone" },
+    "raids": { "lastFetch": "2026-06-18T11:00:00Z", "status": "ok", "note": "当前 boss:5★ 奈克洛兹玛、超级巨钳螳螂、暗影帝牙卢卡" },
+    "events-hub": { "lastFetch": "2026-06-18T11:00:00Z", "status": "ok", "note": "Hub 为聚合列表页,提供各活动详情/指南链接" },
+    "events-pokebase": { "lastFetch": "2026-06-18T11:00:00Z", "status": "ok", "note": "未发现按活动的直链,主要为宝可梦/工具页" },
+    "events-official": { "lastFetch": "2026-06-18T11:00:00Z", "status": "ok", "note": "官方 news 链接:7月泪眼蜥社区日、雷丘超级团战日、GO Fest" },
+    "gamemaster": { "lastFetch": "2026-06-15T15:55:43Z", "status": "ok", "note": "PvPoke,3 天内仍新鲜;含英文 species,中文名经 pokeapi zh-hans 核对" },
+    "tiers-attackers": { "lastFetch": "2026-06-18T11:00:00Z", "status": "ok", "note": "Hub Max Attackers (June 2026);S Tier 仅说明无表格,A–E 为表格;无独立属性榜区,属性榜由 A/B 各属性专精推导" },
+    "tiers-defenders": { "lastFetch": "2026-06-18T11:00:00Z", "status": "ok", "note": "Hub Max Defenders;含招式与抗性" },
+    "tiers-pokebase": { "lastFetch": "2026-06-18T11:00:00Z", "status": "ok", "note": "交叉对照参考" }
+  },
+  "notes": "本次全量重新核对名字:rotations.json 段名、events.json pokemon/counters、战力榜中文名与招式均经 data/raw/gamemaster.json(dex→species)+ pokeapi.co(zh-hans / move zh-hans)确认。修正:rotations.json dex 797 安皇钢 → 铁火辉夜(pokeapi 权威名)。Mega 巨钳螳螂用 form 精灵图 id 10046。链接已确认指向同一宝可梦(石丸子 Max 周一未误挂 Electabuzz 指南)。"
 }

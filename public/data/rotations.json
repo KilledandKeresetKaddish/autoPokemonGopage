@@ -11,7 +11,7 @@
         { "name": "Reshiram", "cn": "莱希拉姆", "pokemon": [{ "id": 643, "name": "莱希拉姆" }], "start": "2026-06-03", "end": "2026-06-09" },
         { "name": "Zekrom", "cn": "捷克罗姆", "pokemon": [{ "id": 644, "name": "捷克罗姆" }], "start": "2026-06-10", "end": "2026-06-16" },
         { "name": "Necrozma", "cn": "奈克洛兹玛", "pokemon": [{ "id": 800, "name": "奈克洛兹玛" }], "start": "2026-06-17", "end": "2026-06-23" },
-        { "name": "Kartana / Celesteela", "cn": "纸御剑 / 安皇钢", "pokemon": [{ "id": 798, "name": "纸御剑" }, { "id": 797, "name": "安皇钢" }], "start": "2026-06-24", "end": "2026-06-30" }
+        { "name": "Kartana / Celesteela", "cn": "纸御剑 / 铁火辉夜", "pokemon": [{ "id": 798, "name": "纸御剑" }, { "id": 797, "name": "铁火辉夜" }], "start": "2026-06-24", "end": "2026-06-30" }
       ]
     },
     {
