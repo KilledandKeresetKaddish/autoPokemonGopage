@@ -187,7 +187,8 @@ cross-checks). Off-allowlist URLs are refused. Stay
      same-属性 Mega** for farming that boss's candy (boss 属性 → a Mega of the same 属性), and render the
      pairing as a **detailed `.rank-list`** (the recommended 超级 sprite + which boss's candy it farms),
      not a one-liner. Build the pairing from whatever bosses are live this run — never hard-code a
-     fixed list.
+     fixed list. **Verify each 属性 / 弱点 against `gamemaster`; label the Mega by the 属性 it *shares*
+     with the boss (that shared type drives the candy) — never paste the boss's own 属性 onto the Mega.**
    - `rankings-current` (本期推荐, **free-form, highest value**) → **editorial / priority**, not a
      counter dump: which live events to do this period (社区日/团战日/Max周一/聚焦), bonuses, shiny
      windows, and a directional "练哪类攻手". Full counter tables belong in 当前团战 Counter — point

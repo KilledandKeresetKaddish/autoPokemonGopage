@@ -43,7 +43,9 @@ Checklist:
    catch a Pokémon sharing that Mega's 属性** (not "evolving yields that species' candy", and unrelated
    to evolving) — and **pairing each live boss to a same-属性 Mega**, rendered as a **detailed
    `.rank-list`** (recommended 超级 sprite + which boss's candy it farms). Build the pairing from this
-   run's live bosses; never hard-code a fixed list.
+   run's live bosses; never hard-code a fixed list. **Verify every 属性 / 弱点 against `gamemaster`
+   too — label each Mega by the 属性 it *shares* with the boss (that shared type is what grants the
+   candy); never copy the boss's own 属性 onto the Mega.**
 6. Build both free-form regions from **this run's** finalized `events.json` +
    `rotations.json` only (never previous/stale files): `rankings-current` (本期推荐) is
    **editorial / priority** — which live events to do, bonuses, shiny windows, a directional
