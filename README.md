@@ -22,14 +22,14 @@ A self-contained **Pokémon GO dashboard** that a coding-agent CLI updates **onc
 day**. The agent is the "brain" (reads data, curates content, edits the page); the
 repo ships the static site, the data-fetch toolbox, and a validate/rollback safety net.
 
-The site has three sections:
+The site has two content sections (plus two owner-maintained placeholder views):
 1. **当月日历** — month calendar, driven by `public/data/events.json` (events from
    [LeekDuck](https://leekduck.com/) via [ScrapedDuck](https://github.com/bigfoott/ScrapedDuck)).
    Click an event for its details + link.
 2. **战力榜** — Max attackers / Max defenders / raid counters, plus a "本期推荐" panel
    that ties picks to what's live right now.
-3. **我的打卡** — your 5 accounts × 3 daily checkboxes (金币 / Pass 点 / Raid). Pure
-   `localStorage`, auto-resets each day. The agent never touches it.
+Plus two **owner-maintained placeholder** views — **世界时钟** and **实用链接** — that the
+agent never touches (static, no AI regions).
 
 ## How it works
 
@@ -46,8 +46,9 @@ cron ──> scripts/run-daily.sh
   gemini / codex / opencode / …). Instructions live in `AGENTS.md` (+ `CLAUDE.md`
   symlink for Claude Code); portable sub-agent briefs live in `tasks/subagents/`.
 - **The agent only edits** `public/data/*.json` and the `<!-- AI:START … -->` regions
-  of `public/index.html`. `app.js` / `style.css` are checksum-protected; the tracker
-  is rendered by `app.js` and off-limits. Anything outside the rules fails validation
+  of `public/index.html`. `app.js` / `style.css` are checksum-protected and the rest of
+  `index.html` (chrome + the 世界时钟 / 实用链接 placeholders) is off-limits. Anything outside
+  the rules fails validation
   and is rolled back, so the live site never drops below the last good version.
 
 ## Layout

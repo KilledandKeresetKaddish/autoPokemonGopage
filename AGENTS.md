@@ -22,7 +22,7 @@ source's English/romanized form — a hallucinated or garbled name is worse than
 
 ---
 
-## The site (3 sections)
+## The site (2 content sections + owner placeholders)
 1. **Calendar** (`#view-calendar`) — month grid **+ a 长期活动 band** (long-running events
    pulled out of the grid) **+ a 本月 Weekly Rotations** section. Data-driven from
    `public/data/events.json` and `public/data/rotations.json`: short headline events live in
@@ -30,8 +30,9 @@ source's English/romanized form — a hallucinated or garbled name is worse than
    boss rotation renders from `rotations.json`.
 2. **Rankings** (`#view-rankings`) — Max attackers / Max defenders / raid counters, plus
    a "本期推荐" panel tied to what's live right now.
-3. **Tracker** (`#view-tracker`) — the user's personal daily checkboxes. **Not your
-   concern. Never read or touch it.**
+The other two views — **世界时钟** (`#view-clock`) and **实用链接** (`#view-links`) — are
+**owner-maintained placeholders** (static, no AI markers). **Not your concern — never read
+or touch them.**
 
 ## What you MAY edit — and nothing else
 - `public/data/events.json` — the normalized events array the calendar + 长期活动 band render.
