@@ -120,7 +120,7 @@
     "end": "2026-07-02T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-02/",
-    "summary": "聚焦时刻:18:00–19:00 波波 大量出现,并有 蒸发星尘 ×2 加成。",
+    "summary": "聚焦时刻:18:00–19:00 波波 大量出现,并有 捕捉星尘 ×2 加成。",
     "links": [
       {
         "label": "LeekDuck",
@@ -138,7 +138,7 @@
       }
     ],
     "bonuses": [
-      "蒸发星尘 ×2"
+      "捕捉星尘 ×2"
     ]
   },
   {

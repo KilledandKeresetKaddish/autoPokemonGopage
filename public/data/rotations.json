@@ -20,10 +20,10 @@
       "color": "#9c7bb0",
       "tag": "M",
       "segments": [
-        { "name": "Mega Audino", "cn": "超级差不多娃娃", "pokemon": [{ "id": 531, "name": "差不多娃娃" }], "start": "2026-06-03", "end": "2026-06-09" },
-        { "name": "Mega Lopunny", "cn": "超级长耳兔", "pokemon": [{ "id": 428, "name": "长耳兔" }], "start": "2026-06-10", "end": "2026-06-16" },
-        { "name": "Mega Scizor", "cn": "超级巨钳螳螂", "pokemon": [{ "id": 212, "name": "巨钳螳螂" }], "start": "2026-06-17", "end": "2026-06-23" },
-        { "name": "Mega Pidgeot", "cn": "超级大比鸟", "pokemon": [{ "id": 18, "name": "大比鸟" }], "start": "2026-06-24", "end": "2026-06-30" }
+        { "name": "Mega Audino", "cn": "超级差不多娃娃", "pokemon": [{ "id": 10069, "name": "差不多娃娃" }], "start": "2026-06-03", "end": "2026-06-09" },
+        { "name": "Mega Lopunny", "cn": "超级长耳兔", "pokemon": [{ "id": 10088, "name": "长耳兔" }], "start": "2026-06-10", "end": "2026-06-16" },
+        { "name": "Mega Scizor", "cn": "超级巨钳螳螂", "pokemon": [{ "id": 10046, "name": "巨钳螳螂" }], "start": "2026-06-17", "end": "2026-06-23" },
+        { "name": "Mega Pidgeot", "cn": "超级大比鸟", "pokemon": [{ "id": 10073, "name": "大比鸟" }], "start": "2026-06-24", "end": "2026-06-30" }
       ]
     },
     {
