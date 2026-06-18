@@ -1,8 +1,7 @@
 /* ============================================================================
  * pogo-agent frontend (PROTECTED — the daily content agent must not edit this).
- * Renders: the month calendar (spanning bars + day chips, from data/events.json),
- * the rankings sub-tab switching, and the personal daily tracker (localStorage,
- * auto-resets each day). After editing this file or style.css, regenerate
+ * Renders: the month calendar (spanning bars + day chips, from data/events.json)
+ * and the rankings sub-tab switching. After editing this file or style.css, regenerate
  * scripts/protected.sha256 or the next daily run fails validation.
  * ========================================================================== */
 'use strict';
@@ -518,58 +517,6 @@ function openDetail(ev) {
   $('#event-detail').hidden = false;
 }
 
-/* ---------- tracker (localStorage, daily reset) ---------- */
-const TASKS = [{ k: 'coins', l: '金币' }, { k: 'pass', l: 'Pass 点' }, { k: 'raid', l: 'Raid' }];
-const ACCOUNTS = [1, 2, 3, 4, 5];
-const LS_KEY = 'pogo-tracker-v1';
-
-function trackerLoad() {
-  let d;
-  try { d = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch (e) { d = {}; }
-  const today = ymd(new Date());
-  if (d.date !== today) { d = { date: today, names: (d && d.names) || {}, checks: {} }; trackerSave(d); }
-  d.names = d.names || {}; d.checks = d.checks || {};
-  return d;
-}
-function trackerSave(d) { try { localStorage.setItem(LS_KEY, JSON.stringify(d)); } catch (e) {} }
-
-function renderTracker() {
-  const d = trackerLoad();
-  const root = $('#tracker');
-  root.innerHTML = '';
-  let done = 0;
-  const total = ACCOUNTS.length * TASKS.length;
-
-  ACCOUNTS.forEach(a => {
-    const row = document.createElement('div');
-    row.className = 'trk-row';
-
-    const name = document.createElement('input');
-    name.className = 'trk-name';
-    name.value = d.names[a] || '';
-    name.placeholder = `账号 ${a}`;
-    name.addEventListener('input', () => { const x = trackerLoad(); x.names[a] = name.value; trackerSave(x); });
-    row.appendChild(name);
-
-    TASKS.forEach(t => {
-      const id = `${a}.${t.k}`;
-      const checked = !!d.checks[id];
-      if (checked) done++;
-      const lab = document.createElement('label');
-      lab.className = 'trk-check' + (checked ? ' on' : '');
-      const cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.checked = checked;
-      cb.addEventListener('change', () => { const x = trackerLoad(); x.checks[id] = cb.checked; trackerSave(x); renderTracker(); });
-      lab.appendChild(cb);
-      lab.appendChild(document.createTextNode(t.l));
-      row.appendChild(lab);
-    });
-    root.appendChild(row);
-  });
-  $('#tracker-progress').textContent = `${done} / ${total}`;
-}
-
 /* ---------- wiring ---------- */
 function setupTabs() {
   $('#main-tabs').addEventListener('click', e => {
@@ -607,7 +554,6 @@ async function init() {
   setupTabs();
   setupCalNav();
   setupDetail();
-  renderTracker();
   await loadData();
   renderCalendar();
   renderRotations();

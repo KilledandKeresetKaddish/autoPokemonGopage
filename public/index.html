@@ -4,13 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pokémon GO 面板</title>
-  <link rel="stylesheet" href="style.css?v=10" />
+  <link rel="stylesheet" href="style.css?v=11" />
 </head>
 <body>
   <!-- =====================================================================
        PROTECTED structure. The daily content agent edits ONLY the data files
        and the marked editable regions below. Everything else (masthead, nav,
-       calendar shell, tracker) is owner-maintained. Keep every required id and
+       calendar shell) is owner-maintained. Keep every required id and
        every editable-region marker pair intact, or validation rolls the run back.
        ===================================================================== -->
 
@@ -26,7 +26,6 @@
   <nav class="tabs" id="main-tabs">
     <button data-view="calendar" class="active"><span class="t-ico">☾</span> 当月日历</button>
     <button data-view="rankings"><span class="t-ico">⚔</span> 战力榜</button>
-    <button data-view="tracker"><span class="t-ico">✓</span> 我的打卡</button>
   </nav>
 
   <main>
@@ -106,17 +105,6 @@
       </div>
     </section>
 
-    <!-- ========================= VIEW 3: TRACKER ========================= -->
-    <!-- Rendered entirely by app.js + localStorage. The content agent never
-         touches this. -->
-    <section id="view-tracker" class="view">
-      <div class="tracker-head">
-        <h2>我的打卡</h2>
-        <span id="tracker-progress" class="badge">0 / 0</span>
-      </div>
-      <p class="muted">5 个账号 · 每日金币 / Pass 点 / Raid · 跨日自动重置(按本机日期)</p>
-      <div id="tracker"></div>
-    </section>
   </main>
 
   <footer class="site-footer">
@@ -128,6 +116,6 @@
     <div class="muted">by: adonais·anabiosis</div>
   </footer>
 
-  <script src="app.js?v=10" defer></script>
+  <script src="app.js?v=11" defer></script>
 </body>
 </html>
