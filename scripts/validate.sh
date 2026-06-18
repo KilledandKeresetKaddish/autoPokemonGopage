@@ -47,6 +47,13 @@ done
 starts=$(grep -c 'AI:START' "$H"); ends=$(grep -c 'AI:END' "$H")
 [ "$starts" = "$ends" ] || { say "FAIL marker imbalance (START=$starts END=$ends)"; fail=1; }
 
+# 3b) Each AI region must be non-empty — hard-enforces the "never ship empty
+#     rankings" rule that was previously only a soft prompt instruction.
+for region in calendar-notes rankings-current rankings-attackers rankings-defenders rankings-raid; do
+  body=$(awk -v r="$region" 'index($0,"AI:START "r){f=1;next} index($0,"AI:END "r){f=0} f{print}' "$H")
+  [ -n "$(printf '%s' "$body" | tr -d '[:space:]')" ] || { say "FAIL AI region empty: $region"; fail=1; }
+done
+
 # 4) Data files the agent writes must be valid JSON.
 for j in public/data/events.json public/data/meta.json public/data/rotations.json public/data/categories.json data/state.json; do
   if [ -f "$j" ]; then
@@ -65,6 +72,11 @@ if [ -f "$E" ] && jq empty "$E" >/dev/null 2>&1; then
   [ "$n" -le 250 ] || { say "FAIL events.json too large ($n entries > 250)"; fail=1; }
   dups=$(jq '[.[].id] | group_by(.) | map(select(length > 1)) | length' "$E")
   [ "$dups" = 0 ] || { say "FAIL events.json has $dups duplicate id(s)"; fail=1; }
+  # semantic floors — catch a gutted/partial rewrite that is still structurally
+  # valid. Non-emptiness only: cannot be satisfied by fabricating content.
+  [ "$n" -ge 5 ] || { say "FAIL events.json too small ($n entries < 5 — gutted/partial run?)"; fail=1; }
+  badf=$(jq '[.[] | select(((.id // "")=="") or ((.name // "")=="") or ((.start // "")=="") or ((.end != null) and (.end < .start)))] | length' "$E")
+  [ "$badf" = 0 ] || { say "FAIL events.json has $badf event(s) with empty id/name/start or end<start"; fail=1; }
   cut=$(date -u -d '100 days ago' +%F 2>/dev/null || date -u -v-100d +%F 2>/dev/null || true)
   if [ -n "$cut" ]; then
     stale=$(jq --arg c "$cut" '[.[] | select(((.end // .start) | tostring | .[0:10]) < $c)] | length' "$E")

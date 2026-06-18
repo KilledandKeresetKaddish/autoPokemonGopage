@@ -100,6 +100,11 @@ fetch_one() {
   local ok=1
   if is_protected "$name"; then fetch_tier "$url" "$tmp" || ok=0; else fetch_plain "$url" "$tmp" || ok=0; fi
   if [ "$ok" = 1 ] && [ -s "$tmp" ]; then
+    # JSON sources: a 200-wrapped error / rate-limit / HTML page is NOT valid JSON.
+    # Reject it and keep the last good cache rather than overwrite with garbage.
+    if [ "$(ext_of "$name")" = json ] && ! jq empty "$tmp" >/dev/null 2>&1; then
+      rm -f "$tmp"; echo "FAIL $name  <- $url  (not valid JSON — kept last good)" >&2; return 1
+    fi
     mv "$tmp" "$out"
     echo "OK   $name  $(wc -c <"$out")b  -> data/raw/$(basename "$out")"
   else
