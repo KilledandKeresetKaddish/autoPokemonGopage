@@ -550,248 +550,60 @@ const WC_NOTE = {
 };
 const WC_WD = { Mon:'一', Tue:'二', Wed:'三', Thu:'四', Fri:'五', Sat:'六', Sun:'日' };
 const WC_DATA = [
-  // ── 东亚 / 东南亚 ──
+  // 每个时区一个代表地(占位);可按需增删。最早(高偏移)→ 最晚(低偏移)。
+  ['基里巴斯','圣诞岛','ki','Pacific/Kiritimati'],
+  ['汤加','努库阿洛法','to','Pacific/Tongatapu'],
+  ['新西兰','奥克兰','nz','Pacific/Auckland'],
+  ['所罗门群岛','霍尼亚拉','sb','Pacific/Guadalcanal'],
+  ['澳大利亚','悉尼','au','Australia/Sydney'],
+  ['澳大利亚','达尔文','au','Australia/Darwin'],
   ['日本','东京','jp','Asia/Tokyo'],
-  ['韩国','首尔','kr','Asia/Seoul'],
-  ['朝鲜','平壤','kp','Asia/Pyongyang'],
   ['中国','北京','cn','Asia/Shanghai',2],
-  ['蒙古','乌兰巴托','mn','Asia/Ulaanbaatar'],
-  ['新加坡','新加坡','sg','Asia/Singapore'],
-  ['马来西亚','吉隆坡','my','Asia/Kuala_Lumpur'],
-  ['文莱','斯里巴加湾市','bn','Asia/Kuching'],
-  ['菲律宾','马尼拉','ph','Asia/Manila'],
   ['泰国','曼谷','th','Asia/Bangkok'],
-  ['越南','河内','vn','Asia/Ho_Chi_Minh'],
-  ['柬埔寨','金边','kh','Asia/Bangkok'],
-  ['老挝','万象','la','Asia/Bangkok'],
   ['缅甸','仰光','mm','Asia/Yangon'],
-  ['东帝汶','帝力','tl','Asia/Dili'],
-  // ── 南亚 / 中亚 ──
-  ['印度','新德里','in','Asia/Kolkata'],
-  ['斯里兰卡','科伦坡','lk','Asia/Colombo'],
-  ['尼泊尔','加德满都','np','Asia/Kathmandu'],
-  ['不丹','廷布','bt','Asia/Thimphu'],
   ['孟加拉国','达卡','bd','Asia/Dhaka'],
+  ['尼泊尔','加德满都','np','Asia/Kathmandu'],
+  ['印度','新德里','in','Asia/Kolkata'],
   ['巴基斯坦','伊斯兰堡','pk','Asia/Karachi'],
   ['阿富汗','喀布尔','af','Asia/Kabul'],
-  ['哈萨克斯坦','阿斯塔纳','kz','Asia/Almaty'],
-  ['乌兹别克斯坦','塔什干','uz','Asia/Tashkent'],
-  ['吉尔吉斯斯坦','比什凯克','kg','Asia/Bishkek'],
-  ['塔吉克斯坦','杜尚别','tj','Asia/Dushanbe'],
-  ['土库曼斯坦','阿什哈巴德','tm','Asia/Ashgabat'],
-  // ── 西亚 / 中东 ──
-  ['伊朗','德黑兰','ir','Asia/Tehran'],
-  ['伊拉克','巴格达','iq','Asia/Baghdad'],
-  ['以色列','耶路撒冷','il','Asia/Jerusalem'],
-  ['巴勒斯坦','拉马拉','ps','Asia/Hebron'],
-  ['约旦','安曼','jo','Asia/Amman'],
-  ['黎巴嫩','贝鲁特','lb','Asia/Beirut'],
-  ['叙利亚','大马士革','sy','Asia/Damascus'],
-  ['沙特阿拉伯','利雅得','sa','Asia/Riyadh'],
-  ['也门','萨那','ye','Asia/Riyadh'],
-  ['科威特','科威特城','kw','Asia/Riyadh'],
-  ['卡塔尔','多哈','qa','Asia/Qatar'],
-  ['巴林','麦纳麦','bh','Asia/Qatar'],
   ['阿联酋','迪拜','ae','Asia/Dubai'],
-  ['阿曼','马斯喀特','om','Asia/Dubai'],
-  ['亚美尼亚','埃里温','am','Asia/Yerevan'],
-  ['阿塞拜疆','巴库','az','Asia/Baku'],
-  ['格鲁吉亚','第比利斯','ge','Asia/Tbilisi'],
-  ['塞浦路斯','尼科西亚','cy','Asia/Nicosia'],
-  ['马尔代夫','马累','mv','Indian/Maldives'],
-  // ── 欧洲 ──
-  ['英国','伦敦','gb','Europe/London'],
-  ['爱尔兰','都柏林','ie','Europe/Dublin'],
-  ['葡萄牙','里斯本','pt','Europe/Lisbon'],
-  ['葡萄牙','亚速尔群岛','pt','Atlantic/Azores'],
-  ['冰岛','雷克雅未克','is','Atlantic/Reykjavik'],
-  ['法国','巴黎','fr','Europe/Paris'],
-  ['摩纳哥','摩纳哥','mc','Europe/Paris'],
-  ['西班牙','马德里','es','Europe/Madrid'],
-  ['西班牙','加那利群岛','es','Atlantic/Canary'],
-  ['德国','柏林','de','Europe/Berlin'],
-  ['荷兰','阿姆斯特丹','nl','Europe/Brussels'],
-  ['比利时','布鲁塞尔','be','Europe/Brussels'],
-  ['卢森堡','卢森堡市','lu','Europe/Brussels'],
-  ['瑞士','伯尔尼','ch','Europe/Zurich'],
-  ['列支敦士登','瓦杜兹','li','Europe/Zurich'],
-  ['奥地利','维也纳','at','Europe/Vienna'],
-  ['意大利','罗马','it','Europe/Rome'],
-  ['圣马力诺','圣马力诺','sm','Europe/Rome'],
-  ['梵蒂冈','梵蒂冈城','va','Europe/Rome'],
-  ['马耳他','瓦莱塔','mt','Europe/Malta'],
-  ['安道尔','安道尔城','ad','Europe/Andorra'],
-  ['丹麦','哥本哈根','dk','Europe/Berlin'],
-  ['挪威','奥斯陆','no','Europe/Berlin'],
-  ['瑞典','斯德哥尔摩','se','Europe/Berlin'],
-  ['波兰','华沙','pl','Europe/Warsaw'],
-  ['捷克','布拉格','cz','Europe/Prague'],
-  ['斯洛伐克','布拉迪斯拉发','sk','Europe/Prague'],
-  ['匈牙利','布达佩斯','hu','Europe/Budapest'],
-  ['斯洛文尼亚','卢布尔雅那','si','Europe/Belgrade'],
-  ['克罗地亚','萨格勒布','hr','Europe/Belgrade'],
-  ['波黑','萨拉热窝','ba','Europe/Belgrade'],
-  ['塞尔维亚','贝尔格莱德','rs','Europe/Belgrade'],
-  ['黑山','波德戈里察','me','Europe/Belgrade'],
-  ['北马其顿','斯科普里','mk','Europe/Belgrade'],
-  ['阿尔巴尼亚','地拉那','al','Europe/Tirane'],
-  ['希腊','雅典','gr','Europe/Athens'],
-  ['保加利亚','索菲亚','bg','Europe/Sofia'],
-  ['罗马尼亚','布加勒斯特','ro','Europe/Bucharest'],
-  ['摩尔多瓦','基希讷乌','md','Europe/Chisinau'],
-  ['乌克兰','基辅','ua','Europe/Kyiv'],
-  ['芬兰','赫尔辛基','fi','Europe/Helsinki'],
-  ['爱沙尼亚','塔林','ee','Europe/Tallinn'],
-  ['拉脱维亚','里加','lv','Europe/Riga'],
-  ['立陶宛','维尔纽斯','lt','Europe/Vilnius'],
-  ['白俄罗斯','明斯克','by','Europe/Minsk',1],
-  ['土耳其','伊斯坦布尔','tr','Europe/Istanbul'],
-  // ── 俄罗斯(11 个官方时区,均为锁区)──
-  ['俄罗斯','加里宁格勒','ru','Europe/Kaliningrad',1],
+  ['伊朗','德黑兰','ir','Asia/Tehran'],
   ['俄罗斯','莫斯科','ru','Europe/Moscow',1],
-  ['俄罗斯','萨马拉','ru','Europe/Samara',1],
-  ['俄罗斯','叶卡捷琳堡','ru','Asia/Yekaterinburg',1],
-  ['俄罗斯','鄂木斯克','ru','Asia/Omsk',1],
-  ['俄罗斯','克拉斯诺亚尔斯克','ru','Asia/Krasnoyarsk',1],
-  ['俄罗斯','伊尔库茨克','ru','Asia/Irkutsk',1],
-  ['俄罗斯','雅库茨克','ru','Asia/Yakutsk',1],
-  ['俄罗斯','符拉迪沃斯托克(海参崴)','ru','Asia/Vladivostok',1],
-  ['俄罗斯','马加丹','ru','Asia/Magadan',1],
-  ['俄罗斯','堪察加','ru','Asia/Kamchatka',1],
-  // ── 非洲 ──
-  ['埃及','开罗','eg','Africa/Cairo'],
-  ['利比亚','的黎波里','ly','Africa/Tripoli'],
-  ['突尼斯','突尼斯市','tn','Africa/Tunis'],
-  ['阿尔及利亚','阿尔及尔','dz','Africa/Algiers'],
-  ['摩洛哥','拉巴特','ma','Africa/Casablanca'],
-  ['苏丹','喀土穆','sd','Africa/Khartoum'],
-  ['南苏丹','朱巴','ss','Africa/Juba'],
-  ['尼日利亚','阿布贾','ng','Africa/Lagos'],
-  ['尼日尔','尼亚美','ne','Africa/Lagos'],
-  ['喀麦隆','雅温得','cm','Africa/Lagos'],
-  ['乍得','恩贾梅纳','td','Africa/Ndjamena'],
-  ['中非','班吉','cf','Africa/Lagos'],
-  ['加蓬','利伯维尔','ga','Africa/Lagos'],
-  ['刚果(布)','布拉柴维尔','cg','Africa/Lagos'],
-  ['刚果(金)','金沙萨','cd','Africa/Lagos'],
-  ['刚果(金)','卢本巴希','cd','Africa/Maputo'],
-  ['赤道几内亚','马拉博','gq','Africa/Lagos'],
-  ['安哥拉','罗安达','ao','Africa/Lagos'],
-  ['贝宁','波多诺伏','bj','Africa/Lagos'],
-  ['科特迪瓦','阿比让','ci','Africa/Abidjan'],
-  ['加纳','阿克拉','gh','Africa/Abidjan'],
-  ['布基纳法索','瓦加杜古','bf','Africa/Abidjan'],
-  ['马里','巴马科','ml','Africa/Abidjan'],
-  ['塞内加尔','达喀尔','sn','Africa/Abidjan'],
-  ['几内亚','科纳克里','gn','Africa/Abidjan'],
-  ['几内亚比绍','比绍','gw','Africa/Bissau'],
-  ['冈比亚','班珠尔','gm','Africa/Abidjan'],
-  ['塞拉利昂','弗里敦','sl','Africa/Abidjan'],
-  ['利比里亚','蒙罗维亚','lr','Africa/Monrovia'],
-  ['多哥','洛美','tg','Africa/Abidjan'],
-  ['毛里塔尼亚','努瓦克肖特','mr','Africa/Abidjan'],
-  ['佛得角','普拉亚','cv','Atlantic/Cape_Verde'],
-  ['圣多美和普林西比','圣多美','st','Africa/Sao_Tome'],
-  ['肯尼亚','内罗毕','ke','Africa/Nairobi'],
-  ['坦桑尼亚','多多马','tz','Africa/Nairobi'],
-  ['乌干达','坎帕拉','ug','Africa/Nairobi'],
-  ['埃塞俄比亚','亚的斯亚贝巴','et','Africa/Nairobi'],
-  ['厄立特里亚','阿斯马拉','er','Africa/Nairobi'],
-  ['吉布提','吉布提市','dj','Africa/Nairobi'],
-  ['索马里','摩加迪沙','so','Africa/Nairobi'],
-  ['马达加斯加','塔那那利佛','mg','Africa/Nairobi'],
-  ['科摩罗','莫罗尼','km','Africa/Nairobi'],
   ['南非','比勒陀利亚','za','Africa/Johannesburg'],
-  ['莱索托','马塞卢','ls','Africa/Johannesburg'],
-  ['斯威士兰','姆巴巴内','sz','Africa/Johannesburg'],
-  ['莫桑比克','马普托','mz','Africa/Maputo'],
-  ['赞比亚','卢萨卡','zm','Africa/Maputo'],
-  ['津巴布韦','哈拉雷','zw','Africa/Maputo'],
-  ['马拉维','利隆圭','mw','Africa/Maputo'],
-  ['博茨瓦纳','哈博罗内','bw','Africa/Maputo'],
-  ['布隆迪','基特加','bi','Africa/Maputo'],
-  ['卢旺达','基加利','rw','Africa/Maputo'],
-  ['纳米比亚','温得和克','na','Africa/Windhoek'],
-  ['毛里求斯','路易港','mu','Indian/Mauritius'],
-  ['塞舌尔','维多利亚','sc','Indian/Mahe'],
-  // ── 北美 / 中美 / 加勒比 ──
-  ['美国','纽约 · 东部','us','America/New_York'],
-  ['美国','芝加哥 · 中部','us','America/Chicago'],
-  ['美国','丹佛 · 山地','us','America/Denver'],
-  ['美国','凤凰城 · 山地(无夏令时)','us','America/Phoenix'],
-  ['美国','洛杉矶 · 太平洋','us','America/Los_Angeles'],
-  ['美国','安克雷奇 · 阿拉斯加','us','America/Anchorage'],
-  ['美国','檀香山 · 夏威夷','us','Pacific/Honolulu'],
-  ['加拿大','圣约翰斯 · 纽芬兰','ca','America/St_Johns'],
-  ['加拿大','哈利法克斯 · 大西洋','ca','America/Halifax'],
-  ['加拿大','多伦多 · 东部','ca','America/Toronto'],
-  ['加拿大','温尼伯 · 中部','ca','America/Winnipeg'],
-  ['加拿大','埃德蒙顿 · 山地','ca','America/Edmonton'],
-  ['加拿大','温哥华 · 太平洋','ca','America/Vancouver'],
-  ['墨西哥','墨西哥城 · 中部','mx','America/Mexico_City'],
-  ['墨西哥','坎昆 · 东部','mx','America/Cancun'],
-  ['墨西哥','马萨特兰 · 山地','mx','America/Mazatlan'],
-  ['墨西哥','蒂华纳 · 太平洋','mx','America/Tijuana'],
-  ['危地马拉','危地马拉城','gt','America/Guatemala'],
-  ['伯利兹','贝尔莫潘','bz','America/Belize'],
-  ['萨尔瓦多','圣萨尔瓦多','sv','America/El_Salvador'],
-  ['洪都拉斯','特古西加尔巴','hn','America/Tegucigalpa'],
-  ['尼加拉瓜','马那瓜','ni','America/Managua'],
-  ['哥斯达黎加','圣何塞','cr','America/Costa_Rica'],
-  ['巴拿马','巴拿马城','pa','America/Panama'],
-  ['古巴','哈瓦那','cu','America/Havana'],
-  ['牙买加','金斯敦','jm','America/Jamaica'],
-  ['海地','太子港','ht','America/Port-au-Prince'],
-  ['多米尼加','圣多明各','do','America/Santo_Domingo'],
-  ['巴哈马','拿骚','bs','America/Toronto'],
-  ['巴巴多斯','布里奇敦','bb','America/Barbados'],
-  ['特立尼达和多巴哥','西班牙港','tt','America/Puerto_Rico'],
-  ['安提瓜和巴布达','圣约翰斯','ag','America/Puerto_Rico'],
-  ['多米尼克','罗索','dm','America/Puerto_Rico'],
-  ['格林纳达','圣乔治','gd','America/Puerto_Rico'],
-  ['圣基茨和尼维斯','巴斯特尔','kn','America/Puerto_Rico'],
-  ['圣卢西亚','卡斯特里','lc','America/Puerto_Rico'],
-  ['圣文森特和格林纳丁斯','金斯敦','vc','America/Puerto_Rico'],
-  // ── 南美 ──
-  ['哥伦比亚','波哥大','co','America/Bogota'],
-  ['委内瑞拉','加拉加斯','ve','America/Caracas'],
-  ['圭亚那','乔治敦','gy','America/Guyana'],
-  ['苏里南','帕拉马里博','sr','America/Paramaribo'],
-  ['厄瓜多尔','基多','ec','America/Guayaquil'],
-  ['厄瓜多尔','加拉帕戈斯群岛','ec','Pacific/Galapagos'],
-  ['秘鲁','利马','pe','America/Lima'],
-  ['玻利维亚','拉巴斯','bo','America/La_Paz'],
-  ['巴拉圭','亚松森','py','America/Asuncion'],
-  ['乌拉圭','蒙得维的亚','uy','America/Montevideo'],
-  ['阿根廷','布宜诺斯艾利斯','ar','America/Argentina/Buenos_Aires'],
-  ['巴西','圣保罗','br','America/Sao_Paulo'],
-  ['巴西','玛瑙斯','br','America/Manaus'],
-  ['巴西','里奥布兰科','br','America/Rio_Branco'],
+  ['尼日利亚','阿布贾','ng','Africa/Lagos'],
+  ['冰岛','雷克雅未克','is','Atlantic/Reykjavik'],
+  ['佛得角','普拉亚','cv','Atlantic/Cape_Verde'],
   ['巴西','费尔南多·迪诺罗尼亚','br','America/Noronha'],
-  ['智利','圣地亚哥','cl','America/Santiago'],
-  ['智利','复活节岛','cl','Pacific/Easter'],
-  // ── 大洋洲 ──
-  ['澳大利亚','悉尼 · 东部','au','Australia/Sydney'],
-  ['澳大利亚','布里斯班 · 东部(无夏令时)','au','Australia/Brisbane'],
-  ['澳大利亚','阿德莱德 · 中部','au','Australia/Adelaide'],
-  ['澳大利亚','达尔文 · 中部(无夏令时)','au','Australia/Darwin'],
-  ['澳大利亚','珀斯 · 西部','au','Australia/Perth'],
-  ['新西兰','奥克兰','nz','Pacific/Auckland'],
-  ['巴布亚新几内亚','莫尔斯比港','pg','Pacific/Port_Moresby'],
-  ['斐济','苏瓦','fj','Pacific/Fiji'],
-  ['所罗门群岛','霍尼亚拉','sb','Pacific/Guadalcanal'],
-  ['瓦努阿图','维拉港','vu','Pacific/Efate'],
-  ['萨摩亚','阿皮亚','ws','Pacific/Apia'],
-  ['汤加','努库阿洛法','to','Pacific/Tongatapu'],
-  ['基里巴斯','塔拉瓦','ki','Pacific/Tarawa'],
-  ['基里巴斯','凤凰群岛','ki','Pacific/Kanton'],
-  ['基里巴斯','圣诞岛','ki','Pacific/Kiritimati'],
-  ['马绍尔群岛','马朱罗','mh','Pacific/Tarawa'],
-  ['密克罗尼西亚','帕利基尔','fm','Pacific/Guadalcanal'],
-  ['帕劳','恩吉鲁穆德','pw','Pacific/Palau'],
-  ['瑙鲁','亚伦','nr','Pacific/Nauru'],
-  ['图瓦卢','富纳富提','tv','Pacific/Tarawa'],
+  ['阿根廷','布宜诺斯艾利斯','ar','America/Argentina/Buenos_Aires'],
+  ['加拿大','圣约翰斯','ca','America/St_Johns'],
+  ['玻利维亚','拉巴斯','bo','America/La_Paz'],
+  ['秘鲁','利马','pe','America/Lima'],
+  ['危地马拉','危地马拉城','gt','America/Guatemala'],
+  ['墨西哥','马萨特兰','mx','America/Mazatlan'],
+  ['美国','洛杉矶','us','America/Los_Angeles'],
+  ['美国','檀香山','us','Pacific/Honolulu'],
 ];
+
+// 精选地点(社区常用 PoGo 热点)。[名称, 国家·城市, ISO2, IANA时区, 备注, 纬度, 经度]
+// 时间一律实时计算;坐标可点击跳转地图。highlight = 选中时段时此刻当地处于该时段。
+const WC_SPOTS = [
+  ['Wellington 植物园 / Auckland','新西兰 · 惠灵顿/奥克兰','nz','Pacific/Auckland','最早时区起点;活动 / raid 开局', -41.2806, 174.7676],
+  ['Sydney 悉尼歌剧院一带','澳大利亚 · 悉尼','au','Australia/Sydney','早时区 raid / 活动候选', -33.8568, 151.2153],
+  ['Shibuya / Shinjuku 涩谷新宿','日本 · 东京','jp','Asia/Tokyo','主热点;Go Fest / raid / city play 常用', 35.6595, 139.7005],
+  ['台北车站 Taipei Main Station','台湾 · 台北','tw','Asia/Taipei','raid-only 老热点;现强度有争议', 25.0478, 121.5173],
+  ['Dubai Marina 迪拜码头','阿联酋 · 迪拜','ae','Asia/Dubai','catch event 强,主要靠 lures', 25.0805, 55.1403],
+  ['Plaza de Europa','西班牙 · 萨拉戈萨','es','Europe/Madrid','spawn density 高', 41.6488, -0.8891],
+  ['Margaret Island 玛格丽特岛','匈牙利 · 布达佩斯','hu','Europe/Budapest','有人觉得比 Zara 好,证据较弱', 47.5278, 19.0506],
+  ['Ibirapuera Park 伊比拉普埃拉公园','巴西 · 圣保罗','br','America/Sao_Paulo','stops + 重 lures;活动日 catch 强', -23.5874, -46.6576],
+  ['Bryant Park / Central Park','美国 · 纽约','us','America/New_York','spawn + lure + raid 强(NYC)', 40.7536, -73.9832],
+  ['Havana 随机坐标','古巴 · 哈瓦那','cu','America/Havana','Go Fest 末尾随机坐标,不算稳定热点', 23.1136, -82.3666],
+  ['Lincoln Park','美国 · 芝加哥','us','America/Chicago','Go Fest / city play;非自然 density', 41.9214, -87.6513],
+  ['Calle República de El Salvador 21','墨西哥 · 墨西哥城 CDMX','mx','America/Mexico_City','疑似社区热点;stops / gyms 密集', 19.4316, -99.1336],
+  ['PIER 39 / Santa Monica Pier','美国 · 旧金山 / 洛杉矶','us','America/Los_Angeles','传统 pier 热点;评价分裂', 37.8087, -122.4098],
+  ['Honolulu / Waikiki','美国 · 夏威夷檀香山','us','Pacific/Honolulu','最后尾巴时区', 21.2793, -157.8294],
+];
+
+let wcActive = false; // false = 显示全部(最早→最晚);true = 按所选时段筛选
 
 const wcPad = n => String(n).padStart(2, '0');
 // One Intl read per zone → current offset (minutes), local h:m, weekday, day-shift.
@@ -824,19 +636,21 @@ function renderWorldClock() {
   const startSel = $('#wc-start'), endSel = $('#wc-end'), box = $('#wc-results');
   if (!startSel || !endSel || !box) return;
   const start = +startSel.value, end = +endSel.value, now = new Date();
+  // ----- 国家列表:按当前 UTC 偏移分组;不选时段=全部,选了则筛选;最早→最晚 -----
   const groups = new Map();
   WC_DATA.forEach(t => {
     let c; try { c = wcCompute(t[3], now); } catch (e) { return; }
-    if (!wcInRange(c.h, start, end)) return;
+    if (wcActive && !wcInRange(c.h, start, end)) return;
     if (!groups.has(c.offset)) groups.set(c.offset, { off: c.offset, s: c, items: [] });
     groups.get(c.offset).items.push({ country: t[0], city: t[1], cc: t[2], lock: t[4] || 0 });
   });
-  const arr = [...groups.values()].sort((a, b) => a.off - b.off);
+  const arr = [...groups.values()].sort((a, b) => b.off - a.off); // 最早(高偏移)→ 最晚
   const total = arr.reduce((n, g) => n + g.items.length, 0);
   const sum = $('#wc-summary');
-  if (sum) sum.textContent = `当地 ${wcPad(start)}:00–${wcPad(end)}:59 · 命中 ${arr.length} 个时区 / ${total} 个国家地区`;
-  if (!arr.length) { box.innerHTML = '<p class="muted" style="padding:1rem;text-align:center">该时段暂无匹配的国家 / 地区。</p>'; return; }
-  box.innerHTML = arr.map(g => {
+  if (sum) sum.textContent = wcActive
+    ? `当地 ${wcPad(start)}:00–${wcPad(end)}:59 · 命中 ${arr.length} 个时区 / ${total} 个地区`
+    : `全部时段 · ${arr.length} 个时区(最早 → 最晚)`;
+  box.innerHTML = arr.length ? arr.map(g => {
     const dd = g.s.dayDelta > 0 ? ' <span class="wc-dd">次日</span>' : (g.s.dayDelta < 0 ? ' <span class="wc-dd">昨日</span>' : '');
     const items = g.items.slice().sort((a, b) => a.country.localeCompare(b.country, 'zh-Hans')).map(it => {
       const note = WC_NOTE[it.cc] ? ` title="${escapeHtml(WC_NOTE[it.cc])}"` : '';
@@ -852,19 +666,48 @@ function renderWorldClock() {
       + `<span class="wc-wd muted">周${WC_WD[g.s.wd] || ''}${dd}</span>`
       + `<span class="wc-count muted">${g.items.length}</span></div>`
       + `<div class="wc-list">${items}</div></div>`;
-  }).join('');
+  }).join('') : '<p class="muted" style="padding:1rem;text-align:center">该时段暂无匹配的地区。</p>';
+  renderWcSpots(start, end, now);
+}
+// 精选地点侧栏:始终列出(最早→最晚),实时显示当地时间 + 坐标;选中时段则高亮命中者。
+function renderWcSpots(start, end, now) {
+  const box = $('#wc-spots'); if (!box) return;
+  const rows = WC_SPOTS.map(s => {
+    let c; try { c = wcCompute(s[3], now); } catch (e) { c = null; }
+    return { s, c };
+  }).filter(x => x.c).sort((a, b) => b.c.offset - a.c.offset);
+  box.innerHTML = '<div class="wc-spots-head"><span class="dia">◆</span><h3>精选地点</h3></div>'
+    + rows.map(({ s, c }) => {
+      const hot = wcActive && wcInRange(c.h, start, end);
+      const dd = c.dayDelta > 0 ? ' 次日' : (c.dayDelta < 0 ? ' 昨日' : '');
+      const geo = `${s[5].toFixed(4)}, ${s[6].toFixed(4)}`;
+      return `<div class="wc-spot${hot ? ' hot' : ''}${wcActive && !hot ? ' dim' : ''}">`
+        + `<div class="wc-spot-top">`
+        + `<img class="wc-flag" src="https://flagcdn.com/w40/${s[2]}.png" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`
+        + `<span class="wc-spot-time">${wcPad(c.h)}:${wcPad(c.m)}</span>`
+        + `<span class="wc-off">${wcFmtOffset(c.offset)}</span>`
+        + `<span class="wc-spot-wd muted">周${WC_WD[c.wd] || ''}${dd}</span></div>`
+        + `<div class="wc-spot-name">${escapeHtml(s[0])}</div>`
+        + `<div class="wc-spot-sub muted">${escapeHtml(s[1])} · ${escapeHtml(s[3])}</div>`
+        + `<div class="wc-spot-note muted">${escapeHtml(s[4])}</div>`
+        + `<a class="wc-spot-geo" href="https://www.google.com/maps?q=${s[5]},${s[6]}" target="_blank" rel="noopener">📍 ${geo}</a>`
+        + `</div>`;
+    }).join('');
 }
 function setupWorldClock() {
-  const startSel = $('#wc-start'), endSel = $('#wc-end');
+  const startSel = $('#wc-start'), endSel = $('#wc-end'), allBtn = $('#wc-all');
   if (!startSel || !endSel) return;
   let opts = '';
   for (let i = 0; i < 24; i++) opts += `<option value="${i}">${wcPad(i)}:00</option>`;
   startSel.innerHTML = opts; endSel.innerHTML = opts;
-  startSel.value = '14'; endSel.value = '18'; // demo default (= the 14–18 example)
-  startSel.addEventListener('change', renderWorldClock);
-  endSel.addEventListener('change', renderWorldClock);
+  startSel.value = '4'; endSel.value = '7'; // pre-filled (= the 4–7 example), inactive until changed
+  const activate = () => { wcActive = true; if (allBtn) allBtn.classList.remove('active'); renderWorldClock(); };
+  startSel.addEventListener('change', activate);
+  endSel.addEventListener('change', activate);
+  if (allBtn) allBtn.addEventListener('click', () => { wcActive = false; allBtn.classList.add('active'); renderWorldClock(); });
+  wcActive = false; if (allBtn) allBtn.classList.add('active'); // default: 显示全部,最早→最晚
   renderWorldClock();
-  // tick so groups shift as the minute rolls — only while the clock view is open
+  // tick so times/groups shift as the minute rolls — only while the clock view is open
   setInterval(() => {
     const v = $('#view-clock');
     if (v && v.classList.contains('active')) renderWorldClock();
