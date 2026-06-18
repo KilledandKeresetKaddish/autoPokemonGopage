@@ -336,6 +336,26 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .tier-B{background:linear-gradient(135deg,#8b9bbd,#6f86ba);color:#15130b;}
 .tier-C{background:linear-gradient(135deg,#a39a86,#857c69);color:#15130b;}
 
+/* current-raid counters (rankings-raid region): a big boss header above a
+   compact counter list, so the boss reads larger than its counters. */
+.raid-block{margin:.2rem 0 1rem;}
+.raid-boss{display:flex;align-items:center;gap:.75rem;margin:.1rem 0 .5rem;
+  padding:.5rem .75rem;background:var(--panel2);border:1px solid var(--gold-line);
+  border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.3);}
+.raid-boss .boss-icon{width:76px;height:76px;object-fit:contain;flex:none;
+  background:rgba(var(--gold-rgb),.08);border:1px solid var(--line);border-radius:12px;
+  image-rendering:pixelated;filter:drop-shadow(0 2px 3px rgba(0,0,0,.55));}
+.raid-boss strong{color:var(--h1);font-family:var(--serif);font-size:1.2rem;letter-spacing:.03em;}
+.raid-boss .badge{margin-right:.45rem;font-size:.74rem;padding:.1rem .55rem;vertical-align:.08em;}
+.raid-boss .meta{color:var(--muted);font-size:.82rem;margin-top:.2rem;}
+/* compact counter list under a boss header — smaller sprites than the tier lists */
+.rank-list.mini{gap:.4rem;}
+.rank-list.mini .rank-item{padding:.34rem .6rem;gap:.55rem;}
+.rank-list.mini .rank-item::before{inset:4px;}
+.rank-list.mini .rank-item .mon-icon{width:38px;height:38px;}
+.rank-list.mini .rank-item strong{font-size:.98rem;}
+.rank-list.mini .rank-item .meta{font-size:.8rem;}
+
 /* ---------- Free-form synthesis utilities (本月看点 / 本期推荐) ----------
    Whitelisted building blocks the daily agent may use inside the
    calendar-notes and rankings-current AI regions. Theme-correct, inert. */

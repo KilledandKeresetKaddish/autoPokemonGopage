@@ -35,9 +35,13 @@ Checklist:
    the species) — never write a Chinese name or move from memory; drop anything you can't
    verify rather than guessing.**
 5. Build `rankings-raid` (**当前团战 Counter**) from what's live now — current raid bosses **and any
-   active Max/Dynamax battle** (e.g. Dynamax Regice during its event) — each with justified counters.
-   Then add a **brief Mega Booster** line: which Mega to evolve to farm **candy** for the relevant
-   Pokémon (same-type Mega → +糖). Keep it short.
+   active Max/Dynamax battle**. Render **each boss as a header with a large sprite** (`.raid-block` >
+   `.raid-boss` with a `.boss-icon` + 简体中文 name + a `.meta` line of 属性 / 弱点), then its counters
+   in a **`.rank-list.mini`** (smaller sprites) below, so the boss reads bigger than its counters.
+   Then a **Mega Booster** block stating the mechanic correctly — an **active** Mega gives **+1 糖 when
+   you catch a Pokémon sharing that Mega's 属性** (not "evolving yields that species' candy", and
+   unrelated to evolving) — and **pairing each live boss to a same-属性 Mega** for its candy. Build the
+   pairing from this run's live bosses; never hard-code a fixed list.
 6. Build both free-form regions from **this run's** finalized `events.json` +
    `rotations.json` only (never previous/stale files): `rankings-current` (本期推荐) is
    **editorial / priority** — which live events to do, bonuses, shiny windows, a directional

@@ -177,6 +177,20 @@ function packLanes(items) {
   });
 }
 
+// A weekly rotation day-icon stands in for a real raid event when one exists in
+// events.json (same boss dex id + overlapping dates). Resolve to that event so the
+// drawer carries its counters / links / summary instead of a bare name + sprite.
+function findRaidEvent(rd) {
+  const ids = new Set((rd && rd.mons || []).map(m => m && m.id).filter(Boolean));
+  if (!ids.size) return null;
+  const rs = parseDay(rd.start), re = parseDay(rd.end) || rs;
+  return state.events.find(ev => {
+    if (ev.type !== 'raid-battles' || !ev._s || !ev._e) return false;
+    if (rs && re && (ev._e < rs || ev._s > re)) return false; // dates don't overlap
+    return (ev.pokemon || []).some(p => p && ids.has(p.id));
+  }) || null;
+}
+
 function renderCalendar() {
   $('#cal-title').textContent = `${state.calYear}年${state.calMonth + 1}月`;
   const root = $('#calendar');
@@ -288,10 +302,11 @@ function renderCalendar() {
           b.title = `${rd.name} · ${fmtDateShort(rd.start)}–${fmtDateShort(rd.end)}`;
           b.innerHTML = mons.map(p => `<img src="${escapeHtml(monSprite(p))}" alt="" loading="lazy" onerror="this.style.display='none'">`).join('')
             + `<span class="tg">${escapeHtml(badge)}</span>`;
-          b.addEventListener('click', () => openDetail({
-            name: rd.name, heading: '团战 Boss', type: 'raid-battles',
-            start: rd.start, end: rd.end, pokemon: rd.mons
-          }));
+          b.addEventListener('click', () => openDetail(
+            findRaidEvent(rd) || {
+              name: rd.name, heading: '团战 Boss', type: 'raid-battles',
+              start: rd.start, end: rd.end, pokemon: rd.mons
+            }));
           rbox.appendChild(b);
         });
         num.appendChild(rbox);

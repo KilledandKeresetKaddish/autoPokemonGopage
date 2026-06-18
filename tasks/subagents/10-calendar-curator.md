@@ -24,10 +24,13 @@ Checklist:
    event; never accumulate duplicates. When a real event is confirmed, delete the old
    placeholder ("待公布 / waiting for announcement") row it replaces — be smart, never
    leave both.
-3. Aggregate real source URLs into `links[]` (`LeekDuck`, `Hub`, `Pokébase`, `官方`).
-   Keep `link` as the primary URL. Never guess a URL you have not seen. **Confirm each link is
-   about THIS exact event/Pokémon — not a same-category article for a different one (a Roggenrola
-   Max Monday must NOT link Electabuzz's guide); omit rather than attach a wrong link.**
+3. Aggregate real source URLs into `links[]` (`LeekDuck`, `Hub`, `Pokébase`, `官方`) for **every
+   event — every type, every week through the end of next month**, not just raids. Keep `link` as the
+   primary URL. If the bulk feed didn't surface a per-event URL, fetch it on demand. When no per-event
+   article exists, a source's **generic category guide** is acceptable **only if it genuinely covers
+   this event**. Never guess a URL you have not seen. **Confirm each link is about THIS exact
+   event/Pokémon — not a same-category article for a different subject; omit rather than attach a wrong
+   link.** Don't settle for LeekDuck-only unless you checked the other sources and nothing fits.
 4. Fill concise 简体中文 `summary`, useful `bonuses[]`, `pokemon[]`, and event-specific
    `sections[]`. For raid / mega / raid-day items, add justified `counters[]` when
    source data supports it. **Verify every 简体中文 Pokémon name and move against
@@ -40,7 +43,9 @@ Checklist:
    Pokémon and include a shiny bonus line.
 7. Register only genuinely new `type` values in `public/data/categories.json` using
    approved palette keys and `kind` values from `AGENTS.md`.
-8. All user-facing strings must be 简体中文; JSON must remain valid.
+8. All user-facing strings must be 简体中文 — including each event `name` (title): never leave a
+   source's English headline; build it from the event's verified 简体中文 `pokemon[]` name + category.
+   JSON must remain valid.
 
 Output to the coordinator: changed files, event count, long-term count, highlighted
 count, known source gaps kept from last good content.

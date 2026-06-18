@@ -122,15 +122,21 @@ cross-checks). Off-allowlist URLs are refused. Stay
    - **Dedup by event identity.** The same real-world event shows up in 2–4 sources
      (LeekDuck / Hub / pokébase / official). Decide which entries are the *same* event and
      emit **one** row — never two rows for one event.
-   - **Aggregate links — actively, for every event.** Do **not** just keep the LeekDuck link. For each
-     event, find its match in `events-hub` / `events-pokebase` / `events-official` (by name + date) and
-     add each **real** URL to `links[]` with a label (`LeekDuck` / `Hub` / `Pokébase` / `官方`). If a
-     source clearly covers the event but the bulk feed didn't surface the URL, fetch it on demand
-     (`scripts/fetch.sh url …`) and grab the real link. **Use real URLs only — never guess or construct
+   - **简体中文 titles.** The event `name` (the calendar title) must be 简体中文 — never leave a
+     source's English headline. Build it from the event's own verified 简体中文 `pokemon[]` name +
+     its category, so it tracks whatever the source serves each run.
+   - **Aggregate links — actively, for EVERY event** (every `type`, and every week through the end of
+     next month — not just raids, and not just near-term events). Do **not** just keep the LeekDuck
+     link. For each event, find its match in `events-hub` / `events-pokebase` / `events-official` (by
+     name + date) and add each **real** URL to `links[]` with a label (`LeekDuck` / `Hub` / `Pokébase`
+     / `官方`). If a source clearly covers the event but the bulk feed didn't surface the URL, fetch it
+     on demand (`scripts/fetch.sh url …`) and grab the real link. When no per-event article exists, a
+     source's **generic category guide** (a schedule / guide page for that kind of event) is acceptable
+     **only if that page genuinely covers this event**. **Use real URLs only — never guess or construct
      a link you haven't seen. Confirm each link is about THIS exact event/Pokémon — not a same-category
-     article for a different one (a Roggenrola Max Monday must NOT link Electabuzz's guide); if you
-     can't find the right-Pokémon URL, omit it rather than attach a wrong one.** Most events should end up with ≥2 source links; LeekDuck-only is the
-     exception, not the default. Keep `link` = the primary one.
+     article for a different subject; omit rather than attach a wrong one.** Most events should end up
+     with ≥2 source links; do **not** settle for LeekDuck-only unless you actually checked the other
+     sources and nothing fits. Keep `link` = the primary one.
    - **Populate Pokémon, bonuses & a summary.** Fill `pokemon[]` (dex id + 简体中文 name + `shiny`),
      `bonuses[]`, and a **concise 简体中文 `summary`** (1–2 sentences) for every event from the articles —
      so the calendar isn't empty and the detail drawer is actually useful (not just a title + date).
@@ -165,10 +171,16 @@ cross-checks). Off-allowlist URLs are refused. Stay
      embedded in its artwork URL, e.g. `…/detail/861_gmax.png` → id 861; strip suffixes like
      `_gmax`. **Adapt if the layout changes. Parse the lists — do not decide rankings yourself.**)
    - `rankings-raid` (**当前团战 Counter**) → counters for what's **live right now**: current raid
-     bosses from `data/raw/raids.json` **and any active Max/Dynamax battle** (e.g. an in-event
-     Dynamax boss) — each with a few top counters (justify with `gamemaster` types — don't invent
-     numbers). Then add a **brief Mega Booster** line: which Mega to evolve to boost **candy** for
-     the relevant Pokémon (same-type Mega → +糖). Keep it short.
+     bosses from `data/raw/raids.json` **and any active Max/Dynamax battle**. Render **each boss as a
+     header with a large sprite** (`.raid-block` > `.raid-boss` with a `.boss-icon` + 简体中文 name +
+     a `.meta` line of its 属性 / 弱点), then its top counters in a **`.rank-list.mini`** (smaller
+     sprites) below — so the boss reads bigger than its counters. Justify counters with `gamemaster`
+     types; don't invent numbers.
+   - Then a **Mega Booster** block. Get the mechanic right: an **active** Mega gives **+1 糖 when you
+     catch a Pokémon sharing that Mega's 属性** (chance of extra / XL) — it is **not** "evolving yields
+     that species' candy" and has nothing to do with the act of evolving. Then **pair each live boss
+     to a same-属性 Mega** for farming that boss's candy (boss 属性 → a Mega of the same 属性). Build the
+     pairing from whatever bosses are live this run — never hard-code a fixed list.
    - `rankings-current` (本期推荐, **free-form, highest value**) → **editorial / priority**, not a
      counter dump: which live events to do this period (社区日/团战日/Max周一/聚焦), bonuses, shiny
      windows, and a directional "练哪类攻手". Full counter tables belong in 当前团战 Counter — point
@@ -295,6 +307,8 @@ Use **only** these whitelisted, theme-correct classes (no inline colors, no `<st
 - Pokémon/tiers: `.mon-icon`, `.mon-row` / `.mon` / `.shiny`, `.tier` + `.tier-S|tier-A|tier-B|tier-C`
 - sprites/icons: `<img class="spr">` or `class="mon-icon"` (PokeAPI dex-id URL); `<img class="ico">` /
   `class="ico-lg"` for the local resource icons in `assets/icons/` (size locked).
+- current-raid blocks (structured `rankings-raid` only): `.raid-block` > `.raid-boss` (header) with a
+  big `<img class="boss-icon">`, and `.rank-list.mini` for the compact counter rows beneath it.
 
 `rankings-current` should tie today's live events + current raid bosses to the best
 attackers/tanks to use (e.g. a Max/Dynamax event → the relevant Max picks).
@@ -306,6 +320,18 @@ attackers/tanks to use (e.g. a Max/Dynamax event → the relevant Max picks).
     <span class="tier tier-S">S</span>
     <img class="mon-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/384.png" alt="烈空坐">
     <div><strong>烈空坐</strong><div class="meta">龙息 / 画龙点睛</div></div>
+  </div>
+</div>
+```
+当前团战 Counter — boss 头(大图)+ 紧凑 counter 列表(小图)。占位符按本轮实际 boss 填:
+```html
+<div class="raid-block">
+  <div class="raid-boss">
+    <img class="boss-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<bossDexId>.png" alt="<boss 简体中文名>">
+    <div><span class="badge">&lt;档次&gt;</span><strong>&lt;boss 简体中文名&gt;</strong><div class="meta">&lt;属性&gt; · 弱 &lt;弱点&gt;</div></div>
+  </div>
+  <div class="rank-list mini">
+    <div class="rank-item"><img class="mon-icon" src="…/<counterDexId>.png" alt="<counter 名>"><div><strong>&lt;counter 名&gt;</strong><div class="meta">&lt;fast&gt; / &lt;charged&gt;</div></div></div>
   </div>
 </div>
 ```
