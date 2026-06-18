@@ -268,6 +268,9 @@ never invent a link.
   for **Mega / Primal / Gigantamax / regional** forms set the form's sprite instead: use the form's
   PokeAPI *pokemon* id as `id`, or add `"sprite": "<url>"` from `pokeapi.co/api/v2/pokemon/<name>/`
   (`sprites.front_default`; e.g. `scizor-mega`, `skarmory-mega`, `raichu-mega-x`). pokeapi.co is allowlisted.
+  **Exception — rotation Mega segments:** keep `id` = the **base** dex (matching that boss's
+  `events.json` entry) and use the `"sprite"` override for the mega look; a mega-form `id` there breaks
+  the day-icon → raid-event link (see the rotations.json schema note below).
 - `counters`: best raid/团战 counters (`id` for the sprite + 简体中文 `name` + optional `fast`/`charged`
   moves) → rendered as a collapsible "团战 Counter" block. Fill for raid / mega / raid-day events from the
   Hub raid guide or `db.pokemongohub.net`, justified by `gamemaster` — **don't invent**.
@@ -314,6 +317,12 @@ never invent a link.
   vanish from the grid. `color` drives both the rotation section and the day-icon ring — 5★ = gold
   `#d8b25f`, Mega = purple `#9c7bb0` (Max keeps its own; Max is not a day icon). `tag` (≤2 chars,
   optional) is the icon's hover badge (default 5★ / M).
+- **A Mega/5★ day-icon links to its raid event by *dex id* — keep the id consistent.** Clicking an
+  icon opens the drawer of the matching `events.json` raid (its counters / links / summary). The
+  matcher compares `pokemon[].id`, so a rotation segment **must use the SAME id as that boss's
+  `events.json` raid entry** — i.e. the **BASE national-dex id** (Mega 巨钳螳螂 → `212`, *not* the
+  mega-form id `10046`), with the mega look supplied via `"sprite"`. Put a mega-form id here and the
+  icon opens a **bare, link-less drawer** (it can't find its event — this is a real bug, not cosmetic).
 
 `public/data/meta.json`:
 ```json

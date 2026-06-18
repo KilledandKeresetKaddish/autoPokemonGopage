@@ -66,12 +66,22 @@ OUT="$DISC/discover-$(date -u +%Y%m%dT%H%M%SZ).txt"
       | awk '{printf "gohub\t-\t%s\n",$0}'
   fi
 
-  # --- 3) Official pokemongo.com news (best effort, same solver path).
+  # --- 3) Official pokemongo.com news — the news index has no usable search, so we
+  #     fetch it and keep ONLY posts whose link text/URL actually contain the query
+  #     tokens. Never dump the whole index: an unfiltered list would hand the agent
+  #     unrelated 官方 URLs as if they were query-specific leads (false matches).
   OFF="$("$FETCH" url "https://pokemongo.com/news" 2>/dev/null || true)"
   if [ -n "$OFF" ]; then
     printf '%s\n' "$OFF" \
-      | grep -oE 'https://(www\.)?pokemongo\.com/(news|post)/[a-zA-Z0-9/_-]+' 2>/dev/null \
-      | awk '{printf "official\t-\t%s\n",$0}'
+      | grep -oE '\[[^][]+\]\(https://(www\.)?pokemongo\.com/(news|post)/[^) ]+\)' 2>/dev/null \
+      | awk -v q="$QUERY" '
+          BEGIN { n = split(tolower(q), ts, " ") }
+          match($0, /\]\(/) {
+            t = substr($0, 2, RSTART - 2); u = substr($0, RSTART + 2); sub(/\)$/, "", u);
+            hay = tolower(t " " u); ok = (n > 0);
+            for (i = 1; i <= n; i++) if (index(hay, ts[i]) == 0) { ok = 0; break }
+            if (ok) printf "official\t%s\t%s\n", t, u
+          }'
   fi
 } | awk -F'\t' '{k=$3; sub(/\/$/,"",k)} !seen[k]++' | tee "$OUT"
 

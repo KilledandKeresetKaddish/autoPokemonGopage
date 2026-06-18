@@ -78,14 +78,14 @@
         {
           "name": "Mega Scizor",
           "cn": "超级巨钳螳螂",
-          "pokemon": [{ "id": 10046, "name": "巨钳螳螂" }],
+          "pokemon": [{ "id": 212, "name": "巨钳螳螂", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10046.png" }],
           "start": "2026-06-17",
           "end": "2026-06-23"
         },
         {
           "name": "Mega Pidgeot",
           "cn": "超级大比鸟",
-          "pokemon": [{ "id": 10073, "name": "大比鸟" }],
+          "pokemon": [{ "id": 18, "name": "大比鸟", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10073.png" }],
           "start": "2026-06-24",
           "end": "2026-06-30"
         }
