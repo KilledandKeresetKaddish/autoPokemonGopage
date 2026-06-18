@@ -532,6 +532,208 @@ function openDetail(ev) {
   $('#event-detail').hidden = false;
 }
 
+/* ---------- world clock (time-band country filter) ----------------------------
+ * Owner feature (not the daily content agent's): pick a local-hour window and
+ * list every country/region currently inside it, grouped by UTC offset. All time
+ * math is done live in the browser via Intl + IANA zone ids (DST handled for us),
+ * so the static table only carries display data. Offsets are NEVER hard-coded.
+ *   row = [国家, 城市/时区标注, ISO2(flagcdn), IANA zone, lock?]
+ *   lock: 1 = 锁区 (Niantic suspended play) · 2 = 部分可玩 (partially playable)
+ * Multi-zone countries list each OFFICIAL zone (e.g. US ×7); single-tz countries
+ * (China = UTC+8 only) list once. Zone ids are validated against Node ICU before
+ * shipping; flags from flagcdn.com (renders cross-platform, unlike emoji flags). */
+const WC_LOCK = { 1: '锁区', 2: '部分可玩' };
+const WC_NOTE = {
+  cn: '中国大陆官方使用 UTC+8(北京时间)。多数内地城市为空地图,海南、东北、新疆及粤/桂部分口岸(珠海、深圳等)附近有可玩区域。',
+  ru: 'Niantic 已暂停俄罗斯的游玩,社区普遍视为锁区。',
+  by: '与俄罗斯同批被 Niantic 暂停游玩,社区视为锁区。',
+};
+const WC_WD = { Mon:'一', Tue:'二', Wed:'三', Thu:'四', Fri:'五', Sat:'六', Sun:'日' };
+const WC_DATA = [
+  // 覆盖 UTC+14 → −12 的全部时区(用户指定的代表地点)。同一时区可多国并列。
+  ['基里巴斯','圣诞岛 Kiritimati','ki','Pacific/Kiritimati'],
+  ['萨摩亚','阿皮亚','ws','Pacific/Apia'],
+  ['新西兰','查塔姆群岛','nz','Pacific/Chatham'],
+  ['新西兰','奥克兰 / 惠灵顿','nz','Pacific/Auckland'],
+  ['新喀里多尼亚','努美阿','nc','Pacific/Noumea'],
+  ['澳大利亚','豪勋爵岛','au','Australia/Lord_Howe'],
+  ['澳大利亚','悉尼','au','Australia/Sydney'],
+  ['澳大利亚','达尔文','au','Australia/Darwin'],
+  ['日本','东京 / 千叶','jp','Asia/Tokyo'],
+  ['澳大利亚','Eucla','au','Australia/Eucla'],
+  ['台湾','新北','tw','Asia/Taipei'],
+  ['马来西亚','吉隆坡','my','Asia/Kuala_Lumpur'],
+  ['新加坡','新加坡','sg','Asia/Singapore'],
+  ['越南','胡志明市','vn','Asia/Ho_Chi_Minh'],
+  ['印度尼西亚','雅加达','id','Asia/Jakarta'],
+  ['缅甸','仰光','mm','Asia/Yangon'],
+  ['孟加拉国','达卡 / 吉大港','bd','Asia/Dhaka'],
+  ['尼泊尔','加德满都','np','Asia/Kathmandu'],
+  ['印度','孟买 / 新德里','in','Asia/Kolkata'],
+  ['马尔代夫','马累','mv','Indian/Maldives'],
+  ['阿富汗','喀布尔','af','Asia/Kabul'],
+  ['阿联酋','迪拜 / 阿布扎比','ae','Asia/Dubai'],
+  ['伊朗','德黑兰','ir','Asia/Tehran'],
+  ['土耳其','伊斯坦布尔','tr','Europe/Istanbul'],
+  ['以色列','耶路撒冷','il','Asia/Jerusalem'],
+  ['希腊','雅典','gr','Europe/Athens'],
+  ['西班牙','萨拉戈萨','es','Europe/Madrid'],
+  ['匈牙利','布达佩斯','hu','Europe/Budapest'],
+  ['法国','巴黎','fr','Europe/Paris'],
+  ['英国','伦敦','gb','Europe/London'],
+  ['西班牙','加那利群岛','es','Atlantic/Canary'],
+  ['冰岛','雷克雅未克','is','Atlantic/Reykjavik'],
+  ['佛得角','普拉亚','cv','Atlantic/Cape_Verde'],
+  ['南乔治亚岛','Grytviken','gs','Atlantic/South_Georgia'],
+  ['加拿大','圣约翰斯(纽芬兰)','ca','America/St_Johns'],
+  ['巴西','圣保罗','br','America/Sao_Paulo'],
+  ['阿根廷','布宜诺斯艾利斯','ar','America/Argentina/Buenos_Aires'],
+  ['美国','纽约','us','America/New_York'],
+  ['加拿大','蒙特利尔','ca','America/Toronto'],
+  ['多米尼加','圣多明各','do','America/Santo_Domingo'],
+  ['美国','芝加哥 / 休斯敦','us','America/Chicago'],
+  ['墨西哥','墨西哥城','mx','America/Mexico_City'],
+  ['美国','丹佛 / 新墨西哥','us','America/Denver'],
+  ['美国','旧金山','us','America/Los_Angeles'],
+  ['加拿大','温哥华','ca','America/Vancouver'],
+  ['美国','安克雷奇(阿拉斯加)','us','America/Anchorage'],
+  ['法属波利尼西亚','甘比尔群岛','pf','Pacific/Gambier'],
+  ['法属波利尼西亚','马克萨斯群岛','pf','Pacific/Marquesas'],
+  ['美国','檀香山(夏威夷)','us','Pacific/Honolulu'],
+  ['美属萨摩亚','帕果帕果','as','Pacific/Pago_Pago'],
+  ['美国本土外小岛','贝克 / 豪兰岛','us','Etc/GMT+12'],
+];
+
+// 精选地点(社区常用 PoGo 热点)。[名称, 国家·城市, ISO2, IANA时区, 备注, 纬度, 经度]
+// 时间一律实时计算;坐标可点击跳转地图。highlight = 选中时段时此刻当地处于该时段。
+const WC_SPOTS = [
+  ['Wellington 植物园 / Auckland','新西兰 · 惠灵顿/奥克兰','nz','Pacific/Auckland','最早时区起点;活动 / raid 开局', -41.2806, 174.7676],
+  ['Sydney 悉尼歌剧院一带','澳大利亚 · 悉尼','au','Australia/Sydney','早时区 raid / 活动候选', -33.8568, 151.2153],
+  ['Shibuya / Shinjuku 涩谷新宿','日本 · 东京','jp','Asia/Tokyo','主热点;Go Fest / raid / city play 常用', 35.6595, 139.7005],
+  ['台北车站 Taipei Main Station','台湾 · 台北','tw','Asia/Taipei','raid-only 老热点;现强度有争议', 25.0478, 121.5173],
+  ['Dubai Marina 迪拜码头','阿联酋 · 迪拜','ae','Asia/Dubai','catch event 强,主要靠 lures', 25.0805, 55.1403],
+  ['Plaza de Europa','西班牙 · 萨拉戈萨','es','Europe/Madrid','spawn density 高', 41.6488, -0.8891],
+  ['Margaret Island 玛格丽特岛','匈牙利 · 布达佩斯','hu','Europe/Budapest','有人觉得比 Zara 好,证据较弱', 47.5278, 19.0506],
+  ['Ibirapuera Park 伊比拉普埃拉公园','巴西 · 圣保罗','br','America/Sao_Paulo','stops + 重 lures;活动日 catch 强', -23.5874, -46.6576],
+  ['Bryant Park / Central Park','美国 · 纽约','us','America/New_York','spawn + lure + raid 强(NYC)', 40.7536, -73.9832],
+  ['Havana 随机坐标','古巴 · 哈瓦那','cu','America/Havana','Go Fest 末尾随机坐标,不算稳定热点', 23.1136, -82.3666],
+  ['Lincoln Park','美国 · 芝加哥','us','America/Chicago','Go Fest / city play;非自然 density', 41.9214, -87.6513],
+  ['Calle República de El Salvador 21','墨西哥 · 墨西哥城 CDMX','mx','America/Mexico_City','疑似社区热点;stops / gyms 密集', 19.4316, -99.1336],
+  ['PIER 39 / Santa Monica Pier','美国 · 旧金山 / 洛杉矶','us','America/Los_Angeles','传统 pier 热点;评价分裂', 37.8087, -122.4098],
+  ['Honolulu / Waikiki','美国 · 夏威夷檀香山','us','Pacific/Honolulu','最后尾巴时区', 21.2793, -157.8294],
+];
+
+let wcActive = false; // false = 显示全部(最早→最晚);true = 按所选时段筛选
+
+const wcPad = n => String(n).padStart(2, '0');
+// One Intl read per zone → current offset (minutes), local h:m, weekday, day-shift.
+function wcCompute(zone, now) {
+  const p = {};
+  for (const x of new Intl.DateTimeFormat('en-US', {
+    timeZone: zone, hourCycle: 'h23', weekday: 'short',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+  }).formatToParts(now)) if (x.type !== 'literal') p[x.type] = x.value;
+  const h = (+p.hour) % 24;
+  const asUTC = Date.UTC(+p.year, +p.month - 1, +p.day, h, +p.minute, +p.second);
+  const offset = Math.round((asUTC - now.getTime()) / 60000);
+  const dayDelta = Math.round(
+    (Date.UTC(+p.year, +p.month - 1, +p.day) -
+      Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) / 86400000);
+  return { offset, h, m: +p.minute, wd: p.weekday, dayDelta };
+}
+function wcFmtOffset(min) {
+  const sign = min < 0 ? '-' : '+', a = Math.abs(min);
+  const h = Math.floor(a / 60), m = a % 60;
+  return 'UTC' + sign + h + (m ? ':' + wcPad(m) : '');
+}
+// Inclusive on both ends, hour granularity; wraps past midnight when start > end.
+function wcInRange(h, start, end) {
+  if (start === end) return h === start;
+  return start < end ? (h >= start && h <= end) : (h >= start || h <= end);
+}
+function renderWorldClock() {
+  const startSel = $('#wc-start'), endSel = $('#wc-end'), box = $('#wc-results');
+  if (!startSel || !endSel || !box) return;
+  const start = +startSel.value, end = +endSel.value, now = new Date();
+  // ----- 国家列表:按当前 UTC 偏移分组;不选时段=全部,选了则筛选;最早→最晚 -----
+  const groups = new Map();
+  WC_DATA.forEach(t => {
+    let c; try { c = wcCompute(t[3], now); } catch (e) { return; }
+    if (wcActive && !wcInRange(c.h, start, end)) return;
+    if (!groups.has(c.offset)) groups.set(c.offset, { off: c.offset, s: c, items: [] });
+    groups.get(c.offset).items.push({ country: t[0], city: t[1], cc: t[2], lock: t[4] || 0 });
+  });
+  const arr = [...groups.values()].sort((a, b) => b.off - a.off); // 最早(高偏移)→ 最晚
+  const total = arr.reduce((n, g) => n + g.items.length, 0);
+  const sum = $('#wc-summary');
+  if (sum) sum.textContent = wcActive
+    ? `当地 ${wcPad(start)}:00–${wcPad(end)}:59 · 命中 ${arr.length} 个时区 / ${total} 个地区`
+    : `全部时段 · ${arr.length} 个时区(最早 → 最晚)`;
+  box.innerHTML = arr.length ? arr.map(g => {
+    const dd = g.s.dayDelta > 0 ? ' <span class="wc-dd">次日</span>' : (g.s.dayDelta < 0 ? ' <span class="wc-dd">昨日</span>' : '');
+    const items = g.items.slice().sort((a, b) => a.country.localeCompare(b.country, 'zh-Hans')).map(it => {
+      const note = WC_NOTE[it.cc] ? ` title="${escapeHtml(WC_NOTE[it.cc])}"` : '';
+      const badge = it.lock ? `<span class="wc-lock l${it.lock}">${WC_LOCK[it.lock]}</span>` : '';
+      return `<div class="wc-item${it.lock ? ' locked' : ''}"${note}>`
+        + `<img class="wc-flag" src="https://flagcdn.com/w40/${it.cc}.png" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`
+        + `<div class="wc-meta"><span class="wc-country">${escapeHtml(it.country)}</span>`
+        + `<span class="wc-city">${escapeHtml(it.city)}</span></div>${badge}</div>`;
+    }).join('');
+    return `<div class="wc-group"><div class="wc-group-head">`
+      + `<span class="wc-time">${wcPad(g.s.h)}:${wcPad(g.s.m)}</span>`
+      + `<span class="wc-off">${wcFmtOffset(g.off)}</span>`
+      + `<span class="wc-wd muted">周${WC_WD[g.s.wd] || ''}${dd}</span>`
+      + `<span class="wc-count muted">${g.items.length}</span></div>`
+      + `<div class="wc-list">${items}</div></div>`;
+  }).join('') : '<p class="muted" style="padding:1rem;text-align:center">该时段暂无匹配的地区。</p>';
+  renderWcSpots(start, end, now);
+}
+// 精选地点侧栏:始终列出(最早→最晚),实时显示当地时间 + 坐标;选中时段则高亮命中者。
+function renderWcSpots(start, end, now) {
+  const box = $('#wc-spots'); if (!box) return;
+  const rows = WC_SPOTS.map(s => {
+    let c; try { c = wcCompute(s[3], now); } catch (e) { c = null; }
+    return { s, c };
+  }).filter(x => x.c).sort((a, b) => b.c.offset - a.c.offset);
+  box.innerHTML = '<div class="wc-spots-head"><span class="dia">◆</span><h3>精选地点</h3></div>'
+    + rows.map(({ s, c }) => {
+      const hot = wcActive && wcInRange(c.h, start, end);
+      const dd = c.dayDelta > 0 ? ' 次日' : (c.dayDelta < 0 ? ' 昨日' : '');
+      const geo = `${s[5].toFixed(4)}, ${s[6].toFixed(4)}`;
+      return `<div class="wc-spot${hot ? ' hot' : ''}${wcActive && !hot ? ' dim' : ''}">`
+        + `<div class="wc-spot-top">`
+        + `<img class="wc-flag" src="https://flagcdn.com/w40/${s[2]}.png" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`
+        + `<span class="wc-spot-time">${wcPad(c.h)}:${wcPad(c.m)}</span>`
+        + `<span class="wc-off">${wcFmtOffset(c.offset)}</span>`
+        + `<span class="wc-spot-wd muted">周${WC_WD[c.wd] || ''}${dd}</span></div>`
+        + `<div class="wc-spot-name">${escapeHtml(s[0])}</div>`
+        + `<div class="wc-spot-sub muted">${escapeHtml(s[1])} · ${escapeHtml(s[3])}</div>`
+        + `<div class="wc-spot-note muted">${escapeHtml(s[4])}</div>`
+        + `<a class="wc-spot-geo" href="https://www.google.com/maps?q=${s[5]},${s[6]}" target="_blank" rel="noopener">📍 ${geo}</a>`
+        + `</div>`;
+    }).join('');
+}
+function setupWorldClock() {
+  const startSel = $('#wc-start'), endSel = $('#wc-end'), allBtn = $('#wc-all');
+  if (!startSel || !endSel) return;
+  let opts = '';
+  for (let i = 0; i < 24; i++) opts += `<option value="${i}">${wcPad(i)}:00</option>`;
+  startSel.innerHTML = opts; endSel.innerHTML = opts;
+  startSel.value = '4'; endSel.value = '7'; // pre-filled (= the 4–7 example), inactive until changed
+  const activate = () => { wcActive = true; if (allBtn) allBtn.classList.remove('active'); renderWorldClock(); };
+  startSel.addEventListener('change', activate);
+  endSel.addEventListener('change', activate);
+  if (allBtn) allBtn.addEventListener('click', () => { wcActive = false; allBtn.classList.add('active'); renderWorldClock(); });
+  wcActive = false; if (allBtn) allBtn.classList.add('active'); // default: 显示全部,最早→最晚
+  renderWorldClock();
+  // tick so times/groups shift as the minute rolls — only while the clock view is open
+  setInterval(() => {
+    const v = $('#view-clock');
+    if (v && v.classList.contains('active')) renderWorldClock();
+  }, 30000);
+}
+
 /* ---------- wiring ---------- */
 function setupTabs() {
   $('#main-tabs').addEventListener('click', e => {
@@ -569,6 +771,7 @@ async function init() {
   setupTabs();
   setupCalNav();
   setupDetail();
+  setupWorldClock();
   await loadData();
   renderCalendar();
   renderRotations();
