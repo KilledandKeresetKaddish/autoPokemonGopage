@@ -1,17 +1,17 @@
 {
-  "lastUpdated": "2026-06-19T14:42:51Z",
+  "lastUpdated": "2026-06-19T15:08:43Z",
   "sources": {
     "events": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:42:51Z",
+      "lastChecked": "2026-06-19T15:08:43Z",
       "status": "ok",
       "bytes": 61339,
       "sha256": "a465877ea899827e0c6771fcb68131a1e75d9d9d8e6a49ab76fb484c693aad59",
-      "note": "强制重抓; ScrapedDuck/LeekDuck JSON 用作日历主干,发现并加入 Road of Legends。"
+      "note": "重抓 OK;传奇之路每日团战来自上轮已核(本轮 LeekDuck/Hub 经 Jina 403,沿用上轮已验内容)。"
     },
     "raids": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:42:51Z",
+      "lastChecked": "2026-06-19T15:08:43Z",
       "status": "ok",
       "bytes": 16037,
       "sha256": "96623f71e0cfb80c0d172d5fefc9393970dcbe713b732c686bbba5cdbdffe2eb",
@@ -19,7 +19,7 @@
     },
     "eggs": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:42:51Z",
+      "lastChecked": "2026-06-19T15:08:43Z",
       "status": "ok",
       "bytes": 29466,
       "sha256": "bf0d68f3851420d0c007fdc89e3e956d849020a1ff999a8c1f668326d0c7d3ee",
@@ -35,11 +35,11 @@
     },
     "gamemaster": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:42:51Z",
+      "lastChecked": "2026-06-19T15:08:43Z",
       "status": "ok",
       "bytes": 912180,
       "sha256": "3dda2af1b856b070d153b3b53e7bc995df9e0a9b91e8596ae4ccf7841ec587d5",
-      "note": "强制重抓; 用于属性/招式与 dex 核对。"
+      "note": "重抓 OK;用于交叉核对 dex→英文物种(373暴飞龙/248班基拉斯/282沙奈朵/94耿鬼/646酋雷姆/800奈克洛兹玛/888-9剑盾/483-4起源双龙/382-3原始双神 均一致)。"
     },
     "tiers-attackers": {
       "lastFetch": "2026-06-19T14:14:25Z",
@@ -106,5 +106,15 @@
     "rotations": "2026-06 三条 track 完整; Mega 段保持 base dex id + sprite override。",
     "rankings": "五个 AI 区块非空; rankings-current/calendar-notes 已引用本次最终日历与轮换; raid panel 保留并修正明显英文宝可梦名。",
     "sourceLinks": "Road of Legends 使用 LeekDuck/Hub/官方已确认链接; GO Fest Global 使用 LeekDuck/Hub/官方入口并补充官方社区庆典 APAC 与欧美大洋洲页面。"
+  },
+  "notes": {
+    "run": "2026-06-19T15:08:43Z",
+    "operatorFix": "按用户反馈:7月无角标 + 周列错位。根因=传奇之路每日团战被写成 raid-hour 长 chip,而角标只由 rotations.json 的 5star/mega 轨驱动。",
+    "changes": [
+      "rotations.json:月份切到 2026-07,5★与超级轨各新增 7/6–7/10 单日段(当日 Boss),日历生成每日角标;6月段保留以便6月视图。",
+      "events.json:5 个 road-of-legends-raids 由 raid-hour→raid-battles 且改为全天(00:01–23:59),角标点击经 findRaidEvent 命中各自抽屉;raid-battles 在有角标时不再画 bar,周列恢复对齐。"
+    ],
+    "verify": "dex/形态经 gamemaster.json 交叉核对一致;简体中文名沿用上轮已验数据(本轮 pokeapi.co 与 Jina 均 403,无法在线复核,按 AGENTS.md 保留上轮已验内容)。",
+    "network": "raw.githubusercontent.com 可达;pokeapi.co、r.jina.ai(Hub/LeekDuck/官方)本轮 403。"
   }
 }
