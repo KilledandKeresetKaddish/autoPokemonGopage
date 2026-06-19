@@ -1,120 +1,92 @@
 {
-  "lastUpdated": "2026-06-19T15:08:43Z",
+  "lastUpdated": "2026-06-19T16:21:02Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T15:08:43Z",
+      "lastFetch": "2026-06-19T16:05:00Z",
+      "lastChecked": "2026-06-19T16:21:02Z",
       "status": "ok",
       "bytes": 61339,
-      "sha256": "a465877ea899827e0c6771fcb68131a1e75d9d9d8e6a49ab76fb484c693aad59",
-      "note": "重抓 OK;传奇之路每日团战来自上轮已核(本轮 LeekDuck/Hub 经 Jina 403,沿用上轮已验内容)。"
+      "note": "LeekDuck JSON OK; 6月下旬和7月事件完整,传奇之路 (7/6-7/10) 每日团战信息已从 Hub 核对。"
     },
     "raids": {
-      "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T15:08:43Z",
+      "lastFetch": "2026-06-19T16:05:00Z",
+      "lastChecked": "2026-06-19T16:21:02Z",
       "status": "ok",
       "bytes": 16037,
-      "sha256": "96623f71e0cfb80c0d172d5fefc9393970dcbe713b732c686bbba5cdbdffe2eb",
-      "note": "强制重抓; 当前团战用于 Counter 与轮换核对。"
+      "note": "当前团战列表与排行 Counter 一致:Necrozma 5★, Shadow Dialga, Mega Scizor, 3★/1★/暗影池匹配。"
     },
     "eggs": {
-      "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T15:08:43Z",
+      "lastFetch": "2026-06-19T14:10:22Z",
+      "lastChecked": "2026-06-19T16:21:02Z",
       "status": "ok",
       "bytes": 29466,
-      "sha256": "bf0d68f3851420d0c007fdc89e3e956d849020a1ff999a8c1f668326d0c7d3ee",
-      "note": "强制重抓; 用于传奇之路蛋池/活动细节核对。"
+      "note": "蛋池数据可用;传奇之路蛋池信息已引用到 sections。"
     },
     "research": {
-      "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:42:51Z",
+      "lastFetch": "2026-06-19T14:10:22Z",
+      "lastChecked": "2026-06-19T16:21:02Z",
       "status": "ok",
       "bytes": 67259,
-      "sha256": "8fb8d402a721d2f655e1d9913fdae8db0ce781209fde3714355246e5ddc3f4b3",
-      "note": "强制重抓; 用于活动调查奖励核对。"
+      "note": "调查奖励数据可用。"
     },
     "gamemaster": {
-      "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T15:08:43Z",
+      "lastFetch": "2026-06-19T14:10:23Z",
+      "lastChecked": "2026-06-19T16:21:02Z",
       "status": "ok",
       "bytes": 912180,
-      "sha256": "3dda2af1b856b070d153b3b53e7bc995df9e0a9b91e8596ae4ccf7841ec587d5",
-      "note": "重抓 OK;用于交叉核对 dex→英文物种(373暴飞龙/248班基拉斯/282沙奈朵/94耿鬼/646酋雷姆/800奈克洛兹玛/888-9剑盾/483-4起源双龙/382-3原始双神 均一致)。"
+      "note": "PvPoke gamemaster OK;属性/招式类型已用于 counter 验证。Darkrai fast move 修正:祸不单行→大声咆哮(Hex→Snarl)。"
     },
     "tiers-attackers": {
-      "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:42:51Z",
+      "lastFetch": "2026-06-19T14:10:26Z",
+      "lastChecked": "2026-06-19T16:21:02Z",
       "status": "ok",
       "bytes": 34727,
-      "sha256": "ba0b74ccf0e351a528e1de04e329f3606e697627aebd1bf88ddf04db1384be05",
-      "note": "强制重抓; Max 攻手榜源可用。"
+      "note": "Max 攻手榜源可用;A/B tier 已解析至 rankings-attackers。"
     },
     "tiers-defenders": {
-      "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:42:51Z",
+      "lastFetch": "2026-06-19T14:10:30Z",
+      "lastChecked": "2026-06-19T16:21:02Z",
       "status": "ok",
       "bytes": 38671,
-      "sha256": "709d29eb63a469ba4d2db7c95ad3ec5187fe6940ecff5bf163225644fde68324",
-      "note": "强制重抓; Max 防守榜源可用。"
+      "note": "Max 防守榜源可用;S/A/B tier 已解析至 rankings-defenders。"
     },
     "tiers-pokebase": {
-      "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:42:51Z",
+      "lastFetch": "2026-06-19T14:14:02Z",
+      "lastChecked": "2026-06-19T16:21:02Z",
       "status": "ok",
       "bytes": 121558,
-      "sha256": "4759f6ce185b47e102d2b04937d289d9395d8257a599afbfe3448f1eda78c2a8",
-      "note": "第一次重抓返回 503,随后重试成功; 作为 Max 榜交叉参考。"
+      "note": "Pokébase 交叉参考可用。"
     },
     "events-hub": {
-      "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:42:51Z",
+      "lastFetch": "2026-06-19T16:05:00Z",
+      "lastChecked": "2026-06-19T16:21:02Z",
       "status": "ok",
-      "bytes": 30742,
-      "sha256": "5d40d8c56b78853e9d25af37434779fa71d2fab474273d822ff145382ab71216",
-      "note": "强制重抓; 用于月历、十周年、Road of Legends、Max 指南与超级团战链接核对。"
+      "bytes": 30694,
+      "note": "Hub 事件索引 OK;Road of Legends 详细页(go-fest-2026-road-of-legends)已用于每日 Boss 核对与 counter 填充。"
     },
     "events-pokebase": {
-      "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:42:51Z",
+      "lastFetch": "2026-06-19T16:05:00Z",
+      "lastChecked": "2026-06-19T16:21:02Z",
       "status": "ok",
-      "bytes": 26717,
-      "sha256": "ee88dc0daeb29812391df946be6dc233c21217dc8bc584d0a9b3c438502aa9d4",
-      "note": "强制重抓; 用于活动交叉参考。"
+      "bytes": 26887,
+      "note": "Pokébase 事件列表可用。"
     },
     "events-official": {
-      "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:42:51Z",
+      "lastFetch": "2026-06-19T16:05:00Z",
+      "lastChecked": "2026-06-19T16:21:02Z",
       "status": "ok",
       "bytes": 9930,
-      "sha256": "3d6f0eb9ab30c5f5bc77582b5035046452af19b527b97ae135f3a4166676b759",
-      "note": "强制重抓; 官方首页/新闻确认 Road of Legends 与 July Community Day 等官方链接。"
+      "note": "官方新闻 OK。"
     }
   },
   "detailChecks": {
-    "checkedAt": "2026-06-19T14:42:51Z",
+    "checkedAt": "2026-06-19T16:21:02Z",
     "status": "ok",
-    "note": "本次按操作备注复核 Road of Legends Hub/官方页面、GO Fest Global Hub 页面与官方社区庆典页面;日历已新增 7/6–7/10 每日团战角标并完善 GO Fest 全球弹窗。"
+    "note": "本次核对: (1)传奇之路7/6-10每日团战添加counter(gamemaster验证); (2)Darkrai fast move修正(Hex→Snarl/大声咆哮); (3)社区日Hub链接修正; (4)雷丘超级团战日添加Hub链接; (5)传奇之路每日事件添加LeekDuck链接; (6)暗影铁哑铃补入rankings-raid。"
   },
   "operatorNote": {
-    "checkedAt": "2026-06-19T14:42:51Z",
+    "checkedAt": "2026-06-19T16:21:02Z",
     "status": "compliant",
-    "note": "已在允许范围内完成:传奇之路主活动弹窗补充每日 5★/超级或原始团战、特殊背景、蛋池与 GO Pass;新增 5 条每日 raid-hour 角标;GO Fest 全球弹窗补充免费内容、超级超梦 X/Y、捷拉奥拉、栖息地/团战与官方社区庆典链接。未触碰受保护文件。"
-  },
-  "selfCheck": {
-    "checkedAt": "2026-06-19T14:42:51Z",
-    "events": "42 条; 重复 id 0; 长期活动 10 条; 高亮 8 条; Road of Legends 已拆分每日团战角标。",
-    "rotations": "2026-06 三条 track 完整; Mega 段保持 base dex id + sprite override。",
-    "rankings": "五个 AI 区块非空; rankings-current/calendar-notes 已引用本次最终日历与轮换; raid panel 保留并修正明显英文宝可梦名。",
-    "sourceLinks": "Road of Legends 使用 LeekDuck/Hub/官方已确认链接; GO Fest Global 使用 LeekDuck/Hub/官方入口并补充官方社区庆典 APAC 与欧美大洋洲页面。"
-  },
-  "notes": {
-    "run": "2026-06-19T15:08:43Z",
-    "operatorFix": "按用户反馈:7月无角标 + 周列错位。根因=传奇之路每日团战被写成 raid-hour 长 chip,而角标只由 rotations.json 的 5star/mega 轨驱动。",
-    "changes": [
-      "rotations.json:月份切到 2026-07,5★与超级轨各新增 7/6–7/10 单日段(当日 Boss),日历生成每日角标;6月段保留以便6月视图。",
-      "events.json:5 个 road-of-legends-raids 由 raid-hour→raid-battles 且改为全天(00:01–23:59),角标点击经 findRaidEvent 命中各自抽屉;raid-battles 在有角标时不再画 bar,周列恢复对齐。"
-    ],
-    "verify": "dex/形态经 gamemaster.json 交叉核对一致;简体中文名沿用上轮已验数据(本轮 pokeapi.co 与 Jina 均 403,无法在线复核,按 AGENTS.md 保留上轮已验内容)。",
-    "network": "raw.githubusercontent.com 可达;pokeapi.co、r.jina.ai(Hub/LeekDuck/官方)本轮 403。"
+    "note": "操作备注: 认真整理补全+7月传奇之路角标。传奇之路7/6-10已有完整单日5star和mega轨段(含form sprite),pokemon[]与events.json对齐,preflight通过。counter已补齐。"
   }
 }

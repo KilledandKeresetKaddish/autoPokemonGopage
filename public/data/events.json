@@ -204,7 +204,7 @@
       {
         "id": 491,
         "name": "达克莱伊",
-        "fast": "祸不单行",
+        "fast": "大声咆哮",
         "charged": "暗影球"
       },
       {
@@ -280,7 +280,7 @@
       {
         "id": 491,
         "name": "达克莱伊",
-        "fast": "祸不单行",
+        "fast": "大声咆哮",
         "charged": "暗影球"
       },
       {
@@ -296,7 +296,7 @@
         "charged": "暗影球"
       }
     ],
-    "highlight": true
+    "highlight": false
   },
   {
     "id": "pokemonspotlighthour2026-06-18",
@@ -601,10 +601,24 @@
         "name": "铁火辉夜"
       }
     ],
-    "highlight": true,
+    "highlight": false,
     "bonuses": [
       "18:00–19:00 5★ 团战大量出现",
       "北半球:纸御剑;南半球:铁火辉夜"
+    ],
+    "counters": [
+      {
+        "id": 609,
+        "name": "水晶灯火灵",
+        "fast": "火焰旋涡",
+        "charged": "过热"
+      },
+      {
+        "id": 257,
+        "name": "火焰鸡",
+        "fast": "火焰旋涡",
+        "charged": "爆炸烈焰"
+      }
     ]
   },
   {
@@ -925,7 +939,7 @@
       },
       {
         "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/spotlight-raid-hours/"
+        "url": "https://pokemongohub.net/post/event/sobble-community-day-july-2026/"
       },
       {
         "label": "官方",
@@ -1067,6 +1081,10 @@
     "summary": "7/6 全天 5★团战登场众多传说与究极异兽;团战时刻 18:00–20:00 刷新更密集,超级暴飞龙为当日超级团战重点。",
     "links": [
       {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/road-of-legends-2026/"
+      },
+      {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/"
       },
@@ -1134,7 +1152,27 @@
         ]
       }
     ],
-    "highlight": false
+    "highlight": false,
+    "counters": [
+      {
+        "id": 445,
+        "name": "烈咬陆鲨",
+        "fast": "龙息",
+        "charged": "逆鳞"
+      },
+      {
+        "id": 491,
+        "name": "达克莱伊",
+        "fast": "大声咆哮",
+        "charged": "暗影球"
+      },
+      {
+        "id": 376,
+        "name": "巨金怪",
+        "fast": "子弹拳",
+        "charged": "彗星拳"
+      }
+    ]
   },
   {
     "id": "road-of-legends-raids-20260707",
@@ -1147,6 +1185,10 @@
     "link": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/",
     "summary": "7/7 全天 5★团战:白酋雷姆、捷克罗姆、拂晓之翼奈克洛兹玛等;团战时刻 18:00–19:00,19:00–20:00 超级团战为超级班基拉斯。",
     "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/road-of-legends-2026/"
+      },
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/"
@@ -1199,7 +1241,27 @@
         ]
       }
     ],
-    "highlight": false
+    "highlight": false,
+    "counters": [
+      {
+        "id": 376,
+        "name": "巨金怪",
+        "fast": "子弹拳",
+        "charged": "彗星拳"
+      },
+      {
+        "id": 448,
+        "name": "路卡利欧",
+        "fast": "双倍奉还",
+        "charged": "波导弹"
+      },
+      {
+        "id": 639,
+        "name": "代拉基翁",
+        "fast": "双倍奉还",
+        "charged": "近身战"
+      }
+    ]
   },
   {
     "id": "gbl-forever-forward_ultra-league_fantasy-cup-ultra-league-edition",
@@ -1234,6 +1296,10 @@
     "link": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/",
     "summary": "7/8 全天 5★团战:黑酋雷姆、莱希拉姆、黄昏之鬃奈克洛兹玛等;团战时刻 18:00–19:00,19:00–20:00 超级团战为超级沙奈朵。",
     "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/road-of-legends-2026/"
+      },
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/"
@@ -1286,7 +1352,27 @@
         ]
       }
     ],
-    "highlight": false
+    "highlight": false,
+    "counters": [
+      {
+        "id": 376,
+        "name": "巨金怪",
+        "fast": "子弹拳",
+        "charged": "彗星拳"
+      },
+      {
+        "id": 491,
+        "name": "达克莱伊",
+        "fast": "大声咆哮",
+        "charged": "暗影球"
+      },
+      {
+        "id": 248,
+        "name": "班基拉斯",
+        "fast": "咬住",
+        "charged": "咬碎"
+      }
+    ]
   },
   {
     "id": "road-of-legends-raids-20260709",
@@ -1299,6 +1385,10 @@
     "link": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/",
     "summary": "7/9 全天 5★团战:剑之王苍响、盾之王藏玛然特;团战时刻 18:00–19:00,19:00–20:00 超级团战为超级耿鬼。",
     "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/road-of-legends-2026/"
+      },
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/"
@@ -1346,7 +1436,27 @@
         ]
       }
     ],
-    "highlight": false
+    "highlight": false,
+    "counters": [
+      {
+        "id": 383,
+        "name": "固拉多",
+        "fast": "泥巴射击",
+        "charged": "断崖之剑"
+      },
+      {
+        "id": 257,
+        "name": "火焰鸡",
+        "fast": "火焰旋涡",
+        "charged": "爆炸烈焰"
+      },
+      {
+        "id": 491,
+        "name": "达克莱伊",
+        "fast": "大声咆哮",
+        "charged": "暗影球"
+      }
+    ]
   },
   {
     "id": "road-of-legends-raids-20260710",
@@ -1359,6 +1469,10 @@
     "link": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/",
     "summary": "7/10 全天团战:起源帝牙卢卡、起源帕路奇亚;团战时刻 18:00–19:00,19:00–20:00 原始团战为原始盖欧卡、原始固拉多。",
     "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/road-of-legends-2026/"
+      },
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/"
@@ -1413,7 +1527,27 @@
         ]
       }
     ],
-    "highlight": false
+    "highlight": false,
+    "counters": [
+      {
+        "id": 383,
+        "name": "固拉多",
+        "fast": "泥巴射击",
+        "charged": "断崖之剑"
+      },
+      {
+        "id": 445,
+        "name": "烈咬陆鲨",
+        "fast": "龙息",
+        "charged": "逆鳞"
+      },
+      {
+        "id": 644,
+        "name": "捷克罗姆",
+        "fast": "充电光束",
+        "charged": "疯狂伏特"
+      }
+    ]
   },
   {
     "id": "pokemon-go-fest-2026-global",
@@ -1609,6 +1743,10 @@
       {
         "label": "官方",
         "url": "https://pokemongo.com/news/raichu-super-mega-raid-day-2026"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/super-mega-raichu-raid-day/"
       }
     ],
     "pokemon": [
