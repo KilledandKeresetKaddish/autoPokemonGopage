@@ -132,8 +132,8 @@ def in_month_days(E, y, m):
 for e in events:
     if e.get('type') in CHIP_TYPES and not is_long(e):
         nm = e.get('name', '')
-        if len(nm) > 16:
-            warn(f"long chip name ({len(nm)} chars) may crowd the day cell — shorten or use a 角标: {e.get('id')} «{nm}»")
+        if len(nm) > 14:
+            warn(f"long chip name ({len(nm)} chars) — consider shortening or using a 角标 (CSS will ellipsis if kept): {e.get('id')} «{nm}»")
 
 # ---- Check 2 (FAIL): orphan raid-battles that day-icons hide & never link --
 for E in events:
