@@ -25,7 +25,7 @@ cd "$ROOT"
 command -v python3 >/dev/null 2>&1 || { echo "preflight: WARN python3 not found — render checks skipped"; exit 0; }
 
 python3 - <<'PY'
-import json, sys
+import json, sys, os, re
 from datetime import date, timedelta
 
 def load(p):
@@ -183,6 +183,38 @@ for key, seg in icon_segs:
             fail(f"mega base-id: rotation segment «{seg.get('cn') or seg.get('name')}» pokemon id={i} "
                  f"is a form id (≥10000). Use the BASE national-dex id + a \"sprite\" override, or the "
                  f"day-icon can't match its raid event (opens a bare drawer).")
+
+# (Mega / form EXISTENCE is intentionally NOT gated here: the Mega roster grows with
+# new game content (e.g. Legends Z-A), so a cached PvPoke snapshot is not authoritative.
+# Verify a newly-featured Mega against a LIVE source at edit time, never a stale cache.)
+
+# ---- Check 5 (WARN): :token: in bonuses/sections that resolves to no icon asset --
+ICONS = {
+ 'normal':'normal.webp','bug':'bug.png','dark':'dark.webp','dragon':'dragon.png','electric':'electric.webp',
+ 'fairy':'fairy.webp','fighting':'fighting.png','fire':'fire.png','flying':'flying.png','ghost':'ghost.webp',
+ 'grass':'grass.webp','ground':'ground.webp','ice':'ice.webp','poison':'poison.webp','psychic':'psychic.webp',
+ 'rock':'rock.webp','steel':'steel.webp','water':'water.webp','candy':'candy.png','xl-candy':'xl-candy.png',
+ 'rare-candy':'rare-candy.png','stardust':'stardust.png','xp':'xp.png','lure':'lure.png','incense':'incense.png',
+ 'incubator':'incubators.png','golden-razz':'golden-razz-berry.png','silver-berry':'silver_berry.webp',
+ 'pokeball':'poke-ball.png','pokestop':'pokestop.png','raid':'Raid.png','spawn':'Reward%20spawn.png',
+ 'rocket':'teamrocket_r.png','trading':'trading.png',
+}
+tok_re = re.compile(r':([a-z0-9_-]{1,24}):')
+def icon_missing(tok):
+    fn = ICONS.get(tok, tok + '.png')
+    return not os.path.exists(os.path.join('public/assets/icons', fn.replace('%20', ' ')))
+bad_tok = {}
+for e in events:
+    texts = list(e.get('bonuses') or [])
+    for sec in (e.get('sections') or []):
+        texts += list(sec.get('items') or [])
+        if sec.get('body'): texts.append(sec['body'])
+    for t in texts:
+        for tok in tok_re.findall(t):
+            if icon_missing(tok): bad_tok.setdefault(tok, e.get('id'))
+for tok, eid in sorted(bad_tok.items()):
+    hint = " (a time mangled by iconify — reword, e.g. '7/7 18:00' not '7/7:18:00')" if tok.isdigit() else ""
+    warn(f":{tok}: in '{eid}' resolves to no icon asset → renders blank{hint}.")
 
 # ---- report ---------------------------------------------------------------
 for w in warns: print(f"preflight: WARN {w}")

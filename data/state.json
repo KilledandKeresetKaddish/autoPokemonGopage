@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-19T16:46:34Z",
+  "lastUpdated": "2026-06-19T17:42:23Z",
   "sources": {
     "events": {
       "lastFetch": "2026-06-19T16:05:00Z",
@@ -88,5 +88,13 @@
     "checkedAt": "2026-06-19T16:46:34Z",
     "status": "compliant",
     "note": "本轮完成: Mega超梦X/Y独立事件+mega轨角标(form sprite 10043/10044),超级雷丘角标,雷丘团战日sprite修正(Hub DB mega),20+事件bonuses补:token:图标,calendar-notes/rankings-current全面刷新。preflight+validate通过。"
+  },
+  "notes": {
+    "correction_2026-06-19": {
+      "fact": "雷丘(26)与盔甲鸟(227)在最新 Pokémon GO 中【有】超级进化形态(Mega 名单随 Legends Z-A 等新内容扩充)。",
+      "reverted": "上一轮误把它们当作无 Mega、改回了基础形态——已全部还原:超级雷丘/超级盔甲鸟 精灵图、26-Mega hub、7/18 超级雷丘角标段、\"超级雷丘能量\"加成。",
+      "source_caveat": "PvPoke gamemaster.json 的 mega 名单【不可】作为\"某宝可梦是否有 Mega\"的判据(它会滞后于新内容)。判断 Mega/形态是否存在,请用实时来源(LeekDuck/Hub/官方/PokeAPI),不要用缓存快照。",
+      "preflight": "已移除依赖 gamemaster 的\"伪造 Mega\"检查;保留图标 token 有效性检查。"
+    }
   }
 }

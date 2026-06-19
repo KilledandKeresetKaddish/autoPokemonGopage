@@ -39,7 +39,9 @@ Checklist:
    counters + links, not just a name. **Verify every 简体中文 Pokémon name and move against
    `data/raw/gamemaster.json` (dex → species / move) or an allowlisted `pokeapi.co` lookup before
    writing it — never from memory; if you can't verify it, omit it or keep the source's
-   English/romanized form rather than inventing one.**
+   English/romanized form rather than inventing one.** But **don't use gamemaster to decide whether a
+   Mega/form *exists*** — it lags new content (Legends Z-A …). If a source features one (e.g. "<X>
+   Super Mega Raid Day"), render the Mega and trust the live source, not gamemaster's absence.
 5. Set `longTerm:true` for season / GO Pass / GO Battle League and spans longer than
    ~2 weeks so they render in the 长期活动 band.
 6. Set `highlight:true` for 社区日, 团战日, and boosted-shiny events. Also mark shiny

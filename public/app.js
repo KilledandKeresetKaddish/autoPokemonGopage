@@ -189,6 +189,11 @@ async function loadData() {
   try {
     state.categories = (await (await fetch('data/categories.json?t=' + Date.now())).json()) || {};
   } catch (e) { state.categories = {}; }
+  try {
+    const ft = await (await fetch('data/featured.json?t=' + Date.now())).json();
+    const ftSet = new Set(Array.isArray(ft) ? ft : []);
+    state.events.forEach(ev => { if (ftSet.has(ev.id)) ev._featured = true; });
+  } catch (e) { /* no featured.json — fine */ }
 }
 
 /* ---------- calendar ---------- */
@@ -359,7 +364,7 @@ function renderCalendar() {
         list.slice(0, 3).forEach(({ ev, cat }) => {
           const sp = firstSprite(ev);
           const chip = document.createElement('button');
-          chip.className = 'cal-chip' + (ev.highlight ? ' hl' : '');
+          chip.className = 'cal-chip' + (ev._featured ? ' ft' : '') + (ev.highlight ? ' hl' : '');
           chip.style.setProperty('--c', cat.color);
           chip.title = `${ev.name} · ${fmtRange(ev.start, ev.end)}`;
           chip.innerHTML = `<i class="dot"></i>${sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}`
@@ -386,10 +391,11 @@ function renderCalendar() {
       const segS = Math.max(b.si, rs), segE = Math.min(b.ei, re);
       const leftCol = segS - rs, span = segE - segS + 1;
       const isL = b.realStart === segS, isR = b.realEnd === segE;
-      const quiet = !b.ev.highlight && !b.cat.bg;   // two-tier weight: solid only for highlight/bands
+      const featured = b.ev._featured;
+      const quiet = !featured && !b.ev.highlight && !b.cat.bg;
       const bar = document.createElement('button');
       bar.className = 'cal-bar' + (isL ? ' l' : '') + (isR ? ' r' : '') + (b.cat.bg ? ' bg' : '')
-        + (b.ev.highlight ? ' hl' : '') + (quiet ? ' q' : '') + (isL ? '' : ' cont');
+        + (featured ? ' ft' : '') + (b.ev.highlight ? ' hl' : '') + (quiet ? ' q' : '') + (isL ? '' : ' cont');
       bar.style.left = `calc(${leftCol / 7 * 100}% + 3px)`;
       bar.style.width = `calc(${span / 7 * 100}% - 6px)`;
       bar.style.top = (NUM_H + b.lane * LANE_H) + 'px';
@@ -822,8 +828,11 @@ function shiftMonth(delta) {
   state.calMonth = m; state.calYear = y; renderCalendar();
 }
 function setupDetail() {
-  $('#detail-close').addEventListener('click', () => { $('#event-detail').hidden = true; });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') $('#event-detail').hidden = true; });
+  const panel = $('#event-detail');
+  const close = () => { panel.hidden = true; };
+  $('#detail-close').addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  document.addEventListener('mousedown', e => { if (!panel.hidden && !panel.contains(e.target)) close(); });
 }
 
 async function init() {
