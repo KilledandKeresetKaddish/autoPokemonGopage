@@ -49,6 +49,12 @@ Checklist:
 8. All user-facing strings must be 简体中文 — including each event `name` (title): never leave a
    source's English headline; build it from the event's verified 简体中文 `pokemon[]` name + category.
    JSON must remain valid.
+9. **日期角标不归你管 —— 归 rotation-curator(`rotations.json`)。** `events.json` 的事件只会渲染成
+   bar 或 chip,**变不成日期数字旁的角标**。要给某些天加 5★/超级 Boss 角标(含 传奇之路 / GO Fest 前置周
+   这类多日每日轮换),按 AGENTS.md《渲染契约》:主活动出 1 条横幅事件;当天每个 Boss 出**全天 `raid-battles`**
+   事件(**别用 `raid-hour` chip 模拟每日 Boss** —— 那既出不了角标、超长名还挤乱周列),并让 rotation-curator
+   为这些天加**单日段**、`pokemon[]` 与你的事件对齐。每个 `raid-battles` 都要有匹配角标,否则 `preflight.sh`
+   会判它 orphan(被角标隐藏 bar 后静默消失)。
 
 Output to the coordinator: changed files, event count, long-term count, highlighted
 count, known source gaps kept from last good content.
