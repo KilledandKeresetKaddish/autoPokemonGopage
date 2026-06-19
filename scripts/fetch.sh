@@ -82,7 +82,7 @@ fetch_tier() {
     flaresolverr)
       curl -fsS --max-time 150 -X POST "$FLARESOLVERR_URL" \
         -H 'Content-Type: application/json' \
-        -d "{\"cmd\":\"request.get\",\"url\":\"${url}\",\"maxTimeout\":120000}" \
+        -d "$(jq -nc --arg u "$url" '{"cmd":"request.get","url":$u,"maxTimeout":120000}')" \
         | jq -r '.solution.response // empty' > "$tmp"
       [ -s "$tmp" ] ;;
     direct)

@@ -65,7 +65,7 @@ done
 
 # 4b) events.json data hygiene — guards against unbounded growth and against
 #     duplicate / repeatedly-added events. Keep it bounded, ids unique, and
-#     prune events that ended well in the past (>100 days ~= 3 months).
+#     prune events that ended well in the past (>90 days ~= 3 months).
 E=public/data/events.json
 if [ -f "$E" ] && jq empty "$E" >/dev/null 2>&1; then
   n=$(jq 'length' "$E")
@@ -75,12 +75,14 @@ if [ -f "$E" ] && jq empty "$E" >/dev/null 2>&1; then
   # semantic floors — catch a gutted/partial rewrite that is still structurally
   # valid. Non-emptiness only: cannot be satisfied by fabricating content.
   [ "$n" -ge 5 ] || { say "FAIL events.json too small ($n entries < 5 — gutted/partial run?)"; fail=1; }
-  badf=$(jq '[.[] | select(((.id // "")=="") or ((.name // "")=="") or ((.start // "")=="") or ((.end != null) and (.end < .start)))] | length' "$E")
-  [ "$badf" = 0 ] || { say "FAIL events.json has $badf event(s) with empty id/name/start or end<start"; fail=1; }
-  cut=$(date -u -d '100 days ago' +%F 2>/dev/null || date -u -v-100d +%F 2>/dev/null || true)
+  badf=$(jq '[.[] | select(((.id // "")=="") or ((.name // "")=="") or ((.start // "")=="") or ((.type // "")=="") or ((.end != null) and (.end < .start)))] | length' "$E")
+  [ "$badf" = 0 ] || { say "FAIL events.json has $badf event(s) with empty id/name/start/type or end<start"; fail=1; }
+  cut=$(date -u -d '90 days ago' +%F 2>/dev/null || date -u -v-90d +%F 2>/dev/null || true)
   if [ -n "$cut" ]; then
     stale=$(jq --arg c "$cut" '[.[] | select(((.end // .start) | tostring | .[0:10]) < $c)] | length' "$E")
-    [ "$stale" = 0 ] || { say "FAIL events.json has $stale stale event(s) ended >100d ago (prune old events)"; fail=1; }
+    [ "$stale" = 0 ] || { say "FAIL events.json has $stale stale event(s) ended >90d ago (prune old events)"; fail=1; }
+  else
+    say "WARN could not compute stale-event cutoff (no GNU/BSD date) — skipping age check"
   fi
 fi
 
@@ -88,6 +90,8 @@ fi
 R=public/data/rotations.json
 if [ -f "$R" ] && jq empty "$R" >/dev/null 2>&1; then
   jq -e '.tracks | type == "array"' "$R" >/dev/null 2>&1 || { say "FAIL rotations.json missing tracks[]"; fail=1; }
+  bad_seg=$(jq '[.tracks[]?.segments[]? | select(((.start // "")=="") or ((.pokemon | type) != "array") or ((.pokemon | length) == 0))] | length' "$R" 2>/dev/null || echo 0)
+  [ "${bad_seg:-0}" = 0 ] || { say "FAIL rotations.json has $bad_seg segment(s) with empty start or non-array/empty pokemon[]"; fail=1; }
 fi
 
 # 4d) categories.json: the agent may register NEW event types, but only with a
@@ -106,6 +110,32 @@ fi
 if [ "$(grep -c '<script' "$H")" -ne 1 ]; then
   say "FAIL unexpected <script> count in index.html (only app.js is allowed)"; fail=1
 fi
+
+# 5b) AI regions must not contain dangerous HTML: <style>, <iframe>, <object>,
+#     <embed>, event-handler attributes (onerror, onload, onclick…), javascript: URIs,
+#     or any href/src whose scheme isn't on the allowlist (defeats entity-encoded bypasses).
+for region in calendar-notes rankings-current rankings-attackers rankings-defenders rankings-raid; do
+  body=$(awk -v r="$region" 'index($0,"AI:START "r){f=1;next} index($0,"AI:END "r){f=0} f{print}' "$H")
+  if printf '%s' "$body" | grep -qiE '<(style|iframe|object|embed)[ >]'; then
+    say "FAIL AI region $region contains forbidden tag (<style>/<iframe>/<object>/<embed>)"; fail=1
+  fi
+  if printf '%s' "$body" | grep -qiE '(^|[[:space:]])on[a-z]+[[:space:]]*='; then
+    say "FAIL AI region $region contains event-handler attribute (onerror/onload/onclick…)"; fail=1
+  fi
+  if printf '%s' "$body" | grep -qiF 'javascript:'; then
+    say "FAIL AI region $region contains javascript: URI"; fail=1
+  fi
+  # href/src must use a safe scheme. The literal javascript: grep above misses
+  # entity-encoded payloads (e.g. href="jav&#x61;script:…") that the browser decodes
+  # and executes; an allowlist also blocks data:/vbscript:/protocol-relative URLs.
+  # AI regions only ever need https:// , repo-relative assets/ , or #anchors.
+  # (Attributes are the conventional double-quoted form the agent/app emit.)
+  bad_url=$(printf '%s' "$body" | grep -oiE '(href|src)[[:space:]]*=[[:space:]]*"[^"]*"' \
+    | sed -E 's/^[^"]*"//; s/"$//' | grep -viE '^(https://|assets/|#)' | head -1 || true)
+  if [ -n "$bad_url" ]; then
+    say "FAIL AI region $region has href/src with disallowed scheme: $bad_url"; fail=1
+  fi
+done
 
 [ "$fail" = 0 ] && say "OK all checks passed"
 exit $fail

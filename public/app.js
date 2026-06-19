@@ -431,7 +431,7 @@ function renderLegend(present, hasRaids) {
   });
   items.sort((a, b) => (a.kind === b.kind ? 0 : a.kind === 'bar' ? -1 : 1));
   let html = items.map(c =>
-    `<span class="lg"><i class="${c.kind === 'chip' ? 'round' : ''}" style="background:${c.color}"></i>${escapeHtml(c.label)}</span>`
+    `<span class="lg"><i class="${c.kind === 'chip' ? 'round' : ''}" style="background:${escapeHtml(c.color)}"></i>${escapeHtml(c.label)}</span>`
   ).join('');
   if (hasRaids) {
     html += '<span class="lg"><i class="ring s5"></i>5★ 团战</span><span class="lg"><i class="ring mega"></i>超级团战</span>';
@@ -814,7 +814,7 @@ function setupCalNav() {
   state.calMonth = now.getMonth();
   $('#cal-prev').addEventListener('click', () => { shiftMonth(-1); });
   $('#cal-next').addEventListener('click', () => { shiftMonth(1); });
-  $('#cal-today').addEventListener('click', () => { state.calYear = now.getFullYear(); state.calMonth = now.getMonth(); renderCalendar(); });
+  $('#cal-today').addEventListener('click', () => { const t = new Date(); state.calYear = t.getFullYear(); state.calMonth = t.getMonth(); renderCalendar(); });
 }
 function shiftMonth(delta) {
   let m = state.calMonth + delta, y = state.calYear;
