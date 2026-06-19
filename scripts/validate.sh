@@ -65,7 +65,7 @@ done
 
 # 4b) events.json data hygiene — guards against unbounded growth and against
 #     duplicate / repeatedly-added events. Keep it bounded, ids unique, and
-#     prune events that ended well in the past (>100 days ~= 3 months).
+#     prune events that ended well in the past (>90 days ~= 3 months).
 E=public/data/events.json
 if [ -f "$E" ] && jq empty "$E" >/dev/null 2>&1; then
   n=$(jq 'length' "$E")
@@ -118,7 +118,7 @@ for region in calendar-notes rankings-current rankings-attackers rankings-defend
   if printf '%s' "$body" | grep -qiE '<(style|iframe|object|embed)[ >]'; then
     say "FAIL AI region $region contains forbidden tag (<style>/<iframe>/<object>/<embed>)"; fail=1
   fi
-  if printf '%s' "$body" | grep -qiE '\bon[a-z]+\s*='; then
+  if printf '%s' "$body" | grep -qiE '(^|[[:space:]])on[a-z]+[[:space:]]*='; then
     say "FAIL AI region $region contains event-handler attribute (onerror/onload/onclick…)"; fail=1
   fi
   if printf '%s' "$body" | grep -qiF 'javascript:'; then

@@ -211,9 +211,9 @@ read before you write, as always.
    - **New event types.** If a source introduces a `type` that isn't styled yet (it would otherwise
      fall back to a generic grey marker), register it in `public/data/categories.json` with a palette
      key + 简体中文 label + kind (see schema). Assign the family colour that fits — you can't pick a hex.
-   - **Retention.** Keep events whose end date is **within 3 months** of today; drop anything
-     that ended **more than 3 months ago** (validate.sh hard-rejects >100 days ≈ 3.3 months, so
-     prune well before that). Look forward through the end of next month. Use a **stable `id`**
+   - **Retention.** Forward: keep the **current month through the end of next month**. Backward:
+     **drop events that ended more than ~90 days (≈3 months) ago** (validate.sh hard-rejects events
+     ended >90 days ago, so prune well before that). Use a **stable `id`**
      so re-runs map the same event to the same row and can never accumulate duplicates.
      **ID algorithm:** take the source slug (e.g. LeekDuck's URL slug `community-day-june-2026`)
      and normalize: lowercase, keep `[a-z0-9-]`, strip trailing date fragments if they duplicate
@@ -359,11 +359,6 @@ read before you write, as always.
 ```
 - The three tracks 5★ / Mega / Max. `cn` = displayed name; `pokemon[]` may hold >1 boss (dual/triple
   rotations — they **cycle** inside one day-number icon). `start`/`end` = `YYYY-MM-DD`.
-- **Mega / form segments:** set `pokemon[].id` to the **base national-dex id** (e.g. Scizor = 212,
-  not the PokeAPI mega-form id 10046). For the sprite, add `"sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<formId>.png"`
-  with the form id. Reason: app.js uses the base dex id to match rotation segments to `raid-battles`
-  events in events.json (`findRaidEvent`). If you use the form id as `id`, the icon click opens a
-  bare drawer with no detail. Apply this rule **consistently to every Mega segment** — not just some.
 - **5★ and Mega weekly bosses render as small icons next to each day's number** (the grid no longer
   draws weekly-raid bars). So keep rotations.json **complete for the whole month**, or those raids
   vanish from the grid. `color` drives both the rotation section and the day-icon ring — 5★ = gold
@@ -460,9 +455,11 @@ These mistakes have been observed in past runs. **Check for each one** during st
    they are NOT "boosted". Do not mark regular Raid Hours as `highlight:true`. Only set it for
    Community Day, Raid Day, and events that explicitly announce boosted shiny odds.
 
-3. **Inconsistent Mega form IDs.** When building `rotations.json`, apply the Mega base-id rule to
-   **every** Mega segment, not just the latest ones. If you fixed Scizor and Pidgeot but left
-   Medicham/Audino/Lopunny with form IDs, that's an inconsistency. Process the whole list uniformly.
+3. **Inconsistent Mega form IDs.** Apply the Mega base-id rule uniformly across `rotations.json`.
+   **Whenever you switch a segment's `id` to the base dex, you MUST also add the `"sprite"` form-image
+   override** — otherwise the day-icon regresses from Mega art to the base sprite. The id-match only
+   affects segments with a live matching `raid-battles` event (past segments render fine either way),
+   but keep them uniform to avoid confusion.
 
 4. **Single-source events.** After writing events.json, scan for events with only 1 link. For each,
    actively search the other sources (Hub via `events-hub`, pokébase via `events-pokebase`, official
