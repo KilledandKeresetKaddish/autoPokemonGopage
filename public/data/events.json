@@ -357,13 +357,13 @@
     ],
     "bonuses": [
       "✨ 闪光概率提升",
-      "捕捉星尘 ×3",
-      "3 小时熏香",
-      "1 小时诱饵*",
-      "捕捉糖果 ×2",
-      "糖果 XL 概率 ×2",
-      "当日可多进行 1 次特殊交换(上限 2 次)*",
-      "交换所需星尘减少 50%*"
+      ":stardust: 捕捉星尘 ×3",
+      ":incense: 3 小时熏香",
+      ":lure: 1 小时诱饵*",
+      ":candy: 捕捉糖果 ×2",
+      ":xl-candy: 糖果 XL 概率 ×2",
+      ":trading: 当日可多进行 1 次特殊交换(上限 2 次)*",
+      ":stardust: 交换所需星尘减少 50%*"
     ],
     "sections": [
       {
@@ -408,8 +408,8 @@
       }
     ],
     "bonuses": [
-      "Max 团战登场",
-      "可获得 Max 粒子"
+      ":raid: Max 团战登场",
+      ":stardust: 可获得 Max 粒子"
     ],
     "sections": [
       {
@@ -442,7 +442,7 @@
       }
     ],
     "bonuses": [
-      "飞行系宝可梦增加出现"
+      ":flying: 飞行系宝可梦增加出现"
     ]
   },
   {
@@ -520,8 +520,8 @@
       }
     ],
     "bonuses": [
-      "北半球:纸御剑",
-      "南半球:铁火辉夜"
+      ":raid: 北半球:纸御剑",
+      ":raid: 南半球:铁火辉夜"
     ]
   },
   {
@@ -642,7 +642,7 @@
       }
     ],
     "bonuses": [
-      "限时实地调查任务"
+      ":research: 限时实地调查任务"
     ]
   },
   {
@@ -672,7 +672,7 @@
       }
     ],
     "bonuses": [
-      "捕捉星尘 ×2"
+      ":stardust: 捕捉星尘 ×2"
     ]
   },
   {
@@ -704,7 +704,7 @@
     ],
     "bonuses": [
       "✨ 闪光概率提升",
-      "团战门票相关奖励"
+      ":raid: 团战门票相关奖励"
     ],
     "counters": [
       {
@@ -753,8 +753,8 @@
       }
     ],
     "bonuses": [
-      "Max 团战登场",
-      "可获得 Max 粒子"
+      ":raid: Max 团战登场",
+      ":stardust: 可获得 Max 粒子"
     ],
     "sections": [
       {
@@ -787,8 +787,8 @@
       }
     ],
     "bonuses": [
-      "限时调查双线选择",
-      "完成后可领取对应奖励"
+      ":research: 限时调查双线选择",
+      ":candy: 完成后可领取对应奖励"
     ]
   },
   {
@@ -836,7 +836,7 @@
       }
     ],
     "bonuses": [
-      "进化经验 ×2"
+      ":xp: 进化经验 ×2"
     ]
   },
   {
@@ -863,8 +863,8 @@
       ":xp: 捕捉 XP ×4",
       ":stardust: 捕捉星尘 ×4",
       "✨ 活动主题野生宝可梦闪光概率提升",
-      "金币袋期间有机会遇见闪光索财灵",
-      "十周年硬币索财灵可能带特殊背景(至 7/31 23:59)"
+      ":spawn: 金币袋期间有机会遇见闪光索财灵",
+      ":spawn: 十周年硬币索财灵可能带特殊背景(至 7/31 23:59)"
     ],
     "pokemon": [
       {
@@ -955,13 +955,13 @@
     ],
     "bonuses": [
       "✨ 闪光概率提升",
-      "孵化距离 1/4",
-      "3 小时熏香",
-      "1 小时诱饵*",
-      "捕捉糖果 ×2",
-      "糖果 XL 概率 ×2",
-      "当日可多进行 1 次特殊交换(上限 2 次)*",
-      "交换所需星尘减少 50%*"
+      ":incubator: 孵化距离 1/4",
+      ":incense: 3 小时熏香",
+      ":lure: 1 小时诱饵*",
+      ":candy: 捕捉糖果 ×2",
+      ":xl-candy: 糖果 XL 概率 ×2",
+      ":trading: 当日可多进行 1 次特殊交换(上限 2 次)*",
+      ":stardust: 交换所需星尘减少 50%*"
     ],
     "highlight": true
   },
@@ -1141,7 +1141,7 @@
       "5★团战时刻 18:00–19:00(7/6 为 18:00–20:00)",
       "超级/原始团战时刻 19:00–20:00",
       "✨ 列表中标 * 的宝可梦可遇闪光",
-      "可能获得特殊背景(7/6–7/12)"
+      ":raid: 可能获得特殊背景(7/6–7/12)"
     ],
     "sections": [
       {
@@ -1230,7 +1230,7 @@
       "5★团战时刻 18:00–19:00(7/6 为 18:00–20:00)",
       "超级/原始团战时刻 19:00–20:00",
       "✨ 列表中标 * 的宝可梦可遇闪光",
-      "可能获得特殊背景(7/6–7/12)"
+      ":raid: 可能获得特殊背景(7/6–7/12)"
     ],
     "sections": [
       {
@@ -1341,7 +1341,7 @@
       "5★团战时刻 18:00–19:00(7/6 为 18:00–20:00)",
       "超级/原始团战时刻 19:00–20:00",
       "✨ 列表中标 * 的宝可梦可遇闪光",
-      "可能获得特殊背景(7/6–7/12)"
+      ":raid: 可能获得特殊背景(7/6–7/12)"
     ],
     "sections": [
       {
@@ -1425,7 +1425,7 @@
       "5★团战时刻 18:00–19:00(7/6 为 18:00–20:00)",
       "超级/原始团战时刻 19:00–20:00",
       "✨ 列表中标 * 的宝可梦可遇闪光",
-      "可能获得特殊背景(7/6–7/12)"
+      ":raid: 可能获得特殊背景(7/6–7/12)"
     ],
     "sections": [
       {
@@ -1516,7 +1516,7 @@
       "5★团战时刻 18:00–19:00(7/6 为 18:00–20:00)",
       "超级/原始团战时刻 19:00–20:00",
       "✨ 列表中标 * 的宝可梦可遇闪光",
-      "可能获得特殊背景(7/6–7/12)"
+      ":raid: 可能获得特殊背景(7/6–7/12)"
     ],
     "sections": [
       {
@@ -1661,6 +1661,140 @@
     ]
   },
   {
+    "id": "mega-mewtwo-x-in-mega-raids-gofest-2026",
+    "name": "超级超梦 X 超级团战",
+    "type": "raid-battles",
+    "heading": "Mega Raid",
+    "start": "2026-07-11T10:00:00",
+    "end": "2026-07-11T19:00:00",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png",
+    "link": "https://leekduck.com/events/pokemon-go-fest-2026-global/",
+    "summary": "GO Fest 2026 全球周六超级超梦 X 首次登场于超级超级团战。超能力/格斗属性,弱点为飞行、幽灵、妖精。击败后可获得超级超梦 X 能量。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-go-fest-2026-global/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-fest-2026-global/"
+      },
+      {
+        "label": "官方 GO Fest",
+        "url": "https://pokemongo.com/en/gofest"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 150,
+        "name": "超梦",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png",
+        "hub": "150-Mega_X"
+      }
+    ],
+    "bonuses": [
+      ":raid: 超级超级团战首次登场",
+      "✨ 捕获后可遇闪光超梦",
+      ":candy: 击败可获得超级超梦 X 能量"
+    ],
+    "counters": [
+      {
+        "id": 487,
+        "name": "骑拉帝纳",
+        "fast": "暗影爪",
+        "charged": "暗影之力",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10187.png",
+        "hub": "487-Origin"
+      },
+      {
+        "id": 609,
+        "name": "水晶灯火灵",
+        "fast": "祸不单行",
+        "charged": "暗影球"
+      },
+      {
+        "id": 384,
+        "name": "烈空坐",
+        "fast": "空气斩",
+        "charged": "飓风"
+      },
+      {
+        "id": 94,
+        "name": "耿鬼",
+        "fast": "暗影爪",
+        "charged": "暗影球"
+      }
+    ],
+    "highlight": false
+  },
+  {
+    "id": "mega-mewtwo-y-in-mega-raids-gofest-2026",
+    "name": "超级超梦 Y 超级团战",
+    "type": "raid-battles",
+    "heading": "Mega Raid",
+    "start": "2026-07-12T10:00:00",
+    "end": "2026-07-12T19:00:00",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png",
+    "link": "https://leekduck.com/events/pokemon-go-fest-2026-global/",
+    "summary": "GO Fest 2026 全球周日超级超梦 Y 首次登场于超级超级团战。纯超能力属性,弱点为虫、幽灵、恶。击败后可获得超级超梦 Y 能量。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-go-fest-2026-global/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-fest-2026-global/"
+      },
+      {
+        "label": "官方 GO Fest",
+        "url": "https://pokemongo.com/en/gofest"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 150,
+        "name": "超梦",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png",
+        "hub": "150-Mega_Y"
+      }
+    ],
+    "bonuses": [
+      ":raid: 超级超级团战首次登场",
+      "✨ 捕获后可遇闪光超梦",
+      ":candy: 击败可获得超级超梦 Y 能量"
+    ],
+    "counters": [
+      {
+        "id": 248,
+        "name": "班基拉斯",
+        "fast": "咬住",
+        "charged": "狂舞挥打"
+      },
+      {
+        "id": 635,
+        "name": "三首恶龙",
+        "fast": "咬住",
+        "charged": "狂舞挥打"
+      },
+      {
+        "id": 491,
+        "name": "达克莱伊",
+        "fast": "大声咆哮",
+        "charged": "暗影球"
+      },
+      {
+        "id": 609,
+        "name": "水晶灯火灵",
+        "fast": "祸不单行",
+        "charged": "暗影球"
+      }
+    ],
+    "highlight": false
+  },
+  {
     "id": "gbl-forever-forward_master-league_retro-cup-great-league-edition",
     "name": "大师联赛 · 复古杯",
     "type": "go-battle-league",
@@ -1705,7 +1839,7 @@
       }
     ],
     "bonuses": [
-      "捕捉经验 ×2"
+      ":xp: 捕捉经验 ×2"
     ]
   },
   {
@@ -1734,7 +1868,7 @@
     "end": "2026-07-18T17:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-18-raichu-super-mega-raid-day-2026/raichu-super-mega-raid-day-2026.jpg",
     "link": "https://leekduck.com/events/raichu-super-mega-raid-day-2026/",
-    "summary": "雷丘超级团战日:全天密集出现超级雷丘(电系),闪光概率提升。",
+    "summary": "雷丘超级团战日：全天密集出现超级雷丘（电系），闪光概率提升。14:00–17:00 期间最多可获 5 张免费团战入场券。",
     "links": [
       {
         "label": "LeekDuck",
@@ -1753,11 +1887,15 @@
       {
         "id": 26,
         "name": "雷丘",
-        "shiny": true
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
+        "hub": "26-Mega"
       }
     ],
     "bonuses": [
-      "✨ 闪光概率提升"
+      "✨ 闪光概率提升",
+      ":raid: 最多 5 张免费团战入场券",
+      ":candy: 击败可获得超级雷丘能量"
     ],
     "counters": [
       {
@@ -1814,7 +1952,7 @@
       }
     ],
     "bonuses": [
-      "捕捉糖果 ×2"
+      ":candy: 捕捉糖果 ×2"
     ]
   },
   {
@@ -1834,8 +1972,8 @@
       }
     ],
     "bonuses": [
-      "限时调查双线选择",
-      "完成后可领取对应奖励"
+      ":research: 限时调查双线选择",
+      ":candy: 完成后可领取对应奖励"
     ]
   },
   {
@@ -1883,7 +2021,7 @@
       }
     ],
     "bonuses": [
-      "转移糖果 ×2"
+      ":candy: 转移糖果 ×2"
     ]
   }
 ]

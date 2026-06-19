@@ -349,6 +349,48 @@
           ],
           "start": "2026-07-10",
           "end": "2026-07-10"
+        },
+        {
+          "name": "Mega Mewtwo X",
+          "cn": "超级超梦 X",
+          "pokemon": [
+            {
+              "id": 150,
+              "name": "超梦",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png",
+              "hub": "150-Mega_X"
+            }
+          ],
+          "start": "2026-07-11",
+          "end": "2026-07-11"
+        },
+        {
+          "name": "Mega Mewtwo Y",
+          "cn": "超级超梦 Y",
+          "pokemon": [
+            {
+              "id": 150,
+              "name": "超梦",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png",
+              "hub": "150-Mega_Y"
+            }
+          ],
+          "start": "2026-07-12",
+          "end": "2026-07-12"
+        },
+        {
+          "name": "Mega Raichu",
+          "cn": "超级雷丘",
+          "pokemon": [
+            {
+              "id": 26,
+              "name": "雷丘",
+              "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
+              "hub": "26-Mega"
+            }
+          ],
+          "start": "2026-07-18",
+          "end": "2026-07-18"
         }
       ]
     },
