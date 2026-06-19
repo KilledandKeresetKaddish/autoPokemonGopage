@@ -133,6 +133,40 @@ function monSprite(p) {
 function firstSprite(ev) {
   return monSprite((ev.pokemon || [])[0]);
 }
+// Pokémon GO Hub DB page for an entry. `hub` (e.g. "212-Mega", "77-Galarian")
+// overrides; else the national-dex id. Forms keep the base id in data (so the
+// day-icon↔event match still works), so set `hub` for the exact form page.
+function hubHref(p) {
+  const slug = p && (p.hub || p.id);
+  return slug ? 'https://db.pokemongohub.net/pokemon/' + encodeURIComponent(slug) : '';
+}
+// Wrap a sprite <img> string in a link to its hub page (no-op without an id).
+function linkSprite(imgHtml, p) {
+  const href = hubHref(p);
+  return href ? `<a class="spr-link" href="${href}" target="_blank" rel="noopener">${imgHtml}</a>` : imgHtml;
+}
+// Make STATIC sprite <img> (the ranking panels baked into index.html) clickable →
+// hub. Uses data-hub if present, else the base national-dex id parsed from a
+// PokeAPI sprite URL. Skips type icons, already-linked imgs and the calendar
+// day-icon buttons; form-id sprites (≥10000) need an explicit data-hub.
+function linkifySprites(root) {
+  if (!root) return;
+  root.querySelectorAll('img').forEach(img => {
+    if (img.closest('a') || img.closest('button')) return;
+    let slug = img.getAttribute('data-hub');
+    if (!slug) {
+      const m = /\/pokemon\/(\d+)\.png(?:[?#]|$)/.exec(img.getAttribute('src') || '');
+      if (m && +m[1] < 10000) slug = m[1];
+    }
+    if (!slug) return;
+    const a = document.createElement('a');
+    a.className = 'spr-link';
+    a.href = 'https://db.pokemongohub.net/pokemon/' + slug;
+    a.target = '_blank'; a.rel = 'noopener';
+    img.parentNode.insertBefore(a, img);
+    a.appendChild(img);
+  });
+}
 
 /* ---------- data ---------- */
 async function loadData() {
@@ -455,7 +489,8 @@ function renderRotations() {
       row.style.setProperty('--c', color);
       const mons = (seg.pokemon || []).map(p => {
         const sp = monSprite(p);
-        return sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '';
+        if (!sp) return '';
+        return linkSprite(`<img class="spr" src="${escapeHtml(sp)}" alt="${escapeHtml(p.name || '')}" loading="lazy" onerror="this.style.display='none'">`, p);
       }).join('');
       const range = (seg.start || seg.end)
         ? `<span class="rot-range">${escapeHtml(fmtDateShort(seg.start))}${seg.end && seg.end !== seg.start ? '–' + escapeHtml(fmtDateShort(seg.end)) : ''}</span>`
@@ -473,6 +508,7 @@ function renderRotations() {
  * this map. Missing files hide gracefully; size is locked by CSS (.ico/.ico-lg). */
 const ICONS = {
   // Pokémon types
+  normal:'normal.webp',
   bug:'bug.png', dark:'dark.webp', dragon:'dragon.png', electric:'electric.webp',
   fairy:'fairy.webp', fighting:'fighting.png', fire:'fire.png', flying:'flying.png',
   ghost:'ghost.webp', grass:'grass.webp', ground:'ground.webp', ice:'ice.webp',
@@ -492,16 +528,18 @@ function iconify(s) {
 }
 function openDetail(ev) {
   const cat = catOf(ev);
-  const mons = (ev.pokemon || []).map(p =>
-    `<figure class="mon"><img class="mon-icon" src="${escapeHtml(monSprite(p))}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'">${p.shiny ? '<span class="shiny">✨</span>' : ''}<figcaption>${escapeHtml(p.name)}</figcaption></figure>`
-  ).join('');
+  const mons = (ev.pokemon || []).map(p => {
+    const img = `<img class="mon-icon" src="${escapeHtml(monSprite(p))}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'">`;
+    return `<figure class="mon">${linkSprite(img, p)}${p.shiny ? '<span class="shiny">✨</span>' : ''}<figcaption>${escapeHtml(p.name)}</figcaption></figure>`;
+  }).join('');
   const bonuses = (ev.bonuses || []).map(b => `<li>${iconify(b)}</li>`).join('');
   // Best counters → collapsible, sprite + recommended moves.
   const counters = (ev.counters || []).filter(c => c && (c.id || c.name || c.sprite)).map(c => {
     const moves = [c.fast, c.charged].filter(Boolean).map(escapeHtml).join(' / ');
     const csp = monSprite(c);
+    const cimg = csp ? `<img class="spr" src="${escapeHtml(csp)}" alt="${escapeHtml(c.name || '')}" loading="lazy" onerror="this.style.display='none'">` : '';
     return `<div class="ctr-row">`
-      + (csp ? `<img class="spr" src="${escapeHtml(csp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
+      + (cimg ? linkSprite(cimg, c) : '')
       + `<div><strong>${escapeHtml(c.name || '')}</strong>${moves ? `<div class="ctr-moves">${moves}</div>` : ''}</div></div>`;
   }).join('');
   // Generic extra sections (paid/ticketed options, special research, …) → collapsible.
@@ -775,6 +813,8 @@ async function init() {
   await loadData();
   renderCalendar();
   renderRotations();
+  // make the static ranking-panel sprites clickable → Pokémon GO Hub DB
+  document.querySelectorAll('[data-rank-panel]').forEach(linkifySprites);
 }
 
 document.addEventListener('DOMContentLoaded', init);

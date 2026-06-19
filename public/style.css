@@ -366,6 +366,9 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   background:rgba(var(--gold-rgb),.08);border:1px solid var(--line);border-radius:8px;
   image-rendering:pixelated;}
 .raid-boss .meta .ico,.rank-item .meta .ico{width:1.2em;height:1.2em;vertical-align:-.24em;margin:0 .05em;}
+/* clickable sprite → Pokémon GO Hub DB; wrap must not disturb flex sizing */
+.spr-link{display:inline-flex;flex:none;line-height:0;text-decoration:none;border:0;border-radius:inherit;cursor:pointer;}
+.spr-link:hover{filter:brightness(1.12);}
 
 /* ---------- Free-form synthesis utilities (本月看点 / 本期推荐) ----------
    Whitelisted building blocks the daily agent may use inside the

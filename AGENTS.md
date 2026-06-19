@@ -107,6 +107,9 @@ refetch everything.** Then read the files in `data/raw/`.
 
 **Sprites** need no fetch — build image URLs directly from a Pokémon's national-dex id:
 `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<dexId>.png`
+If PokeAPI has no usable sprite for a form, fall back to a **Pokémon GO Hub DB** image (allowlisted) via
+the `"sprite"` override: `https://db.pokemongohub.net/images/official/full/<dexId>_<form>_with_bg.webp`
+(e.g. `015_mega_with_bg.webp`, `150_mega_y_with_bg.webp`).
 
 > If a fetch fails or a page comes back empty/unparyable (a source changed, or Hub is
 > unreachable), **keep the last good content in place**, record the problem in
@@ -121,9 +124,10 @@ scripts/fetch.sh url https://leekduck.com/events/<slug>/
 scripts/fetch.sh url https://pokemongohub.net/post/<...>
 ```
 It prints the page to stdout (JS/Cloudflare hosts go through the solver; raw file/API hosts via
-plain curl). **Allowed hosts:** `leekduck.com · pokemongohub.net · pokebase.app · pokemongo.com · dialgadex.com ·
-raw.githubusercontent.com · pvpoke.com · pokeapi.co` (e.g. `dialgadex.com` for best-attacker-by-type
-cross-checks). Off-allowlist URLs are refused. Stay
+plain curl). **Allowed hosts:** `leekduck.com · pokemongohub.net · db.pokemongohub.net · pokebase.app ·
+pokemongo.com · dialgadex.com · raw.githubusercontent.com · pvpoke.com · pokeapi.co` (`dialgadex.com` for
+best-attacker-by-type cross-checks; `db.pokemongohub.net` for per-Pokémon movesets / counters / form
+images). Off-allowlist URLs are refused. Stay
 **primarily on the named sources** — use `url` to enrich / corroborate / chase a detail, not to crawl.
 
 **Don't know the URL? Discover it — don't guess.** The feeds give you every LeekDuck link and the
@@ -283,6 +287,12 @@ read before you write, as always.
   **Exception — rotation Mega segments:** keep `id` = the **base** dex (matching that boss's
   `events.json` entry) and use the `"sprite"` override for the mega look; a mega-form `id` there breaks
   the day-icon → raid-event link (see the rotations.json schema note below).
+- **Clickable sprites → Hub DB.** Every Pokémon sprite the site renders (calendar drawer, 长期 band,
+  weekly rotations, ranking panels) is auto-linked to `https://db.pokemongohub.net/pokemon/<id>`. A base
+  `id` only links to the base page, so for a **form** add an optional **`hub`** slug on that
+  `pokemon[]` / `counters[]` / rotation entry to point at the exact form page: `"hub": "212-Mega"` ·
+  `"150-Mega_Y"` · `"77-Galarian"` · `"105-Alolan"` (id `-Form`, `_` for X/Y). In the **static** ranking
+  HTML put the same on the `<img>` as `data-hub="212-Mega"`; plain base-id sprites need nothing.
 - `counters`: best raid/团战 counters (`id` for the sprite + 简体中文 `name` + optional `fast`/`charged`
   moves) → rendered as a collapsible "团战 Counter" block. Fill for raid / mega / raid-day events from the
   Hub raid guide or `db.pokemongohub.net`, justified by `gamemaster` — **don't invent**.
@@ -401,5 +411,5 @@ attackers/tanks to use (e.g. a Max/Dynamax event → the relevant Max picks).
 ```
 **属性→图标文件**(扩展名不统一,务必照此):`fire.png water.webp grass.webp electric.webp ice.webp
 fighting.png poison.webp ground.webp flying.png psychic.webp bug.png rock.webp ghost.webp dragon.png
-dark.webp steel.webp fairy.webp`;`一般`(normal)无图标 → 保留文字。counter 招式属性由 `gamemaster`
-的 move→type 求得。Keep it readable on mobile.
+dark.webp steel.webp fairy.webp normal.webp`;`一般` = `normal.webp`(若该文件已存在于 `assets/icons/`,
+否则暂保留文字)。counter 招式属性由 `gamemaster` 的 move→type 求得。Keep it readable on mobile.
