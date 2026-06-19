@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-06-19T14:14:48Z",
+  "lastUpdated": "2026-06-19T14:42:51Z",
   "sources": {
     "events": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:42:51Z",
       "status": "ok",
       "bytes": 61339,
       "sha256": "a465877ea899827e0c6771fcb68131a1e75d9d9d8e6a49ab76fb484c693aad59",
@@ -11,7 +11,7 @@
     },
     "raids": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:42:51Z",
       "status": "ok",
       "bytes": 16037,
       "sha256": "96623f71e0cfb80c0d172d5fefc9393970dcbe713b732c686bbba5cdbdffe2eb",
@@ -19,7 +19,7 @@
     },
     "eggs": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:42:51Z",
       "status": "ok",
       "bytes": 29466,
       "sha256": "bf0d68f3851420d0c007fdc89e3e956d849020a1ff999a8c1f668326d0c7d3ee",
@@ -27,7 +27,7 @@
     },
     "research": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:42:51Z",
       "status": "ok",
       "bytes": 67259,
       "sha256": "8fb8d402a721d2f655e1d9913fdae8db0ce781209fde3714355246e5ddc3f4b3",
@@ -35,7 +35,7 @@
     },
     "gamemaster": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:42:51Z",
       "status": "ok",
       "bytes": 912180,
       "sha256": "3dda2af1b856b070d153b3b53e7bc995df9e0a9b91e8596ae4ccf7841ec587d5",
@@ -43,7 +43,7 @@
     },
     "tiers-attackers": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:42:51Z",
       "status": "ok",
       "bytes": 34727,
       "sha256": "ba0b74ccf0e351a528e1de04e329f3606e697627aebd1bf88ddf04db1384be05",
@@ -51,7 +51,7 @@
     },
     "tiers-defenders": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:42:51Z",
       "status": "ok",
       "bytes": 38671,
       "sha256": "709d29eb63a469ba4d2db7c95ad3ec5187fe6940ecff5bf163225644fde68324",
@@ -59,7 +59,7 @@
     },
     "tiers-pokebase": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:42:51Z",
       "status": "ok",
       "bytes": 121558,
       "sha256": "4759f6ce185b47e102d2b04937d289d9395d8257a599afbfe3448f1eda78c2a8",
@@ -67,7 +67,7 @@
     },
     "events-hub": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:42:51Z",
       "status": "ok",
       "bytes": 30742,
       "sha256": "5d40d8c56b78853e9d25af37434779fa71d2fab474273d822ff145382ab71216",
@@ -75,7 +75,7 @@
     },
     "events-pokebase": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:42:51Z",
       "status": "ok",
       "bytes": 26717,
       "sha256": "ee88dc0daeb29812391df946be6dc233c21217dc8bc584d0a9b3c438502aa9d4",
@@ -83,7 +83,7 @@
     },
     "events-official": {
       "lastFetch": "2026-06-19T14:14:25Z",
-      "lastChecked": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:42:51Z",
       "status": "ok",
       "bytes": 9930,
       "sha256": "3d6f0eb9ab30c5f5bc77582b5035046452af19b527b97ae135f3a4166676b759",
@@ -91,20 +91,20 @@
     }
   },
   "detailChecks": {
-    "checkedAt": "2026-06-19T14:14:25Z",
+    "checkedAt": "2026-06-19T14:42:51Z",
     "status": "ok",
-    "note": "按操作备注强制审核: discover new 找到 Road of Legends,并打开 LeekDuck/Hub/官方页面核实; 打开十周年 LeekDuck/Hub 页面补全加成、野生出现与闪光提升; 打开 Max Battles Hub 指南; Mega Scizor/Pidgeot Hub 指南链接已保留。"
+    "note": "本次按操作备注复核 Road of Legends Hub/官方页面、GO Fest Global Hub 页面与官方社区庆典页面;日历已新增 7/6–7/10 每日团战角标并完善 GO Fest 全球弹窗。"
   },
   "operatorNote": {
-    "checkedAt": "2026-06-19T14:14:48Z",
+    "checkedAt": "2026-06-19T14:42:51Z",
     "status": "compliant",
-    "note": "HTML 中未发现“不是捕捉经验”等找补文本; 日历补充超级巨钳螳螂/超级大比鸟链接、Max Hub 指南链接、十周年详细加成与 Road of Legends 新活动; 官方链接仅在已确认官方页面的活动上添加,未伪造 URL。"
+    "note": "已在允许范围内完成:传奇之路主活动弹窗补充每日 5★/超级或原始团战、特殊背景、蛋池与 GO Pass;新增 5 条每日 raid-hour 角标;GO Fest 全球弹窗补充免费内容、超级超梦 X/Y、捷拉奥拉、栖息地/团战与官方社区庆典链接。未触碰受保护文件。"
   },
   "selfCheck": {
-    "checkedAt": "2026-06-19T14:14:48Z",
-    "events": "37 条; 重复 id 0; 长期活动 9 条; 高亮 8 条; 已加入 Road of Legends。",
-    "rotations": "2026-06 三条 track 完整; Mega 段已修正为 base dex id + sprite override。",
-    "rankings": "五个 AI 区块保留非空; 未发现操作备注禁止文本。",
-    "sourceLinks": "十周年添加 Hub 链接; Max 周一添加 Hub Max 指南; Road of Legends 添加 LeekDuck/Hub/官方链接; GO Fest Global 保留已存在官方入口。"
+    "checkedAt": "2026-06-19T14:42:51Z",
+    "events": "42 条; 重复 id 0; 长期活动 10 条; 高亮 8 条; Road of Legends 已拆分每日团战角标。",
+    "rotations": "2026-06 三条 track 完整; Mega 段保持 base dex id + sprite override。",
+    "rankings": "五个 AI 区块非空; rankings-current/calendar-notes 已引用本次最终日历与轮换; raid panel 保留并修正明显英文宝可梦名。",
+    "sourceLinks": "Road of Legends 使用 LeekDuck/Hub/官方已确认链接; GO Fest Global 使用 LeekDuck/Hub/官方入口并补充官方社区庆典 APAC 与欧美大洋洲页面。"
   }
 }
