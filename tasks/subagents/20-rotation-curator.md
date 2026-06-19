@@ -12,7 +12,10 @@ Inputs:
 - `data/raw/events-hub.txt` for the monthly article / rotation schedule.
 - `data/raw/raids.json` for corroborating current bosses.
 - `data/raw/gamemaster.json` or allowlisted PokeAPI lookups only when dex / form ids
-  need confirmation.
+  need confirmation. **gamemaster confirms dex/属性/招式 only — NOT whether a Mega exists.**
+  The Mega roster grows with new content (Legends Z-A …); a cached snapshot lags. If a source
+  features a Mega (e.g. "<X> Super Mega Raid Day" → 超级雷丘/超级盔甲鸟), treat it as real and
+  verify the form against the live event page / PokeAPI, never by gamemaster's absence.
 
 Checklist:
 1. Set `month` to the current month (`YYYY-MM`).

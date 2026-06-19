@@ -44,6 +44,16 @@ PokeAPI returns no Chinese name for a species, keep the English/romanized form �
 translate from memory. Common game vocabulary (属性 names like 火/水/草, item names like
 星尘/糖果, mechanic terms) is **not** covered by this rule — only species and move names.
 
+**`gamemaster` is authoritative for *stable facts* only — NOT for what *exists this season*.**
+Use it to confirm a dex→species mapping, a Pokémon's 属性, or a move→type (the counter type-icons).
+Do **NOT** use it to decide whether a **Mega / Primal / regional / brand-new form exists or is
+featured** — the Mega roster keeps growing with new game content (e.g. Legends Z-A), so a cached
+PvPoke snapshot lags and will wrongly report a real new Mega as "nonexistent". A Pokémon being
+absent from gamemaster's mega list is **not** evidence it has no Mega. Confirm any Mega/form (and
+any brand-new species) against a **live** source — the LeekDuck/Hub event page, 官方 news, or
+PokeAPI — never the cache. In particular, when a source names an event "<X> **Super Mega** Raid
+Day", treat <X>'s Mega as real (e.g. 超级雷丘, 超级盔甲鸟) and render the Mega form.
+
 ---
 
 ## The site (2 content sections + owner placeholders)
