@@ -377,20 +377,6 @@
           ],
           "start": "2026-07-12",
           "end": "2026-07-12"
-        },
-        {
-          "name": "Mega Raichu",
-          "cn": "超级雷丘",
-          "pokemon": [
-            {
-              "id": 26,
-              "name": "雷丘",
-              "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
-              "hub": "26-Mega"
-            }
-          ],
-          "start": "2026-07-18",
-          "end": "2026-07-18"
         }
       ]
     },

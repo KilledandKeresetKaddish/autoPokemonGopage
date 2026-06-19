@@ -25,7 +25,7 @@ cd "$ROOT"
 command -v python3 >/dev/null 2>&1 || { echo "preflight: WARN python3 not found — render checks skipped"; exit 0; }
 
 python3 - <<'PY'
-import json, sys
+import json, sys, os, re
 from datetime import date, timedelta
 
 def load(p):
@@ -183,6 +183,67 @@ for key, seg in icon_segs:
             fail(f"mega base-id: rotation segment «{seg.get('cn') or seg.get('name')}» pokemon id={i} "
                  f"is a form id (≥10000). Use the BASE national-dex id + a \"sprite\" override, or the "
                  f"day-icon can't match its raid event (opens a bare drawer).")
+
+# ---- Check 5 (FAIL, gamemaster-backed): a 超级团战 Boss with no Mega/Primal form --
+# Catches fabricated megas (e.g. 雷丘/盔甲鸟 have none) that validate.sh can't know.
+# Skips gracefully if gamemaster.json isn't on disk (it's a fetched source).
+GM = 'data/raw/gamemaster.json'
+has_mega = None
+if os.path.exists(GM):
+    try:
+        gm = json.load(open(GM, encoding='utf-8'))
+        plist = gm.get('pokemon') if isinstance(gm, dict) else gm
+        has_mega = set()
+        for p in (plist or []):
+            sid = p.get('speciesId', '') or ''
+            if 'mega' in sid or 'mega' in (p.get('tags') or []):  # primals are tagged 'mega'
+                if p.get('dex'): has_mega.add(p['dex'])
+    except Exception:
+        has_mega = None
+if has_mega is not None:
+    for key, seg in icon_segs:
+        if key != 'mega': continue
+        for p in (seg.get('pokemon') or []):
+            i = p.get('id')
+            if isinstance(i, int) and i not in has_mega:
+                fail(f"fabricated mega: 超级团战 segment «{seg.get('cn') or seg.get('name')}» ({seg.get('start')}) "
+                     f"lists dex {i}, which has NO Mega/Primal form in gamemaster — it can't be a 超级团战 Boss.")
+    for e in events:                                   # events.json claiming a Mega for a Mega-less dex
+        for p in (e.get('pokemon') or []):
+            i = p.get('id')
+            claims = 'mega' in (p.get('hub') or '').lower() or re.search(r'mega', (p.get('sprite') or ''), re.I)
+            if claims and isinstance(i, int) and i not in has_mega:
+                warn(f"event '{e.get('id')}' dex {i} claims a Mega (hub/sprite) but gamemaster has no Mega form for it.")
+else:
+    print("preflight: WARN data/raw/gamemaster.json absent — fabricated-mega check skipped")
+
+# ---- Check 6 (WARN): :token: in bonuses/sections that resolves to no icon asset --
+ICONS = {
+ 'normal':'normal.webp','bug':'bug.png','dark':'dark.webp','dragon':'dragon.png','electric':'electric.webp',
+ 'fairy':'fairy.webp','fighting':'fighting.png','fire':'fire.png','flying':'flying.png','ghost':'ghost.webp',
+ 'grass':'grass.webp','ground':'ground.webp','ice':'ice.webp','poison':'poison.webp','psychic':'psychic.webp',
+ 'rock':'rock.webp','steel':'steel.webp','water':'water.webp','candy':'candy.png','xl-candy':'xl-candy.png',
+ 'rare-candy':'rare-candy.png','stardust':'stardust.png','xp':'xp.png','lure':'lure.png','incense':'incense.png',
+ 'incubator':'incubators.png','golden-razz':'golden-razz-berry.png','silver-berry':'silver_berry.webp',
+ 'pokeball':'poke-ball.png','pokestop':'pokestop.png','raid':'Raid.png','spawn':'Reward%20spawn.png',
+ 'rocket':'teamrocket_r.png','trading':'trading.png',
+}
+tok_re = re.compile(r':([a-z0-9_-]{1,24}):')
+def icon_missing(tok):
+    fn = ICONS.get(tok, tok + '.png')
+    return not os.path.exists(os.path.join('public/assets/icons', fn.replace('%20', ' ')))
+bad_tok = {}
+for e in events:
+    texts = list(e.get('bonuses') or [])
+    for sec in (e.get('sections') or []):
+        texts += list(sec.get('items') or [])
+        if sec.get('body'): texts.append(sec['body'])
+    for t in texts:
+        for tok in tok_re.findall(t):
+            if icon_missing(tok): bad_tok.setdefault(tok, e.get('id'))
+for tok, eid in sorted(bad_tok.items()):
+    hint = " (a time mangled by iconify — reword, e.g. '7/7 18:00' not '7/7:18:00')" if tok.isdigit() else ""
+    warn(f":{tok}: in '{eid}' resolves to no icon asset → renders blank{hint}.")
 
 # ---- report ---------------------------------------------------------------
 for w in warns: print(f"preflight: WARN {w}")

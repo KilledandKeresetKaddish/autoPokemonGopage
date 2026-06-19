@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-19T16:46:34Z",
+  "lastUpdated": "2026-06-19T17:14:21Z",
   "sources": {
     "events": {
       "lastFetch": "2026-06-19T16:05:00Z",
@@ -88,5 +88,22 @@
     "checkedAt": "2026-06-19T16:46:34Z",
     "status": "compliant",
     "note": "本轮完成: Mega超梦X/Y独立事件+mega轨角标(form sprite 10043/10044),超级雷丘角标,雷丘团战日sprite修正(Hub DB mega),20+事件bonuses补:token:图标,calendar-notes/rankings-current全面刷新。preflight+validate通过。"
+  },
+  "notes": {
+    "audit_2026-06-19": {
+      "fixed": [
+        "雷丘/盔甲鸟 \"Super Mega Raid Day\":二者均无 Mega(经 gamemaster 核对),原内容把它们写成\"超级雷丘/超级盔甲鸟\"并配伪造 mega 精灵图/能量——改回基础形态。",
+        "移除 rotations.json 7/18 伪造的\"超级雷丘\"超级团战角标段。",
+        "iconify 把 bonuses/sections 里的 :时间: 当图标吃掉(7/7:18:00→显示错乱),改写为空格分隔;移除无资源的 :gift:/:research: token。"
+      ],
+      "verified_ok": [
+        "Mega 超梦 X/Y:gamemaster 确有 mega_x/mega_y;精灵图 10043=X、10044=Y 经目视确认未颠倒;X=7/11(六)、Y=7/12(日)与 GO Fest 日程一致。"
+      ],
+      "preflight_added": [
+        "超级团战段 Boss 必须在 gamemaster 有 Mega/Primal 形态(FAIL)",
+        "events bonuses/sections 的 :token: 必须对应真实图标资源(WARN)"
+      ],
+      "network": "pokeapi.co 与 Jina(Hub/LeekDuck)本轮仍 403;链接未能在线复核,保留未改。"
+    }
   }
 }

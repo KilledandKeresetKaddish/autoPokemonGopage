@@ -363,7 +363,10 @@ read before you write, as always.
   fire flying ghost grass ground ice poison psychic rock steel water`; items: `candy xl-candy rare-candy
   stardust xp lure incense incubator golden-razz silver-berry pokeball pokestop raid spawn rocket trading`.
   Unknown tokens fall back to `<token>.png`; missing files hide. Use where it adds clarity (e.g. a type
-  icon next to a counter, an item icon next to a bonus).
+  icon next to a counter, an item icon next to a bonus). **Only use tokens from the two lists above** —
+  invented ones (`gift`, `research`, …) have no asset and render blank (`preflight.sh` warns). And the
+  `:token:` regex eats any `:…:`, so **never put a time like `7/7:18:00` in `bonuses`/`sections`** — the
+  `:18:` is swallowed and the line shows mangled; write `7/7 18:00` (space, not colon).
 - `link` (single) is kept for back-compat; prefer `links[]` to point at **every** source for the event.
 - `longTerm:true` → renders in the 长期活动 band instead of the grid (auto for season/pass/league
   and spans >~2 weeks; set `false` to force back onto the grid).
