@@ -109,13 +109,16 @@ run_agent() {
 echo "--- invoking agent: $AGENT_CLI ---"
 run_agent || echo "WARN agent exited non-zero (continuing to validation)"
 
+echo "--- preflight (render dry-run) ---"
+scripts/preflight.sh; pf=$?
 echo "--- validating ---"
-if scripts/validate.sh; then
+scripts/validate.sh; vl=$?
+if [ "$pf" = 0 ] && [ "$vl" = 0 ]; then
   echo "--- publishing ---"
   scripts/publish.sh
   echo "===== done OK $(date -u +%FT%TZ) ====="
 else
-  echo "!!! validation FAILED — rolling back working tree to last good commit"
+  echo "!!! gate FAILED (preflight=$pf validate=$vl) — rolling back working tree to last good commit"
   git checkout -- public data/state.json 2>/dev/null || true
   git clean -fdq public 2>/dev/null || true
   echo "===== rolled back $(date -u +%FT%TZ) ====="

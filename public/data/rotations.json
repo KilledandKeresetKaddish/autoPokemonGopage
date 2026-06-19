@@ -1,6 +1,6 @@
 {
-  "month": "2026-06",
-  "note": "5★ 与超级团战 Boss 每周三 10:00 轮换 · Max 团战每周轮换(时间以当地为准)",
+  "month": "2026-07",
+  "note": "5★ 与超级团战 Boss 每周三 10:00 轮换;传奇之路 7/6–7/10 期间改为每日轮换,日历角标显示当日 Boss(Max 团战每周轮换,时间以当地为准)。",
   "tracks": [
     {
       "key": "5star",
@@ -71,6 +71,130 @@
           ],
           "start": "2026-06-24",
           "end": "2026-06-30"
+        },
+        {
+          "name": "All-Gen Legends",
+          "cn": "全世代传说(多种传说轮替)",
+          "pokemon": [
+            {
+              "id": 144,
+              "name": "急冻鸟"
+            },
+            {
+              "id": 145,
+              "name": "闪电鸟"
+            },
+            {
+              "id": 146,
+              "name": "火焰鸟"
+            },
+            {
+              "id": 382,
+              "name": "盖欧卡"
+            },
+            {
+              "id": 383,
+              "name": "固拉多"
+            },
+            {
+              "id": 384,
+              "name": "烈空坐"
+            },
+            {
+              "id": 800,
+              "name": "奈克洛兹玛"
+            }
+          ],
+          "start": "2026-07-06",
+          "end": "2026-07-06"
+        },
+        {
+          "name": "White Kyurem / Zekrom / Dawn Wings Necrozma",
+          "cn": "白酋雷姆 等",
+          "pokemon": [
+            {
+              "id": 646,
+              "name": "酋雷姆",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png",
+              "hub": "646-White"
+            },
+            {
+              "id": 644,
+              "name": "捷克罗姆"
+            },
+            {
+              "id": 800,
+              "name": "奈克洛兹玛",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10156.png",
+              "hub": "800-Dawn_Wings"
+            }
+          ],
+          "start": "2026-07-07",
+          "end": "2026-07-07"
+        },
+        {
+          "name": "Black Kyurem / Reshiram / Dusk Mane Necrozma",
+          "cn": "黑酋雷姆 等",
+          "pokemon": [
+            {
+              "id": 646,
+              "name": "酋雷姆",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10022.png",
+              "hub": "646-Black"
+            },
+            {
+              "id": 643,
+              "name": "莱希拉姆"
+            },
+            {
+              "id": 800,
+              "name": "奈克洛兹玛",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10155.png",
+              "hub": "800-Dusk_Mane"
+            }
+          ],
+          "start": "2026-07-08",
+          "end": "2026-07-08"
+        },
+        {
+          "name": "Crowned Zacian / Zamazenta",
+          "cn": "苍响 / 藏玛然特",
+          "pokemon": [
+            {
+              "id": 888,
+              "name": "苍响",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10188.png",
+              "hub": "888-Crowned_Sword"
+            },
+            {
+              "id": 889,
+              "name": "藏玛然特",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10189.png",
+              "hub": "889-Crowned_Shield"
+            }
+          ],
+          "start": "2026-07-09",
+          "end": "2026-07-09"
+        },
+        {
+          "name": "Origin Dialga / Palkia",
+          "cn": "起源 帝牙卢卡 / 帕路奇亚",
+          "pokemon": [
+            {
+              "id": 483,
+              "name": "帝牙卢卡",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10245.png",
+              "hub": "483-Origin"
+            },
+            {
+              "id": 484,
+              "name": "帕路奇亚",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10246.png",
+              "hub": "484-Origin"
+            }
+          ],
+          "start": "2026-07-10",
+          "end": "2026-07-10"
         }
       ]
     },
@@ -149,6 +273,82 @@
           ],
           "start": "2026-06-24",
           "end": "2026-06-30"
+        },
+        {
+          "name": "Mega Salamence",
+          "cn": "超级暴飞龙",
+          "pokemon": [
+            {
+              "id": 373,
+              "name": "暴飞龙",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png",
+              "hub": "373-Mega"
+            }
+          ],
+          "start": "2026-07-06",
+          "end": "2026-07-06"
+        },
+        {
+          "name": "Mega Tyranitar",
+          "cn": "超级班基拉斯",
+          "pokemon": [
+            {
+              "id": 248,
+              "name": "班基拉斯",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png",
+              "hub": "248-Mega"
+            }
+          ],
+          "start": "2026-07-07",
+          "end": "2026-07-07"
+        },
+        {
+          "name": "Mega Gardevoir",
+          "cn": "超级沙奈朵",
+          "pokemon": [
+            {
+              "id": 282,
+              "name": "沙奈朵",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10051.png",
+              "hub": "282-Mega"
+            }
+          ],
+          "start": "2026-07-08",
+          "end": "2026-07-08"
+        },
+        {
+          "name": "Mega Gengar",
+          "cn": "超级耿鬼",
+          "pokemon": [
+            {
+              "id": 94,
+              "name": "耿鬼",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png",
+              "hub": "94-Mega"
+            }
+          ],
+          "start": "2026-07-09",
+          "end": "2026-07-09"
+        },
+        {
+          "name": "Primal Kyogre / Groudon",
+          "cn": "原始 盖欧卡 / 固拉多",
+          "pokemon": [
+            {
+              "id": 382,
+              "name": "盖欧卡",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png",
+              "hub": "382-Primal"
+            },
+            {
+              "id": 383,
+              "name": "固拉多",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png",
+              "hub": "383-Primal"
+            }
+          ],
+          "start": "2026-07-10",
+          "end": "2026-07-10"
         }
       ]
     },

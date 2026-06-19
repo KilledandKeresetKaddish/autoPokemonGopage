@@ -45,11 +45,14 @@ responsibilities.
    five allowed AI markers in `public/index.html`.
 5. Run the State + Validator phase last: it sets `public/data/meta.json.lastUpdated`,
    records fixed per-source notes in `data/state.json` (it is the **sole writer** of
-   `data/state.json`), self-checks, and runs `scripts/validate.sh`. **You (the
-   coordinator) own the fix loop:** if validation fails, read the reported failures,
-   re-dispatch the responsible owner (Calendar / Rotations / Rankings) to fix its own
-   scope, then re-run validation — repeat until it passes. State + Validator reports; it
-   never reaches into another owner's scope.
+   `data/state.json`), self-checks, and runs `scripts/preflight.sh` **then**
+   `scripts/validate.sh` (`run-daily.sh` enforces both before publish — either non-zero
+   rolls the run back). **You (the coordinator) own the fix loop:** if **either** gate
+   fails, read the reported failures, re-dispatch the responsible owner (Calendar /
+   Rotations / Rankings) to fix its own scope, then re-run the gates — repeat until both
+   pass. `preflight.sh` flags render-contract breakage (orphan raids, 角标↔抽屉 mismatch,
+   mega form-id) that `validate.sh`'s structural checks can't see. State + Validator
+   reports; it never reaches into another owner's scope.
 6. If a source is unreachable or unparsable, keep the last good content, record the
    issue in `data/state.json`, and still pass validation. Never ship empty rankings.
 
@@ -66,3 +69,11 @@ or force a recheck**, that is a fetch job, not a memory job: run `scripts/discov
 keywords>"` to find candidate URLs, open each with `scripts/fetch.sh url <URL>`, and edit only from
 what you read. Do **not** reply that you "can't access the network / search" — you can, via those
 scripts (see AGENTS.md, *"You have full network access — use it, never refuse."*).
+
+When the note asks for **日历角标 / day-badges on specific dates** — e.g. "给某些天加 Boss 角标", or
+splitting a multi-day event (传奇之路 / GO Fest 前置周) into per-day Bosses — route it to **Rotations**,
+not Calendar-as-chips. Day-badges come **only** from `rotations.json`; an `events.json` `raid-hour`
+chip can never become a 角标. Follow AGENTS.md《渲染契约》: one banner event + an all-day `raid-battles`
+per Boss (Calendar) **and** matching single-day `5star`/`mega` segments (Rotations) whose `pokemon[]`
+equal those events. `scripts/preflight.sh` rejects orphan raids and 角标↔抽屉 mismatch, so Calendar and
+Rotations must be dispatched **together** for such a note.

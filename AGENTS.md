@@ -87,6 +87,37 @@ or touch them.**
 
 ---
 
+## 渲染契约 — 改 `events.json` / `rotations.json` 前必读
+日历的两种"标记"由**不同文件**驱动,**选错文件 = 看不到效果**。这是硬约定,
+`scripts/preflight.sh` 会据此在发布前拦截(orphan / 不一致 / form-id / 超长 chip)。
+
+- **日期数字旁的小角标(5★ 金环 / 超级团战 紫环)= 只由 `rotations.json` 的 `5star`/`mega` 轨产生**,
+  覆盖到的每一天画一个。`events.json` 里的事件**永远变不成角标** —— 它们只会是横跨日的 **bar** 或格子里的
+  **chip**。所以"给某些天加 Boss 角标"(包括 传奇之路 这类多日活动)= 往 `rotations.json` 加**单日段**,
+  **不是**往 `events.json` 塞 `raid-hour` chip。
+- **有角标的月份,`app.js` 会隐藏所有 `raid-battles` 的 bar**(改由角标代表)。因此每个 `raid-battles`
+  事件**必须**有一个 **dex id + 日期都匹配**的 `rotations.json` 段,点角标才能经 `findRaidEvent` 打开它的
+  抽屉;否则它**既无 bar 又无角标 = 静默消失**(preflight 报 `orphan raid`)。例外:`longTerm:true` 进
+  长期 band,不受此限。
+- **角标 ↔ 抽屉必须一致**:`renderRotations()` **逐字**渲染 `seg.pokemon`。单日段的 `pokemon[]` 应直接等于
+  当天对应 `raid-battles` 事件的 `pokemon[]`(5★ 段 = 事件里非超级/原始的 Boss;超级段 = 当天的超级/原始)。
+  段里出现抽屉没有的 Boss、或抽屉里的 Boss 在任何角标都不出现,都会被 preflight 拦下。角标本身只显示前 3 只
+  (多只会循环),但 rotation 面板会**列全** `seg.pokemon` —— 所以**别只放 3 只"代表"**,要放全;池子太大时
+  用段名 `cn` 标注"多种轮替"。
+- **Mega/形态段用 BASE 全国图鉴 id**(= 该 Boss 在 `events.json` 里用的 id)+ `"sprite"` 形态图覆盖。用
+  form id(≥10000)会让角标匹配不到事件、打开空抽屉(preflight 报 `mega base-id`)。形态精灵图优先用可核验的
+  PokeAPI 形态 id(`raw.githubusercontent.com/PokeAPI/sprites/.../<formId>.png`),写前可 `fetch.sh url` 拉下来确认。
+- **多日"每日轮换"事件 playbook(传奇之路 / GO Fest 前置周等)**:
+  ① 主活动在 `events.json` 出**一条横幅事件**(`event`/`pokemon-go-fest`,跨度大可 `longTerm:true`)。
+  ② 当天每个 Boss 在 `events.json` 出**全天 `raid-battles` 事件**(承载 counters/links/summary 抽屉)。
+  ③ 在 `rotations.json` 的 `5star`/`mega` 轨为这几天各加**单日段**(`start==end`),`pokemon[]` 取自 ②。
+  ④ 角标自动生成、点开即 ② 的抽屉。**不要**用 `raid-hour` chip 模拟每日 Boss。
+
+> 自检:跑 `scripts/preflight.sh`(`run-daily.sh` 已在 `validate.sh` 前**强制**运行,任一不过即回滚)。
+> 它模拟 `app.js` 的日历逻辑,`validate.sh` 只看结构、看不到这些语义问题。
+
+---
+
 ## Data sources — fetch via `scripts/fetch.sh <name>`
 Start by running `scripts/fetch.sh list` and reading `data/state.json` to see what is
 already cached and how old it is. **Decide what to refresh by age — do not blindly

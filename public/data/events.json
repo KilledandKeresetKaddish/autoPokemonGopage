@@ -1058,13 +1058,13 @@
   {
     "id": "road-of-legends-raids-20260706",
     "name": "传奇之路团战:超级暴飞龙与全世代传说",
-    "type": "raid-hour",
-    "heading": "Raid Hour",
-    "start": "2026-07-06T18:00:00",
-    "end": "2026-07-06T20:00:00",
+    "type": "raid-battles",
+    "heading": "传奇之路 · 每日团战",
+    "start": "2026-07-06T00:01:00",
+    "end": "2026-07-06T23:59:00",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-06-road-of-legends-2026/road-of-legends-2026.jpg",
     "link": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/",
-    "summary": "7/6 重点团战日:5★团战时刻 18:00–20:00,超级暴飞龙为当日超级团战重点。5★阵容覆盖大量传说、究极异兽与地区限定湖之众神/究极异兽。",
+    "summary": "7/6 全天 5★团战登场众多传说与究极异兽;团战时刻 18:00–20:00 刷新更密集,超级暴飞龙为当日超级团战重点。",
     "links": [
       {
         "label": "Hub",
@@ -1139,13 +1139,13 @@
   {
     "id": "road-of-legends-raids-20260707",
     "name": "传奇之路团战:白酋雷姆与超级班基拉斯",
-    "type": "raid-hour",
-    "heading": "Raid Hour",
-    "start": "2026-07-07T18:00:00",
-    "end": "2026-07-07T20:00:00",
+    "type": "raid-battles",
+    "heading": "传奇之路 · 每日团战",
+    "start": "2026-07-07T00:01:00",
+    "end": "2026-07-07T23:59:00",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-06-road-of-legends-2026/road-of-legends-2026.jpg",
     "link": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/",
-    "summary": "7/7 18:00–19:00 重点 5★为白酋雷姆、捷克罗姆、拂晓之翼奈克洛兹玛;19:00–20:00 为超级班基拉斯。",
+    "summary": "7/7 全天 5★团战:白酋雷姆、捷克罗姆、拂晓之翼奈克洛兹玛等;团战时刻 18:00–19:00,19:00–20:00 超级团战为超级班基拉斯。",
     "links": [
       {
         "label": "Hub",
@@ -1160,7 +1160,7 @@
       {
         "id": 646,
         "name": "酋雷姆",
-        "sprite": "https://db.pokemongohub.net/images/ingame/normal/pm646.fWHITE.icon.png",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png",
         "hub": "646-White",
         "shiny": true
       },
@@ -1172,7 +1172,7 @@
       {
         "id": 800,
         "name": "奈克洛兹玛",
-        "sprite": "https://db.pokemongohub.net/images/ingame/normal/pm800.fDAWN_WINGS.icon.png",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10156.png",
         "hub": "800-Dawn_Wings",
         "shiny": true
       },
@@ -1226,13 +1226,13 @@
   {
     "id": "road-of-legends-raids-20260708",
     "name": "传奇之路团战:黑酋雷姆与超级沙奈朵",
-    "type": "raid-hour",
-    "heading": "Raid Hour",
-    "start": "2026-07-08T18:00:00",
-    "end": "2026-07-08T20:00:00",
+    "type": "raid-battles",
+    "heading": "传奇之路 · 每日团战",
+    "start": "2026-07-08T00:01:00",
+    "end": "2026-07-08T23:59:00",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-06-road-of-legends-2026/road-of-legends-2026.jpg",
     "link": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/",
-    "summary": "7/8 18:00–19:00 重点 5★为黑酋雷姆、莱希拉姆、黄昏之鬃奈克洛兹玛;19:00–20:00 为超级沙奈朵。",
+    "summary": "7/8 全天 5★团战:黑酋雷姆、莱希拉姆、黄昏之鬃奈克洛兹玛等;团战时刻 18:00–19:00,19:00–20:00 超级团战为超级沙奈朵。",
     "links": [
       {
         "label": "Hub",
@@ -1247,7 +1247,7 @@
       {
         "id": 646,
         "name": "酋雷姆",
-        "sprite": "https://db.pokemongohub.net/images/ingame/normal/pm646.fBLACK.icon.png",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10022.png",
         "hub": "646-Black",
         "shiny": true
       },
@@ -1259,7 +1259,7 @@
       {
         "id": 800,
         "name": "奈克洛兹玛",
-        "sprite": "https://db.pokemongohub.net/images/ingame/normal/pm800.fDUSK_MANE.icon.png",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10155.png",
         "hub": "800-Dusk_Mane",
         "shiny": true
       },
@@ -1291,13 +1291,13 @@
   {
     "id": "road-of-legends-raids-20260709",
     "name": "传奇之路团战:王者苍响/藏玛然特与超级耿鬼",
-    "type": "raid-hour",
-    "heading": "Raid Hour",
-    "start": "2026-07-09T18:00:00",
-    "end": "2026-07-09T20:00:00",
+    "type": "raid-battles",
+    "heading": "传奇之路 · 每日团战",
+    "start": "2026-07-09T00:01:00",
+    "end": "2026-07-09T23:59:00",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-06-road-of-legends-2026/road-of-legends-2026.jpg",
     "link": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/",
-    "summary": "7/9 18:00–19:00 重点 5★为剑之王苍响、盾之王藏玛然特;19:00–20:00 为超级耿鬼。",
+    "summary": "7/9 全天 5★团战:剑之王苍响、盾之王藏玛然特;团战时刻 18:00–19:00,19:00–20:00 超级团战为超级耿鬼。",
     "links": [
       {
         "label": "Hub",
@@ -1312,14 +1312,14 @@
       {
         "id": 888,
         "name": "苍响",
-        "sprite": "https://db.pokemongohub.net/images/ingame/normal/pm888.fCROWNED_SWORD.icon.png",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10188.png",
         "hub": "888-Crowned_Sword",
         "shiny": true
       },
       {
         "id": 889,
         "name": "藏玛然特",
-        "sprite": "https://db.pokemongohub.net/images/ingame/normal/pm889.fCROWNED_SHIELD.icon.png",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10189.png",
         "hub": "889-Crowned_Shield",
         "shiny": true
       },
@@ -1351,13 +1351,13 @@
   {
     "id": "road-of-legends-raids-20260710",
     "name": "传奇之路团战:起源双龙与原始双神",
-    "type": "raid-hour",
-    "heading": "Raid Hour",
-    "start": "2026-07-10T18:00:00",
-    "end": "2026-07-10T20:00:00",
+    "type": "raid-battles",
+    "heading": "传奇之路 · 每日团战",
+    "start": "2026-07-10T00:01:00",
+    "end": "2026-07-10T23:59:00",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-06-road-of-legends-2026/road-of-legends-2026.jpg",
     "link": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/",
-    "summary": "7/10 18:00–19:00 重点 5★为起源帝牙卢卡、起源帕路奇亚;19:00–20:00 原始盖欧卡、原始固拉多进入原始团战时刻。",
+    "summary": "7/10 全天团战:起源帝牙卢卡、起源帕路奇亚;团战时刻 18:00–19:00,19:00–20:00 原始团战为原始盖欧卡、原始固拉多。",
     "links": [
       {
         "label": "Hub",
@@ -1372,28 +1372,28 @@
       {
         "id": 483,
         "name": "帝牙卢卡",
-        "sprite": "https://db.pokemongohub.net/images/ingame/normal/pm483.fORIGIN.icon.png",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10245.png",
         "hub": "483-Origin",
         "shiny": true
       },
       {
         "id": 484,
         "name": "帕路奇亚",
-        "sprite": "https://db.pokemongohub.net/images/ingame/normal/pm484.fORIGIN.icon.png",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10246.png",
         "hub": "484-Origin",
         "shiny": true
       },
       {
         "id": 382,
         "name": "盖欧卡",
-        "sprite": "https://db.pokemongohub.net/images/ingame/normal/pm382.fPRIMAL.icon.png",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png",
         "hub": "382-Primal",
         "shiny": true
       },
       {
         "id": 383,
         "name": "固拉多",
-        "sprite": "https://db.pokemongohub.net/images/ingame/normal/pm383.fPRIMAL.icon.png",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png",
         "hub": "383-Primal",
         "shiny": true
       }
