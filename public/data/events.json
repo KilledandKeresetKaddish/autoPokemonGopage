@@ -684,7 +684,7 @@
     "end": "2026-06-27T17:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-06-27-skarmory-super-mega-raid-day-2026/skarmory-super-mega-raid-day-2026.jpg",
     "link": "https://leekduck.com/events/skarmory-super-mega-raid-day-2026/",
-    "summary": "盔甲鸟超级团战日:全天密集出现盔甲鸟(钢/飞),闪光概率提升。",
+    "summary": "盔甲鸟超级团战日:全天密集出现超级盔甲鸟(钢/飞),闪光概率提升。",
     "links": [
       {
         "label": "LeekDuck",
@@ -1868,7 +1868,7 @@
     "end": "2026-07-18T17:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-18-raichu-super-mega-raid-day-2026/raichu-super-mega-raid-day-2026.jpg",
     "link": "https://leekduck.com/events/raichu-super-mega-raid-day-2026/",
-    "summary": "雷丘超级团战日：全天密集出现雷丘（电系），闪光概率提升。14:00–17:00 期间最多可获 5 张免费团战入场券。",
+    "summary": "雷丘超级团战日：全天密集出现超级雷丘（电系），闪光概率提升。14:00–17:00 期间最多可获 5 张免费团战入场券。",
     "links": [
       {
         "label": "LeekDuck",
@@ -1887,12 +1887,15 @@
       {
         "id": 26,
         "name": "雷丘",
-        "shiny": true
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
+        "hub": "26-Mega"
       }
     ],
     "bonuses": [
       "✨ 闪光概率提升",
-      ":raid: 最多 5 张免费团战入场券"
+      ":raid: 最多 5 张免费团战入场券",
+      ":candy: 击败可获得超级雷丘能量"
     ],
     "counters": [
       {

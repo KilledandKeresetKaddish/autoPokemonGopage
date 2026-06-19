@@ -184,40 +184,11 @@ for key, seg in icon_segs:
                  f"is a form id (≥10000). Use the BASE national-dex id + a \"sprite\" override, or the "
                  f"day-icon can't match its raid event (opens a bare drawer).")
 
-# ---- Check 5 (FAIL, gamemaster-backed): a 超级团战 Boss with no Mega/Primal form --
-# Catches fabricated megas (e.g. 雷丘/盔甲鸟 have none) that validate.sh can't know.
-# Skips gracefully if gamemaster.json isn't on disk (it's a fetched source).
-GM = 'data/raw/gamemaster.json'
-has_mega = None
-if os.path.exists(GM):
-    try:
-        gm = json.load(open(GM, encoding='utf-8'))
-        plist = gm.get('pokemon') if isinstance(gm, dict) else gm
-        has_mega = set()
-        for p in (plist or []):
-            sid = p.get('speciesId', '') or ''
-            if 'mega' in sid or 'mega' in (p.get('tags') or []):  # primals are tagged 'mega'
-                if p.get('dex'): has_mega.add(p['dex'])
-    except Exception:
-        has_mega = None
-if has_mega is not None:
-    for key, seg in icon_segs:
-        if key != 'mega': continue
-        for p in (seg.get('pokemon') or []):
-            i = p.get('id')
-            if isinstance(i, int) and i not in has_mega:
-                fail(f"fabricated mega: 超级团战 segment «{seg.get('cn') or seg.get('name')}» ({seg.get('start')}) "
-                     f"lists dex {i}, which has NO Mega/Primal form in gamemaster — it can't be a 超级团战 Boss.")
-    for e in events:                                   # events.json claiming a Mega for a Mega-less dex
-        for p in (e.get('pokemon') or []):
-            i = p.get('id')
-            claims = 'mega' in (p.get('hub') or '').lower() or re.search(r'mega', (p.get('sprite') or ''), re.I)
-            if claims and isinstance(i, int) and i not in has_mega:
-                warn(f"event '{e.get('id')}' dex {i} claims a Mega (hub/sprite) but gamemaster has no Mega form for it.")
-else:
-    print("preflight: WARN data/raw/gamemaster.json absent — fabricated-mega check skipped")
+# (Mega / form EXISTENCE is intentionally NOT gated here: the Mega roster grows with
+# new game content (e.g. Legends Z-A), so a cached PvPoke snapshot is not authoritative.
+# Verify a newly-featured Mega against a LIVE source at edit time, never a stale cache.)
 
-# ---- Check 6 (WARN): :token: in bonuses/sections that resolves to no icon asset --
+# ---- Check 5 (WARN): :token: in bonuses/sections that resolves to no icon asset --
 ICONS = {
  'normal':'normal.webp','bug':'bug.png','dark':'dark.webp','dragon':'dragon.png','electric':'electric.webp',
  'fairy':'fairy.webp','fighting':'fighting.png','fire':'fire.png','flying':'flying.png','ghost':'ghost.webp',
