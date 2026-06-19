@@ -80,6 +80,11 @@ or touch them.**
   - `<!-- AI:START rankings-attackers -->` … `<!-- AI:END rankings-attackers -->`
   - `<!-- AI:START rankings-defenders -->` … `<!-- AI:END rankings-defenders -->`
   - `<!-- AI:START rankings-raid -->` … `<!-- AI:END rankings-raid -->`
+- `public/data/featured.json` — admin-curated list of event `id`s to feature (gold border on the
+  calendar). **You maintain this file on behalf of the admin**: when the admin tells you to feature
+  or unfeature an event, add or remove that event's `id` from the array. Format: `["event-id-1", "event-id-2"]`.
+  Do NOT add IDs on your own initiative — only when the admin explicitly requests it. Prune IDs
+  whose events have been removed from `events.json`.
 - `data/state.json` — your own bookkeeping (last-fetch times, source hashes, notes).
 
 ## HARD RULES (validation rejects the run if broken)
@@ -246,9 +251,11 @@ read before you write, as always.
      (this is what keeps headline short events visible). `longTerm:false` forces a borderline
      event back onto the grid. (You can also use `display:"banner"` to force long-term,
      or `display:"bar"` to force onto the grid — they mirror `longTerm:true`/`false`.)
-   - **Flag focus / shiny-boost events.** Set `highlight:true` on 社区日, 团战日, and any event with
-     **boosted shiny odds** → ✨ + gold ring on the calendar. Also set `pokemon[].shiny:true` for the
+   - **Flag shiny-boost events.** Set `highlight:true` on 社区日, 团战日, and any event with
+     **boosted shiny odds** → ✨ on the calendar. Also set `pokemon[].shiny:true` for the
      shiny-available mons and add a `bonuses[]` line like "✨ 闪光概率提升" so the detail drawer shows it.
+     Note: `highlight` only adds the ✨ indicator; the **gold border** is controlled separately by
+     `featured.json` (admin-curated, see above). Do not conflate the two.
    - **New event types.** If a source introduces a `type` that isn't styled yet (it would otherwise
      fall back to a generic grey marker), register it in `public/data/categories.json` with a palette
      key + 简体中文 label + kind (see schema). Assign the family colour that fits — you can't pick a hex.
@@ -304,6 +311,7 @@ read before you write, as always.
    aggregated (≥2 sources per event where possible), no event ended >3 months ago, long events
    flagged, rotations parsed not invented, `highlight` only on Community Day / Raid Day /
    boosted-shiny events (standard raid encounters at base shiny rate do NOT qualify),
+   `featured.json` pruned of stale IDs (events no longer in `events.json`),
    **every 简体中文 name/move verified against `gamemaster` or PokeAPI (no hallucinated or
    garbled names)**, all `links[].url` actually confirmed to exist and point to THIS event
    (not a same-category article for a different Pokémon).
@@ -380,9 +388,11 @@ read before you write, as always.
 - `link` (single) is kept for back-compat; prefer `links[]` to point at **every** source for the event.
 - `longTerm:true` → renders in the 长期活动 band instead of the grid (auto for season/pass/league
   and spans >~2 weeks; set `false` to force back onto the grid).
-- `highlight:true` → ✨ + gold ring on the calendar bar/chip. Set it for **focus events**: 社区日
+- `highlight:true` → ✨ indicator on the calendar bar/chip (shiny boost). Set it for 社区日
   (Community Day), 团战日 (Raid Day), and any event with **boosted shiny odds**. Put the shiny detail
   in `pokemon[].shiny` (✨ on the sprite) and add a `bonuses[]` line like "✨ 闪光概率提升".
+  The gold border is driven separately by `featured.json` (admin-controlled); `highlight` no longer
+  controls the border.
 
 `public/data/rotations.json` — the current month's weekly boss rotation:
 ```json
@@ -497,7 +507,9 @@ These mistakes have been observed in past runs. **Check for each one** during st
 2. **Stale `highlight:true`.** The `highlight` flag means **boosted shiny odds** (社区日 ~1/25,
    团战日 special rate). Standard raid encounters (传说 ~1/20) have the **base** raid shiny rate —
    they are NOT "boosted". Do not mark regular Raid Hours as `highlight:true`. Only set it for
-   Community Day, Raid Day, and events that explicitly announce boosted shiny odds.
+   Community Day, Raid Day, and events that explicitly announce boosted shiny odds. Note:
+   `highlight` now only shows the ✨ icon; the gold border is separately controlled by
+   `featured.json` — do not confuse the two.
 
 3. **Inconsistent Mega form IDs.** Apply the Mega base-id rule uniformly across `rotations.json`.
    **Whenever you switch a segment's `id` to the base dex, you MUST also add the `"sprite"` form-image
