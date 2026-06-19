@@ -141,7 +141,10 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   border-bottom:1px solid var(--line-soft);}
 .cal-week:last-child{border-bottom:0;}
 
-.cal-day{position:relative;min-height:var(--cell-min);
+/* min-width:0 pins every column to an exact 1fr — without it a grid item's
+   default min-width:auto (=min-content) lets a wide cell (long chip, raid-icon
+   row) stretch its column and drift the day grid off the weekday header. */
+.cal-day{position:relative;min-width:0;min-height:var(--cell-min);
   border-right:1px solid var(--line-soft);padding:5px 6px 7px;display:flex;flex-direction:column;}
 .cal-day:nth-child(7){border-right:0;}
 .cal-day.out{background:repeating-linear-gradient(135deg,rgba(255,255,255,.014) 0 8px,rgba(255,255,255,0) 8px 16px);}
