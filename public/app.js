@@ -822,8 +822,11 @@ function shiftMonth(delta) {
   state.calMonth = m; state.calYear = y; renderCalendar();
 }
 function setupDetail() {
-  $('#detail-close').addEventListener('click', () => { $('#event-detail').hidden = true; });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') $('#event-detail').hidden = true; });
+  const panel = $('#event-detail');
+  const close = () => { panel.hidden = true; };
+  $('#detail-close').addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  document.addEventListener('mousedown', e => { if (!panel.hidden && !panel.contains(e.target)) close(); });
 }
 
 async function init() {
