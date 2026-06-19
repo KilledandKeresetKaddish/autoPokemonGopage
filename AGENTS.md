@@ -35,6 +35,15 @@ confirmed against `data/raw/gamemaster.json` (dex → species / move) or an allo
 source's English/romanized form — a hallucinated or garbled name is worse than none, and
 `validate.sh` only checks **structure**, so it cannot catch a wrong name.
 
+**How to verify in practice.** `gamemaster.json` contains English species names; it does
+**not** contain 简体中文. To produce a verified 简体中文 name: (1) identify the national-dex id
+from the source data or `gamemaster.json`; (2) look up the Chinese name via
+`scripts/fetch.sh url https://pokeapi.co/api/v2/pokemon-species/<dexId>/` — the `names[]`
+array has `language.name == "zh-Hans"` entries; (3) use that Chinese name verbatim. If
+PokeAPI returns no Chinese name for a species, keep the English/romanized form — do **not**
+translate from memory. Common game vocabulary (属性 names like 火/水/草, item names like
+星尘/糖果, mechanic terms) is **not** covered by this rule — only species and move names.
+
 ---
 
 ## The site (2 content sections + owner placeholders)
@@ -68,7 +77,8 @@ or touch them.**
   `public/index.html` **outside** the AI markers. Keep every `AI:START`/`AI:END`
   marker present and balanced, and keep the `.rank-panel` wrappers and all `id="…"`
   attributes intact.
-- The HTML you write must be **inert**: no `<script>`, no external CSS/JS.
+- The HTML you write must be **inert**: no `<script>`, no `<style>`, no `<iframe>`/`<object>`/`<embed>`,
+  no event-handler attributes (`onerror`, `onload`, `onclick`, …), no `javascript:` URIs, no external CSS/JS.
 - Keep `public/data/*.json` valid JSON in the schemas below.
 - **Fetch only via `scripts/fetch.sh` / `scripts/discover.sh`**: the named sources below, ad-hoc
   detail pages on the allowlisted domains via `scripts/fetch.sh url <URL>`, and candidate-URL
@@ -193,17 +203,24 @@ read before you write, as always.
    - **Flag long-running events.** Set `longTerm:true` on season / GO Pass / GO Battle League and
      anything spanning more than ~2 weeks — they render in the 长期活动 band, not the day grid
      (this is what keeps headline short events visible). `longTerm:false` forces a borderline
-     event back onto the grid. (`display:"banner"|"bar"` are equivalent overrides.)
+     event back onto the grid. (You can also use `display:"banner"` to force long-term,
+     or `display:"bar"` to force onto the grid — they mirror `longTerm:true`/`false`.)
    - **Flag focus / shiny-boost events.** Set `highlight:true` on 社区日, 团战日, and any event with
      **boosted shiny odds** → ✨ + gold ring on the calendar. Also set `pokemon[].shiny:true` for the
      shiny-available mons and add a `bonuses[]` line like "✨ 闪光概率提升" so the detail drawer shows it.
    - **New event types.** If a source introduces a `type` that isn't styled yet (it would otherwise
      fall back to a generic grey marker), register it in `public/data/categories.json` with a palette
      key + 简体中文 label + kind (see schema). Assign the family colour that fits — you can't pick a hex.
-   - **Retention.** Keep the **current month through the end of next month**; **drop events that
-     ended before the current month started**. Use a **stable `id`** (derived deterministically
-     from a source slug) so re-runs map the same event to the same row and can never accumulate
-     duplicates.
+   - **Retention.** Keep events whose end date is **within 3 months** of today; drop anything
+     that ended **more than 3 months ago** (validate.sh hard-rejects >100 days ≈ 3.3 months, so
+     prune well before that). Look forward through the end of next month. Use a **stable `id`**
+     so re-runs map the same event to the same row and can never accumulate duplicates.
+     **ID algorithm:** take the source slug (e.g. LeekDuck's URL slug `community-day-june-2026`)
+     and normalize: lowercase, keep `[a-z0-9-]`, strip trailing date fragments if they duplicate
+     the start date, but **keep** the year-month to prevent cross-month collisions. Examples:
+     `community-day-june-2026`, `raidhour20260617`, `season-of-discovery-2026`. If no slug exists,
+     compose `<type>-<startYYYYMMDD>` (e.g. `spotlight-hour-20260701`). Never use sequential
+     counters or random values.
 5. **Rotations** → rewrite `public/data/rotations.json` (schema below): the **current month's**
    5★ / Mega / Max weekly boss rotation, parsed from the Hub monthly article and corroborated
    with `data/raw/raids.json`. Dex id per boss for the sprite; dates `YYYY-MM-DD`.
@@ -243,10 +260,15 @@ read before you write, as always.
 7. Set `public/data/meta.json` `lastUpdated` to now (ISO 8601); record per-source fetch
    times/notes in `data/state.json` (a fixed object keyed by source — **not** a growing log).
 8. **Self-check before validating:** one row per real event (no duplicate `id`s), `links[]`
-   aggregated, no event ended >3 months ago, long events flagged, rotations parsed not invented,
-   **every 简体中文 name/move verified against `gamemaster` (no hallucinated or garbled names).**
+   aggregated (≥2 sources per event where possible), no event ended >3 months ago, long events
+   flagged, rotations parsed not invented, `highlight` only on Community Day / Raid Day /
+   boosted-shiny events (standard raid encounters at base shiny rate do NOT qualify),
+   **every 简体中文 name/move verified against `gamemaster` or PokeAPI (no hallucinated or
+   garbled names)**, all `links[].url` actually confirmed to exist and point to THIS event
+   (not a same-category article for a different Pokémon).
 9. Run `scripts/validate.sh`. Fix what it reports until it passes. (It hard-rejects duplicate
-   ids, >250 events, and events ended >100 days ago — so prune and dedup.)
+   ids, >250 events, events ended >90 days ago, empty `type` fields, dangerous HTML in AI
+   regions, and rotation segments without `start`/`pokemon[]` — so prune, dedup, and check.)
 
 ---
 
@@ -298,7 +320,8 @@ read before you write, as always.
 - `counters`: best raid/团战 counters (`id` for the sprite + 简体中文 `name` + optional `fast`/`charged`
   moves) → rendered as a collapsible "团战 Counter" block. Fill for raid / mega / raid-day events from the
   Hub raid guide or `db.pokemongohub.net`, justified by `gamemaster` — **don't invent**.
-- `sections`: **free-form** collapsible blocks `[{ "title": "...", "items": ["..."] }]` — **you decide
+- `sections`: **free-form** collapsible blocks `[{ "title": "...", "items": ["..."] }]` or
+  `[{ "title": "...", "body": "一段文字" }]` (`body` renders as a paragraph instead of a list) — **you decide
   per event** what's worth surfacing (付费/票务、限时调查步骤、栖息地时段、Field Research 任务、奖励清单…).
   Titles and contents are yours to choose; 付费内容 is just one example. Use them to bring the useful
   detail inline instead of forcing users out to the source link.
@@ -336,6 +359,11 @@ read before you write, as always.
 ```
 - The three tracks 5★ / Mega / Max. `cn` = displayed name; `pokemon[]` may hold >1 boss (dual/triple
   rotations — they **cycle** inside one day-number icon). `start`/`end` = `YYYY-MM-DD`.
+- **Mega / form segments:** set `pokemon[].id` to the **base national-dex id** (e.g. Scizor = 212,
+  not the PokeAPI mega-form id 10046). For the sprite, add `"sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<formId>.png"`
+  with the form id. Reason: app.js uses the base dex id to match rotation segments to `raid-battles`
+  events in events.json (`findRaidEvent`). If you use the form id as `id`, the icon click opens a
+  bare drawer with no detail. Apply this rule **consistently to every Mega segment** — not just some.
 - **5★ and Mega weekly bosses render as small icons next to each day's number** (the grid no longer
   draws weekly-raid bars). So keep rotations.json **complete for the whole month**, or those raids
   vanish from the grid. `color` drives both the rotation section and the day-icon ring — 5★ = gold
@@ -415,3 +443,37 @@ attackers/tanks to use (e.g. a Max/Dynamax event → the relevant Max picks).
 fighting.png poison.webp ground.webp flying.png psychic.webp bug.png rock.webp ghost.webp dragon.png
 dark.webp steel.webp fairy.webp normal.webp`;`一般` = `normal.webp`(若该文件已存在于 `assets/icons/`,
 否则暂保留文字)。counter 招式属性由 `gamemaster` 的 move→type 求得。Keep it readable on mobile.
+
+---
+
+## Common data-analysis mistakes to avoid
+
+These mistakes have been observed in past runs. **Check for each one** during step 8 (self-check).
+
+1. **Wrong link attribution.** Don't attach a generic category guide URL (e.g. a "Spotlight & Raid
+   Hours" schedule page) as the Hub link for a Community Day event. Confirm each `links[].url`
+   actually covers **this specific event/Pokémon** — open the page (via `fetch.sh url`) and verify
+   before attaching. If the page is about a different subject, omit rather than attach.
+
+2. **Stale `highlight:true`.** The `highlight` flag means **boosted shiny odds** (社区日 ~1/25,
+   团战日 special rate). Standard raid encounters (传说 ~1/20) have the **base** raid shiny rate —
+   they are NOT "boosted". Do not mark regular Raid Hours as `highlight:true`. Only set it for
+   Community Day, Raid Day, and events that explicitly announce boosted shiny odds.
+
+3. **Inconsistent Mega form IDs.** When building `rotations.json`, apply the Mega base-id rule to
+   **every** Mega segment, not just the latest ones. If you fixed Scizor and Pidgeot but left
+   Medicham/Audino/Lopunny with form IDs, that's an inconsistency. Process the whole list uniformly.
+
+4. **Single-source events.** After writing events.json, scan for events with only 1 link. For each,
+   actively search the other sources (Hub via `events-hub`, pokébase via `events-pokebase`, official
+   via `events-official`). Major events (Community Day, Fest, anniversaries) almost always have
+   coverage in all 4 sources — a single-source major event signals a missed merge opportunity.
+
+5. **English text leaking into Chinese UI.** Every `name`, `pokemon[].name`, `counters[].name`, `cn`,
+   and ranking HTML visible text must be 简体中文. `alt` attributes on sprites should also be 简体中文
+   for consistency. English `heading` is acceptable (it's a machine key, rarely displayed). Check your
+   output for any English Pokémon names in user-visible positions.
+
+6. **Fabricating URLs.** Never construct a URL from a pattern (e.g., guessing a Hub article slug from
+   an event name). Only emit URLs you have actually seen in a source page or feed. If you cannot find
+   a matching article, it's better to have 1 link than a broken link.
