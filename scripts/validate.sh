@@ -90,8 +90,8 @@ fi
 R=public/data/rotations.json
 if [ -f "$R" ] && jq empty "$R" >/dev/null 2>&1; then
   jq -e '.tracks | type == "array"' "$R" >/dev/null 2>&1 || { say "FAIL rotations.json missing tracks[]"; fail=1; }
-  bad_seg=$(jq '[.tracks[]?.segments[]? | select(((.start // "")=="") or ((.pokemon // []) | length == 0))] | length' "$R" 2>/dev/null || echo 0)
-  [ "${bad_seg:-0}" = 0 ] || { say "FAIL rotations.json has $bad_seg segment(s) missing start or pokemon[]"; fail=1; }
+  bad_seg=$(jq '[.tracks[]?.segments[]? | select(((.start // "")=="") or ((.pokemon | type) != "array") or ((.pokemon | length) == 0))] | length' "$R" 2>/dev/null || echo 0)
+  [ "${bad_seg:-0}" = 0 ] || { say "FAIL rotations.json has $bad_seg segment(s) with empty start or non-array/empty pokemon[]"; fail=1; }
 fi
 
 # 4d) categories.json: the agent may register NEW event types, but only with a
@@ -112,7 +112,8 @@ if [ "$(grep -c '<script' "$H")" -ne 1 ]; then
 fi
 
 # 5b) AI regions must not contain dangerous HTML: <style>, <iframe>, <object>,
-#     <embed>, event-handler attributes (onerror, onload, onclick…), or javascript: URIs.
+#     <embed>, event-handler attributes (onerror, onload, onclick…), javascript: URIs,
+#     or any href/src whose scheme isn't on the allowlist (defeats entity-encoded bypasses).
 for region in calendar-notes rankings-current rankings-attackers rankings-defenders rankings-raid; do
   body=$(awk -v r="$region" 'index($0,"AI:START "r){f=1;next} index($0,"AI:END "r){f=0} f{print}' "$H")
   if printf '%s' "$body" | grep -qiE '<(style|iframe|object|embed)[ >]'; then
@@ -123,6 +124,16 @@ for region in calendar-notes rankings-current rankings-attackers rankings-defend
   fi
   if printf '%s' "$body" | grep -qiF 'javascript:'; then
     say "FAIL AI region $region contains javascript: URI"; fail=1
+  fi
+  # href/src must use a safe scheme. The literal javascript: grep above misses
+  # entity-encoded payloads (e.g. href="jav&#x61;script:…") that the browser decodes
+  # and executes; an allowlist also blocks data:/vbscript:/protocol-relative URLs.
+  # AI regions only ever need https:// , repo-relative assets/ , or #anchors.
+  # (Attributes are the conventional double-quoted form the agent/app emit.)
+  bad_url=$(printf '%s' "$body" | grep -oiE '(href|src)[[:space:]]*=[[:space:]]*"[^"]*"' \
+    | sed -E 's/^[^"]*"//; s/"$//' | grep -viE '^(https://|assets/|#)' | head -1 || true)
+  if [ -n "$bad_url" ]; then
+    say "FAIL AI region $region has href/src with disallowed scheme: $bad_url"; fail=1
   fi
 done
 
