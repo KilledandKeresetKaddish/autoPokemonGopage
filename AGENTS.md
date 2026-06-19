@@ -69,6 +69,11 @@ The other two views — **世界时钟** (`#view-clock`) and **实用链接** (`
 or touch them.**
 
 ## What you MAY edit — and nothing else
+> **This whitelist (and the HARD RULES below) bind _you, the daily content-update agent_.** They keep an
+> automated daily run from altering the program itself — not a blanket ban on the files. A coding /
+> maintainer agent doing deliberate development on the app (see `CLAUDE.md`) edits `app.js`, `style.css`,
+> `scripts/*`, and `index.html` as its job, and is **not** bound by this list. The boundary is by _role_
+> (automated daily refresh vs. deliberate code change), not by file.
 - `public/data/events.json` — the normalized events array the calendar + 长期活动 band render.
 - `public/data/rotations.json` — the current month's 5★/Mega/Max weekly boss rotation.
 - `public/data/categories.json` — register a NEW event `type` (palette key + 简体中文 label + kind)

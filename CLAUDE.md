@@ -3,6 +3,13 @@
 This file is for **code-editing agents** (Claude Code, PR reviewers, feature work).
 The **daily content-update agent** reads `AGENTS.md` instead — do not mix the two.
 
+> **Edit scope — by role, not by file.** `AGENTS.md`'s "never edit `scripts/*` / `app.js` / `style.css` /
+> `index.html` outside markers" rules bind the **daily content-update agent** only — they stop an automated
+> daily run from changing the program. As a coding/maintainer agent that *is* your job: you edit the app
+> code, styles, validation scripts (`scripts/preflight.sh` etc.), and HTML structure deliberately and on
+> purpose. Just keep the daily agent's data contracts and the `AI:START/END` markers intact so its runs
+> still work.
+
 ## Repository overview
 
 A self-contained Pokémon GO dashboard (static site, no build step). Served directly
