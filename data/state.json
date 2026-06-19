@@ -1,93 +1,93 @@
 {
-  "lastUpdated": "2026-06-19T17:42:23Z",
+  "lastUpdated": "2026-06-19T19:52:35Z",
   "sources": {
     "events": {
       "lastFetch": "2026-06-19T16:05:00Z",
-      "lastChecked": "2026-06-19T16:46:34Z",
+      "lastChecked": "2026-06-19T19:52:35Z",
       "status": "ok",
       "bytes": 61339,
       "note": "LeekDuck JSON OK; 6月下旬和7月事件完整,传奇之路 (7/6-7/10) 每日团战信息已从 Hub 核对。"
     },
     "raids": {
       "lastFetch": "2026-06-19T16:05:00Z",
-      "lastChecked": "2026-06-19T16:46:34Z",
+      "lastChecked": "2026-06-19T19:52:35Z",
       "status": "ok",
       "bytes": 16037,
       "note": "当前团战列表与排行 Counter 一致:Necrozma 5★, Shadow Dialga, Mega Scizor, 3★/1★/暗影池匹配。"
     },
     "eggs": {
       "lastFetch": "2026-06-19T14:10:22Z",
-      "lastChecked": "2026-06-19T16:46:34Z",
+      "lastChecked": "2026-06-19T19:52:35Z",
       "status": "ok",
       "bytes": 29466,
       "note": "蛋池数据可用;传奇之路蛋池信息已引用到 sections。"
     },
     "research": {
       "lastFetch": "2026-06-19T14:10:22Z",
-      "lastChecked": "2026-06-19T16:46:34Z",
+      "lastChecked": "2026-06-19T19:52:35Z",
       "status": "ok",
       "bytes": 67259,
       "note": "调查奖励数据可用。"
     },
     "gamemaster": {
       "lastFetch": "2026-06-19T14:10:23Z",
-      "lastChecked": "2026-06-19T16:46:34Z",
+      "lastChecked": "2026-06-19T19:52:35Z",
       "status": "ok",
       "bytes": 912180,
       "note": "PvPoke gamemaster OK;属性/招式类型已用于 counter 验证。Darkrai fast move 修正:祸不单行→大声咆哮(Hex→Snarl)。"
     },
     "tiers-attackers": {
       "lastFetch": "2026-06-19T14:10:26Z",
-      "lastChecked": "2026-06-19T16:46:34Z",
+      "lastChecked": "2026-06-19T19:52:35Z",
       "status": "ok",
       "bytes": 34727,
       "note": "Max 攻手榜源可用;A/B tier 已解析至 rankings-attackers。"
     },
     "tiers-defenders": {
       "lastFetch": "2026-06-19T14:10:30Z",
-      "lastChecked": "2026-06-19T16:46:34Z",
+      "lastChecked": "2026-06-19T19:52:35Z",
       "status": "ok",
       "bytes": 38671,
       "note": "Max 防守榜源可用;S/A/B tier 已解析至 rankings-defenders。"
     },
     "tiers-pokebase": {
       "lastFetch": "2026-06-19T14:14:02Z",
-      "lastChecked": "2026-06-19T16:46:34Z",
+      "lastChecked": "2026-06-19T19:52:35Z",
       "status": "ok",
       "bytes": 121558,
       "note": "Pokébase 交叉参考可用。"
     },
     "events-hub": {
       "lastFetch": "2026-06-19T16:05:00Z",
-      "lastChecked": "2026-06-19T16:46:34Z",
+      "lastChecked": "2026-06-19T19:52:35Z",
       "status": "ok",
       "bytes": 30694,
       "note": "Hub 事件索引 OK;Road of Legends 详细页(go-fest-2026-road-of-legends)已用于每日 Boss 核对与 counter 填充。"
     },
     "events-pokebase": {
       "lastFetch": "2026-06-19T16:05:00Z",
-      "lastChecked": "2026-06-19T16:46:34Z",
+      "lastChecked": "2026-06-19T19:52:35Z",
       "status": "ok",
       "bytes": 26887,
       "note": "Pokébase 事件列表可用。"
     },
     "events-official": {
       "lastFetch": "2026-06-19T16:05:00Z",
-      "lastChecked": "2026-06-19T16:46:34Z",
+      "lastChecked": "2026-06-19T19:52:35Z",
       "status": "ok",
       "bytes": 9930,
       "note": "官方新闻 OK。"
     }
   },
   "detailChecks": {
-    "checkedAt": "2026-06-19T16:46:34Z",
+    "checkedAt": "2026-06-19T19:52:35Z",
     "status": "ok",
-    "note": "本次核对: (1)超梦X(7/11)和超梦Y(7/12)拆为独立raid-battles事件,sprite分别用10043和10044; (2)rotations.json mega轨新增超梦X(7/11)、超梦Y(7/12)、超级雷丘(7/18)单日段; (3)雷丘超级团战日sprite改为Hub DB mega形态图; (4)6/20之后20+事件bonuses添加:token:图标; (5)calendar-notes和rankings-current刷新,区分GO Fest超梦X/Y及雷丘团战日信息。"
+    "note": "本轮核对: (1)飞行计程车(flying-taxi-2026)从 LeekDuck 详情页补全 pokemon[]/sections/bonuses(怒鹦哥 931 四羽色、咕咕、稚山雀、蓝鸦、洗翠勇士雄鹰、下石鸟、青绵鸟、姆克儿、秃鹰丫头 均经 PokeAPI zh-hans 核实),GO通行证/付费内容亦入 sections; (2)被接管(flying-taxi-taken-over-2026)补莱希拉姆与新暗影宝可梦(小海狮/咕咕/嗡蝠/稚山雀)、火箭队 bonuses; (3)雷丘超级团战日修为超级雷丘 X+Y 双形态(均弱地面,sprite 026_mega_x/y_with_bg),counter 换为超级烈咬陆鲨/原始固拉多/龙头地鼠,rotations mega 轨同步; (4)盔甲鸟超级团战日补 Mega 形态 sprite(227_mega_with_bg)与电/火 counter(超级喷火龙Y/震悘暗影雷电云/暗影席多蓝恩/暗影电击魔兽); (5)rotations.json month 从 2026-07 修正为当月 2026-06。"
   },
   "operatorNote": {
-    "checkedAt": "2026-06-19T16:46:34Z",
+    "checkedAt": "2026-06-19T19:52:35Z",
     "status": "compliant",
-    "note": "本轮完成: Mega超梦X/Y独立事件+mega轨角标(form sprite 10043/10044),超级雷丘角标,雷丘团战日sprite修正(Hub DB mega),20+事件bonuses补:token:图标,calendar-notes/rankings-current全面刷新。preflight+validate通过。"
+    "note": "本轮 operator note 完成: ①补充 Flying Taxi 详情(含 icon 令牌); ②featured.json 写入全部社区日(june/july community day)、超级团战日(盔甲鸟/雷丘)、十周年庆典、传奇之路、全球 GO Fest、所有聚焦时刻共13个ID; ③纠错与补链接/图标优化: 雷丘 X/Y 双形态、盔甲鸟 Mega 精灵图与 counter、rotations month 修正、所有新 counter 名/招式经 PokeAPI/gamemaster 核实。所有链接均经 fetch.sh url 验证真实(未编造)。preflight+validate 均通过。"
   },
   "notes": {
     "correction_2026-06-19": {
