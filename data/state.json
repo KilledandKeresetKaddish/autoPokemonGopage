@@ -1,122 +1,110 @@
 {
-  "lastUpdated": "2026-06-18T19:26:08Z",
+  "lastUpdated": "2026-06-19T14:14:48Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-06-18T19:15:00Z",
-      "lastChecked": "2026-06-18T19:26:08Z",
+      "lastFetch": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:14:25Z",
       "status": "ok",
-      "bytes": 60740,
-      "sha256": "bd4c837ff1024747f617bfa956d329a7e9ba968bba403781142cbfc55ec4f8ad",
-      "note": "Coordinator forced scripts/fetch.sh all successfully; ScrapedDuck/LeekDuck JSON used as calendar backbone."
+      "bytes": 61339,
+      "sha256": "a465877ea899827e0c6771fcb68131a1e75d9d9d8e6a49ab76fb484c693aad59",
+      "note": "强制重抓; ScrapedDuck/LeekDuck JSON 用作日历主干,发现并加入 Road of Legends。"
     },
     "raids": {
-      "lastFetch": "2026-06-18T19:15:00Z",
-      "lastChecked": "2026-06-18T19:26:08Z",
+      "lastFetch": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:14:25Z",
       "status": "ok",
       "bytes": 16037,
       "sha256": "96623f71e0cfb80c0d172d5fefc9393970dcbe713b732c686bbba5cdbdffe2eb",
-      "note": "Coordinator forced scripts/fetch.sh all successfully; current raid bosses used for rankings and rotation corroboration."
+      "note": "强制重抓; 当前团战用于 Counter 与轮换核对。"
     },
     "eggs": {
-      "lastFetch": "2026-06-18T19:15:00Z",
-      "lastChecked": "2026-06-18T19:26:08Z",
+      "lastFetch": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:14:25Z",
       "status": "ok",
       "bytes": 29466,
       "sha256": "bf0d68f3851420d0c007fdc89e3e956d849020a1ff999a8c1f668326d0c7d3ee",
-      "note": "Coordinator forced scripts/fetch.sh all successfully; source available for egg-pool checks."
+      "note": "强制重抓; 用于传奇之路蛋池/活动细节核对。"
     },
     "research": {
-      "lastFetch": "2026-06-18T19:15:00Z",
-      "lastChecked": "2026-06-18T19:26:08Z",
+      "lastFetch": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:14:25Z",
       "status": "ok",
       "bytes": 67259,
       "sha256": "8fb8d402a721d2f655e1d9913fdae8db0ce781209fde3714355246e5ddc3f4b3",
-      "note": "Coordinator forced scripts/fetch.sh all successfully; source available for research reward/detail checks."
+      "note": "强制重抓; 用于活动调查奖励核对。"
     },
     "gamemaster": {
-      "lastFetch": "2026-06-18T19:15:00Z",
-      "lastChecked": "2026-06-18T19:26:08Z",
+      "lastFetch": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:14:25Z",
       "status": "ok",
       "bytes": 912180,
       "sha256": "3dda2af1b856b070d153b3b53e7bc995df9e0a9b91e8596ae4ccf7841ec587d5",
-      "note": "Coordinator forced scripts/fetch.sh all successfully; 简体中文宝可梦名、属性和招式名 verification source."
+      "note": "强制重抓; 用于属性/招式与 dex 核对。"
     },
     "tiers-attackers": {
-      "lastFetch": "2026-06-18T19:15:00Z",
-      "lastChecked": "2026-06-18T19:26:08Z",
+      "lastFetch": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:14:25Z",
       "status": "ok",
       "bytes": 34727,
       "sha256": "ba0b74ccf0e351a528e1de04e329f3606e697627aebd1bf88ddf04db1384be05",
-      "note": "Coordinator forced scripts/fetch.sh all successfully; Rankings used Hub Max Attackers tiers and per-type guidance."
+      "note": "强制重抓; Max 攻手榜源可用。"
     },
     "tiers-defenders": {
-      "lastFetch": "2026-06-18T19:15:00Z",
-      "lastChecked": "2026-06-18T19:26:08Z",
+      "lastFetch": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:14:25Z",
       "status": "ok",
       "bytes": 38671,
-      "sha256": "f22bc157761d4545824ecb1816eb307e9fb8bd39f872bd09a90947ca6cd5e9cb",
-      "note": "Coordinator forced scripts/fetch.sh all successfully; Rankings used Hub Max Defenders tiers."
+      "sha256": "709d29eb63a469ba4d2db7c95ad3ec5187fe6940ecff5bf163225644fde68324",
+      "note": "强制重抓; Max 防守榜源可用。"
     },
     "tiers-pokebase": {
-      "lastFetch": "2026-06-18T19:15:00Z",
-      "lastChecked": "2026-06-18T19:26:08Z",
+      "lastFetch": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:14:25Z",
       "status": "ok",
       "bytes": 121558,
       "sha256": "4759f6ce185b47e102d2b04937d289d9395d8257a599afbfe3448f1eda78c2a8",
-      "note": "Coordinator forced scripts/fetch.sh all successfully; used as Max tier-list cross-check."
+      "note": "第一次重抓返回 503,随后重试成功; 作为 Max 榜交叉参考。"
     },
     "events-hub": {
-      "lastFetch": "2026-06-18T19:15:00Z",
-      "lastChecked": "2026-06-18T19:26:08Z",
+      "lastFetch": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:14:25Z",
       "status": "ok",
       "bytes": 30742,
-      "sha256": "71da124febffbf7aba410452b775a421e5bece31a5bf757b2937b219d64759c8",
-      "note": "Coordinator forced scripts/fetch.sh all successfully; used for event enrichment, June Max Battles confirmation, rotations, and corrected Mega Scizor/Pidgeot guide links."
+      "sha256": "5d40d8c56b78853e9d25af37434779fa71d2fab474273d822ff145382ab71216",
+      "note": "强制重抓; 用于月历、十周年、Road of Legends、Max 指南与超级团战链接核对。"
     },
     "events-pokebase": {
-      "lastFetch": "2026-06-18T19:16:00Z",
-      "lastChecked": "2026-06-18T19:26:08Z",
+      "lastFetch": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:14:25Z",
       "status": "ok",
-      "bytes": 28808,
-      "sha256": "d00815f89cfc9c39e44fa47c431e34c75a583d7e064dee12c2048fdc3dc3c939",
-      "note": "Coordinator forced scripts/fetch.sh all successfully; used for event/Pokémon cross-reference where applicable."
+      "bytes": 26717,
+      "sha256": "ee88dc0daeb29812391df946be6dc233c21217dc8bc584d0a9b3c438502aa9d4",
+      "note": "强制重抓; 用于活动交叉参考。"
     },
     "events-official": {
-      "lastFetch": "2026-06-18T19:16:00Z",
-      "lastChecked": "2026-06-18T19:26:08Z",
+      "lastFetch": "2026-06-19T14:14:25Z",
+      "lastChecked": "2026-06-19T14:14:25Z",
       "status": "ok",
-      "bytes": 9883,
-      "sha256": "b865df2f03d3d20809a2d17326063fe4fddf3975b1c593472ee1fc3bb079b26f",
-      "note": "Coordinator forced scripts/fetch.sh all successfully; official references used for priority event fact checks including corrected 10th Anniversary facts."
+      "bytes": 9930,
+      "sha256": "3d6f0eb9ab30c5f5bc77582b5035046452af19b527b97ae135f3a4166676b759",
+      "note": "强制重抓; 官方首页/新闻确认 Road of Legends 与 July Community Day 等官方链接。"
     }
   },
   "detailChecks": {
-    "checkedAt": "2026-06-18T19:26:08Z",
+    "checkedAt": "2026-06-19T14:14:25Z",
     "status": "ok",
-    "directory": "/tmp/pogo-detail-fetch",
-    "files": {
-      "leekduck.com_events_10th-anniversary-party_.txt": 8035,
-      "leekduck.com_events_max-mondays-2026-06-22_.txt": 5674,
-      "leekduck.com_events_max-mondays-2026-06-29_.txt": 6329,
-      "leekduck.com_events_mega-pidgeot-in-mega-raids-june-2026_.txt": 6895,
-      "leekduck.com_events_mega-scizor-in-mega-raids-june-2026_.txt": 1499,
-      "pokemongohub.net_post_event_june-2026-pokemon-go-events_.txt": 22083,
-      "pokemongohub.net_post_guide_mega-pidgeot-raid-guide_.txt": 18587,
-      "pokemongohub.net_post_guide_mega-scizor-raid-guide_.txt": 17510
-    },
-    "note": "Coordinator fetched all operator detail URLs successfully; Mega Scizor/Pidgeot guide links fixed; Hub June Max Battles confirmation recorded; 10th Anniversary facts corrected."
+    "note": "按操作备注强制审核: discover new 找到 Road of Legends,并打开 LeekDuck/Hub/官方页面核实; 打开十周年 LeekDuck/Hub 页面补全加成、野生出现与闪光提升; 打开 Max Battles Hub 指南; Mega Scizor/Pidgeot Hub 指南链接已保留。"
   },
   "operatorNote": {
-    "checkedAt": "2026-06-18T19:26:08Z",
+    "checkedAt": "2026-06-19T14:14:48Z",
     "status": "compliant",
-    "note": "Source Scout limitation folded carefully: initial scout subagent lacked bash and did not perform fetches itself, but coordinator did execute mandatory scripts/fetch.sh list && scripts/fetch.sh all successfully, and all named sources including eggs/research are OK. Calendar changed events.json and validate passed; Rotation made no changes; Rankings changed five AI markers and validate passed."
+    "note": "HTML 中未发现“不是捕捉经验”等找补文本; 日历补充超级巨钳螳螂/超级大比鸟链接、Max Hub 指南链接、十周年详细加成与 Road of Legends 新活动; 官方链接仅在已确认官方页面的活动上添加,未伪造 URL。"
   },
   "selfCheck": {
-    "checkedAt": "2026-06-18T19:26:08Z",
-    "events": "36 条; 无重复 id; 无早于 2026-06-01 结束的活动; 当前月至下月内容保留; 长期活动 9 条; 高亮 8 条; 36 条均含 links[]。",
-    "rotations": "public/data/rotations.json 未由本任务改动; 2026-06 三条 track 完整: 5★/超级/Max 各 5 段; parsed/corroborated, not invented。",
-    "rankings": "calendar-notes、rankings-current、rankings-attackers、rankings-defenders、rankings-raid 五个 AI 区块均非空。",
-    "namesAndMoves": "State + Validator 未新增宝可梦名或招式; 本轮内容按 data/raw/gamemaster.json 与 allowlisted detail sources 核对。",
-    "sourceLinks": "Calendar reported aggregated source links; detail URL fetches succeeded and related guide/article links were corrected where needed。"
+    "checkedAt": "2026-06-19T14:14:48Z",
+    "events": "37 条; 重复 id 0; 长期活动 9 条; 高亮 8 条; 已加入 Road of Legends。",
+    "rotations": "2026-06 三条 track 完整; Mega 段已修正为 base dex id + sprite override。",
+    "rankings": "五个 AI 区块保留非空; 未发现操作备注禁止文本。",
+    "sourceLinks": "十周年添加 Hub 链接; Max 周一添加 Hub Max 指南; Road of Legends 添加 LeekDuck/Hub/官方链接; GO Fest Global 保留已存在官方入口。"
   }
 }

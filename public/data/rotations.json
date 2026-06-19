@@ -11,28 +11,48 @@
         {
           "name": "Tapu Fini",
           "cn": "卡璞・鳍鳍",
-          "pokemon": [{ "id": 788, "name": "卡璞・鳍鳍" }],
+          "pokemon": [
+            {
+              "id": 788,
+              "name": "卡璞・鳍鳍"
+            }
+          ],
           "start": "2026-05-27",
           "end": "2026-06-02"
         },
         {
           "name": "Reshiram",
           "cn": "莱希拉姆",
-          "pokemon": [{ "id": 643, "name": "莱希拉姆" }],
+          "pokemon": [
+            {
+              "id": 643,
+              "name": "莱希拉姆"
+            }
+          ],
           "start": "2026-06-03",
           "end": "2026-06-09"
         },
         {
           "name": "Zekrom",
           "cn": "捷克罗姆",
-          "pokemon": [{ "id": 644, "name": "捷克罗姆" }],
+          "pokemon": [
+            {
+              "id": 644,
+              "name": "捷克罗姆"
+            }
+          ],
           "start": "2026-06-10",
           "end": "2026-06-16"
         },
         {
           "name": "Necrozma",
           "cn": "奈克洛兹玛",
-          "pokemon": [{ "id": 800, "name": "奈克洛兹玛" }],
+          "pokemon": [
+            {
+              "id": 800,
+              "name": "奈克洛兹玛"
+            }
+          ],
           "start": "2026-06-17",
           "end": "2026-06-23"
         },
@@ -40,8 +60,14 @@
           "name": "Kartana / Celesteela",
           "cn": "纸御剑 / 铁火辉夜",
           "pokemon": [
-            { "id": 798, "name": "纸御剑" },
-            { "id": 797, "name": "铁火辉夜" }
+            {
+              "id": 798,
+              "name": "纸御剑"
+            },
+            {
+              "id": 797,
+              "name": "铁火辉夜"
+            }
           ],
           "start": "2026-06-24",
           "end": "2026-06-30"
@@ -57,35 +83,70 @@
         {
           "name": "Mega Medicham",
           "cn": "超级恰雷姆",
-          "pokemon": [{ "id": 10054, "name": "恰雷姆", "hub": "308-Mega" }],
+          "pokemon": [
+            {
+              "id": 308,
+              "name": "恰雷姆",
+              "hub": "308-Mega",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10054.png"
+            }
+          ],
           "start": "2026-05-27",
           "end": "2026-06-02"
         },
         {
           "name": "Mega Audino",
           "cn": "超级差不多娃娃",
-          "pokemon": [{ "id": 10069, "name": "差不多娃娃", "hub": "531-Mega" }],
+          "pokemon": [
+            {
+              "id": 531,
+              "name": "差不多娃娃",
+              "hub": "531-Mega",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10069.png"
+            }
+          ],
           "start": "2026-06-03",
           "end": "2026-06-09"
         },
         {
           "name": "Mega Lopunny",
           "cn": "超级长耳兔",
-          "pokemon": [{ "id": 10088, "name": "长耳兔", "hub": "428-Mega" }],
+          "pokemon": [
+            {
+              "id": 428,
+              "name": "长耳兔",
+              "hub": "428-Mega",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10088.png"
+            }
+          ],
           "start": "2026-06-10",
           "end": "2026-06-16"
         },
         {
           "name": "Mega Scizor",
           "cn": "超级巨钳螳螂",
-          "pokemon": [{ "id": 212, "name": "巨钳螳螂", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10046.png", "hub": "212-Mega" }],
+          "pokemon": [
+            {
+              "id": 212,
+              "name": "巨钳螳螂",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10046.png",
+              "hub": "212-Mega"
+            }
+          ],
           "start": "2026-06-17",
           "end": "2026-06-23"
         },
         {
           "name": "Mega Pidgeot",
           "cn": "超级大比鸟",
-          "pokemon": [{ "id": 18, "name": "大比鸟", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10073.png", "hub": "18-Mega" }],
+          "pokemon": [
+            {
+              "id": 18,
+              "name": "大比鸟",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10073.png",
+              "hub": "18-Mega"
+            }
+          ],
           "start": "2026-06-24",
           "end": "2026-06-30"
         }
@@ -99,35 +160,60 @@
         {
           "name": "Inkay",
           "cn": "好啦鱿",
-          "pokemon": [{ "id": 686, "name": "好啦鱿" }],
+          "pokemon": [
+            {
+              "id": 686,
+              "name": "好啦鱿"
+            }
+          ],
           "start": "2026-06-01",
           "end": "2026-06-07"
         },
         {
           "name": "Electabuzz",
           "cn": "电击兽",
-          "pokemon": [{ "id": 125, "name": "电击兽" }],
+          "pokemon": [
+            {
+              "id": 125,
+              "name": "电击兽"
+            }
+          ],
           "start": "2026-06-08",
           "end": "2026-06-14"
         },
         {
           "name": "Roggenrola",
           "cn": "石丸子",
-          "pokemon": [{ "id": 524, "name": "石丸子" }],
+          "pokemon": [
+            {
+              "id": 524,
+              "name": "石丸子"
+            }
+          ],
           "start": "2026-06-15",
           "end": "2026-06-21"
         },
         {
           "name": "Hoothoot",
           "cn": "咕咕",
-          "pokemon": [{ "id": 163, "name": "咕咕" }],
+          "pokemon": [
+            {
+              "id": 163,
+              "name": "咕咕"
+            }
+          ],
           "start": "2026-06-22",
           "end": "2026-06-28"
         },
         {
           "name": "Pidove",
           "cn": "豆豆鸽",
-          "pokemon": [{ "id": 519, "name": "豆豆鸽" }],
+          "pokemon": [
+            {
+              "id": 519,
+              "name": "豆豆鸽"
+            }
+          ],
           "start": "2026-06-29",
           "end": "2026-07-05"
         }
