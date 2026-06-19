@@ -74,7 +74,7 @@
         },
         {
           "name": "All-Gen Legends",
-          "cn": "全世代传说团战",
+          "cn": "全世代传说(多种传说轮替)",
           "pokemon": [
             {
               "id": 144,
@@ -87,6 +87,22 @@
             {
               "id": 146,
               "name": "火焰鸟"
+            },
+            {
+              "id": 382,
+              "name": "盖欧卡"
+            },
+            {
+              "id": 383,
+              "name": "固拉多"
+            },
+            {
+              "id": 384,
+              "name": "烈空坐"
+            },
+            {
+              "id": 800,
+              "name": "奈克洛兹玛"
             }
           ],
           "start": "2026-07-06",
@@ -99,8 +115,8 @@
             {
               "id": 646,
               "name": "酋雷姆",
-              "hub": "646-White",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png"
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png",
+              "hub": "646-White"
             },
             {
               "id": 644,
@@ -109,8 +125,8 @@
             {
               "id": 800,
               "name": "奈克洛兹玛",
-              "hub": "800-Dawn_Wings",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10156.png"
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10156.png",
+              "hub": "800-Dawn_Wings"
             }
           ],
           "start": "2026-07-07",
@@ -123,8 +139,8 @@
             {
               "id": 646,
               "name": "酋雷姆",
-              "hub": "646-Black",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10022.png"
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10022.png",
+              "hub": "646-Black"
             },
             {
               "id": 643,
@@ -133,8 +149,8 @@
             {
               "id": 800,
               "name": "奈克洛兹玛",
-              "hub": "800-Dusk_Mane",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10155.png"
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10155.png",
+              "hub": "800-Dusk_Mane"
             }
           ],
           "start": "2026-07-08",
@@ -147,14 +163,14 @@
             {
               "id": 888,
               "name": "苍响",
-              "hub": "888-Crowned_Sword",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10188.png"
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10188.png",
+              "hub": "888-Crowned_Sword"
             },
             {
               "id": 889,
               "name": "藏玛然特",
-              "hub": "889-Crowned_Shield",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10189.png"
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10189.png",
+              "hub": "889-Crowned_Shield"
             }
           ],
           "start": "2026-07-09",
@@ -167,14 +183,14 @@
             {
               "id": 483,
               "name": "帝牙卢卡",
-              "hub": "483-Origin",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10245.png"
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10245.png",
+              "hub": "483-Origin"
             },
             {
               "id": 484,
               "name": "帕路奇亚",
-              "hub": "484-Origin",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10246.png"
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10246.png",
+              "hub": "484-Origin"
             }
           ],
           "start": "2026-07-10",
@@ -265,8 +281,8 @@
             {
               "id": 373,
               "name": "暴飞龙",
-              "hub": "373-Mega",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png"
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png",
+              "hub": "373-Mega"
             }
           ],
           "start": "2026-07-06",
@@ -279,8 +295,8 @@
             {
               "id": 248,
               "name": "班基拉斯",
-              "hub": "248-Mega",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png"
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png",
+              "hub": "248-Mega"
             }
           ],
           "start": "2026-07-07",
@@ -293,8 +309,8 @@
             {
               "id": 282,
               "name": "沙奈朵",
-              "hub": "282-Mega",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10051.png"
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10051.png",
+              "hub": "282-Mega"
             }
           ],
           "start": "2026-07-08",
@@ -307,8 +323,8 @@
             {
               "id": 94,
               "name": "耿鬼",
-              "hub": "94-Mega",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png"
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png",
+              "hub": "94-Mega"
             }
           ],
           "start": "2026-07-09",
@@ -321,14 +337,14 @@
             {
               "id": 382,
               "name": "盖欧卡",
-              "hub": "382-Primal",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png"
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png",
+              "hub": "382-Primal"
             },
             {
               "id": 383,
               "name": "固拉多",
-              "hub": "383-Primal",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png"
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png",
+              "hub": "383-Primal"
             }
           ],
           "start": "2026-07-10",
