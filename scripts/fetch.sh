@@ -53,7 +53,7 @@ ALL=(events raids eggs research gamemaster tiers-attackers tiers-defenders tiers
 
 # Domains the agent may pull AD-HOC pages from via `fetch.sh url <URL>` (beyond the
 # named sources above) — trusted Pokémon GO sources only, suffix-matched on host.
-ALLOW_HOSTS=(leekduck.com pokemongohub.net pokebase.app pokemongo.com dialgadex.com raw.githubusercontent.com pvpoke.com pokeapi.co)
+ALLOW_HOSTS=(leekduck.com pokemongohub.net db.pokemongohub.net pokebase.app pokemongo.com dialgadex.com raw.githubusercontent.com pvpoke.com pokeapi.co)
 
 list_status() {
   for k in "${ALL[@]}"; do

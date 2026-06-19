@@ -36,16 +36,18 @@ Checklist:
    verify rather than guessing.**
 5. Build `rankings-raid` (**当前团战 Counter**) from what's live now — current raid bosses **and any
    active Max/Dynamax battle**. This tab is the **detailed** reference (calendar drawers stay concise):
-   render **each boss as a header with a large sprite** (`.raid-block` > `.raid-boss` with a
-   `.boss-icon` + 简体中文 name + a `.meta` line of 属性 / 弱点), then a **fuller** counter list in a
-   **`.rank-list.mini`** (smaller sprites) below, so the boss reads bigger than its counters. Then a
-   **Mega Booster** block stating the mechanic correctly — an **active** Mega gives **+1 糖 when you
-   catch a Pokémon sharing that Mega's 属性** (not "evolving yields that species' candy", and unrelated
-   to evolving) — and **pairing each live boss to a same-属性 Mega**, rendered as a **detailed
-   `.rank-list`** (recommended 超级 sprite + which boss's candy it farms). Build the pairing from this
-   run's live bosses; never hard-code a fixed list. **Verify every 属性 / 弱点 against `gamemaster`
-   too — label each Mega by the 属性 it *shares* with the boss (that shared type is what grants the
-   candy); never copy the boss's own 属性 onto the Mega.**
+   - **Sort bosses by tier, highest first** (传说/5★ → 超级/Mega → 3★ → 1★ → 暗影 → Max).
+   - Render **each boss as a header with a large sprite** (`.raid-block` > `.raid-boss` with a
+     `.boss-icon` + 简体中文 name + `.meta`), then a **fuller** counter list in a **`.rank-list.mini`**
+     below, so the boss reads bigger than its counters.
+   - **属性用图标,不用文字:** boss `.meta` 的 属性 / 弱点 用 `<img class="ico" src="assets/icons/<type>.<ext>">`,
+     并在每个 counter 的招式文字前加该招式的 **move 属性** 图标(move→type 取自 `gamemaster`)。扩展名不统一,
+     按 `AGENTS.md` *Ranking HTML pattern* 的「属性→图标文件」表;`一般`/normal 无图标 → 保留文字。
+   - **Mega Booster = 内联在每个 boss 右侧,不再是底部独立列表。** 机制:**激活**某超级进化时,捕捉与其
+     **共享属性**的宝可梦 +1 糖(含 XL 机会),与「进化获得糖果」无关。在 boss 头右侧空白处放一个
+     **`.raid-mega`**(`.lbl` + 小图标),展示能 farm 该 boss 糖果的同属性 超级(`title="超级X · 共享<属性>"`)。
+     pairing 按本轮 live bosses 现算,绝不硬编码。**按 Mega 与 boss *共享* 的属性标注**(共享属性才给糖),
+     绝不把 boss 自身属性套到 Mega 上;每个 属性 / 弱点 都对 `gamemaster` 核对。
 6. Build both free-form regions from **this run's** finalized `events.json` +
    `rotations.json` only (never previous/stale files): `rankings-current` (本期推荐) is
    **editorial / priority** — which live events to do, bonuses, shiny windows, a directional

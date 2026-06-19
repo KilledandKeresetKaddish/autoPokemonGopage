@@ -133,6 +133,40 @@ function monSprite(p) {
 function firstSprite(ev) {
   return monSprite((ev.pokemon || [])[0]);
 }
+// Pokémon GO Hub DB page for an entry. `hub` (e.g. "212-Mega", "77-Galarian")
+// overrides; else the national-dex id. Forms keep the base id in data (so the
+// day-icon↔event match still works), so set `hub` for the exact form page.
+function hubHref(p) {
+  const slug = p && (p.hub || p.id);
+  return slug ? 'https://db.pokemongohub.net/pokemon/' + encodeURIComponent(slug) : '';
+}
+// Wrap a sprite <img> string in a link to its hub page (no-op without an id).
+function linkSprite(imgHtml, p) {
+  const href = hubHref(p);
+  return href ? `<a class="spr-link" href="${href}" target="_blank" rel="noopener">${imgHtml}</a>` : imgHtml;
+}
+// Make STATIC sprite <img> (the ranking panels baked into index.html) clickable →
+// hub. Uses data-hub if present, else the base national-dex id parsed from a
+// PokeAPI sprite URL. Skips type icons, already-linked imgs and the calendar
+// day-icon buttons; form-id sprites (≥10000) need an explicit data-hub.
+function linkifySprites(root) {
+  if (!root) return;
+  root.querySelectorAll('img').forEach(img => {
+    if (img.closest('a') || img.closest('button') || img.closest('#calendar') || img.closest('#long-term')) return;
+    let slug = img.getAttribute('data-hub');
+    if (!slug) {
+      const m = /\/pokemon\/(\d+)\.png(?:[?#]|$)/.exec(img.getAttribute('src') || '');
+      if (m && +m[1] < 10000) slug = m[1];
+    }
+    if (!slug) return;
+    const a = document.createElement('a');
+    a.className = 'spr-link';
+    a.href = 'https://db.pokemongohub.net/pokemon/' + slug;
+    a.target = '_blank'; a.rel = 'noopener';
+    img.parentNode.insertBefore(a, img);
+    a.appendChild(img);
+  });
+}
 
 /* ---------- data ---------- */
 async function loadData() {
@@ -455,7 +489,8 @@ function renderRotations() {
       row.style.setProperty('--c', color);
       const mons = (seg.pokemon || []).map(p => {
         const sp = monSprite(p);
-        return sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '';
+        if (!sp) return '';
+        return linkSprite(`<img class="spr" src="${escapeHtml(sp)}" alt="${escapeHtml(p.name || '')}" loading="lazy" onerror="this.style.display='none'">`, p);
       }).join('');
       const range = (seg.start || seg.end)
         ? `<span class="rot-range">${escapeHtml(fmtDateShort(seg.start))}${seg.end && seg.end !== seg.start ? '–' + escapeHtml(fmtDateShort(seg.end)) : ''}</span>`
@@ -473,6 +508,7 @@ function renderRotations() {
  * this map. Missing files hide gracefully; size is locked by CSS (.ico/.ico-lg). */
 const ICONS = {
   // Pokémon types
+  normal:'normal.webp',
   bug:'bug.png', dark:'dark.webp', dragon:'dragon.png', electric:'electric.webp',
   fairy:'fairy.webp', fighting:'fighting.png', fire:'fire.png', flying:'flying.png',
   ghost:'ghost.webp', grass:'grass.webp', ground:'ground.webp', ice:'ice.webp',
@@ -492,16 +528,18 @@ function iconify(s) {
 }
 function openDetail(ev) {
   const cat = catOf(ev);
-  const mons = (ev.pokemon || []).map(p =>
-    `<figure class="mon"><img class="mon-icon" src="${escapeHtml(monSprite(p))}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'">${p.shiny ? '<span class="shiny">✨</span>' : ''}<figcaption>${escapeHtml(p.name)}</figcaption></figure>`
-  ).join('');
+  const mons = (ev.pokemon || []).map(p => {
+    const img = `<img class="mon-icon" src="${escapeHtml(monSprite(p))}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'">`;
+    return `<figure class="mon">${linkSprite(img, p)}${p.shiny ? '<span class="shiny">✨</span>' : ''}<figcaption>${escapeHtml(p.name)}</figcaption></figure>`;
+  }).join('');
   const bonuses = (ev.bonuses || []).map(b => `<li>${iconify(b)}</li>`).join('');
   // Best counters → collapsible, sprite + recommended moves.
   const counters = (ev.counters || []).filter(c => c && (c.id || c.name || c.sprite)).map(c => {
     const moves = [c.fast, c.charged].filter(Boolean).map(escapeHtml).join(' / ');
     const csp = monSprite(c);
+    const cimg = csp ? `<img class="spr" src="${escapeHtml(csp)}" alt="${escapeHtml(c.name || '')}" loading="lazy" onerror="this.style.display='none'">` : '';
     return `<div class="ctr-row">`
-      + (csp ? `<img class="spr" src="${escapeHtml(csp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
+      + (cimg ? linkSprite(cimg, c) : '')
       + `<div><strong>${escapeHtml(c.name || '')}</strong>${moves ? `<div class="ctr-moves">${moves}</div>` : ''}</div></div>`;
   }).join('');
   // Generic extra sections (paid/ticketed options, special research, …) → collapsible.
@@ -530,6 +568,7 @@ function openDetail(ev) {
     ${links ? `<div class="detail-links">${links}</div>` : ''}
   `;
   $('#event-detail').hidden = false;
+  linkifySprites($('#detail-body'));
 }
 
 /* ---------- world clock (time-band country filter) ----------------------------
@@ -584,7 +623,7 @@ const WC_DATA = [
   ['西班牙','加那利群岛','es','Atlantic/Canary'],
   ['冰岛','雷克雅未克','is','Atlantic/Reykjavik'],
   ['佛得角','普拉亚','cv','Atlantic/Cape_Verde'],
-  ['南乔治亚岛','Grytviken','gs','Atlantic/South_Georgia'],
+  ['巴西','费尔南多·迪诺罗尼亚群岛','br','America/Noronha'],
   ['加拿大','圣约翰斯(纽芬兰)','ca','America/St_Johns'],
   ['巴西','圣保罗','br','America/Sao_Paulo'],
   ['阿根廷','布宜诺斯艾利斯','ar','America/Argentina/Buenos_Aires'],
@@ -689,6 +728,18 @@ function renderWorldClock() {
   }).join('') : '<p class="muted" style="padding:1rem;text-align:center">该时段暂无匹配的地区。</p>';
   renderWcSpots(start, end, now);
 }
+// 把"所选时段(以该精选地点的当地时间计)"换算成当前用户的本地时间窗口。用户时区取自
+// 浏览器;无法判断时回退到中国时间(UTC+8)。返回 "HH:MM–HH:MM"。
+function wcUserWindow(spotOffset, start, end) {
+  let uo = -new Date().getTimezoneOffset() / 60;
+  if (!isFinite(uo)) uo = 8;
+  const fmt = h => {
+    let mins = Math.round((h - spotOffset + uo) * 60);
+    mins = ((mins % 1440) + 1440) % 1440;
+    return wcPad(Math.floor(mins / 60)) + ':' + wcPad(mins % 60);
+  };
+  return fmt(start) + '–' + fmt(end);
+}
 // 精选地点侧栏:始终列出(最早→最晚),实时显示当地时间 + 坐标;选中时段则高亮命中者。
 function renderWcSpots(start, end, now) {
   const box = $('#wc-spots'); if (!box) return;
@@ -710,8 +761,9 @@ function renderWcSpots(start, end, now) {
         + `<div class="wc-spot-name">${escapeHtml(s[0])}</div>`
         + `<div class="wc-spot-sub muted">${escapeHtml(s[1])} · ${escapeHtml(s[3])}</div>`
         + `<div class="wc-spot-note muted">${escapeHtml(s[4])}</div>`
-        + `<a class="wc-spot-geo" href="https://www.google.com/maps?q=${s[5]},${s[6]}" target="_blank" rel="noopener">📍 ${geo}</a>`
-        + `</div>`;
+        + `<div class="wc-spot-foot"><a class="wc-spot-geo" href="https://www.google.com/maps?q=${s[5]},${s[6]}" target="_blank" rel="noopener">📍 ${geo}</a>`
+        + (wcActive ? `<span class="wc-spot-you muted" title="你的当地时间(该地点处于所选时段时)"><span class="dia">✦</span> ${wcUserWindow(c.offset, start, end)}</span>` : '')
+        + `</div></div>`;
     }).join('');
 }
 function setupWorldClock() {
@@ -720,12 +772,19 @@ function setupWorldClock() {
   let opts = '';
   for (let i = 0; i < 24; i++) opts += `<option value="${i}">${wcPad(i)}:00</option>`;
   startSel.innerHTML = opts; endSel.innerHTML = opts;
-  startSel.value = '4'; endSel.value = '7'; // pre-filled (= the 4–7 example), inactive until changed
-  const activate = () => { wcActive = true; if (allBtn) allBtn.classList.remove('active'); renderWorldClock(); };
+  // restore last choice (range + mode) from localStorage; fall back to the 4–7 example
+  let savedWc = {}; try { savedWc = JSON.parse(localStorage.getItem('wc-range') || '{}'); } catch (e) {}
+  startSel.value = String(savedWc.start != null ? savedWc.start : 4);
+  endSel.value = String(savedWc.end != null ? savedWc.end : 7);
+  const saveWc = () => { try { localStorage.setItem('wc-range', JSON.stringify({ mode: wcActive ? 'range' : 'all', start: +startSel.value, end: +endSel.value })); } catch (e) {} };
+  const dimWc = () => [startSel, endSel].forEach(s => s.classList.toggle('wc-off-dim', !wcActive));
+  const activate = () => { wcActive = true; if (allBtn) allBtn.classList.remove('active'); dimWc(); saveWc(); renderWorldClock(); };
   startSel.addEventListener('change', activate);
   endSel.addEventListener('change', activate);
-  if (allBtn) allBtn.addEventListener('click', () => { wcActive = false; allBtn.classList.add('active'); renderWorldClock(); });
-  wcActive = false; if (allBtn) allBtn.classList.add('active'); // default: 显示全部,最早→最晚
+  if (allBtn) allBtn.addEventListener('click', () => { wcActive = false; allBtn.classList.add('active'); dimWc(); saveWc(); renderWorldClock(); });
+  wcActive = (savedWc.mode === 'range'); // restore mode (default = 全部时段)
+  if (allBtn) allBtn.classList.toggle('active', !wcActive);
+  dimWc();
   renderWorldClock();
   // tick so times/groups shift as the minute rolls — only while the clock view is open
   setInterval(() => {
@@ -775,6 +834,11 @@ async function init() {
   await loadData();
   renderCalendar();
   renderRotations();
+  // make the static ranking-panel sprites clickable → Pokémon GO Hub DB
+  // auto-link every Pokémon sprite the agent renders (rankings, rotations,
+  // free-form notes, …) → hub. Calendar grid + 长期 band are excluded inside
+  // linkifySprites (their icons open the in-page drawer instead).
+  linkifySprites(document.body);
 }
 
 document.addEventListener('DOMContentLoaded', init);
