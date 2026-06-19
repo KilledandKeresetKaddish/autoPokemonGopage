@@ -214,19 +214,23 @@ read before you write, as always.
      `_gmax`. **Adapt if the layout changes. Parse the lists — do not decide rankings yourself.**)
    - `rankings-raid` (**当前团战 Counter**) → counters for what's **live right now**: current raid
      bosses from `data/raw/raids.json` **and any active Max/Dynamax battle**. This tab is the
-     **detailed** reference (the calendar drawers stay concise). Render **each boss as a header with a
-     large sprite** (`.raid-block` > `.raid-boss` with a `.boss-icon` + 简体中文 name + a `.meta` line
-     of its 属性 / 弱点), then a **fuller** counter list in a **`.rank-list.mini`** (smaller sprites)
-     below — so the boss reads bigger than its counters. Justify counters with `gamemaster` types;
-     don't invent numbers.
-   - Then a **Mega Booster** block. Get the mechanic right: an **active** Mega gives **+1 糖 when you
-     catch a Pokémon sharing that Mega's 属性** (chance of extra / XL) — it is **not** "evolving yields
-     that species' candy" and has nothing to do with the act of evolving. **Pair each live boss to a
-     same-属性 Mega** for farming that boss's candy (boss 属性 → a Mega of the same 属性), and render the
-     pairing as a **detailed `.rank-list`** (the recommended 超级 sprite + which boss's candy it farms),
-     not a one-liner. Build the pairing from whatever bosses are live this run — never hard-code a
-     fixed list. **Verify each 属性 / 弱点 against `gamemaster`; label the Mega by the 属性 it *shares*
-     with the boss (that shared type drives the candy) — never paste the boss's own 属性 onto the Mega.**
+     **detailed** reference (the calendar drawers stay concise). **Sort bosses by tier, highest first**
+     (传说/5★ → 超级/Mega → 3★ → 1★ → 暗影 → Max). Render **each boss as a header with a large sprite**
+     (`.raid-block` > `.raid-boss` with a `.boss-icon` + 简体中文 name + a `.meta` line), then a
+     **fuller** counter list in a **`.rank-list.mini`** below — the boss reads bigger than its counters.
+     **属性用图标,不用文字:** in the boss `.meta` render its 属性 and 弱点 as
+     `<img class="ico" src="assets/icons/<type>.<ext>">`, and **prepend each counter's move 属性 icon(s)**
+     before its move text (move→type from `gamemaster`). Type files vary by extension — see the map in
+     *Ranking HTML pattern*; `一般`/normal has no icon, keep the text. Justify counters/types with
+     `gamemaster`; don't invent.
+   - **Mega Booster — inline on each boss, NOT a separate bottom list.** Mechanic: an **active** Mega
+     gives **+1 糖 when you catch a Pokémon sharing that Mega's 属性** (chance of extra / XL) — it is
+     **not** "evolving yields that species' candy" and has nothing to do with evolving. For each boss,
+     put a small **`.raid-mega`** area in the blank space to the **right of the boss header** showing the
+     same-属性 超级 sprite(s) that farm **that boss's** candy (`<img title="超级X · 共享<属性>">`). Build
+     the pairings from whatever bosses are live this run — never hard-code a fixed list. **Label the Mega
+     by the 属性 it *shares* with the boss** (that shared type drives the candy) — never paste the boss's
+     own 属性 onto the Mega; verify each 属性 / 弱点 against `gamemaster`.
    - `rankings-current` (本期推荐, **free-form, highest value**) → **editorial / priority**, not a
      counter dump: which live events to do this period (社区日/团战日/Max周一/聚焦), bonuses, shiny
      windows, and a directional "练哪类攻手". Full counter tables belong in 当前团战 Counter — point
@@ -363,7 +367,8 @@ Use **only** these whitelisted, theme-correct classes (no inline colors, no `<st
 - sprites/icons: `<img class="spr">` or `class="mon-icon"` (PokeAPI dex-id URL); `<img class="ico">` /
   `class="ico-lg"` for the local resource icons in `assets/icons/` (size locked).
 - current-raid blocks (structured `rankings-raid` only): `.raid-block` > `.raid-boss` (header) with a
-  big `<img class="boss-icon">`, and `.rank-list.mini` for the compact counter rows beneath it.
+  big `<img class="boss-icon">`, an inline `.raid-mega` (`.lbl` + small Mega sprites, pinned to the
+  boss's right), and `.rank-list.mini` for the compact counter rows beneath it. Type icons via `.ico`.
 
 `rankings-current` should tie today's live events + current raid bosses to the best
 attackers/tanks to use (e.g. a Max/Dynamax event → the relevant Max picks).
@@ -378,16 +383,23 @@ attackers/tanks to use (e.g. a Max/Dynamax event → the relevant Max picks).
   </div>
 </div>
 ```
-当前团战 Counter — boss 头(大图)+ 紧凑 counter 列表(小图)。占位符按本轮实际 boss 填:
+当前团战 Counter — **按星级从高到低**;boss 头(大图)+ **右侧 `.raid-mega` 内联区** + 紧凑 counter
+列表(小图)。**属性一律用图标**。占位符按本轮实际 boss 填:
 ```html
 <div class="raid-block">
   <div class="raid-boss">
-    <img class="boss-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<bossDexId>.png" alt="<boss 简体中文名>">
-    <div><span class="badge">&lt;档次&gt;</span><strong>&lt;boss 简体中文名&gt;</strong><div class="meta">&lt;属性&gt; · 弱 &lt;弱点&gt;</div></div>
+    <img class="boss-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<bossDexId>.png" alt="<boss 名>">
+    <div><span class="badge">&lt;档次&gt;</span><strong>&lt;boss 名&gt;</strong>
+      <div class="meta"><img class="ico" src="assets/icons/<type>.webp" alt="<属性>"> · 弱 <img class="ico" src="assets/icons/<weak>.webp" alt="<弱点>"></div></div>
+    <div class="raid-mega"><span class="lbl">Mega</span><img src="…/<megaFormDexId>.png" title="超级X · 共享<属性>" alt="超级X"></div>
   </div>
   <div class="rank-list mini">
-    <div class="rank-item"><img class="mon-icon" src="…/<counterDexId>.png" alt="<counter 名>"><div><strong>&lt;counter 名&gt;</strong><div class="meta">&lt;fast&gt; / &lt;charged&gt;</div></div></div>
+    <div class="rank-item"><img class="mon-icon" src="…/<counterDexId>.png" alt="<counter 名>"><div><strong>&lt;counter 名&gt;</strong>
+      <div class="meta"><img class="ico" src="assets/icons/<moveType>.webp" alt="<招式属性>"> &lt;fast&gt; / &lt;charged&gt;</div></div></div>
   </div>
 </div>
 ```
-Keep it readable on mobile.
+**属性→图标文件**(扩展名不统一,务必照此):`fire.png water.webp grass.webp electric.webp ice.webp
+fighting.png poison.webp ground.webp flying.png psychic.webp bug.png rock.webp ghost.webp dragon.png
+dark.webp steel.webp fairy.webp`;`一般`(normal)无图标 → 保留文字。counter 招式属性由 `gamemaster`
+的 move→type 求得。Keep it readable on mobile.
