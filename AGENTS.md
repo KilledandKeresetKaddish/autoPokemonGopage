@@ -140,6 +140,14 @@ through the same Jina solver), printing `SOURCE <tab> TITLE <tab> URL` candidate
 month), and only then add it to `links[]`. If nothing fits, record the gap in `data/state.json` —
 never invent a link.
 
+**Catch events nobody told you about — `scripts/discover.sh new`.** To find activities that turned
+up in the feeds this cycle but aren't on the calendar yet (an official "surprise" event, a new raid
+day…), run `scripts/discover.sh new`. It re-fetches the feeds and lists feed events **within the
+current + next-month window** that are missing from `public/data/events.json`, each tagged with
+cross-source corroboration (`佐证:LeekDuck[+Hub][+官方]`), plus any official news links not tied to a
+known event. These are leads: open each with `scripts/fetch.sh url <URL>`, confirm it, then add it —
+read before you write, as always.
+
 ---
 
 ## Daily procedure

@@ -18,6 +18,10 @@ Goal: make the raw source cache ready for the content curators without over-fetc
      Hub per-boss raid guide), find it with `scripts/discover.sh "<english keywords>"`, verify
      candidates with `scripts/fetch.sh url`, and hand the confirmed links to the Calendar curator
      (never guess a URL).
+   - **newly-listed events** — run `scripts/discover.sh new` to surface feed events (this month +
+     next) not yet in `public/data/events.json`, with cross-source corroboration; verify each with
+     `scripts/fetch.sh url` and pass the real ones to the Calendar curator. Especially useful when
+     the operator asks to "audit new + existing events".
 6. Do not edit any site content or bookkeeping files — including `data/state.json`.
    Report fetch problems in your output; State + Validator (90) is the sole writer of
    `data/state.json` and records them for you.

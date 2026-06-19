@@ -584,7 +584,7 @@ const WC_DATA = [
   ['西班牙','加那利群岛','es','Atlantic/Canary'],
   ['冰岛','雷克雅未克','is','Atlantic/Reykjavik'],
   ['佛得角','普拉亚','cv','Atlantic/Cape_Verde'],
-  ['南乔治亚岛','Grytviken','gs','Atlantic/South_Georgia'],
+  ['巴西','费尔南多·迪诺罗尼亚群岛','br','America/Noronha'],
   ['加拿大','圣约翰斯(纽芬兰)','ca','America/St_Johns'],
   ['巴西','圣保罗','br','America/Sao_Paulo'],
   ['阿根廷','布宜诺斯艾利斯','ar','America/Argentina/Buenos_Aires'],
