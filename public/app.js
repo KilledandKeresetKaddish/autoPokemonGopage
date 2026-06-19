@@ -152,7 +152,7 @@ function linkSprite(imgHtml, p) {
 function linkifySprites(root) {
   if (!root) return;
   root.querySelectorAll('img').forEach(img => {
-    if (img.closest('a') || img.closest('button')) return;
+    if (img.closest('a') || img.closest('button') || img.closest('#calendar') || img.closest('#long-term')) return;
     let slug = img.getAttribute('data-hub');
     if (!slug) {
       const m = /\/pokemon\/(\d+)\.png(?:[?#]|$)/.exec(img.getAttribute('src') || '');
@@ -568,6 +568,7 @@ function openDetail(ev) {
     ${links ? `<div class="detail-links">${links}</div>` : ''}
   `;
   $('#event-detail').hidden = false;
+  linkifySprites($('#detail-body'));
 }
 
 /* ---------- world clock (time-band country filter) ----------------------------
@@ -727,6 +728,18 @@ function renderWorldClock() {
   }).join('') : '<p class="muted" style="padding:1rem;text-align:center">该时段暂无匹配的地区。</p>';
   renderWcSpots(start, end, now);
 }
+// 把"所选时段(以该精选地点的当地时间计)"换算成当前用户的本地时间窗口。用户时区取自
+// 浏览器;无法判断时回退到中国时间(UTC+8)。返回 "HH:MM–HH:MM"。
+function wcUserWindow(spotOffset, start, end) {
+  let uo = -new Date().getTimezoneOffset() / 60;
+  if (!isFinite(uo)) uo = 8;
+  const fmt = h => {
+    let mins = Math.round((h - spotOffset + uo) * 60);
+    mins = ((mins % 1440) + 1440) % 1440;
+    return wcPad(Math.floor(mins / 60)) + ':' + wcPad(mins % 60);
+  };
+  return fmt(start) + '–' + fmt(end);
+}
 // 精选地点侧栏:始终列出(最早→最晚),实时显示当地时间 + 坐标;选中时段则高亮命中者。
 function renderWcSpots(start, end, now) {
   const box = $('#wc-spots'); if (!box) return;
@@ -748,8 +761,9 @@ function renderWcSpots(start, end, now) {
         + `<div class="wc-spot-name">${escapeHtml(s[0])}</div>`
         + `<div class="wc-spot-sub muted">${escapeHtml(s[1])} · ${escapeHtml(s[3])}</div>`
         + `<div class="wc-spot-note muted">${escapeHtml(s[4])}</div>`
-        + `<a class="wc-spot-geo" href="https://www.google.com/maps?q=${s[5]},${s[6]}" target="_blank" rel="noopener">📍 ${geo}</a>`
-        + `</div>`;
+        + `<div class="wc-spot-foot"><a class="wc-spot-geo" href="https://www.google.com/maps?q=${s[5]},${s[6]}" target="_blank" rel="noopener">📍 ${geo}</a>`
+        + (wcActive ? `<span class="wc-spot-you muted" title="你的当地时间(该地点处于所选时段时)"><span class="dia">✦</span> ${wcUserWindow(c.offset, start, end)}</span>` : '')
+        + `</div></div>`;
     }).join('');
 }
 function setupWorldClock() {
@@ -758,12 +772,19 @@ function setupWorldClock() {
   let opts = '';
   for (let i = 0; i < 24; i++) opts += `<option value="${i}">${wcPad(i)}:00</option>`;
   startSel.innerHTML = opts; endSel.innerHTML = opts;
-  startSel.value = '4'; endSel.value = '7'; // pre-filled (= the 4–7 example), inactive until changed
-  const activate = () => { wcActive = true; if (allBtn) allBtn.classList.remove('active'); renderWorldClock(); };
+  // restore last choice (range + mode) from localStorage; fall back to the 4–7 example
+  let savedWc = {}; try { savedWc = JSON.parse(localStorage.getItem('wc-range') || '{}'); } catch (e) {}
+  startSel.value = String(savedWc.start != null ? savedWc.start : 4);
+  endSel.value = String(savedWc.end != null ? savedWc.end : 7);
+  const saveWc = () => { try { localStorage.setItem('wc-range', JSON.stringify({ mode: wcActive ? 'range' : 'all', start: +startSel.value, end: +endSel.value })); } catch (e) {} };
+  const dimWc = () => [startSel, endSel].forEach(s => s.classList.toggle('wc-off-dim', !wcActive));
+  const activate = () => { wcActive = true; if (allBtn) allBtn.classList.remove('active'); dimWc(); saveWc(); renderWorldClock(); };
   startSel.addEventListener('change', activate);
   endSel.addEventListener('change', activate);
-  if (allBtn) allBtn.addEventListener('click', () => { wcActive = false; allBtn.classList.add('active'); renderWorldClock(); });
-  wcActive = false; if (allBtn) allBtn.classList.add('active'); // default: 显示全部,最早→最晚
+  if (allBtn) allBtn.addEventListener('click', () => { wcActive = false; allBtn.classList.add('active'); dimWc(); saveWc(); renderWorldClock(); });
+  wcActive = (savedWc.mode === 'range'); // restore mode (default = 全部时段)
+  if (allBtn) allBtn.classList.toggle('active', !wcActive);
+  dimWc();
   renderWorldClock();
   // tick so times/groups shift as the minute rolls — only while the clock view is open
   setInterval(() => {
@@ -814,7 +835,10 @@ async function init() {
   renderCalendar();
   renderRotations();
   // make the static ranking-panel sprites clickable → Pokémon GO Hub DB
-  document.querySelectorAll('[data-rank-panel]').forEach(linkifySprites);
+  // auto-link every Pokémon sprite the agent renders (rankings, rotations,
+  // free-form notes, …) → hub. Calendar grid + 长期 band are excluded inside
+  // linkifySprites (their icons open the in-page drawer instead).
+  linkifySprites(document.body);
 }
 
 document.addEventListener('DOMContentLoaded', init);

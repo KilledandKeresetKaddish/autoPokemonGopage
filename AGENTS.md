@@ -287,10 +287,12 @@ read before you write, as always.
   **Exception — rotation Mega segments:** keep `id` = the **base** dex (matching that boss's
   `events.json` entry) and use the `"sprite"` override for the mega look; a mega-form `id` there breaks
   the day-icon → raid-event link (see the rotations.json schema note below).
-- **Clickable sprites → Hub DB.** Every Pokémon sprite the site renders (calendar drawer, 长期 band,
-  weekly rotations, ranking panels) is auto-linked to `https://db.pokemongohub.net/pokemon/<id>`. A base
-  `id` only links to the base page, so for a **form** add an optional **`hub`** slug on that
-  `pokemon[]` / `counters[]` / rotation entry to point at the exact form page: `"hub": "212-Mega"` ·
+- **Clickable sprites → Hub DB (automatic).** Every Pokémon sprite the site renders — event drawer,
+  weekly rotations, all ranking panels, the free-form notes — is **auto-linked** to
+  `https://db.pokemongohub.net/pokemon/<id>` by `app.js`; you don't hand-write `<a>` tags. (Only the
+  **calendar grid day-icons + 长期 band** are left un-linked, because their icons open the in-page drawer.)
+  A base `id` only links to the base page, so for a **form** add an optional **`hub`** slug on that
+  `pokemon[]` / `counters[]` / rotation-segment entry to hit the exact form page: `"hub": "212-Mega"` ·
   `"150-Mega_Y"` · `"77-Galarian"` · `"105-Alolan"` (id `-Form`, `_` for X/Y). In the **static** ranking
   HTML put the same on the `<img>` as `data-hub="212-Mega"`; plain base-id sprites need nothing.
 - `counters`: best raid/团战 counters (`id` for the sprite + 简体中文 `name` + optional `fast`/`charged`

@@ -390,6 +390,10 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   border:1px solid var(--gold-line);border-radius:8px;padding:.32rem .55rem;font-size:1rem;cursor:pointer;
   transition:border-color .15s,background .15s;}
 .wc-field select:hover{border-color:var(--gold);background:rgba(var(--gold-rgb),.1);}
+.wc-field select.wc-off-dim{opacity:.5;} /* 全部时段 时起始/结束不生效 → 视觉变灰 */
+/* readable dropdown options (browser popup): dark bg + light text, clear selected */
+.wc-field select option{background:#241a12;color:#f1e7d3;}
+.wc-field select option:checked{background:rgba(var(--gold-rgb),.42);color:#fff;}
 .wc-sep{color:var(--gold);font-weight:700;font-size:1.1rem;}
 .wc-summary{font-size:.82rem;}
 .wc-results{display:flex;flex-direction:column;gap:.8rem;}
@@ -450,6 +454,10 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .wc-spot.hot{border-color:var(--gold);background:rgba(var(--gold-rgb),.1);
   box-shadow:0 0 0 1px var(--gold), 0 0 16px rgba(var(--gold-rgb),.4);}
 .wc-spot.dim{opacity:.5;}
+.wc-spot-foot{display:flex;align-items:center;justify-content:space-between;gap:.4rem;flex-wrap:wrap;margin-top:.34rem;}
+.wc-spot-foot .wc-spot-geo{margin-top:0;}
+.wc-spot-you{font-size:.66rem;color:var(--gold-dim);white-space:nowrap;}
+.wc-spot-you .dia{color:var(--gold);font-size:.66rem;margin-right:.12em;}
 
 /* ---------- Footer ---------- */
 .site-footer{position:relative;z-index:1;text-align:center;padding:1.6rem 1rem 2.2rem;}

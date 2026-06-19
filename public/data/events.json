@@ -798,6 +798,7 @@
         "id": 212,
         "name": "巨钳螳螂",
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10046.png",
+        "hub": "212-Mega",
         "shiny": true
       }
     ],
@@ -844,6 +845,7 @@
         "id": 18,
         "name": "大比鸟",
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10073.png",
+        "hub": "18-Mega",
         "shiny": true
       }
     ],
