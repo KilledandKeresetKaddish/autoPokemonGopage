@@ -423,14 +423,14 @@
   },
   {
     "id": "flying-taxi-2026",
-    "name": "飞行计程车",
+    "name": "飞行计程车:怒鹦哥登场",
     "type": "event",
     "heading": "Event",
     "start": "2026-06-23T10:00:00",
     "end": "2026-06-29T20:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-06-23-flying-taxi-2026/flying-taxi-2026.jpg",
     "link": "https://leekduck.com/events/flying-taxi-2026/",
-    "summary": "「飞行计程车」活动:飞行系与相关宝可梦野外增加,搭配限时主题任务。",
+    "summary": "「飞行计程车」活动:怒鹦哥(Squawkabilly)首次登场,共四种羽色形态;飞行系宝可梦野外增加,并配套 GO 通行证:飞行计程车 进度轨与限时实地调查。",
     "links": [
       {
         "label": "LeekDuck",
@@ -442,7 +442,57 @@
       }
     ],
     "bonuses": [
-      ":flying: 飞行系宝可梦增加出现"
+      ":spawn: 飞行系宝可梦野外增加出现",
+      ":candy: GO 通行证 Rank 10 起:捕捉糖果 ×2",
+      ":stardust: GO 通行证 Rank 20 起:击败火箭队获得更多星尘"
+    ],
+    "pokemon": [
+      { "name": "怒鹦哥", "id": 931, "shiny": false },
+      { "name": "咕咕", "id": 163, "shiny": true },
+      { "name": "稚山雀", "id": 821, "shiny": true },
+      { "name": "蓝鸦", "id": 822, "shiny": true },
+      { "name": "勇士雄鹰", "id": 628, "shiny": true, "hub": "628-Hisuian" },
+      { "name": "下石鸟", "id": 962, "shiny": true },
+      { "name": "青绵鸟", "id": 333, "shiny": true },
+      { "name": "姆克儿", "id": 396, "shiny": true },
+      { "name": "秃鹰丫头", "id": 629, "shiny": true }
+    ],
+    "sections": [
+      {
+        "title": "怒鹦哥四种羽色形态",
+        "items": [
+          "黄色羽毛:全球出现",
+          "白色羽毛:全球出现(野外亦有机会)",
+          "绿色羽毛:东半球出现",
+          "蓝色羽毛:西半球出现",
+          "形态依你所在地区而定"
+        ]
+      },
+      {
+        "title": "团战与野外",
+        "items": [
+          ":raid: 1★ 团战:青绵鸟、姆克儿、秃鹰丫头",
+          ":raid: 3★ 团战:洗翠勇士雄鹰、蓝鸦、下石鸟",
+          ":spawn: 野外:咕咕、稚山雀,偶遇白色羽毛怒鹦哥"
+        ]
+      },
+      {
+        "title": "GO 通行证:飞行计程车",
+        "items": [
+          "6/23 10:00 自动获得免费 GO 通行证,可升级领取奖励",
+          "6/27 00:00 - 6/29 19:59,GO 点数无每日上限",
+          "奖励含:比比鸟、咕咕、秃鹰丫头、稚山雀 等遭遇 · 超级火箭队雷达 ×1 · 神秘零件与暗影碎片",
+          ":stardust: 奖励须于 7/1 19:59 前领取,逾期失效"
+        ]
+      },
+      {
+        "title": "付费内容",
+        "items": [
+          "GO 通行证 Deluxe:4.99 美元(升级奖励 + 更快进度)",
+          "GO 通行证 Deluxe + 6 段:6.99 美元(直达 Rank 7)",
+          "网页商店购买另赠:究极球 ×10、极巨复活 ×5、高级战斗通行证 ×1、极巨药水 ×5"
+        ]
+      }
     ]
   },
   {
@@ -630,7 +680,7 @@
     "end": "2026-06-29T20:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-06-25-flying-taxi-taken-over-2026/flying-taxi-taken-over-2026.jpg",
     "link": "https://leekduck.com/events/flying-taxi-taken-over-2026/",
-    "summary": "「飞行计程车:被接管」活动:火箭队相关内容与限时实地调查任务。",
+    "summary": "「飞行计程车:被接管」活动:火箭队接管城市,营救暗影莱希拉姆与多只新暗影宝可梦;火箭队更频繁出现,并有限时实地调查。",
     "links": [
       {
         "label": "LeekDuck",
@@ -642,7 +692,35 @@
       }
     ],
     "bonuses": [
-      "限时实地调查任务"
+      ":rocket: 火箭队更频繁现身于补给站与气球(约每 2 小时)",
+      ":rocket: 1★/3★ 暗影团战捕捉的宝可梦个体值范围更广",
+      "可用充能 TM 帮暗影宝可梦遗忘「揭空画龙点睛」(挤挤眼)"
+    ],
+    "pokemon": [
+      { "name": "莱希拉姆", "id": 643, "shiny": true },
+      { "name": "小海狮", "id": 86, "shiny": true },
+      { "name": "咕咕", "id": 163, "shiny": true },
+      { "name": "嗡蝠", "id": 714, "shiny": true },
+      { "name": "稚山雀", "id": 821, "shiny": true }
+    ],
+    "sections": [
+      {
+        "title": "营救暗影莱希拉姆",
+        "body": "推进 GO 通行证:飞行计程车 获得超级火箭队雷达,追查只能在补给站现身的绠里欧夫。可从 GO 通行证领取奖励至 7/1 19:59。暗影/净化宝可梦无法参与融合。"
+      },
+      {
+        "title": "新暗影宝可梦",
+        "items": [
+          ":rocket: 小海狮、咕咕、嗡蝠、稚山雀(击败火箭队小兵营救)",
+          "首领 Sierra / Cliff / Arlo 使用全新暗影阵容"
+        ]
+      },
+      {
+        "title": "实地调查任务",
+        "items": [
+          "完成主题任务可获:快速 TM ×1、充能 TM ×1、神秘零件 ×1"
+        ]
+      }
     ]
   },
   {
@@ -698,26 +776,54 @@
     "pokemon": [
       {
         "id": 227,
-        "name": "盔甲鸟",
-        "shiny": true
+        "name": "超级盔甲鸟",
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/official/full/227_mega_with_bg.webp",
+        "hub": "227-Mega"
       }
     ],
     "bonuses": [
       "✨ 闪光概率提升",
-      ":raid: 团战门票相关奖励"
+      ":raid: 转道馆拍照盘最多领 5 张免费团战入场券(合计 6 张)",
+      ":raid: 远程团战入场券上限提至 20(6/26 17:00 起)"
     ],
     "counters": [
       {
-        "id": 609,
-        "name": "水晶灯火灵",
-        "fast": "祸不单行",
-        "charged": "过热"
+        "id": 6,
+        "name": "超级喷火龙 Y",
+        "fast": "火焰旋涡",
+        "charged": "爆炸烈焰",
+        "hub": "6-Mega_Y"
       },
       {
-        "id": 257,
-        "name": "火焰鸡",
+        "id": 642,
+        "name": "震悘暗影雷电云",
+        "fast": "伏特替换",
+        "charged": "狂野雷电风暴",
+        "hub": "642-Therian_Shadow"
+      },
+      {
+        "id": 485,
+        "name": "暗影席多蓝恩",
         "fast": "火焰旋涡",
-        "charged": "过热"
+        "charged": "熔岩风暴",
+        "hub": "485-Shadow"
+      },
+      {
+        "id": 466,
+        "name": "暗影电击魔兽",
+        "fast": "电击",
+        "charged": "疯狂伏特",
+        "hub": "466-Shadow"
+      }
+    ],
+    "sections": [
+      {
+        "title": "限时调查与攻略",
+        "items": [
+          "活动期间提供限时调查，完成可获高级战斗通行证与哭哭羊遭遇",
+          ":raid: 超级盔甲鸟弱电系与火系，优先上机这两类攻手"
+        ]
       }
     ],
     "highlight": true
@@ -1886,23 +1992,54 @@
     "pokemon": [
       {
         "id": 26,
-        "name": "雷丘",
+        "name": "超级雷丘 X",
         "shiny": true,
         "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
-        "hub": "26-Mega"
+        "hub": "26-Mega_X"
+      },
+      {
+        "id": 26,
+        "name": "超级雷丘 Y",
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp",
+        "hub": "26-Mega_Y"
       }
     ],
     "bonuses": [
       "✨ 闪光概率提升",
       ":raid: 最多 5 张免费团战入场券",
-      ":candy: 击败可获得超级雷丘能量"
+      ":raid: 远程团战入场券上限提至 20(7/17 17:00 起)",
+      ":candy: 击败可获得超级雷丘能量(解锁 Mega 等级 1)"
     ],
     "counters": [
       {
-        "id": 383,
-        "name": "固拉多",
+        "id": 445,
+        "name": "超级烈咬陆鲨",
         "fast": "泥巴射击",
-        "charged": "地震"
+        "charged": "大地之力",
+        "hub": "445-Mega"
+      },
+      {
+        "id": 383,
+        "name": "原始固拉多",
+        "fast": "泥巴射击",
+        "charged": "地震",
+        "hub": "383-Primal"
+      },
+      {
+        "id": 530,
+        "name": "龙头地鼠",
+        "fast": "泥巴射击",
+        "charged": "十字镐"
+      }
+    ],
+    "sections": [
+      {
+        "title": "限时调查与攻略",
+        "items": [
+          "活动期间提供限时调查，完成可获高级战斗通行证与大钢蛇遭遇",
+          ":raid: 两种超级雷丘均弱地面系，优先凑齐地面攻手"
+        ]
       }
     ],
     "highlight": true

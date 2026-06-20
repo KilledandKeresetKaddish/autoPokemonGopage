@@ -1,5 +1,5 @@
 {
-  "month": "2026-07",
+  "month": "2026-06",
   "note": "5★ 与超级团战 Boss 每周三 10:00 轮换;传奇之路 7/6–7/10 期间改为每日轮换,日历角标显示当日 Boss(Max 团战每周轮换,时间以当地为准)。",
   "tracks": [
     {
@@ -379,14 +379,20 @@
           "end": "2026-07-12"
         },
         {
-          "name": "Mega Raichu",
-          "cn": "超级雷丘",
+          "name": "Mega Raichu X / Y",
+          "cn": "超级雷丘 X / Y",
           "pokemon": [
             {
               "id": 26,
-              "name": "雷丘",
+              "name": "超级雷丘 X",
               "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
-              "hub": "26-Mega"
+              "hub": "26-Mega_X"
+            },
+            {
+              "id": 26,
+              "name": "超级雷丘 Y",
+              "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp",
+              "hub": "26-Mega_Y"
             }
           ],
           "start": "2026-07-18",
