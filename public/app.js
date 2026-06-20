@@ -802,6 +802,7 @@ function renderWcSpots(start, end, now) {
     return { s, c };
   }).filter(x => x.c).sort((a, b) => b.c.offset - a.c.offset);
   box.innerHTML = '<div class="wc-spots-head"><span class="dia">◆</span><h3>精选地点</h3></div>'
+    + '<div class="wc-spots-scroll">'
     + rows.map(({ s, c }) => {
       const dd = c.dayDelta > 0 ? ' 次日' : (c.dayDelta < 0 ? ' 昨日' : '');
       const geo = `${s[5].toFixed(4)}, ${s[6].toFixed(4)}`;
@@ -817,7 +818,8 @@ function renderWcSpots(start, end, now) {
         + `<div class="wc-spot-foot"><a class="wc-spot-geo" href="https://www.google.com/maps?q=${s[5]},${s[6]}" target="_blank" rel="noopener">📍 ${geo}</a>`
         + (wcActive ? `<span class="wc-spot-you" title="你的当地时间(该地点处于所选时段时)"><span class="dia">✦</span> ${wcUserWindow(c.offset, start, end)}</span>` : '')
         + `</div></div>`;
-    }).join('');
+    }).join('')
+    + '</div>';
 }
 // 悬浮条:只列出当前命中所选时段的精选热点;未选时段 / 无命中 → 提示语。
 function renderWcPin(start, end, now) {
