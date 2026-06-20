@@ -33,10 +33,12 @@ body{
   font-family:var(--sans);
   line-height:1.5;
   -webkit-font-smoothing:antialiased;
+  /* layers top→bottom: corner glows · readability veil · tarot 背景图 · solid fallback */
   background:
     radial-gradient(1100px 620px at 14% -10%, rgba(123,84,196,.16), transparent 60%),
     radial-gradient(1000px 600px at 100% 0%, rgba(var(--gold-rgb),.14), transparent 55%),
-    linear-gradient(180deg, var(--bg) 0%, #08070c 75%);
+    linear-gradient(180deg, rgba(10,8,14,.55) 0%, rgba(10,8,14,.68) 55%, rgba(8,7,12,.8) 100%),
+    url("background.png") center / cover no-repeat var(--bg);
   background-attachment:fixed;
 }
 /* faint star texture + warm centre glow, behind everything */
