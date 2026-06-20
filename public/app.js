@@ -91,6 +91,11 @@ function hashColor(s) {
   return `hsl(${h}, 22%, 60%)`;
 }
 function dayDiff(a, b) { return Math.round((b - a) / 86400000); }
+// Step N calendar days from a LOCAL-midnight date, staying in the viewer's own
+// timezone. Adding raw 86400000ms drifts across DST (a fall-back day is 25h, so
+// the ms lands at 23:00 of the prior day and ymd() reads the wrong date) — so the
+// "today" highlight could land a day early. Building from Y/M/D+n is DST-safe.
+function addDays(base, n) { return new Date(base.getFullYear(), base.getMonth(), base.getDate() + n); }
 function catOf(ev) {
   const def = (state.categories && state.categories[ev.type]) || CATEGORY_DEFAULTS[ev.type];
   if (def) return resolveCat(def);
@@ -300,8 +305,8 @@ function renderCalendar() {
   for (let r = 0; r < 6; r++) {
     const rs = r * 7, re = rs + 6;
     // skip a trailing week that is entirely in another month
-    const startMon = new Date(gridStart.getTime() + rs * 86400000).getMonth();
-    const endMon = new Date(gridStart.getTime() + re * 86400000).getMonth();
+    const startMon = addDays(gridStart, rs).getMonth();
+    const endMon = addDays(gridStart, re).getMonth();
     if (r >= 4 && startMon !== state.calMonth && endMon !== state.calMonth) continue;
 
     const week = document.createElement('div');
@@ -315,7 +320,7 @@ function renderCalendar() {
 
     for (let c = 0; c < 7; c++) {
       const idx = rs + c;
-      const date = new Date(gridStart.getTime() + idx * 86400000);
+      const date = addDays(gridStart, idx);
       const inMonth = date.getMonth() === state.calMonth;
       const cell = document.createElement('div');
       cell.className = 'cal-day'
@@ -697,10 +702,23 @@ function wcInRange(h, start, end) {
   if (start === end) return h === start;
   return start < end ? (h >= start && h <= end) : (h >= start || h <= end);
 }
+// 本机当前时间 + 浏览器检测到的时区。随 renderWorldClock 的分钟 tick 一起刷新。
+function renderWcNow(now) {
+  const el = $('#wc-now'); if (!el) return;
+  let zone = '';
+  try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+  const wd = ['日', '一', '二', '三', '四', '五', '六'][now.getDay()];
+  el.innerHTML = `<span class="wc-now-label muted">你的当地时间</span>`
+    + `<span class="wc-now-time">${wcPad(now.getHours())}:${wcPad(now.getMinutes())}</span>`
+    + `<span class="wc-now-wd muted">周${wd}</span>`
+    + `<span class="wc-off">${wcFmtOffset(-now.getTimezoneOffset())}</span>`
+    + (zone ? `<span class="wc-now-zone muted">${escapeHtml(zone)}</span>` : '');
+}
 function renderWorldClock() {
   const startSel = $('#wc-start'), endSel = $('#wc-end'), box = $('#wc-results');
   if (!startSel || !endSel || !box) return;
   const start = +startSel.value, end = +endSel.value, now = new Date();
+  renderWcNow(now);
   // ----- 国家列表:按当前 UTC 偏移分组;不选时段=全部,选了则筛选;最早→最晚 -----
   const groups = new Map();
   WC_DATA.forEach(t => {
@@ -737,10 +755,11 @@ function renderWorldClock() {
 // 把"所选时段(以该精选地点的当地时间计)"换算成当前用户的本地时间窗口。用户时区取自
 // 浏览器;无法判断时回退到中国时间(UTC+8)。返回 "HH:MM–HH:MM"。
 function wcUserWindow(spotOffset, start, end) {
-  let uo = -new Date().getTimezoneOffset() / 60;
+  let uo = -new Date().getTimezoneOffset() / 60;   // 用户 UTC 偏移(小时)
   if (!isFinite(uo)) uo = 8;
+  const so = spotOffset / 60;                       // 地点 UTC 偏移(c.offset 是分钟 → 小时)
   const fmt = h => {
-    let mins = Math.round((h - spotOffset + uo) * 60);
+    let mins = Math.round((h - so + uo) * 60);
     mins = ((mins % 1440) + 1440) % 1440;
     return wcPad(Math.floor(mins / 60)) + ':' + wcPad(mins % 60);
   };
