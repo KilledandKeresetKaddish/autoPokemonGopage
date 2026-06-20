@@ -722,10 +722,11 @@ function wcFmtOffset(min) {
   const h = Math.floor(a / 60), m = a % 60;
   return 'UTC' + sign + h + (m ? ':' + wcPad(m) : '');
 }
-// Inclusive on both ends, hour granularity; wraps past midnight when start > end.
+// Half-open [start, end) on a 24h clock, hour granularity: 「结束」exclusive
+// (end may be 24 = 当日结束). Wraps past midnight when start > end; start === end → empty.
 function wcInRange(h, start, end) {
-  if (start === end) return h === start;
-  return start < end ? (h >= start && h <= end) : (h >= start || h <= end);
+  if (start === end) return false;
+  return start < end ? (h >= start && h < end) : (h >= start || h < end);
 }
 // 本机当前时间 + 浏览器检测到的时区。随 renderWorldClock 的分钟 tick 一起刷新。
 function renderWcNow(now) {
@@ -756,7 +757,7 @@ function renderWorldClock() {
   const total = arr.reduce((n, g) => n + g.items.length, 0);
   const sum = $('#wc-summary');
   if (sum) sum.textContent = wcActive
-    ? `当地 ${wcPad(start)}:00–${wcPad(end)}:59 · 命中 ${arr.length} 个时区 / ${total} 个地区`
+    ? `当地 ${wcPad(start)}:00–${wcPad(end)}:00 · 命中 ${arr.length} 个时区 / ${total} 个地区`
     : `全部时段 · ${arr.length} 个时区(最早 → 最晚)`;
   box.innerHTML = arr.length ? arr.map(g => {
     const dd = g.s.dayDelta > 0 ? ' <span class="wc-dd">次日</span>' : (g.s.dayDelta < 0 ? ' <span class="wc-dd">昨日</span>' : '');
@@ -826,7 +827,7 @@ function renderWcPin(start, end, now) {
     .sort((a, b) => b.c.offset - a.c.offset);
   let inner;
   if (!wcActive) inner = '<div class="wc-pin-empty">选择上方时段后,正处于该时段的热点会固定显示在这里。</div>';
-  else if (!hot.length) inner = `<div class="wc-pin-empty">当地 ${wcPad(start)}:00–${wcPad(end)}:59 暂无精选热点激活,试试相邻时段。</div>`;
+  else if (!hot.length) inner = `<div class="wc-pin-empty">当地 ${wcPad(start)}:00–${wcPad(end)}:00 暂无精选热点激活,试试相邻时段。</div>`;
   else inner = '<div class="wc-pin-row">' + hot.map(({ s, c }) =>
     `<div class="wc-pinchip"><img class="wc-flag" src="https://flagcdn.com/w40/${s[2]}.png" alt="" onerror="this.style.visibility='hidden'">`
     + `<span class="pc-time">${wcPad(c.h)}:${wcPad(c.m)}</span>`
@@ -841,8 +842,8 @@ function renderWcAxis(start, end, now) {
   let ticks = '';
   for (let i = 0; i <= 24; i += 3) ticks += `<div class="wc-axis-tick" style="left:${X(i / 24)}%"><i></i><span>${wcPad(i % 24)}</span></div>`;
   let bands = '';
-  if (wcActive) {
-    const segs = start <= end ? [[start, end + 1]] : [[start, 24], [0, end + 1]];
+  if (wcActive && start !== end) {
+    const segs = start < end ? [[start, end]] : [[start, 24], [0, end]];
     segs.forEach((sg, idx) => {
       const f0 = sg[0] / 24, f1 = sg[1] / 24;
       bands += `<div class="wc-axis-band" style="left:${(1 - f1) * 100}%;width:${(f1 - f0) * 100}%">`
@@ -863,13 +864,19 @@ function renderWcAxis(start, end, now) {
 function setupWorldClock() {
   const startSel = $('#wc-start'), endSel = $('#wc-end'), allBtn = $('#wc-all');
   if (!startSel || !endSel) return;
-  let opts = '';
-  for (let i = 0; i < 24; i++) opts += `<option value="${i}">${wcPad(i)}:00</option>`;
-  startSel.innerHTML = opts; endSel.innerHTML = opts;
+  let startOpts = '', endOpts = '';
+  for (let i = 0; i <= 23; i++) startOpts += `<option value="${i}">${wcPad(i)}:00</option>`;   // 起始 00:00–23:00
+  for (let i = 1; i <= 24; i++) endOpts += `<option value="${i}">${wcPad(i)}:00</option>`;       // 结束 01:00–24:00(独占;24:00 = 当日结束)
+  startSel.innerHTML = startOpts; endSel.innerHTML = endOpts;
   // restore last choice (range + mode) from localStorage; fall back to the 4–7 example
   let savedWc = {}; try { savedWc = JSON.parse(localStorage.getItem('wc-range') || '{}'); } catch (e) {}
-  startSel.value = String(savedWc.start != null ? savedWc.start : 4);
-  endSel.value = String(savedWc.end != null ? savedWc.end : 7);
+  let sStart = savedWc.start != null ? savedWc.start : 4;
+  let sEnd = savedWc.end != null ? savedWc.end : 7;
+  if (sEnd === 0) sEnd = 24;                                 // migrate legacy「0 = 午夜」→ 24
+  sStart = Math.min(Math.max(sStart | 0, 0), 23);
+  sEnd = Math.min(Math.max(sEnd | 0, 1), 24);
+  startSel.value = String(sStart);
+  endSel.value = String(sEnd);
   const saveWc = () => { try { localStorage.setItem('wc-range', JSON.stringify({ mode: wcActive ? 'range' : 'all', start: +startSel.value, end: +endSel.value })); } catch (e) {} };
   const dimWc = () => [startSel, endSel].forEach(s => s.classList.toggle('wc-off-dim', !wcActive));
   const activate = () => { wcActive = true; if (allBtn) allBtn.classList.remove('active'); dimWc(); saveWc(); renderWorldClock(); };
