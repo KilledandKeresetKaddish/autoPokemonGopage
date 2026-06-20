@@ -1,16 +1,16 @@
 {
-  "lastUpdated": "2026-06-20T03:45:00Z",
+  "lastUpdated": "2026-06-20T13:11:00Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-06-20T03:37:00Z",
-      "lastChecked": "2026-06-20T03:45:00Z",
+      "lastFetch": "2026-06-20T13:05:00Z",
+      "lastChecked": "2026-06-20T13:11:00Z",
       "status": "ok",
       "bytes": 60184,
-      "note": "LeekDuck JSON OK;6月下旬+7月+8月事件完整。本轮刷新无新增(discover.sh new: 本周期无新增)。"
+      "note": "LeekDuck JSON OK;6月下旬+7月+8月事件完整。本轮已补齐 8 月预告活动(孵化日/社区日/团战日/选择你的道路:毒与藤蔓/4 档 GBL,均为日期已定、主角待官方公布的占位)。discover.sh new 窗口仅覆盖本月+次月,8 月需手动从 raw feed 取。"
     },
     "raids": {
-      "lastFetch": "2026-06-20T03:37:00Z",
-      "lastChecked": "2026-06-20T03:45:00Z",
+      "lastFetch": "2026-06-20T13:05:00Z",
+      "lastChecked": "2026-06-20T13:11:00Z",
       "status": "ok",
       "bytes": 16037,
       "note": "当前团战未轮换:Necrozma 5★, Shadow Dialga 5★暗影, Mega Scizor 超级;3★/1★/暗影池匹配排行 Counter。下一次轮换 6/24(→纸御剑/铁火辉夜 + 超级大比鸟)。"
@@ -58,36 +58,36 @@
       "note": "Pokébase 交叉参考仍新鲜,本轮未刷新。"
     },
     "events-hub": {
-      "lastFetch": "2026-06-20T03:37:00Z",
-      "lastChecked": "2026-06-20T03:45:00Z",
+      "lastFetch": "2026-06-20T13:05:00Z",
+      "lastChecked": "2026-06-20T13:11:00Z",
       "status": "ok",
-      "bytes": 30694,
+      "bytes": 30695,
       "note": "Hub 事件索引 OK。注意:索引页不含周轮换表,轮换需 fetch.sh url 拉 june-2026-pokemon-go-events 文章(本轮 rotations 未变,沿用上轮已核对数据)。"
     },
     "events-pokebase": {
-      "lastFetch": "2026-06-20T03:37:00Z",
-      "lastChecked": "2026-06-20T03:45:00Z",
+      "lastFetch": "2026-06-20T13:05:00Z",
+      "lastChecked": "2026-06-20T13:11:00Z",
       "status": "ok",
-      "bytes": 29529,
+      "bytes": 29982,
       "note": "Pokébase 事件列表可用。"
     },
     "events-official": {
-      "lastFetch": "2026-06-20T03:37:00Z",
-      "lastChecked": "2026-06-20T03:45:00Z",
+      "lastFetch": "2026-06-20T13:05:00Z",
+      "lastChecked": "2026-06-20T13:11:00Z",
       "status": "ok",
       "bytes": 9930,
       "note": "官方新闻 OK。"
     }
   },
   "detailChecks": {
-    "checkedAt": "2026-06-20T04:55:00Z",
+    "checkedAt": "2026-06-20T13:11:00Z",
     "status": "ok",
-    "note": "每日源今晨(03:38Z)已刷新且仍新鲜,本轮未再刷新;discover.sh new 本周期无新增活动,当前团战 Boss 未轮换(6/24 才切)。events.json/rotations.json 结构与上轮一致,无需改动。本轮主要工作=执行 operator note:补齐当前团战 Counter 的 Mega Booster。"
+    "note": "每日源本轮(13:05Z)已刷新。当前团战 Boss 未轮换(6/24 才切),raids.json 与排行 Counter 一致。纠错复核:站内 events 日期全部与 feed 一致(0 mismatch);凉脊龙=Frigibax(996)、泪眼蜥=Sobble(816)、season-23 等关键名/id 经 pokeapi/gamemaster 核对无误。本轮新增工作=补齐 8 月活动 + 扩展 Mega Booster。"
   },
   "operatorNote": {
-    "checkedAt": "2026-06-20T04:55:00Z",
+    "checkedAt": "2026-06-20T13:11:00Z",
     "status": "done",
-    "note": "operator note:把当前团战 Counter 每个 boss 可用的 Mega 补齐(参照 Hub《Complete Mega Evolution Guide》,其中标注 Not Available 的也按已实装处理)。已完成:fetch.sh url 拉取该指南取得完整 Mega 名单(48 个 dex,含双形态 X/Y),Mega 属性以 gamemaster 核对、简体中文名以 pokeapi zh-hans 核对、形态精灵图 id 全部 curl 200 验证。对 18 个 live boss 逐一按『Mega 与 boss 共享属性』计算配对,按超级攻击力排序、每 boss 最多 6 只(.raid-mega 单行不换行,故设上限)。例:奈克洛兹玛(超能力)→ 超梦Y/X·胡地·拉帝欧斯·沙奈朵·艾路雷朵;岩狗狗/石丸子(岩石)→ 蒂安希·班基拉斯·化石翼龙。preflight+validate 均通过。"
+    "note": "operator note(2026-06-20 第二次):①纠错——以本轮 fetch 的 LeekDuck feed/PokeAPI/gamemaster 为准复核现有数据,events 日期 0 处不一致、关键简中名与 dex 均正确,无需改动。②补齐 8 月预告活动:从 raw feed 取 8 条(孵化日 8/8、社区日 8/16、团战日 8/22、选择你的道路:毒与藤蔓 8/11–8/17、4 档 GBL),LeekDuck 详情页目前仅有日期、无主角/加成,故按日期+类别建占位事件,summary 注明『待官方公布』,GBL 设 longTerm。③Mega Booster 扩容:每个 live boss 由最多 6 提升到最多 8(.raid-mega 3 列网格容 8),仍按『Mega 与 boss 共享属性』、按超级攻击力高→低排序。新纳入并经 db.pokemongohub.net 确认已实装的 Mega:超级快龙(149,f10281)、超级大食花(71,f10279)、超级乌贼王(687,db webp)、超级列阵兵(870,db webp)、超级阿勃梭鲁/雷电兽/冰鬼护/波士可多拉/七夕青鸟/大嘴娃/拉帝亚斯/暴雪王/勾魂眼。简中名经 pokeapi zh-hans 核对,form sprite id 全部 curl 200。岩石单属性 boss(岩狗狗/石丸子)同属性超级仅 3 个、墨海马水系 6 个、多边兽一般系 4 个——按实际数量列出,不硬凑。preflight+validate 均通过。"
   },
   "notes": {
     "correction_2026-06-19": {
