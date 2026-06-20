@@ -82,12 +82,13 @@
   "detailChecks": {
     "checkedAt": "2026-06-20T13:11:00Z",
     "status": "ok",
-    "note": "每日源本轮(13:05Z)已刷新。当前团战 Boss 未轮换(6/24 才切),raids.json 与排行 Counter 一致。纠错复核:站内 events 日期全部与 feed 一致(0 mismatch);凉脊龙=Frigibax(996)、泪眼蜥=Sobble(816)、season-23 等关键名/id 经 pokeapi/gamemaster 核对无误。本轮新增工作=补齐 8 月活动 + 扩展 Mega Booster。"
+    "note": "每日源本轮(13:05Z)已刷新。当前团战 Boss 未轮换(6/24 才切),raids.json 与排行 Counter 一致。纠错复核:站内 events 日期全部与 feed 一致(mega-mewtwo-y 为 GO Fest 派生子活动 7/12,已 fetch 活动页确认、非错误);凉脊龙=Frigibax(996)、泪眼蜥=Sobble(816)、season-23 等关键名/id 经 pokeapi/gamemaster 核对无误。本轮修复:PokeAPI mega-latias 小图(10062)上游损坏、渲染为 Latios,已改用 Hub DB 380_mega_with_bg.webp 兜底。"
   },
   "operatorNote": {
-    "checkedAt": "2026-06-20T13:11:00Z",
+    "checkedAt": "2026-06-20T14:35:00Z",
     "status": "done",
-    "note": "operator note(2026-06-20 第二次):①纠错——以本轮 fetch 的 LeekDuck feed/PokeAPI/gamemaster 为准复核现有数据,events 日期 0 处不一致、关键简中名与 dex 均正确,无需改动。②补齐 8 月预告活动:从 raw feed 取 8 条(孵化日 8/8、社区日 8/16、团战日 8/22、选择你的道路:毒与藤蔓 8/11–8/17、4 档 GBL),LeekDuck 详情页目前仅有日期、无主角/加成,故按日期+类别建占位事件,summary 注明『待官方公布』,GBL 设 longTerm。③Mega Booster 扩容:每个 live boss 由最多 6 提升到最多 8(.raid-mega 3 列网格容 8),仍按『Mega 与 boss 共享属性』、按超级攻击力高→低排序。新纳入并经 db.pokemongohub.net 确认已实装的 Mega:超级快龙(149,f10281)、超级大食花(71,f10279)、超级乌贼王(687,db webp)、超级列阵兵(870,db webp)、超级阿勃梭鲁/雷电兽/冰鬼护/波士可多拉/七夕青鸟/大嘴娃/拉帝亚斯/暴雪王/勾魂眼。简中名经 pokeapi zh-hans 核对,form sprite id 全部 curl 200。岩石单属性 boss(岩狗狗/石丸子)同属性超级仅 3 个、墨海马水系 6 个、多边兽一般系 4 个——按实际数量列出,不硬凑。preflight+validate 均通过。"
+    "note": "operator note(2026-06-20 第三次):①Latias 图标纠错——经 fetch 核实 PokeAPI 小图 sprites/pokemon/10062.png(latias-mega)【上游损坏】:与 10063.png(latios-mega)逐像素完全相同(ImageChops diff bbox=None)、红色像素=0,实际渲染为蓝色超级拉帝欧斯,这正是 operator 报告的『latias 图标用错成 latios』。other/home/10062.png 同样偏蓝且与 base 380(红)不符。改用 AGENTS.md 许可的 Hub DB 兜底图 https://db.pokemongohub.net/images/official/full/380_mega_with_bg.webp(经 db.pokemongohub.net/pokemon/380 Latias 页确认其 Mega 用此文件,HTTP 200 image/webp),替换 rankings-raid 内两处(奈克洛兹玛『共享超能力』段、赤面龙『共享龙』段)。10063→381→超级拉帝欧斯 各处保持一致、无误。②全量纠错复核(基于本轮 fetch):discover.sh new 无新增;52 条 events 与 LeekDuck feed 链接逐一比对,唯一『日期不一致』为 mega-mewtwo-y(站 7/12 vs feed 父活动 7/11)——经 fetch GO Fest 页确认是派生子活动,周六超梦X(7/11)/周日超梦Y(7/12),站内日期正确,属误报。preflight(仅既有 24 日双 Boss long-chip WARN)+validate 均通过。",
+    "prevNote_2nd": "operator note(2026-06-20 第二次):①纠错——以本轮 fetch 的 LeekDuck feed/PokeAPI/gamemaster 为准复核现有数据,events 日期 0 处不一致、关键简中名与 dex 均正确,无需改动。②补齐 8 月预告活动:从 raw feed 取 8 条(孵化日 8/8、社区日 8/16、团战日 8/22、选择你的道路:毒与藤蔓 8/11–8/17、4 档 GBL),LeekDuck 详情页目前仅有日期、无主角/加成,故按日期+类别建占位事件,summary 注明『待官方公布』,GBL 设 longTerm。③Mega Booster 扩容:每个 live boss 由最多 6 提升到最多 8(.raid-mega 3 列网格容 8),仍按『Mega 与 boss 共享属性』、按超级攻击力高→低排序。新纳入并经 db.pokemongohub.net 确认已实装的 Mega:超级快龙(149,f10281)、超级大食花(71,f10279)、超级乌贼王(687,db webp)、超级列阵兵(870,db webp)、超级阿勃梭鲁/雷电兽/冰鬼护/波士可多拉/七夕青鸟/大嘴娃/拉帝亚斯/暴雪王/勾魂眼。简中名经 pokeapi zh-hans 核对,form sprite id 全部 curl 200。岩石单属性 boss(岩狗狗/石丸子)同属性超级仅 3 个、墨海马水系 6 个、多边兽一般系 4 个——按实际数量列出,不硬凑。preflight+validate 均通过。"
   },
   "notes": {
     "correction_2026-06-19": {
