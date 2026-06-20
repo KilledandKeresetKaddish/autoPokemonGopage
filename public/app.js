@@ -500,7 +500,8 @@ function renderLongTerm(list) {
 }
 
 // Weekly rotation tracks (5★ / Mega / Max) for the current month, from
-// data/rotations.json. Stacked card-per-track list — readable at any width.
+// data/rotations.json. Three-column board (one column per track); the segment
+// whose date window contains today is highlighted as 进行中.
 function renderRotations() {
   const box = $('#rotations'); if (!box) return;
   const note = $('#rot-note');
@@ -512,18 +513,26 @@ function renderRotations() {
     box.innerHTML = '<p class="muted">本月轮换将在每日更新后显示。</p>';
     return;
   }
+  // 三栏并列:每条轨道一列,列内纵向列出周段;当前日期落在 [start,end] 内的段高亮。
+  // 「进行中」与日历同口径:parseDay 取本地零点,结束日含当天(inclusive)。
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const board = document.createElement('div');
+  board.className = 'rot-board';
   tracks.forEach(tr => {
     const color = tr.color || '#b08a44';
-    const card = document.createElement('div');
-    card.className = 'rot-track';
+    const col = document.createElement('div');
+    col.className = 'rot-col';
+    col.style.setProperty('--c', color);
     const head = document.createElement('div');
-    head.className = 'rot-track-head';
-    head.innerHTML = `<i style="background:${escapeHtml(color)}"></i><span>${escapeHtml(tr.label || '')}</span>`;
-    card.appendChild(head);
+    head.className = 'rot-col-head';
+    head.innerHTML = `<span class="rot-dot"></span><span class="rot-col-name">${escapeHtml(tr.label || '')}</span>`;
+    col.appendChild(head);
     (tr.segments || []).forEach(seg => {
-      const row = document.createElement('div');
-      row.className = 'rot-seg';
-      row.style.setProperty('--c', color);
+      const sd = parseDay(seg.start);
+      const ed = parseDay(seg.end) || sd;
+      const active = !!sd && sd <= today && today <= ed;
+      const cell = document.createElement('div');
+      cell.className = 'rot-seg' + (active ? ' now' : '');
       const mons = (seg.pokemon || []).map(p => {
         const sp = monSprite(p);
         if (!sp) return '';
@@ -532,11 +541,14 @@ function renderRotations() {
       const range = (seg.start || seg.end)
         ? `<span class="rot-range">${escapeHtml(fmtDateShort(seg.start))}${seg.end && seg.end !== seg.start ? '–' + escapeHtml(fmtDateShort(seg.end)) : ''}</span>`
         : '';
-      row.innerHTML = `${mons}<span class="rot-name">${escapeHtml(seg.cn || seg.name || '')}</span>${range}`;
-      card.appendChild(row);
+      cell.innerHTML = `<div class="rot-spr">${mons}</div>`
+        + `<div class="rot-txt"><span class="rot-name">${escapeHtml(seg.cn || seg.name || '')}</span>${range}</div>`
+        + (active ? '<span class="rot-now">进行中</span>' : '');
+      col.appendChild(cell);
     });
-    box.appendChild(card);
+    board.appendChild(col);
   });
+  box.appendChild(board);
 }
 
 /* Inline resource icons. Tokens map to the actual asset filenames in
@@ -802,6 +814,7 @@ function renderWcSpots(start, end, now) {
     return { s, c };
   }).filter(x => x.c).sort((a, b) => b.c.offset - a.c.offset);
   box.innerHTML = '<div class="wc-spots-head"><span class="dia">◆</span><h3>精选地点</h3></div>'
+    + '<div class="wc-spots-scroll">'
     + rows.map(({ s, c }) => {
       const dd = c.dayDelta > 0 ? ' 次日' : (c.dayDelta < 0 ? ' 昨日' : '');
       const geo = `${s[5].toFixed(4)}, ${s[6].toFixed(4)}`;
@@ -817,7 +830,8 @@ function renderWcSpots(start, end, now) {
         + `<div class="wc-spot-foot"><a class="wc-spot-geo" href="https://www.google.com/maps?q=${s[5]},${s[6]}" target="_blank" rel="noopener">📍 ${geo}</a>`
         + (wcActive ? `<span class="wc-spot-you" title="你的当地时间(该地点处于所选时段时)"><span class="dia">✦</span> ${wcUserWindow(c.offset, start, end)}</span>` : '')
         + `</div></div>`;
-    }).join('');
+    }).join('')
+    + '</div>';
 }
 // 悬浮条:只列出当前命中所选时段的精选热点;未选时段 / 无命中 → 提示语。
 function renderWcPin(start, end, now) {
