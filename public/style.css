@@ -141,7 +141,10 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   border-bottom:1px solid var(--line-soft);}
 .cal-week:last-child{border-bottom:0;}
 
-.cal-day{position:relative;min-height:var(--cell-min);
+/* min-width:0 pins every column to an exact 1fr — without it a grid item's
+   default min-width:auto (=min-content) lets a wide cell (long chip, raid-icon
+   row) stretch its column and drift the day grid off the weekday header. */
+.cal-day{position:relative;min-width:0;min-height:var(--cell-min);
   border-right:1px solid var(--line-soft);padding:5px 6px 7px;display:flex;flex-direction:column;}
 .cal-day:nth-child(7){border-right:0;}
 .cal-day.out{background:repeating-linear-gradient(135deg,rgba(255,255,255,.014) 0 8px,rgba(255,255,255,0) 8px 16px);}
@@ -397,6 +400,14 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .wc-field select option:checked{background:rgba(var(--gold-rgb),.42);color:#fff;}
 .wc-sep{color:var(--gold);font-weight:700;font-size:1.1rem;}
 .wc-summary{font-size:.82rem;}
+/* 本机当前时间(浏览器检测时区)— 时段筛选面板内的实时读数 */
+.wc-now{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem .7rem;margin-top:.7rem;
+  padding:.45rem .85rem;background:rgba(var(--gold-rgb),.07);
+  border:1px solid var(--gold-line);border-radius:12px;}
+.wc-now-label{font-size:.82rem;}
+.wc-now-time{font-family:var(--display);font-weight:800;font-size:1.3rem;color:var(--h1);letter-spacing:.02em;}
+.wc-now-wd{font-size:.82rem;}
+.wc-now-zone{font-size:.8rem;letter-spacing:.01em;}
 .wc-results{display:flex;flex-direction:column;gap:.8rem;}
 .wc-layout{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1rem;align-items:start;}
 @media (min-width:860px){.wc-layout{grid-template-columns:minmax(0,1fr) 332px;}}
