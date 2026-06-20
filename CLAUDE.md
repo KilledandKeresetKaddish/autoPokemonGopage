@@ -50,7 +50,7 @@ Containers: `.panel` `.panel-head` `.note-grid` `.callout`
 Lists: `.rank-list` `.rank-item` `.pill` `.pillrow` `.badge` `.btn`
 Pokemon: `.mon-icon` `.mon-row` `.mon` `.shiny` `.tier` (`.tier-S` `.tier-A` `.tier-B` `.tier-C`)
 Sprites/icons: `<img class="spr">` `<img class="ico">` `<img class="ico-lg">`
-Raid blocks: `.raid-block` `.raid-boss` `.boss-icon` `.raid-mega` `.rank-list.mini`
+Raid blocks: `.raid-wall` `.raid-block` `.raid-boss` `.boss-icon` `.binfo` `.btop` `.raid-mega` `.rank-list.mini`
 
 ### Testing
 

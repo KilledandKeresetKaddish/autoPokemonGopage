@@ -340,39 +340,57 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .tier-B{background:linear-gradient(135deg,#8b9bbd,#6f86ba);color:#15130b;}
 .tier-C{background:linear-gradient(135deg,#a39a86,#857c69);color:#15130b;}
 
-/* current-raid counters (rankings-raid region): a big boss header above a
-   compact counter list, so the boss reads larger than its counters. */
-.raid-block{margin:.2rem 0 1rem;}
-.raid-boss{display:flex;align-items:center;gap:.75rem;margin:.1rem 0 .5rem;
-  padding:.5rem .75rem;background:var(--panel2);border:1px solid var(--gold-line);
-  border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.3);}
-.raid-boss .boss-icon{width:76px;height:76px;object-fit:contain;flex:none;
-  background:rgba(var(--gold-rgb),.08);border:1px solid var(--line);border-radius:12px;
-  image-rendering:pixelated;filter:drop-shadow(0 2px 3px rgba(0,0,0,.55));}
-.raid-boss strong{color:var(--h1);font-family:var(--serif);font-size:1.2rem;letter-spacing:.03em;}
-.raid-boss .badge{margin-right:.45rem;font-size:.74rem;padding:.1rem .55rem;vertical-align:.08em;}
-.raid-boss .meta{color:var(--muted);font-size:.82rem;margin-top:.2rem;}
-/* compact counter list under a boss header — smaller sprites than the tier lists */
-.rank-list.mini{gap:.4rem;}
-.rank-list.mini .rank-item{padding:.34rem .6rem;gap:.55rem;}
-.rank-list.mini .rank-item::before{inset:4px;}
-.rank-list.mini .rank-item .mon-icon{width:38px;height:38px;}
-.rank-list.mini .rank-item strong{font-size:.98rem;}
-.rank-list.mini .rank-item .meta{font-size:.8rem;}
-/* 当前团战: boss 头右侧的「Mega 加成」内联区(用 boss 右侧空白),+ 属性图标 */
-.raid-boss{flex-wrap:wrap;}
-.raid-mega{margin-left:auto;display:flex;align-items:center;gap:.4rem;align-self:center;
-  padding:.28rem .5rem;border:1px solid rgba(var(--gold-rgb),.18);border-radius:10px;
-  background:rgba(var(--gold-rgb),.05);}
-.raid-mega .lbl{font-family:var(--display);font-size:.62rem;letter-spacing:.16em;
-  color:var(--gold-dim);text-transform:uppercase;}
-.raid-mega img{width:40px;height:40px;object-fit:contain;flex:none;
-  background:rgba(var(--gold-rgb),.08);border:1px solid var(--line);border-radius:8px;
-  image-rendering:pixelated;}
+/* ===== 当前团战 Counter(rankings-raid)· 卡片墙 D2 ===== */
+/* 外层墙:一行 3 张卡 */
+.raid-wall{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;align-items:start;margin-top:.4rem;}
+
+/* 单卡 */
+.raid-block{margin:0;display:flex;flex-direction:column;gap:.3rem;
+  background:var(--panel);border:1px solid var(--gold-line);border-radius:14px;
+  padding:.5rem .65rem .45rem;box-shadow:0 10px 24px rgba(0,0,0,.3);}
+
+/* boss 头:左 = 图标 + 身份;右 = Mega 3 列网格 */
+.raid-boss{display:flex;align-items:flex-start;gap:.55rem;margin:0;padding:0 0 .4rem;
+  background:none;border:0;border-bottom:1px solid var(--line);border-radius:0;box-shadow:none;flex-wrap:nowrap;}
+.raid-boss .boss-icon{width:50px;height:50px;flex:none;object-fit:contain;image-rendering:pixelated;
+  background:rgba(var(--gold-rgb),.08);border:1px solid var(--line);border-radius:10px;
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.5));}
+.raid-boss .binfo{min-width:0;display:flex;flex-direction:column;gap:.14rem;}
+.raid-boss .btop{display:flex;align-items:center;gap:.4rem;}
+.raid-boss strong{color:var(--h1);font-family:var(--serif);font-size:1.04rem;letter-spacing:.03em;}
+.raid-boss .badge{font-size:.7rem;padding:.08rem .5rem;vertical-align:0;margin:0;}
+.raid-boss .meta{color:var(--muted);font-size:.8rem;margin:0;display:flex;align-items:center;flex-wrap:wrap;gap:.05rem;}
+
+/* 头右 Mega:3 列网格,6–8 个 → 最多 3 行;最省横向空间 */
+.raid-mega{margin-left:auto;flex:none;display:grid;grid-template-columns:repeat(3,28px);gap:.24rem;
+  align-content:start;padding:0;border:0;background:none;}
+.raid-mega .lbl{display:none;}                 /* 头右不放文字标,省宽 */
+.raid-mega img{width:28px;height:28px;object-fit:contain;image-rendering:pixelated;flex:none;
+  background:rgba(var(--gold-rgb),.08);border:1px solid var(--line);border-radius:6px;
+  transition:transform .12s,border-color .12s;}
+.raid-mega img:hover{transform:scale(1.22);border-color:var(--gold);position:relative;z-index:2;}
+
+/* counter:去边框,细线分隔表格行,招式右对齐 */
+.rank-list.mini{display:flex;flex-direction:column;gap:0;}
+.rank-list.mini .rank-item{display:flex;align-items:center;gap:.5rem;min-width:0;
+  background:none;border:0;border-bottom:1px solid var(--line-soft);border-radius:0;
+  padding:.28rem .05rem;box-shadow:none;}
+.rank-list.mini .rank-item::before{display:none;}
+.rank-list.mini .rank-item:last-child{border-bottom:0;}
+.rank-list.mini .rank-item .mon-icon{width:32px;height:32px;flex:none;
+  background:none;border:0;border-radius:6px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5));}
+.rank-list.mini .rank-item strong{color:var(--h1);font-family:var(--serif);font-size:.92rem;letter-spacing:.02em;flex:none;}
+.rank-list.mini .rank-item .meta{margin-left:auto;color:var(--muted);font-size:.74rem;white-space:nowrap;
+  display:flex;align-items:center;gap:.1rem;}
+/* 属性图标尺寸(boss 弱点行 + counter 招式行沿用) */
 .raid-boss .meta .ico,.rank-item .meta .ico{width:1.2em;height:1.2em;vertical-align:-.24em;margin:0 .05em;}
-/* clickable sprite → Pokémon GO Hub DB; wrap must not disturb flex sizing */
+
+/* 可点击精灵 → Hub DB(沿用) */
 .spr-link{display:inline-flex;flex:none;line-height:0;text-decoration:none;border:0;border-radius:inherit;cursor:pointer;}
 .spr-link:hover{filter:brightness(1.12);}
+
+@media (max-width:900px){ .raid-wall{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media (max-width:560px){ .raid-wall{grid-template-columns:1fr;} }
 
 /* ---------- Free-form synthesis utilities (本月看点 / 本期推荐) ----------
    Whitelisted building blocks the daily agent may use inside the
