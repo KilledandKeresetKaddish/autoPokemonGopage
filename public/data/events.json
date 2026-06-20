@@ -447,15 +447,52 @@
       ":stardust: GO 通行证 Rank 20 起:击败火箭队获得更多星尘"
     ],
     "pokemon": [
-      { "name": "怒鹦哥", "id": 931, "shiny": false },
-      { "name": "咕咕", "id": 163, "shiny": true },
-      { "name": "稚山雀", "id": 821, "shiny": true },
-      { "name": "蓝鸦", "id": 822, "shiny": true },
-      { "name": "勇士雄鹰", "id": 628, "shiny": true, "hub": "628-Hisuian" },
-      { "name": "下石鸟", "id": 962, "shiny": true },
-      { "name": "青绵鸟", "id": 333, "shiny": true },
-      { "name": "姆克儿", "id": 396, "shiny": true },
-      { "name": "秃鹰丫头", "id": 629, "shiny": true }
+      {
+        "name": "怒鹦哥",
+        "id": 931,
+        "shiny": false
+      },
+      {
+        "name": "咕咕",
+        "id": 163,
+        "shiny": true
+      },
+      {
+        "name": "稚山雀",
+        "id": 821,
+        "shiny": true
+      },
+      {
+        "name": "蓝鸦",
+        "id": 822,
+        "shiny": true
+      },
+      {
+        "name": "勇士雄鹰",
+        "id": 628,
+        "shiny": true,
+        "hub": "628-Hisuian"
+      },
+      {
+        "name": "下石鸟",
+        "id": 962,
+        "shiny": true
+      },
+      {
+        "name": "青绵鸟",
+        "id": 333,
+        "shiny": true
+      },
+      {
+        "name": "姆克儿",
+        "id": 396,
+        "shiny": true
+      },
+      {
+        "name": "秃鹰丫头",
+        "id": 629,
+        "shiny": true
+      }
     ],
     "sections": [
       {
@@ -697,11 +734,31 @@
       "可用充能 TM 帮暗影宝可梦遗忘「揭空画龙点睛」(挤挤眼)"
     ],
     "pokemon": [
-      { "name": "莱希拉姆", "id": 643, "shiny": true },
-      { "name": "小海狮", "id": 86, "shiny": true },
-      { "name": "咕咕", "id": 163, "shiny": true },
-      { "name": "嗡蝠", "id": 714, "shiny": true },
-      { "name": "稚山雀", "id": 821, "shiny": true }
+      {
+        "name": "莱希拉姆",
+        "id": 643,
+        "shiny": true
+      },
+      {
+        "name": "小海狮",
+        "id": 86,
+        "shiny": true
+      },
+      {
+        "name": "咕咕",
+        "id": 163,
+        "shiny": true
+      },
+      {
+        "name": "嗡蝠",
+        "id": 714,
+        "shiny": true
+      },
+      {
+        "name": "稚山雀",
+        "id": 821,
+        "shiny": true
+      }
     ],
     "sections": [
       {
@@ -2160,5 +2217,177 @@
     "bonuses": [
       ":candy: 转移糖果 ×2"
     ]
+  },
+  {
+    "id": "gbl-forever-forward_ultra-league_weather-cup-great-league-edition",
+    "name": "高级联赛 · 天气杯(超级联赛规则)",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-08-04T20:00:00Z",
+    "end": "2026-08-11T20:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/go-battle-league-ultra-league-machamp-swampert.jpg",
+    "link": "https://leekduck.com/events/gbl-forever-forward_ultra-league_weather-cup-great-league-edition/",
+    "summary": "GO 对战联盟:高级联赛与天气杯(超级联赛规则,CP 上限 1500)开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-forever-forward_ultra-league_weather-cup-great-league-edition/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-forever-forward/"
+      }
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "hatch-day-august-2026",
+    "name": "孵化日(8 月)",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-08-08T11:00:00",
+    "end": "2026-08-08T17:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/hatch-day-august-2026/",
+    "summary": "8 月孵化日,11:00–17:00 限时举行;主角宝可梦与加成官方尚未公布,稍后补充。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/hatch-day-august-2026/"
+      }
+    ],
+    "bonuses": [
+      ":incubator: 孵化相关加成(待官方公布)"
+    ]
+  },
+  {
+    "id": "choose-your-path-venom-and-vines-2026",
+    "name": "选择你的道路:毒与藤蔓",
+    "type": "choose-your-path",
+    "heading": "Choose Your Path",
+    "start": "2026-08-11T10:00:00",
+    "end": "2026-08-17T20:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/choose-your-path-evergreen.jpg",
+    "link": "https://leekduck.com/events/choose-your-path-venom-and-vines-2026/",
+    "summary": "「选择你的道路:毒与藤蔓」限时调查,二选一路线主题为毒系与草系;具体宝可梦待官方公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/choose-your-path-venom-and-vines-2026/"
+      }
+    ],
+    "bonuses": [
+      "限时调查双线选择"
+    ]
+  },
+  {
+    "id": "gbl-forever-forward_master-league_evolution-cup-great-league-edition",
+    "name": "大师联赛 · 进化杯(超级联赛规则)",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-08-11T20:00:00Z",
+    "end": "2026-08-18T20:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/gobattleleague-master-key.jpg",
+    "link": "https://leekduck.com/events/gbl-forever-forward_master-league_evolution-cup-great-league-edition/",
+    "summary": "GO 对战联盟:大师联赛与进化杯(超级联赛规则,CP 上限 1500)开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-forever-forward_master-league_evolution-cup-great-league-edition/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-forever-forward/"
+      }
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "august-communityday2026",
+    "name": "8 月社区日",
+    "type": "community-day",
+    "heading": "Community Day",
+    "start": "2026-08-16T14:00:00",
+    "end": "2026-08-16T17:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/cd-default.jpg",
+    "link": "https://leekduck.com/events/august-communityday2026/",
+    "summary": "8 月社区日,14:00–17:00 限时举行;主角宝可梦与限定招式官方尚未公布,稍后补充。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/august-communityday2026/"
+      }
+    ],
+    "bonuses": [
+      "✨ 闪光概率提升",
+      ":candy: 捕捉糖果加成(待官方公布)"
+    ],
+    "highlight": true
+  },
+  {
+    "id": "gbl-forever-forward_great-league_scroll-cup-great-league-edition",
+    "name": "超级联赛 · 卷轴杯",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-08-18T20:00:00Z",
+    "end": "2026-08-25T20:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/gobattle-greatleague-key.jpg",
+    "link": "https://leekduck.com/events/gbl-forever-forward_great-league_scroll-cup-great-league-edition/",
+    "summary": "GO 对战联盟:超级联赛与卷轴杯(CP 上限 1500)开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-forever-forward_great-league_scroll-cup-great-league-edition/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-forever-forward/"
+      }
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "raid-day-august-2026",
+    "name": "团战日(8 月)",
+    "type": "raid-day",
+    "heading": "Raid Day",
+    "start": "2026-08-22T14:00:00",
+    "end": "2026-08-22T17:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/raid-day-august-2026/",
+    "summary": "8 月团战日,14:00–17:00 限时举行;主角 Boss 与闪光窗口官方尚未公布,稍后补充。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/raid-day-august-2026/"
+      }
+    ],
+    "bonuses": [
+      "✨ 闪光概率提升",
+      ":raid: 限时增援团战入场券加成(待官方公布)"
+    ],
+    "highlight": true
+  },
+  {
+    "id": "gbl-forever-forward_great-league_ultra-league_master-league-split-3",
+    "name": "超级 / 高级 / 大师联赛",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-08-25T20:00:00Z",
+    "end": "2026-09-01T20:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/go-battle-league-season-27-forever-forward.jpg",
+    "link": "https://leekduck.com/events/gbl-forever-forward_great-league_ultra-league_master-league-split-3/",
+    "summary": "GO 对战联盟:超级联赛、高级联赛与大师联赛同时开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-forever-forward_great-league_ultra-league_master-league-split-3/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-forever-forward/"
+      }
+    ],
+    "longTerm": true
   }
 ]
