@@ -65,6 +65,21 @@ function resolveCat(def) {
   };
 }
 
+/* Calendar raid day-icon presentation, keyed by rotations.json track.key. The
+ * three known tiers get a fixed CSS class + glyph + 中文 legend label; ANY new
+ * tier the game adds still renders — raidMeta() falls back to a neutral '.gen'
+ * chip and a ≤2-char badge derived from track.tag (or the key). So a future
+ * rotation track shows up in the day cells automatically, no code change needed.
+ * Per-track `color` (from the data) drives the ring via inline --ring regardless. */
+const RAID_META = {
+  '5star': { cls: 's5',   tag: '5★', label: '5★ 团战' },
+  'mega':  { cls: 'mega', tag: 'M',  label: '超级团战' },
+  'max':   { cls: 'max',  tag: 'MX', label: '极巨团战' },
+};
+function raidMeta(key) {
+  return RAID_META[key] || { cls: 'gen', tag: (key || '').slice(0, 2).toUpperCase() || '★', label: (key || '团战') + ' 团战' };
+}
+
 /* ---------- small helpers ---------- */
 function $(sel) { return document.querySelector(sel); }
 function ymd(d) {
@@ -254,16 +269,20 @@ function renderCalendar() {
   const todayStr = ymd(new Date());
   const present = new Set();
 
-  // weekly 5★/Mega rotation bosses → one icon per track next to the day number
+  // weekly raid-rotation bosses → one icon per track next to the day number
   // (driven by rotations.json, which carries pokemon ids; events.json raids don't).
+  // Opt-out, not allow-list: every rotation track shows unless it sets
+  // showOnCalendar:false, so a new boss tier appears in the cells with no code change.
   const raidsByDay = {};
+  const raidTracks = new Map(); // track.key → {key,color,tag,name} for tracks shown this month (legend)
   (state.rotations && state.rotations.tracks || [])
-    .filter(t => t.key === '5star' || t.key === 'mega')
+    .filter(t => t && t.key && t.showOnCalendar !== false)
     .forEach(t => (t.segments || []).forEach(seg => {
       const si = dayDiff(gridStart, parseDay(seg.start));
       const ei = dayDiff(gridStart, parseDay(seg.end || seg.start));
       const mons = (seg.pokemon || []).filter(p => p && (p.id || p.sprite));
       if (!mons.length || isNaN(si) || isNaN(ei) || ei < 0 || si > 41) return;
+      raidTracks.set(t.key, { key: t.key, color: t.color, tag: t.tag, name: t.name });
       for (let i = Math.max(0, si); i <= Math.min(41, ei); i++) {
         (raidsByDay[i] = raidsByDay[i] || []).push(
           { tier: t.key, color: t.color, tag: t.tag, mons, name: seg.cn || seg.name, start: seg.start, end: seg.end });
@@ -340,9 +359,10 @@ function renderCalendar() {
         raids.forEach(rd => {
           const mons = rd.mons.slice(0, 3);
           const b = document.createElement('button');
-          b.className = 'raid-ico ' + (rd.tier === '5star' ? 's5' : 'mega') + (mons.length > 1 ? ' slide n' + mons.length : '');
+          const meta = raidMeta(rd.tier);
+          b.className = 'raid-ico ' + meta.cls + (mons.length > 1 ? ' slide n' + mons.length : '');
           if (rd.color) b.style.setProperty('--ring', rd.color);
-          const badge = (rd.tag || (rd.tier === '5star' ? '5★' : 'M')).slice(0, 2);
+          const badge = (rd.tag || meta.tag).slice(0, 2);
           b.title = `${rd.name} · ${fmtDateShort(rd.start)}–${fmtDateShort(rd.end)}`;
           b.innerHTML = mons.map(p => `<img src="${escapeHtml(monSprite(p))}" alt="" loading="lazy" onerror="this.style.display='none'">`).join('')
             + `<span class="tg">${escapeHtml(badge)}</span>`;
@@ -423,12 +443,14 @@ function renderCalendar() {
   }
 
   root.appendChild(weeks);
-  renderLegend(present, hasRaidIcons);
+  renderLegend(present, raidTracks);
   renderLongTerm(longTerm);
 }
 
 // Legend reflects only the categories actually present in the current month.
-function renderLegend(present, hasRaids) {
+// raidTracks is a Map(track.key → {key,color,tag,name}) of the rotation tiers that
+// placed an icon this month — emitted as ring chips so new tiers self-document.
+function renderLegend(present, raidTracks) {
   const box = $('#cal-legend');
   if (!box) return;
   const seen = new Set();
@@ -444,8 +466,12 @@ function renderLegend(present, hasRaids) {
   let html = items.map(c =>
     `<span class="lg"><i class="${c.kind === 'chip' ? 'round' : ''}" style="background:${escapeHtml(c.color)}"></i>${escapeHtml(c.label)}</span>`
   ).join('');
-  if (hasRaids) {
-    html += '<span class="lg"><i class="ring s5"></i>5★ 团战</span><span class="lg"><i class="ring mega"></i>超级团战</span>';
+  if (raidTracks && raidTracks.size) {
+    html += [...raidTracks.values()].map(t => {
+      const meta = raidMeta(t.key);
+      const ring = t.color ? ` style="--ring:${escapeHtml(t.color)}"` : '';
+      return `<span class="lg"><i class="ring ${meta.cls}"${ring}></i>${escapeHtml(t.name || meta.label)}</span>`;
+    }).join('');
   }
   box.innerHTML = html || '';
 }
@@ -660,17 +686,16 @@ const WC_SPOTS = [
   ['Wellington 植物园 / Auckland','新西兰 · 惠灵顿/奥克兰','nz','Pacific/Auckland','最早时区起点;活动 / raid 开局', -41.2806, 174.7676],
   ['Sydney 悉尼歌剧院一带','澳大利亚 · 悉尼','au','Australia/Sydney','早时区 raid / 活动候选', -33.8568, 151.2153],
   ['Shibuya / Shinjuku 涩谷新宿','日本 · 东京','jp','Asia/Tokyo','主热点;Go Fest / raid / city play 常用', 35.6595, 139.7005],
-  ['台北车站 Taipei Main Station','台湾 · 台北','tw','Asia/Taipei','raid-only 老热点;现强度有争议', 25.0478, 121.5173],
+  ['台北车站 Taipei Main Station','台湾(中国) · 台北','tw','Asia/Taipei','raid-only 老热点;现强度有争议', 25.0478, 121.5173],
   ['Dubai Marina 迪拜码头','阿联酋 · 迪拜','ae','Asia/Dubai','catch event 强,主要靠 lures', 25.0805, 55.1403],
   ['Plaza de Europa','西班牙 · 萨拉戈萨','es','Europe/Madrid','spawn density 高', 41.6488, -0.8891],
   ['Margaret Island 玛格丽特岛','匈牙利 · 布达佩斯','hu','Europe/Budapest','有人觉得比 Zara 好,证据较弱', 47.5278, 19.0506],
   ['Ibirapuera Park 伊比拉普埃拉公园','巴西 · 圣保罗','br','America/Sao_Paulo','stops + 重 lures;活动日 catch 强', -23.5874, -46.6576],
-  ['Bryant Park / Central Park','美国 · 纽约','us','America/New_York','spawn + lure + raid 强(NYC)', 40.7536, -73.9832],
-  ['Havana 随机坐标','古巴 · 哈瓦那','cu','America/Havana','Go Fest 末尾随机坐标,不算稳定热点', 23.1136, -82.3666],
-  ['Lincoln Park','美国 · 芝加哥','us','America/Chicago','Go Fest / city play;非自然 density', 41.9214, -87.6513],
+  ['Bryant Park / Central Park / Times Square','美国 · 纽约','us','America/New_York','spawn + lure + raid 强(NYC)', 40.7536, -73.9832],
+  ['Lincoln Park / City of Dallas','美国 · 芝加哥 / 达拉斯','us','America/Chicago','Go Fest / city play;非自然 density', 41.9214, -87.6513],
   ['Calle República de El Salvador 21','墨西哥 · 墨西哥城 CDMX','mx','America/Mexico_City','疑似社区热点;stops / gyms 密集', 19.4316, -99.1336],
-  ['PIER 39 / Santa Monica Pier','美国 · 旧金山 / 洛杉矶','us','America/Los_Angeles','传统 pier 热点;评价分裂', 37.8087, -122.4098],
-  ['Honolulu / Waikiki','美国 · 夏威夷檀香山','us','Pacific/Honolulu','最后尾巴时区', 21.2793, -157.8294],
+  ['PIER 39 / Union Square','美国 · 旧金山','us','America/Los_Angeles','传统 pier 热点;评价分裂', 37.8087, -122.4098],
+  ['Honolulu / 416 cookie','美国 · 夏威夷檀香山','us','Pacific/Honolulu','最后尾巴时区', 21.2793, -157.8294],
 ];
 
 let wcActive = false; // false = 显示全部(最早→最晚);true = 按所选时段筛选
@@ -751,6 +776,8 @@ function renderWorldClock() {
       + `<div class="wc-list">${items}</div></div>`;
   }).join('') : '<p class="muted" style="padding:1rem;text-align:center">该时段暂无匹配的地区。</p>';
   renderWcSpots(start, end, now);
+  renderWcPin(start, end, now);
+  renderWcAxis(start, end, now);
 }
 // 把"所选时段(以该精选地点的当地时间计)"换算成当前用户的本地时间窗口。用户时区取自
 // 浏览器;无法判断时回退到中国时间(UTC+8)。返回 "HH:MM–HH:MM"。
@@ -765,7 +792,8 @@ function wcUserWindow(spotOffset, start, end) {
   };
   return fmt(start) + '–' + fmt(end);
 }
-// 精选地点侧栏:始终列出(最早→最晚),实时显示当地时间 + 坐标;选中时段则高亮命中者。
+// 精选地点侧栏:朴素平铺,按时区最早→最晚原序,不高亮/不淡显/不置顶;
+// 保留 ✦ HH:MM–HH:MM(你的当地时段窗口)。「激活」强调只出现在悬浮条与时间轴。
 function renderWcSpots(start, end, now) {
   const box = $('#wc-spots'); if (!box) return;
   const rows = WC_SPOTS.map(s => {
@@ -774,10 +802,9 @@ function renderWcSpots(start, end, now) {
   }).filter(x => x.c).sort((a, b) => b.c.offset - a.c.offset);
   box.innerHTML = '<div class="wc-spots-head"><span class="dia">◆</span><h3>精选地点</h3></div>'
     + rows.map(({ s, c }) => {
-      const hot = wcActive && wcInRange(c.h, start, end);
       const dd = c.dayDelta > 0 ? ' 次日' : (c.dayDelta < 0 ? ' 昨日' : '');
       const geo = `${s[5].toFixed(4)}, ${s[6].toFixed(4)}`;
-      return `<div class="wc-spot${hot ? ' hot' : ''}${wcActive && !hot ? ' dim' : ''}">`
+      return `<div class="wc-spot">`
         + `<div class="wc-spot-top">`
         + `<img class="wc-flag" src="https://flagcdn.com/w40/${s[2]}.png" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`
         + `<span class="wc-spot-time">${wcPad(c.h)}:${wcPad(c.m)}</span>`
@@ -787,9 +814,51 @@ function renderWcSpots(start, end, now) {
         + `<div class="wc-spot-sub muted">${escapeHtml(s[1])} · ${escapeHtml(s[3])}</div>`
         + `<div class="wc-spot-note muted">${escapeHtml(s[4])}</div>`
         + `<div class="wc-spot-foot"><a class="wc-spot-geo" href="https://www.google.com/maps?q=${s[5]},${s[6]}" target="_blank" rel="noopener">📍 ${geo}</a>`
-        + (wcActive ? `<span class="wc-spot-you muted" title="你的当地时间(该地点处于所选时段时)"><span class="dia">✦</span> ${wcUserWindow(c.offset, start, end)}</span>` : '')
+        + (wcActive ? `<span class="wc-spot-you" title="你的当地时间(该地点处于所选时段时)"><span class="dia">✦</span> ${wcUserWindow(c.offset, start, end)}</span>` : '')
         + `</div></div>`;
     }).join('');
+}
+// 悬浮条:只列出当前命中所选时段的精选热点;未选时段 / 无命中 → 提示语。
+function renderWcPin(start, end, now) {
+  const box = $('#wc-pin'); if (!box) return;
+  const hot = WC_SPOTS.map(s => { let c; try { c = wcCompute(s[3], now); } catch (e) { c = null; } return { s, c }; })
+    .filter(x => x.c && wcActive && wcInRange(x.c.h, start, end))
+    .sort((a, b) => b.c.offset - a.c.offset);
+  let inner;
+  if (!wcActive) inner = '<div class="wc-pin-empty">选择上方时段后,正处于该时段的热点会固定显示在这里。</div>';
+  else if (!hot.length) inner = `<div class="wc-pin-empty">当地 ${wcPad(start)}:00–${wcPad(end)}:59 暂无精选热点激活,试试相邻时段。</div>`;
+  else inner = '<div class="wc-pin-row">' + hot.map(({ s, c }) =>
+    `<div class="wc-pinchip"><img class="wc-flag" src="https://flagcdn.com/w40/${s[2]}.png" alt="" onerror="this.style.visibility='hidden'">`
+    + `<span class="pc-time">${wcPad(c.h)}:${wcPad(c.m)}</span>`
+    + `<div class="pc-body"><span class="pc-name">${escapeHtml(s[0])}</span>`
+    + `<span class="pc-meta">${escapeHtml(s[1])} · ✦ <b>${wcUserWindow(c.offset, start, end)}</b></span></div></div>`).join('') + '</div>';
+  box.innerHTML = '<div class="wc-pin-label"><span class="dot"></span>现在激活 · 所选时段命中的热点</div>' + inner;
+}
+// 反向时间轴:较晚在左、00:00 在右。所选时段=金色光带;命中=hot 绿点。
+function renderWcAxis(start, end, now) {
+  const box = $('#wc-axis'); if (!box) return;
+  const X = f => (1 - f) * 100;
+  let ticks = '';
+  for (let i = 0; i <= 24; i += 3) ticks += `<div class="wc-axis-tick" style="left:${X(i / 24)}%"><i></i><span>${wcPad(i % 24)}</span></div>`;
+  let bands = '';
+  if (wcActive) {
+    const segs = start <= end ? [[start, end + 1]] : [[start, 24], [0, end + 1]];
+    segs.forEach((sg, idx) => {
+      const f0 = sg[0] / 24, f1 = sg[1] / 24;
+      bands += `<div class="wc-axis-band" style="left:${(1 - f1) * 100}%;width:${(f1 - f0) * 100}%">`
+        + `${idx === 0 ? `<span class="band-lbl">所选 ${wcPad(start)}–${wcPad(end)} 点</span>` : ''}</div>`;
+    });
+  }
+  const rows = WC_SPOTS.map(s => { let c; try { c = wcCompute(s[3], now); } catch (e) { c = null; } return { s, c }; })
+    .filter(x => x.c).sort((a, b) => b.c.offset - a.c.offset);
+  const pins = rows.map(({ s, c }, i) => {
+    const isHot = wcActive && wcInRange(c.h, start, end);
+    const cls = 'wc-pin2 ' + (i % 2 === 0 ? 'up' : 'down') + (isHot ? ' hot' : (wcActive ? ' cool' : ''));
+    return `<div class="${cls}" style="left:${X((c.h + c.m / 60) / 24)}%" title="${escapeHtml(s[0])} · ${wcPad(c.h)}:${wcPad(c.m)}">`
+      + `<div class="lab"><img class="wc-flag" src="https://flagcdn.com/w40/${s[2]}.png" alt="" onerror="this.style.visibility='hidden'"><span class="pt">${wcPad(c.h)}:${wcPad(c.m)}</span></div>`
+      + `<div class="stem"></div><div class="dot"></div></div>`;
+  }).join('');
+  box.innerHTML = `<div class="wc-axis"><div class="wc-axis-track"></div>${bands}${ticks}${pins}</div>`;
 }
 function setupWorldClock() {
   const startSel = $('#wc-start'), endSel = $('#wc-end'), allBtn = $('#wc-all');

@@ -22,6 +22,7 @@
   --serif:Georgia,Cambria,"Times New Roman","Songti SC","STSong",SimSun,"Source Han Serif SC","Noto Serif CJK SC",serif;
   --sans:system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;
   --display:"SF Pro Rounded",system-ui,-apple-system,"Segoe UI","PingFang SC",sans-serif;
+  --live:#86c98e;--live-rgb:134,201,142;
 }
 
 *{box-sizing:border-box;}
@@ -169,6 +170,8 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   box-shadow:0 0 0 2px var(--ring,var(--gold-line)),0 3px 12px -2px rgba(0,0,0,.7),0 0 14px -2px var(--ring,var(--gold-line));}
 .raid-ico.s5{--ring:#d8b25f;}
 .raid-ico.mega{--ring:#9c7bb0;}
+.raid-ico.max{--ring:#bd7f97;}
+/* .gen = an unknown future tier; data-supplied --ring colours it, else gold-line */
 /* corner tier badge — hover only (≤2 chars, agent-set via track.tag) */
 .raid-ico .tg{position:absolute;bottom:-3px;left:-3px;font-size:.5rem;font-weight:800;line-height:1;
   padding:0 2px;border-radius:4px;background:var(--ring,var(--gold-line));color:#1a1206;
@@ -185,9 +188,10 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 @keyframes raidcyc3{0%,33.333%{opacity:1}33.334%,100%{opacity:0}}
 /* legend rings for the day icons */
 .lg .ring{width:13px;height:13px;border-radius:5px;display:inline-block;
-  background:rgba(var(--gold-rgb),.12);box-shadow:0 0 0 2px var(--gold-line);}
-.lg .ring.s5{box-shadow:0 0 0 2px #d8b25f;}
-.lg .ring.mega{box-shadow:0 0 0 2px #9c7bb0;}
+  background:rgba(var(--gold-rgb),.12);box-shadow:0 0 0 2px var(--ring,var(--gold-line));}
+.lg .ring.s5{--ring:#d8b25f;}
+.lg .ring.mega{--ring:#9c7bb0;}
+.lg .ring.max{--ring:#bd7f97;}
 
 /* reserves vertical room for the absolutely-positioned spanning bars */
 .cal-barspace{height:var(--bars-h,0px);flex:none;}
@@ -340,39 +344,57 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .tier-B{background:linear-gradient(135deg,#8b9bbd,#6f86ba);color:#15130b;}
 .tier-C{background:linear-gradient(135deg,#a39a86,#857c69);color:#15130b;}
 
-/* current-raid counters (rankings-raid region): a big boss header above a
-   compact counter list, so the boss reads larger than its counters. */
-.raid-block{margin:.2rem 0 1rem;}
-.raid-boss{display:flex;align-items:center;gap:.75rem;margin:.1rem 0 .5rem;
-  padding:.5rem .75rem;background:var(--panel2);border:1px solid var(--gold-line);
-  border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.3);}
-.raid-boss .boss-icon{width:76px;height:76px;object-fit:contain;flex:none;
-  background:rgba(var(--gold-rgb),.08);border:1px solid var(--line);border-radius:12px;
-  image-rendering:pixelated;filter:drop-shadow(0 2px 3px rgba(0,0,0,.55));}
-.raid-boss strong{color:var(--h1);font-family:var(--serif);font-size:1.2rem;letter-spacing:.03em;}
-.raid-boss .badge{margin-right:.45rem;font-size:.74rem;padding:.1rem .55rem;vertical-align:.08em;}
-.raid-boss .meta{color:var(--muted);font-size:.82rem;margin-top:.2rem;}
-/* compact counter list under a boss header — smaller sprites than the tier lists */
-.rank-list.mini{gap:.4rem;}
-.rank-list.mini .rank-item{padding:.34rem .6rem;gap:.55rem;}
-.rank-list.mini .rank-item::before{inset:4px;}
-.rank-list.mini .rank-item .mon-icon{width:38px;height:38px;}
-.rank-list.mini .rank-item strong{font-size:.98rem;}
-.rank-list.mini .rank-item .meta{font-size:.8rem;}
-/* 当前团战: boss 头右侧的「Mega 加成」内联区(用 boss 右侧空白),+ 属性图标 */
-.raid-boss{flex-wrap:wrap;}
-.raid-mega{margin-left:auto;display:flex;align-items:center;gap:.4rem;align-self:center;
-  padding:.28rem .5rem;border:1px solid rgba(var(--gold-rgb),.18);border-radius:10px;
-  background:rgba(var(--gold-rgb),.05);}
-.raid-mega .lbl{font-family:var(--display);font-size:.62rem;letter-spacing:.16em;
-  color:var(--gold-dim);text-transform:uppercase;}
-.raid-mega img{width:40px;height:40px;object-fit:contain;flex:none;
-  background:rgba(var(--gold-rgb),.08);border:1px solid var(--line);border-radius:8px;
-  image-rendering:pixelated;}
+/* ===== 当前团战 Counter(rankings-raid)· 卡片墙 D2 ===== */
+/* 外层墙:一行 3 张卡 */
+.raid-wall{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;align-items:start;margin-top:.4rem;}
+
+/* 单卡 */
+.raid-block{margin:0;display:flex;flex-direction:column;gap:.3rem;
+  background:var(--panel);border:1px solid var(--gold-line);border-radius:14px;
+  padding:.5rem .65rem .45rem;box-shadow:0 10px 24px rgba(0,0,0,.3);}
+
+/* boss 头:左 = 图标 + 身份;右 = Mega 3 列网格 */
+.raid-boss{display:flex;align-items:flex-start;gap:.55rem;margin:0;padding:0 0 .4rem;
+  background:none;border:0;border-bottom:1px solid var(--line);border-radius:0;box-shadow:none;flex-wrap:nowrap;}
+.raid-boss .boss-icon{width:50px;height:50px;flex:none;object-fit:contain;image-rendering:pixelated;
+  background:rgba(var(--gold-rgb),.08);border:1px solid var(--line);border-radius:10px;
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.5));}
+.raid-boss .binfo{min-width:0;display:flex;flex-direction:column;gap:.14rem;}
+.raid-boss .btop{display:flex;align-items:center;gap:.4rem;}
+.raid-boss strong{color:var(--h1);font-family:var(--serif);font-size:1.04rem;letter-spacing:.03em;}
+.raid-boss .badge{font-size:.7rem;padding:.08rem .5rem;vertical-align:0;margin:0;}
+.raid-boss .meta{color:var(--muted);font-size:.8rem;margin:0;display:flex;align-items:center;flex-wrap:wrap;gap:.05rem;}
+
+/* 头右 Mega:3 列网格,6–8 个 → 最多 3 行;最省横向空间 */
+.raid-mega{margin-left:auto;flex:none;display:grid;grid-template-columns:repeat(3,28px);gap:.24rem;
+  align-content:start;padding:0;border:0;background:none;}
+.raid-mega .lbl{display:none;}                 /* 头右不放文字标,省宽 */
+.raid-mega img{width:28px;height:28px;object-fit:contain;image-rendering:pixelated;flex:none;
+  background:rgba(var(--gold-rgb),.08);border:1px solid var(--line);border-radius:6px;
+  transition:transform .12s,border-color .12s;}
+.raid-mega img:hover{transform:scale(1.22);border-color:var(--gold);position:relative;z-index:2;}
+
+/* counter:去边框,细线分隔表格行,招式右对齐 */
+.rank-list.mini{display:flex;flex-direction:column;gap:0;}
+.rank-list.mini .rank-item{display:flex;align-items:center;gap:.5rem;min-width:0;
+  background:none;border:0;border-bottom:1px solid var(--line-soft);border-radius:0;
+  padding:.28rem .05rem;box-shadow:none;}
+.rank-list.mini .rank-item::before{display:none;}
+.rank-list.mini .rank-item:last-child{border-bottom:0;}
+.rank-list.mini .rank-item .mon-icon{width:32px;height:32px;flex:none;
+  background:none;border:0;border-radius:6px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5));}
+.rank-list.mini .rank-item strong{color:var(--h1);font-family:var(--serif);font-size:.92rem;letter-spacing:.02em;flex:none;}
+.rank-list.mini .rank-item .meta{margin-left:auto;color:var(--muted);font-size:.74rem;white-space:nowrap;
+  display:flex;align-items:center;gap:.1rem;}
+/* 属性图标尺寸(boss 弱点行 + counter 招式行沿用) */
 .raid-boss .meta .ico,.rank-item .meta .ico{width:1.2em;height:1.2em;vertical-align:-.24em;margin:0 .05em;}
-/* clickable sprite → Pokémon GO Hub DB; wrap must not disturb flex sizing */
+
+/* 可点击精灵 → Hub DB(沿用) */
 .spr-link{display:inline-flex;flex:none;line-height:0;text-decoration:none;border:0;border-radius:inherit;cursor:pointer;}
 .spr-link:hover{filter:brightness(1.12);}
+
+@media (max-width:900px){ .raid-wall{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media (max-width:560px){ .raid-wall{grid-template-columns:1fr;} }
 
 /* ---------- Free-form synthesis utilities (本月看点 / 本期推荐) ----------
    Whitelisted building blocks the daily agent may use inside the
@@ -470,6 +492,74 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .wc-spot-foot .wc-spot-geo{margin-top:0;}
 .wc-spot-you{font-size:.66rem;color:var(--gold-dim);white-space:nowrap;}
 .wc-spot-you .dia{color:var(--gold);font-size:.66rem;margin-right:.12em;}
+
+/* ① 悬浮「现在激活」条:常驻视口顶、半透明、磨砂、点击穿透 */
+.wc-pin{background:linear-gradient(180deg,rgba(20,30,22,.52),rgba(16,22,18,.48));
+  border:1px solid rgba(var(--live-rgb),.35);border-radius:13px;padding:.55rem .7rem;
+  box-shadow:0 12px 30px rgba(0,0,0,.35), 0 0 0 1px rgba(var(--live-rgb),.14);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+.wc-pin-float{position:fixed;top:10px;left:50%;transform:translateX(-50%);
+  width:min(1206px,calc(100vw - 2.2rem));z-index:60;
+  pointer-events:none;}
+.wc-pin-label{display:flex;align-items:center;gap:.4rem;font-family:var(--display);font-weight:800;
+  font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#bfe6c4;margin-bottom:.5rem;}
+.wc-pin-label .dot{width:.55em;height:.55em;border-radius:50%;background:var(--live);
+  box-shadow:0 0 0 0 rgba(var(--live-rgb),.7);animation:wcPulse 1.8s infinite;}
+.wc-pin-row{display:flex;gap:.55rem;overflow-x:auto;padding-bottom:.15rem;scrollbar-width:thin;
+  pointer-events:auto;}
+.wc-pinchip{flex:none;display:flex;align-items:center;gap:.5rem;min-width:14rem;
+  background:rgba(var(--live-rgb),.08);border:1px solid rgba(var(--live-rgb),.45);border-radius:10px;padding:.45rem .6rem;}
+.wc-pinchip .pc-time{font-family:var(--display);font-weight:800;font-size:1.18rem;color:#dff1e1;letter-spacing:.02em;}
+.wc-pinchip .pc-body{min-width:0;display:flex;flex-direction:column;line-height:1.2;}
+.wc-pinchip .pc-name{font-family:var(--serif);font-weight:700;color:#cdebd0;font-size:.92rem;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:13rem;}
+.wc-pinchip .pc-meta{font-size:.7rem;color:#9bbfa0;white-space:nowrap;}
+.wc-pinchip .pc-meta b{color:var(--gold-bright);font-weight:700;}
+.wc-pin-empty{font-size:.82rem;color:#9bbfa0;padding:.2rem .1rem .35rem;}
+@keyframes wcPulse{0%{box-shadow:0 0 0 0 rgba(var(--live-rgb),.55)}
+  70%{box-shadow:0 0 0 .42em rgba(var(--live-rgb),0)}100%{box-shadow:0 0 0 0 rgba(var(--live-rgb),0)}}
+@media (min-width:860px){ #view-clock .wc-layout .wc-spots{top:120px;} }
+
+/* ② 可折叠 24h 时间轴 */
+.wc-axis-collapse{margin-bottom:1.2rem;border:1px solid var(--line);border-radius:14px;
+  background:var(--panel);overflow:hidden;}
+.wc-axis-collapse>summary{list-style:none;cursor:pointer;padding:.6rem .9rem;font-family:var(--serif);
+  color:var(--gold-bright);font-size:.96rem;letter-spacing:.03em;display:flex;align-items:center;gap:.5rem;
+  background:var(--panel2);border-bottom:1px solid var(--line);}
+.wc-axis-collapse:not([open])>summary{border-bottom:0;}
+.wc-axis-collapse>summary::-webkit-details-marker{display:none;}
+.wc-axis-collapse>summary::before{content:'▾';color:var(--gold);transition:transform .15s;}
+.wc-axis-collapse:not([open])>summary::before{transform:rotate(-90deg);}
+#wc-axis{padding:1.1rem 1.2rem 1rem;}
+.wc-axis{position:relative;height:188px;margin:.2rem .4rem 0;}
+.wc-axis-track{position:absolute;left:0;right:0;top:50%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold-line) 6%,var(--gold-line) 94%,transparent);}
+.wc-axis-band{position:absolute;top:18px;bottom:18px;background:rgba(var(--gold-rgb),.12);
+  border-left:1px solid var(--gold);border-right:1px solid var(--gold);border-radius:4px;
+  box-shadow:inset 0 0 22px rgba(var(--gold-rgb),.12);}
+.wc-axis-band .band-lbl{position:absolute;top:-1.35rem;left:50%;transform:translateX(-50%);white-space:nowrap;
+  font-family:var(--display);font-size:.66rem;font-weight:700;letter-spacing:.05em;color:var(--gold-bright);}
+.wc-axis-tick{position:absolute;top:50%;transform:translate(-50%,-50%);}
+.wc-axis-tick i{position:absolute;left:0;top:-4px;width:1px;height:8px;background:var(--line);transform:translateX(-50%);}
+.wc-axis-tick span{position:absolute;left:0;top:8px;transform:translateX(-50%);
+  font-family:var(--display);font-size:.62rem;color:var(--gold-dim);}
+.wc-pin2{position:absolute;transform:translateX(-50%);display:flex;flex-direction:column;
+  align-items:center;gap:.18rem;width:max-content;}
+.wc-pin2.up{bottom:calc(50% + 12px);}
+.wc-pin2.down{top:calc(50% + 12px);flex-direction:column-reverse;}
+.wc-pin2 .stem{width:1px;height:14px;background:var(--gold-line);}
+.wc-pin2 .dot{width:9px;height:9px;border-radius:50%;background:var(--gold-dim);border:1px solid var(--gold-line);}
+.wc-pin2 .lab{display:flex;align-items:center;gap:.28rem;background:var(--panel2);border:1px solid var(--line);
+  border-radius:7px;padding:.16rem .36rem;white-space:nowrap;}
+.wc-pin2 .lab .pt{font-family:var(--display);font-weight:700;font-size:.72rem;color:var(--ink);}
+.wc-pin2 .lab .wc-flag{width:18px;height:13px;}
+.wc-pin2.hot{z-index:3;}
+.wc-pin2.hot .dot{background:var(--live);border-color:var(--live);box-shadow:0 0 8px rgba(var(--live-rgb),.8);}
+.wc-pin2.hot .stem{background:var(--live);}
+.wc-pin2.hot .lab{border-color:rgba(var(--live-rgb),.6);background:rgba(var(--live-rgb),.12);}
+.wc-pin2.hot .lab .pt{color:#cdebd0;}
+.wc-pin2.cool{opacity:.55;}
+@media (max-width:560px){ .wc-axis{height:230px;} }
 
 /* ---------- Footer ---------- */
 .site-footer{position:relative;z-index:1;text-align:center;padding:1.6rem 1rem 2.2rem;}

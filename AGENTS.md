@@ -111,10 +111,13 @@ or touch them.**
 日历的两种"标记"由**不同文件**驱动,**选错文件 = 看不到效果**。这是硬约定,
 `scripts/preflight.sh` 会据此在发布前拦截(orphan / 不一致 / form-id / 超长 chip)。
 
-- **日期数字旁的小角标(5★ 金环 / 超级团战 紫环)= 只由 `rotations.json` 的 `5star`/`mega` 轨产生**,
-  覆盖到的每一天画一个。`events.json` 里的事件**永远变不成角标** —— 它们只会是横跨日的 **bar** 或格子里的
-  **chip**。所以"给某些天加 Boss 角标"(包括 传奇之路 这类多日活动)= 往 `rotations.json` 加**单日段**,
-  **不是**往 `events.json` 塞 `raid-hour` chip。
+- **日期数字旁的小角标 = 由 `rotations.json` 的轨(track)产生**,覆盖到的每一天画一个。`events.json` 里的
+  事件**永远变不成角标** —— 它们只会是横跨日的 **bar** 或格子里的 **chip**。所以"给某些天加 Boss 角标"
+  (包括 传奇之路 这类多日活动)= 往 `rotations.json` 加**单日段**,**不是**往 `events.json` 塞 `raid-hour` chip。
+- **角标轨是"默认全显示"的(opt-out)**:`app.js` 现在渲染 `rotations.json` 里**每一条**带 `pokemon` 的轨,
+  不再写死只认 `5star`/`mega`。`5star`(金环 5★)、`mega`(紫环 M)、`max`(粉环 MX,极巨团战)有内置配色/字形/图例文案;
+  **游戏将来新增的团战档次也会自动出现在格子里** —— 新轨用一个新 `key` + `color` + **≤2 字符的 `tag`**(角标只显示 2 字)
+  即可,无需改代码。某条轨不想进日历格子(例如纯统计轨)时,给它设 `"showOnCalendar": false`。
 - **有角标的月份,`app.js` 会隐藏所有 `raid-battles` 的 bar**(改由角标代表)。因此每个 `raid-battles`
   事件**必须**有一个 **dex id + 日期都匹配**的 `rotations.json` 段,点角标才能经 `findRaidEvent` 打开它的
   抽屉;否则它**既无 bar 又无角标 = 静默消失**(preflight 报 `orphan raid`)。例外:`longTerm:true` 进
@@ -186,9 +189,11 @@ scripts/fetch.sh url https://pokemongohub.net/post/<...>
 ```
 It prints the page to stdout (JS/Cloudflare hosts go through the solver; raw file/API hosts via
 plain curl). **Allowed hosts:** `leekduck.com · pokemongohub.net · db.pokemongohub.net · pokebase.app ·
-pokemongo.com · dialgadex.com · raw.githubusercontent.com · pvpoke.com · pokeapi.co` (`dialgadex.com` for
-best-attacker-by-type cross-checks; `db.pokemongohub.net` for per-Pokémon movesets / counters / form
-images). Off-allowlist URLs are refused. Stay
+pokemongo.com · dialgadex.com · raw.githubusercontent.com · pvpoke.com · pokeapi.co · serebii.net ·
+pokemongo.fandom.com` (`dialgadex.com` for best-attacker-by-type cross-checks; `db.pokemongohub.net`
+for per-Pokémon movesets / counters / form images; **`serebii.net/pokemongo` + `pokemongo.fandom.com`
+(GO Hub Wiki) for cross-checking Mega rosters / counters / 属性 / 弱点 when giving 建议 — extra
+corroboration sources, never the sole basis**). Off-allowlist URLs are refused. Stay
 **primarily on the named sources** — use `url` to enrich / corroborate / chase a detail, not to crawl.
 
 **Don't know the URL? Discover it — don't guess.** The feeds give you every LeekDuck link and the
@@ -300,11 +305,15 @@ read before you write, as always.
    - **Mega Booster — inline on each boss, NOT a separate bottom list.** Mechanic: an **active** Mega
      gives **+1 糖 when you catch a Pokémon sharing that Mega's 属性** (chance of extra / XL) — it is
      **not** "evolving yields that species' candy" and has nothing to do with evolving. For each boss,
-     put a small **`.raid-mega`** area in the blank space to the **right of the boss header** showing the
-     same-属性 超级 sprite(s) that farm **that boss's** candy (`<img title="超级X · 共享<属性>">`). Build
-     the pairings from whatever bosses are live this run — never hard-code a fixed list. **Label the Mega
-     by the 属性 it *shares* with the boss** (that shared type drives the candy) — never paste the boss's
-     own 属性 onto the Mega; verify each 属性 / 弱点 against `gamemaster`.
+     put a **`.raid-mega`** 3-列网格 to the **right of the boss header** showing **6–8** same-属性 超级
+     sprites that farm **that boss's** candy (`<img title="超级X · 共享<属性>">`), **sorted by 超级 attack
+     high→low, hard cap 8** (the 头右 grid fits 8 in 3 rows; a 4th row would stretch the card head). List
+     as many as actually share the 属性 — don't pad with off-type Mega, and don't drop below the real count
+     just to hit 6. Build the pairings from whatever bosses are live this run — never hard-code a fixed
+     list. **Label the Mega by the 属性 it *shares* with the boss** (that shared type drives the candy) —
+     never paste the boss's own 属性 onto the Mega; verify each 属性 / 弱点 against `gamemaster`, and
+     **cross-check which 超级 actually exist in PoGo against a live source** (`serebii.net/pokemongo` or
+     `pokemongo.fandom.com`) — `gamemaster`'s Mega list lags new releases.
    - `rankings-current` (本期推荐, **free-form, highest value**) → **editorial / priority**, not a
      counter dump: which live events to do this period (社区日/团战日/Max周一/聚焦), bonuses, shiny
      windows, and a directional "练哪类攻手". Full counter tables belong in 当前团战 Counter — point
@@ -412,17 +421,18 @@ read before you write, as always.
           "start": "2026-06-10", "end": "2026-06-16" }
       ] },
     { "key": "mega", "label": "超级团战", "color": "#9c7bb0", "tag": "M", "segments": [ "…" ] },
-    { "key": "max",  "label": "Max 团战", "color": "#bd7f97", "segments": [ "…" ] }
+    { "key": "max",  "label": "极巨团战", "color": "#bd7f97", "tag": "MX", "segments": [ "…" ] }
   ]
 }
 ```
-- The three tracks 5★ / Mega / Max. `cn` = displayed name; `pokemon[]` may hold >1 boss (dual/triple
-  rotations — they **cycle** inside one day-number icon). `start`/`end` = `YYYY-MM-DD`.
-- **5★ and Mega weekly bosses render as small icons next to each day's number** (the grid no longer
+- Tracks 5★ / Mega / Max (+ any future tier). `cn` = displayed name; `pokemon[]` may hold >1 boss
+  (dual/triple rotations — they **cycle** inside one day-number icon). `start`/`end` = `YYYY-MM-DD`.
+- **Every track with `pokemon` renders as small icons next to each day's number** (the grid no longer
   draws weekly-raid bars). So keep rotations.json **complete for the whole month**, or those raids
   vanish from the grid. `color` drives both the rotation section and the day-icon ring — 5★ = gold
-  `#d8b25f`, Mega = purple `#9c7bb0` (Max keeps its own; Max is not a day icon). `tag` (≤2 chars,
-  optional) is the icon's hover badge (default 5★ / M).
+  `#d8b25f`, Mega = purple `#9c7bb0`, Max = mauve `#bd7f97`. `tag` (**≤2 chars**) is the icon's corner
+  badge — set it on every track (5★/M/MX are built-in fallbacks; a new tier with no `tag` falls back to
+  the first 2 letters of its `key`). To keep a track **out** of the day cells, set `"showOnCalendar": false`.
 - **A Mega/5★ day-icon links to its raid event by *dex id* — keep the id consistent.** Clicking an
   icon opens the drawer of the matching `events.json` raid (its counters / links / summary). The
   matcher compares `pokemon[].id`, so a rotation segment **must use the SAME id as that boss's
@@ -460,9 +470,12 @@ Use **only** these whitelisted, theme-correct classes (no inline colors, no `<st
 - Pokémon/tiers: `.mon-icon`, `.mon-row` / `.mon` / `.shiny`, `.tier` + `.tier-S|tier-A|tier-B|tier-C`
 - sprites/icons: `<img class="spr">` or `class="mon-icon"` (PokeAPI dex-id URL); `<img class="ico">` /
   `class="ico-lg"` for the local resource icons in `assets/icons/` (size locked).
-- current-raid blocks (structured `rankings-raid` only): `.raid-block` > `.raid-boss` (header) with a
-  big `<img class="boss-icon">`, an inline `.raid-mega` (`.lbl` + small Mega sprites, pinned to the
-  boss's right), and `.rank-list.mini` for the compact counter rows beneath it. Type icons via `.ico`.
+- current-raid blocks (structured `rankings-raid` only): one **`.raid-wall`** (3-up card grid) wrapping
+  per-boss **`.raid-block`** cards. Each card = a **`.raid-boss`** header (`<img class="boss-icon">` +
+  **`.binfo`**, which holds a **`.btop`** badge/name row above a **`.meta`** 属性/弱点 row) and a
+  **`.raid-mega`** 3-列网格 of **6–8** same-属性 Mega sprites pinned to the header's right (no text label —
+  `.lbl` is CSS-hidden), with **`.rank-list.mini`** **flat** counter rows beneath (`mon-icon` / `strong` /
+  `.meta` are siblings — no wrapper `<div>` — so the move `.meta` right-aligns). Type icons via `.ico`.
 
 `rankings-current` should tie today's live events + current raid bosses to the best
 attackers/tanks to use (e.g. a Max/Dynamax event → the relevant Max picks).
@@ -477,20 +490,30 @@ attackers/tanks to use (e.g. a Max/Dynamax event → the relevant Max picks).
   </div>
 </div>
 ```
-当前团战 Counter — **按星级从高到低**;boss 头(大图)+ **右侧 `.raid-mega` 内联区** + 紧凑 counter
-列表(小图)。**属性一律用图标**。占位符按本轮实际 boss 填:
+当前团战 Counter — **按星级从高到低**;**全部 boss 卡放进一个 `.raid-wall`(每行 3 张)**。每张卡:boss 头
+(`.binfo` 里 `.btop` 档次/名 一行,`.meta` 属性/弱点 一行)+ **头右 `.raid-mega` 3-列网格(6–8 个同属性
+超级,按超级攻击力高→低,上限 8,无文字标)** + **拍平的** `.rank-list.mini` counter 行(`mon-icon` /
+`strong` / `.meta` 平级,招式 `.meta` 右对齐)。**属性一律用图标**。占位符按本轮实际 boss 填:
 ```html
-<div class="raid-block">
-  <div class="raid-boss">
-    <img class="boss-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<bossDexId>.png" alt="<boss 名>">
-    <div><span class="badge">&lt;档次&gt;</span><strong>&lt;boss 名&gt;</strong>
-      <div class="meta"><img class="ico" src="assets/icons/<type>.webp" alt="<属性>"> · 弱 <img class="ico" src="assets/icons/<weak>.webp" alt="<弱点>"></div></div>
-    <div class="raid-mega"><span class="lbl">Mega</span><img src="…/<megaFormDexId>.png" title="超级X · 共享<属性>" alt="超级X"></div>
+<div class="raid-wall">
+  <div class="raid-block">
+    <div class="raid-boss">
+      <img class="boss-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<bossDexId>.png" alt="<boss 名>">
+      <div class="binfo">
+        <div class="btop"><span class="badge">&lt;档次&gt;</span><strong>&lt;boss 名&gt;</strong></div>
+        <div class="meta"><img class="ico" src="assets/icons/<type>.webp" alt="<属性>"> · 弱 <img class="ico" src="assets/icons/<weak>.webp" alt="<弱点>"></div>
+      </div>
+      <!-- 头右 Mega:6–8 个同属性超级,按超级攻击力排序,上限 8,无 .lbl 文字标 -->
+      <div class="raid-mega">
+        <img src="…/<megaFormDexId>.png" data-hub="<dexId>-Mega" title="超级X · 共享<属性>" alt="超级X">
+        <!-- …其余同属性 Mega(共 6–8 个)… -->
+      </div>
+    </div>
+    <div class="rank-list mini">
+      <div class="rank-item"><img class="mon-icon" src="…/<counterDexId>.png" alt="<counter 名>"><strong>&lt;counter 名&gt;</strong><div class="meta"><img class="ico" src="assets/icons/<moveType>.webp" alt="<招式属性>"> &lt;fast&gt; / &lt;charged&gt;</div></div>
+    </div>
   </div>
-  <div class="rank-list mini">
-    <div class="rank-item"><img class="mon-icon" src="…/<counterDexId>.png" alt="<counter 名>"><div><strong>&lt;counter 名&gt;</strong>
-      <div class="meta"><img class="ico" src="assets/icons/<moveType>.webp" alt="<招式属性>"> &lt;fast&gt; / &lt;charged&gt;</div></div></div>
-  </div>
+  <!-- …其余 boss 卡同结构,全部包在这一个 .raid-wall 内… -->
 </div>
 ```
 **属性→图标文件**(扩展名不统一,务必照此):`fire.png water.webp grass.webp electric.webp ice.webp
