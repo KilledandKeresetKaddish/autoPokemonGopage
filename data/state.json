@@ -80,14 +80,14 @@
     }
   },
   "detailChecks": {
-    "checkedAt": "2026-06-20T03:45:00Z",
+    "checkedAt": "2026-06-20T04:55:00Z",
     "status": "ok",
-    "note": "本轮为轻量刷新:5 个每日源全部刷新成功,discover.sh new 报告本周期无新增活动,当前团战 Boss 未轮换(6/24 才切)。events.json/rotations.json 结构与上轮一致,无需改动。仅把 rankings-current(本期优先级 6/19→6/20)与 calendar-notes 改为'今天 6/20 凉脊龙社区日进行中'的现在进行时框定。"
+    "note": "每日源今晨(03:38Z)已刷新且仍新鲜,本轮未再刷新;discover.sh new 本周期无新增活动,当前团战 Boss 未轮换(6/24 才切)。events.json/rotations.json 结构与上轮一致,无需改动。本轮主要工作=执行 operator note:补齐当前团战 Counter 的 Mega Booster。"
   },
   "operatorNote": {
-    "checkedAt": "2026-06-20T03:45:00Z",
-    "status": "none",
-    "note": "本轮无 operator note。"
+    "checkedAt": "2026-06-20T04:55:00Z",
+    "status": "done",
+    "note": "operator note:把当前团战 Counter 每个 boss 可用的 Mega 补齐(参照 Hub《Complete Mega Evolution Guide》,其中标注 Not Available 的也按已实装处理)。已完成:fetch.sh url 拉取该指南取得完整 Mega 名单(48 个 dex,含双形态 X/Y),Mega 属性以 gamemaster 核对、简体中文名以 pokeapi zh-hans 核对、形态精灵图 id 全部 curl 200 验证。对 18 个 live boss 逐一按『Mega 与 boss 共享属性』计算配对,按超级攻击力排序、每 boss 最多 6 只(.raid-mega 单行不换行,故设上限)。例:奈克洛兹玛(超能力)→ 超梦Y/X·胡地·拉帝欧斯·沙奈朵·艾路雷朵;岩狗狗/石丸子(岩石)→ 蒂安希·班基拉斯·化石翼龙。preflight+validate 均通过。"
   },
   "notes": {
     "correction_2026-06-19": {
