@@ -264,17 +264,32 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 /* ---------- Weekly rotation tracks (5★ / Mega / Max) ---------- */
 .rot-wrap{padding:.85rem 1.05rem;margin-top:1rem;}
 .rot-wrap #rot-note{margin:.1rem 0 .6rem;}
-.rot-track{background:var(--panel2);border:1px solid var(--line);border-radius:10px;
-  padding:.5rem .7rem;margin:.5rem 0;}
-.rot-track-head{display:flex;align-items:center;gap:.45rem;margin-bottom:.35rem;
+/* 三栏并列:5★ / 超级 / 极巨 三条轨道并排成列 */
+.rot-board{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;align-items:start;}
+.rot-col{background:var(--panel2);border:1px solid var(--gold-line);border-radius:12px;
+  padding:.6rem .65rem;display:flex;flex-direction:column;gap:.4rem;}
+.rot-col-head{display:flex;align-items:center;gap:.45rem;padding-bottom:.35rem;
+  border-bottom:1px solid var(--line-soft);
   font-family:var(--serif);font-weight:700;letter-spacing:.04em;color:var(--gold-bright);font-size:1rem;}
-.rot-track-head i{width:12px;height:12px;border-radius:3px;display:inline-block;flex:none;box-shadow:0 0 6px rgba(0,0,0,.4);}
-.rot-seg{display:flex;align-items:center;gap:.5rem;padding:.3rem .5rem;margin:.25rem 0;border-radius:7px;
-  border-left:3px solid var(--c,var(--gold-line));background:rgba(var(--gold-rgb),.04);}
-.rot-seg .spr{width:26px;height:26px;object-fit:contain;flex:none;image-rendering:pixelated;
+.rot-dot{width:10px;height:10px;border-radius:50%;background:var(--c,var(--gold));
+  box-shadow:0 0 7px var(--c,var(--gold));flex:none;}
+.rot-seg{position:relative;display:flex;align-items:center;gap:.5rem;padding:.4rem .5rem;border-radius:9px;
+  border:1px solid var(--line);border-left:3px solid var(--c,var(--gold-line));background:rgba(var(--gold-rgb),.04);}
+.rot-spr{display:flex;align-items:center;gap:.2rem;flex:none;}
+.rot-seg .spr{width:34px;height:34px;object-fit:contain;flex:none;image-rendering:pixelated;
   filter:drop-shadow(0 1px 1px rgba(0,0,0,.5));}
-.rot-name{flex:1;min-width:0;color:var(--ink);font-weight:600;font-size:.84rem;}
+.rot-txt{min-width:0;display:flex;flex-direction:column;gap:.04rem;}
+.rot-name{color:var(--ink);font-weight:600;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .rot-range{color:var(--muted);font-size:.72rem;white-space:nowrap;}
+/* 高亮进行中 */
+.rot-seg.now{border-color:var(--c,var(--gold));
+  box-shadow:0 0 0 1px var(--c,var(--gold)),0 5px 14px rgba(0,0,0,.3);
+  background:color-mix(in srgb, var(--c,var(--gold)) 13%, var(--panel2));}
+.rot-seg.now .rot-name{padding-right:3.4rem;}
+.rot-now{position:absolute;top:.32rem;right:.42rem;font-family:var(--display);font-size:.52rem;
+  letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:#10100a;
+  background:var(--c,var(--gold-bright));padding:.08rem .42rem;border-radius:999px;white-space:nowrap;}
+@media (max-width:760px){ .rot-board{grid-template-columns:1fr;} }
 
 /* ---------- Event detail drawer ---------- */
 .drawer{position:fixed;top:0;right:0;height:100%;width:min(430px,93vw);z-index:60;

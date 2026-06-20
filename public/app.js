@@ -500,7 +500,8 @@ function renderLongTerm(list) {
 }
 
 // Weekly rotation tracks (5★ / Mega / Max) for the current month, from
-// data/rotations.json. Stacked card-per-track list — readable at any width.
+// data/rotations.json. Three-column board (one column per track); the segment
+// whose date window contains today is highlighted as 进行中.
 function renderRotations() {
   const box = $('#rotations'); if (!box) return;
   const note = $('#rot-note');
@@ -512,18 +513,26 @@ function renderRotations() {
     box.innerHTML = '<p class="muted">本月轮换将在每日更新后显示。</p>';
     return;
   }
+  // 三栏并列:每条轨道一列,列内纵向列出周段;当前日期落在 [start,end] 内的段高亮。
+  // 「进行中」与日历同口径:parseDay 取本地零点,结束日含当天(inclusive)。
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const board = document.createElement('div');
+  board.className = 'rot-board';
   tracks.forEach(tr => {
     const color = tr.color || '#b08a44';
-    const card = document.createElement('div');
-    card.className = 'rot-track';
+    const col = document.createElement('div');
+    col.className = 'rot-col';
+    col.style.setProperty('--c', color);
     const head = document.createElement('div');
-    head.className = 'rot-track-head';
-    head.innerHTML = `<i style="background:${escapeHtml(color)}"></i><span>${escapeHtml(tr.label || '')}</span>`;
-    card.appendChild(head);
+    head.className = 'rot-col-head';
+    head.innerHTML = `<span class="rot-dot"></span><span class="rot-col-name">${escapeHtml(tr.label || '')}</span>`;
+    col.appendChild(head);
     (tr.segments || []).forEach(seg => {
-      const row = document.createElement('div');
-      row.className = 'rot-seg';
-      row.style.setProperty('--c', color);
+      const sd = parseDay(seg.start);
+      const ed = parseDay(seg.end) || sd;
+      const active = !!sd && sd <= today && today <= ed;
+      const cell = document.createElement('div');
+      cell.className = 'rot-seg' + (active ? ' now' : '');
       const mons = (seg.pokemon || []).map(p => {
         const sp = monSprite(p);
         if (!sp) return '';
@@ -532,11 +541,14 @@ function renderRotations() {
       const range = (seg.start || seg.end)
         ? `<span class="rot-range">${escapeHtml(fmtDateShort(seg.start))}${seg.end && seg.end !== seg.start ? '–' + escapeHtml(fmtDateShort(seg.end)) : ''}</span>`
         : '';
-      row.innerHTML = `${mons}<span class="rot-name">${escapeHtml(seg.cn || seg.name || '')}</span>${range}`;
-      card.appendChild(row);
+      cell.innerHTML = `<div class="rot-spr">${mons}</div>`
+        + `<div class="rot-txt"><span class="rot-name">${escapeHtml(seg.cn || seg.name || '')}</span>${range}</div>`
+        + (active ? '<span class="rot-now">进行中</span>' : '');
+      col.appendChild(cell);
     });
-    box.appendChild(card);
+    board.appendChild(col);
   });
+  box.appendChild(board);
 }
 
 /* Inline resource icons. Tokens map to the actual asset filenames in
