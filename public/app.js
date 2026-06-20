@@ -686,7 +686,7 @@ const WC_SPOTS = [
   ['Wellington 植物园 / Auckland','新西兰 · 惠灵顿/奥克兰','nz','Pacific/Auckland','最早时区起点;活动 / raid 开局', -41.2806, 174.7676],
   ['Sydney 悉尼歌剧院一带','澳大利亚 · 悉尼','au','Australia/Sydney','早时区 raid / 活动候选', -33.8568, 151.2153],
   ['Shibuya / Shinjuku 涩谷新宿','日本 · 东京','jp','Asia/Tokyo','主热点;Go Fest / raid / city play 常用', 35.6595, 139.7005],
-  ['台北车站 Taipei Main Station','台湾 · 台北','tw','Asia/Taipei','raid-only 老热点;现强度有争议', 25.0478, 121.5173],
+  ['台北车站 Taipei Main Station','台湾(中国) · 台北','tw','Asia/Taipei','raid-only 老热点;现强度有争议', 25.0478, 121.5173],
   ['Dubai Marina 迪拜码头','阿联酋 · 迪拜','ae','Asia/Dubai','catch event 强,主要靠 lures', 25.0805, 55.1403],
   ['Plaza de Europa','西班牙 · 萨拉戈萨','es','Europe/Madrid','spawn density 高', 41.6488, -0.8891],
   ['Margaret Island 玛格丽特岛','匈牙利 · 布达佩斯','hu','Europe/Budapest','有人觉得比 Zara 好,证据较弱', 47.5278, 19.0506],
