@@ -305,9 +305,9 @@ read before you write, as always.
    - **Mega Booster — inline on each boss, NOT a separate bottom list.** Mechanic: an **active** Mega
      gives **+1 糖 when you catch a Pokémon sharing that Mega's 属性** (chance of extra / XL) — it is
      **not** "evolving yields that species' candy" and has nothing to do with evolving. For each boss,
-     put a **`.raid-mega`** 3-列网格 to the **right of the boss header** showing **6–8** same-属性 超级
+     put a **`.raid-mega`** 4-列网格 to the **right of the boss header** showing **6–8** same-属性 超级
      sprites that farm **that boss's** candy (`<img title="超级X · 共享<属性>">`), **sorted by 超级 attack
-     high→low, hard cap 8** (the 头右 grid fits 8 in 3 rows; a 4th row would stretch the card head). List
+     high→low, hard cap 8** (the 头右 grid fits 8 in 2 rows of 4). List
      as many as actually share the 属性 — don't pad with off-type Mega, and don't drop below the real count
      just to hit 6. Build the pairings from whatever bosses are live this run — never hard-code a fixed
      list. **Label the Mega by the 属性 it *shares* with the boss** (that shared type drives the candy) —
@@ -473,7 +473,7 @@ Use **only** these whitelisted, theme-correct classes (no inline colors, no `<st
 - current-raid blocks (structured `rankings-raid` only): one **`.raid-wall`** (3-up card grid) wrapping
   per-boss **`.raid-block`** cards. Each card = a **`.raid-boss`** header (`<img class="boss-icon">` +
   **`.binfo`**, which holds a **`.btop`** badge/name row above a **`.meta`** 属性/弱点 row) and a
-  **`.raid-mega`** 3-列网格 of **6–8** same-属性 Mega sprites pinned to the header's right (no text label —
+  **`.raid-mega`** 4-列网格 of **6–8** same-属性 Mega sprites pinned to the header's right (no text label —
   `.lbl` is CSS-hidden), with **`.rank-list.mini`** **flat** counter rows beneath (`mon-icon` / `strong` /
   `.meta` are siblings — no wrapper `<div>` — so the move `.meta` right-aligns). Type icons via `.ico`.
 
@@ -491,7 +491,7 @@ attackers/tanks to use (e.g. a Max/Dynamax event → the relevant Max picks).
 </div>
 ```
 当前团战 Counter — **按星级从高到低**;**全部 boss 卡放进一个 `.raid-wall`(每行 3 张)**。每张卡:boss 头
-(`.binfo` 里 `.btop` 档次/名 一行,`.meta` 属性/弱点 一行)+ **头右 `.raid-mega` 3-列网格(6–8 个同属性
+(`.binfo` 里 `.btop` 档次/名 一行,`.meta` 属性/弱点 一行)+ **头右 `.raid-mega` 4-列网格(6–8 个同属性
 超级,按超级攻击力高→低,上限 8,无文字标)** + **拍平的** `.rank-list.mini` counter 行(`mon-icon` /
 `strong` / `.meta` 平级,招式 `.meta` 右对齐)。**属性一律用图标**。占位符按本轮实际 boss 填:
 ```html

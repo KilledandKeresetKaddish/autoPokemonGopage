@@ -33,10 +33,12 @@ body{
   font-family:var(--sans);
   line-height:1.5;
   -webkit-font-smoothing:antialiased;
+  /* layers top→bottom: corner glows · readability veil · tarot 背景图 · solid fallback */
   background:
     radial-gradient(1100px 620px at 14% -10%, rgba(123,84,196,.16), transparent 60%),
     radial-gradient(1000px 600px at 100% 0%, rgba(var(--gold-rgb),.14), transparent 55%),
-    linear-gradient(180deg, var(--bg) 0%, #08070c 75%);
+    linear-gradient(180deg, rgba(10,8,14,.55) 0%, rgba(10,8,14,.68) 55%, rgba(8,7,12,.8) 100%),
+    url("background.png") center / cover no-repeat var(--bg);
   background-attachment:fixed;
 }
 /* faint star texture + warm centre glow, behind everything */
@@ -353,7 +355,7 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   background:var(--panel);border:1px solid var(--gold-line);border-radius:14px;
   padding:.5rem .65rem .45rem;box-shadow:0 10px 24px rgba(0,0,0,.3);}
 
-/* boss 头:左 = 图标 + 身份;右 = Mega 3 列网格 */
+/* boss 头:左 = 图标 + 身份;右 = Mega 4 列网格 */
 .raid-boss{display:flex;align-items:flex-start;gap:.55rem;margin:0;padding:0 0 .4rem;
   background:none;border:0;border-bottom:1px solid var(--line);border-radius:0;box-shadow:none;flex-wrap:nowrap;}
 .raid-boss .boss-icon{width:50px;height:50px;flex:none;object-fit:contain;image-rendering:pixelated;
@@ -365,8 +367,8 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .raid-boss .badge{font-size:.7rem;padding:.08rem .5rem;vertical-align:0;margin:0;}
 .raid-boss .meta{color:var(--muted);font-size:.8rem;margin:0;display:flex;align-items:center;flex-wrap:wrap;gap:.05rem;}
 
-/* 头右 Mega:3 列网格,6–8 个 → 最多 3 行;最省横向空间 */
-.raid-mega{margin-left:auto;flex:none;display:grid;grid-template-columns:repeat(3,28px);gap:.24rem;
+/* 头右 Mega:4 列网格,6–8 个 → 最多 2 行(8 个正好 4×2) */
+.raid-mega{margin-left:auto;flex:none;display:grid;grid-template-columns:repeat(4,28px);gap:.24rem;
   align-content:start;padding:0;border:0;background:none;}
 .raid-mega .lbl{display:none;}                 /* 头右不放文字标,省宽 */
 .raid-mega img{width:28px;height:28px;object-fit:contain;image-rendering:pixelated;flex:none;
