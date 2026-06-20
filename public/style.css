@@ -169,6 +169,8 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   box-shadow:0 0 0 2px var(--ring,var(--gold-line)),0 3px 12px -2px rgba(0,0,0,.7),0 0 14px -2px var(--ring,var(--gold-line));}
 .raid-ico.s5{--ring:#d8b25f;}
 .raid-ico.mega{--ring:#9c7bb0;}
+.raid-ico.max{--ring:#bd7f97;}
+/* .gen = an unknown future tier; data-supplied --ring colours it, else gold-line */
 /* corner tier badge — hover only (≤2 chars, agent-set via track.tag) */
 .raid-ico .tg{position:absolute;bottom:-3px;left:-3px;font-size:.5rem;font-weight:800;line-height:1;
   padding:0 2px;border-radius:4px;background:var(--ring,var(--gold-line));color:#1a1206;
@@ -185,9 +187,10 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 @keyframes raidcyc3{0%,33.333%{opacity:1}33.334%,100%{opacity:0}}
 /* legend rings for the day icons */
 .lg .ring{width:13px;height:13px;border-radius:5px;display:inline-block;
-  background:rgba(var(--gold-rgb),.12);box-shadow:0 0 0 2px var(--gold-line);}
-.lg .ring.s5{box-shadow:0 0 0 2px #d8b25f;}
-.lg .ring.mega{box-shadow:0 0 0 2px #9c7bb0;}
+  background:rgba(var(--gold-rgb),.12);box-shadow:0 0 0 2px var(--ring,var(--gold-line));}
+.lg .ring.s5{--ring:#d8b25f;}
+.lg .ring.mega{--ring:#9c7bb0;}
+.lg .ring.max{--ring:#bd7f97;}
 
 /* reserves vertical room for the absolutely-positioned spanning bars */
 .cal-barspace{height:var(--bars-h,0px);flex:none;}

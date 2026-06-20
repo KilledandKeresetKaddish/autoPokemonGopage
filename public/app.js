@@ -65,6 +65,21 @@ function resolveCat(def) {
   };
 }
 
+/* Calendar raid day-icon presentation, keyed by rotations.json track.key. The
+ * three known tiers get a fixed CSS class + glyph + 中文 legend label; ANY new
+ * tier the game adds still renders — raidMeta() falls back to a neutral '.gen'
+ * chip and a ≤2-char badge derived from track.tag (or the key). So a future
+ * rotation track shows up in the day cells automatically, no code change needed.
+ * Per-track `color` (from the data) drives the ring via inline --ring regardless. */
+const RAID_META = {
+  '5star': { cls: 's5',   tag: '5★', label: '5★ 团战' },
+  'mega':  { cls: 'mega', tag: 'M',  label: '超级团战' },
+  'max':   { cls: 'max',  tag: 'MX', label: '极巨团战' },
+};
+function raidMeta(key) {
+  return RAID_META[key] || { cls: 'gen', tag: (key || '').slice(0, 2).toUpperCase() || '★', label: (key || '团战') + ' 团战' };
+}
+
 /* ---------- small helpers ---------- */
 function $(sel) { return document.querySelector(sel); }
 function ymd(d) {
@@ -254,16 +269,20 @@ function renderCalendar() {
   const todayStr = ymd(new Date());
   const present = new Set();
 
-  // weekly 5★/Mega rotation bosses → one icon per track next to the day number
+  // weekly raid-rotation bosses → one icon per track next to the day number
   // (driven by rotations.json, which carries pokemon ids; events.json raids don't).
+  // Opt-out, not allow-list: every rotation track shows unless it sets
+  // showOnCalendar:false, so a new boss tier appears in the cells with no code change.
   const raidsByDay = {};
+  const raidTracks = new Map(); // track.key → {key,color,tag,name} for tracks shown this month (legend)
   (state.rotations && state.rotations.tracks || [])
-    .filter(t => t.key === '5star' || t.key === 'mega')
+    .filter(t => t && t.key && t.showOnCalendar !== false)
     .forEach(t => (t.segments || []).forEach(seg => {
       const si = dayDiff(gridStart, parseDay(seg.start));
       const ei = dayDiff(gridStart, parseDay(seg.end || seg.start));
       const mons = (seg.pokemon || []).filter(p => p && (p.id || p.sprite));
       if (!mons.length || isNaN(si) || isNaN(ei) || ei < 0 || si > 41) return;
+      raidTracks.set(t.key, { key: t.key, color: t.color, tag: t.tag, name: t.name });
       for (let i = Math.max(0, si); i <= Math.min(41, ei); i++) {
         (raidsByDay[i] = raidsByDay[i] || []).push(
           { tier: t.key, color: t.color, tag: t.tag, mons, name: seg.cn || seg.name, start: seg.start, end: seg.end });
@@ -340,9 +359,10 @@ function renderCalendar() {
         raids.forEach(rd => {
           const mons = rd.mons.slice(0, 3);
           const b = document.createElement('button');
-          b.className = 'raid-ico ' + (rd.tier === '5star' ? 's5' : 'mega') + (mons.length > 1 ? ' slide n' + mons.length : '');
+          const meta = raidMeta(rd.tier);
+          b.className = 'raid-ico ' + meta.cls + (mons.length > 1 ? ' slide n' + mons.length : '');
           if (rd.color) b.style.setProperty('--ring', rd.color);
-          const badge = (rd.tag || (rd.tier === '5star' ? '5★' : 'M')).slice(0, 2);
+          const badge = (rd.tag || meta.tag).slice(0, 2);
           b.title = `${rd.name} · ${fmtDateShort(rd.start)}–${fmtDateShort(rd.end)}`;
           b.innerHTML = mons.map(p => `<img src="${escapeHtml(monSprite(p))}" alt="" loading="lazy" onerror="this.style.display='none'">`).join('')
             + `<span class="tg">${escapeHtml(badge)}</span>`;
@@ -423,12 +443,14 @@ function renderCalendar() {
   }
 
   root.appendChild(weeks);
-  renderLegend(present, hasRaidIcons);
+  renderLegend(present, raidTracks);
   renderLongTerm(longTerm);
 }
 
 // Legend reflects only the categories actually present in the current month.
-function renderLegend(present, hasRaids) {
+// raidTracks is a Map(track.key → {key,color,tag,name}) of the rotation tiers that
+// placed an icon this month — emitted as ring chips so new tiers self-document.
+function renderLegend(present, raidTracks) {
   const box = $('#cal-legend');
   if (!box) return;
   const seen = new Set();
@@ -444,8 +466,12 @@ function renderLegend(present, hasRaids) {
   let html = items.map(c =>
     `<span class="lg"><i class="${c.kind === 'chip' ? 'round' : ''}" style="background:${escapeHtml(c.color)}"></i>${escapeHtml(c.label)}</span>`
   ).join('');
-  if (hasRaids) {
-    html += '<span class="lg"><i class="ring s5"></i>5★ 团战</span><span class="lg"><i class="ring mega"></i>超级团战</span>';
+  if (raidTracks && raidTracks.size) {
+    html += [...raidTracks.values()].map(t => {
+      const meta = raidMeta(t.key);
+      const ring = t.color ? ` style="--ring:${escapeHtml(t.color)}"` : '';
+      return `<span class="lg"><i class="ring ${meta.cls}"${ring}></i>${escapeHtml(t.name || meta.label)}</span>`;
+    }).join('');
   }
   box.innerHTML = html || '';
 }
@@ -665,12 +691,11 @@ const WC_SPOTS = [
   ['Plaza de Europa','西班牙 · 萨拉戈萨','es','Europe/Madrid','spawn density 高', 41.6488, -0.8891],
   ['Margaret Island 玛格丽特岛','匈牙利 · 布达佩斯','hu','Europe/Budapest','有人觉得比 Zara 好,证据较弱', 47.5278, 19.0506],
   ['Ibirapuera Park 伊比拉普埃拉公园','巴西 · 圣保罗','br','America/Sao_Paulo','stops + 重 lures;活动日 catch 强', -23.5874, -46.6576],
-  ['Bryant Park / Central Park','美国 · 纽约','us','America/New_York','spawn + lure + raid 强(NYC)', 40.7536, -73.9832],
-  ['Havana 随机坐标','古巴 · 哈瓦那','cu','America/Havana','Go Fest 末尾随机坐标,不算稳定热点', 23.1136, -82.3666],
-  ['Lincoln Park','美国 · 芝加哥','us','America/Chicago','Go Fest / city play;非自然 density', 41.9214, -87.6513],
+  ['Bryant Park / Central Park / Times Square','美国 · 纽约','us','America/New_York','spawn + lure + raid 强(NYC)', 40.7536, -73.9832],
+  ['Lincoln Park / City of Dallas','美国 · 芝加哥 / 达拉斯','us','America/Chicago','Go Fest / city play;非自然 density', 41.9214, -87.6513],
   ['Calle República de El Salvador 21','墨西哥 · 墨西哥城 CDMX','mx','America/Mexico_City','疑似社区热点;stops / gyms 密集', 19.4316, -99.1336],
-  ['PIER 39 / Santa Monica Pier','美国 · 旧金山 / 洛杉矶','us','America/Los_Angeles','传统 pier 热点;评价分裂', 37.8087, -122.4098],
-  ['Honolulu / Waikiki','美国 · 夏威夷檀香山','us','Pacific/Honolulu','最后尾巴时区', 21.2793, -157.8294],
+  ['PIER 39 / Union Square','美国 · 旧金山','us','America/Los_Angeles','传统 pier 热点;评价分裂', 37.8087, -122.4098],
+  ['Honolulu / 416 cookie','美国 · 夏威夷檀香山','us','Pacific/Honolulu','最后尾巴时区', 21.2793, -157.8294],
 ];
 
 let wcActive = false; // false = 显示全部(最早→最晚);true = 按所选时段筛选

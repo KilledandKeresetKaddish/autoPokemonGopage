@@ -111,10 +111,13 @@ or touch them.**
 日历的两种"标记"由**不同文件**驱动,**选错文件 = 看不到效果**。这是硬约定,
 `scripts/preflight.sh` 会据此在发布前拦截(orphan / 不一致 / form-id / 超长 chip)。
 
-- **日期数字旁的小角标(5★ 金环 / 超级团战 紫环)= 只由 `rotations.json` 的 `5star`/`mega` 轨产生**,
-  覆盖到的每一天画一个。`events.json` 里的事件**永远变不成角标** —— 它们只会是横跨日的 **bar** 或格子里的
-  **chip**。所以"给某些天加 Boss 角标"(包括 传奇之路 这类多日活动)= 往 `rotations.json` 加**单日段**,
-  **不是**往 `events.json` 塞 `raid-hour` chip。
+- **日期数字旁的小角标 = 由 `rotations.json` 的轨(track)产生**,覆盖到的每一天画一个。`events.json` 里的
+  事件**永远变不成角标** —— 它们只会是横跨日的 **bar** 或格子里的 **chip**。所以"给某些天加 Boss 角标"
+  (包括 传奇之路 这类多日活动)= 往 `rotations.json` 加**单日段**,**不是**往 `events.json` 塞 `raid-hour` chip。
+- **角标轨是"默认全显示"的(opt-out)**:`app.js` 现在渲染 `rotations.json` 里**每一条**带 `pokemon` 的轨,
+  不再写死只认 `5star`/`mega`。`5star`(金环 5★)、`mega`(紫环 M)、`max`(粉环 MX,极巨团战)有内置配色/字形/图例文案;
+  **游戏将来新增的团战档次也会自动出现在格子里** —— 新轨用一个新 `key` + `color` + **≤2 字符的 `tag`**(角标只显示 2 字)
+  即可,无需改代码。某条轨不想进日历格子(例如纯统计轨)时,给它设 `"showOnCalendar": false`。
 - **有角标的月份,`app.js` 会隐藏所有 `raid-battles` 的 bar**(改由角标代表)。因此每个 `raid-battles`
   事件**必须**有一个 **dex id + 日期都匹配**的 `rotations.json` 段,点角标才能经 `findRaidEvent` 打开它的
   抽屉;否则它**既无 bar 又无角标 = 静默消失**(preflight 报 `orphan raid`)。例外:`longTerm:true` 进
@@ -418,17 +421,18 @@ read before you write, as always.
           "start": "2026-06-10", "end": "2026-06-16" }
       ] },
     { "key": "mega", "label": "超级团战", "color": "#9c7bb0", "tag": "M", "segments": [ "…" ] },
-    { "key": "max",  "label": "Max 团战", "color": "#bd7f97", "segments": [ "…" ] }
+    { "key": "max",  "label": "极巨团战", "color": "#bd7f97", "tag": "MX", "segments": [ "…" ] }
   ]
 }
 ```
-- The three tracks 5★ / Mega / Max. `cn` = displayed name; `pokemon[]` may hold >1 boss (dual/triple
-  rotations — they **cycle** inside one day-number icon). `start`/`end` = `YYYY-MM-DD`.
-- **5★ and Mega weekly bosses render as small icons next to each day's number** (the grid no longer
+- Tracks 5★ / Mega / Max (+ any future tier). `cn` = displayed name; `pokemon[]` may hold >1 boss
+  (dual/triple rotations — they **cycle** inside one day-number icon). `start`/`end` = `YYYY-MM-DD`.
+- **Every track with `pokemon` renders as small icons next to each day's number** (the grid no longer
   draws weekly-raid bars). So keep rotations.json **complete for the whole month**, or those raids
   vanish from the grid. `color` drives both the rotation section and the day-icon ring — 5★ = gold
-  `#d8b25f`, Mega = purple `#9c7bb0` (Max keeps its own; Max is not a day icon). `tag` (≤2 chars,
-  optional) is the icon's hover badge (default 5★ / M).
+  `#d8b25f`, Mega = purple `#9c7bb0`, Max = mauve `#bd7f97`. `tag` (**≤2 chars**) is the icon's corner
+  badge — set it on every track (5★/M/MX are built-in fallbacks; a new tier with no `tag` falls back to
+  the first 2 letters of its `key`). To keep a track **out** of the day cells, set `"showOnCalendar": false`.
 - **A Mega/5★ day-icon links to its raid event by *dex id* — keep the id consistent.** Clicking an
   icon opens the drawer of the matching `events.json` raid (its counters / links / summary). The
   matcher compares `pokemon[].id`, so a rotation segment **must use the SAME id as that boss's

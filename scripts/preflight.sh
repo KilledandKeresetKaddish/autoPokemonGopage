@@ -69,10 +69,12 @@ def is_long(e):
     s, en = pday(e.get('start')), pday(e.get('end')) or pday(e.get('start'))
     return bool(s and en and (en - s).days >= 14)
 
-# 5★/Mega rotation segments are the only ones that become day-icons (app.js)
+# Rotation segments that become day-icons (app.js): every track with a key,
+# unless it opts out with showOnCalendar:false. (Was hardcoded 5★/Mega; app.js is
+# now opt-out so new tiers like Max render too — keep this mirror in sync.)
 icon_segs = []
 for t in (rot.get('tracks') or []):
-    if t.get('key') in ('5star', 'mega'):
+    if t.get('key') and t.get('showOnCalendar') is not False:
         for seg in (t.get('segments') or []):
             icon_segs.append((t.get('key'), seg))
 
@@ -148,7 +150,7 @@ for E in events:
     for (y, mn) in sorted(months):
         if in_month_days(E, y, mn) and has_icons(y, mn):
             fail(f"orphan raid: '{E.get('id')}' (raid-battles) is hidden by day-icons in {y}-{mn:02d} "
-                 f"but no 5★/Mega rotation segment links to it → it vanishes. Add a rotations.json "
+                 f"but no rotation segment links to it → it vanishes. Add a rotations.json "
                  f"segment (matching dex id + dates) or set longTerm:true.")
             break
 
