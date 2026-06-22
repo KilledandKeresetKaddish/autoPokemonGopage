@@ -593,8 +593,17 @@ function openDetail(ev) {
   }).join('');
   // Generic extra sections (paid/ticketed options, special research, …) → collapsible.
   const sections = (ev.sections || []).filter(s => s && s.title).map(s => {
+    // 精灵图网格:section 可带 mons[](条目形状同 pokemon[]/counters[]:{id|sprite, name?, shiny?, hub?})。
+    // 渲染为无 caption、可点击跳 Hub 的图标;name 只作 alt/title(hover),绝不显示为文字/技能。
+    const grid = (s.mons || []).filter(m => m && (m.id || m.name || m.sprite)).map(m => {
+      const sp = monSprite(m);
+      if (!sp) return '';
+      const img = `<img class="spr" src="${escapeHtml(sp)}" alt="${escapeHtml(m.name || '')}" title="${escapeHtml(m.name || '')}" loading="lazy" onerror="this.style.display='none'">`;
+      return `<span class="spr-cell">${linkSprite(img, m)}${m.shiny ? '<span class="shiny">✨</span>' : ''}</span>`;
+    }).join('');
     const items = (s.items || []).map(it => `<li>${iconify(it)}</li>`).join('');
-    const body = items ? `<ul>${items}</ul>` : (s.body ? `<p>${iconify(s.body)}</p>` : '');
+    const body = (grid ? `<div class="spr-grid">${grid}</div>` : '')
+      + (items ? `<ul>${items}</ul>` : (s.body ? `<p>${iconify(s.body)}</p>` : ''));
     return `<details><summary>${escapeHtml(s.title)}</summary><div class="det-body">${body}</div></details>`;
   }).join('');
   // Prefer the aggregated multi-source links[]; fall back to the legacy single link.

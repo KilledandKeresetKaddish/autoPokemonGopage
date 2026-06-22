@@ -384,7 +384,10 @@ read before you write, as always.
   moves) → rendered as a collapsible "团战 Counter" block. Fill for raid / mega / raid-day events from the
   Hub raid guide or `db.pokemongohub.net`, justified by `gamemaster` — **don't invent**.
 - `sections`: **free-form** collapsible blocks `[{ "title": "...", "items": ["..."] }]` or
-  `[{ "title": "...", "body": "一段文字" }]` (`body` renders as a paragraph instead of a list) — **you decide
+  `[{ "title": "...", "body": "一段文字" }]` (`body` renders as a paragraph instead of a list) or
+  `[{ "title": "...", "mons": [{ "id": 144, "name": "急冻鸟", "shiny": true }, …] }]` (`mons` renders as a
+  **caption-less sprite-icon grid** — dex `id` + sprite/hub conventions like `pokemon[]`/`counters[]`; name
+  shows only on hover, no text/moves) — **you decide
   per event** what's worth surfacing (付费/票务、限时调查步骤、栖息地时段、Field Research 任务、奖励清单…).
   Titles and contents are yours to choose; 付费内容 is just one example. Use them to bring the useful
   detail inline instead of forcing users out to the source link.
