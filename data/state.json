@@ -1,88 +1,88 @@
 {
-  "lastUpdated": "2026-06-20T13:11:00Z",
+  "lastUpdated": "2026-06-22T11:15:00Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-06-20T13:05:00Z",
-      "lastChecked": "2026-06-20T13:11:00Z",
+      "lastFetch": "2026-06-22T11:11:00Z",
+      "lastChecked": "2026-06-22T11:15:00Z",
       "status": "ok",
       "bytes": 60184,
-      "note": "LeekDuck JSON OK;6月下旬+7月+8月事件完整。本轮已补齐 8 月预告活动(孵化日/社区日/团战日/选择你的道路:毒与藤蔓/4 档 GBL,均为日期已定、主角待官方公布的占位)。discover.sh new 窗口仅覆盖本月+次月,8 月需手动从 raw feed 取。"
+      "note": "LeekDuck JSON OK;6月下旬+7月+8月事件完整。discover.sh new 本轮无新增。站内 52 条与 feed 日期一致,本轮无需改动 events.json。"
     },
     "raids": {
-      "lastFetch": "2026-06-20T13:05:00Z",
-      "lastChecked": "2026-06-20T13:11:00Z",
+      "lastFetch": "2026-06-22T11:11:00Z",
+      "lastChecked": "2026-06-22T11:15:00Z",
       "status": "ok",
       "bytes": 16037,
-      "note": "当前团战未轮换:Necrozma 5★, Shadow Dialga 5★暗影, Mega Scizor 超级;3★/1★/暗影池匹配排行 Counter。下一次轮换 6/24(→纸御剑/铁火辉夜 + 超级大比鸟)。"
+      "note": "当前团战未轮换(仍 Necrozma 5★, Shadow Dialga 5★暗影, Mega Scizor 超级);下一次轮换 6/24(→纸御剑/铁火辉夜 + 超级大比鸟)。rankings-raid 与 raids.json 一致,无需改。"
     },
     "eggs": {
       "lastFetch": "2026-06-19T14:10:22Z",
-      "lastChecked": "2026-06-20T03:45:00Z",
+      "lastChecked": "2026-06-22T11:15:00Z",
       "status": "ok",
       "bytes": 29466,
-      "note": "蛋池数据仍新鲜(<7d),本轮未刷新;传奇之路蛋池信息已引用到 sections。"
+      "note": "蛋池数据仍新鲜(<7d),本轮未刷新。"
     },
     "research": {
       "lastFetch": "2026-06-19T14:10:22Z",
-      "lastChecked": "2026-06-20T03:45:00Z",
+      "lastChecked": "2026-06-22T11:15:00Z",
       "status": "ok",
       "bytes": 67259,
       "note": "调查奖励数据仍新鲜,本轮未刷新。"
     },
     "gamemaster": {
       "lastFetch": "2026-06-19T14:10:23Z",
-      "lastChecked": "2026-06-20T03:45:00Z",
+      "lastChecked": "2026-06-22T11:15:00Z",
       "status": "ok",
       "bytes": 912180,
       "note": "PvPoke gamemaster 仍新鲜(<7d),本轮未刷新;属性/招式类型用于 counter 验证。注意:gamemaster 的 mega 名单不可作为'是否有 Mega'判据(滞后于新内容)。"
     },
     "tiers-attackers": {
-      "lastFetch": "2026-06-19T14:10:26Z",
-      "lastChecked": "2026-06-20T03:45:00Z",
+      "lastFetch": "2026-06-22T11:11:00Z",
+      "lastChecked": "2026-06-22T11:15:00Z",
       "status": "ok",
       "bytes": 34727,
-      "note": "Max 攻手榜仍新鲜(<3d),本轮未刷新;A/B tier 已在 rankings-attackers。"
+      "note": "Max 攻手榜已刷新;内容与上轮一致(同字节),A/B tier 已在 rankings-attackers。"
     },
     "tiers-defenders": {
-      "lastFetch": "2026-06-19T14:10:30Z",
-      "lastChecked": "2026-06-20T03:45:00Z",
+      "lastFetch": "2026-06-22T11:11:00Z",
+      "lastChecked": "2026-06-22T11:15:00Z",
       "status": "ok",
       "bytes": 38671,
-      "note": "Max 防守榜仍新鲜(<3d),本轮未刷新;S/A/B tier 已在 rankings-defenders。"
+      "note": "Max 防守榜已刷新;内容与上轮一致,S/A/B tier 已在 rankings-defenders。"
     },
     "tiers-pokebase": {
-      "lastFetch": "2026-06-19T14:14:02Z",
-      "lastChecked": "2026-06-20T03:45:00Z",
+      "lastFetch": "2026-06-22T11:11:00Z",
+      "lastChecked": "2026-06-22T11:15:00Z",
       "status": "ok",
-      "bytes": 121558,
-      "note": "Pokébase 交叉参考仍新鲜,本轮未刷新。"
+      "bytes": 121569,
+      "note": "Pokébase 交叉参考已刷新。"
     },
     "events-hub": {
-      "lastFetch": "2026-06-20T13:05:00Z",
-      "lastChecked": "2026-06-20T13:11:00Z",
+      "lastFetch": "2026-06-22T11:11:00Z",
+      "lastChecked": "2026-06-22T11:15:00Z",
       "status": "ok",
-      "bytes": 30695,
-      "note": "Hub 事件索引 OK。注意:索引页不含周轮换表,轮换需 fetch.sh url 拉 june-2026-pokemon-go-events 文章(本轮 rotations 未变,沿用上轮已核对数据)。"
+      "bytes": 30424,
+      "note": "Hub 事件索引 OK。索引页不含周轮换表,本轮 rotations 未变(沿用上轮已核对数据)。"
     },
     "events-pokebase": {
-      "lastFetch": "2026-06-20T13:05:00Z",
-      "lastChecked": "2026-06-20T13:11:00Z",
+      "lastFetch": "2026-06-22T11:11:00Z",
+      "lastChecked": "2026-06-22T11:15:00Z",
       "status": "ok",
-      "bytes": 29982,
+      "bytes": 29351,
       "note": "Pokébase 事件列表可用。"
     },
     "events-official": {
-      "lastFetch": "2026-06-20T13:05:00Z",
-      "lastChecked": "2026-06-20T13:11:00Z",
+      "lastFetch": "2026-06-22T11:11:00Z",
+      "lastChecked": "2026-06-22T11:15:00Z",
       "status": "ok",
       "bytes": 9930,
       "note": "官方新闻 OK。"
     }
   },
   "detailChecks": {
-    "checkedAt": "2026-06-20T13:11:00Z",
+    "checkedAt": "2026-06-22T11:15:00Z",
     "status": "ok",
-    "note": "每日源本轮(13:05Z)已刷新。当前团战 Boss 未轮换(6/24 才切),raids.json 与排行 Counter 一致。纠错复核:站内 events 日期全部与 feed 一致(mega-mewtwo-y 为 GO Fest 派生子活动 7/12,已 fetch 活动页确认、非错误);凉脊龙=Frigibax(996)、泪眼蜥=Sobble(816)、season-23 等关键名/id 经 pokeapi/gamemaster 核对无误。本轮修复:PokeAPI mega-latias 小图(10062)上游损坏、渲染为 Latios,已改用 Hub DB 380_mega_with_bg.webp 兜底。"
+    "note": "每日源本轮(11:11Z)已刷新。当前团战 Boss 未轮换(6/24 才切),raids.json 与排行 Counter 一致。discover.sh new 无新增。events.json/rotations.json 结构本轮无需改动;仅把日期敏感的自由区(本月看点/本期推荐)从 6/20 刷到 6/22:凉脊龙社区日(6/20)与化石乐趣(至 6/21)已过,Max周一极巨化咕咕(6/22–6/28)本周登场。preflight 仅既有 raidhour20260624 long-chip WARN(保留),validate 通过。"
   },
   "operatorNote": {
     "checkedAt": "2026-06-20T14:35:00Z",
