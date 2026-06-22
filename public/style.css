@@ -332,6 +332,13 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .ctr-row .spr{width:32px;height:32px;object-fit:contain;image-rendering:pixelated;flex:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5));}
 .ctr-row strong{color:var(--h1);}
 .ctr-moves{color:var(--muted);font-size:.8rem;}
+/* 精灵图网格(无名字):section 带 mons[] 时用,如「当日阵容」 */
+.spr-grid{display:flex;flex-wrap:wrap;gap:.4rem;padding:.15rem 0;}
+.spr-cell{position:relative;display:inline-flex;}
+.spr-grid .spr{width:42px;height:42px;object-fit:contain;image-rendering:pixelated;flex:none;
+  background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:.18rem;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.5));}
+.spr-grid .spr-link:hover .spr{border-color:var(--gold-line);}
 
 /* ---------- Rankings ---------- */
 .subtabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.1rem;}

@@ -117,12 +117,24 @@ function catOf(ev) {
   const span = ev._s && ev._e ? dayDiff(ev._s, ev._e) : 0;
   return { color: hashColor(ev.type), fg: INK_DARK, label: ev.heading || ev.type || '活动', kind: span >= 1 ? 'bar' : 'chip' };
 }
-/* Long-running "background" events (season / pass / league, or anything that
- * spans more than ~2 weeks) are pulled out of the day grid into a compact band
- * so they don't bury the headline short events. The daily agent can override
- * either way with an explicit longTerm (or display:'banner'|'bar') flag. */
-const LONG_TYPES = new Set(['season', 'go-pass', 'go-battle-league']);
+/* PVP events (GO Battle League seasons, cups, Battle Weekend/Day…) are pulled
+ * into their own 「PVP活动」 band, mirroring the long-term band's form. The daily
+ * agent marks them with pvp:true (or display:'pvp'); go-battle-league is auto-
+ * classified. pvp:false forces an event out. Checked before isLongTerm so a long
+ * PVP season lands in PVP, not 长期活动. */
+const PVP_TYPES = new Set(['go-battle-league']);
+function isPvp(ev) {
+  if (ev.pvp === true || ev.display === 'pvp') return true;
+  if (ev.pvp === false) return false;
+  return PVP_TYPES.has(ev.type);
+}
+/* Long-running "background" events (season / pass, or anything that spans more
+ * than ~2 weeks) are pulled out of the day grid into a compact band so they don't
+ * bury the headline short events. The daily agent can override either way with an
+ * explicit longTerm (or display:'banner'|'bar') flag. */
+const LONG_TYPES = new Set(['season', 'go-pass']);
 function isLongTerm(ev) {
+  if (isPvp(ev)) return false;            // PVP events get their own band (above)
   if (ev.longTerm === true || ev.display === 'banner') return true;
   if (ev.longTerm === false || ev.display === 'bar') return false;
   if (LONG_TYPES.has(ev.type)) return true;
@@ -292,12 +304,14 @@ function renderCalendar() {
   const hasRaidIcons = Object.keys(raidsByDay).length > 0;
 
   // map every event into grid indices, clipped to the visible 0..41 range
-  const bars = [], chipsByDay = {}, longTerm = [];
+  const bars = [], chipsByDay = {}, longTerm = [], pvp = [];
   state.events.forEach(ev => {
     if (!ev._s) return;
     const si = dayDiff(gridStart, ev._s);
     const ei = dayDiff(gridStart, ev._e);
     if (ei < 0 || si > 41) return; // outside the visible grid
+    // PVP events (league / cups / battle weekends) get their own band below 长期活动
+    if (isPvp(ev)) { pvp.push(ev); return; }
     // long-running background events leave the grid for the compact band below
     if (isLongTerm(ev)) { longTerm.push(ev); return; }
     // weekly 5★/Mega bosses show as day-number icons instead — but only drop the
@@ -444,7 +458,8 @@ function renderCalendar() {
 
   root.appendChild(weeks);
   renderLegend(present, raidTracks);
-  renderLongTerm(longTerm);
+  renderBand('#long-term', '长期活动', longTerm);
+  renderBand('#pvp-band', 'PVP活动', pvp);
 }
 
 // Legend reflects only the categories actually present in the current month.
@@ -476,14 +491,15 @@ function renderLegend(present, raidTracks) {
   box.innerHTML = html || '';
 }
 
-// Compact band of long-running events (season / pass / league / multi-week),
-// shown under the grid so the day cells stay focused on headline events.
-function renderLongTerm(list) {
-  const box = $('#long-term');
+// Compact band of pulled-out events — 长期活动 (season / pass / multi-week) and
+// PVP活动 (league / cups / battle weekends) — shown under the grid so the day
+// cells stay focused on headline events. One renderer, reused for both bands.
+function renderBand(boxId, title, list) {
+  const box = $(boxId);
   if (!box) return;
   if (!list.length) { box.hidden = true; box.innerHTML = ''; return; }
   box.hidden = false;
-  box.innerHTML = '<span class="lt-title">长期活动</span>';
+  box.innerHTML = `<span class="lt-title">${escapeHtml(title)}</span>`;
   list.slice().sort((a, b) => a._s - b._s).forEach(ev => {
     const cat = catOf(ev);
     const sp = firstSprite(ev);
@@ -593,8 +609,17 @@ function openDetail(ev) {
   }).join('');
   // Generic extra sections (paid/ticketed options, special research, …) → collapsible.
   const sections = (ev.sections || []).filter(s => s && s.title).map(s => {
+    // 精灵图网格:section 可带 mons[](条目形状同 pokemon[]/counters[]:{id|sprite, name?, shiny?, hub?})。
+    // 渲染为无 caption、可点击跳 Hub 的图标;name 只作 alt/title(hover),绝不显示为文字/技能。
+    const grid = (s.mons || []).filter(m => m && (m.id || m.name || m.sprite)).map(m => {
+      const sp = monSprite(m);
+      if (!sp) return '';
+      const img = `<img class="spr" src="${escapeHtml(sp)}" alt="${escapeHtml(m.name || '')}" title="${escapeHtml(m.name || '')}" loading="lazy" onerror="this.style.display='none'">`;
+      return `<span class="spr-cell">${linkSprite(img, m)}${m.shiny ? '<span class="shiny">✨</span>' : ''}</span>`;
+    }).join('');
     const items = (s.items || []).map(it => `<li>${iconify(it)}</li>`).join('');
-    const body = items ? `<ul>${items}</ul>` : (s.body ? `<p>${iconify(s.body)}</p>` : '');
+    const body = (grid ? `<div class="spr-grid">${grid}</div>` : '')
+      + (items ? `<ul>${items}</ul>` : (s.body ? `<p>${iconify(s.body)}</p>` : ''));
     return `<details><summary>${escapeHtml(s.title)}</summary><div class="det-body">${body}</div></details>`;
   }).join('');
   // Prefer the aggregated multi-source links[]; fall back to the legacy single link.

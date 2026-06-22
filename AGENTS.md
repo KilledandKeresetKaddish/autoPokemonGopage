@@ -57,11 +57,12 @@ Day", treat <X>'s Mega as real (e.g. 超级雷丘, 超级盔甲鸟) and render t
 ---
 
 ## The site (2 content sections + owner placeholders)
-1. **Calendar** (`#view-calendar`) — month grid **+ a 长期活动 band** (long-running events
+1. **Calendar** (`#view-calendar`) — month grid **+ a 长期活动 band + a PVP活动 band** (events
    pulled out of the grid) **+ a 本月 Weekly Rotations** section. Data-driven from
    `public/data/events.json` and `public/data/rotations.json`: short headline events live in
-   the grid; season/pass/league/multi-week events render in the band; the 5★/Mega/Max weekly
-   boss rotation renders from `rotations.json`.
+   the grid; season/pass/multi-week events render in the 长期活动 band; PVP events (对战联盟 /
+   杯赛 / 对战周末) render in the PVP活动 band; the 5★/Mega/Max weekly boss rotation renders
+   from `rotations.json`.
 2. **Rankings** (`#view-rankings`) — Max attackers / Max defenders / raid counters, plus
    a "本期推荐" panel tied to what's live right now.
 The other two views — **世界时钟** (`#view-clock`) and **实用链接** (`#view-links`) — are
@@ -256,11 +257,20 @@ read before you write, as always.
      counters + links, not just a name. Put any other useful detail in `sections[]` — **your call per
      event** (paid/ticketed options, special research, habitat hours, reward lists…), not a fixed set.
      All render as collapsible blocks.
-   - **Flag long-running events.** Set `longTerm:true` on season / GO Pass / GO Battle League and
+   - **Flag long-running events.** Set `longTerm:true` on season / GO Pass and
      anything spanning more than ~2 weeks — they render in the 长期活动 band, not the day grid
      (this is what keeps headline short events visible). `longTerm:false` forces a borderline
      event back onto the grid. (You can also use `display:"banner"` to force long-term,
      or `display:"bar"` to force onto the grid — they mirror `longTerm:true`/`false`.)
+   - **Flag PVP events.** Set `pvp:true` on GO Battle League seasons, 杯赛 (大师/超级/超等联盟杯),
+     对战周末 / 对战日 and other PvP events — they render in the **PVP活动 band** (its own row under
+     长期活动), not the day grid. `go-battle-league` is auto-classified; `pvp:false` forces an event
+     out of the band; `display:"pvp"` mirrors `pvp:true`. PVP wins over 长期活动 when both apply.
+   - **Include local / in-person events — don't skip them.** Region- or city-specific events
+     (Safari Zone, City Safari, GO Tour 线下场, 区域线下活动, etc.) belong on the calendar too. Add
+     them like any other event, and make the **location explicit** in the 简体中文 `name` / `summary`
+     (e.g. "城市狩猎:大阪") so users see it's a 线下/local event. Never drop an event just because it
+     is location-specific.
    - **Flag shiny-boost events.** Set `highlight:true` on 社区日, 团战日, and any event with
      **boosted shiny odds** → ✨ on the calendar. Also set `pokemon[].shiny:true` for the
      shiny-available mons and add a `bonuses[]` line like "✨ 闪光概率提升" so the detail drawer shows it.
@@ -384,7 +394,10 @@ read before you write, as always.
   moves) → rendered as a collapsible "团战 Counter" block. Fill for raid / mega / raid-day events from the
   Hub raid guide or `db.pokemongohub.net`, justified by `gamemaster` — **don't invent**.
 - `sections`: **free-form** collapsible blocks `[{ "title": "...", "items": ["..."] }]` or
-  `[{ "title": "...", "body": "一段文字" }]` (`body` renders as a paragraph instead of a list) — **you decide
+  `[{ "title": "...", "body": "一段文字" }]` (`body` renders as a paragraph instead of a list) or
+  `[{ "title": "...", "mons": [{ "id": 144, "name": "急冻鸟", "shiny": true }, …] }]` (`mons` renders as a
+  **caption-less sprite-icon grid** — dex `id` + sprite/hub conventions like `pokemon[]`/`counters[]`; name
+  shows only on hover, no text/moves) — **you decide
   per event** what's worth surfacing (付费/票务、限时调查步骤、栖息地时段、Field Research 任务、奖励清单…).
   Titles and contents are yours to choose; 付费内容 is just one example. Use them to bring the useful
   detail inline instead of forcing users out to the source link.
@@ -400,8 +413,11 @@ read before you write, as always.
   `:token:` regex eats any `:…:`, so **never put a time like `7/7:18:00` in `bonuses`/`sections`** — the
   `:18:` is swallowed and the line shows mangled; write `7/7 18:00` (space, not colon).
 - `link` (single) is kept for back-compat; prefer `links[]` to point at **every** source for the event.
-- `longTerm:true` → renders in the 长期活动 band instead of the grid (auto for season/pass/league
+- `longTerm:true` → renders in the 长期活动 band instead of the grid (auto for season/pass
   and spans >~2 weeks; set `false` to force back onto the grid).
+- `pvp:true` → renders in the **PVP活动 band** instead of the grid (auto for `go-battle-league`;
+  use for 杯赛 / 对战周末 / 对战日; set `false` to force back onto the grid; `display:"pvp"` mirrors it).
+  Checked before `longTerm`, so a long PVP season lands in PVP, not 长期活动.
 - `highlight:true` → ✨ indicator on the calendar bar/chip (shiny boost). Set it for 社区日
   (Community Day), 团战日 (Raid Day), and any event with **boosted shiny odds**. Put the shiny detail
   in `pokemon[].shiny` (✨ on the sprite) and add a `bonuses[]` line like "✨ 闪光概率提升".

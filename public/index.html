@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pokémon GO 面板</title>
   <link rel="icon" type="image/x-icon" href="pokemongocalender.ico?v=14" />
-  <link rel="stylesheet" href="style.css?v=15" />
+  <link rel="stylesheet" href="style.css?v=16" />
 </head>
 <body>
   <!-- =====================================================================
@@ -47,9 +47,13 @@
 
       <div id="calendar" class="calendar"></div>
 
-      <!-- Long-running events (season/pass/league/multi-week). Rendered by app.js
+      <!-- Long-running events (season/pass/multi-week). Rendered by app.js
            from the same events.json so the day grid stays focused on short events. -->
       <div id="long-term" class="lt-band" hidden></div>
+
+      <!-- PVP events (GO Battle League / cups / battle weekends). Same band form
+           as 长期活动; populated by app.js (type go-battle-league or pvp:true). -->
+      <div id="pvp-band" class="lt-band" hidden></div>
 
       <aside class="cal-notes panel">
         <div class="panel-head"><span class="dia">◆</span><h3>本月看点</h3></div>
@@ -369,6 +373,6 @@
     <div class="muted">by: adonais·anabiosis</div>
   </footer>
 
-  <script src="app.js?v=15" defer></script>
+  <script src="app.js?v=17" defer></script>
 </body>
 </html>

@@ -27,7 +27,7 @@ req=(
   'id="view-calendar"' 'id="view-rankings"' 'id="view-clock"' 'id="view-links"'
   'id="calendar"' 'id="main-tabs"' 'id="rank-subtabs"'
   'id="event-detail"' 'id="last-updated"'
-  'id="long-term"' 'id="rotations"'
+  'id="long-term"' 'id="pvp-band"' 'id="rotations"'
   'data-rank-panel="current"' 'data-rank-panel="attackers"'
   'data-rank-panel="defenders"' 'data-rank-panel="raid"'
 )

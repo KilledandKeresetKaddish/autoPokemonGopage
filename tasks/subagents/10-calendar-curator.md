@@ -19,7 +19,9 @@ Inputs:
 
 Checklist:
 1. Keep current month through end of next month; drop events that ended before the
-   current month started.
+   current month started. **Include local / in-person events** (Safari Zone, City Safari,
+   GO Tour 线下场, 区域线下活动) — never skip an event for being location-specific; make the
+   location explicit in `name` / `summary`.
 2. Deduplicate by real-world event identity. Emit one stable deterministic `id` per
    event; never accumulate duplicates. When a real event is confirmed, delete the old
    placeholder ("待公布 / waiting for announcement") row it replaces — be smart, never
@@ -42,8 +44,10 @@ Checklist:
    English/romanized form rather than inventing one.** But **don't use gamemaster to decide whether a
    Mega/form *exists*** — it lags new content (Legends Z-A …). If a source features one (e.g. "<X>
    Super Mega Raid Day"), render the Mega and trust the live source, not gamemaster's absence.
-5. Set `longTerm:true` for season / GO Pass / GO Battle League and spans longer than
-   ~2 weeks so they render in the 长期活动 band.
+5. Set `longTerm:true` for season / GO Pass and spans longer than ~2 weeks so they render in
+   the 长期活动 band. Set `pvp:true` for GO Battle League / 杯赛 / 对战周末 / 对战日 (PvP events)
+   so they render in the **PVP活动 band** (`go-battle-league` auto-classifies; PVP wins over
+   长期活动; `pvp:false` opts out; `display:"pvp"` mirrors `pvp:true`).
 6. Set `highlight:true` for 社区日, 团战日, and boosted-shiny events. Also mark shiny
    Pokémon and include a shiny bonus line.
 7. Register only genuinely new `type` values in `public/data/categories.json` using
