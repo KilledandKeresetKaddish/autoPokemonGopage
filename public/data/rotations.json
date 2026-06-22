@@ -195,6 +195,343 @@
           ],
           "start": "2026-07-10",
           "end": "2026-07-10"
+        },
+        {
+          "name": "GO Fest Global Saturday",
+          "cn": "GO Fest 周六(多种传说轮替)",
+          "pokemon": [
+            {
+              "id": 144,
+              "name": "急冻鸟",
+              "shiny": true
+            },
+            {
+              "id": 145,
+              "name": "闪电鸟",
+              "shiny": true
+            },
+            {
+              "id": 146,
+              "name": "火焰鸟",
+              "shiny": true
+            },
+            {
+              "id": 243,
+              "name": "雷公",
+              "shiny": true
+            },
+            {
+              "id": 244,
+              "name": "炎帝",
+              "shiny": true
+            },
+            {
+              "id": 245,
+              "name": "水君",
+              "shiny": true
+            },
+            {
+              "id": 249,
+              "name": "洛奇亚",
+              "shiny": true
+            },
+            {
+              "id": 250,
+              "name": "凤王",
+              "shiny": true
+            },
+            {
+              "id": 480,
+              "name": "由克希",
+              "shiny": true
+            },
+            {
+              "id": 481,
+              "name": "艾姆利多",
+              "shiny": true
+            },
+            {
+              "id": 482,
+              "name": "亚克诺姆",
+              "shiny": true
+            },
+            {
+              "id": 483,
+              "name": "帝牙卢卡",
+              "shiny": true
+            },
+            {
+              "id": 484,
+              "name": "帕路奇亚",
+              "shiny": true
+            },
+            {
+              "id": 487,
+              "name": "骑拉帝纳",
+              "shiny": true
+            },
+            {
+              "id": 487,
+              "name": "起源骑拉帝纳",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10007.png",
+              "hub": "487-Origin"
+            },
+            {
+              "id": 716,
+              "name": "哲尔尼亚斯",
+              "shiny": true
+            },
+            {
+              "id": 717,
+              "name": "伊裴尔塔尔",
+              "shiny": true
+            },
+            {
+              "id": 791,
+              "name": "索尔迦雷欧",
+              "shiny": true
+            },
+            {
+              "id": 792,
+              "name": "露奈雅拉",
+              "shiny": true
+            },
+            {
+              "id": 382,
+              "name": "盖欧卡",
+              "shiny": true
+            },
+            {
+              "id": 383,
+              "name": "固拉多",
+              "shiny": true
+            },
+            {
+              "id": 384,
+              "name": "烈空坐",
+              "shiny": true
+            },
+            {
+              "id": 643,
+              "name": "莱希拉姆",
+              "shiny": true
+            },
+            {
+              "id": 644,
+              "name": "捷克罗姆",
+              "shiny": true
+            },
+            {
+              "id": 646,
+              "name": "酋雷姆",
+              "shiny": true
+            }
+          ],
+          "start": "2026-07-11",
+          "end": "2026-07-11"
+        },
+        {
+          "name": "GO Fest Global Sunday",
+          "cn": "GO Fest 周日(多种传说轮替)",
+          "pokemon": [
+            {
+              "id": 377,
+              "name": "雷吉洛克",
+              "shiny": true
+            },
+            {
+              "id": 378,
+              "name": "雷吉艾斯",
+              "shiny": true
+            },
+            {
+              "id": 379,
+              "name": "雷吉斯奇鲁",
+              "shiny": true
+            },
+            {
+              "id": 483,
+              "name": "帝牙卢卡",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10245.png",
+              "hub": "483-Origin"
+            },
+            {
+              "id": 484,
+              "name": "帕路奇亚",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10246.png",
+              "hub": "484-Origin"
+            },
+            {
+              "id": 485,
+              "name": "席多蓝恩",
+              "shiny": true
+            },
+            {
+              "id": 486,
+              "name": "雷吉奇卡斯",
+              "shiny": true
+            },
+            {
+              "id": 641,
+              "name": "龙卷云",
+              "shiny": true
+            },
+            {
+              "id": 642,
+              "name": "雷电云",
+              "shiny": true
+            },
+            {
+              "id": 645,
+              "name": "土地云",
+              "shiny": true
+            },
+            {
+              "id": 905,
+              "name": "眷恋云",
+              "shiny": true
+            },
+            {
+              "id": 894,
+              "name": "雷吉艾勒奇",
+              "shiny": true
+            },
+            {
+              "id": 895,
+              "name": "雷吉铎拉戈",
+              "shiny": true
+            },
+            {
+              "id": 386,
+              "name": "代欧奇希斯",
+              "shiny": true
+            },
+            {
+              "id": 649,
+              "name": "盖诺赛克特",
+              "shiny": true
+            },
+            {
+              "id": 793,
+              "name": "虚吾伊德",
+              "shiny": true
+            },
+            {
+              "id": 794,
+              "name": "爆肌蚊",
+              "shiny": true
+            },
+            {
+              "id": 795,
+              "name": "费洛美螂",
+              "shiny": true
+            },
+            {
+              "id": 796,
+              "name": "电束木",
+              "shiny": true
+            },
+            {
+              "id": 797,
+              "name": "铁火辉夜",
+              "shiny": true
+            },
+            {
+              "id": 798,
+              "name": "纸御剑",
+              "shiny": true
+            },
+            {
+              "id": 799,
+              "name": "恶食大王",
+              "shiny": true
+            },
+            {
+              "id": 800,
+              "name": "奈克洛兹玛",
+              "shiny": true
+            },
+            {
+              "id": 805,
+              "name": "垒磊石",
+              "shiny": true
+            },
+            {
+              "id": 806,
+              "name": "砰头小丑",
+              "shiny": true
+            },
+            {
+              "id": 785,
+              "name": "卡璞・鸣鸣",
+              "shiny": true
+            },
+            {
+              "id": 786,
+              "name": "卡璞・蝶蝶",
+              "shiny": true
+            },
+            {
+              "id": 787,
+              "name": "卡璞・哞哞",
+              "shiny": true
+            },
+            {
+              "id": 788,
+              "name": "卡璞・鳍鳍",
+              "shiny": true
+            },
+            {
+              "id": 380,
+              "name": "拉帝亚斯",
+              "shiny": true
+            },
+            {
+              "id": 381,
+              "name": "拉帝欧斯",
+              "shiny": true
+            },
+            {
+              "id": 488,
+              "name": "克雷色利亚",
+              "shiny": true
+            },
+            {
+              "id": 491,
+              "name": "达克莱伊",
+              "shiny": true
+            },
+            {
+              "id": 638,
+              "name": "勾帕路翁",
+              "shiny": true
+            },
+            {
+              "id": 639,
+              "name": "代拉基翁",
+              "shiny": true
+            },
+            {
+              "id": 640,
+              "name": "毕力吉翁",
+              "shiny": true
+            },
+            {
+              "id": 888,
+              "name": "苍响",
+              "shiny": true
+            },
+            {
+              "id": 889,
+              "name": "藏玛然特",
+              "shiny": true
+            }
+          ],
+          "start": "2026-07-12",
+          "end": "2026-07-12"
         }
       ]
     },

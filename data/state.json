@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-22T11:15:00Z",
+  "lastUpdated": "2026-06-22T16:05:42Z",
   "sources": {
     "events": {
       "lastFetch": "2026-06-22T11:11:00Z",
@@ -80,15 +80,15 @@
     }
   },
   "detailChecks": {
-    "checkedAt": "2026-06-22T15:29:00Z",
+    "checkedAt": "2026-06-22T16:05:42Z",
     "status": "ok",
-    "note": "本轮按 operator note 扩充内容(每日源 11:11Z/14:45Z 已新鲜,未额外刷新)。新增/修改:① 传奇之路 5 个每日团战事件各加「当日阵容(全部团战 Boss)」纯小图标 mons 网格(7/6 列 37 只全世代传说池+超级暴飞龙,7/7–7/10 与抽屉 pokemon[] 对齐);② 新增长期线下事件 mlb-2026(11 站主题赛日程+坐标,官方 pokemongo.com/post/mlb-2026 + Hub)与 11 个 mlb-game-* 单日 chip(皮卡丘 sprite + 底部活动条,type=mlb-game-day 已注册 categories.json blue/chip);③ 新增 pokemon-fossil-museum-chicago-2026 长期线下(坐标 41.86662,-87.61682,官方 pgo-pokemon-fossil-musuem + Hub,LeekDuck 无此页故省);④ Forever Forward 赛季事件补每日发现/GO Pass 里程碑/研究突破(快龙·牙牙·独剑鞘·心鳞宝·爱管侍·毛崖蟹)/2-12km 蛋种全 mons 图标(地区形态用 form sprite+hub);⑤ rankings-raid 的 Max boss 由过期石丸子(524)更新为本周咕咕(163,一般/飞行)+对应 Mega/counter;calendar-notes 补 MLB/化石博物馆。所有新简中名经 PokeAPI zh-hans 核对,form sprite id 全部 curl 200。preflight 仅既有 raidhour20260624 long-chip WARN,validate 通过。",
-    "arraiaGap": "operator note #3 要求补 Arraia 线下活动并设 featured,但 LeekDuck(404+feed 无)、Pokémon GO Hub(站内搜索/分类/直接 slug 均无)、官方 pokemongo.com(news/events/in-person 列表均无)三源本轮都查不到任何 Arraia 条目,按 AGENTS『只用真实链接、查不到则记录不杜撰』未添加,待该活动正式公布后再补并设 featured。"
+    "note": "本轮(16:05Z)续作 operator note:每日源仍新鲜(11:11Z/14:45Z),未额外刷新。新增:① GO Fest 2026:全球 7/11(周六)与 7/12(周日)各一条 5★团战事件(gofest-2026-global-5star-raids-2026071[12]),pokemon[] 为当日栖息地 5★ 并集(周六 25 只:三鸟+四神兽+湖之众神+帝牙卢卡/帕路奇亚+别种/起源骑拉帝纳+哲尔尼亚斯/伊裴尔塔尔/索尔迦雷欧/露奈雅拉+三神柱龙;周日 38 只:三圣柱+起源帝牙卢卡/帕路奇亚+席多蓝恩/雷吉奇卡斯+云神三组+眷恋云+雷吉艾勒奇/铎拉戈+代欧奇希斯四形态+盖诺赛克特+究极异兽+卡璞家族+拉帝兄弟+克雷色利亚/达克莱伊+圣剑士+百战苍响/藏玛然特),含『当日 5★ 阵容(全部 Boss)』纯小图标 mons 网格;② rotations 5★ 轨加 7/11、7/12 单日段,pokemon[] 与抽屉对齐 → 日历这两天现显示全部 5★ Boss 角标(原仅 mega 轨的超级超梦 X/Y)。起源骑拉帝纳改名区分别种。所有新简中名经 PokeAPI zh-hans 核对,form sprite id 全部核验(10007 origin-giratina、10245/10246 origin-dialga/palkia 等)。preflight OK(仅既有 raidhour20260624 long-chip WARN),validate OK。",
+    "arraiaGap": "operator note #3 复核仍无 Arraia:LeekDuck(/events/ 索引无 + arraia/arraia-2026/festa-junina 等 slug 全 404)、Pokémon GO Hub(discover.sh 站内搜索 + 直接 slug 均 404/无关)、官方 pokemongo.com(首页 news/events/featured-in-person-events 列表均无)三源 2026-06-22 复查皆无任何 Arraia 条目。按 AGENTS『只用真实链接、查不到则记录不杜撰』未添加、未设 featured;待该活动正式公布后补全(官方+LeekDuck+Hub 链接)并设 featured。"
   },
   "operatorNote": {
-    "checkedAt": "2026-06-22T15:29:00Z",
+    "checkedAt": "2026-06-22T16:05:42Z",
     "status": "done",
-    "note": "2026-06-22 operator note 五项:①传奇之路 popup 当日阵容补全 boss/孵蛋纯小图标✓;②化石博物馆芝加哥长期线下(坐标+官方+Hub)✓(LeekDuck 无页省略);③Arraia——三源皆无,记录待核(见 detailChecks.arraiaGap),未杜撰、未设 featured;④MLB 11 站主题赛(长期 band + 每赛日皮卡丘 chip 活动条 + 坐标对齐,官方+Hub)✓;⑤Forever Forward 补每日发现/GO Pass 里程碑/研究突破/常规蛋种全图标✓。"
+    "note": "2026-06-22 operator note 三项复核:①纠错——form sprite id 与简中名全部核验,白/黑酋雷姆(10023/10022)、起源帝牙卢卡/帕路奇亚、超级超梦 X/Y 等映射正确,rankings-raid 与当前 raids.json 一致,无错图/错信息;传奇之路 5 日每日团战 popup『当日阵容』纯小图标网格(boss+孵蛋)已齐,GO Fest 11/12 团战对象 boss 角标本轮补齐(新增两条 5★ 事件 + rotations 单日段);②同上;③Arraia——三源复查仍无,记录待核(detailChecks.arraiaGap),未杜撰、未设 featured。"
   },
   "notes": {
     "correction_2026-06-19": {

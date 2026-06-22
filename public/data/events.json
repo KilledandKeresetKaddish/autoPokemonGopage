@@ -2675,6 +2675,786 @@
   "highlight": false
  },
  {
+  "id": "gofest-2026-global-5star-raids-20260711",
+  "name": "GO Fest 全球周六 5★团战",
+  "type": "raid-battles",
+  "heading": "GO Fest · 5★ Raids",
+  "start": "2026-07-11T10:00:00",
+  "end": "2026-07-11T19:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-11-pokemon-go-fest-2026-global/pokemon-go-fest-2026-global.jpg?v2",
+  "link": "https://leekduck.com/events/pokemon-go-fest-2026-global/",
+  "summary": "GO Fest 2026:全球周六(7/11)5★团战 Boss 随每小时栖息地轮换。风暴火峰(冰/电/火)、星潮(超能力/幽灵/水)、龙翔峰(飞行/岩石/龙)各有不同传说登场,部分究极异兽按地区限定。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/pokemon-go-fest-2026-global/"
+   },
+   {
+    "label": "Hub",
+    "url": "https://pokemongohub.net/post/event/pokemon-go-fest-2026-global/"
+   },
+   {
+    "label": "官方 GO Fest",
+    "url": "https://pokemongo.com/en/gofest"
+   }
+  ],
+  "bonuses": [
+   "5★团战 Boss 随每小时栖息地轮换",
+   "✨ 活动时段闪光遇见概率提升",
+   ":raid: 每天最多 9 张免费团战入场券",
+   ":raid: 捕获部分 Boss 可能带特殊背景(7/6–7/12)"
+  ],
+  "sections": [
+   {
+    "title": "周六栖息地 5★",
+    "items": [
+     "10:00–13:00 风暴火峰(冰/电/火):急冻鸟、闪电鸟、火焰鸟、雷公、炎帝、水君、洛奇亚、凤王。",
+     "13:00–16:00 星潮(超能力/幽灵/水):由克希、艾姆利多、亚克诺姆、帝牙卢卡、帕路奇亚、别种/起源骑拉帝纳、哲尔尼亚斯、伊裴尔塔尔、索尔迦雷欧、露奈雅拉。",
+     "16:00–19:00 龙翔峰(飞行/岩石/龙):盖欧卡、固拉多、烈空坐、莱希拉姆、捷克罗姆、酋雷姆。"
+    ]
+   },
+   {
+    "title": "当日 5★ 阵容(全部 Boss)",
+    "mons": [
+     {
+      "id": 144,
+      "name": "急冻鸟",
+      "shiny": true
+     },
+     {
+      "id": 145,
+      "name": "闪电鸟",
+      "shiny": true
+     },
+     {
+      "id": 146,
+      "name": "火焰鸟",
+      "shiny": true
+     },
+     {
+      "id": 243,
+      "name": "雷公",
+      "shiny": true
+     },
+     {
+      "id": 244,
+      "name": "炎帝",
+      "shiny": true
+     },
+     {
+      "id": 245,
+      "name": "水君",
+      "shiny": true
+     },
+     {
+      "id": 249,
+      "name": "洛奇亚",
+      "shiny": true
+     },
+     {
+      "id": 250,
+      "name": "凤王",
+      "shiny": true
+     },
+     {
+      "id": 480,
+      "name": "由克希",
+      "shiny": true
+     },
+     {
+      "id": 481,
+      "name": "艾姆利多",
+      "shiny": true
+     },
+     {
+      "id": 482,
+      "name": "亚克诺姆",
+      "shiny": true
+     },
+     {
+      "id": 483,
+      "name": "帝牙卢卡",
+      "shiny": true
+     },
+     {
+      "id": 484,
+      "name": "帕路奇亚",
+      "shiny": true
+     },
+     {
+      "id": 487,
+      "name": "骑拉帝纳",
+      "shiny": true
+     },
+     {
+      "id": 487,
+      "name": "起源骑拉帝纳",
+      "shiny": true,
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10007.png",
+      "hub": "487-Origin"
+     },
+     {
+      "id": 716,
+      "name": "哲尔尼亚斯",
+      "shiny": true
+     },
+     {
+      "id": 717,
+      "name": "伊裴尔塔尔",
+      "shiny": true
+     },
+     {
+      "id": 791,
+      "name": "索尔迦雷欧",
+      "shiny": true
+     },
+     {
+      "id": 792,
+      "name": "露奈雅拉",
+      "shiny": true
+     },
+     {
+      "id": 382,
+      "name": "盖欧卡",
+      "shiny": true
+     },
+     {
+      "id": 383,
+      "name": "固拉多",
+      "shiny": true
+     },
+     {
+      "id": 384,
+      "name": "烈空坐",
+      "shiny": true
+     },
+     {
+      "id": 643,
+      "name": "莱希拉姆",
+      "shiny": true
+     },
+     {
+      "id": 644,
+      "name": "捷克罗姆",
+      "shiny": true
+     },
+     {
+      "id": 646,
+      "name": "酋雷姆",
+      "shiny": true
+     }
+    ]
+   }
+  ],
+  "highlight": true,
+  "pokemon": [
+   {
+    "id": 144,
+    "name": "急冻鸟",
+    "shiny": true
+   },
+   {
+    "id": 145,
+    "name": "闪电鸟",
+    "shiny": true
+   },
+   {
+    "id": 146,
+    "name": "火焰鸟",
+    "shiny": true
+   },
+   {
+    "id": 243,
+    "name": "雷公",
+    "shiny": true
+   },
+   {
+    "id": 244,
+    "name": "炎帝",
+    "shiny": true
+   },
+   {
+    "id": 245,
+    "name": "水君",
+    "shiny": true
+   },
+   {
+    "id": 249,
+    "name": "洛奇亚",
+    "shiny": true
+   },
+   {
+    "id": 250,
+    "name": "凤王",
+    "shiny": true
+   },
+   {
+    "id": 480,
+    "name": "由克希",
+    "shiny": true
+   },
+   {
+    "id": 481,
+    "name": "艾姆利多",
+    "shiny": true
+   },
+   {
+    "id": 482,
+    "name": "亚克诺姆",
+    "shiny": true
+   },
+   {
+    "id": 483,
+    "name": "帝牙卢卡",
+    "shiny": true
+   },
+   {
+    "id": 484,
+    "name": "帕路奇亚",
+    "shiny": true
+   },
+   {
+    "id": 487,
+    "name": "骑拉帝纳",
+    "shiny": true
+   },
+   {
+    "id": 487,
+    "name": "起源骑拉帝纳",
+    "shiny": true,
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10007.png",
+    "hub": "487-Origin"
+   },
+   {
+    "id": 716,
+    "name": "哲尔尼亚斯",
+    "shiny": true
+   },
+   {
+    "id": 717,
+    "name": "伊裴尔塔尔",
+    "shiny": true
+   },
+   {
+    "id": 791,
+    "name": "索尔迦雷欧",
+    "shiny": true
+   },
+   {
+    "id": 792,
+    "name": "露奈雅拉",
+    "shiny": true
+   },
+   {
+    "id": 382,
+    "name": "盖欧卡",
+    "shiny": true
+   },
+   {
+    "id": 383,
+    "name": "固拉多",
+    "shiny": true
+   },
+   {
+    "id": 384,
+    "name": "烈空坐",
+    "shiny": true
+   },
+   {
+    "id": 643,
+    "name": "莱希拉姆",
+    "shiny": true
+   },
+   {
+    "id": 644,
+    "name": "捷克罗姆",
+    "shiny": true
+   },
+   {
+    "id": 646,
+    "name": "酋雷姆",
+    "shiny": true
+   }
+  ],
+  "counters": [
+   {
+    "id": 248,
+    "name": "班基拉斯",
+    "fast": "咬住",
+    "charged": "原始之力"
+   },
+   {
+    "id": 376,
+    "name": "巨金怪",
+    "fast": "子弹拳",
+    "charged": "彗星拳"
+   },
+   {
+    "id": 445,
+    "name": "烈咬陆鲨",
+    "fast": "龙息",
+    "charged": "逆鳞"
+   }
+  ]
+ },
+ {
+  "id": "gofest-2026-global-5star-raids-20260712",
+  "name": "GO Fest 全球周日 5★团战",
+  "type": "raid-battles",
+  "heading": "GO Fest · 5★ Raids",
+  "start": "2026-07-12T10:00:00",
+  "end": "2026-07-12T19:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-11-pokemon-go-fest-2026-global/pokemon-go-fest-2026-global.jpg?v2",
+  "link": "https://leekduck.com/events/pokemon-go-fest-2026-global/",
+  "summary": "GO Fest 2026:全球周日(7/12)5★团战 Boss 随每小时栖息地轮换。锻地领域(地面/钢/一般)、翠绿异常(毒/虫/草)、暮光战场(恶/妖精/格斗)各有不同传说与究极异兽登场,部分按地区限定。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/pokemon-go-fest-2026-global/"
+   },
+   {
+    "label": "Hub",
+    "url": "https://pokemongohub.net/post/event/pokemon-go-fest-2026-global/"
+   },
+   {
+    "label": "官方 GO Fest",
+    "url": "https://pokemongo.com/en/gofest"
+   }
+  ],
+  "bonuses": [
+   "5★团战 Boss 随每小时栖息地轮换",
+   "✨ 活动时段闪光遇见概率提升",
+   ":raid: 每天最多 9 张免费团战入场券",
+   ":raid: 捕获部分 Boss 可能带特殊背景(7/6–7/12)"
+  ],
+  "sections": [
+   {
+    "title": "周日栖息地 5★",
+    "items": [
+     "10:00–13:00 锻地领域(地面/钢/一般):三圣柱、起源帝牙卢卡、起源帕路奇亚、席多蓝恩、雷吉奇卡斯、龙卷云/雷电云/土地云、眷恋云、雷吉艾勒奇、雷吉铎拉戈。",
+     "13:00–16:00 翠绿异常(毒/虫/草):代欧奇希斯四形态、盖诺赛克特、虚吾伊德、爆肌蚊、费洛美螂、电束木、铁火辉夜、纸御剑、恶食大王、奈克洛兹玛、垒磊石、砰头小丑、卡璞家族。",
+     "16:00–19:00 暮光战场(恶/妖精/格斗):拉帝亚斯、拉帝欧斯、克雷色利亚、达克莱伊、勾帕路翁、代拉基翁、毕力吉翁、百战勇者苍响、百战勇者藏玛然特。"
+    ]
+   },
+   {
+    "title": "当日 5★ 阵容(全部 Boss)",
+    "mons": [
+     {
+      "id": 377,
+      "name": "雷吉洛克",
+      "shiny": true
+     },
+     {
+      "id": 378,
+      "name": "雷吉艾斯",
+      "shiny": true
+     },
+     {
+      "id": 379,
+      "name": "雷吉斯奇鲁",
+      "shiny": true
+     },
+     {
+      "id": 483,
+      "name": "帝牙卢卡",
+      "shiny": true,
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10245.png",
+      "hub": "483-Origin"
+     },
+     {
+      "id": 484,
+      "name": "帕路奇亚",
+      "shiny": true,
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10246.png",
+      "hub": "484-Origin"
+     },
+     {
+      "id": 485,
+      "name": "席多蓝恩",
+      "shiny": true
+     },
+     {
+      "id": 486,
+      "name": "雷吉奇卡斯",
+      "shiny": true
+     },
+     {
+      "id": 641,
+      "name": "龙卷云",
+      "shiny": true
+     },
+     {
+      "id": 642,
+      "name": "雷电云",
+      "shiny": true
+     },
+     {
+      "id": 645,
+      "name": "土地云",
+      "shiny": true
+     },
+     {
+      "id": 905,
+      "name": "眷恋云",
+      "shiny": true
+     },
+     {
+      "id": 894,
+      "name": "雷吉艾勒奇",
+      "shiny": true
+     },
+     {
+      "id": 895,
+      "name": "雷吉铎拉戈",
+      "shiny": true
+     },
+     {
+      "id": 386,
+      "name": "代欧奇希斯",
+      "shiny": true
+     },
+     {
+      "id": 649,
+      "name": "盖诺赛克特",
+      "shiny": true
+     },
+     {
+      "id": 793,
+      "name": "虚吾伊德",
+      "shiny": true
+     },
+     {
+      "id": 794,
+      "name": "爆肌蚊",
+      "shiny": true
+     },
+     {
+      "id": 795,
+      "name": "费洛美螂",
+      "shiny": true
+     },
+     {
+      "id": 796,
+      "name": "电束木",
+      "shiny": true
+     },
+     {
+      "id": 797,
+      "name": "铁火辉夜",
+      "shiny": true
+     },
+     {
+      "id": 798,
+      "name": "纸御剑",
+      "shiny": true
+     },
+     {
+      "id": 799,
+      "name": "恶食大王",
+      "shiny": true
+     },
+     {
+      "id": 800,
+      "name": "奈克洛兹玛",
+      "shiny": true
+     },
+     {
+      "id": 805,
+      "name": "垒磊石",
+      "shiny": true
+     },
+     {
+      "id": 806,
+      "name": "砰头小丑",
+      "shiny": true
+     },
+     {
+      "id": 785,
+      "name": "卡璞・鸣鸣",
+      "shiny": true
+     },
+     {
+      "id": 786,
+      "name": "卡璞・蝶蝶",
+      "shiny": true
+     },
+     {
+      "id": 787,
+      "name": "卡璞・哞哞",
+      "shiny": true
+     },
+     {
+      "id": 788,
+      "name": "卡璞・鳍鳍",
+      "shiny": true
+     },
+     {
+      "id": 380,
+      "name": "拉帝亚斯",
+      "shiny": true
+     },
+     {
+      "id": 381,
+      "name": "拉帝欧斯",
+      "shiny": true
+     },
+     {
+      "id": 488,
+      "name": "克雷色利亚",
+      "shiny": true
+     },
+     {
+      "id": 491,
+      "name": "达克莱伊",
+      "shiny": true
+     },
+     {
+      "id": 638,
+      "name": "勾帕路翁",
+      "shiny": true
+     },
+     {
+      "id": 639,
+      "name": "代拉基翁",
+      "shiny": true
+     },
+     {
+      "id": 640,
+      "name": "毕力吉翁",
+      "shiny": true
+     },
+     {
+      "id": 888,
+      "name": "苍响",
+      "shiny": true
+     },
+     {
+      "id": 889,
+      "name": "藏玛然特",
+      "shiny": true
+     }
+    ]
+   }
+  ],
+  "highlight": true,
+  "pokemon": [
+   {
+    "id": 377,
+    "name": "雷吉洛克",
+    "shiny": true
+   },
+   {
+    "id": 378,
+    "name": "雷吉艾斯",
+    "shiny": true
+   },
+   {
+    "id": 379,
+    "name": "雷吉斯奇鲁",
+    "shiny": true
+   },
+   {
+    "id": 483,
+    "name": "帝牙卢卡",
+    "shiny": true,
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10245.png",
+    "hub": "483-Origin"
+   },
+   {
+    "id": 484,
+    "name": "帕路奇亚",
+    "shiny": true,
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10246.png",
+    "hub": "484-Origin"
+   },
+   {
+    "id": 485,
+    "name": "席多蓝恩",
+    "shiny": true
+   },
+   {
+    "id": 486,
+    "name": "雷吉奇卡斯",
+    "shiny": true
+   },
+   {
+    "id": 641,
+    "name": "龙卷云",
+    "shiny": true
+   },
+   {
+    "id": 642,
+    "name": "雷电云",
+    "shiny": true
+   },
+   {
+    "id": 645,
+    "name": "土地云",
+    "shiny": true
+   },
+   {
+    "id": 905,
+    "name": "眷恋云",
+    "shiny": true
+   },
+   {
+    "id": 894,
+    "name": "雷吉艾勒奇",
+    "shiny": true
+   },
+   {
+    "id": 895,
+    "name": "雷吉铎拉戈",
+    "shiny": true
+   },
+   {
+    "id": 386,
+    "name": "代欧奇希斯",
+    "shiny": true
+   },
+   {
+    "id": 649,
+    "name": "盖诺赛克特",
+    "shiny": true
+   },
+   {
+    "id": 793,
+    "name": "虚吾伊德",
+    "shiny": true
+   },
+   {
+    "id": 794,
+    "name": "爆肌蚊",
+    "shiny": true
+   },
+   {
+    "id": 795,
+    "name": "费洛美螂",
+    "shiny": true
+   },
+   {
+    "id": 796,
+    "name": "电束木",
+    "shiny": true
+   },
+   {
+    "id": 797,
+    "name": "铁火辉夜",
+    "shiny": true
+   },
+   {
+    "id": 798,
+    "name": "纸御剑",
+    "shiny": true
+   },
+   {
+    "id": 799,
+    "name": "恶食大王",
+    "shiny": true
+   },
+   {
+    "id": 800,
+    "name": "奈克洛兹玛",
+    "shiny": true
+   },
+   {
+    "id": 805,
+    "name": "垒磊石",
+    "shiny": true
+   },
+   {
+    "id": 806,
+    "name": "砰头小丑",
+    "shiny": true
+   },
+   {
+    "id": 785,
+    "name": "卡璞・鸣鸣",
+    "shiny": true
+   },
+   {
+    "id": 786,
+    "name": "卡璞・蝶蝶",
+    "shiny": true
+   },
+   {
+    "id": 787,
+    "name": "卡璞・哞哞",
+    "shiny": true
+   },
+   {
+    "id": 788,
+    "name": "卡璞・鳍鳍",
+    "shiny": true
+   },
+   {
+    "id": 380,
+    "name": "拉帝亚斯",
+    "shiny": true
+   },
+   {
+    "id": 381,
+    "name": "拉帝欧斯",
+    "shiny": true
+   },
+   {
+    "id": 488,
+    "name": "克雷色利亚",
+    "shiny": true
+   },
+   {
+    "id": 491,
+    "name": "达克莱伊",
+    "shiny": true
+   },
+   {
+    "id": 638,
+    "name": "勾帕路翁",
+    "shiny": true
+   },
+   {
+    "id": 639,
+    "name": "代拉基翁",
+    "shiny": true
+   },
+   {
+    "id": 640,
+    "name": "毕力吉翁",
+    "shiny": true
+   },
+   {
+    "id": 888,
+    "name": "苍响",
+    "shiny": true
+   },
+   {
+    "id": 889,
+    "name": "藏玛然特",
+    "shiny": true
+   }
+  ],
+  "counters": [
+   {
+    "id": 248,
+    "name": "班基拉斯",
+    "fast": "咬住",
+    "charged": "原始之力"
+   },
+   {
+    "id": 376,
+    "name": "巨金怪",
+    "fast": "子弹拳",
+    "charged": "彗星拳"
+   },
+   {
+    "id": 445,
+    "name": "烈咬陆鲨",
+    "fast": "龙息",
+    "charged": "逆鳞"
+   }
+  ]
+ },
+ {
   "id": "gbl-forever-forward_master-league_retro-cup-great-league-edition",
   "name": "大师联赛 · 复古杯",
   "type": "go-battle-league",
