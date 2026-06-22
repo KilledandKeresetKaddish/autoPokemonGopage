@@ -1,1 +1,3 @@
-{}
+{
+  "mlb-game-day": { "palette": "blue", "label": "MLB 主题赛", "kind": "chip" }
+}

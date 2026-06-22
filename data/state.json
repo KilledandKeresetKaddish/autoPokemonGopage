@@ -3,92 +3,92 @@
   "sources": {
     "events": {
       "lastFetch": "2026-06-22T11:11:00Z",
-      "lastChecked": "2026-06-22T11:15:00Z",
+      "lastChecked": "2026-06-22T15:29:00Z",
       "status": "ok",
       "bytes": 60184,
       "note": "LeekDuck JSON OK;6月下旬+7月+8月事件完整。discover.sh new 本轮无新增。站内 52 条与 feed 日期一致,本轮无需改动 events.json。"
     },
     "raids": {
       "lastFetch": "2026-06-22T11:11:00Z",
-      "lastChecked": "2026-06-22T11:15:00Z",
+      "lastChecked": "2026-06-22T15:29:00Z",
       "status": "ok",
       "bytes": 16037,
       "note": "当前团战未轮换(仍 Necrozma 5★, Shadow Dialga 5★暗影, Mega Scizor 超级);下一次轮换 6/24(→纸御剑/铁火辉夜 + 超级大比鸟)。rankings-raid 与 raids.json 一致,无需改。"
     },
     "eggs": {
       "lastFetch": "2026-06-19T14:10:22Z",
-      "lastChecked": "2026-06-22T11:15:00Z",
+      "lastChecked": "2026-06-22T15:29:00Z",
       "status": "ok",
       "bytes": 29466,
       "note": "蛋池数据仍新鲜(<7d),本轮未刷新。"
     },
     "research": {
       "lastFetch": "2026-06-19T14:10:22Z",
-      "lastChecked": "2026-06-22T11:15:00Z",
+      "lastChecked": "2026-06-22T15:29:00Z",
       "status": "ok",
       "bytes": 67259,
       "note": "调查奖励数据仍新鲜,本轮未刷新。"
     },
     "gamemaster": {
       "lastFetch": "2026-06-19T14:10:23Z",
-      "lastChecked": "2026-06-22T11:15:00Z",
+      "lastChecked": "2026-06-22T15:29:00Z",
       "status": "ok",
       "bytes": 912180,
       "note": "PvPoke gamemaster 仍新鲜(<7d),本轮未刷新;属性/招式类型用于 counter 验证。注意:gamemaster 的 mega 名单不可作为'是否有 Mega'判据(滞后于新内容)。"
     },
     "tiers-attackers": {
       "lastFetch": "2026-06-22T11:11:00Z",
-      "lastChecked": "2026-06-22T11:15:00Z",
+      "lastChecked": "2026-06-22T15:29:00Z",
       "status": "ok",
       "bytes": 34727,
       "note": "Max 攻手榜已刷新;内容与上轮一致(同字节),A/B tier 已在 rankings-attackers。"
     },
     "tiers-defenders": {
       "lastFetch": "2026-06-22T11:11:00Z",
-      "lastChecked": "2026-06-22T11:15:00Z",
+      "lastChecked": "2026-06-22T15:29:00Z",
       "status": "ok",
       "bytes": 38671,
       "note": "Max 防守榜已刷新;内容与上轮一致,S/A/B tier 已在 rankings-defenders。"
     },
     "tiers-pokebase": {
       "lastFetch": "2026-06-22T11:11:00Z",
-      "lastChecked": "2026-06-22T11:15:00Z",
+      "lastChecked": "2026-06-22T15:29:00Z",
       "status": "ok",
       "bytes": 121569,
       "note": "Pokébase 交叉参考已刷新。"
     },
     "events-hub": {
       "lastFetch": "2026-06-22T11:11:00Z",
-      "lastChecked": "2026-06-22T11:15:00Z",
+      "lastChecked": "2026-06-22T15:29:00Z",
       "status": "ok",
       "bytes": 30424,
       "note": "Hub 事件索引 OK。索引页不含周轮换表,本轮 rotations 未变(沿用上轮已核对数据)。"
     },
     "events-pokebase": {
       "lastFetch": "2026-06-22T11:11:00Z",
-      "lastChecked": "2026-06-22T11:15:00Z",
+      "lastChecked": "2026-06-22T15:29:00Z",
       "status": "ok",
       "bytes": 29351,
       "note": "Pokébase 事件列表可用。"
     },
     "events-official": {
       "lastFetch": "2026-06-22T11:11:00Z",
-      "lastChecked": "2026-06-22T11:15:00Z",
+      "lastChecked": "2026-06-22T15:29:00Z",
       "status": "ok",
       "bytes": 9930,
       "note": "官方新闻 OK。"
     }
   },
   "detailChecks": {
-    "checkedAt": "2026-06-22T11:15:00Z",
+    "checkedAt": "2026-06-22T15:29:00Z",
     "status": "ok",
-    "note": "每日源本轮(11:11Z)已刷新。当前团战 Boss 未轮换(6/24 才切),raids.json 与排行 Counter 一致。discover.sh new 无新增。events.json/rotations.json 结构本轮无需改动;仅把日期敏感的自由区(本月看点/本期推荐)从 6/20 刷到 6/22:凉脊龙社区日(6/20)与化石乐趣(至 6/21)已过,Max周一极巨化咕咕(6/22–6/28)本周登场。preflight 仅既有 raidhour20260624 long-chip WARN(保留),validate 通过。"
+    "note": "本轮按 operator note 扩充内容(每日源 11:11Z/14:45Z 已新鲜,未额外刷新)。新增/修改:① 传奇之路 5 个每日团战事件各加「当日阵容(全部团战 Boss)」纯小图标 mons 网格(7/6 列 37 只全世代传说池+超级暴飞龙,7/7–7/10 与抽屉 pokemon[] 对齐);② 新增长期线下事件 mlb-2026(11 站主题赛日程+坐标,官方 pokemongo.com/post/mlb-2026 + Hub)与 11 个 mlb-game-* 单日 chip(皮卡丘 sprite + 底部活动条,type=mlb-game-day 已注册 categories.json blue/chip);③ 新增 pokemon-fossil-museum-chicago-2026 长期线下(坐标 41.86662,-87.61682,官方 pgo-pokemon-fossil-musuem + Hub,LeekDuck 无此页故省);④ Forever Forward 赛季事件补每日发现/GO Pass 里程碑/研究突破(快龙·牙牙·独剑鞘·心鳞宝·爱管侍·毛崖蟹)/2-12km 蛋种全 mons 图标(地区形态用 form sprite+hub);⑤ rankings-raid 的 Max boss 由过期石丸子(524)更新为本周咕咕(163,一般/飞行)+对应 Mega/counter;calendar-notes 补 MLB/化石博物馆。所有新简中名经 PokeAPI zh-hans 核对,form sprite id 全部 curl 200。preflight 仅既有 raidhour20260624 long-chip WARN,validate 通过。",
+    "arraiaGap": "operator note #3 要求补 Arraia 线下活动并设 featured,但 LeekDuck(404+feed 无)、Pokémon GO Hub(站内搜索/分类/直接 slug 均无)、官方 pokemongo.com(news/events/in-person 列表均无)三源本轮都查不到任何 Arraia 条目,按 AGENTS『只用真实链接、查不到则记录不杜撰』未添加,待该活动正式公布后再补并设 featured。"
   },
   "operatorNote": {
-    "checkedAt": "2026-06-20T14:35:00Z",
+    "checkedAt": "2026-06-22T15:29:00Z",
     "status": "done",
-    "note": "operator note(2026-06-20 第三次):①Latias 图标纠错——经 fetch 核实 PokeAPI 小图 sprites/pokemon/10062.png(latias-mega)【上游损坏】:与 10063.png(latios-mega)逐像素完全相同(ImageChops diff bbox=None)、红色像素=0,实际渲染为蓝色超级拉帝欧斯,这正是 operator 报告的『latias 图标用错成 latios』。other/home/10062.png 同样偏蓝且与 base 380(红)不符。改用 AGENTS.md 许可的 Hub DB 兜底图 https://db.pokemongohub.net/images/official/full/380_mega_with_bg.webp(经 db.pokemongohub.net/pokemon/380 Latias 页确认其 Mega 用此文件,HTTP 200 image/webp),替换 rankings-raid 内两处(奈克洛兹玛『共享超能力』段、赤面龙『共享龙』段)。10063→381→超级拉帝欧斯 各处保持一致、无误。②全量纠错复核(基于本轮 fetch):discover.sh new 无新增;52 条 events 与 LeekDuck feed 链接逐一比对,唯一『日期不一致』为 mega-mewtwo-y(站 7/12 vs feed 父活动 7/11)——经 fetch GO Fest 页确认是派生子活动,周六超梦X(7/11)/周日超梦Y(7/12),站内日期正确,属误报。preflight(仅既有 24 日双 Boss long-chip WARN)+validate 均通过。",
-    "prevNote_2nd": "operator note(2026-06-20 第二次):①纠错——以本轮 fetch 的 LeekDuck feed/PokeAPI/gamemaster 为准复核现有数据,events 日期 0 处不一致、关键简中名与 dex 均正确,无需改动。②补齐 8 月预告活动:从 raw feed 取 8 条(孵化日 8/8、社区日 8/16、团战日 8/22、选择你的道路:毒与藤蔓 8/11–8/17、4 档 GBL),LeekDuck 详情页目前仅有日期、无主角/加成,故按日期+类别建占位事件,summary 注明『待官方公布』,GBL 设 longTerm。③Mega Booster 扩容:每个 live boss 由最多 6 提升到最多 8(.raid-mega 3 列网格容 8),仍按『Mega 与 boss 共享属性』、按超级攻击力高→低排序。新纳入并经 db.pokemongohub.net 确认已实装的 Mega:超级快龙(149,f10281)、超级大食花(71,f10279)、超级乌贼王(687,db webp)、超级列阵兵(870,db webp)、超级阿勃梭鲁/雷电兽/冰鬼护/波士可多拉/七夕青鸟/大嘴娃/拉帝亚斯/暴雪王/勾魂眼。简中名经 pokeapi zh-hans 核对,form sprite id 全部 curl 200。岩石单属性 boss(岩狗狗/石丸子)同属性超级仅 3 个、墨海马水系 6 个、多边兽一般系 4 个——按实际数量列出,不硬凑。preflight+validate 均通过。"
+    "note": "2026-06-22 operator note 五项:①传奇之路 popup 当日阵容补全 boss/孵蛋纯小图标✓;②化石博物馆芝加哥长期线下(坐标+官方+Hub)✓(LeekDuck 无页省略);③Arraia——三源皆无,记录待核(见 detailChecks.arraiaGap),未杜撰、未设 featured;④MLB 11 站主题赛(长期 band + 每赛日皮卡丘 chip 活动条 + 坐标对齐,官方+Hub)✓;⑤Forever Forward 补每日发现/GO Pass 里程碑/研究突破/常规蛋种全图标✓。"
   },
   "notes": {
     "correction_2026-06-19": {
