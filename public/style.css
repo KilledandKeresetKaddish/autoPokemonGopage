@@ -433,22 +433,21 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .pill .spr,.pill img{width:18px;height:18px;object-fit:contain;flex:none;image-rendering:pixelated;}
 .pillrow{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0;}
 .note-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem;margin:.4rem 0;}
-/* Keep the 三栏面板 (本期推荐 / 本月看点) tidy: stack each panel's children with a
-   uniform gap (zeroing their assorted default margins).
+/* Keep the 三栏面板 (本期推荐 / 本月看点) tidy. Plain flex column so a panel with ANY
+   number of children stacks cleanly and never overlaps. (Replaces an earlier subgrid
+   attempt that capped each panel at 2 row tracks: it worked for the 2-child columns but
+   collapsed the 5-child "GO Fest 超级超梦 X/Y" panel into a pile of overlapping text.)
    Scoped to .note-grid > .panel so other .panel uses (cal-notes, raid cards…) are untouched. */
-.note-grid > .panel{display:flex;flex-direction:column;gap:.5rem;}
+.note-grid > .panel{display:flex;flex-direction:column;gap:.5rem;padding:.9rem 1rem 1rem;}
 .note-grid > .panel > *{margin-block:0;}
-/* Fallback (no subgrid): reserve a 2-line head so a wrapped title still lines its
-   body up with the neighbouring columns' first row — at the cost of a gap under short titles. */
-.note-grid > .panel > .panel-head{min-height:4em;align-items:flex-start;}
-/* Preferred (subgrid): size the head band to the TALLEST title in the row, so every
-   column's first body line aligns with NO wasted gap when the titles are short — it
-   only grows to two lines if a title actually wraps. Fixes the head→body offset. */
-@supports (grid-template-rows: subgrid){
-  .note-grid{grid-template-rows:auto 1fr;}
-  .note-grid > .panel{display:grid;grid-template-rows:subgrid;grid-row:span 2;}
-  .note-grid > .panel > .panel-head{min-height:0;align-items:center;}
-}
+/* Reserve a uniform head band so single- and two-line titles still line their first body
+   line up across the three columns; zero the h4's own margin so it sits flush at the top. */
+.note-grid > .panel > .panel-head{min-height:3.4em;align-items:flex-start;}
+.note-grid > .panel > .panel-head h4{margin:0;}
+/* pillrow inside these panels: vertically center the lead sprite with the pills/label and
+   shrink it from the default 58px so the row stays compact. */
+.note-grid .pillrow{align-items:center;}
+.note-grid .pillrow .mon-icon{width:36px;height:36px;border-radius:8px;}
 .callout{background:rgba(var(--gold-rgb),.07);border-left:3px solid var(--gold-line);
   border-radius:8px;padding:.6rem .85rem;margin:.5rem 0;color:var(--ink);}
 .callout strong{color:var(--h1);}
