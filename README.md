@@ -1,24 +1,58 @@
-**作者常用指令 (cheat sheet)**
+**作者常用指令 (cheat sheet) — 三种跑法**
+
+固定环境变量(pi + 自建反代):`AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina`。
+⚠️ **`PI_PROVIDER` 别漏** —— 漏了 pi 会回退到默认 `anthropic` provider,报 `No API key found for anthropic` 直接退出。
 
 ```bash
-# 每日更新(默认:无附加指令)
-AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina ./scripts/run-daily.sh
-
-# 带附加指令(仅本次有效):把今天的额外要求作为第 1 个参数传入。它在"日常更新之外额外执行",
-# 仍受 AGENTS.md 硬规则约束;越界要求会被记录到 data/state.json 并跳过(不会强改受保护文件,
-# 因而也不会整次回滚)。
+# ① 默认日更(无附加指令)—— 只做常规每日刷新
 AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
-  ./scripts/run-daily.sh "今天把社区日 counters 填全,本月看点写详细点"
-
-# 只管下达自然语言指令 —— AI 自己 discover → fetch → verify(无需你手贴 URL)。缺链接/缺细节时,
-# 它先跑 scripts/discover.sh 找候选 URL,再用 scripts/fetch.sh url 抓取核对,最后才落库。
-AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
-  ./scripts/run-daily.sh "补上超级巨钳螳螂和超级大比鸟的 GOHub 团战指南链接,补全十周年庆典的加成/spawn/闪光,并强制复查本月所有事件链接"
-
-# 等价写法:改用环境变量 EXTRA_INSTRUCTIONS(适合多行/复用)
-EXTRA_INSTRUCTIONS="今天……" AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
   ./scripts/run-daily.sh
+
+# ② 带一次性指令(operator note)—— 务必用单引号 '...' 包裹
+#    指令作为第 1 个参数,仅本次有效,仍受 AGENTS.md 硬规则约束。
+#    ⚠️ 指令里若含双引号(例如  例如:"本周 Max 团战" ),别用双引号包整段:
+#    shell 会在第一个内部 " 处提前闭合 → 指令被截断,run-daily.sh 只收到前半截。
+#    单引号内的双引号原样保留:
+AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
+  ./scripts/run-daily.sh '补上超级巨钳螳螂的 GOHub 团战指南链接,本月看点写详细点(可含 "引号")'
+
+# ③ 复杂 / 多行 / 带各种引号 → 写进 note.txt,用 EXTRA_INSTRUCTIONS 传(最稳)
+#    命令替换的结果不再被 shell 解析,note.txt 里随便用什么引号都安全。
+AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
+  EXTRA_INSTRUCTIONS="$(cat note.txt)" ./scripts/run-daily.sh
 ```
+
+> **指令优先级**:位置参数 `$1` > `EXTRA_INSTRUCTIONS` 环境变量 > 无 → ② 和 ③ 二选一(同时给会忽略 env)。
+> operator note 只对**本次**生效;越界要求(改 `style.css` / `app.js` / `index.html` marker 外的受保护文件)会被记到 `data/state.json` 并跳过,不强改、也不整次回滚。
+
+**note.txt 方式的坑(逐条避雷)**
+
+- **`PI_PROVIDER` 必带**:漏了 → `No API key found for anthropic`(回退默认 anthropic provider)。
+- **`PI_MODEL` 不能含斜杠**:pi 把 `--model` 里的 `/` 当成 `provider/model` 拆。真实 id 含 `/`(如 `CCcookie/claude-opus-4-8`)时,用 `PI_PROVIDER` 选后端、`PI_MODEL` 给一个**不含 `/` 的子串**(如 `claude-opus-4-8`)。
+- **note.txt 必须是 UTF-8(建议无 BOM)**:daily agent / pi 按**字节**读文件;Windows 记事本默认可能存成 GBK,那样 pi 收到的就是乱码(模型那边也乱)。确认:`file -i note.txt` 应是 `charset=utf-8`;Windows 用「另存为 → UTF-8」或 VS Code 右下角切到 `UTF-8`。
+- **终端 `▒▒▒` 乱码 ≠ 内容坏了**:服务器 locale 不是 UTF-8 时,`run-daily.sh` 回显 operator note 会是一片 `▒`,但传给 pi 的字节是对的(`cat` / `printf` / shell 全按字节透传)。想终端也正常显示:跑前 `export LANG=C.UTF-8`(或 `en_US.UTF-8`)。**判断指令是否真进去别看终端花不花,看下面的 grep。**
+- **note.txt 路径 = 当前目录相对路径**:在 `/opt/pogo-agent` 跑就 `cat note.txt`;路径错 / 文件空 → `cat` 得空串 → 等于没传指令(会按默认日更跑)。
+- **确认完整指令真进了 prompt**:`grep -c '你指令里独有的关键词' note.txt`(查文件本身);开 `PI_VERBOSE=1` 后 `grep -c '关键词' logs/pi-events-$(date -u +%F).jsonl`(>0 即在 prompt 里、没被截断)。
+
+**note.txt 完整命令(规避上面所有坑,可直接复制)**
+
+```bash
+cd /opt/pogo-agent                  # 确保在仓库根、note.txt 就在这
+export LANG=C.UTF-8                 # 让终端也能正常显示中文(仅影响显示,可选)
+file -i note.txt                    # 一次性自检:应输出 charset=utf-8(不是 gbk/iso-8859)
+AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
+  EXTRA_INSTRUCTIONS="$(cat note.txt)" ./scripts/run-daily.sh
+```
+
+> 想边跑边看工具调用,在最后那条命令最前面再加 `PI_VERBOSE=1`,然后另开终端 `tail -F`(见下)。
+
+**实时观看 pi 的工具调用(可选)**
+
+加 `PI_VERBOSE=1`:pi 切到 `--mode json`,事件流写进 `logs/pi-events-<UTC日期>.jsonl`(主终端只剩 `preflight / validate / publish` 几行 —— **这是正常的**,洪流进了文件、没崩)。另开一个终端:
+```bash
+tail -F logs/pi-events-$(date -u +%F).jsonl | jq -c 'select(.type|test("tool_execution"))'
+```
+> `--mode json` 下最终的人类可读总结藏在 `message_*` 事件里(不是纯文本),所以仅调试时开 `PI_VERBOSE=1`;平时默认 `-p` 保留可读总结。
 
 
 推送用指令:
