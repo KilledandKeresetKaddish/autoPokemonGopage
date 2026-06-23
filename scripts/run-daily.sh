@@ -94,10 +94,24 @@ run_agent() {
       # mode (built-in read/write/edit/bash run without prompts). No OS sandbox, so
       # fetch.sh's network works out of the box. Pick the model via env (set in cron):
       #   PI_PROVIDER=<provider id in ~/.pi/agent/models.json>   PI_MODEL=<pattern>
+      #
+      # Live debugging: set PI_VERBOSE=1 to swap -p for --mode json and tee the event
+      # stream to its own clean jsonl (logs/pi-events-<UTC-date>.jsonl). Watch it from
+      # another terminal with:
+      #   tail -F logs/pi-events-$(date -u +%F).jsonl | jq -c 'select(.type|test("tool_execution"))'
+      # (tool_execution_start/end events carry each tool call + its result). NOTE: under
+      # --mode json the final human-readable summary is no longer plain stdout — it lives
+      # inside message_* events — so only enable PI_VERBOSE for debugging; the default -p
+      # keeps the readable summary.
       pi_args=(-p)
+      [ "${PI_VERBOSE:-0}" = "1" ] && pi_args=(--mode json)
       [ -n "${PI_PROVIDER:-}" ] && pi_args+=(--provider "$PI_PROVIDER")
       [ -n "${PI_MODEL:-}" ] && pi_args+=(--model "$PI_MODEL")
-      pi "${pi_args[@]}" "$PROMPT"
+      if [ "${PI_VERBOSE:-0}" = "1" ]; then
+        pi "${pi_args[@]}" "$PROMPT" | tee "logs/pi-events-$(date -u +%F).jsonl"
+      else
+        pi "${pi_args[@]}" "$PROMPT"
+      fi
       ;;
     *)
       # Generic fallback: treat $AGENT_CLI as a command taking the prompt arg.

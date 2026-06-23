@@ -428,6 +428,13 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .pill .spr,.pill img{width:18px;height:18px;object-fit:contain;flex:none;image-rendering:pixelated;}
 .pillrow{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0;}
 .note-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem;margin:.4rem 0;}
+/* Keep the 三栏面板 (本期推荐 / 本月看点) tidy: stack each panel's children with a
+   uniform gap (zeroing their assorted default margins) and reserve a 2-line head so a
+   title that wraps still lines its body up with the neighbouring columns' first line.
+   Scoped to .note-grid > .panel so other .panel uses (cal-notes, raid cards…) are untouched. */
+.note-grid > .panel{display:flex;flex-direction:column;gap:.5rem;}
+.note-grid > .panel > *{margin-block:0;}
+.note-grid > .panel > .panel-head{min-height:4em;align-items:flex-start;}
 .callout{background:rgba(var(--gold-rgb),.07);border-left:3px solid var(--gold-line);
   border-radius:8px;padding:.6rem .85rem;margin:.5rem 0;color:var(--ink);}
 .callout strong{color:var(--h1);}
