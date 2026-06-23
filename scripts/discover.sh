@@ -6,14 +6,16 @@
 # two gaps the daily agent otherwise can't fill on its own:
 #
 #   scripts/discover.sh "<keywords>"   SEARCH — find the URL for an event you can
-#                                      name (LeekDuck feed + GO Hub site search).
+#                                      name (LeekDuck feed + GO Hub + 官方 news +
+#                                      Pokémon GO Wiki/Fandom search).
 #   scripts/discover.sh new            DETECT — list events that appear in the
 #                                      freshly-fetched feeds but are NOT yet in
 #                                      public/data/events.json, cross-checked
 #                                      against Hub / official for corroboration.
 #
-# Both reach the network through the SAME path as fetch.sh (Cloudflare/JS pages
-# solved by Jina) and only ever touch the project's trusted sources. Everything
+# Both reach the network mostly through the SAME path as fetch.sh (Cloudflare/JS
+# pages solved by Jina; the Fandom search hits its MediaWiki JSON API directly) and
+# only ever touch the project's trusted, allowlisted sources. Everything
 # printed is a LEAD, not truth: open each with `scripts/fetch.sh url <URL>`, read
 # it, confirm it's the right event/Pokémon, THEN edit. Never invent a URL.
 #
@@ -27,6 +29,7 @@ FETCH="$ROOT/scripts/fetch.sh"
 RAW="$ROOT/data/raw"
 DISC="$RAW/discovery"
 mkdir -p "$DISC"
+UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 
 # ============================ DETECT MODE ==================================
 # `discover.sh new` — what showed up in the feeds this cycle that the calendar
@@ -153,6 +156,21 @@ OUT="$DISC/discover-$(date -u +%Y%m%dT%H%M%SZ).txt"
             for (i = 1; i <= n; i++) if (index(hay, ts[i]) == 0) { ok = 0; break }
             if (ok) printf "official\t%s\t%s\n", t, u
           }'
+  fi
+
+  # --- 4) Pokémon GO Wiki (Fandom) — the MediaWiki search API returns clean JSON,
+  #     so curl api.php directly (it isn't Cloudflare-gated; the Jina solver is only
+  #     for rendered article pages). This is the search path the LeekDuck feed / Hub
+  #     can't give for region- or local-only events that surface only on the wiki.
+  #     Host is fixed + allowlisted, query is url-encoded. Hits are LEADS: open each
+  #     /wiki/ page with `scripts/fetch.sh url` and confirm before using.
+  FAN="$(curl -fsSL --max-time 40 -A "$UA" \
+    "https://pokemongo.fandom.com/api.php?action=query&list=search&srsearch=${ENC}&srlimit=8&srprop=&format=json" 2>/dev/null || true)"
+  if [ -n "$FAN" ]; then
+    printf '%s\n' "$FAN" | jq -r '
+      (.query.search // [])[]
+      | "fandom\t\(.title)\thttps://pokemongo.fandom.com/wiki/\(.title | gsub(" "; "_") | @uri)"
+    ' 2>/dev/null || true
   fi
 } | awk -F'\t' '{k=$3; sub(/\/$/,"",k)} !seen[k]++' | tee "$OUT"
 

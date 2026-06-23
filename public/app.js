@@ -548,17 +548,31 @@ function renderRotations() {
       const ed = parseDay(seg.end) || sd;
       const active = !!sd && sd <= today && today <= ed;
       const cell = document.createElement('div');
-      cell.className = 'rot-seg' + (active ? ' now' : '');
-      const mons = (seg.pokemon || []).map(p => {
+
+      // 列宽锁死:sprite 封顶 4 个 + 折叠 +N;≥5 只降级缩小、名称改用段标题(完整名单进 tooltip)。
+      // 「进行中」沿用上面 parseDay/today 的同口径判断,语义不变。
+      const mons = seg.pokemon || [];
+      const CAP = 4;                  // 直接显示的最大 sprite 数
+      const many = mons.length >= 5;  // 触发缩小 + 语义化标题
+      const sprHtml = mons.slice(0, CAP).map(p => {
         const sp = monSprite(p);
         if (!sp) return '';
         return linkSprite(`<img class="spr" src="${escapeHtml(sp)}" alt="${escapeHtml(p.name || '')}" loading="lazy" onerror="this.style.display='none'">`, p);
       }).join('');
+      const overflow = mons.length > CAP
+        ? `<span class="rot-more">+${mons.length - CAP}</span>` : '';
+      const fullNames = mons.map(p => p.name).filter(Boolean).join('、');
+      // 优先用 curated 段名(seg.cn 已是短标题,且保留「超级/原始」与双 Boss 信息);
+      // 仅当它缺失时,多只回退「传说轮替 ×N」、单只回退首只名。完整名单始终进 tooltip。
+      const label = seg.cn || seg.name
+        || (many ? `传说轮替 ×${mons.length}` : ((mons[0] && mons[0].name) || ''));
       const range = (seg.start || seg.end)
         ? `<span class="rot-range">${escapeHtml(fmtDateShort(seg.start))}${seg.end && seg.end !== seg.start ? '–' + escapeHtml(fmtDateShort(seg.end)) : ''}</span>`
         : '';
-      cell.innerHTML = `<div class="rot-spr">${mons}</div>`
-        + `<div class="rot-txt"><span class="rot-name">${escapeHtml(seg.cn || seg.name || '')}</span>${range}</div>`
+      cell.className = 'rot-seg' + (active ? ' now' : '') + (many ? ' multi' : '');
+      cell.innerHTML =
+        `<div class="rot-spr">${sprHtml}${overflow}</div>`
+        + `<div class="rot-txt"><span class="rot-name" title="${escapeHtml(fullNames)}">${escapeHtml(label)}</span>${range}</div>`
         + (active ? '<span class="rot-now">进行中</span>' : '');
       col.appendChild(cell);
     });
@@ -968,11 +982,26 @@ function setupDetail() {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   document.addEventListener('mousedown', e => { if (!panel.hidden && !panel.contains(e.target)) close(); });
 }
+// Generic hook: any element carrying data-event-id opens that event's detail drawer
+// (the same popup the calendar day-icons use). Lets the daily agent make event
+// mentions in the free-form 本月看点 region clickable — just wrap the name in
+// <a class="event-link" data-event-id="<events.json id>">名称</a> (or a <span>).
+// Delegated on document, so it keeps working for the agent-rewritten marker HTML.
+function setupEventLinks() {
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-event-id]');
+    if (!t) return;
+    e.preventDefault();                       // never let an href="#" jump the page
+    const ev = state.events.find(x => x.id === t.getAttribute('data-event-id'));
+    if (ev) openDetail(ev);                   // unknown id → element stays inert text
+  });
+}
 
 async function init() {
   setupTabs();
   setupCalNav();
   setupDetail();
+  setupEventLinks();
   setupWorldClock();
   await loadData();
   renderCalendar();

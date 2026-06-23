@@ -10,18 +10,25 @@ Write scope:
 - `public/data/categories.json` only when a new event type needs registration
 
 Inputs:
-- `data/raw/events.json` as the authoritative backbone.
-- `data/raw/events-hub.txt`, `data/raw/events-pokebase.txt`, and
-  `data/raw/events-official.txt` for corroboration, extra links, summaries, bonuses,
-  Pokémon, and details.
-- Ad-hoc detail pages only via `scripts/fetch.sh url <allowlisted URL>` when a
-  specific missing detail is needed.
+- `data/raw/events.json` (ScrapedDuck → LeekDuck) as the **structured backbone** for *normalizing*
+  events — clean JSON, easy to parse — **but not the sole arbiter of what exists this period.**
+- `data/raw/events-hub.txt` and `data/raw/events-official.txt` are **co-equal primary** sources for
+  *what's happening* (not mere corroboration); `data/raw/events-pokebase.txt` corroborates in bulk, the
+  Pokémon GO Wiki (Fandom) is **searchable** via `scripts/discover.sh`, and `serebii.net` is consulted
+  only via a known URL. Pull links, summaries, bonuses, Pokémon, and details from all of them, and treat
+  an event found on Hub / 官网 / Fandom as real even if LeekDuck omits it.
+- Ad-hoc detail pages via `scripts/fetch.sh url <allowlisted URL>` (use `scripts/discover.sh` to find
+  them) whenever a specific event/detail isn't in the bulk feeds — **including events LeekDuck lacks.**
+  Real fetched URLs only — never guess one.
 
 Checklist:
 1. Keep current month through end of next month; drop events that ended before the
-   current month started. **Include local / in-person events** (Safari Zone, City Safari,
-   GO Tour 线下场, 区域线下活动) — never skip an event for being location-specific; make the
-   location explicit in `name` / `summary`.
+   current month started. **Include local / in-person AND region- / country-limited events**
+   (Safari Zone, City Safari, GO Tour 线下场, 区域线下活动 …) — never skip an event for
+   being location-specific, and **never drop one just because LeekDuck 404s / omits it**: a "doesn't
+   exist" verdict requires an empty **searchable** sweep — `scripts/discover.sh` (LeekDuck + Hub + 官网 +
+   Fandom) plus the pokébase bulk file — not LeekDuck alone. (Serebii isn't searchable: known-URL
+   corroboration only.) Make the location explicit in `name` / `summary`.
 2. Deduplicate by real-world event identity. Emit one stable deterministic `id` per
    event; never accumulate duplicates. When a real event is confirmed, delete the old
    placeholder ("待公布 / waiting for announcement") row it replaces — be smart, never
