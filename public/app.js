@@ -954,6 +954,7 @@ function setupTabs() {
     document.querySelectorAll('#main-tabs button').forEach(x => x.classList.toggle('active', x === b));
     const v = b.dataset.view;
     document.querySelectorAll('.view').forEach(s => s.classList.toggle('active', s.id === `view-${v}`));
+    if (v === 'todo') todoCheckRollover();   // re-check the local day each time it's opened
   });
   $('#rank-subtabs').addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
@@ -997,11 +998,195 @@ function setupEventLinks() {
   });
 }
 
+/* ---------- Multi-account TODO (client-side only) ----------
+ * A grid the user fills in: accounts = rows (each with a nickname), tasks =
+ * columns (each with a custom label), cells = a daily checkbox. Everything lives
+ * in localStorage under "pogo-todo"; the checkmarks auto-clear at the user's LOCAL
+ * midnight while the account list + task columns persist. No network, no data
+ * contract with the daily agent — safe to live entirely in the frontend. */
+const TODO_KEY = 'pogo-todo';
+const todoId = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+function todoToday() {
+  const d = new Date(), p = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;   // local calendar day
+}
+function todoLoad() {
+  let data = null;
+  try { data = JSON.parse(localStorage.getItem(TODO_KEY) || 'null'); } catch (e) {}
+  if (!data || typeof data !== 'object') {
+    // first run — seed a tiny visible grid so the row/column shape is obvious
+    data = { v: 1, day: todoToday(),
+      accounts: [{ id: todoId('a'), name: '' }],
+      tasks: [{ id: todoId('t'), name: '' }, { id: todoId('t'), name: '' }],
+      checks: {} };
+  }
+  data.accounts = Array.isArray(data.accounts) ? data.accounts : [];
+  data.tasks = Array.isArray(data.tasks) ? data.tasks : [];
+  data.checks = (data.checks && typeof data.checks === 'object') ? data.checks : {};
+  return data;
+}
+function todoSave(data) { try { localStorage.setItem(TODO_KEY, JSON.stringify(data)); } catch (e) {} }
+// Wipe every check once the local day has rolled over. Returns true if it reset.
+function todoRollover(data) {
+  const today = todoToday();
+  if (data.day !== today) { data.day = today; data.checks = {}; todoSave(data); return true; }
+  return false;
+}
+
+let todoState = null;
+function renderTodo() {
+  const mount = $('#todo-mount');
+  if (!mount || !todoState) return;
+  const data = todoState;
+
+  const status = $('#todo-status');
+  if (status) {
+    status.textContent = '';
+    const day = document.createElement('span');
+    day.className = 'todo-day'; day.textContent = '今天 ' + data.day;
+    const note = document.createElement('span');
+    note.textContent = '0:00 自动清空勾选';
+    status.append(day, note);
+  }
+
+  mount.textContent = '';
+  const bar = document.createElement('div');
+  bar.className = 'todo-toolbar';
+  const mkBtn = (cls, label, fn) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = cls; b.textContent = label;
+    b.addEventListener('click', fn); return b;
+  };
+  bar.appendChild(mkBtn('btn', '＋ 添加账号', () => {
+    data.accounts.push({ id: todoId('a'), name: '' }); todoSave(data); renderTodo();
+    const last = mount.querySelector('tbody tr:last-child .todo-name'); if (last) last.focus();
+  }));
+  bar.appendChild(mkBtn('btn', '＋ 添加任务', () => {
+    data.tasks.push({ id: todoId('t'), name: '' }); todoSave(data); renderTodo();
+    const heads = mount.querySelectorAll('thead .todo-task .todo-name');
+    if (heads.length) heads[heads.length - 1].focus();
+  }));
+  bar.appendChild(mkBtn('btn btn-ghost', '清空今日勾选', () => {
+    if (!Object.keys(data.checks).length || confirm('清空今天所有勾选?')) {
+      data.checks = {}; todoSave(data); renderTodo();
+    }
+  }));
+  mount.appendChild(bar);
+
+  if (!data.accounts.length && !data.tasks.length) {
+    const e = document.createElement('p');
+    e.className = 'todo-empty';
+    e.textContent = '还没有内容。点「＋ 添加账号」加一行账号(填昵称),点「＋ 添加任务」加一列任务(填自定义内容),再逐格勾选即可。';
+    mount.appendChild(e);
+    return;
+  }
+
+  const nameInput = (val, ph, onInput) => {
+    const i = document.createElement('input');
+    i.className = 'todo-name'; i.type = 'text'; i.value = val; i.placeholder = ph;
+    i.addEventListener('input', () => onInput(i.value));
+    return i;
+  };
+  const delBtn = (title, onClick) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'todo-del'; b.title = title; b.setAttribute('aria-label', title);
+    b.textContent = '×'; b.addEventListener('click', onClick); return b;
+  };
+
+  const table = document.createElement('table');
+  table.className = 'todo-table';
+
+  const thead = document.createElement('thead');
+  const hr = document.createElement('tr');
+  const corner = document.createElement('th');
+  corner.className = 'todo-corner'; corner.textContent = '账号 ＼ 任务';
+  hr.appendChild(corner);
+  data.tasks.forEach(t => {
+    const th = document.createElement('th');
+    th.className = 'todo-task';
+    const wrap = document.createElement('div');
+    wrap.className = 'todo-head-in';
+    wrap.appendChild(nameInput(t.name, '任务名', v => { t.name = v; todoSave(data); }));
+    wrap.appendChild(delBtn('删除任务', () => {
+      if (!confirm('删除这一列任务?该列的勾选也会一起删除。')) return;
+      data.tasks = data.tasks.filter(x => x.id !== t.id);
+      Object.keys(data.checks).forEach(k => { if (k.endsWith('|' + t.id)) delete data.checks[k]; });
+      todoSave(data); renderTodo();
+    }));
+    th.appendChild(wrap);
+    hr.appendChild(th);
+  });
+  thead.appendChild(hr);
+  table.appendChild(thead);
+
+  const tbody = document.createElement('tbody');
+  data.accounts.forEach(a => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'todo-acct';
+    const wrap = document.createElement('div');
+    wrap.className = 'todo-head-in';
+    wrap.appendChild(nameInput(a.name, '昵称', v => { a.name = v; todoSave(data); }));
+    wrap.appendChild(delBtn('删除账号', () => {
+      if (!confirm('删除这个账号?该行的勾选也会一起删除。')) return;
+      data.accounts = data.accounts.filter(x => x.id !== a.id);
+      Object.keys(data.checks).forEach(k => { if (k.startsWith(a.id + '|')) delete data.checks[k]; });
+      todoSave(data); renderTodo();
+    }));
+    th.appendChild(wrap);
+    tr.appendChild(th);
+    data.tasks.forEach(t => {
+      const td = document.createElement('td');
+      td.className = 'todo-cell';
+      const key = a.id + '|' + t.id;
+      const lab = document.createElement('label');
+      const cb = document.createElement('input');
+      cb.type = 'checkbox'; cb.className = 'todo-check'; cb.checked = !!data.checks[key];
+      cb.addEventListener('change', () => {
+        if (cb.checked) data.checks[key] = true; else delete data.checks[key];
+        todoSave(data);
+      });
+      lab.appendChild(cb);
+      td.appendChild(lab);
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+
+  const scroll = document.createElement('div');
+  scroll.className = 'todo-scroll';
+  scroll.appendChild(table);
+  mount.appendChild(scroll);
+}
+
+let todoTimer = null;
+function todoScheduleMidnight() {
+  if (todoTimer) clearTimeout(todoTimer);
+  const now = new Date();
+  const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 3, 0);
+  todoTimer = setTimeout(() => {
+    if (todoState) { todoRollover(todoState); renderTodo(); }
+    todoScheduleMidnight();
+  }, Math.max(1000, next - now));
+}
+function todoCheckRollover() { if (todoState && todoRollover(todoState)) renderTodo(); }
+function setupTodo() {
+  todoState = todoLoad();
+  todoRollover(todoState);   // opened on a new day → drop yesterday's checks
+  todoSave(todoState);       // persist the seeded / normalised shape
+  renderTodo();
+  todoScheduleMidnight();
+  // also catch the rollover if the machine was asleep when the timer should have fired
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) todoCheckRollover(); });
+}
+
 async function init() {
   setupTabs();
   setupCalNav();
   setupDetail();
   setupEventLinks();
+  setupTodo();
   setupWorldClock();
   await loadData();
   renderCalendar();

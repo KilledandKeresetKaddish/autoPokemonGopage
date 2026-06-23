@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pokémon GO 面板</title>
   <link rel="icon" type="image/x-icon" href="pokemongocalender.ico?v=14" />
-  <link rel="stylesheet" href="style.css?v=19" />
+  <link rel="stylesheet" href="style.css?v=20" />
 </head>
 <body>
   <!-- =====================================================================
@@ -29,6 +29,7 @@
     <button data-view="rankings"><span class="t-ico">⚔</span> 战力榜</button>
     <button data-view="clock"><span class="t-ico">🕓</span> 世界时钟</button>
     <button data-view="links"><span class="t-ico">🔗</span> 实用链接</button>
+    <button data-view="todo"><span class="t-ico">📋</span> 多账号 TODO</button>
   </nav>
 
   <main>
@@ -304,8 +305,9 @@
           <img class="ico-lg" src="https://pokemongo.com/favicon.ico" alt="">
           <h3><a href="https://pokemongo.com/" target="_blank" rel="noopener">官方 Pokémon GO</a></h3>
         </div>
-        <p class="muted">官方地图 · 活动 · 线下活动 · 网页商店</p>
+        <p class="muted">新闻 · 官方地图 · 活动 · 线下活动 · 网页商店</p>
         <div class="detail-links">
+          <a class="btn" href="https://pokemongo.com/news" target="_blank" rel="noopener">新闻</a>
           <a class="btn" href="https://pokemongo.com/map" target="_blank" rel="noopener">官方地图</a>
           <a class="btn" href="https://pokemongo.com/en/events/" target="_blank" rel="noopener">官方活动</a>
           <a class="btn" href="https://pokemongo.com/en/featured-in-person-events" target="_blank" rel="noopener">线下活动</a>
@@ -382,12 +384,25 @@
         · 图标 <a href="https://pokeapi.co/" target="_blank" rel="noopener">PokeAPI</a>
       </p>
     </section>
+
+    <!-- ========================= VIEW 5: MULTI-ACCOUNT TODO ========================= -->
+    <!-- Owner-maintained; no AI region. Fully client-side: the grid + checks live in
+         localStorage (key "pogo-todo"); checks auto-clear at the user's local midnight.
+         All DOM is built by app.js (setupTodo / renderTodo) into #todo-mount. -->
+    <section id="view-todo" class="view">
+      <div class="panel todo-panel" style="padding:.85rem 1.05rem">
+        <div class="panel-head"><span class="dia">◆</span><h3>多账号 TODO</h3></div>
+        <p class="muted">每个账号一行,每项任务一列;勾选记录今天的完成情况。数据只保存在本机浏览器(localStorage),不会上传;每天 0:00(以你本机时间为准)自动清空全部勾选,账号与任务列保留。</p>
+        <div id="todo-status" class="todo-status muted"></div>
+        <div id="todo-mount"></div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
     <div class="muted">by: adonais·anabiosis</div>
   </footer>
 
-  <script src="app.js?v=17" defer></script>
+  <script src="app.js?v=18" defer></script>
 </body>
 </html>

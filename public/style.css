@@ -434,12 +434,21 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .pillrow{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0;}
 .note-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem;margin:.4rem 0;}
 /* Keep the 三栏面板 (本期推荐 / 本月看点) tidy: stack each panel's children with a
-   uniform gap (zeroing their assorted default margins) and reserve a 2-line head so a
-   title that wraps still lines its body up with the neighbouring columns' first line.
+   uniform gap (zeroing their assorted default margins).
    Scoped to .note-grid > .panel so other .panel uses (cal-notes, raid cards…) are untouched. */
 .note-grid > .panel{display:flex;flex-direction:column;gap:.5rem;}
 .note-grid > .panel > *{margin-block:0;}
+/* Fallback (no subgrid): reserve a 2-line head so a wrapped title still lines its
+   body up with the neighbouring columns' first row — at the cost of a gap under short titles. */
 .note-grid > .panel > .panel-head{min-height:4em;align-items:flex-start;}
+/* Preferred (subgrid): size the head band to the TALLEST title in the row, so every
+   column's first body line aligns with NO wasted gap when the titles are short — it
+   only grows to two lines if a title actually wraps. Fixes the head→body offset. */
+@supports (grid-template-rows: subgrid){
+  .note-grid{grid-template-rows:auto 1fr;}
+  .note-grid > .panel{display:grid;grid-template-rows:subgrid;grid-row:span 2;}
+  .note-grid > .panel > .panel-head{min-height:0;align-items:center;}
+}
 .callout{background:rgba(var(--gold-rgb),.07);border-left:3px solid var(--gold-line);
   border-radius:8px;padding:.6rem .85rem;margin:.5rem 0;color:var(--ink);}
 .callout strong{color:var(--h1);}
@@ -610,6 +619,46 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .wc-pin2.hot .lab .pt{color:#cdebd0;}
 .wc-pin2.cool{opacity:.55;}
 @media (max-width:560px){ .wc-axis{height:230px;} }
+
+/* ---------- Multi-account TODO (client-side, localStorage) ---------- */
+.todo-status{margin:.1rem 0 .6rem;display:flex;flex-wrap:wrap;align-items:center;gap:.35rem .8rem;font-size:.82rem;}
+.todo-status .todo-day{color:var(--gold-bright);font-family:var(--display);font-weight:700;letter-spacing:.02em;}
+.todo-toolbar{display:flex;flex-wrap:wrap;gap:.5rem;margin:.2rem 0 .85rem;}
+.todo-toolbar .btn{display:inline-flex;align-items:center;gap:.3rem;}
+.todo-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel2);
+  scrollbar-width:thin;scrollbar-color:var(--gold-line) transparent;}
+.todo-scroll::-webkit-scrollbar{height:8px;}
+.todo-scroll::-webkit-scrollbar-thumb{background:var(--gold-line);border-radius:8px;}
+.todo-scroll::-webkit-scrollbar-track{background:transparent;}
+.todo-table{border-collapse:collapse;width:100%;min-width:max-content;}
+.todo-table th,.todo-table td{border:1px solid var(--line-soft);padding:0;}
+.todo-corner{position:sticky;left:0;z-index:2;background:var(--panel);
+  font-family:var(--serif);font-size:.76rem;color:var(--gold-dim);font-weight:700;letter-spacing:.04em;
+  padding:.45rem .65rem;white-space:nowrap;text-align:left;}
+.todo-task{min-width:7.5rem;background:var(--panel);}
+.todo-acct{position:sticky;left:0;z-index:1;background:var(--panel2);min-width:8rem;}
+.todo-head-in{display:flex;align-items:center;gap:.2rem;padding:.28rem .4rem;}
+.todo-name{flex:1;min-width:0;background:transparent;border:0;border-bottom:1px solid transparent;
+  color:var(--ink);font-family:var(--sans);font-size:.86rem;padding:.2rem .15rem;outline:none;
+  transition:border-color .15s,background .15s;}
+.todo-task .todo-name{color:var(--gold-bright);font-weight:600;text-align:center;}
+.todo-name::placeholder{color:var(--gold-dim);opacity:.85;}
+.todo-name:focus{border-bottom-color:var(--gold);background:rgba(var(--gold-rgb),.07);}
+.todo-del{flex:none;border:0;background:transparent;color:var(--gold-dim);cursor:pointer;
+  font-size:1rem;line-height:1;padding:.08rem .24rem;border-radius:6px;transition:color .15s,background .15s;}
+.todo-del:hover{color:#e7a89e;background:rgba(200,93,78,.15);}
+.todo-cell{text-align:center;}
+.todo-cell label{display:flex;align-items:center;justify-content:center;cursor:pointer;padding:.4rem .55rem;min-height:2.1rem;}
+.todo-check{appearance:none;-webkit-appearance:none;width:20px;height:20px;flex:none;cursor:pointer;margin:0;
+  border:1px solid var(--gold-line);border-radius:6px;background:rgba(var(--gold-rgb),.05);position:relative;
+  transition:background .15s,border-color .15s,box-shadow .15s;}
+.todo-check:hover{border-color:var(--gold);}
+.todo-check:checked{background:linear-gradient(135deg,#e8cb8c,#c79a4f);border-color:var(--gold);
+  box-shadow:0 0 8px rgba(var(--gold-rgb),.5);}
+.todo-check:checked::after{content:'';position:absolute;left:6px;top:2px;width:5px;height:10px;
+  border:solid #1d1402;border-width:0 2px 2px 0;transform:rotate(45deg);}
+.todo-table tbody tr:hover .todo-cell,.todo-table tbody tr:hover .todo-acct{background:rgba(var(--gold-rgb),.05);}
+.todo-empty{color:var(--muted);font-size:.92rem;line-height:1.6;padding:1.1rem .3rem;}
 
 /* ---------- Footer ---------- */
 .site-footer{position:relative;z-index:1;text-align:center;padding:1.6rem 1rem 2.2rem;}
