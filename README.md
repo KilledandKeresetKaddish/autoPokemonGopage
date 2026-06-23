@@ -34,6 +34,18 @@ AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
 - **note.txt 路径 = 当前目录相对路径**:在 `/opt/pogo-agent` 跑就 `cat note.txt`;路径错 / 文件空 → `cat` 得空串 → 等于没传指令(会按默认日更跑)。
 - **确认完整指令真进了 prompt**:`grep -c '你指令里独有的关键词' note.txt`(查文件本身);开 `PI_VERBOSE=1` 后 `grep -c '关键词' logs/pi-events-$(date -u +%F).jsonl`(>0 即在 prompt 里、没被截断)。
 
+**note.txt 完整命令(规避上面所有坑,可直接复制)**
+
+```bash
+cd /opt/pogo-agent                  # 确保在仓库根、note.txt 就在这
+export LANG=C.UTF-8                 # 让终端也能正常显示中文(仅影响显示,可选)
+file -i note.txt                    # 一次性自检:应输出 charset=utf-8(不是 gbk/iso-8859)
+AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
+  EXTRA_INSTRUCTIONS="$(cat note.txt)" ./scripts/run-daily.sh
+```
+
+> 想边跑边看工具调用,在最后那条命令最前面再加 `PI_VERBOSE=1`,然后另开终端 `tail -F`(见下)。
+
 **实时观看 pi 的工具调用(可选)**
 
 加 `PI_VERBOSE=1`:pi 切到 `--mode json`,事件流写进 `logs/pi-events-<UTC日期>.jsonl`(主终端只剩 `preflight / validate / publish` 几行 —— **这是正常的**,洪流进了文件、没崩)。另开一个终端:
