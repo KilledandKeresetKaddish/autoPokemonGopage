@@ -23,12 +23,14 @@ Goal: make the raw source cache ready for the content curators without over-fetc
      `scripts/fetch.sh url` and pass the real ones to the Calendar curator. Especially useful when
      the operator asks to "audit new + existing events".
    - **events LeekDuck doesn't carry** — Hub + 官网 are **co-equal primary** sources here, not mere
-     corroboration. Many **region- / country-limited** events appear only on
-     Hub's monthly roundup, the 官网 news, or `pokemongo.fandom.com` even when LeekDuck 404s. Scan
-     Hub / 官网 / Fandom for events that are **absent from the LeekDuck feed**, confirm each with
-     `scripts/fetch.sh url`, and hand them to the Calendar curator so it never drops a region/local
-     event for LeekDuck's silence. A "doesn't exist" verdict requires an **empty sweep of every
-     allowlisted source** — never LeekDuck alone. Still: real fetched URLs only, never a guessed one.
+     corroboration. Many **region- / country-limited** events appear only on Hub's monthly roundup, the
+     官网 news, or the Pokémon GO Wiki (Fandom) even when LeekDuck 404s. Run `scripts/discover.sh
+     "<keywords>"` — it now searches **LeekDuck + Hub + 官网 + Fandom** — and read the `events-hub` /
+     `events-official` / `events-pokebase` bulk files for anything **absent from the LeekDuck feed**;
+     confirm each lead with `scripts/fetch.sh url` and hand it to the Calendar curator so it never drops
+     a region/local event for LeekDuck's silence. A "doesn't exist" verdict requires that **searchable
+     sweep** to come up empty — never LeekDuck alone. (`serebii.net` has no search/bulk feed —
+     corroboration via a known URL only, not part of the sweep.) Real fetched URLs only, never guessed.
 6. Do not edit any site content or bookkeeping files — including `data/state.json`.
    Report fetch problems in your output; State + Validator (90) is the sole writer of
    `data/state.json` and records them for you.

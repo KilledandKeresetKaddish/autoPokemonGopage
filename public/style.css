@@ -443,6 +443,12 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .callout{background:rgba(var(--gold-rgb),.07);border-left:3px solid var(--gold-line);
   border-radius:8px;padding:.6rem .85rem;margin:.5rem 0;color:var(--ink);}
 .callout strong{color:var(--h1);}
+/* 可点击的活动名(本月看点等):data-event-id 由 app.js 接管,点开对应活动 popup。
+   下划线 + 指针,区别于普通正文;主题金色,hover 提亮。 */
+.event-link{color:var(--gold-bright);cursor:pointer;font-weight:600;
+  text-decoration:underline;text-decoration-color:var(--gold-line);
+  text-underline-offset:2px;text-decoration-thickness:1px;}
+.event-link:hover{color:var(--h1);text-decoration-color:var(--gold);}
 
 /* ---------- World clock (time-band country filter) ---------- */
 .wc-controls{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem .8rem;margin-top:.6rem;}

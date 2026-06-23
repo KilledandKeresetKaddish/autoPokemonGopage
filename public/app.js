@@ -982,11 +982,26 @@ function setupDetail() {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   document.addEventListener('mousedown', e => { if (!panel.hidden && !panel.contains(e.target)) close(); });
 }
+// Generic hook: any element carrying data-event-id opens that event's detail drawer
+// (the same popup the calendar day-icons use). Lets the daily agent make event
+// mentions in the free-form 本月看点 region clickable — just wrap the name in
+// <a class="event-link" data-event-id="<events.json id>">名称</a> (or a <span>).
+// Delegated on document, so it keeps working for the agent-rewritten marker HTML.
+function setupEventLinks() {
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-event-id]');
+    if (!t) return;
+    e.preventDefault();                       // never let an href="#" jump the page
+    const ev = state.events.find(x => x.id === t.getAttribute('data-event-id'));
+    if (ev) openDetail(ev);                   // unknown id → element stays inert text
+  });
+}
 
 async function init() {
   setupTabs();
   setupCalNav();
   setupDetail();
+  setupEventLinks();
   setupWorldClock();
   await loadData();
   renderCalendar();

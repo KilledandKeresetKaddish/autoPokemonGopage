@@ -172,10 +172,13 @@ refetch everything.** Then read the files in `data/raw/`.
 > arbiter of whether an event is real. **Never conclude an event "doesn't exist" — and never skip it —
 > just because LeekDuck 404s or omits it.** Region- or country-limited events
 > routinely live on Hub's monthly roundup, the 官网 news, or `pokemongo.fandom.com` even when LeekDuck
-> has no page. **Before dropping any event as nonexistent, sweep _every_ allowlisted source** — Hub
-> (`events-hub` + the monthly article), 官网 (`events-official`), pokébase, and `pokemongo.fandom.com` /
-> `serebii.net` — using `scripts/discover.sh` + `scripts/fetch.sh url <URL>` to chase each candidate
-> link if the bulk feeds don't surface it; only call it nonexistent after that sweep comes up empty.
+> has no page. **Before dropping any event as nonexistent, sweep the sources you can actually search or bulk-read** —
+> the LeekDuck feed, the `events-hub` / `events-official` / `events-pokebase` bulk files **and** their
+> monthly articles, plus `scripts/discover.sh "<keywords>"`, which now searches **LeekDuck + Hub + 官网 +
+> Pokémon GO Wiki (Fandom)** for you — then open each lead with `scripts/fetch.sh url <URL>`. Only call it
+> nonexistent after that sweep is empty. `serebii.net` has **no** search or bulk feed, so it **cannot** be
+> swept: consult it only as corroboration when you already hold a specific URL, and never read "absent
+> from Serebii" as evidence either way.
 > If a Jina source is flaky or empty, still build a complete calendar from whatever primaries you
 > *can* read. **Iron rule, unchanged: only ever use real, reachable URLs you have actually fetched —
 > never invent, hand-build, or guess a link; record a genuinely-unconfirmable event as a gap in
@@ -215,8 +218,10 @@ need a page whose URL you don't already have, search the trusted sources first:
 scripts/discover.sh "mega scizor raid guide"
 scripts/discover.sh "10th anniversary party"
 ```
-It matches LeekDuck via the cached `events` feed and searches Pokémon GO Hub (its on-site search,
-through the same Jina solver), printing `SOURCE <tab> TITLE <tab> URL` candidates (also saved under
+It matches LeekDuck via the cached `events` feed, searches Pokémon GO Hub (its on-site search) and the
+官方 news index through the Jina solver, **and queries the Pokémon GO Wiki (Fandom) MediaWiki search API
+directly** — so a region-/local-only event with only a Fandom page is still discoverable. It prints
+`SOURCE <tab> TITLE <tab> URL` candidates (also saved under
 `data/raw/discovery/`). **Candidates are leads, not facts:** open each promising one with
 `scripts/fetch.sh url <URL>`, confirm it is the *exact* same event/Pokémon (right boss, right
 month), and only then add it to `links[]`. If nothing fits, record the gap in `data/state.json` —
@@ -497,6 +502,12 @@ Use **only** these whitelisted, theme-correct classes (no inline colors, no `<st
 - Pokémon/tiers: `.mon-icon`, `.mon-row` / `.mon` / `.shiny`, `.tier` + `.tier-S|tier-A|tier-B|tier-C`
 - sprites/icons: `<img class="spr">` or `class="mon-icon"` (PokeAPI dex-id URL); `<img class="ico">` /
   `class="ico-lg"` for the local resource icons in `assets/icons/` (size locked).
+- **clickable event names** (本月看点 = `calendar-notes`): wrap a headline event's name in
+  `<span class="event-link" data-event-id="<events.json id>">名称</span>` (a `<span>`, or an `<a>` with no
+  `href`) — `app.js` opens that event's detail popup on click (underline marks it clickable). The
+  `data-event-id` **must** equal an existing `events.json` `id` (an unknown id just stays inert text, so
+  prune links when you remove the event). Use it to let 本月看点 jump to a drawer; the popup only opens on
+  the calendar view, so keep these in `calendar-notes`, not the rankings regions.
 - current-raid blocks (structured `rankings-raid` only): one **`.raid-wall`** (3-up card grid) wrapping
   per-boss **`.raid-block`** cards. Each card = a **`.raid-boss`** header (`<img class="boss-icon">` +
   **`.binfo`**, which holds a **`.btop`** badge/name row above a **`.meta`** 属性/弱点 row) and a
@@ -589,9 +600,10 @@ These mistakes have been observed in past runs. **Check for each one** during st
 7. **LeekDuck-only tunnel vision.** A LeekDuck 404 / omission is **not** proof an event doesn't exist.
    LeekDuck skips many **region- or country-limited** events that Hub's monthly
    roundup, the 官网 news, or `pokemongo.fandom.com` still cover. Before skipping any event as
-   "nonexistent", sweep **all** allowlisted sources — Hub (`events-hub` + monthly article), 官网
-   (`events-official`), pokébase, Fandom, Serebii — discovering (`scripts/discover.sh`) and fetching
-   (`scripts/fetch.sh url`) each candidate; only drop it if every source comes up empty. **Region /
+   "nonexistent", sweep the **searchable / bulk-readable** sources — the LeekDuck feed, the `events-hub`
+   / `events-official` / `events-pokebase` bulk files, and `scripts/discover.sh` (which searches LeekDuck
+   + Hub + 官网 + Fandom) — opening each lead with `scripts/fetch.sh url`; only drop it if every one comes
+   up empty. (Serebii has no search/bulk feed — corroboration via a known URL only, never a sweep target.) **Region /
    local / in-person events are in scope, not noise** — never discard one merely because LeekDuck lacks
    it. (Recording a genuinely-unconfirmable event as a gap in `data/state.json` is still correct — just
    don't reach that conclusion from LeekDuck alone, and never paper over the gap with a fabricated link.)
