@@ -19,6 +19,7 @@ echo "===== daily run $(date -u +%FT%TZ) ====="
 
 # keep the log dir bounded — drop run logs older than ~30 days
 find logs -maxdepth 1 -name 'daily-*.log' -type f -mtime +30 -delete 2>/dev/null || true
+find logs -maxdepth 1 -name 'pi-events-*.jsonl' -type f -mtime +7 -delete 2>/dev/null || true
 
 AGENT_CLI="${AGENT_CLI:-claude}"
 
@@ -108,7 +109,7 @@ run_agent() {
       [ -n "${PI_PROVIDER:-}" ] && pi_args+=(--provider "$PI_PROVIDER")
       [ -n "${PI_MODEL:-}" ] && pi_args+=(--model "$PI_MODEL")
       if [ "${PI_VERBOSE:-0}" = "1" ]; then
-        pi "${pi_args[@]}" "$PROMPT" | tee "logs/pi-events-$(date -u +%F).jsonl"
+        pi "${pi_args[@]}" "$PROMPT" > "logs/pi-events-$(date -u +%F).jsonl"
       else
         pi "${pi_args[@]}" "$PROMPT"
       fi
