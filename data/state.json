@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-23T07:49:11Z",
+  "lastUpdated": "2026-06-23T08:47:43Z",
   "sources": {
     "events": {
       "lastFetch": "2026-06-23T07:23:00Z",
@@ -80,19 +80,24 @@
     }
   },
   "detailChecks": {
-    "checkedAt": "2026-06-23T07:49:11Z",
+    "checkedAt": "2026-06-23T08:47:43Z",
     "status": "ok",
-    "note": "本轮(07:49Z)三项 operator note 全部落地。① 强制全量重抓:events/raids/events-hub/-pokebase/-official/tiers-attackers/-defenders/-pokebase 于 07:17–07:23Z 重抓全部 OK;eggs/research/gamemaster 仍新鲜(<7d)未强制刷新。② events.json 67→87:新增 7 月标准团战轮换(三神鸟 5★ 7/1-5 & 7/13-14、盖欧卡 7/15-21、索尔迦雷欧 7/22-28、酋雷姆 7/29-8/4;Mega 路卡利欧/蜥蜴王/暴飞龙/波士可多拉;暗影帕路奇亚 7/1-8/4;Raid Hours 7/1,7/15,7/22,7/29;7 月 Max 周一 吉利蛋/单首龙/破破袋/丑丑鱼;7/13-20 & 7/21-27 两条待公布活动);GO Fest 与传奇之路 popup 去除重复的『当日阵容(全部团战 Boss)』mons 网格,并给传奇之路加 2km/5km/10km 孵蛋小图标网格;rotations 补 7 月单日/周段(5star/mega/max,按 dex-id 与 events.json raid 对齐)。③ 本月看点(calendar-notes)接入 25 个 data-event-id 可点击事件链接(已校验全部命中 events.json id),本期推荐刷新至 6/23;attackers/defenders/raid 面板沿用上轮已核对内容(tier 文件 + raids.json 本轮无变化,raids 6/24 轮换)。自检:87 条无重复 id、无 type 为空、最早 end 2026-06-17(在 90 天留存窗内)、rotations 三轨段齐全(5★/mega/max)、五个 ranking 面板均非空。"
+    "note": "08:47Z 二次运行处理五项 operator note(见 operatorNote)。所有源仍 <1d 新鲜,未重抓。events 87→88(新增 Arraiá)。preflight 通过(仅 raidhour20260624 已知 long-chip WARN),validate exit 0。"
   },
   "arraiaGap": {
-    "checkedAt": "2026-06-23T07:49:11Z",
-    "status": "still-absent",
-    "note": "operator note 复核仍无 Arraia:LeekDuck(/events/ 索引无 + arraia/arraia-2026/festa-junina 等 slug 全 404)、Pokémon GO Hub(discover.sh 站内搜索 + 直接 slug 均 404/无关)、官方 pokemongo.com(news/events/featured-in-person-events 列表均无)三源 2026-06-23 复查皆无任何 Arraia 条目。按 AGENTS『只用真实链接、查不到则记录不杜撰』未添加、未设 featured;待该活动正式公布后补全(官方+LeekDuck+Hub 链接)并设 featured。"
+    "checkedAt": "2026-06-23T08:47:43Z",
+    "status": "resolved",
+    "note": "Arraiá 已确认并落地。官方 PT 新闻 https://pokemongo.com/pt_BR/news/festa-junina-2026(2026-06-12 发布,标题『Peguem um Tauros de Paldea da Espécie Aquática no Arraiá do Pokémon GO!』)给出完整详情:巴西限定,6/23 10:00–6/29 22:00 当地时间;全巴西可遇带特殊背景的水之品种帕底亚肯泰罗(dex128/form10252),戴牛仔帽卡比兽(143,闪光提升),润水鸭(912)、利牙鱼(318);加成苔藓诱饵多苹果、诱饵 1h、双倍伙伴爱心。新增事件 id=arraia-festa-junina-2026 并 featured。链接仅 官方+Fandom(https://pokemongo.fandom.com/wiki/Arraiá):Hub 6 月文章经 grep 确认未提 Arraiá,LeekDuck 仍无页,按防误attribution规则不挂 Hub/LeekDuck。"
+  },
+  "solgaleoShinyGap": {
+    "checkedAt": "2026-06-23T08:47:43Z",
+    "status": "not-released",
+    "note": "operator note ① 期望给索尔迦雷欧(791,7/22–7/28 5★)加实装闪光图标。复查 gohub DB https://db.pokemongohub.net/pokemon/791 明示『Shiny released: No』『Solgaleo cannot be shiny in Pokémon GO』,Hub 团战指南 https://pokemongohub.net/post/guide/solgaleo-raid-guide-best-counters-100-ivs-cps/ 亦称『cannot be shiny from Raids』,页面无任何闪光精灵图可放。所有 live 源一致否定本期闪光实装,按 AGENTS『核对后再写、绝不杜撰』未加闪光标记/图标,事件保留『暂未实装闪光』。待官方正式宣布该活动周实装闪光、且 gohub/官方出现闪光图标后再补 pokemon[].shiny + 闪光 bonus。"
   },
   "operatorNote": {
-    "checkedAt": "2026-06-23T07:49:11Z",
+    "checkedAt": "2026-06-23T08:47:43Z",
     "status": "done",
-    "note": "2026-06-23 三项 operator note 全部完成:① 强制全量重抓 8 个每日/tier 源(07:17–07:23Z 全 OK),eggs/research/gamemaster 仍新鲜未刷新;② events.json 67→87(7 月标准团战轮换全量 + GO Fest/传奇之路 popup 阵容去重 + 传奇之路孵蛋图标网格)、rotations 补 7 月段(按 dex-id 对齐);③ 本月看点接入 25 个可点击事件链接、本期推荐刷新至 6/23,attackers/defenders/raid 沿用上轮(raids 6/24 才轮换)。所有新简中名经 PokeAPI zh-Hans 核对,counter 招式属性经 gamemaster 核验。preflight + validate 均 exit 0。"
+    "note": "2026-06-23T08:47Z 五项 operator note 处理:① 索尔迦雷欧闪光—live 源(gohub DB + Hub 指南)均否定实装、无图标,未杜撰,记 solgaleoShinyGap;② 传奇之路 7/6 raid popup 增『当日阵容(全部团战 Boss)』60 只 sprite 网格(取自 Hub Road of Legends 7/6 名单,简中名经核验);③ 本月看点每条事件标题短语本身设为可点击 event-link(全部命中 events.json id);④ Arraiá 六月节(巴西限定 6/23–6/29)据官方 PT 新闻新增 events.json(id=arraia-festa-junina-2026,官方+Fandom 链接)并 featured;⑤ featured 增 max-mondays-2026-07-06/arraia-festa-junina-2026/august-communityday2026/raidhour20260722。events 87→88。源全部 <1d 新鲜未重抓。preflight 通过(仅 raidhour20260624 已知 long-chip WARN),validate exit 0。"
   },
   "notes": {
     "correction_2026-06-19": {
