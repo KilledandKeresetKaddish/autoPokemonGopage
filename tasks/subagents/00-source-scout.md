@@ -23,7 +23,7 @@ Goal: make the raw source cache ready for the content curators without over-fetc
      `scripts/fetch.sh url` and pass the real ones to the Calendar curator. Especially useful when
      the operator asks to "audit new + existing events".
    - **events LeekDuck doesn't carry** — Hub + 官网 are **co-equal primary** sources here, not mere
-     corroboration. Many **region- / country-limited** events (e.g. 巴西限定 Arraiá) appear only on
+     corroboration. Many **region- / country-limited** events appear only on
      Hub's monthly roundup, the 官网 news, or `pokemongo.fandom.com` even when LeekDuck 404s. Scan
      Hub / 官网 / Fandom for events that are **absent from the LeekDuck feed**, confirm each with
      `scripts/fetch.sh url`, and hand them to the Calendar curator so it never drops a region/local

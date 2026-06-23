@@ -23,7 +23,7 @@ Inputs:
 Checklist:
 1. Keep current month through end of next month; drop events that ended before the
    current month started. **Include local / in-person AND region- / country-limited events**
-   (Safari Zone, City Safari, GO Tour 线下场, 区域线下活动, 巴西限定 Arraiá …) — never skip an event for
+   (Safari Zone, City Safari, GO Tour 线下场, 区域线下活动 …) — never skip an event for
    being location-specific, and **never drop one just because LeekDuck 404s / omits it**: a "doesn't
    exist" verdict requires an empty sweep of **every** allowlisted source (Hub, 官网, pokébase, Fandom,
    Serebii), not LeekDuck alone. Make the location explicit in `name` / `summary`.

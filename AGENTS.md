@@ -170,7 +170,7 @@ refetch everything.** Then read the files in `data/raw/`.
 > Fandom / Serebii corroborate. `events` (ScrapedDuck → LeekDuck, clean JSON) stays the convenient
 > **structured backbone** for *normalizing* the events you include — but it is **not** the sole
 > arbiter of whether an event is real. **Never conclude an event "doesn't exist" — and never skip it —
-> just because LeekDuck 404s or omits it.** Region- or country-limited events (e.g. 巴西限定 Arraiá)
+> just because LeekDuck 404s or omits it.** Region- or country-limited events
 > routinely live on Hub's monthly roundup, the 官网 news, or `pokemongo.fandom.com` even when LeekDuck
 > has no page. **Before dropping any event as nonexistent, sweep _every_ allowlisted source** — Hub
 > (`events-hub` + the monthly article), 官网 (`events-official`), pokébase, and `pokemongo.fandom.com` /
@@ -587,7 +587,7 @@ These mistakes have been observed in past runs. **Check for each one** during st
    a matching article, it's better to have 1 link than a broken link.
 
 7. **LeekDuck-only tunnel vision.** A LeekDuck 404 / omission is **not** proof an event doesn't exist.
-   LeekDuck skips many **region- or country-limited** events (e.g. 巴西限定 Arraiá) that Hub's monthly
+   LeekDuck skips many **region- or country-limited** events that Hub's monthly
    roundup, the 官网 news, or `pokemongo.fandom.com` still cover. Before skipping any event as
    "nonexistent", sweep **all** allowlisted sources — Hub (`events-hub` + monthly article), 官网
    (`events-official`), pokébase, Fandom, Serebii — discovering (`scripts/discover.sh`) and fetching
