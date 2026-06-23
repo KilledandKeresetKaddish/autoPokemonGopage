@@ -265,21 +265,26 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .rot-wrap{padding:.85rem 1.05rem;margin-top:1rem;}
 .rot-wrap #rot-note{margin:.1rem 0 .6rem;}
 /* 三栏并列:5★ / 超级 / 极巨 三条轨道并排成列 */
-.rot-board{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;align-items:start;}
-.rot-col{background:var(--panel2);border:1px solid var(--gold-line);border-radius:12px;
+.rot-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem;align-items:start;}
+.rot-col{min-width:0;background:var(--panel2);border:1px solid var(--gold-line);border-radius:12px;
   padding:.6rem .65rem;display:flex;flex-direction:column;gap:.4rem;}
 .rot-col-head{display:flex;align-items:center;gap:.45rem;padding-bottom:.35rem;
   border-bottom:1px solid var(--line-soft);
   font-family:var(--serif);font-weight:700;letter-spacing:.04em;color:var(--gold-bright);font-size:1rem;}
 .rot-dot{width:10px;height:10px;border-radius:50%;background:var(--c,var(--gold));
   box-shadow:0 0 7px var(--c,var(--gold));flex:none;}
-.rot-seg{position:relative;display:flex;align-items:center;gap:.5rem;padding:.4rem .5rem;border-radius:9px;
+.rot-seg{position:relative;display:flex;align-items:center;gap:.5rem;min-width:0;min-height:48px;padding:.4rem .5rem;border-radius:9px;
   border:1px solid var(--line);border-left:3px solid var(--c,var(--gold-line));background:rgba(var(--gold-rgb),.04);}
-.rot-spr{display:flex;align-items:center;gap:.2rem;flex:none;}
+.rot-spr{display:flex;flex-wrap:wrap;align-items:center;gap:.18rem;flex:none;max-width:140px;}
 .rot-seg .spr{width:34px;height:34px;object-fit:contain;flex:none;image-rendering:pixelated;
   filter:drop-shadow(0 1px 1px rgba(0,0,0,.5));}
+.rot-seg.multi .spr{width:24px;height:24px;}   /* ≥5 只缩小,最多两行高 */
+/* 溢出徽标 +N:超出 CAP 的数量折叠成一颗轨道色徽标,完整名单在 .rot-name 的 title 里 */
+.rot-more{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;
+  padding:0 .32rem;border-radius:999px;font-family:var(--display);font-weight:800;font-size:.62rem;
+  line-height:1;color:#10100a;background:var(--c,var(--gold));}
 .rot-txt{min-width:0;display:flex;flex-direction:column;gap:.04rem;}
-.rot-name{color:var(--ink);font-weight:600;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rot-name{min-width:0;color:var(--ink);font-weight:600;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .rot-range{color:var(--muted);font-size:.72rem;white-space:nowrap;}
 /* 高亮进行中 */
 .rot-seg.now{border-color:var(--c,var(--gold));

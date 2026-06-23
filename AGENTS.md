@@ -52,7 +52,7 @@ PvPoke snapshot lags and will wrongly report a real new Mega as "nonexistent". A
 absent from gamemaster's mega list is **not** evidence it has no Mega. Confirm any Mega/form (and
 any brand-new species) against a **live** source — the LeekDuck/Hub event page, 官方 news, or
 PokeAPI — never the cache. In particular, when a source names an event "<X> **Super Mega** Raid
-Day", treat <X>'s Mega as real (e.g. 超级雷丘, 超级盔甲鸟) and render the Mega form.
+Day", treat <X>'s Mega as real and render the Mega form, even if gamemaster lacks it.
 
 ---
 
