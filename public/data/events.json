@@ -1584,11 +1584,186 @@
     ]
    },
    {
-    "title": "蛋池重点",
-    "items": [
-     "2 km 蛋:独角虫、波波、凯西、鬼斯、凯罗斯、化石翼龙、咩利羊、幼基拉斯、木守宫、火稚鸡、水跃鱼、拉鲁拉丝、宝贝龙、铁哑铃、圆陆鲨、利欧路、雪笠怪、差不多娃娃、燃烧虫。",
-     "5 km 蛋:戴皮卡丘遮阳帽的妙蛙种子、小火龙、杰尼龟,以及赫拉克罗斯、魔尼尼、燃烧虫。",
-     "10 km 蛋:热带龙、牙牙、爆炸头水牛、燃烧虫、黏黏宝、心鳞宝、毒电婴、凉脊龙;燃烧虫可能孵出闪光。"
+    "title": "蛋池重点(7/6 起)",
+    "body": "7/6 起开放传奇之路特别蛋池;燃烧虫可从 2/5/10 km 蛋孵化,且可能为闪光。"
+   },
+   {
+    "title": "2 km 蛋",
+    "mons": [
+     {
+      "id": 13,
+      "name": "独角虫",
+      "shiny": true
+     },
+     {
+      "id": 16,
+      "name": "波波",
+      "shiny": true
+     },
+     {
+      "id": 63,
+      "name": "凯西",
+      "shiny": true
+     },
+     {
+      "id": 92,
+      "name": "鬼斯",
+      "shiny": true
+     },
+     {
+      "id": 127,
+      "name": "凯罗斯",
+      "shiny": true
+     },
+     {
+      "id": 142,
+      "name": "化石翼龙",
+      "shiny": true
+     },
+     {
+      "id": 179,
+      "name": "咩利羊",
+      "shiny": true
+     },
+     {
+      "id": 246,
+      "name": "幼基拉斯",
+      "shiny": true
+     },
+     {
+      "id": 252,
+      "name": "木守宫",
+      "shiny": true
+     },
+     {
+      "id": 255,
+      "name": "火稚鸡",
+      "shiny": true
+     },
+     {
+      "id": 258,
+      "name": "水跃鱼",
+      "shiny": true
+     },
+     {
+      "id": 280,
+      "name": "拉鲁拉丝",
+      "shiny": true
+     },
+     {
+      "id": 371,
+      "name": "宝贝龙",
+      "shiny": true
+     },
+     {
+      "id": 374,
+      "name": "铁哑铃",
+      "shiny": true
+     },
+     {
+      "id": 443,
+      "name": "圆陆鲨",
+      "shiny": true
+     },
+     {
+      "id": 447,
+      "name": "利欧路",
+      "shiny": true
+     },
+     {
+      "id": 459,
+      "name": "雪笠怪",
+      "shiny": true
+     },
+     {
+      "id": 531,
+      "name": "差不多娃娃",
+      "shiny": true
+     },
+     {
+      "id": 636,
+      "name": "燃烧虫",
+      "shiny": true
+     }
+    ]
+   },
+   {
+    "title": "5 km 蛋",
+    "mons": [
+     {
+      "id": 1,
+      "name": "妙蛙种子",
+      "shiny": true
+     },
+     {
+      "id": 4,
+      "name": "小火龙",
+      "shiny": true
+     },
+     {
+      "id": 7,
+      "name": "杰尼龟",
+      "shiny": true
+     },
+     {
+      "id": 214,
+      "name": "赫拉克罗斯",
+      "shiny": true
+     },
+     {
+      "id": 439,
+      "name": "魔尼尼",
+      "shiny": true
+     },
+     {
+      "id": 636,
+      "name": "燃烧虫",
+      "shiny": true
+     }
+    ]
+   },
+   {
+    "title": "10 km 蛋",
+    "mons": [
+     {
+      "id": 357,
+      "name": "热带龙",
+      "shiny": true
+     },
+     {
+      "id": 610,
+      "name": "牙牙",
+      "shiny": true
+     },
+     {
+      "id": 626,
+      "name": "爆炸头水牛"
+     },
+     {
+      "id": 636,
+      "name": "燃烧虫",
+      "shiny": true
+     },
+     {
+      "id": 704,
+      "name": "黏黏宝",
+      "shiny": true
+     },
+     {
+      "id": 782,
+      "name": "心鳞宝",
+      "shiny": true
+     },
+     {
+      "id": 848,
+      "name": "毒电婴",
+      "shiny": true
+     },
+     {
+      "id": 996,
+      "name": "凉脊龙",
+      "shiny": true
+     }
     ]
    },
    {
@@ -1717,198 +1892,6 @@
      "5★重点:急冻鸟、闪电鸟、火焰鸟、雷公、炎帝、水君、洛奇亚、凤王、三圣柱、拉帝亚斯、拉帝欧斯、盖欧卡、固拉多、烈空坐、代欧奇希斯四形态、湖之众神、帝牙卢卡/帕路奇亚(含起源)、席多蓝恩、雷吉奇卡斯、骑拉帝纳两形态、克雷色利亚、达克莱伊、圣剑士、云神三组两形态、莱希拉姆、捷克罗姆、酋雷姆、盖诺赛克特多卡带、卡璞家族、索尔迦雷欧、露奈雅拉、究极异兽、奈克洛兹玛、苍响/藏玛然特、雷吉艾勒奇、雷吉铎拉戈、眷恋云两形态。",
      "超级团战重点:超级暴飞龙。"
     ]
-   },
-   {
-    "title": "当日阵容(全部团战 Boss)",
-    "mons": [
-     {
-      "id": 373,
-      "name": "超级暴飞龙",
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png",
-      "hub": "373-Mega",
-      "shiny": true
-     },
-     {
-      "id": 144,
-      "name": "急冻鸟",
-      "shiny": true
-     },
-     {
-      "id": 145,
-      "name": "闪电鸟",
-      "shiny": true
-     },
-     {
-      "id": 146,
-      "name": "火焰鸟",
-      "shiny": true
-     },
-     {
-      "id": 243,
-      "name": "雷公",
-      "shiny": true
-     },
-     {
-      "id": 244,
-      "name": "炎帝",
-      "shiny": true
-     },
-     {
-      "id": 245,
-      "name": "水君",
-      "shiny": true
-     },
-     {
-      "id": 249,
-      "name": "洛奇亚",
-      "shiny": true
-     },
-     {
-      "id": 250,
-      "name": "凤王",
-      "shiny": true
-     },
-     {
-      "id": 377,
-      "name": "雷吉洛克",
-      "shiny": true
-     },
-     {
-      "id": 378,
-      "name": "雷吉艾斯",
-      "shiny": true
-     },
-     {
-      "id": 379,
-      "name": "雷吉斯奇鲁",
-      "shiny": true
-     },
-     {
-      "id": 380,
-      "name": "拉帝亚斯",
-      "shiny": true
-     },
-     {
-      "id": 381,
-      "name": "拉帝欧斯",
-      "shiny": true
-     },
-     {
-      "id": 382,
-      "name": "盖欧卡",
-      "shiny": true
-     },
-     {
-      "id": 383,
-      "name": "固拉多",
-      "shiny": true
-     },
-     {
-      "id": 384,
-      "name": "烈空坐",
-      "shiny": true
-     },
-     {
-      "id": 480,
-      "name": "由克希",
-      "shiny": true
-     },
-     {
-      "id": 481,
-      "name": "艾姆利多",
-      "shiny": true
-     },
-     {
-      "id": 482,
-      "name": "亚克诺姆",
-      "shiny": true
-     },
-     {
-      "id": 483,
-      "name": "帝牙卢卡",
-      "shiny": true
-     },
-     {
-      "id": 484,
-      "name": "帕路奇亚",
-      "shiny": true
-     },
-     {
-      "id": 487,
-      "name": "骑拉帝纳",
-      "shiny": true
-     },
-     {
-      "id": 485,
-      "name": "席多蓝恩",
-      "shiny": true
-     },
-     {
-      "id": 486,
-      "name": "雷吉奇卡斯",
-      "shiny": true
-     },
-     {
-      "id": 488,
-      "name": "克雷色利亚",
-      "shiny": true
-     },
-     {
-      "id": 491,
-      "name": "达克莱伊",
-      "shiny": true
-     },
-     {
-      "id": 638,
-      "name": "勾帕路翁",
-      "shiny": true
-     },
-     {
-      "id": 639,
-      "name": "代拉基翁",
-      "shiny": true
-     },
-     {
-      "id": 640,
-      "name": "毕力吉翁",
-      "shiny": true
-     },
-     {
-      "id": 641,
-      "name": "龙卷云",
-      "shiny": true
-     },
-     {
-      "id": 642,
-      "name": "雷电云",
-      "shiny": true
-     },
-     {
-      "id": 645,
-      "name": "土地云",
-      "shiny": true
-     },
-     {
-      "id": 643,
-      "name": "莱希拉姆",
-      "shiny": true
-     },
-     {
-      "id": 644,
-      "name": "捷克罗姆",
-      "shiny": true
-     },
-     {
-      "id": 646,
-      "name": "酋雷姆",
-      "shiny": true
-     },
-     {
-      "id": 800,
-      "name": "奈克洛兹玛",
-      "shiny": true
-     }
-    ]
    }
   ],
   "highlight": false,
@@ -1997,37 +1980,6 @@
     "items": [
      "5★团战时刻:白酋雷姆、捷克罗姆、拂晓之翼奈克洛兹玛。",
      "超级团战时刻:超级班基拉斯。"
-    ]
-   },
-   {
-    "title": "当日阵容(全部团战 Boss)",
-    "mons": [
-     {
-      "id": 646,
-      "name": "酋雷姆",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png",
-      "hub": "646-White"
-     },
-     {
-      "id": 644,
-      "name": "捷克罗姆",
-      "shiny": true
-     },
-     {
-      "id": 800,
-      "name": "奈克洛兹玛",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10156.png",
-      "hub": "800-Dawn_Wings"
-     },
-     {
-      "id": 248,
-      "name": "班基拉斯",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png",
-      "hub": "248-Mega"
-     }
     ]
    }
   ],
@@ -2140,37 +2092,6 @@
      "5★团战时刻:黑酋雷姆、莱希拉姆、黄昏之鬃奈克洛兹玛。",
      "超级团战时刻:超级沙奈朵。"
     ]
-   },
-   {
-    "title": "当日阵容(全部团战 Boss)",
-    "mons": [
-     {
-      "id": 646,
-      "name": "酋雷姆",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10022.png",
-      "hub": "646-Black"
-     },
-     {
-      "id": 643,
-      "name": "莱希拉姆",
-      "shiny": true
-     },
-     {
-      "id": 800,
-      "name": "奈克洛兹玛",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10155.png",
-      "hub": "800-Dusk_Mane"
-     },
-     {
-      "id": 282,
-      "name": "沙奈朵",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10051.png",
-      "hub": "282-Mega"
-     }
-    ]
    }
   ],
   "highlight": false,
@@ -2254,32 +2175,6 @@
     "items": [
      "5★团战时刻:剑之王苍响、盾之王藏玛然特。",
      "超级团战时刻:超级耿鬼。"
-    ]
-   },
-   {
-    "title": "当日阵容(全部团战 Boss)",
-    "mons": [
-     {
-      "id": 888,
-      "name": "苍响",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10188.png",
-      "hub": "888-Crowned_Sword"
-     },
-     {
-      "id": 889,
-      "name": "藏玛然特",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10189.png",
-      "hub": "889-Crowned_Shield"
-     },
-     {
-      "id": 94,
-      "name": "耿鬼",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png",
-      "hub": "94-Mega"
-     }
     ]
    }
   ],
@@ -2371,39 +2266,6 @@
     "items": [
      "5★团战时刻:起源帝牙卢卡、起源帕路奇亚。",
      "原始团战时刻:原始盖欧卡、原始固拉多。"
-    ]
-   },
-   {
-    "title": "当日阵容(全部团战 Boss)",
-    "mons": [
-     {
-      "id": 483,
-      "name": "帝牙卢卡",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10245.png",
-      "hub": "483-Origin"
-     },
-     {
-      "id": 484,
-      "name": "帕路奇亚",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10246.png",
-      "hub": "484-Origin"
-     },
-     {
-      "id": 382,
-      "name": "盖欧卡",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png",
-      "hub": "382-Primal"
-     },
-     {
-      "id": 383,
-      "name": "固拉多",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png",
-      "hub": "383-Primal"
-     }
     ]
    }
   ],
@@ -2712,138 +2574,6 @@
      "13:00–16:00 星潮(超能力/幽灵/水):由克希、艾姆利多、亚克诺姆、帝牙卢卡、帕路奇亚、别种/起源骑拉帝纳、哲尔尼亚斯、伊裴尔塔尔、索尔迦雷欧、露奈雅拉。",
      "16:00–19:00 龙翔峰(飞行/岩石/龙):盖欧卡、固拉多、烈空坐、莱希拉姆、捷克罗姆、酋雷姆。"
     ]
-   },
-   {
-    "title": "当日 5★ 阵容(全部 Boss)",
-    "mons": [
-     {
-      "id": 144,
-      "name": "急冻鸟",
-      "shiny": true
-     },
-     {
-      "id": 145,
-      "name": "闪电鸟",
-      "shiny": true
-     },
-     {
-      "id": 146,
-      "name": "火焰鸟",
-      "shiny": true
-     },
-     {
-      "id": 243,
-      "name": "雷公",
-      "shiny": true
-     },
-     {
-      "id": 244,
-      "name": "炎帝",
-      "shiny": true
-     },
-     {
-      "id": 245,
-      "name": "水君",
-      "shiny": true
-     },
-     {
-      "id": 249,
-      "name": "洛奇亚",
-      "shiny": true
-     },
-     {
-      "id": 250,
-      "name": "凤王",
-      "shiny": true
-     },
-     {
-      "id": 480,
-      "name": "由克希",
-      "shiny": true
-     },
-     {
-      "id": 481,
-      "name": "艾姆利多",
-      "shiny": true
-     },
-     {
-      "id": 482,
-      "name": "亚克诺姆",
-      "shiny": true
-     },
-     {
-      "id": 483,
-      "name": "帝牙卢卡",
-      "shiny": true
-     },
-     {
-      "id": 484,
-      "name": "帕路奇亚",
-      "shiny": true
-     },
-     {
-      "id": 487,
-      "name": "骑拉帝纳",
-      "shiny": true
-     },
-     {
-      "id": 487,
-      "name": "起源骑拉帝纳",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10007.png",
-      "hub": "487-Origin"
-     },
-     {
-      "id": 716,
-      "name": "哲尔尼亚斯",
-      "shiny": true
-     },
-     {
-      "id": 717,
-      "name": "伊裴尔塔尔",
-      "shiny": true
-     },
-     {
-      "id": 791,
-      "name": "索尔迦雷欧",
-      "shiny": true
-     },
-     {
-      "id": 792,
-      "name": "露奈雅拉",
-      "shiny": true
-     },
-     {
-      "id": 382,
-      "name": "盖欧卡",
-      "shiny": true
-     },
-     {
-      "id": 383,
-      "name": "固拉多",
-      "shiny": true
-     },
-     {
-      "id": 384,
-      "name": "烈空坐",
-      "shiny": true
-     },
-     {
-      "id": 643,
-      "name": "莱希拉姆",
-      "shiny": true
-     },
-     {
-      "id": 644,
-      "name": "捷克罗姆",
-      "shiny": true
-     },
-     {
-      "id": 646,
-      "name": "酋雷姆",
-      "shiny": true
-     }
-    ]
    }
   ],
   "highlight": true,
@@ -3034,205 +2764,6 @@
      "10:00–13:00 锻地领域(地面/钢/一般):三圣柱、起源帝牙卢卡、起源帕路奇亚、席多蓝恩、雷吉奇卡斯、龙卷云/雷电云/土地云、眷恋云、雷吉艾勒奇、雷吉铎拉戈。",
      "13:00–16:00 翠绿异常(毒/虫/草):代欧奇希斯四形态、盖诺赛克特、虚吾伊德、爆肌蚊、费洛美螂、电束木、铁火辉夜、纸御剑、恶食大王、奈克洛兹玛、垒磊石、砰头小丑、卡璞家族。",
      "16:00–19:00 暮光战场(恶/妖精/格斗):拉帝亚斯、拉帝欧斯、克雷色利亚、达克莱伊、勾帕路翁、代拉基翁、毕力吉翁、百战勇者苍响、百战勇者藏玛然特。"
-    ]
-   },
-   {
-    "title": "当日 5★ 阵容(全部 Boss)",
-    "mons": [
-     {
-      "id": 377,
-      "name": "雷吉洛克",
-      "shiny": true
-     },
-     {
-      "id": 378,
-      "name": "雷吉艾斯",
-      "shiny": true
-     },
-     {
-      "id": 379,
-      "name": "雷吉斯奇鲁",
-      "shiny": true
-     },
-     {
-      "id": 483,
-      "name": "帝牙卢卡",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10245.png",
-      "hub": "483-Origin"
-     },
-     {
-      "id": 484,
-      "name": "帕路奇亚",
-      "shiny": true,
-      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10246.png",
-      "hub": "484-Origin"
-     },
-     {
-      "id": 485,
-      "name": "席多蓝恩",
-      "shiny": true
-     },
-     {
-      "id": 486,
-      "name": "雷吉奇卡斯",
-      "shiny": true
-     },
-     {
-      "id": 641,
-      "name": "龙卷云",
-      "shiny": true
-     },
-     {
-      "id": 642,
-      "name": "雷电云",
-      "shiny": true
-     },
-     {
-      "id": 645,
-      "name": "土地云",
-      "shiny": true
-     },
-     {
-      "id": 905,
-      "name": "眷恋云",
-      "shiny": true
-     },
-     {
-      "id": 894,
-      "name": "雷吉艾勒奇",
-      "shiny": true
-     },
-     {
-      "id": 895,
-      "name": "雷吉铎拉戈",
-      "shiny": true
-     },
-     {
-      "id": 386,
-      "name": "代欧奇希斯",
-      "shiny": true
-     },
-     {
-      "id": 649,
-      "name": "盖诺赛克特",
-      "shiny": true
-     },
-     {
-      "id": 793,
-      "name": "虚吾伊德",
-      "shiny": true
-     },
-     {
-      "id": 794,
-      "name": "爆肌蚊",
-      "shiny": true
-     },
-     {
-      "id": 795,
-      "name": "费洛美螂",
-      "shiny": true
-     },
-     {
-      "id": 796,
-      "name": "电束木",
-      "shiny": true
-     },
-     {
-      "id": 797,
-      "name": "铁火辉夜",
-      "shiny": true
-     },
-     {
-      "id": 798,
-      "name": "纸御剑",
-      "shiny": true
-     },
-     {
-      "id": 799,
-      "name": "恶食大王",
-      "shiny": true
-     },
-     {
-      "id": 800,
-      "name": "奈克洛兹玛",
-      "shiny": true
-     },
-     {
-      "id": 805,
-      "name": "垒磊石",
-      "shiny": true
-     },
-     {
-      "id": 806,
-      "name": "砰头小丑",
-      "shiny": true
-     },
-     {
-      "id": 785,
-      "name": "卡璞・鸣鸣",
-      "shiny": true
-     },
-     {
-      "id": 786,
-      "name": "卡璞・蝶蝶",
-      "shiny": true
-     },
-     {
-      "id": 787,
-      "name": "卡璞・哞哞",
-      "shiny": true
-     },
-     {
-      "id": 788,
-      "name": "卡璞・鳍鳍",
-      "shiny": true
-     },
-     {
-      "id": 380,
-      "name": "拉帝亚斯",
-      "shiny": true
-     },
-     {
-      "id": 381,
-      "name": "拉帝欧斯",
-      "shiny": true
-     },
-     {
-      "id": 488,
-      "name": "克雷色利亚",
-      "shiny": true
-     },
-     {
-      "id": 491,
-      "name": "达克莱伊",
-      "shiny": true
-     },
-     {
-      "id": 638,
-      "name": "勾帕路翁",
-      "shiny": true
-     },
-     {
-      "id": 639,
-      "name": "代拉基翁",
-      "shiny": true
-     },
-     {
-      "id": 640,
-      "name": "毕力吉翁",
-      "shiny": true
-     },
-     {
-      "id": 888,
-      "name": "苍响",
-      "shiny": true
-     },
-     {
-      "id": 889,
-      "name": "藏玛然特",
-      "shiny": true
-     }
     ]
    }
   ],
@@ -4622,6 +4153,868 @@
     ]
    }
   ],
+  "highlight": false
+ },
+ {
+  "id": "articuno-zapdos-moltres-in-5-star-raid-battles-july-2026",
+  "name": "急冻鸟・闪电鸟・火焰鸟 现身 5★ 团战",
+  "type": "raid-battles",
+  "heading": "Raid Battles",
+  "start": "2026-07-01T06:00:00",
+  "end": "2026-07-05T22:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+  "link": "https://leekduck.com/events/articuno-zapdos-moltres-in-5-star-raid-battles-july-2026/",
+  "summary": "7/1–7/5 关都三神鸟急冻鸟(冰/飞)、闪电鸟(电/飞)、火焰鸟(火/飞)现身 5★ 团战,均可遇闪光。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/articuno-zapdos-moltres-in-5-star-raid-battles-july-2026/"
+   },
+   {
+    "label": "Hub",
+    "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
+   },
+   {
+    "label": "Hub 急冻鸟指南",
+    "url": "https://pokemongohub.net/post/guide/articuno-raid-boss/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 144,
+    "name": "急冻鸟",
+    "shiny": true
+   },
+   {
+    "id": 145,
+    "name": "闪电鸟",
+    "shiny": true
+   },
+   {
+    "id": 146,
+    "name": "火焰鸟",
+    "shiny": true
+   }
+  ],
+  "counters": [
+   {
+    "id": 464,
+    "name": "超甲狂犀",
+    "fast": "掷泥",
+    "charged": "尖石攻击"
+   },
+   {
+    "id": 248,
+    "name": "班基拉斯",
+    "fast": "咬住",
+    "charged": "尖石攻击"
+   },
+   {
+    "id": 409,
+    "name": "战槌龙",
+    "fast": "击落",
+    "charged": "岩崩"
+   }
+  ],
+  "bonuses": [
+   "✨ 三神鸟均可遇闪光"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "raidhour20260701",
+  "name": "关都三神鸟 团战时刻",
+  "type": "raid-hour",
+  "heading": "Raid Hour",
+  "start": "2026-07-01T18:00:00",
+  "end": "2026-07-01T19:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+  "link": "https://leekduck.com/events/raidhour20260701/",
+  "summary": "7/1 18:00–19:00 团战时刻,各处道馆集中刷出关都三神鸟急冻鸟、闪电鸟、火焰鸟的 5★ 团战。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/raidhour20260701/"
+   },
+   {
+    "label": "Hub",
+    "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 144,
+    "name": "急冻鸟",
+    "shiny": true
+   },
+   {
+    "id": 145,
+    "name": "闪电鸟",
+    "shiny": true
+   },
+   {
+    "id": 146,
+    "name": "火焰鸟",
+    "shiny": true
+   }
+  ],
+  "bonuses": [
+   ":raid: 18:00–19:00 团战集中刷新"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "mega-lucario-in-mega-raids-july-2026",
+  "name": "超级路卡利欧 现身超级团战",
+  "type": "raid-battles",
+  "heading": "Raid Battles",
+  "start": "2026-07-01T06:00:00",
+  "end": "2026-07-05T22:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+  "link": "https://leekduck.com/events/mega-lucario-in-mega-raids-july-2026/",
+  "summary": "7/1–7/5 超级路卡利欧(格斗/钢)现身超级团战,击败可获得超级能量,其原型可遇闪光。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/mega-lucario-in-mega-raids-july-2026/"
+   },
+   {
+    "label": "Hub 超级路卡利欧指南",
+    "url": "https://pokemongohub.net/post/guide/mega-lucario-raid-guide/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 448,
+    "name": "超级路卡利欧",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png",
+    "hub": "448-Mega",
+    "shiny": true
+   }
+  ],
+  "counters": [
+   {
+    "id": 6,
+    "name": "喷火龙",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png",
+    "hub": "6-Mega_Y",
+    "fast": "火焰旋涡",
+    "charged": "爆炸烈焰"
+   },
+   {
+    "id": 609,
+    "name": "水晶灯火灵",
+    "fast": "火焰旋涡",
+    "charged": "过热"
+   },
+   {
+    "id": 643,
+    "name": "莱希拉姆",
+    "fast": "火焰牙",
+    "charged": "过热"
+   }
+  ],
+  "bonuses": [
+   "✨ 路卡利欧可遇闪光"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "max-mondays-2026-07-06",
+  "name": "Max 周一:极巨化吉利蛋",
+  "type": "max-mondays",
+  "heading": "Max Mondays",
+  "start": "2026-07-06T06:00:00",
+  "end": "2026-07-06T21:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+  "link": "https://leekduck.com/events/max-mondays-2026-07-06/",
+  "summary": "Max 周一:Max 团战登场极巨化吉利蛋,击败可获得其极巨态与 Max 粒子。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/max-mondays-2026-07-06/"
+   },
+   {
+    "label": "Hub",
+    "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 113,
+    "name": "吉利蛋"
+   }
+  ],
+  "bonuses": [
+   ":raid: Max 团战登场",
+   ":stardust: 可获得 Max 粒子"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "max-mondays-2026-07-13",
+  "name": "Max 周一:极巨化单首龙",
+  "type": "max-mondays",
+  "heading": "Max Mondays",
+  "start": "2026-07-13T06:00:00",
+  "end": "2026-07-13T21:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+  "link": "https://leekduck.com/events/max-mondays-2026-07-13/",
+  "summary": "Max 周一:Max 团战登场极巨化单首龙,击败可获得其极巨态与 Max 粒子。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/max-mondays-2026-07-13/"
+   },
+   {
+    "label": "Hub",
+    "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 633,
+    "name": "单首龙"
+   }
+  ],
+  "bonuses": [
+   ":raid: Max 团战登场",
+   ":stardust: 可获得 Max 粒子"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "max-mondays-2026-07-20",
+  "name": "Max 周一:极巨化破破袋",
+  "type": "max-mondays",
+  "heading": "Max Mondays",
+  "start": "2026-07-20T06:00:00",
+  "end": "2026-07-20T21:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+  "link": "https://leekduck.com/events/max-mondays-2026-07-20/",
+  "summary": "Max 周一:Max 团战登场极巨化破破袋,击败可获得其极巨态与 Max 粒子。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/max-mondays-2026-07-20/"
+   },
+   {
+    "label": "Hub",
+    "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 568,
+    "name": "破破袋"
+   }
+  ],
+  "bonuses": [
+   ":raid: Max 团战登场",
+   ":stardust: 可获得 Max 粒子"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "max-mondays-2026-07-27",
+  "name": "Max 周一:极巨化丑丑鱼",
+  "type": "max-mondays",
+  "heading": "Max Mondays",
+  "start": "2026-07-27T06:00:00",
+  "end": "2026-07-27T21:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+  "link": "https://leekduck.com/events/max-mondays-2026-07-27/",
+  "summary": "Max 周一:Max 团战登场极巨化丑丑鱼,击败可获得其极巨态与 Max 粒子。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/max-mondays-2026-07-27/"
+   },
+   {
+    "label": "Hub",
+    "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 349,
+    "name": "丑丑鱼"
+   }
+  ],
+  "bonuses": [
+   ":raid: Max 团战登场",
+   ":stardust: 可获得 Max 粒子"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "mega-lucario-in-mega-raids-july-13-2026",
+  "name": "超级路卡利欧 现身超级团战(7/13)",
+  "type": "raid-battles",
+  "heading": "Raid Battles",
+  "start": "2026-07-13T06:00:00",
+  "end": "2026-07-14T22:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+  "link": "https://leekduck.com/events/mega-lucario-in-mega-raids-july-13-2026/",
+  "summary": "7/13–7/14 超级路卡利欧(格斗/钢)再次现身超级团战,击败可获得超级能量,其原型可遇闪光。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/mega-lucario-in-mega-raids-july-13-2026/"
+   },
+   {
+    "label": "Hub 超级路卡利欧指南",
+    "url": "https://pokemongohub.net/post/guide/mega-lucario-raid-guide/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 448,
+    "name": "超级路卡利欧",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png",
+    "hub": "448-Mega",
+    "shiny": true
+   }
+  ],
+  "counters": [
+   {
+    "id": 6,
+    "name": "喷火龙",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png",
+    "hub": "6-Mega_Y",
+    "fast": "火焰旋涡",
+    "charged": "爆炸烈焰"
+   },
+   {
+    "id": 609,
+    "name": "水晶灯火灵",
+    "fast": "火焰旋涡",
+    "charged": "过热"
+   },
+   {
+    "id": 643,
+    "name": "莱希拉姆",
+    "fast": "火焰牙",
+    "charged": "过热"
+   }
+  ],
+  "bonuses": [
+   "✨ 路卡利欧可遇闪光"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "raidhour20260715",
+  "name": "盖欧卡 团战时刻",
+  "type": "raid-hour",
+  "heading": "Raid Hour",
+  "start": "2026-07-15T18:00:00",
+  "end": "2026-07-15T19:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+  "link": "https://leekduck.com/events/raidhour20260715/",
+  "summary": "7/15 18:00–19:00 团战时刻,各处道馆集中刷出盖欧卡(水)的 5★ 团战。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/raidhour20260715/"
+   },
+   {
+    "label": "Hub",
+    "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 382,
+    "name": "盖欧卡",
+    "shiny": true
+   }
+  ],
+  "bonuses": [
+   ":raid: 18:00–19:00 团战集中刷新"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "kyogre-in-5-star-raid-battles-july-2026",
+  "name": "盖欧卡 现身 5★ 团战",
+  "type": "raid-battles",
+  "heading": "Raid Battles",
+  "start": "2026-07-15T06:00:00",
+  "end": "2026-07-21T22:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+  "link": "https://leekduck.com/events/kyogre-in-5-star-raid-battles-july-2026/",
+  "summary": "7/15–7/21 传说宝可梦盖欧卡(水)现身 5★ 团战,可遇闪光。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/kyogre-in-5-star-raid-battles-july-2026/"
+   },
+   {
+    "label": "Hub 盖欧卡指南",
+    "url": "https://pokemongohub.net/post/guide/kyogre-raid-boss/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 382,
+    "name": "盖欧卡",
+    "shiny": true
+   }
+  ],
+  "counters": [
+   {
+    "id": 796,
+    "name": "电束木",
+    "fast": "电击",
+    "charged": "打雷"
+   },
+   {
+    "id": 644,
+    "name": "捷克罗姆",
+    "fast": "充电光束",
+    "charged": "疯狂伏特"
+   },
+   {
+    "id": 407,
+    "name": "罗丝雷朵",
+    "fast": "飞叶快刀",
+    "charged": "飞叶风暴"
+   }
+  ],
+  "bonuses": [
+   "✨ 盖欧卡可遇闪光"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "mega-sceptile-in-mega-raids-july-2026",
+  "name": "超级蜥蜴王 现身超级团战",
+  "type": "raid-battles",
+  "heading": "Raid Battles",
+  "start": "2026-07-15T06:00:00",
+  "end": "2026-07-21T22:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+  "link": "https://leekduck.com/events/mega-sceptile-in-mega-raids-july-2026/",
+  "summary": "7/15–7/21 超级蜥蜴王(草/龙)现身超级团战,击败可获得超级能量,其原型可遇闪光。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/mega-sceptile-in-mega-raids-july-2026/"
+   },
+   {
+    "label": "Hub 超级蜥蜴王指南",
+    "url": "https://pokemongohub.net/post/guide/mega-sceptile-raid-guide/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 254,
+    "name": "超级蜥蜴王",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png",
+    "hub": "254-Mega",
+    "shiny": true
+   }
+  ],
+  "counters": [
+   {
+    "id": 461,
+    "name": "玛狃拉",
+    "fast": "冰砾",
+    "charged": "雪崩"
+   },
+   {
+    "id": 473,
+    "name": "象牙猪",
+    "fast": "细雪",
+    "charged": "冰锥"
+   },
+   {
+    "id": 471,
+    "name": "冰伊布",
+    "fast": "冰息",
+    "charged": "冰冻光束"
+   }
+  ],
+  "bonuses": [
+   "✨ 蜥蜴王可遇闪光"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "raidhour20260722",
+  "name": "索尔迦雷欧 团战时刻",
+  "type": "raid-hour",
+  "heading": "Raid Hour",
+  "start": "2026-07-22T18:00:00",
+  "end": "2026-07-22T19:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+  "link": "https://leekduck.com/events/raidhour20260722/",
+  "summary": "7/22 18:00–19:00 团战时刻,各处道馆集中刷出索尔迦雷欧(超能力/钢)的 5★ 团战。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/raidhour20260722/"
+   },
+   {
+    "label": "Hub",
+    "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 791,
+    "name": "索尔迦雷欧"
+   }
+  ],
+  "bonuses": [
+   ":raid: 18:00–19:00 团战集中刷新"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "solgaleo-in-5-star-raid-battles-july-2026",
+  "name": "索尔迦雷欧 现身 5★ 团战",
+  "type": "raid-battles",
+  "heading": "Raid Battles",
+  "start": "2026-07-22T06:00:00",
+  "end": "2026-07-28T22:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+  "link": "https://leekduck.com/events/solgaleo-in-5-star-raid-battles-july-2026/",
+  "summary": "7/22–7/28 传说宝可梦索尔迦雷欧(超能力/钢)现身 5★ 团战;暂未实装闪光。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/solgaleo-in-5-star-raid-battles-july-2026/"
+   },
+   {
+    "label": "Hub 索尔迦雷欧指南",
+    "url": "https://pokemongohub.net/post/guide/solgaleo-raid-guide-best-counters-100-ivs-cps/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 791,
+    "name": "索尔迦雷欧"
+   }
+  ],
+  "counters": [
+   {
+    "id": 409,
+    "name": "战槌龙",
+    "fast": "击落",
+    "charged": "岩崩"
+   },
+   {
+    "id": 229,
+    "name": "超级黑鲁加",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png",
+    "hub": "229-Mega",
+    "fast": "火焰牙",
+    "charged": "大字爆炎"
+   },
+   {
+    "id": 248,
+    "name": "班基拉斯",
+    "fast": "咬住",
+    "charged": "咬碎"
+   }
+  ],
+  "bonuses": [
+   ":raid: 传说 5★ 团战"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "mega-salamence-in-mega-raids-july-2026",
+  "name": "超级暴飞龙 现身超级团战",
+  "type": "raid-battles",
+  "heading": "Raid Battles",
+  "start": "2026-07-22T06:00:00",
+  "end": "2026-07-28T22:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+  "link": "https://leekduck.com/events/mega-salamence-in-mega-raids-july-2026/",
+  "summary": "7/22–7/28 超级暴飞龙(龙/飞)现身超级团战,击败可获得超级能量,其原型可遇闪光。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/mega-salamence-in-mega-raids-july-2026/"
+   },
+   {
+    "label": "Hub 超级暴飞龙指南",
+    "url": "https://pokemongohub.net/post/guide/mega-salamence-raid-guide/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 373,
+    "name": "超级暴飞龙",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png",
+    "hub": "373-Mega",
+    "shiny": true
+   }
+  ],
+  "counters": [
+   {
+    "id": 471,
+    "name": "冰伊布",
+    "fast": "冰息",
+    "charged": "冰冻光束"
+   },
+   {
+    "id": 461,
+    "name": "玛狃拉",
+    "fast": "冰砾",
+    "charged": "雪崩"
+   },
+   {
+    "id": 473,
+    "name": "象牙猪",
+    "fast": "细雪",
+    "charged": "冰锥"
+   }
+  ],
+  "bonuses": [
+   "✨ 暴飞龙可遇闪光"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "raidhour20260729",
+  "name": "酋雷姆 团战时刻",
+  "type": "raid-hour",
+  "heading": "Raid Hour",
+  "start": "2026-07-29T18:00:00",
+  "end": "2026-07-29T19:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+  "link": "https://leekduck.com/events/raidhour20260729/",
+  "summary": "7/29 18:00–19:00 团战时刻,各处道馆集中刷出酋雷姆(龙/冰)的 5★ 团战。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/raidhour20260729/"
+   },
+   {
+    "label": "Hub",
+    "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 646,
+    "name": "酋雷姆",
+    "shiny": true
+   }
+  ],
+  "bonuses": [
+   ":raid: 18:00–19:00 团战集中刷新"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "kyurem-in-5-star-raid-battles-july-2026",
+  "name": "酋雷姆 现身 5★ 团战",
+  "type": "raid-battles",
+  "heading": "Raid Battles",
+  "start": "2026-07-29T06:00:00",
+  "end": "2026-08-04T22:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/kyurem.jpg",
+  "link": "https://leekduck.com/events/kyurem-in-5-star-raid-battles-july-2026/",
+  "summary": "7/29–8/4 传说宝可梦酋雷姆(龙/冰)现身 5★ 团战,可遇闪光。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/kyurem-in-5-star-raid-battles-july-2026/"
+   },
+   {
+    "label": "Hub 酋雷姆指南",
+    "url": "https://pokemongohub.net/post/guide/kyurem-counters-guide/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 646,
+    "name": "酋雷姆",
+    "shiny": true
+   }
+  ],
+  "counters": [
+   {
+    "id": 68,
+    "name": "怪力",
+    "fast": "双倍奉还",
+    "charged": "爆裂拳"
+   },
+   {
+    "id": 248,
+    "name": "班基拉斯",
+    "fast": "咬住",
+    "charged": "尖石攻击"
+   },
+   {
+    "id": 534,
+    "name": "修建老匠",
+    "fast": "双倍奉还",
+    "charged": "爆裂拳"
+   }
+  ],
+  "bonuses": [
+   "✨ 酋雷姆可遇闪光"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "mega-aggron-in-mega-raids-july-2026",
+  "name": "超级波士可多拉 现身超级团战",
+  "type": "raid-battles",
+  "heading": "Raid Battles",
+  "start": "2026-07-29T06:00:00",
+  "end": "2026-08-04T22:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+  "link": "https://leekduck.com/events/mega-aggron-in-mega-raids-july-2026/",
+  "summary": "7/29–8/4 超级波士可多拉(钢)现身超级团战,击败可获得超级能量,其原型可遇闪光。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/mega-aggron-in-mega-raids-july-2026/"
+   },
+   {
+    "label": "Hub 超级波士可多拉指南",
+    "url": "https://pokemongohub.net/post/guide/mega-aggron-raid-guide/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 306,
+    "name": "超级波士可多拉",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10053.png",
+    "hub": "306-Mega",
+    "shiny": true
+   }
+  ],
+  "counters": [
+   {
+    "id": 68,
+    "name": "怪力",
+    "fast": "双倍奉还",
+    "charged": "近身战"
+   },
+   {
+    "id": 534,
+    "name": "修建老匠",
+    "fast": "双倍奉还",
+    "charged": "爆裂拳"
+   },
+   {
+    "id": 383,
+    "name": "固拉多",
+    "fast": "泥巴射击",
+    "charged": "地震"
+   }
+  ],
+  "bonuses": [
+   "✨ 波士可多拉可遇闪光"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "shadow-palkia-in-shadow-raids-july-2026",
+  "name": "暗影帕路奇亚 现身暗影团战",
+  "type": "raid-battles",
+  "heading": "Raid Battles",
+  "start": "2026-07-01T06:00:00",
+  "end": "2026-08-04T22:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+  "link": "https://leekduck.com/events/shadow-palkia-in-shadow-raids-july-2026/",
+  "summary": "7/1–8/4 周末暗影帕路奇亚(水/龙)现身暗影团战,可遇闪光。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/shadow-palkia-in-shadow-raids-july-2026/"
+   },
+   {
+    "label": "Hub",
+    "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
+   }
+  ],
+  "pokemon": [
+   {
+    "id": 484,
+    "name": "帕路奇亚",
+    "hub": "484-Shadow",
+    "shiny": true
+   }
+  ],
+  "counters": [
+   {
+    "id": 461,
+    "name": "玛狃拉",
+    "fast": "冰砾",
+    "charged": "雪崩"
+   },
+   {
+    "id": 471,
+    "name": "冰伊布",
+    "fast": "冰息",
+    "charged": "冰冻光束"
+   },
+   {
+    "id": 473,
+    "name": "象牙猪",
+    "fast": "细雪",
+    "charged": "冰锥"
+   }
+  ],
+  "bonuses": [
+   "✨ 帕路奇亚可遇闪光",
+   ":raid: 周末暗影团战登场"
+  ],
+  "highlight": false
+ },
+ {
+  "id": "july-event-2026",
+  "name": "7 月活动(详情待公布)",
+  "type": "event",
+  "heading": "Event",
+  "start": "2026-07-13T10:00:00",
+  "end": "2026-07-20T20:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+  "link": "https://leekduck.com/events/july-event-2026/",
+  "summary": "7/13–7/20 官方预告的 7 月活动,具体内容(主打宝可梦、加成与调查)尚未公布,LeekDuck 与 Hub 月历均标记为待公布。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/july-event-2026/"
+   },
+   {
+    "label": "Hub",
+    "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
+   }
+  ],
+  "bonuses": [],
+  "highlight": false
+ },
+ {
+  "id": "july-event-2026-july-21",
+  "name": "7 月活动:7 月 21 日(详情待公布)",
+  "type": "event",
+  "heading": "Event",
+  "start": "2026-07-21T10:00:00",
+  "end": "2026-07-27T20:00:00",
+  "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+  "link": "https://leekduck.com/events/july-event-2026-july-21/",
+  "summary": "7/21–7/27 官方预告的另一档 7 月活动,具体内容尚未公布,LeekDuck 与 Hub 月历均标记为待公布。",
+  "links": [
+   {
+    "label": "LeekDuck",
+    "url": "https://leekduck.com/events/july-event-2026-july-21/"
+   },
+   {
+    "label": "Hub",
+    "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
+   }
+  ],
+  "bonuses": [],
   "highlight": false
  }
 ]

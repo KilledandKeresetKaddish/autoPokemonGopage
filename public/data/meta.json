@@ -1,4 +1,4 @@
 {
-  "lastUpdated": "2026-06-22T16:05:42Z",
-  "note": "本轮新增 GO Fest 2026:全球 7/11(周六)与 7/12(周日)各一条 5★团战事件,并在 rotations 5★ 轨加对应单日段——日历 7/11/7/12 现显示当日全部 5★ Boss 角标(原仅超级超梦 X/Y)。所有简中名经 PokeAPI zh-hans 核对,form sprite id 全部核验。Arraia 在三源(LeekDuck/Hub/官方)均无条目,记录待核。"
+  "lastUpdated": "2026-06-23T07:49:11Z",
+  "note": "强制全量重抓 events/raids/events-hub/-pokebase/-official/tiers-* (07:xx OK)。events.json 67→87 条:新增 7 月标准团战轮换(三神鸟/盖欧卡/索尔迦雷欧/酋雷姆 5★、Mega 路卡利欧/蜥蜴王/暴飞龙/波士可多拉、暗影帕路奇亚、Raid Hours、7 月 Max 周一、两条待公布活动);GO Fest 与传奇之路 popup 阵容去重并加孵蛋小图标网格;rotations 补 7 月单日/周段(按 dex-id 对齐);本月看点接入 25 个可点击事件链接,本期推荐刷新至 6/23。raids 6/24 轮换前未变。"
 }

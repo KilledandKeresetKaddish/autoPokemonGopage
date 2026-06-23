@@ -1,6 +1,6 @@
 {
   "month": "2026-06",
-  "note": "5★ 与超级团战 Boss 每周三 10:00 轮换;传奇之路 7/6–7/10 期间改为每日轮换,日历角标显示当日 Boss(Max 团战每周轮换,时间以当地为准)。",
+  "note": "覆盖 6 月–7 月。5★ 与超级团战 Boss 每周轮换;传奇之路 7/6–7/10 与 GO Fest 7/11–7/12 期间改为每日轮换,日历角标显示当日 Boss(Max 团战每周轮换、周一为高峰,时间以当地为准)。",
   "tracks": [
     {
       "key": "5star",
@@ -71,6 +71,17 @@
           ],
           "start": "2026-06-24",
           "end": "2026-06-30"
+        },
+        {
+          "name": "Articuno / Zapdos / Moltres",
+          "cn": "急冻鸟 / 闪电鸟 / 火焰鸟",
+          "pokemon": [
+            { "id": 144, "name": "急冻鸟" },
+            { "id": 145, "name": "闪电鸟" },
+            { "id": 146, "name": "火焰鸟" }
+          ],
+          "start": "2026-07-01",
+          "end": "2026-07-05"
         },
         {
           "name": "All-Gen Legends",
@@ -532,6 +543,44 @@
           ],
           "start": "2026-07-12",
           "end": "2026-07-12"
+        },
+        {
+          "name": "Articuno / Zapdos / Moltres",
+          "cn": "急冻鸟 / 闪电鸟 / 火焰鸟",
+          "pokemon": [
+            { "id": 144, "name": "急冻鸟" },
+            { "id": 145, "name": "闪电鸟" },
+            { "id": 146, "name": "火焰鸟" }
+          ],
+          "start": "2026-07-13",
+          "end": "2026-07-14"
+        },
+        {
+          "name": "Kyogre",
+          "cn": "盖欧卡",
+          "pokemon": [
+            { "id": 382, "name": "盖欧卡" }
+          ],
+          "start": "2026-07-15",
+          "end": "2026-07-21"
+        },
+        {
+          "name": "Solgaleo",
+          "cn": "索尔迦雷欧",
+          "pokemon": [
+            { "id": 791, "name": "索尔迦雷欧" }
+          ],
+          "start": "2026-07-22",
+          "end": "2026-07-28"
+        },
+        {
+          "name": "Kyurem",
+          "cn": "酋雷姆",
+          "pokemon": [
+            { "id": 646, "name": "酋雷姆" }
+          ],
+          "start": "2026-07-29",
+          "end": "2026-08-04"
         }
       ]
     },
@@ -610,6 +659,20 @@
           ],
           "start": "2026-06-24",
           "end": "2026-06-30"
+        },
+        {
+          "name": "Mega Lucario",
+          "cn": "超级路卡利欧",
+          "pokemon": [
+            {
+              "id": 448,
+              "name": "路卡利欧",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png",
+              "hub": "448-Mega"
+            }
+          ],
+          "start": "2026-07-01",
+          "end": "2026-07-05"
         },
         {
           "name": "Mega Salamence",
@@ -734,6 +797,62 @@
           ],
           "start": "2026-07-18",
           "end": "2026-07-18"
+        },
+        {
+          "name": "Mega Lucario",
+          "cn": "超级路卡利欧",
+          "pokemon": [
+            {
+              "id": 448,
+              "name": "路卡利欧",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png",
+              "hub": "448-Mega"
+            }
+          ],
+          "start": "2026-07-13",
+          "end": "2026-07-14"
+        },
+        {
+          "name": "Mega Sceptile",
+          "cn": "超级蜥蜴王",
+          "pokemon": [
+            {
+              "id": 254,
+              "name": "蜥蜴王",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png",
+              "hub": "254-Mega"
+            }
+          ],
+          "start": "2026-07-15",
+          "end": "2026-07-21"
+        },
+        {
+          "name": "Mega Salamence",
+          "cn": "超级暴飞龙",
+          "pokemon": [
+            {
+              "id": 373,
+              "name": "暴飞龙",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png",
+              "hub": "373-Mega"
+            }
+          ],
+          "start": "2026-07-22",
+          "end": "2026-07-28"
+        },
+        {
+          "name": "Mega Aggron",
+          "cn": "超级波士可多拉",
+          "pokemon": [
+            {
+              "id": 306,
+              "name": "波士可多拉",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10053.png",
+              "hub": "306-Mega"
+            }
+          ],
+          "start": "2026-07-29",
+          "end": "2026-08-04"
         }
       ]
     },
@@ -801,6 +920,42 @@
           ],
           "start": "2026-06-29",
           "end": "2026-07-05"
+        },
+        {
+          "name": "Chansey",
+          "cn": "吉利蛋",
+          "pokemon": [
+            { "id": 113, "name": "吉利蛋" }
+          ],
+          "start": "2026-07-06",
+          "end": "2026-07-06"
+        },
+        {
+          "name": "Deino",
+          "cn": "单首龙",
+          "pokemon": [
+            { "id": 633, "name": "单首龙" }
+          ],
+          "start": "2026-07-13",
+          "end": "2026-07-13"
+        },
+        {
+          "name": "Trubbish",
+          "cn": "破破袋",
+          "pokemon": [
+            { "id": 568, "name": "破破袋" }
+          ],
+          "start": "2026-07-20",
+          "end": "2026-07-20"
+        },
+        {
+          "name": "Feebas",
+          "cn": "丑丑鱼",
+          "pokemon": [
+            { "id": 349, "name": "丑丑鱼" }
+          ],
+          "start": "2026-07-27",
+          "end": "2026-07-27"
         }
       ]
     }
