@@ -1,4 +1,4 @@
 {
-  "lastUpdated": "2026-06-23T08:47:43Z",
-  "note": "Operator notes 落地:② 传奇之路 7/6 popup 补『当日阵容(全部团战 Boss)』sprite 网格(60 只,经核验);③ 本月看点每条事件的标题短语本身改为可点击 event-link;④ 新增 Arraiá 六月节(巴西限定,6/23–6/29,官方+Fandom 链接)并 featured;⑤ featured 增 Max周一吉利蛋(7/6)/Arraiá/8月社区日/索尔迦雷欧团战时刻(7/22)。① 索尔迦雷欧闪光:gohub DB 与 Hub 指南均明示『Shiny released: No / cannot be shiny』、页面无闪光图标,按 AGENTS 不杜撰,保留『暂未实装闪光』,待官方实装后补。raids 6/24 才轮换,ranking 面板沿用上轮已核对内容。"
+  "lastUpdated": "2026-06-23T09:12:00Z",
+  "note": "Operator note(本轮):修复本期推荐『GO Fest 超级超梦 X/Y — 两天两套队伍』面板重叠——原末尾裸 .spr 图在 .pillrow 下无尺寸规则、按原分辨率渲染造成叠加;改为将两只超级超梦精灵图以 .mon-icon 内联到各自 7/11 / 7/12 日头行,删除损坏的末尾行。raids 6/24 才轮换,源均 <1d 未重抓,其余面板沿用上轮已核对内容。"
 }

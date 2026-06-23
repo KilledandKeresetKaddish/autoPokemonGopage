@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-23T08:47:43Z",
+  "lastUpdated": "2026-06-23T09:12:00Z",
   "sources": {
     "events": {
       "lastFetch": "2026-06-23T07:23:00Z",
@@ -110,5 +110,10 @@
       "fact": "preflight 对 raidhour20260624《纸御剑 与 铁火辉夜 团战时刻》报 long chip name(15 字符)WARN。",
       "decision": "保留:双 Boss 名需完整呈现,CSS 已用 ellipsis 处理,仅 WARN 不阻断发布。"
     }
+  },
+  "operatorNote2": {
+    "checkedAt": "2026-06-23T09:12:00Z",
+    "status": "done",
+    "note": "Operator note(此次):整理本期推荐(rankings-current)『GO Fest 超级超梦 X/Y — 两天两套队伍』面板,UI 上元素完全叠在一起。根因:面板末尾用 <img class=\"spr\"> 裸图直接放进 .pillrow,而 style.css 只给 .pill .spr / .spr-grid .spr 等带父级的 .spr 设尺寸,无 bare .spr 规则,故两只 Mega 图按原始分辨率(~475px)渲染并互相重叠。修复(仅在 AI:rankings-current 标记内):删除该末尾裸图行,改��超级超梦 X(10043)/Y(10044)精灵图各以已白名单的 .mon-icon 内联到 7/11、7/12 日头 pillrow。未触碰受保护文件。所有源 <1d 新鲜未重抓。"
   }
 }
