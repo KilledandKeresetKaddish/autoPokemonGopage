@@ -954,7 +954,7 @@ function setupTabs() {
     document.querySelectorAll('#main-tabs button').forEach(x => x.classList.toggle('active', x === b));
     const v = b.dataset.view;
     document.querySelectorAll('.view').forEach(s => s.classList.toggle('active', s.id === `view-${v}`));
-    if (v === 'todo') { todoCheckRollover(); todoRefreshCds(); }   // re-check the local day + CD timers each time it's opened
+    if (v === 'todo') todoRefreshCds();   // refresh the per-account CD timers each time it's opened
   });
   $('#rank-subtabs').addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
@@ -1000,10 +1000,11 @@ function setupEventLinks() {
 
 /* ---------- Multi-account TODO (client-side only) ----------
  * A grid the user fills in: accounts = rows (each with a nickname), tasks =
- * columns (each with a custom label), cells = a daily checkbox. Everything lives
- * in localStorage under "pogo-todo"; the checkmarks auto-clear at the user's LOCAL
- * midnight while the account list + task columns persist. No network, no data
- * contract with the daily agent — safe to live entirely in the frontend. */
+ * columns (each with a custom label), cells = a checkbox. Everything lives in
+ * localStorage under "pogo-todo". Checks are NEVER auto-cleared — they persist
+ * until the user clicks 清空勾选, which also stamps data.day to that day; the
+ * header date then holds unchanged until the next manual clear. No network, no
+ * data contract with the daily agent — safe to live entirely in the frontend. */
 const TODO_KEY = 'pogo-todo';
 const todoId = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 const TODO_CD_MS = 2 * 60 * 60 * 1000; // per-account cooldown length: 2 hours
@@ -1025,6 +1026,13 @@ function todoToday() {
   const d = new Date(), p = n => String(n).padStart(2, '0');
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;   // local calendar day
 }
+const TODO_WEEK = ['日', '一', '二', '三', '四', '五', '六'];
+function todoDayLabel(dayStr) { // "2026-06-24" → "2026-06-24 星期三" (weekday from a LOCAL-parsed date)
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dayStr || '');
+  if (!m) return dayStr || '';
+  const wd = new Date(+m[1], +m[2] - 1, +m[3]).getDay();
+  return `${dayStr} 星期${TODO_WEEK[wd]}`;
+}
 function todoLoad() {
   let data = null;
   try { data = JSON.parse(localStorage.getItem(TODO_KEY) || 'null'); } catch (e) {}
@@ -1035,6 +1043,7 @@ function todoLoad() {
       tasks: [{ id: todoId('t'), name: '' }, { id: todoId('t'), name: '' }],
       checks: {} };
   }
+  if (typeof data.day !== 'string') data.day = todoToday();   // header date; only ever changes on manual clear
   data.accounts = Array.isArray(data.accounts) ? data.accounts : [];
   data.accounts.forEach(a => { // normalise per-account CD fields on both new and old saved shapes
     if (typeof a.cdStart !== 'number') a.cdStart = null;
@@ -1045,12 +1054,6 @@ function todoLoad() {
   return data;
 }
 function todoSave(data) { try { localStorage.setItem(TODO_KEY, JSON.stringify(data)); } catch (e) {} }
-// Wipe every check once the local day has rolled over. Returns true if it reset.
-function todoRollover(data) {
-  const today = todoToday();
-  if (data.day !== today) { data.day = today; data.checks = {}; todoSave(data); return true; }
-  return false;
-}
 
 let todoState = null;
 function renderTodo() {
@@ -1062,9 +1065,9 @@ function renderTodo() {
   if (status) {
     status.textContent = '';
     const day = document.createElement('span');
-    day.className = 'todo-day'; day.textContent = '今天 ' + data.day;
+    day.className = 'todo-day'; day.textContent = '今天 ' + todoDayLabel(data.day);
     const note = document.createElement('span');
-    note.textContent = '0:00 自动清空勾选';
+    note.textContent = '勾选仅手动清空,清空后日期记为当天';
     status.append(day, note);
   }
 
@@ -1085,10 +1088,11 @@ function renderTodo() {
     const heads = mount.querySelectorAll('thead .todo-task .todo-name');
     if (heads.length) heads[heads.length - 1].focus();
   }));
-  bar.appendChild(mkBtn('btn btn-ghost', '清空今日勾选', () => {
-    if (!Object.keys(data.checks).length || confirm('清空今天所有勾选?')) {
-      data.checks = {}; todoSave(data); renderTodo();
-    }
+  bar.appendChild(mkBtn('btn btn-ghost', '清空勾选', () => {
+    if (Object.keys(data.checks).length && !confirm('清空全部勾选?')) return;
+    data.checks = {};
+    data.day = todoToday();   // manual clear stamps today → header date updates, then holds
+    todoSave(data); renderTodo();
   }));
   mount.appendChild(bar);
 
@@ -1103,8 +1107,19 @@ function renderTodo() {
   const nameInput = (val, ph, onInput) => {
     const i = document.createElement('input');
     i.className = 'todo-name'; i.type = 'text'; i.value = val; i.placeholder = ph;
+    i.size = 1;   // neutralise the input's default ~20ch intrinsic width (table-layout:auto)
     i.addEventListener('input', () => onInput(i.value));
     return i;
+  };
+  // Task-header input that grows its column to fit the label: a grid wrapper whose
+  // hidden ::after mirror carries the live text (CJK-accurate) and drives the width.
+  const sizerInput = (val, ph, onInput) => {
+    const wrap = document.createElement('span');
+    wrap.className = 'todo-sizer';
+    wrap.dataset.value = val || ph;
+    const i = nameInput(val, ph, v => { wrap.dataset.value = v || ph; onInput(v); });
+    wrap.appendChild(i);
+    return wrap;
   };
   const delBtn = (title, onClick) => {
     const b = document.createElement('button');
@@ -1158,7 +1173,7 @@ function renderTodo() {
     th.className = 'todo-task';
     const wrap = document.createElement('div');
     wrap.className = 'todo-head-in';
-    wrap.appendChild(nameInput(t.name, '任务名', v => { t.name = v; todoSave(data); }));
+    wrap.appendChild(sizerInput(t.name, '任务名', v => { t.name = v; todoSave(data); }));
     wrap.appendChild(delBtn('删除任务', () => {
       if (!confirm('删除这一列任务?该列的勾选也会一起删除。')) return;
       data.tasks = data.tasks.filter(x => x.id !== t.id);
@@ -1213,17 +1228,6 @@ function renderTodo() {
   mount.appendChild(scroll);
 }
 
-let todoTimer = null;
-function todoScheduleMidnight() {
-  if (todoTimer) clearTimeout(todoTimer);
-  const now = new Date();
-  const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 3, 0);
-  todoTimer = setTimeout(() => {
-    if (todoState) { todoRollover(todoState); renderTodo(); }
-    todoScheduleMidnight();
-  }, Math.max(1000, next - now));
-}
-function todoCheckRollover() { if (todoState && todoRollover(todoState)) renderTodo(); }
 // Expire elapsed per-account CDs and refresh the ⏳ badges in place (no full re-render → keeps input focus).
 function todoRefreshCds() {
   if (!todoState) return;
@@ -1237,12 +1241,10 @@ function todoRefreshCds() {
 }
 function setupTodo() {
   todoState = todoLoad();
-  todoRollover(todoState);   // opened on a new day → drop yesterday's checks
   todoSave(todoState);       // persist the seeded / normalised shape
   renderTodo();
-  todoScheduleMidnight();
-  // also catch rollover + elapsed CDs if the machine was asleep when timers should have fired
-  document.addEventListener('visibilitychange', () => { if (!document.hidden) { todoCheckRollover(); todoRefreshCds(); } });
+  // checks are never auto-cleared now; just refresh elapsed per-account CDs on tab focus
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) todoRefreshCds(); });
   // keep the ⏳ countdowns live & expire them — only ticks while the TODO view is open
   setInterval(() => {
     const v = $('#view-todo');

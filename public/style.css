@@ -629,12 +629,12 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .todo-scroll::-webkit-scrollbar{height:8px;}
 .todo-scroll::-webkit-scrollbar-thumb{background:var(--gold-line);border-radius:8px;}
 .todo-scroll::-webkit-scrollbar-track{background:transparent;}
-.todo-table{border-collapse:collapse;width:max-content;table-layout:fixed;}
+.todo-table{border-collapse:collapse;width:max-content;table-layout:auto;}
 .todo-table th,.todo-table td{border:1px solid var(--line-soft);padding:0;}
 .todo-corner{position:sticky;left:0;z-index:2;background:var(--panel);width:10rem;
   font-family:var(--serif);font-size:.76rem;color:var(--gold-dim);font-weight:700;letter-spacing:.04em;
   padding:.45rem .65rem;white-space:nowrap;text-align:left;}
-.todo-task{width:5rem;background:var(--panel);}
+.todo-task{background:var(--panel);}   /* width auto-fits the label (see .todo-sizer); checkbox cell is the floor */
 .todo-acct{position:sticky;left:0;z-index:1;background:var(--panel2);width:10rem;}
 .todo-head-in{display:flex;align-items:center;gap:.2rem;padding:.28rem .4rem;}
 .todo-name{flex:1;min-width:0;background:transparent;border:0;border-bottom:1px solid transparent;
@@ -643,6 +643,13 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .todo-task .todo-name{color:var(--gold-bright);font-weight:600;text-align:center;}
 .todo-name::placeholder{color:var(--gold-dim);opacity:.85;}
 .todo-name:focus{border-bottom-color:var(--gold);background:rgba(var(--gold-rgb),.07);}
+/* Auto-growing task-label input: the hidden ::after mirror carries the live text and
+   sizes the grid track (CJK-accurate); the input stretches to fill it. */
+.todo-sizer{display:inline-grid;align-items:center;flex:none;}
+.todo-sizer>.todo-name,.todo-sizer::after{grid-area:1/1;box-sizing:border-box;
+  font-family:var(--sans);font-size:.86rem;font-weight:600;padding:.2rem .15rem;letter-spacing:0;}
+.todo-sizer>.todo-name{width:100%;min-width:0;}
+.todo-sizer::after{content:attr(data-value) ' ';white-space:pre;visibility:hidden;min-width:2ch;}
 .todo-del{flex:none;border:0;background:transparent;color:var(--gold-dim);cursor:pointer;
   font-size:1rem;line-height:1;padding:.08rem .24rem;border-radius:6px;transition:color .15s,background .15s;}
 .todo-del:hover{color:#e7a89e;background:rgba(200,93,78,.15);}

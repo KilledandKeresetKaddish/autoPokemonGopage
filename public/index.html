@@ -391,12 +391,13 @@
 
     <!-- ========================= VIEW 5: MULTI-ACCOUNT TODO ========================= -->
     <!-- Owner-maintained; no AI region. Fully client-side: the grid + checks live in
-         localStorage (key "pogo-todo"); checks auto-clear at the user's local midnight.
+         localStorage (key "pogo-todo"); checks persist until the user manually clears,
+         which stamps the header date to that day.
          All DOM is built by app.js (setupTodo / renderTodo) into #todo-mount. -->
     <section id="view-todo" class="view">
       <div class="panel todo-panel" style="padding:.85rem 1.05rem">
         <div class="panel-head"><span class="dia">◆</span><h3>多账号 TODO</h3></div>
-        <p class="muted">每个账号一行,每项任务一列;勾选记录今天的完成情况。账号名前的 ⏳ 可开始 2 小时 CD:点击开始,进行中点击可切换「剩余 ⇄ 开始时间」,长按取消。数据只保存在本机浏览器(localStorage),不会上传;每天 0:00(以你本机时间为准)自动清空全部勾选,账号/任务列与进行中的 CD 保留。</p>
+        <p class="muted">每个账号一行,每项任务一列;勾选记录完成情况。账号名前的 ⏳ 可开始 2 小时 CD:点击开始,进行中点击可切换「剩余 ⇄ 开始时间」,长按取消。数据只保存在本机浏览器(localStorage),不会上传;勾选不会自动清空,需手动点「清空勾选」;清空后顶部日期会更新为当天(以你本机时间为准),在下次清空前保持不变,账号/任务列与进行中的 CD 始终保留。</p>
         <div id="todo-status" class="todo-status muted"></div>
         <div id="todo-mount"></div>
       </div>
