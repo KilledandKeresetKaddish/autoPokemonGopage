@@ -954,7 +954,7 @@ function setupTabs() {
     document.querySelectorAll('#main-tabs button').forEach(x => x.classList.toggle('active', x === b));
     const v = b.dataset.view;
     document.querySelectorAll('.view').forEach(s => s.classList.toggle('active', s.id === `view-${v}`));
-    if (v === 'todo') { todoCheckRollover(); todoRefreshCds(); }   // re-check the local day + CD timers each open
+    if (v === 'todo') { todoCheckRollover(); todoRefreshCds(); }   // re-check the local day + CD timers each time it's opened
   });
   $('#rank-subtabs').addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
@@ -1006,13 +1006,13 @@ function setupEventLinks() {
  * contract with the daily agent — safe to live entirely in the frontend. */
 const TODO_KEY = 'pogo-todo';
 const todoId = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-const TODO_CD_MS = 2 * 60 * 60 * 1000;             // per-account cooldown length: 2 hours
+const TODO_CD_MS = 2 * 60 * 60 * 1000; // per-account cooldown length: 2 hours
 const todoCdRemain = a => (a && typeof a.cdStart === 'number') ? (a.cdStart + TODO_CD_MS - Date.now()) : 0;
-function todoFmtRemain(ms) {                        // 7200000→"2h", 7140000→"1h59m", 300000→"5m"
+function todoFmtRemain(ms) { // 7200000→"2h", 7140000→"1h59m", 300000→"5m"
   const min = Math.max(0, Math.ceil(ms / 60000)), h = Math.floor(min / 60), m = min % 60;
   return h ? (m ? `${h}h${m}m` : `${h}h`) : `${m}m`;
 }
-function todoCdLabel(a) {                           // hourglass badge text for the account's CD state
+function todoCdLabel(a) { // hourglass badge text for the account's CD state
   const rem = todoCdRemain(a);
   if (rem <= 0) return '⏳✓';
   if (a.cdView === 'time') {
@@ -1036,7 +1036,7 @@ function todoLoad() {
       checks: {} };
   }
   data.accounts = Array.isArray(data.accounts) ? data.accounts : [];
-  data.accounts.forEach(a => {                      // normalise per-account CD fields
+  data.accounts.forEach(a => { // normalise per-account CD fields on both new and old saved shapes
     if (typeof a.cdStart !== 'number') a.cdStart = null;
     if (a.cdView !== 'time') a.cdView = 'dur';
   });
@@ -1125,9 +1125,9 @@ function renderTodo() {
     b.__sync = sync;
     let lp = false, timer = null;
     const press = (e) => {
-      if (e && e.button) return;                    // primary button / touch only
-      if (todoCdRemain(a) <= 0) return;             // only a running CD can be long-press cancelled
-      timer = setTimeout(() => { timer = null; lp = true; a.cdStart = null; todoSave(data); sync(); }, 500);
+      if (e && e.button) return; // primary button / touch only
+      if (todoCdRemain(a) <= 0) return; // only a running CD can be long-press cancelled
+      timer = setTimeout(() => { timer = null; lp = true; a.cdStart = null; a.cdView = 'dur'; todoSave(data); sync(); }, 500);
     };
     const release = () => { if (timer) { clearTimeout(timer); timer = null; } };
     b.addEventListener('pointerdown', press);
@@ -1136,7 +1136,7 @@ function renderTodo() {
     b.addEventListener('pointercancel', release);
     b.addEventListener('contextmenu', e => e.preventDefault());
     b.addEventListener('click', () => {
-      if (lp) { lp = false; return; }               // swallow the click that ends a long-press cancel
+      if (lp) { lp = false; return; } // swallow the click that ends a long-press cancel
       if (todoCdRemain(a) > 0) a.cdView = (a.cdView === 'time') ? 'dur' : 'time';
       else { a.cdStart = Date.now(); a.cdView = 'dur'; }
       todoSave(data); sync();
@@ -1178,7 +1178,7 @@ function renderTodo() {
     th.className = 'todo-acct';
     const wrap = document.createElement('div');
     wrap.className = 'todo-head-in';
-    wrap.appendChild(cdBtn(a));                      // per-account ⏳ cooldown control, before the nickname
+    wrap.appendChild(cdBtn(a)); // per-account ⏳ cooldown control, before the nickname
     wrap.appendChild(nameInput(a.name, '昵称', v => { a.name = v; todoSave(data); }));
     wrap.appendChild(delBtn('删除账号', () => {
       if (!confirm('删除这个账号?该行的勾选也会一起删除。')) return;
@@ -1229,7 +1229,7 @@ function todoRefreshCds() {
   if (!todoState) return;
   let changed = false;
   todoState.accounts.forEach(a => {
-    if (typeof a.cdStart === 'number' && Date.now() - a.cdStart >= TODO_CD_MS) { a.cdStart = null; changed = true; }
+    if (typeof a.cdStart === 'number' && Date.now() - a.cdStart >= TODO_CD_MS) { a.cdStart = null; a.cdView = 'dur'; changed = true; }
   });
   if (changed) todoSave(todoState);
   const mount = $('#todo-mount');
@@ -1241,13 +1241,13 @@ function setupTodo() {
   todoSave(todoState);       // persist the seeded / normalised shape
   renderTodo();
   todoScheduleMidnight();
+  // also catch rollover + elapsed CDs if the machine was asleep when timers should have fired
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) { todoCheckRollover(); todoRefreshCds(); } });
   // keep the ⏳ countdowns live & expire them — only ticks while the TODO view is open
   setInterval(() => {
     const v = $('#view-todo');
     if (v && v.classList.contains('active')) todoRefreshCds();
   }, 30000);
-  // also catch rollover + elapsed CDs if the machine was asleep when timers should have fired
-  document.addEventListener('visibilitychange', () => { if (!document.hidden) { todoCheckRollover(); todoRefreshCds(); } });
 }
 
 async function init() {
