@@ -1,88 +1,88 @@
 {
-  "lastUpdated": "2026-06-23T09:12:00Z",
+  "lastUpdated": "2026-06-24T11:30:00Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-06-23T07:23:00Z",
-      "lastChecked": "2026-06-23T07:49:11Z",
+      "lastFetch": "2026-06-24T11:24:00Z",
+      "lastChecked": "2026-06-24T11:24:00Z",
       "status": "ok",
-      "bytes": 65725,
-      "note": "operator note #1 强制全量重抓:LeekDuck JSON OK,6月下旬+7月+8月事件完整。Calendar 据此把 events.json 扩到 87 条(新增 7 月标准团战轮换 / GO Fest 当日阵容去重 / 待公布活动)。"
+      "bytes": 65208,
+      "note": "6/24 重抓 OK。LeekDuck JSON 完整,6 月下旬+7 月+8 月事件齐全;discover.sh new 无新增。events.json 88 条不变。"
     },
     "raids": {
-      "lastFetch": "2026-06-23T07:17:00Z",
-      "lastChecked": "2026-06-23T07:49:11Z",
+      "lastFetch": "2026-06-24T11:24:00Z",
+      "lastChecked": "2026-06-24T11:24:00Z",
       "status": "ok",
-      "bytes": 16037,
-      "note": "强制重抓;当前团战仍未轮换(Necrozma 5★ / Shadow Dialga 5★暗影 / Mega Scizor 超级)。下一次轮换 6/24(→纸御剑/铁火辉夜 + 超级大比鸟)。rankings-raid 与 raids.json 一致,本轮未改。"
+      "bytes": 15116,
+      "note": "6/24 重抓:1★/3★ 已轮换为飞行主题(青绵鸟333/姆克儿396/秃鹰丫头629 为 1★;洗翠勇士雄鹰628/蓝鸦822/下石鸟962 为 3★),配合飞行计程车活动。5★(奈克洛兹玛)/超级(巨钳螳螂)/暗影5★(帝牙卢卡)/暗影组/Max(咕咕)feed 仍未翻面。rankings-raid 据此更新 7 个非暗影 1★/3★ 卡片,简中名经 PokeAPI species(zh-hans)核验,counter 招式属性经 gamemaster 核对。"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:00Z",
-      "lastChecked": "2026-06-23T07:49:11Z",
+      "lastChecked": "2026-06-24T11:24:00Z",
       "status": "ok",
       "bytes": 29466,
       "note": "蛋池数据仍新鲜(<7d),本轮检查未刷新内容(文件 mtime 因前序操作刷新,字节不变)。"
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:00Z",
-      "lastChecked": "2026-06-23T07:49:11Z",
+      "lastChecked": "2026-06-24T11:24:00Z",
       "status": "ok",
       "bytes": 70308,
       "note": "调查奖励数据仍新鲜,本轮未强制刷新。"
     },
     "gamemaster": {
       "lastFetch": "2026-06-23T07:04:00Z",
-      "lastChecked": "2026-06-23T07:49:11Z",
+      "lastChecked": "2026-06-24T11:24:00Z",
       "status": "ok",
       "bytes": 911142,
       "note": "PvPoke gamemaster 仍新鲜(<7d),本轮未强制刷新;属性/招式类型用于 counter 验证。注意:gamemaster 的 mega 名单不可作为'是否有 Mega'判据(滞后于新内容)。"
     },
     "tiers-attackers": {
       "lastFetch": "2026-06-23T07:17:00Z",
-      "lastChecked": "2026-06-23T07:49:11Z",
+      "lastChecked": "2026-06-24T11:24:00Z",
       "status": "ok",
       "bytes": 34727,
       "note": "强制重抓;内容与上轮一致(同字节),A/B tier 已在 rankings-attackers。本轮 raids 未轮换,Ranking 沿用上轮已核对面板。"
     },
     "tiers-defenders": {
       "lastFetch": "2026-06-23T07:17:00Z",
-      "lastChecked": "2026-06-23T07:49:11Z",
+      "lastChecked": "2026-06-24T11:24:00Z",
       "status": "ok",
       "bytes": 38671,
       "note": "强制重抓;内容与上轮一致,S/A/B tier 已在 rankings-defenders。"
     },
     "tiers-pokebase": {
       "lastFetch": "2026-06-23T07:17:00Z",
-      "lastChecked": "2026-06-23T07:49:11Z",
+      "lastChecked": "2026-06-24T11:24:00Z",
       "status": "ok",
       "bytes": 121616,
       "note": "Pokébase 交叉参考已强制重抓。"
     },
     "events-hub": {
-      "lastFetch": "2026-06-23T07:23:00Z",
-      "lastChecked": "2026-06-23T07:49:11Z",
+      "lastFetch": "2026-06-24T11:24:00Z",
+      "lastChecked": "2026-06-24T11:24:00Z",
       "status": "ok",
-      "bytes": 30431,
-      "note": "Hub 事件索引强制重抓 OK。用于 7 月事件 / 周轮换交叉核对(rotations 已补 7 月段,按 dex-id 与 events.json 对齐)。"
+      "bytes": 24945,
+      "note": "Hub 事件索引 6/24 重抓 OK。用于 7 月事件/周轮换交叉核对;rotations 已覆盖整月,本轮无需改。"
     },
     "events-pokebase": {
-      "lastFetch": "2026-06-23T07:17:00Z",
-      "lastChecked": "2026-06-23T07:49:11Z",
+      "lastFetch": "2026-06-24T11:24:00Z",
+      "lastChecked": "2026-06-24T11:24:00Z",
       "status": "ok",
-      "bytes": 29238,
-      "note": "Pokébase 事件列表强制重抓,可用于 links[] 聚合。"
+      "bytes": 29495,
+      "note": "6/24 重抓 OK,可用于 links[] 聚合。"
     },
     "events-official": {
-      "lastFetch": "2026-06-23T07:23:00Z",
-      "lastChecked": "2026-06-23T07:49:11Z",
+      "lastFetch": "2026-06-24T11:24:00Z",
+      "lastChecked": "2026-06-24T11:24:00Z",
       "status": "ok",
-      "bytes": 6965,
-      "note": "官方新闻强制重抓 OK。"
+      "bytes": 9772,
+      "note": "官方新闻 6/24 重抓 OK。"
     }
   },
   "detailChecks": {
-    "checkedAt": "2026-06-23T08:47:43Z",
+    "checkedAt": "2026-06-24T11:30:00Z",
     "status": "ok",
-    "note": "08:47Z 二次运行处理五项 operator note(见 operatorNote)。所有源仍 <1d 新鲜,未重抓。events 87→88(新增 Arraiá)。preflight 通过(仅 raidhour20260624 已知 long-chip WARN),validate exit 0。"
+    "note": "6/24 日常:① 重抓 ~1d 源(events/raids/events-hub/events-pokebase/events-official);② raids 6/24 翻面 1★/3★ 飞行主题,rankings-raid 更新 7 卡(简中名经 PokeAPI zh-hans 核验、招式属性经 gamemaster);③ 5★/超级/暗影/Max feed 未翻面,沿用;④ calendar-notes + rankings-current 日期文案 6/23→6/24,改写'6/24 大轮换已到位';⑤ operator note: GO Fest 超级超梦 X/Y 面板整理为两张独立 callout 卡消除拥挤(仅在 AI:rankings-current 内)。preflight 通过(仅 raidhour20260624 已知 long-chip WARN),validate exit 0。"
   },
   "arraiaGap": {
     "checkedAt": "2026-06-23T08:47:43Z",
