@@ -661,6 +661,20 @@
           "end": "2026-06-30"
         },
         {
+          "name": "Mega Skarmory Raid Day",
+          "cn": "超级盔甲鸟团战日",
+          "pokemon": [
+            {
+              "id": 227,
+              "name": "超级盔甲鸟",
+              "sprite": "https://db.pokemongohub.net/images/official/full/227_mega_with_bg.webp",
+              "hub": "227-Mega"
+            }
+          ],
+          "start": "2026-06-27",
+          "end": "2026-06-27"
+        },
+        {
           "name": "Mega Lucario",
           "cn": "超级路卡利欧",
           "pokemon": [

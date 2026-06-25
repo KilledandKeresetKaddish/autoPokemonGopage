@@ -659,7 +659,7 @@
     "end": "2026-06-17T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
     "link": "https://leekduck.com/events/raidhour20260617/",
-    "summary": "奈克洛兹玛团战时刻:18:00–19:00 各道馆密集出现 5★ 奈克洛兹玛,适合集中开团。",
+    "summary": "奈克洛兹玛团战时刻 18:00–19:00 各道馆密集出现 5★ 奈克洛兹玛,适合集中开团。",
     "links": [
       {
         "label": "LeekDuck",
@@ -711,7 +711,7 @@
     "end": "2026-06-18T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-06-18/",
-    "summary": "聚焦时刻:18:00–19:00 小山猪 大量出现,并有 转移糖果 ×2 加成。",
+    "summary": "聚焦时刻 18:00–19:00 小山猪 大量出现,并有 转移糖果 ×2 加成。",
     "links": [
       {
         "label": "LeekDuck",
@@ -1071,7 +1071,7 @@
     "end": "2026-06-24T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
     "link": "https://leekduck.com/events/raidhour20260624/",
-    "summary": "团战时刻:18:00–19:00 各道馆密集出现 5★ 纸御剑与铁火辉夜。",
+    "summary": "团战时刻 18:00–19:00 各道馆密集出现 5★ 纸御剑与铁火辉夜。",
     "links": [
       {
         "label": "LeekDuck",
@@ -1257,7 +1257,7 @@
     "end": "2026-06-25T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-06-25/",
-    "summary": "聚焦时刻:18:00–19:00 长翅鸥 大量出现,并有 捕捉星尘 ×2 加成。",
+    "summary": "聚焦时刻 18:00–19:00 长翅鸥 大量出现,并有 捕捉星尘 ×2 加成。",
     "links": [
       {
         "label": "LeekDuck",
@@ -1281,7 +1281,7 @@
   {
     "id": "skarmory-super-mega-raid-day-2026",
     "name": "盔甲鸟 超级团战日",
-    "type": "raid-day",
+    "type": "raid-battles",
     "heading": "Raid Day",
     "start": "2026-06-27T14:00:00",
     "end": "2026-06-27T17:00:00",
@@ -1453,7 +1453,7 @@
     "end": "2026-07-02T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-02/",
-    "summary": "聚焦时刻:18:00–19:00 波波 大量出现,并有 进化经验 ×2 加成。",
+    "summary": "聚焦时刻 18:00–19:00 波波 大量出现,并有 进化经验 ×2 加成。",
     "links": [
       {
         "label": "LeekDuck",
@@ -3331,7 +3331,7 @@
     "end": "2026-07-16T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-16/",
-    "summary": "聚焦时刻:18:00–19:00 超音蝠 大量出现,并有 捕捉经验 ×2 加成。",
+    "summary": "聚焦时刻 18:00–19:00 超音蝠 大量出现,并有 捕捉经验 ×2 加成。",
     "links": [
       {
         "label": "LeekDuck",
@@ -3368,13 +3368,13 @@
   {
     "id": "raichu-super-mega-raid-day-2026",
     "name": "雷丘 超级团战日",
-    "type": "raid-day",
+    "type": "raid-battles",
     "heading": "Raid Day",
     "start": "2026-07-18T14:00:00",
     "end": "2026-07-18T17:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-18-raichu-super-mega-raid-day-2026/raichu-super-mega-raid-day-2026.jpg",
     "link": "https://leekduck.com/events/raichu-super-mega-raid-day-2026/",
-    "summary": "雷丘超级团战日：全天密集出现超级雷丘（电系），闪光概率提升。14:00–17:00 期间最多可获 5 张免费团战入场券。",
+    "summary": "雷丘超级团战日:全天密集出现超级雷丘(电系),闪光概率提升。14:00–17:00 期间最多可获 5 张免费团战入场券。",
     "links": [
       {
         "label": "LeekDuck",
@@ -3475,7 +3475,7 @@
     "end": "2026-07-23T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-23/",
-    "summary": "聚焦时刻:18:00–19:00 伊布 大量出现,并有 捕捉糖果 ×2 加成。",
+    "summary": "聚焦时刻 18:00–19:00 伊布 大量出现,并有 捕捉糖果 ×2 加成。",
     "links": [
       {
         "label": "LeekDuck",
@@ -3544,7 +3544,7 @@
     "end": "2026-07-30T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-30/",
-    "summary": "聚焦时刻:18:00–19:00 大牙狸 大量出现,并有 转移糖果 ×2 加成。",
+    "summary": "聚焦时刻 18:00–19:00 大牙狸 大量出现,并有 转移糖果 ×2 加成。",
     "links": [
       {
         "label": "LeekDuck",
