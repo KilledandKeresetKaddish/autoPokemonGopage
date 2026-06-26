@@ -1,119 +1,103 @@
 {
-  "lastUpdated": "2026-06-24T11:30:00Z",
+  "lastUpdated": "2026-06-26T19:23:02Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-06-24T11:24:00Z",
-      "lastChecked": "2026-06-24T11:24:00Z",
+      "lastFetch": "2026-06-25T15:03:00Z",
+      "lastChecked": "2026-06-26T19:23:02Z",
       "status": "ok",
-      "bytes": 65208,
-      "note": "6/24 重抓 OK。LeekDuck JSON 完整,6 月下旬+7 月+8 月事件齐全;discover.sh new 无新增。events.json 88 条不变。"
+      "bytes": 60502,
+      "note": "Source Scout/Coordinator: 2026-06-25 已刷新事件源; discover.sh new 后核验并加入 special-anniversary-pikachu-celebration-2026、happy-birthday-professor-willow-2026、ozone-ascent-2026。当前缓存 2026-06-26T19:15:10Z。"
     },
     "raids": {
-      "lastFetch": "2026-06-24T11:24:00Z",
-      "lastChecked": "2026-06-24T11:24:00Z",
+      "lastFetch": "2026-06-25T15:03:00Z",
+      "lastChecked": "2026-06-26T19:23:02Z",
       "status": "ok",
-      "bytes": 15116,
-      "note": "6/24 重抓:1★/3★ 已轮换为飞行主题(青绵鸟333/姆克儿396/秃鹰丫头629 为 1★;洗翠勇士雄鹰628/蓝鸦822/下石鸟962 为 3★)。注意:raids.json 的 5★/超级 feed 仍卡在 6/17–6/23 轮换(奈克洛兹玛/超级巨钳螳螂=过期),实际本期(6/24–6/30)已是纸御剑/铁火辉夜 5★ + 超级大比鸟(据 rotations.json + 事件 feed 确认)。6/24 bug-fix:rankings-raid 的 5★/超级卡据 rotations.json 本期 Boss 重建(纸御剑草/钢 4×弱火、铁火辉夜钢/飞行弱火/电、大比鸟一般/飞行弱电/冰/岩),简中名经 PokeAPI zh-hans + 属性经 gamemaster 核对。1★/3★ 飞行主题卡沿用上轮已核对结果。暗影组/Max(咕咕)feed 未翻面。"
+      "bytes": 16445,
+      "note": "2026-06-25 已刷新; 当前 raid feed 用于本期团战 Counter 核对。"
     },
     "eggs": {
-      "lastFetch": "2026-06-23T07:04:00Z",
-      "lastChecked": "2026-06-24T11:24:00Z",
+      "lastFetch": "2026-06-23T07:04:25Z",
+      "lastChecked": "2026-06-26T19:23:02Z",
       "status": "ok",
       "bytes": 29466,
-      "note": "蛋池数据仍新鲜(<7d),本轮检查未刷新内容(文件 mtime 因前序操作刷新,字节不变)。"
+      "note": "蛋池缓存仍新鲜(<7d),本阶段未刷新内容。"
     },
     "research": {
-      "lastFetch": "2026-06-23T07:04:00Z",
-      "lastChecked": "2026-06-24T11:24:00Z",
+      "lastFetch": "2026-06-23T07:04:25Z",
+      "lastChecked": "2026-06-26T19:23:02Z",
       "status": "ok",
       "bytes": 70308,
-      "note": "调查奖励数据仍新鲜,本轮未强制刷新。"
+      "note": "调查缓存仍新鲜(<7d),本阶段未刷新内容。"
     },
     "gamemaster": {
-      "lastFetch": "2026-06-23T07:04:00Z",
-      "lastChecked": "2026-06-24T11:24:00Z",
+      "lastFetch": "2026-06-23T07:04:25Z",
+      "lastChecked": "2026-06-26T19:23:02Z",
       "status": "ok",
       "bytes": 911142,
-      "note": "PvPoke gamemaster 仍新鲜(<7d),本轮未强制刷新;属性/招式类型用于 counter 验证。注意:gamemaster 的 mega 名单不可作为'是否有 Mega'判据(滞后于新内容)。"
+      "note": "PvPoke gamemaster 仍新鲜(<7d); 用于属性/招式/计数器核验。Mega 是否存在仍以实时来源为准。"
     },
     "tiers-attackers": {
-      "lastFetch": "2026-06-23T07:17:00Z",
-      "lastChecked": "2026-06-24T11:24:00Z",
+      "lastFetch": "2026-06-26T19:15:03Z",
+      "lastChecked": "2026-06-26T19:23:02Z",
       "status": "ok",
-      "bytes": 34727,
-      "note": "强制重抓;内容与上轮一致(同字节),A/B tier 已在 rankings-attackers。本轮 raids 未轮换,Ranking 沿用上轮已核对面板。"
+      "bytes": 35479,
+      "note": "2026-06-26 重抓 OK; 排行榜攻击手面板已据源更新。"
     },
     "tiers-defenders": {
-      "lastFetch": "2026-06-23T07:17:00Z",
-      "lastChecked": "2026-06-24T11:24:00Z",
+      "lastFetch": "2026-06-26T19:15:08Z",
+      "lastChecked": "2026-06-26T19:23:02Z",
       "status": "ok",
-      "bytes": 38671,
-      "note": "强制重抓;内容与上轮一致,S/A/B tier 已在 rankings-defenders。"
+      "bytes": 39579,
+      "note": "2026-06-26 重抓 OK; 排行榜防守面板已据源更新。"
     },
     "tiers-pokebase": {
-      "lastFetch": "2026-06-23T07:17:00Z",
-      "lastChecked": "2026-06-24T11:24:00Z",
+      "lastFetch": "2026-06-26T19:15:10Z",
+      "lastChecked": "2026-06-26T19:23:02Z",
       "status": "ok",
-      "bytes": 121616,
-      "note": "Pokébase 交叉参考已强制重抓。"
+      "bytes": 121195,
+      "note": "2026-06-26 重抓 OK; 用作 Max tier 交叉参考。"
     },
     "events-hub": {
-      "lastFetch": "2026-06-24T11:24:00Z",
-      "lastChecked": "2026-06-24T11:24:00Z",
+      "lastFetch": "2026-06-25T15:03:00Z",
+      "lastChecked": "2026-06-26T19:23:02Z",
       "status": "ok",
-      "bytes": 24945,
-      "note": "Hub 事件索引 6/24 重抓 OK。用于 7 月事件/周轮换交叉核对;rotations 已覆盖整月,本轮无需改。"
+      "bytes": 30384,
+      "note": "Source Scout/Coordinator: 2026-06-25 已刷新并用于事件/轮换核对; 当前缓存 2026-06-26T19:15:13Z。"
     },
     "events-pokebase": {
-      "lastFetch": "2026-06-24T11:24:00Z",
-      "lastChecked": "2026-06-24T11:24:00Z",
+      "lastFetch": "2026-06-25T15:03:12Z",
+      "lastChecked": "2026-06-26T19:23:02Z",
       "status": "ok",
-      "bytes": 29495,
-      "note": "6/24 重抓 OK,可用于 links[] 聚合。"
+      "bytes": 30677,
+      "note": "2026-06-25 重抓 OK; 用于事件链接聚合/交叉核对。"
     },
     "events-official": {
-      "lastFetch": "2026-06-24T11:24:00Z",
-      "lastChecked": "2026-06-24T11:24:00Z",
+      "lastFetch": "2026-06-25T15:03:00Z",
+      "lastChecked": "2026-06-26T19:23:02Z",
       "status": "ok",
-      "bytes": 9772,
-      "note": "官方新闻 6/24 重抓 OK。"
+      "bytes": 6965,
+      "note": "Source Scout/Coordinator: 2026-06-25 已刷新; 当前缓存 2026-06-26T19:15:15Z。"
     }
   },
-  "detailChecks": {
-    "checkedAt": "2026-06-24T12:02:42Z",
+  "discovery": {
+    "lastChecked": "2026-06-26T19:23:02Z",
     "status": "ok",
-    "note": "6/24 第二轮(operator note 以查 bug 为主):① 当前团战 Counter 修正——5★ 原为过期的奈克洛兹玛、超级原为过期的巨钳螳螂(raids.json 的 5★/超级 feed 卡在 6/17–6/23 未翻面)。据 rotations.json 本期 Boss 重建:5★ 拆为纸御剑(798,草/钢,4×弱火)+ 铁火辉夜(797,钢/飞行,弱火/电)两张卡,超级换大比鸟(18 Mega,一般/飞行,弱电/冰/岩);简中名经 PokeAPI zh-hans、属性/招式经 gamemaster 核对;Mega Booster 同属性重算。② 新增线下活动 City Safari 2026(id=city-safari-2026-sep,9/26–27 10:00–18:00 当地时间,六城同步:波士顿/慕尼黑/马赛/里斯本/布里斯班/里约),据 Hub 六城活动页合并为一条(同日期),links[] 挂六个已 fetch 确认的 Hub URL;独家野生泥驴仔(749,名经 PokeAPI zh-hans 核验);票务/加成/玩法写入 sections。events 88→89。preflight 通过(仅 raidhour20260624 已知 long-chip WARN),validate exit 0。"
+    "note": "scripts/discover.sh new 已运行; 三个新增 LeekDuck 页面已核验: special-anniversary-pikachu-celebration-2026、happy-birthday-professor-willow-2026、ozone-ascent-2026。"
   },
-  "arraiaGap": {
-    "checkedAt": "2026-06-23T08:47:43Z",
-    "status": "resolved",
-    "note": "Arraiá 已确认并落地。官方 PT 新闻 https://pokemongo.com/pt_BR/news/festa-junina-2026(2026-06-12 发布,标题『Peguem um Tauros de Paldea da Espécie Aquática no Arraiá do Pokémon GO!』)给出完整详情:巴西限定,6/23 10:00–6/29 22:00 当地时间;全巴西可遇带特殊背景的水之品种帕底亚肯泰罗(dex128/form10252),戴牛仔帽卡比兽(143,闪光提升),润水鸭(912)、利牙鱼(318);加成苔藓诱饵多苹果、诱饵 1h、双倍伙伴爱心。新增事件 id=arraia-festa-junina-2026 并 featured。链接仅 官方+Fandom(https://pokemongo.fandom.com/wiki/Arraiá):Hub 6 月文章经 grep 确认未提 Arraiá,LeekDuck 仍无页,按防误attribution规则不挂 Hub/LeekDuck。"
+  "contentStatus": {
+    "checkedAt": "2026-06-26T19:23:02Z",
+    "status": "ready-for-validation",
+    "note": "Calendar 输出 90 条事件(含三条新公告)并修正文本问题; rotations 经源核对后未改; rankings AI markers 已更新; 未尝试修改 protected app/style/scripts。"
   },
-  "solgaleoShinyGap": {
-    "checkedAt": "2026-06-23T08:47:43Z",
-    "status": "not-released",
-    "note": "operator note ① 期望给索尔迦雷欧(791,7/22–7/28 5★)加实装闪光图标。复查 gohub DB https://db.pokemongohub.net/pokemon/791 明示『Shiny released: No』『Solgaleo cannot be shiny in Pokémon GO』,Hub 团战指南 https://pokemongohub.net/post/guide/solgaleo-raid-guide-best-counters-100-ivs-cps/ 亦称『cannot be shiny from Raids』,页面无任何闪光精灵图可放。所有 live 源一致否定本期闪光实装,按 AGENTS『核对后再写、绝不杜撰』未加闪光标记/图标,事件保留『暂未实装闪光』。待官方正式宣布该活动周实装闪光、且 gohub/官方出现闪光图标后再补 pokemon[].shiny + 闪光 bonus。"
-  },
-  "operatorNote": {
-    "checkedAt": "2026-06-23T08:47:43Z",
-    "status": "done",
-    "note": "2026-06-23T08:47Z 五项 operator note 处理:① 索尔迦雷欧闪光—live 源(gohub DB + Hub 指南)均否定实装、无图标,未杜撰,记 solgaleoShinyGap;② 传奇之路 7/6 raid popup 增『当日阵容(全部团战 Boss)』60 只 sprite 网格(取自 Hub Road of Legends 7/6 名单,简中名经核验);③ 本月看点每条事件标题短语本身设为可点击 event-link(全部命中 events.json id);④ Arraiá 六月节(巴西限定 6/23–6/29)据官方 PT 新闻新增 events.json(id=arraia-festa-junina-2026,官方+Fandom 链接)并 featured;⑤ featured 增 max-mondays-2026-07-06/arraia-festa-junina-2026/august-communityday2026/raidhour20260722。events 87→88。源全部 <1d 新鲜未重抓。preflight 通过(仅 raidhour20260624 已知 long-chip WARN),validate exit 0。"
+  "validation": {
+    "checkedAt": "2026-06-26T19:23:02Z",
+    "status": "passed",
+    "note": "scripts/preflight.sh exit 0: OK render checks passed, 1 WARN long chip name raidhour20260624; scripts/validate.sh exit 0: OK all checks passed."
   },
   "notes": {
-    "correction_2026-06-19": {
-      "fact": "雷丘(26)与盔甲鸟(227)在最新 Pokémon GO 中【有】超级进化形态(Mega 名单随 Legends Z-A 等新内容扩充)。",
-      "reverted": "上一轮误把它们当作无 Mega、改回了基础形态——已全部还原:超级雷丘/超级盔甲鸟 精灵图、26-Mega hub、7/18 超级雷丘角标段、\"超级雷丘能量\"加成。",
-      "source_caveat": "PvPoke gamemaster.json 的 mega 名单【不可】作为\"某宝可梦是否有 Mega\"的判据(它会滞后于新内容)。判断 Mega/形态是否存在,请用实时来源(LeekDuck/Hub/官方/PokeAPI),不要用缓存快照。",
-      "preflight": "已移除依赖 gamemaster 的\"伪造 Mega\"检查;保留图标 token 有效性检查。"
-    },
     "preflight_known_warn": {
-      "fact": "preflight 对 raidhour20260624《纸御剑 与 铁火辉夜 团战时刻》报 long chip name(15 字符)WARN。",
-      "decision": "保留:双 Boss 名需完整呈现,CSS 已用 ellipsis 处理,仅 WARN 不阻断发布。"
+      "fact": "历史上 raidhour20260624《纸御剑 与 铁火辉夜 团战时刻》可能触发 long chip name WARN。",
+      "decision": "若仍出现且仅 WARN,不阻断发布; 以实际 preflight 输出为准。"
     }
-  },
-  "operatorNote2": {
-    "checkedAt": "2026-06-23T09:12:00Z",
-    "status": "done",
-    "note": "Operator note(此次):整理本期推荐(rankings-current)『GO Fest 超级超梦 X/Y — 两天两套队伍』面板,UI 上元素完全叠在一起。根因:面板末尾用 <img class=\"spr\"> 裸图直接放进 .pillrow,而 style.css 只给 .pill .spr / .spr-grid .spr 等带父级的 .spr 设尺寸,无 bare .spr 规则,故两只 Mega 图按原始分辨率(~475px)渲染并互相重叠。修复(仅在 AI:rankings-current 标记内):删除该末尾裸图行,改��超级超梦 X(10043)/Y(10044)精灵图各以已白名单的 .mon-icon 内联到 7/11、7/12 日头 pillrow。未触碰受保护文件。所有源 <1d 新鲜未重抓。"
   }
 }

@@ -1,4 +1,4 @@
 {
-  "lastUpdated": "2026-06-24T12:02:42Z",
-  "note": "6/24 bug-fix run:① 当前团战 Counter 修正——5★ 由过期的奈克洛兹玛改为本期纸御剑(草/钢,4×弱火)+ 铁火辉夜(钢/飞行,弱火/电)两卡,超级由过期的巨钳螳螂改为大比鸟(一般/飞行,弱电/冰/岩);raids.json 的 5★/超级 feed 仍卡在 6/17–6/23 轮换(过期),据 rotations.json 实际本期 Boss 重建,简中名经 PokeAPI zh-hans + gamemaster 属性核验。② 新增线下活动 City Safari 2026(9/26–27,六城同步:波士顿/慕尼黑/马赛/里斯本/布里斯班/里约),据 Hub 六城活动页合并为一条事件。"
+  "lastUpdated": "2026-06-26T19:23:02Z",
+  "note": "6/26 日更: 已纳入新公告(周年皮卡丘庆祝、柳博士生日、Ozone Ascent), 更新活动/排行榜内容; 本阶段仅更新状态并完成 preflight/validate。"
 }

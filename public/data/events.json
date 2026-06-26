@@ -1135,7 +1135,7 @@
     "bonuses": [
       ":rocket: 火箭队更频繁现身于补给站与气球(约每 2 小时)",
       ":rocket: 1★/3★ 暗影团战捕捉的宝可梦个体值范围更广",
-      "可用充能 TM 帮暗影宝可梦遗忘「揭空画龙点睛」(挤挤眼)"
+      "可用充能 TM 帮暗影宝可梦遗忘「迁怒」"
     ],
     "pokemon": [
       {
@@ -1167,7 +1167,7 @@
     "sections": [
       {
         "title": "营救暗影莱希拉姆",
-        "body": "推进 GO 通行证:飞行计程车 获得超级火箭队雷达,追查只能在补给站现身的绠里欧夫。可从 GO 通行证领取奖励至 7/1 19:59。暗影/净化宝可梦无法参与融合。"
+        "body": "推进 GO 通行证:飞行计程车 获得超级火箭队雷达,追查只能在补给站现身的坂木。可从 GO 通行证领取奖励至 7/1 19:59。暗影/净化宝可梦无法参与融合。"
       },
       {
         "title": "新暗影宝可梦",
@@ -1322,7 +1322,7 @@
       },
       {
         "id": 642,
-        "name": "震悘暗影雷电云",
+        "name": "暗影雷电云",
         "fast": "伏特替换",
         "charged": "狂野雷电风暴",
         "hub": "642-Therian_Shadow"
@@ -5287,49 +5287,182 @@
     "highlight": false
   },
   {
-    "id": "july-event-2026",
-    "name": "7 月活动(详情待公布)",
+    "id": "special-anniversary-pikachu-celebration-2026",
+    "name": "特别周年皮卡丘庆典",
     "type": "event",
     "heading": "Event",
     "start": "2026-07-13T10:00:00",
     "end": "2026-07-20T20:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/july-event-2026/",
-    "summary": "7/13–7/20 官方预告的 7 月活动,具体内容(主打宝可梦、加成与调查)尚未公布,LeekDuck 与 Hub 月历均标记为待公布。",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-13-special-anniversary-pikachu-celebration-2026/special-anniversary-pikachu-celebration-2026.jpg",
+    "link": "https://leekduck.com/events/special-anniversary-pikachu-celebration-2026/",
+    "summary": "特别周年皮卡丘庆典带回多种换装皮卡丘:野外、1★团战与实地调查均有活动主题皮卡丘,并同步开放免费 GO 通行证与付费 Deluxe 轨道。",
     "links": [
       {
         "label": "LeekDuck",
-        "url": "https://leekduck.com/events/july-event-2026/"
+        "url": "https://leekduck.com/events/special-anniversary-pikachu-celebration-2026/"
       },
       {
         "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/special-anniversary-pikachu-celebration-event/"
+      },
+      {
+        "label": "Hub 月历",
         "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
       }
     ],
-    "bonuses": [],
+    "bonuses": [
+      ":spawn: 皮卡丘在野外更常出现",
+      ":pokeball: 皮卡丘更容易捕捉",
+      ":raid: 1★ 团战出现多种换装皮卡丘",
+      ":candy: 免费 GO 通行证与付费 Deluxe 轨道"
+    ],
+    "pokemon": [
+      {
+        "id": 25,
+        "name": "皮卡丘",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "野外与调查主题",
+        "items": [
+          "野外可遇万圣节服装皮卡丘、冬季嘉年华皮卡丘、夏日风格皮卡丘等。",
+          "活动主题实地调查可奖励活动主题皮卡丘遭遇。"
+        ]
+      },
+      {
+        "title": "1★ 团战皮卡丘",
+        "items": [
+          "红色、黄色、蓝色点缀的礼服皮卡丘",
+          "狩猎帽皮卡丘、大学夹克皮卡丘、紫水晶王冠皮卡丘",
+          "世界锦标赛 2022 / 2023 / 2024 皮卡丘"
+        ]
+      },
+      {
+        "title": "GO 通行证",
+        "items": [
+          "7/13 10:00 自动获得 GO 通行证:特别周年皮卡丘庆典,可在 7/20 20:00 前收集 GO 点数提升 Rank。",
+          "GO 通行证豪华版售价 4.99 美元;豪华版 + 6 Rank 售价 6.99 美元。",
+          "已解锁奖励须在 7/22 20:00 前领取。"
+        ]
+      }
+    ],
     "highlight": false
   },
   {
-    "id": "july-event-2026-july-21",
-    "name": "7 月活动:7 月 21 日(详情待公布)",
+    "id": "happy-birthday-professor-willow-2026",
+    "name": "威洛博士生日调查",
     "type": "event",
     "heading": "Event",
     "start": "2026-07-21T10:00:00",
-    "end": "2026-07-27T20:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/july-event-2026-july-21/",
-    "summary": "7/21–7/27 官方预告的另一档 7 月活动,具体内容尚未公布,LeekDuck 与 Hub 月历均标记为待公布。",
+    "end": "2026-07-21T20:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-21-happy-birthday-professor-willow-2026/happy-birthday-professor-willow-2026.jpg",
+    "link": "https://leekduck.com/events/happy-birthday-professor-willow-2026/",
+    "summary": "威洛博士生日调查限时一天登场,威洛博士助手皮卡丘首次亮相,可通过拍照惊喜、1★团战、实地调查与免费限时调查遇见。",
     "links": [
       {
         "label": "LeekDuck",
-        "url": "https://leekduck.com/events/july-event-2026-july-21/"
+        "url": "https://leekduck.com/events/happy-birthday-professor-willow-2026/"
       },
       {
         "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/professor-willows-birthday-research/"
+      },
+      {
+        "label": "Hub 月历",
         "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
       }
     ],
-    "bonuses": [],
+    "bonuses": [
+      ":spawn: 拍照惊喜可遇威洛博士助手皮卡丘",
+      ":raid: 1★ 团战出现威洛博士助手皮卡丘",
+      "实地调查奖励含宝可币、幸运蛋与皮卡丘遭遇",
+      "免费限时调查奖励含皮卡丘遭遇、幸运蛋、星星碎片等"
+    ],
+    "pokemon": [
+      {
+        "id": 25,
+        "name": "皮卡丘",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "首次登场",
+        "items": [
+          "威洛博士助手皮卡丘在实地调查、限时调查、拍照惊喜与团战中登场。",
+          "有机会遇见闪光个体,也可能带队长主题特殊背景。"
+        ]
+      },
+      {
+        "title": "调查期限",
+        "items": [
+          "活动本体为 7/21 10:00–20:00。",
+          "免费限时调查任务与奖励须在 7/27 20:00 前完成并领取。"
+        ]
+      }
+    ],
+    "highlight": false
+  },
+  {
+    "id": "ozone-ascent-2026",
+    "name": "臭氧攀升:烈空坐限时调查",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-07-25T10:00:00",
+    "end": "2026-07-26T20:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-25-ozone-ascent-2026/ozone-ascent-2026.jpg",
+    "link": "https://leekduck.com/events/ozone-ascent-2026/",
+    "summary": "臭氧攀升提供免费限时调查,可获得陨石与烈空坐遭遇;付费限时调查追加陨石、烈空坐超级能量、烈空坐遭遇等奖励。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/ozone-ascent-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/ozone-ascent-mega-rayquaza-timed-research/"
+      },
+      {
+        "label": "Hub 月历",
+        "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
+      }
+    ],
+    "bonuses": [
+      ":candy: 免费限时调查奖励陨石与烈空坐遭遇",
+      ":candy: 付费限时调查奖励陨石、烈空坐超级能量与烈空坐遭遇",
+      "烈空坐需先用陨石学会画龙点睛,才能进行超级进化"
+    ],
+    "pokemon": [
+      {
+        "id": 384,
+        "name": "烈空坐",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "免费限时调查",
+        "items": [
+          "完成任务可获得陨石、烈空坐遭遇等奖励。",
+          "任务与奖励须在 7/26 20:00 前完成并领取。"
+        ]
+      },
+      {
+        "title": "付费限时调查",
+        "items": [
+          "票价 4.99 美元(或当地等值价格)。",
+          "奖励包含陨石、烈空坐超级能量、烈空坐遭遇等;可赠送给达到好朋友或以上的好友。"
+        ]
+      },
+      {
+        "title": "超级进化提示",
+        "items": [
+          "烈空坐不能只靠超级能量进化;必须先用陨石让烈空坐学会充能招式画龙点睛。"
+        ]
+      }
+    ],
     "highlight": false
   },
   {
