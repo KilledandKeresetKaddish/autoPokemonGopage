@@ -6,7 +6,7 @@
  * ========================================================================== */
 'use strict';
 
-const state = { events: [], rotations: null, categories: {}, calYear: 0, calMonth: 0 };
+const state = { events: [], rotations: null, categories: {}, mega: [], calYear: 0, calMonth: 0 };
 const WEEKDAYS = ['一', '二', '三', '四', '五', '六', '日']; // Monday-first
 
 /* ---------- calendar geometry (px) ---------- */
@@ -79,6 +79,65 @@ const RAID_META = {
 function raidMeta(key) {
   return RAID_META[key] || { cls: 'gen', tag: (key || '').slice(0, 2).toUpperCase() || '★', label: (key || '团战') + ' 团战' };
 }
+
+/* ---------- Mega Evolution reference tables ---------------------------------
+ * Source: Bulbapedia "Mega Evolution (GO)" (transcribed & verified against the
+ * game's tables, 2026-07). These are GENERIC game mechanics, not per-Pokémon
+ * content — the ONLY per-Pokémon variable is `initialCost` in data/mega.json,
+ * off which everything below is looked up. Update these constants (and then
+ * regenerate scripts/protected.sha256) only when Niantic changes the mechanics;
+ * the daily content agent must never touch this file. */
+
+// Column order + 中文 labels shared by every mega table.
+const MEGA_LEVELS = [
+  { key: 'base',     label: '普通' },
+  { key: 'high',     label: '高级' },
+  { key: 'max',      label: '最高' },
+  { key: 'superMax', label: '超级最高' },
+];
+// Table 1 — Mega Energy to Mega-Evolve at each level, keyed by Initial Cost.
+// NOT a clean formula (see the 7500 row → 150, not 1500), so it is an explicit lookup.
+const MEGA_ENERGY = {
+  100:  { base: 20,  high: 10, max: 5,  superMax: 5  },
+  200:  { base: 40,  high: 20, max: 10, superMax: 10 },
+  300:  { base: 60,  high: 30, max: 15, superMax: 5  },
+  400:  { base: 80,  high: 40, max: 20, superMax: 20 },
+  7500: { base: 150, high: 80, max: 20, superMax: 20 },
+};
+// Table 2 — generic per-level bonuses (identical for every Pokémon). null → —.
+const MEGA_LEVEL_BONUSES = [
+  { label: '所需超级进化次数', vals: [1, 7, 30, 30] },
+  { label: '所需超级能量',     vals: [null, null, null, '5000 能量'] },
+  { label: '休息时间',         vals: ['7 天', '5 天', '3 天', '24 小时'] },
+  { label: '超级能量消耗减免', vals: ['80%', '90%', '95%', '98.3%'] },
+  { label: '捕捉糖果加成',     vals: ['🍬 1', '🍬 1', '🍬 2', '🍬 3'] },
+  { label: 'XL 糖果几率提升',  vals: [null, '+10%', '+25%', '+30%'] },
+  { label: '捕捉 XP 加成',     vals: [null, '+50 XP', '+100 XP', '+200 XP'] },
+  { label: 'CP 等级加成',      vals: [null, null, null, '+2 级'] },
+];
+// Table 3 — re-Mega-Evolve Energy cost by "No. of times Mega Evolved / Primal
+// Reverted" (array index 0 = the 1st time). Verified to reproduce Bulbapedia's
+// grid exactly. Rule for the 100/200 group (the 300/400/7500 group is exactly 2×):
+//   High:     480 − 80·i                          for i = 0..5   (6 entries)
+//   Max:      1400 − 80·min(i,6) − 40·max(i−6,0)  for i = 0..28  (29 entries)
+//   SuperMax: Max(i) + 5000  for i = 0..28, then 5000 at i = 29  (30 entries)
+// Base level has no re-evolve discount (it is the entry level), so it is omitted.
+const MEGA_REMEGA = (function () {
+  const max100 = [];
+  for (let i = 0; i < 29; i++) max100.push(1400 - 80 * Math.min(i, 6) - 40 * Math.max(i - 6, 0));
+  const high100 = [];
+  for (let i = 0; i < 6; i++) high100.push(480 - 80 * i);
+  const superMax100 = max100.map(v => v + 5000).concat([5000]);
+  const dbl = a => a.map(v => v * 2);
+  return {
+    sm: { high: high100,      max: max100,      superMax: superMax100 },
+    lg: { high: dbl(high100), max: dbl(max100), superMax: dbl(max100).map(v => v + 5000).concat([5000]) },
+  };
+})();
+// Which re-evolve cost group an Initial Cost falls in (100/200 vs 300/400/7500).
+function megaGroup(cost) { return (cost != null && cost <= 200) ? 'sm' : 'lg'; }
+// 12345 → "12,345" (matches the source tables' thousands separators).
+function megaComma(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
 
 /* ---------- small helpers ---------- */
 function $(sel) { return document.querySelector(sel); }
@@ -226,6 +285,10 @@ async function loadData() {
     const ftSet = new Set(Array.isArray(ft) ? ft : []);
     state.events.forEach(ev => { if (ftSet.has(ev.id)) ev._featured = true; });
   } catch (e) { /* no featured.json — fine */ }
+  try {
+    const mg = await (await fetch('data/mega.json?t=' + Date.now())).json();
+    state.mega = Array.isArray(mg) ? mg : [];
+  } catch (e) { state.mega = []; }
 }
 
 /* ---------- calendar ---------- */
@@ -657,6 +720,111 @@ function openDetail(ev) {
   `;
   $('#event-detail').hidden = false;
   linkifySprites($('#detail-body'));
+}
+
+/* ---------- Mega Evolution reference (view-mega) ------------------------------
+ * Owner feature, not the daily agent's: a Pokémon picker + detail card that
+ * DERIVES every value from one variable — `initialCost` in data/mega.json —
+ * via the MEGA_* mechanics constants above. The agent only appends roster rows;
+ * all logic lives here. Sprites are linked inline (linkSprite), so this survives
+ * re-renders on each selection without re-running linkifySprites. */
+function megaTypeIcons(types) {
+  return (types || []).map(t =>
+    `<img class="ico" src="assets/icons/${ICONS[t] || (t + '.png')}" alt="${escapeHtml(t)}" title="${escapeHtml(t)}" onerror="this.style.display='none'">`
+  ).join('');
+}
+function renderMegaDetail(entry) {
+  const box = $('#mega-detail');
+  if (!box) return;
+  if (!entry) { box.innerHTML = '<p class="muted">暂无超级进化数据。</p>'; return; }
+  const cost = (entry.initialCost == null) ? null : entry.initialCost;
+  const energy = (cost != null) ? MEGA_ENERGY[cost] : null;   // undefined for an unknown tier
+  const img = `<img class="mon-icon" src="${escapeHtml(monSprite(entry))}" alt="${escapeHtml(entry.name)}" loading="lazy" onerror="this.style.visibility='hidden'">`;
+  const costTxt = (cost == null) ? '待定' : (megaComma(cost) + ' 超级能量');
+  const header = `<div class="mega-header">${linkSprite(img, entry)}<div class="mega-head-txt">`
+    + `<h3>${escapeHtml(entry.name)}${entry.variant ? ` <span class="mega-var">${escapeHtml(entry.variant)}</span>` : ''}</h3>`
+    + `<p class="muted">${escapeHtml(entry.en || '')}${entry.release ? ' · ' + escapeHtml(entry.release) : ''}</p>`
+    + `<div class="mega-types">${megaTypeIcons(entry.boostedTypes)}</div>`
+    + `<span class="badge mega-cost">首次进化消耗 ${escapeHtml(costTxt)}</span>`
+    + `</div></div>`;
+
+  const head = `<tr><th>Mega 等级</th>${MEGA_LEVELS.map(l => `<th>${l.label}</th>`).join('')}</tr>`;
+  const energyTbl = energy
+    ? `<table class="mega-cost-table"><thead>${head}</thead><tbody><tr><th>升华所需能量</th>`
+        + MEGA_LEVELS.map(l => `<td>${megaComma(energy[l.key])}</td>`).join('') + `</tr></tbody></table>`
+    : '<p class="muted">升华所需能量:待定(该宝可梦尚无已知的首次消耗档位)。</p>';
+
+  const dash = v => (v == null ? '—' : v);
+  const bonusTbl = `<table class="mega-cost-table"><thead>${head}</thead><tbody>`
+    + MEGA_LEVEL_BONUSES.map(r =>
+        `<tr><th>${escapeHtml(r.label)}</th>${r.vals.map(v => `<td>${escapeHtml(String(dash(v)))}</td>`).join('')}</tr>`
+      ).join('')
+    + `</tbody></table>`;
+
+  let remega = '';
+  if (energy) {
+    const g = MEGA_REMEGA[megaGroup(cost)];
+    const cols = [{ key: 'high', label: '高级' }, { key: 'max', label: '最高' }, { key: 'superMax', label: '超级最高' }];
+    let rows = '';
+    for (let i = 0; i < 30; i++) {
+      rows += `<tr><th>${i + 1}</th>` + cols.map(c => {
+        const arr = g[c.key], v = (arr && i < arr.length) ? arr[i] : null;
+        return `<td>${v == null ? '—' : megaComma(v)}</td>`;
+      }).join('') + '</tr>';
+    }
+    const grp = megaGroup(cost) === 'sm' ? '100 / 200' : '300 / 400 / 7500';
+    remega = `<h4>重复升华费用递减</h4>`
+      + `<details class="mega-remega"><summary>按「已升华次数」展开(第 1–30 次)</summary>`
+      + `<div class="mega-scroll"><table class="mega-cost-table"><thead><tr><th>次数</th>`
+      + cols.map(c => `<th>${c.label}</th>`).join('') + `</tr></thead><tbody>${rows}</tbody></table></div>`
+      + `<p class="muted">按初始费用分档:此为 ${grp} 组。普通等级为入门等级,不适用递减。</p></details>`;
+  }
+
+  box.innerHTML = header
+    + `<h4>各等级升华所需超级能量</h4>${energyTbl}`
+    + `<h4>各等级加成(全宝可梦通用)</h4>${bonusTbl}`
+    + remega;
+}
+function renderMega() {
+  const list = state.mega || [];
+  const sel = $('#mega-select');
+  if (sel) sel.innerHTML = list.map((m, i) => `<option value="${i}">${escapeHtml(m.name)}</option>`).join('');
+  const ov = $('#mega-overview');
+  if (ov) {
+    if (!list.length) {
+      ov.innerHTML = '<p class="muted">暂无超级进化数据。</p>';
+    } else {
+      const rows = list.map((m, i) => {
+        const img = `<img class="spr" src="${escapeHtml(monSprite(m))}" alt="${escapeHtml(m.name)}" loading="lazy" onerror="this.style.visibility='hidden'">`;
+        const cost = (m.initialCost == null) ? '待定' : megaComma(m.initialCost);
+        return `<tr data-mega-idx="${i}">`
+          + `<td class="mega-ov-spr">${linkSprite(img, m)}</td>`
+          + `<td class="mega-ov-name">${escapeHtml(m.name)}<div class="muted mega-ov-en">${escapeHtml(m.en || '')}</div></td>`
+          + `<td class="mega-ov-types">${megaTypeIcons(m.boostedTypes)}</td>`
+          + `<td class="mega-ov-cost">${cost}</td>`
+          + `<td class="mega-ov-rel">${escapeHtml(m.release || '—')}</td></tr>`;
+      }).join('');
+      ov.innerHTML = `<div class="mega-scroll"><table class="mega-cost-table mega-overview-table"><thead>`
+        + `<tr><th>精灵</th><th>名称</th><th>加成属性</th><th>首次消耗</th><th>发布日期</th></tr></thead>`
+        + `<tbody>${rows}</tbody></table></div>`;
+    }
+  }
+  renderMegaDetail(list[0]);
+}
+function setupMega() {
+  const sel = $('#mega-select');
+  if (sel) sel.addEventListener('change', () => renderMegaDetail((state.mega || [])[+sel.value]));
+  const ov = $('#mega-overview');
+  if (ov) ov.addEventListener('click', e => {
+    if (e.target.closest('a')) return;               // let sprite → hub links work
+    const tr = e.target.closest('tr[data-mega-idx]');
+    if (!tr) return;
+    const i = +tr.getAttribute('data-mega-idx');
+    if (sel) sel.value = String(i);
+    renderMegaDetail((state.mega || [])[i]);
+    const d = $('#mega-detail');
+    if (d && d.scrollIntoView) d.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 }
 
 /* ---------- world clock (time-band country filter) ----------------------------
@@ -1258,10 +1426,12 @@ async function init() {
   setupDetail();
   setupEventLinks();
   setupTodo();
+  setupMega();
   setupWorldClock();
   await loadData();
   renderCalendar();
   renderRotations();
+  renderMega();
   // make the static ranking-panel sprites clickable → Pokémon GO Hub DB
   // auto-link every Pokémon sprite the agent renders (rankings, rotations,
   // free-form notes, …) → hub. Calendar grid + 长期 band are excluded inside

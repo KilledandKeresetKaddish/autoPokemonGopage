@@ -92,6 +92,31 @@ or touch them.**
   Do NOT add IDs on your own initiative — only when the admin explicitly requests it. Prune IDs
   whose events have been removed from `events.json`.
 - `data/state.json` — your own bookkeeping (last-fetch times, source hashes, notes).
+- `public/data/mega.json` — the cumulative **超级进化 / 原始回归 roster** shown in the 「超级进化」view.
+  Your **one and only job** here: when the game announces a NEW Mega/Primal, **append one row**.
+  Everything the view shows (per-level energy costs, generic bonuses, the re-Mega cost curve) is
+  DERIVED from the single field `initialCost` via mechanics tables baked into `app.js` — you **never**
+  compute or edit those numbers, and you never touch `app.js`/the `#view-mega` HTML.
+  Row schema (flat array; reuses the usual sprite/link conventions):
+  ```json
+  { "id": 3, "name": "超级妙蛙花", "en": "Mega Venusaur",
+    "boostedTypes": ["grass","poison"], "initialCost": 200, "release": "2020-08-27",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10033.png",
+    "hub": "3-Mega" }
+  ```
+  - `id` = **base national-dex id** (X/Y & Primal share it → identity is the **unique `en`**; validation
+    rejects duplicate `en`). `variant` (`"X"`/`"Y"`) and `kind` (`"primal"`) are optional display labels.
+  - `name` = 简体中文 (verify via PokeAPI `zh-Hans` as usual — never from memory), prefix `超级`/`原始`.
+  - `boostedTypes` = **type KEYS only** (`fire`,`water`,… the 18 keys in the 属性→图标 map), never 中文.
+  - `initialCost` = the first-time Mega Energy cost. **Must be one of `{100,200,300,400,7500}` — or `null`
+    if TBD/pre-release** (the view then shows「待定」). Do **NOT** invent a value; leave `null` until confirmed.
+  - `sprite` (Mega/Primal form image — required, base dex sprite can't show the form) + `hub` (form slug
+    e.g. `6-Mega_X`, `382-Primal`) follow the same conventions as `rotations.json` mega segments.
+  - **Sourcing:** Bulbapedia's Mega tables are the human reference but are **off-allowlist and 403 to
+    automated fetch** — take roster/cost from the admin (screenshots) or corroborate via allowlisted
+    Fandom/官方 sources; never fabricate.
+  - This roster is a **cumulative reference**, independent of the weekly `rotations.json` mega track —
+    they need not match (one is "ever existed", the other is "live this week").
 
 ## HARD RULES (validation rejects the run if broken)
 - **NEVER** edit `public/app.js`, `public/style.css`, `scripts/*`, or anything in
