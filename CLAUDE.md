@@ -27,6 +27,7 @@ from `public/`.
 | `public/data/featured.json` | Admin-curated featured event IDs — gold border on calendar. Daily agent maintains on admin's behalf. |
 | `public/data/categories.json` | Custom event-type palette registrations. |
 | `public/data/meta.json` | `lastUpdated` timestamp shown in header. |
+| `public/data/mega.json` | Mega/Primal roster for the 「超级进化」view. Agent-editable, but the ONLY per-Pokémon field that drives mechanics is `initialCost`; everything else is derived. |
 | `public/assets/icons/` | Type and item icons (mixed `.png`/`.webp`). |
 | `scripts/` | Shell scripts for the daily agent (`fetch.sh`, `discover.sh`, `validate.sh`, `preflight.sh`, `run-daily.sh`). |
 | `data/state.json` | Daily agent bookkeeping (fetch timestamps, notes). |
@@ -43,6 +44,7 @@ from `public/`.
 - Sprites: PokeAPI (`raw.githubusercontent.com/PokeAPI/sprites/.../<dexId>.png`). Form overrides via `"sprite"` field or Hub DB images.
 - `app.js` auto-links all rendered sprites to `db.pokemongohub.net/pokemon/<id>` (via `data-hub` attribute for forms).
 - Type icon files have inconsistent extensions — see the map in `AGENTS.md` under "属性→图标文件".
+- Mega reference view (`#view-mega`, owner-maintained shell like `#view-todo`) is JS-filled by `renderMega` / `renderMegaDetail` / `setupMega` from `mega.json`. Tables 1–3 (per-level energy `MEGA_ENERGY`, generic bonuses `MEGA_LEVEL_BONUSES`, re-Mega curve `MEGA_REMEGA`) are **constants in `app.js`** keyed off `initialCost` — the daily agent only appends roster rows, never the mechanics. `mega.json` is validated in `validate.sh` (step 4e).
 
 ### CSS class vocabulary (for HTML in AI marker regions)
 

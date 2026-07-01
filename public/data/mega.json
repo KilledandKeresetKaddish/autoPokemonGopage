@@ -1,0 +1,742 @@
+[
+  {
+    "id": 3,
+    "name": "超级妙蛙花",
+    "en": "Mega Venusaur",
+    "boostedTypes": [
+      "grass",
+      "poison"
+    ],
+    "initialCost": 200,
+    "release": "2020-08-27",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10033.png",
+    "hub": "3-Mega"
+  },
+  {
+    "id": 6,
+    "name": "超级喷火龙 X",
+    "en": "Mega Charizard X",
+    "variant": "X",
+    "boostedTypes": [
+      "fire",
+      "dragon"
+    ],
+    "initialCost": 200,
+    "release": "2020-08-27",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10034.png",
+    "hub": "6-Mega_X"
+  },
+  {
+    "id": 6,
+    "name": "超级喷火龙 Y",
+    "en": "Mega Charizard Y",
+    "variant": "Y",
+    "boostedTypes": [
+      "fire",
+      "flying"
+    ],
+    "initialCost": 200,
+    "release": "2020-08-27",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png",
+    "hub": "6-Mega_Y"
+  },
+  {
+    "id": 9,
+    "name": "超级水箭龟",
+    "en": "Mega Blastoise",
+    "boostedTypes": [
+      "water"
+    ],
+    "initialCost": 200,
+    "release": "2020-08-27",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10036.png",
+    "hub": "9-Mega"
+  },
+  {
+    "id": 15,
+    "name": "超级大针蜂",
+    "en": "Mega Beedrill",
+    "boostedTypes": [
+      "bug",
+      "poison"
+    ],
+    "initialCost": 100,
+    "release": "2020-08-27",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png",
+    "hub": "15-Mega"
+  },
+  {
+    "id": 18,
+    "name": "超级大比鸟",
+    "en": "Mega Pidgeot",
+    "boostedTypes": [
+      "normal",
+      "flying"
+    ],
+    "initialCost": 100,
+    "release": "2020-09-18",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10073.png",
+    "hub": "18-Mega"
+  },
+  {
+    "id": 26,
+    "name": "超级雷丘 X",
+    "en": "Mega Raichu X",
+    "variant": "X",
+    "boostedTypes": [
+      "electric"
+    ],
+    "initialCost": null,
+    "release": "2026-07-18",
+    "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
+    "hub": "26-Mega_X"
+  },
+  {
+    "id": 26,
+    "name": "超级雷丘 Y",
+    "en": "Mega Raichu Y",
+    "variant": "Y",
+    "boostedTypes": [
+      "electric"
+    ],
+    "initialCost": null,
+    "release": "2026-07-18",
+    "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp",
+    "hub": "26-Mega_Y"
+  },
+  {
+    "id": 65,
+    "name": "超级胡地",
+    "en": "Mega Alakazam",
+    "boostedTypes": [
+      "psychic"
+    ],
+    "initialCost": 200,
+    "release": "2022-09-12",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10037.png",
+    "hub": "65-Mega"
+  },
+  {
+    "id": 71,
+    "name": "超级大食花",
+    "en": "Mega Victreebel",
+    "boostedTypes": [
+      "grass",
+      "poison"
+    ],
+    "initialCost": 300,
+    "release": "2026-02-20",
+    "sprite": "https://db.pokemongohub.net/images/official/full/071_mega_with_bg.webp",
+    "hub": "71-Mega"
+  },
+  {
+    "id": 80,
+    "name": "超级呆壳兽",
+    "en": "Mega Slowbro",
+    "boostedTypes": [
+      "water",
+      "psychic"
+    ],
+    "initialCost": 100,
+    "release": "2021-06-08",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10071.png",
+    "hub": "80-Mega"
+  },
+  {
+    "id": 94,
+    "name": "超级耿鬼",
+    "en": "Mega Gengar",
+    "boostedTypes": [
+      "ghost",
+      "poison"
+    ],
+    "initialCost": 200,
+    "release": "2020-10-23",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png",
+    "hub": "94-Mega"
+  },
+  {
+    "id": 115,
+    "name": "超级袋兽",
+    "en": "Mega Kangaskhan",
+    "boostedTypes": [
+      "normal"
+    ],
+    "initialCost": 200,
+    "release": "2022-04-29",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10039.png",
+    "hub": "115-Mega"
+  },
+  {
+    "id": 127,
+    "name": "超级凯罗斯",
+    "en": "Mega Pinsir",
+    "boostedTypes": [
+      "bug",
+      "flying"
+    ],
+    "initialCost": 200,
+    "release": "2023-05-11",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10040.png",
+    "hub": "127-Mega"
+  },
+  {
+    "id": 130,
+    "name": "超级暴鲤龙",
+    "en": "Mega Gyarados",
+    "boostedTypes": [
+      "water",
+      "dark"
+    ],
+    "initialCost": 300,
+    "release": "2021-02-09",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10041.png",
+    "hub": "130-Mega"
+  },
+  {
+    "id": 142,
+    "name": "超级化石翼龙",
+    "en": "Mega Aerodactyl",
+    "boostedTypes": [
+      "rock",
+      "flying"
+    ],
+    "initialCost": 200,
+    "release": "2022-01-07",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10042.png",
+    "hub": "142-Mega"
+  },
+  {
+    "id": 149,
+    "name": "超级快龙",
+    "en": "Mega Dragonite",
+    "boostedTypes": [
+      "dragon",
+      "flying"
+    ],
+    "initialCost": 300,
+    "release": "2026-02-20",
+    "sprite": "https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp",
+    "hub": "149-Mega"
+  },
+  {
+    "id": 150,
+    "name": "超级超梦 X",
+    "en": "Mega Mewtwo X",
+    "variant": "X",
+    "boostedTypes": [
+      "psychic",
+      "fighting"
+    ],
+    "initialCost": 7500,
+    "release": "2026-05-24",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png",
+    "hub": "150-Mega_X"
+  },
+  {
+    "id": 150,
+    "name": "超级超梦 Y",
+    "en": "Mega Mewtwo Y",
+    "variant": "Y",
+    "boostedTypes": [
+      "psychic"
+    ],
+    "initialCost": 7500,
+    "release": "2026-05-24",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png",
+    "hub": "150-Mega_Y"
+  },
+  {
+    "id": 181,
+    "name": "超级电龙",
+    "en": "Mega Ampharos",
+    "boostedTypes": [
+      "electric",
+      "dragon"
+    ],
+    "initialCost": 200,
+    "release": "2021-01-19",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10045.png",
+    "hub": "181-Mega"
+  },
+  {
+    "id": 208,
+    "name": "超级大钢蛇",
+    "en": "Mega Steelix",
+    "boostedTypes": [
+      "steel",
+      "ground"
+    ],
+    "initialCost": 200,
+    "release": "2021-12-01",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10072.png",
+    "hub": "208-Mega"
+  },
+  {
+    "id": 212,
+    "name": "超级巨钳螳螂",
+    "en": "Mega Scizor",
+    "boostedTypes": [
+      "bug",
+      "steel"
+    ],
+    "initialCost": 200,
+    "release": "2022-08-10",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10046.png",
+    "hub": "212-Mega"
+  },
+  {
+    "id": 214,
+    "name": "超级赫拉克罗斯",
+    "en": "Mega Heracross",
+    "boostedTypes": [
+      "bug",
+      "fighting"
+    ],
+    "initialCost": 200,
+    "release": "2024-04-13",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10047.png",
+    "hub": "214-Mega"
+  },
+  {
+    "id": 227,
+    "name": "超级盔甲鸟",
+    "en": "Mega Skarmory",
+    "boostedTypes": [
+      "steel",
+      "flying"
+    ],
+    "initialCost": 300,
+    "release": "2026-06-27",
+    "sprite": "https://db.pokemongohub.net/images/official/full/227_mega_with_bg.webp",
+    "hub": "227-Mega"
+  },
+  {
+    "id": 229,
+    "name": "超级黑鲁加",
+    "en": "Mega Houndoom",
+    "boostedTypes": [
+      "dark",
+      "fire"
+    ],
+    "initialCost": 100,
+    "release": "2020-10-01",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png",
+    "hub": "229-Mega"
+  },
+  {
+    "id": 248,
+    "name": "超级班基拉斯",
+    "en": "Mega Tyranitar",
+    "boostedTypes": [
+      "rock",
+      "dark"
+    ],
+    "initialCost": 300,
+    "release": "2023-07-25",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png",
+    "hub": "248-Mega"
+  },
+  {
+    "id": 254,
+    "name": "超级蜥蜴王",
+    "en": "Mega Sceptile",
+    "boostedTypes": [
+      "grass",
+      "dragon"
+    ],
+    "initialCost": 200,
+    "release": "2022-12-03",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png",
+    "hub": "254-Mega"
+  },
+  {
+    "id": 257,
+    "name": "超级火焰鸡",
+    "en": "Mega Blaziken",
+    "boostedTypes": [
+      "fire",
+      "fighting"
+    ],
+    "initialCost": 200,
+    "release": "2022-12-03",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png",
+    "hub": "257-Mega"
+  },
+  {
+    "id": 260,
+    "name": "超级巨沼怪",
+    "en": "Mega Swampert",
+    "boostedTypes": [
+      "water",
+      "ground"
+    ],
+    "initialCost": 200,
+    "release": "2022-12-03",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10064.png",
+    "hub": "260-Mega"
+  },
+  {
+    "id": 282,
+    "name": "超级沙奈朵",
+    "en": "Mega Gardevoir",
+    "boostedTypes": [
+      "psychic",
+      "fairy"
+    ],
+    "initialCost": 200,
+    "release": "2023-02-08",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10051.png",
+    "hub": "282-Mega"
+  },
+  {
+    "id": 302,
+    "name": "超级勾魂眼",
+    "en": "Mega Sableye",
+    "boostedTypes": [
+      "dark",
+      "ghost"
+    ],
+    "initialCost": 100,
+    "release": "2023-06-29",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10066.png",
+    "hub": "302-Mega"
+  },
+  {
+    "id": 303,
+    "name": "超级大嘴娃",
+    "en": "Mega Mawile",
+    "boostedTypes": [
+      "steel",
+      "fairy"
+    ],
+    "initialCost": 200,
+    "release": "2024-10-12",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10052.png",
+    "hub": "303-Mega"
+  },
+  {
+    "id": 306,
+    "name": "超级波士可多拉",
+    "en": "Mega Aggron",
+    "boostedTypes": [
+      "steel"
+    ],
+    "initialCost": 200,
+    "release": "2022-09-16",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10053.png",
+    "hub": "306-Mega"
+  },
+  {
+    "id": 308,
+    "name": "超级恰雷姆",
+    "en": "Mega Medicham",
+    "boostedTypes": [
+      "fighting",
+      "psychic"
+    ],
+    "initialCost": 100,
+    "release": "2023-03-08",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10054.png",
+    "hub": "308-Mega"
+  },
+  {
+    "id": 310,
+    "name": "超级雷电兽",
+    "en": "Mega Manectric",
+    "boostedTypes": [
+      "electric"
+    ],
+    "initialCost": 100,
+    "release": "2021-03-16",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10055.png",
+    "hub": "310-Mega"
+  },
+  {
+    "id": 319,
+    "name": "超级巨牙鲨",
+    "en": "Mega Sharpedo",
+    "boostedTypes": [
+      "water",
+      "dark"
+    ],
+    "initialCost": 200,
+    "release": "2025-09-07",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10070.png",
+    "hub": "319-Mega"
+  },
+  {
+    "id": 323,
+    "name": "超级喷火驼",
+    "en": "Mega Camerupt",
+    "boostedTypes": [
+      "fire",
+      "ground"
+    ],
+    "initialCost": 200,
+    "release": "2025-09-28",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10087.png",
+    "hub": "323-Mega"
+  },
+  {
+    "id": 334,
+    "name": "超级七夕青鸟",
+    "en": "Mega Altaria",
+    "boostedTypes": [
+      "dragon",
+      "fairy"
+    ],
+    "initialCost": 300,
+    "release": "2021-05-15",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10067.png",
+    "hub": "334-Mega"
+  },
+  {
+    "id": 354,
+    "name": "超级诅咒娃娃",
+    "en": "Mega Banette",
+    "boostedTypes": [
+      "ghost"
+    ],
+    "initialCost": 100,
+    "release": "2022-10-20",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10056.png",
+    "hub": "354-Mega"
+  },
+  {
+    "id": 359,
+    "name": "超级阿勃梭鲁",
+    "en": "Mega Absol",
+    "boostedTypes": [
+      "dark"
+    ],
+    "initialCost": 200,
+    "release": "2021-10-22",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10057.png",
+    "hub": "359-Mega"
+  },
+  {
+    "id": 362,
+    "name": "超级冰鬼护",
+    "en": "Mega Glalie",
+    "boostedTypes": [
+      "ice"
+    ],
+    "initialCost": 200,
+    "release": "2022-12-15",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10074.png",
+    "hub": "362-Mega"
+  },
+  {
+    "id": 373,
+    "name": "超级暴飞龙",
+    "en": "Mega Salamence",
+    "boostedTypes": [
+      "dragon",
+      "flying"
+    ],
+    "initialCost": 300,
+    "release": "2023-01-10",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png",
+    "hub": "373-Mega"
+  },
+  {
+    "id": 376,
+    "name": "超级巨金怪",
+    "en": "Mega Metagross",
+    "boostedTypes": [
+      "steel",
+      "psychic"
+    ],
+    "initialCost": 300,
+    "release": "2025-10-04",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10076.png",
+    "hub": "376-Mega"
+  },
+  {
+    "id": 380,
+    "name": "超级拉帝亚斯",
+    "en": "Mega Latias",
+    "boostedTypes": [
+      "dragon",
+      "psychic"
+    ],
+    "initialCost": 300,
+    "release": "2022-05-03",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10062.png",
+    "hub": "380-Mega"
+  },
+  {
+    "id": 381,
+    "name": "超级拉帝欧斯",
+    "en": "Mega Latios",
+    "boostedTypes": [
+      "dragon",
+      "psychic"
+    ],
+    "initialCost": 300,
+    "release": "2022-05-03",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png",
+    "hub": "381-Mega"
+  },
+  {
+    "id": 382,
+    "name": "原始盖欧卡",
+    "en": "Primal Kyogre",
+    "kind": "primal",
+    "boostedTypes": [
+      "water",
+      "electric",
+      "bug"
+    ],
+    "initialCost": 400,
+    "release": "2023-02-18",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png",
+    "hub": "382-Primal"
+  },
+  {
+    "id": 383,
+    "name": "原始固拉多",
+    "en": "Primal Groudon",
+    "kind": "primal",
+    "boostedTypes": [
+      "fire",
+      "grass",
+      "ground"
+    ],
+    "initialCost": 400,
+    "release": "2023-02-18",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png",
+    "hub": "383-Primal"
+  },
+  {
+    "id": 384,
+    "name": "超级烈空坐",
+    "en": "Mega Rayquaza",
+    "boostedTypes": [
+      "flying",
+      "dragon",
+      "psychic"
+    ],
+    "initialCost": 400,
+    "release": "2023-08-04",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png",
+    "hub": "384-Mega"
+  },
+  {
+    "id": 428,
+    "name": "超级长耳兔",
+    "en": "Mega Lopunny",
+    "boostedTypes": [
+      "normal",
+      "fighting"
+    ],
+    "initialCost": 200,
+    "release": "2021-04-04",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10088.png",
+    "hub": "428-Mega"
+  },
+  {
+    "id": 445,
+    "name": "超级烈咬陆鲨",
+    "en": "Mega Garchomp",
+    "boostedTypes": [
+      "dragon",
+      "ground"
+    ],
+    "initialCost": 300,
+    "release": "2023-11-11",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png",
+    "hub": "445-Mega"
+  },
+  {
+    "id": 448,
+    "name": "超级路卡利欧",
+    "en": "Mega Lucario",
+    "boostedTypes": [
+      "fighting",
+      "steel"
+    ],
+    "initialCost": 200,
+    "release": "2024-07-27",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png",
+    "hub": "448-Mega"
+  },
+  {
+    "id": 460,
+    "name": "超级暴雪王",
+    "en": "Mega Abomasnow",
+    "boostedTypes": [
+      "grass",
+      "ice"
+    ],
+    "initialCost": 200,
+    "release": "2020-12-01",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10060.png",
+    "hub": "460-Mega"
+  },
+  {
+    "id": 475,
+    "name": "超级艾路雷朵",
+    "en": "Mega Gallade",
+    "boostedTypes": [
+      "psychic",
+      "fighting"
+    ],
+    "initialCost": 200,
+    "release": "2025-01-11",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10068.png",
+    "hub": "475-Mega"
+  },
+  {
+    "id": 531,
+    "name": "超级差不多娃娃",
+    "en": "Mega Audino",
+    "boostedTypes": [
+      "normal",
+      "fairy"
+    ],
+    "initialCost": 200,
+    "release": "2025-04-05",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10069.png",
+    "hub": "531-Mega"
+  },
+  {
+    "id": 687,
+    "name": "超级乌贼王",
+    "en": "Mega Malamar",
+    "boostedTypes": [
+      "dark",
+      "psychic"
+    ],
+    "initialCost": 300,
+    "release": "2026-02-20",
+    "sprite": "https://db.pokemongohub.net/images/official/full/687_mega_with_bg.webp",
+    "hub": "687-Mega"
+  },
+  {
+    "id": 719,
+    "name": "超级蒂安希",
+    "en": "Mega Diancie",
+    "boostedTypes": [
+      "rock",
+      "fairy"
+    ],
+    "initialCost": 300,
+    "release": "2023-08-04",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10075.png",
+    "hub": "719-Mega"
+  },
+  {
+    "id": 870,
+    "name": "超级列阵兵",
+    "en": "Mega Falinks",
+    "boostedTypes": [
+      "fighting"
+    ],
+    "initialCost": 300,
+    "release": "2026-05-23",
+    "sprite": "https://db.pokemongohub.net/images/official/full/870_mega_with_bg.webp",
+    "hub": "870-Mega"
+  }
+]

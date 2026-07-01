@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pokémon GO 面板</title>
   <link rel="icon" type="image/x-icon" href="pokemongocalender.ico?v=14" />
-  <link rel="stylesheet" href="style.css?v=22" />
+  <link rel="stylesheet" href="style.css?v=23" />
 </head>
 <body>
   <!-- =====================================================================
@@ -27,6 +27,7 @@
   <nav class="tabs" id="main-tabs">
     <button data-view="calendar" class="active"><span class="t-ico">☾</span> 当月日历</button>
     <button data-view="rankings"><span class="t-ico">⚔</span> 战力榜</button>
+    <button data-view="mega"><span class="t-ico">✷</span> 超级进化</button>
     <button data-view="clock"><span class="t-ico">🕓</span> 世界时钟</button>
     <button data-view="todo"><span class="t-ico">📋</span> 多账号 TODO</button>
     <button data-view="links"><span class="t-ico">🔗</span> 实用链接</button>
@@ -208,6 +209,29 @@
       </div>
     </section>
 
+    <!-- ========================= VIEW: MEGA EVOLUTION ========================= -->
+    <!-- Owner-maintained shell; NO AI region and NO data contract with the daily
+         agent for this markup. All content is built by app.js (setupMega /
+         renderMega / renderMegaDetail) from public/data/mega.json plus the
+         MEGA_* mechanics constants in app.js. The daily agent's ONLY job here is
+         to append Pokémon rows to mega.json — it never edits this section, the
+         mechanics tables, or any logic. -->
+    <section id="view-mega" class="view">
+      <div class="panel" style="padding:.85rem 1.05rem">
+        <div class="panel-head"><span class="dia">◆</span><h3>超级进化参考</h3></div>
+        <p class="muted">选择一只宝可梦,查看其各 Mega 等级(普通 / 高级 / 最高 / 超级最高)升华所需的超级能量、各等级通用加成,以及重复升华的费用递减。信息全部由「首次消耗(Initial Cost)」这一个值推算——新超级进化公布时,只需在 <code>data/mega.json</code> 里加一行(名称 + 首次消耗),其余自动生成。</p>
+        <label class="mega-picker">选择宝可梦
+          <select id="mega-select"></select>
+        </label>
+        <div id="mega-detail"></div>
+      </div>
+      <div class="panel" style="padding:.85rem 1.05rem">
+        <div class="panel-head"><span class="dia">◆</span><h3>全部超级进化</h3></div>
+        <p class="muted">点击任意一行查看该宝可梦的完整信息。</p>
+        <div id="mega-overview"></div>
+      </div>
+    </section>
+
     <!-- ========================= VIEW 3: WORLD CLOCK ========================= -->
     <!-- Placeholder — owner-maintained (no AI region; the daily agent never fills it). -->
     <section id="view-clock" class="view">
@@ -377,6 +401,6 @@
     <div class="muted">by: adonais·anabiosis</div>
   </footer>
 
-  <script src="app.js?v=19" defer></script>
+  <script src="app.js?v=20" defer></script>
 </body>
 </html>

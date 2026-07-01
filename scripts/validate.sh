@@ -24,7 +24,7 @@ fi
 H=public/index.html
 # 2) Required structural tokens must still be present.
 req=(
-  'id="view-calendar"' 'id="view-rankings"' 'id="view-clock"' 'id="view-links"'
+  'id="view-calendar"' 'id="view-rankings"' 'id="view-mega"' 'id="view-clock"' 'id="view-links"'
   'id="calendar"' 'id="main-tabs"' 'id="rank-subtabs"'
   'id="event-detail"' 'id="last-updated"'
   'id="long-term"' 'id="pvp-band"' 'id="rotations"'
@@ -55,7 +55,7 @@ for region in calendar-notes rankings-current rankings-attackers rankings-defend
 done
 
 # 4) Data files the agent writes must be valid JSON.
-for j in public/data/events.json public/data/meta.json public/data/rotations.json public/data/categories.json data/state.json; do
+for j in public/data/events.json public/data/meta.json public/data/rotations.json public/data/categories.json public/data/mega.json data/state.json; do
   if [ -f "$j" ]; then
     jq empty "$j" >/dev/null 2>&1 || { say "FAIL invalid JSON: $j"; fail=1; }
   else
@@ -103,6 +103,32 @@ if [ -f "$C" ] && jq empty "$C" >/dev/null 2>&1; then
     | [ to_entries[] | .value as $v | select( ($pal | index($v.palette) | not) or (($v.kind // "bar") | (. != "bar" and . != "chip")) ) ]
     | length' "$C")
   [ "${bad:-0}" = 0 ] || { say "FAIL categories.json: $bad entry(ies) off-palette or bad kind (palettes: purple green greenlt rust orange red teal teallt blue indigo mauve gold brown; kind: bar|chip)"; fail=1; }
+fi
+
+# 4e) mega.json — the Mega-Evolution roster the agent appends to. Its ONE job is
+#     to add a Pokémon row; the level/energy/re-mega mechanics tables live in the
+#     protected app.js. Enforce the row shape so a bad entry fails the gate rather
+#     than rendering broken (initialCost must be a known tier or null for TBD).
+M=public/data/mega.json
+if [ -f "$M" ] && jq empty "$M" >/dev/null 2>&1; then
+  jq -e 'type == "array" and length >= 1' "$M" >/dev/null 2>&1 || { say "FAIL mega.json must be a non-empty array"; fail=1; }
+  bad=$(jq '
+    ["normal","bug","dark","dragon","electric","fairy","fighting","fire","flying","ghost","grass","ground","ice","poison","psychic","rock","steel","water"] as $ty
+    | [100,200,300,400,7500] as $cost
+    | [ .[] | select(
+        ((.id // 0) | (type != "number" or . <= 0))
+        or ((.name // "") == "")
+        or ((.en // "") == "")
+        or ((.initialCost != null) and ((.initialCost as $ic | $cost | index($ic)) | not))
+        or ((.boostedTypes | type) != "array")
+        or ((.boostedTypes | length) == 0)
+        or ([ .boostedTypes[]? as $t | select(($ty | index($t)) | not) ] | length > 0)
+        or ((.sprite // "") | (type != "string" or (startswith("https://") | not)))
+        or ((.hub // "") | (type != "string" or . == ""))
+      ) ] | length' "$M")
+  [ "${bad:-0}" = 0 ] || { say "FAIL mega.json: $bad row(s) with bad id/name/en, initialCost not in {100,200,300,400,7500}/null, invalid/empty boostedTypes (18 type keys), or missing form sprite (https URL) / hub slug — base dex art and base hub pages are never right for a Mega/Primal row"; fail=1; }
+  dupe=$(jq '[.[].en] | group_by(.) | map(select(length > 1)) | length' "$M")
+  [ "${dupe:-0}" = 0 ] || { say "FAIL mega.json has $dupe duplicate en name(s) — each Mega/Primal form needs a unique en"; fail=1; }
 fi
 
 # 5) No stray <script> injected into the editable regions of index.html
