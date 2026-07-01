@@ -28,8 +28,8 @@
     <button data-view="calendar" class="active"><span class="t-ico">☾</span> 当月日历</button>
     <button data-view="rankings"><span class="t-ico">⚔</span> 战力榜</button>
     <button data-view="clock"><span class="t-ico">🕓</span> 世界时钟</button>
-    <button data-view="links"><span class="t-ico">🔗</span> 实用链接</button>
     <button data-view="todo"><span class="t-ico">📋</span> 多账号 TODO</button>
+    <button data-view="links"><span class="t-ico">🔗</span> 实用链接</button>
   </nav>
 
   <main>
@@ -235,7 +235,21 @@
       <p class="muted wc-foot">列表覆盖 UTC+14 → −12 的全部时区,每档列出代表地点(同一时区可能多地并列);精选地点为社区常用 PoGo 热点,坐标可点击跳转地图。各地时间按所在时区实时计算(含夏令时),仅供参考。</p>
     </section>
 
-    <!-- ========================= VIEW 4: USEFUL LINKS ========================= -->
+    <!-- ========================= VIEW 4: MULTI-ACCOUNT TODO ========================= -->
+    <!-- Owner-maintained; no AI region. Fully client-side: the grid + checks live in
+         localStorage (key "pogo-todo"); checks persist until the user manually clears,
+         which stamps the header date to that day.
+         All DOM is built by app.js (setupTodo / renderTodo) into #todo-mount. -->
+    <section id="view-todo" class="view">
+      <div class="panel todo-panel" style="padding:.85rem 1.05rem">
+        <div class="panel-head"><span class="dia">◆</span><h3>多账号 TODO</h3></div>
+        <p class="muted">每个账号一行,每项任务一列;勾选记录完成情况。账号名前的 ⏳ 可开始 2 小时 CD:点击开始,进行中点击可切换「剩余 ⇄ 开始时间」,长按取消。数据只保存在本机浏览器(localStorage),不会上传;勾选不会自动清空,需手动点「清空勾选」;清空后顶部日期会更新为当天(以你本机时间为准),在下次清空前保持不变,账号/任务列与进行中的 CD 始终保留。</p>
+        <div id="todo-status" class="todo-status muted"></div>
+        <div id="todo-mount"></div>
+      </div>
+    </section>
+
+    <!-- ========================= VIEW 5: USEFUL LINKS ========================= -->
     <!-- Placeholder — owner-maintained (no AI region; the daily agent never fills it). -->
     <section id="view-links" class="view">
       <div class="panel-head"><span class="dia">◆</span><h3>实用链接</h3></div>
@@ -279,7 +293,7 @@
         <!-- LeekDuck -->
         <div class="callout">
           <div class="panel-head">
-            <img class="ico-lg" src="https://leekduck.com/favicon.ico" alt="">
+            <img class="ico-lg" src="https://leekduck.com/assets/img/favicon/favicon.ico" alt="">
             <h3><a href="https://leekduck.com/" target="_blank" rel="noopener">LeekDuck</a></h3>
           </div>
           <p class="muted">活动 / 团战权威数据</p>
@@ -305,7 +319,7 @@
         <!-- DialgaDex -->
         <div class="callout">
           <div class="panel-head">
-            <img class="ico-lg" src="https://www.dialgadex.com/favicon.ico" alt="">
+            <img class="ico-lg" src="https://www.dialgadex.com/res/favicon-96x96.png" alt="">
             <h3><a href="https://www.dialgadex.com" target="_blank" rel="noopener">DialgaDex</a></h3>
           </div>
           <p class="muted">各属性最佳团战输出查询</p>
@@ -335,6 +349,19 @@
             <a class="btn" href="https://www.g47ix.pro/" target="_blank" rel="noopener"><img class="ico" src="https://www.g47ix.pro/favicon.ico" alt="">G47IX</a>
           </div>
         </div>
+
+        <!-- Wikis -->
+        <div class="callout">
+          <div class="panel-head">
+            <img class="ico-lg" src="https://static.wikia.nocookie.net/pokemongo/images/4/4a/Site-favicon.ico" alt="">
+            <h3>Wikis 维基</h3>
+          </div>
+          <p class="muted">百科 / 图鉴资料</p>
+          <div class="detail-links">
+            <a class="btn" href="https://pokemongo.fandom.com/wiki/" target="_blank" rel="noopener"><img class="ico" src="https://static.wikia.nocookie.net/pokemongo/images/4/4a/Site-favicon.ico" alt="">Fandom Wiki</a>
+            <a class="btn" href="https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_GO" target="_blank" rel="noopener"><img class="ico" src="https://bulbapedia.bulbagarden.net/favicon.ico" alt="">Bulbapedia</a>
+          </div>
+        </div>
       </div>
 
       <!-- data-source attribution (moved out of the page footer) -->
@@ -343,20 +370,6 @@
         (via ScrapedDuck) · 属性 <a href="https://pvpoke.com/" target="_blank" rel="noopener">PvPoke</a>
         · 图标 <a href="https://pokeapi.co/" target="_blank" rel="noopener">PokeAPI</a>
       </p>
-    </section>
-
-    <!-- ========================= VIEW 5: MULTI-ACCOUNT TODO ========================= -->
-    <!-- Owner-maintained; no AI region. Fully client-side: the grid + checks live in
-         localStorage (key "pogo-todo"); checks persist until the user manually clears,
-         which stamps the header date to that day.
-         All DOM is built by app.js (setupTodo / renderTodo) into #todo-mount. -->
-    <section id="view-todo" class="view">
-      <div class="panel todo-panel" style="padding:.85rem 1.05rem">
-        <div class="panel-head"><span class="dia">◆</span><h3>多账号 TODO</h3></div>
-        <p class="muted">每个账号一行,每项任务一列;勾选记录完成情况。账号名前的 ⏳ 可开始 2 小时 CD:点击开始,进行中点击可切换「剩余 ⇄ 开始时间」,长按取消。数据只保存在本机浏览器(localStorage),不会上传;勾选不会自动清空,需手动点「清空勾选」;清空后顶部日期会更新为当天(以你本机时间为准),在下次清空前保持不变,账号/任务列与进行中的 CD 始终保留。</p>
-        <div id="todo-status" class="todo-status muted"></div>
-        <div id="todo-mount"></div>
-      </div>
     </section>
   </main>
 
