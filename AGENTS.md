@@ -108,10 +108,22 @@ or touch them.**
     rejects duplicate `en`). `variant` (`"X"`/`"Y"`) and `kind` (`"primal"`) are optional display labels.
   - `name` = 简体中文 (verify via PokeAPI `zh-Hans` as usual — never from memory), prefix `超级`/`原始`.
   - `boostedTypes` = **type KEYS only** (`fire`,`water`,… the 18 keys in the 属性→图标 map), never 中文.
+    These are the **candy-boost 加成属性, NOT the form's own typing**. For ordinary Megas the two happen
+    to coincide (e.g. Mega Skarmory → `steel`,`flying`), but three weather-linked forms boost a fixed
+    trio — do **NOT** "correct" them back to the form typing:
+    | Form | boostedTypes |
+    |---|---|
+    | Primal Kyogre | `water`,`electric`,`bug` (rain group) |
+    | Primal Groudon | `fire`,`grass`,`ground` (sun group) |
+    | Mega Rayquaza | `flying`,`dragon`,`psychic` (wind group) |
   - `initialCost` = the first-time Mega Energy cost. **Must be one of `{100,200,300,400,7500}` — or `null`
     if TBD/pre-release** (the view then shows「待定」). Do **NOT** invent a value; leave `null` until confirmed.
   - `sprite` (Mega/Primal form image — required, base dex sprite can't show the form) + `hub` (form slug
     e.g. `6-Mega_X`, `382-Primal`) follow the same conventions as `rotations.json` mega segments.
+    **Both are enforced by `validate.sh`** (sprite must be an `https://` URL, hub non-empty): without them
+    the view falls back to the base Pokémon's art and links the base Hub page — wrong for every Mega.
+    If no form image exists yet, use the Hub DB pattern `…/images/official/full/<3-digit dex>_mega[_x|_y]/_primal_with_bg.webp`
+    and confirm it renders; do not append the row without a working sprite.
   - **Sourcing:** Bulbapedia's Mega tables are the human reference but are **off-allowlist and 403 to
     automated fetch** — take roster/cost from the admin (screenshots) or corroborate via allowlisted
     Fandom/官方 sources; never fabricate.

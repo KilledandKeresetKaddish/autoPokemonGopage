@@ -87,7 +87,9 @@
       "electric"
     ],
     "initialCost": null,
-    "release": "2026-07-18"
+    "release": "2026-07-18",
+    "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
+    "hub": "26-Mega_X"
   },
   {
     "id": 26,
@@ -98,7 +100,9 @@
       "electric"
     ],
     "initialCost": null,
-    "release": "2026-07-18"
+    "release": "2026-07-18",
+    "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp",
+    "hub": "26-Mega_Y"
   },
   {
     "id": 65,
@@ -121,7 +125,9 @@
       "poison"
     ],
     "initialCost": 300,
-    "release": "2026-02-20"
+    "release": "2026-02-20",
+    "sprite": "https://db.pokemongohub.net/images/official/full/071_mega_with_bg.webp",
+    "hub": "71-Mega"
   },
   {
     "id": 80,
@@ -209,7 +215,9 @@
       "flying"
     ],
     "initialCost": 300,
-    "release": "2026-02-20"
+    "release": "2026-02-20",
+    "sprite": "https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp",
+    "hub": "149-Mega"
   },
   {
     "id": 150,
@@ -299,7 +307,9 @@
       "flying"
     ],
     "initialCost": 300,
-    "release": "2026-06-27"
+    "release": "2026-06-27",
+    "sprite": "https://db.pokemongohub.net/images/official/full/227_mega_with_bg.webp",
+    "hub": "227-Mega"
   },
   {
     "id": 229,
@@ -575,7 +585,9 @@
     "en": "Primal Kyogre",
     "kind": "primal",
     "boostedTypes": [
-      "water"
+      "water",
+      "electric",
+      "bug"
     ],
     "initialCost": 400,
     "release": "2023-02-18",
@@ -588,8 +600,9 @@
     "en": "Primal Groudon",
     "kind": "primal",
     "boostedTypes": [
-      "ground",
-      "fire"
+      "fire",
+      "grass",
+      "ground"
     ],
     "initialCost": 400,
     "release": "2023-02-18",
@@ -601,8 +614,9 @@
     "name": "超级烈空坐",
     "en": "Mega Rayquaza",
     "boostedTypes": [
+      "flying",
       "dragon",
-      "flying"
+      "psychic"
     ],
     "initialCost": 400,
     "release": "2023-08-04",
@@ -696,7 +710,9 @@
       "psychic"
     ],
     "initialCost": 300,
-    "release": "2026-02-20"
+    "release": "2026-02-20",
+    "sprite": "https://db.pokemongohub.net/images/official/full/687_mega_with_bg.webp",
+    "hub": "687-Mega"
   },
   {
     "id": 719,
@@ -719,6 +735,8 @@
       "fighting"
     ],
     "initialCost": 300,
-    "release": "2026-05-23"
+    "release": "2026-05-23",
+    "sprite": "https://db.pokemongohub.net/images/official/full/870_mega_with_bg.webp",
+    "hub": "870-Mega"
   }
 ]

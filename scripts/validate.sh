@@ -123,8 +123,10 @@ if [ -f "$M" ] && jq empty "$M" >/dev/null 2>&1; then
         or ((.boostedTypes | type) != "array")
         or ((.boostedTypes | length) == 0)
         or ([ .boostedTypes[]? as $t | select(($ty | index($t)) | not) ] | length > 0)
+        or ((.sprite // "") | (type != "string" or (startswith("https://") | not)))
+        or ((.hub // "") | (type != "string" or . == ""))
       ) ] | length' "$M")
-  [ "${bad:-0}" = 0 ] || { say "FAIL mega.json: $bad row(s) with bad id/name/en, initialCost not in {100,200,300,400,7500}/null, or invalid/empty boostedTypes (18 type keys)"; fail=1; }
+  [ "${bad:-0}" = 0 ] || { say "FAIL mega.json: $bad row(s) with bad id/name/en, initialCost not in {100,200,300,400,7500}/null, invalid/empty boostedTypes (18 type keys), or missing form sprite (https URL) / hub slug — base dex art and base hub pages are never right for a Mega/Primal row"; fail=1; }
   dupe=$(jq '[.[].en] | group_by(.) | map(select(length > 1)) | length' "$M")
   [ "${dupe:-0}" = 0 ] || { say "FAIL mega.json has $dupe duplicate en name(s) — each Mega/Primal form needs a unique en"; fail=1; }
 fi
