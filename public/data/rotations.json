@@ -1,6 +1,6 @@
 {
-  "month": "2026-06",
-  "note": "覆盖 6 月–7 月。5★ 与超级团战 Boss 每周轮换;传奇之路 7/6–7/10 与 GO Fest 7/11–7/12 期间改为每日轮换,日历角标显示当日 Boss(Max 团战每周轮换、周一为高峰,时间以当地为准)。",
+  "month": "2026-07",
+  "note": "2026 年 7 月 5★/超级团战按 Hub 7 月月历与 LeekDuck 团战事件核对;7/6–7/10 传奇之路、7/11–7/12 GO Fest 为每日特殊轮换;Max 团战按 Hub July 2026 Max Battles 周轮换。",
   "tracks": [
     {
       "key": "5star",
@@ -8,42 +8,6 @@
       "color": "#d8b25f",
       "tag": "5★",
       "segments": [
-        {
-          "name": "Tapu Fini",
-          "cn": "卡璞・鳍鳍",
-          "pokemon": [
-            {
-              "id": 788,
-              "name": "卡璞・鳍鳍"
-            }
-          ],
-          "start": "2026-05-27",
-          "end": "2026-06-02"
-        },
-        {
-          "name": "Reshiram",
-          "cn": "莱希拉姆",
-          "pokemon": [
-            {
-              "id": 643,
-              "name": "莱希拉姆"
-            }
-          ],
-          "start": "2026-06-03",
-          "end": "2026-06-09"
-        },
-        {
-          "name": "Zekrom",
-          "cn": "捷克罗姆",
-          "pokemon": [
-            {
-              "id": 644,
-              "name": "捷克罗姆"
-            }
-          ],
-          "start": "2026-06-10",
-          "end": "2026-06-16"
-        },
         {
           "name": "Necrozma",
           "cn": "奈克洛兹玛",
@@ -76,9 +40,18 @@
           "name": "Articuno / Zapdos / Moltres",
           "cn": "急冻鸟 / 闪电鸟 / 火焰鸟",
           "pokemon": [
-            { "id": 144, "name": "急冻鸟" },
-            { "id": 145, "name": "闪电鸟" },
-            { "id": 146, "name": "火焰鸟" }
+            {
+              "id": 144,
+              "name": "急冻鸟"
+            },
+            {
+              "id": 145,
+              "name": "闪电鸟"
+            },
+            {
+              "id": 146,
+              "name": "火焰鸟"
+            }
           ],
           "start": "2026-07-01",
           "end": "2026-07-05"
@@ -548,9 +521,18 @@
           "name": "Articuno / Zapdos / Moltres",
           "cn": "急冻鸟 / 闪电鸟 / 火焰鸟",
           "pokemon": [
-            { "id": 144, "name": "急冻鸟" },
-            { "id": 145, "name": "闪电鸟" },
-            { "id": 146, "name": "火焰鸟" }
+            {
+              "id": 144,
+              "name": "急冻鸟"
+            },
+            {
+              "id": 145,
+              "name": "闪电鸟"
+            },
+            {
+              "id": 146,
+              "name": "火焰鸟"
+            }
           ],
           "start": "2026-07-13",
           "end": "2026-07-14"
@@ -559,7 +541,10 @@
           "name": "Kyogre",
           "cn": "盖欧卡",
           "pokemon": [
-            { "id": 382, "name": "盖欧卡" }
+            {
+              "id": 382,
+              "name": "盖欧卡"
+            }
           ],
           "start": "2026-07-15",
           "end": "2026-07-21"
@@ -568,7 +553,10 @@
           "name": "Solgaleo",
           "cn": "索尔迦雷欧",
           "pokemon": [
-            { "id": 791, "name": "索尔迦雷欧" }
+            {
+              "id": 791,
+              "name": "索尔迦雷欧"
+            }
           ],
           "start": "2026-07-22",
           "end": "2026-07-28"
@@ -577,7 +565,10 @@
           "name": "Kyurem",
           "cn": "酋雷姆",
           "pokemon": [
-            { "id": 646, "name": "酋雷姆" }
+            {
+              "id": 646,
+              "name": "酋雷姆"
+            }
           ],
           "start": "2026-07-29",
           "end": "2026-08-04"
@@ -590,48 +581,6 @@
       "color": "#9c7bb0",
       "tag": "M",
       "segments": [
-        {
-          "name": "Mega Medicham",
-          "cn": "超级恰雷姆",
-          "pokemon": [
-            {
-              "id": 308,
-              "name": "恰雷姆",
-              "hub": "308-Mega",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10054.png"
-            }
-          ],
-          "start": "2026-05-27",
-          "end": "2026-06-02"
-        },
-        {
-          "name": "Mega Audino",
-          "cn": "超级差不多娃娃",
-          "pokemon": [
-            {
-              "id": 531,
-              "name": "差不多娃娃",
-              "hub": "531-Mega",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10069.png"
-            }
-          ],
-          "start": "2026-06-03",
-          "end": "2026-06-09"
-        },
-        {
-          "name": "Mega Lopunny",
-          "cn": "超级长耳兔",
-          "pokemon": [
-            {
-              "id": 428,
-              "name": "长耳兔",
-              "hub": "428-Mega",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10088.png"
-            }
-          ],
-          "start": "2026-06-10",
-          "end": "2026-06-16"
-        },
         {
           "name": "Mega Scizor",
           "cn": "超级巨钳螳螂",
@@ -876,54 +825,6 @@
       "color": "#bd7f97",
       "segments": [
         {
-          "name": "Inkay",
-          "cn": "好啦鱿",
-          "pokemon": [
-            {
-              "id": 686,
-              "name": "好啦鱿"
-            }
-          ],
-          "start": "2026-06-01",
-          "end": "2026-06-07"
-        },
-        {
-          "name": "Electabuzz",
-          "cn": "电击兽",
-          "pokemon": [
-            {
-              "id": 125,
-              "name": "电击兽"
-            }
-          ],
-          "start": "2026-06-08",
-          "end": "2026-06-14"
-        },
-        {
-          "name": "Roggenrola",
-          "cn": "石丸子",
-          "pokemon": [
-            {
-              "id": 524,
-              "name": "石丸子"
-            }
-          ],
-          "start": "2026-06-15",
-          "end": "2026-06-21"
-        },
-        {
-          "name": "Hoothoot",
-          "cn": "咕咕",
-          "pokemon": [
-            {
-              "id": 163,
-              "name": "咕咕"
-            }
-          ],
-          "start": "2026-06-22",
-          "end": "2026-06-28"
-        },
-        {
           "name": "Pidove",
           "cn": "豆豆鸽",
           "pokemon": [
@@ -939,39 +840,52 @@
           "name": "Chansey",
           "cn": "吉利蛋",
           "pokemon": [
-            { "id": 113, "name": "吉利蛋" }
+            {
+              "id": 113,
+              "name": "吉利蛋"
+            }
           ],
           "start": "2026-07-06",
-          "end": "2026-07-06"
+          "end": "2026-07-12"
         },
         {
           "name": "Deino",
           "cn": "单首龙",
           "pokemon": [
-            { "id": 633, "name": "单首龙" }
+            {
+              "id": 633,
+              "name": "单首龙"
+            }
           ],
           "start": "2026-07-13",
-          "end": "2026-07-13"
+          "end": "2026-07-19"
         },
         {
           "name": "Trubbish",
           "cn": "破破袋",
           "pokemon": [
-            { "id": 568, "name": "破破袋" }
+            {
+              "id": 568,
+              "name": "破破袋"
+            }
           ],
           "start": "2026-07-20",
-          "end": "2026-07-20"
+          "end": "2026-07-26"
         },
         {
           "name": "Feebas",
           "cn": "丑丑鱼",
           "pokemon": [
-            { "id": 349, "name": "丑丑鱼" }
+            {
+              "id": 349,
+              "name": "丑丑鱼"
+            }
           ],
-          "start": "2026-07-27",
-          "end": "2026-07-27"
+          "start": "2026-07-26",
+          "end": "2026-08-02"
         }
-      ]
+      ],
+      "tag": "MX"
     }
   ]
 }

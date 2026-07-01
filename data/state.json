@@ -2,102 +2,113 @@
   "lastUpdated": "2026-06-26T19:23:02Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-06-25T15:03:00Z",
-      "lastChecked": "2026-06-26T19:23:02Z",
+      "lastFetch": "2026-07-01T10:27:52Z",
+      "lastChecked": "2026-07-01T10:27:52Z",
       "status": "ok",
-      "bytes": 60502,
-      "note": "Source Scout/Coordinator: 2026-06-25 已刷新事件源; discover.sh new 后核验并加入 special-anniversary-pikachu-celebration-2026、happy-birthday-professor-willow-2026、ozone-ascent-2026。当前缓存 2026-06-26T19:15:10Z。"
+      "bytes": 58632,
+      "note": "2026-07-01 刷新 OK; discover.sh new 发现并核验 GO Pass: July,已加入日历。另补 7/13–7/14 关都三神鸟 5★ 团战抽屉事件以匹配角标。",
+      "sha256": "aa5e3c8ed84b9409"
     },
     "raids": {
-      "lastFetch": "2026-06-25T15:03:00Z",
-      "lastChecked": "2026-06-26T19:23:02Z",
-      "status": "ok",
-      "bytes": 16445,
-      "note": "2026-06-25 已刷新; 当前 raid feed 用于本期团战 Counter 核对。"
+      "lastFetch": "2026-07-01T10:27:52Z",
+      "lastChecked": "2026-07-01T10:27:52Z",
+      "status": "stale-content",
+      "bytes": 10625,
+      "note": "2026-07-01 刷新 OK,但内容仍显示 6 月末团战池(纸御剑/铁火辉夜/超级大比鸟等),与 7/1 日历轮换不一致; 本期 Counter 改用已核验 events/rotations。",
+      "sha256": "d6117adb9279a75a"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-06-26T19:23:02Z",
+      "lastChecked": "2026-07-01T10:27:52Z",
       "status": "ok",
       "bytes": 29466,
-      "note": "蛋池缓存仍新鲜(<7d),本阶段未刷新内容。"
+      "note": "本轮未刷新; 非本次核心变更。",
+      "sha256": "bf0d68f3851420d0"
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-06-26T19:23:02Z",
+      "lastChecked": "2026-07-01T10:27:52Z",
       "status": "ok",
       "bytes": 70308,
-      "note": "调查缓存仍新鲜(<7d),本阶段未刷新内容。"
+      "note": "本轮未刷新; 非本次核心变更。",
+      "sha256": "02025eab72ec1451"
     },
     "gamemaster": {
-      "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-06-26T19:23:02Z",
+      "lastFetch": "2026-07-01T10:27:52Z",
+      "lastChecked": "2026-07-01T10:27:52Z",
       "status": "ok",
-      "bytes": 911142,
-      "note": "PvPoke gamemaster 仍新鲜(<7d); 用于属性/招式/计数器核验。Mega 是否存在仍以实时来源为准。"
+      "bytes": 918527,
+      "note": "2026-07-01 刷新 OK; 用于 dex/属性/招式核验, Mega 是否存在仍以实时来源为准。",
+      "sha256": "bfd70277b21ec866"
     },
     "tiers-attackers": {
-      "lastFetch": "2026-06-26T19:15:03Z",
-      "lastChecked": "2026-06-26T19:23:02Z",
+      "lastFetch": "2026-07-01T10:27:52Z",
+      "lastChecked": "2026-07-01T10:27:52Z",
       "status": "ok",
       "bytes": 35479,
-      "note": "2026-06-26 重抓 OK; 排行榜攻击手面板已据源更新。"
+      "note": "2026-07-01 刷新 OK; 排行榜攻击手面板已更新。",
+      "sha256": "037bf6a8ed8a2df8"
     },
     "tiers-defenders": {
-      "lastFetch": "2026-06-26T19:15:08Z",
-      "lastChecked": "2026-06-26T19:23:02Z",
+      "lastFetch": "2026-07-01T10:27:52Z",
+      "lastChecked": "2026-07-01T10:27:52Z",
       "status": "ok",
       "bytes": 39579,
-      "note": "2026-06-26 重抓 OK; 排行榜防守面板已据源更新。"
+      "note": "2026-07-01 刷新 OK; 排行榜防守面板已更新。",
+      "sha256": "17e3e7e077fbe798"
     },
     "tiers-pokebase": {
-      "lastFetch": "2026-06-26T19:15:10Z",
-      "lastChecked": "2026-06-26T19:23:02Z",
+      "lastFetch": "2026-07-01T10:27:52Z",
+      "lastChecked": "2026-07-01T10:27:52Z",
       "status": "ok",
-      "bytes": 121195,
-      "note": "2026-06-26 重抓 OK; 用作 Max tier 交叉参考。"
+      "bytes": 121480,
+      "note": "2026-07-01 刷新 OK; 用作 Max tier 交叉参考。",
+      "sha256": "c8087c678438e548"
     },
     "events-hub": {
-      "lastFetch": "2026-06-25T15:03:00Z",
-      "lastChecked": "2026-06-26T19:23:02Z",
+      "lastFetch": "2026-07-01T10:27:52Z",
+      "lastChecked": "2026-07-01T10:27:52Z",
       "status": "ok",
-      "bytes": 30384,
-      "note": "Source Scout/Coordinator: 2026-06-25 已刷新并用于事件/轮换核对; 当前缓存 2026-06-26T19:15:13Z。"
+      "bytes": 30430,
+      "note": "2026-07-01 刷新 OK; bulk index 仍偏旧,但已通过 fetch URL 核验 Hub July 2026 月历与 GO Pass July 页面。",
+      "sha256": "20829d5e783f0f51"
     },
     "events-pokebase": {
-      "lastFetch": "2026-06-25T15:03:12Z",
-      "lastChecked": "2026-06-26T19:23:02Z",
+      "lastFetch": "2026-07-01T10:27:52Z",
+      "lastChecked": "2026-07-01T10:27:52Z",
       "status": "ok",
-      "bytes": 30677,
-      "note": "2026-06-25 重抓 OK; 用于事件链接聚合/交叉核对。"
+      "bytes": 28130,
+      "note": "2026-07-01 刷新 OK; 作为事件交叉参考。",
+      "sha256": "a412aa1fc3c4816c"
     },
     "events-official": {
-      "lastFetch": "2026-06-25T15:03:00Z",
-      "lastChecked": "2026-06-26T19:23:02Z",
-      "status": "ok",
+      "lastFetch": "2026-07-01T10:27:52Z",
+      "lastChecked": "2026-07-01T10:27:52Z",
+      "status": "low-value",
       "bytes": 6965,
-      "note": "Source Scout/Coordinator: 2026-06-25 已刷新; 当前缓存 2026-06-26T19:15:15Z。"
+      "note": "2026-07-01 刷新 OK,但输出仍偏官网通用首页/低信息量; 可用时以具体官方 detail URL 为准。",
+      "sha256": "9fc85a4f6b7d2fea"
     }
   },
   "discovery": {
-    "lastChecked": "2026-06-26T19:23:02Z",
+    "lastChecked": "2026-07-01T10:27:52Z",
     "status": "ok",
-    "note": "scripts/discover.sh new 已运行; 三个新增 LeekDuck 页面已核验: special-anniversary-pikachu-celebration-2026、happy-birthday-professor-willow-2026、ozone-ascent-2026。"
+    "note": "scripts/discover.sh new 于 2026-07-01 运行; 新候选 GO Pass: July 经 LeekDuck 与 Hub URL 核验后加入。operator note 原文部分 mojibake,可辨识 Feature 要求已将特别周年皮卡丘庆典、威洛博士生日调查、臭氧攀升加入 featured.json; 未尝试 protected-file 变更。"
   },
   "contentStatus": {
-    "checkedAt": "2026-06-26T19:23:02Z",
+    "checkedAt": "2026-07-01T10:27:52Z",
     "status": "ready-for-validation",
-    "note": "Calendar 输出 90 条事件(含三条新公告)并修正文本问题; rotations 经源核对后未改; rankings AI markers 已更新; 未尝试修改 protected app/style/scripts。"
+    "note": "Calendar 输出 92 条事件,新增 GO Pass:7月 与 7/13–7/14 三神鸟团战抽屉; rotations month=2026-07 并修正 Max 周轮换; rankings 五个 AI 区域已刷新; featured 按本次 operator note 添加三项可辨识活动。"
   },
   "validation": {
-    "checkedAt": "2026-06-26T19:23:02Z",
+    "checkedAt": "2026-07-01T10:27:53Z",
     "status": "passed",
     "note": "scripts/preflight.sh exit 0: OK render checks passed, 1 WARN long chip name raidhour20260624; scripts/validate.sh exit 0: OK all checks passed."
   },
   "notes": {
     "preflight_known_warn": {
-      "fact": "历史上 raidhour20260624《纸御剑 与 铁火辉夜 团战时刻》可能触发 long chip name WARN。",
-      "decision": "若仍出现且仅 WARN,不阻断发布; 以实际 preflight 输出为准。"
+      "fact": "raidhour20260624《纸御剑 与 铁火辉夜 团战时刻》仍触发 long chip name WARN。",
+      "decision": "preflight 仅 WARN 且 exit 0,不阻断发布; 后续可由 Calendar 缩短标题。"
     }
   }
 }

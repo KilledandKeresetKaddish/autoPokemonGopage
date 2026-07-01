@@ -2343,6 +2343,61 @@
     "longTerm": true
   },
   {
+    "id": "go-pass-july-2026",
+    "name": "GO 通行证:7 月",
+    "type": "go-pass",
+    "heading": "GO Pass",
+    "start": "2026-07-07T10:00:00",
+    "end": "2026-08-04T10:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-07-go-pass-july-2026/go-pass-july-2026.jpg",
+    "link": "https://leekduck.com/events/go-pass-july-2026/",
+    "summary": "7 月 GO 通行证于 7/7 10:00–8/4 10:00 开放,Rank 100 可遇凤王,Rank 101 与 200 可遇持十周年纪念硬币的索财灵;奖励需在 8/6 10:00 前领取。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/go-pass-july-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/go-pass-july-2026/"
+      }
+    ],
+    "longTerm": true,
+    "pokemon": [
+      {
+        "id": 250,
+        "name": "凤王",
+        "shiny": true
+      },
+      {
+        "id": 999,
+        "name": "索财灵",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":candy: Rank 1:交换宝可梦额外 +1 糖果;31 级以上交换保证 +1 糖果 XL",
+      "Rank 25:礼物开启/接收/携带上限提升",
+      ":incense: Rank 50:每日探险熏香持续时间 ×2",
+      ":stardust: Rank 75:孵蛋星尘与孵蛋 XP 提升",
+      "8/1 00:00–8/2 23:59 GO 点数无每日上限"
+    ],
+    "sections": [
+      {
+        "title": "主要奖励",
+        "items": [
+          "免费轨道:Rank 100 凤王遭遇、Rank 101 与 200 十周年纪念硬币索财灵遭遇、400 宝可币、星尘、XP、Max 粒子等。",
+          "豪华轨道:额外 1000 宝可币(合计 1400)、额外索财灵遭遇、超级孵化器与更多宝可梦遭遇。",
+          "GO Pass Deluxe + 10 Ranks 可直接到 Rank 11;网页商店购买有究极球、极巨复活、高级战斗通行证、极巨药水等赠品。"
+        ]
+      },
+      {
+        "title": "领取期限",
+        "body": "GO 通行证:7 月奖励会在 8/6 10:00(当地时间)过期,请在期限前领取已解锁奖励。"
+      }
+    ]
+  },
+  {
     "id": "road-of-legends-raids-20260708",
     "name": "传奇之路团战:黑酋雷姆与超级沙奈朵",
     "type": "raid-battles",
@@ -4695,6 +4750,86 @@
     "bonuses": [
       ":raid: Max 团战登场",
       ":stardust: 可获得 Max 粒子"
+    ],
+    "highlight": false
+  },
+  {
+    "id": "articuno-zapdos-moltres-in-5-star-raid-battles-july-13-2026",
+    "name": "急冻鸟・闪电鸟・火焰鸟 现身 5★ 团战(7/13)",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-07-13T06:00:00",
+    "end": "2026-07-14T22:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/",
+    "summary": "Hub 7 月月历确认 7/13–7/14 急冻鸟、闪电鸟、火焰鸟再次回到 5★团战;对应日历角标可打开本抽屉查看来源与轻量 Counter。",
+    "links": [
+      {
+        "label": "Hub 7月月历",
+        "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
+      },
+      {
+        "label": "Hub 急冻鸟",
+        "url": "https://pokemongohub.net/post/guide/articuno-raid-boss/"
+      },
+      {
+        "label": "Hub 闪电鸟",
+        "url": "https://pokemongohub.net/post/guide/zapdos-raid-boss/"
+      },
+      {
+        "label": "Hub 火焰鸟",
+        "url": "https://pokemongohub.net/post/guide/moltres-raid-boss/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 144,
+        "name": "急冻鸟",
+        "shiny": true
+      },
+      {
+        "id": 145,
+        "name": "闪电鸟",
+        "shiny": true
+      },
+      {
+        "id": 146,
+        "name": "火焰鸟",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      "5★团战 Boss 与 rotations 7/13–7/14 角标一致",
+      "✨ 可遇闪光(常规传说团战闪光率,非活动提升)"
+    ],
+    "counters": [
+      {
+        "id": 248,
+        "name": "班基拉斯",
+        "fast": "击落",
+        "charged": "尖石攻击"
+      },
+      {
+        "id": 464,
+        "name": "超甲狂犀",
+        "fast": "击落",
+        "charged": "岩石炮"
+      },
+      {
+        "id": 409,
+        "name": "战槌龙",
+        "fast": "击落",
+        "charged": "岩崩"
+      }
+    ],
+    "sections": [
+      {
+        "title": "克制提示",
+        "items": [
+          "急冻鸟与火焰鸟双弱岩石,优先岩石系攻手。",
+          "闪电鸟弱岩石与冰系;同一队岩石系可兼顾三只。"
+        ]
+      }
     ],
     "highlight": false
   },
