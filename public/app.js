@@ -676,7 +676,7 @@ const ICONS = {
 // the only markup injected (and the token charset is constrained → safe).
 function iconify(s) {
   return escapeHtml(s).replace(/:([a-z0-9_-]{1,24}):/g, (m, n) =>
-    `<img class="ico" src="assets/icons/${ICONS[n] || (n + '.png')}" alt="" onerror="this.style.display='none'">`);
+    `<img class="ico" src="assets/icons/${escapeHtml(ICONS[n] || (n + '.png'))}" alt="" onerror="this.style.display='none'">`);
 }
 function openDetail(ev) {
   const cat = catOf(ev);
@@ -740,7 +740,7 @@ function openDetail(ev) {
  * re-renders on each selection without re-running linkifySprites. */
 function megaTypeIcons(types) {
   return (types || []).map(t =>
-    `<img class="ico" src="assets/icons/${ICONS[t] || (t + '.png')}" alt="${escapeHtml(t)}" title="${escapeHtml(t)}" onerror="this.style.display='none'">`
+    `<img class="ico" src="assets/icons/${escapeHtml(ICONS[t] || (t + '.png'))}" alt="${escapeHtml(t)}" title="${escapeHtml(t)}" onerror="this.style.display='none'">`
   ).join('');
 }
 /* Planner: given how many times the selected Pokémon has already Mega-Evolved,
@@ -770,12 +770,15 @@ function megaPlanTo(cost, n, target) {
     if (known) dailyEnergy += megaDailyStep(cost, lvl);
   }
   return { steps: Math.max(0, target - n), waitDays, waits, dailyDays,
-           dailyEnergy: known ? dailyEnergy : null, firstCost };
+           // with zero paid re-activations left, 0 is exact even for an unknown tier
+           dailyEnergy: (known || dailyDays === 0) ? dailyEnergy : null, firstCost };
 }
 // Exact instant price to reach `key` from `n` activations done (null = unknown tier).
 // From n = 0 the first activation (full initial cost) must happen first, then the
 // row for "1 time Mega Evolved" applies — both are folded into the returned total.
 function megaInstantCost(cost, n, key) {
+  // At Max the Super-Max buy-in is the flat 5,000 in BOTH groups — tier-independent.
+  if (key === 'superMax' && n >= MEGA_NEED.max) return 5000;
   if (cost == null || !MEGA_ENERGY[cost]) return null;
   const arr = MEGA_LEVELUP[megaGroup(cost)][key];
   const i = Math.max(n, 1) - 1;
