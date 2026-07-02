@@ -42,10 +42,12 @@ Checklist:
      below, so the boss reads bigger than its counters.
    - **属性用图标,不用文字:** boss `.meta` 的 属性 / 弱点 用 `<img class="ico" src="assets/icons/<type>.<ext>">`,
      并在每个 counter 的招式文字前加该招式的 **move 属性** 图标(move→type 取自 `gamemaster`)。扩展名不统一,
-     按 `AGENTS.md` *Ranking HTML pattern* 的「属性→图标文件」表;`一般`/normal 无图标 → 保留文字。
+     按 `AGENTS.md` *Ranking HTML pattern* 的「属性→图标文件」表(`一般` = `normal.webp`,与其他属性一样用图标)。
    - **Mega Booster = 内联在每个 boss 右侧,不再是底部独立列表。** 机制:**激活**某超级进化时,捕捉与其
      **共享属性**的宝可梦 +1 糖(含 XL 机会),与「进化获得糖果」无关。在 boss 头右侧空白处放一个
-     **`.raid-mega`**(`.lbl` + 小图标),展示能 farm 该 boss 糖果的同属性 超级(`title="超级X · 共享<属性>"`)。
+     **`.raid-mega`** 4-列网格 —— **6–8 个**同属性超级 sprite,按超级攻击力高→低排序、上限 8、
+     **不写 `.lbl` 文字标**(CSS 已隐藏它)——展示能 farm 该 boss 糖果的同属性 超级
+     (`title="超级X · 共享<属性>"`)。
      pairing 按本轮 live bosses 现算,绝不硬编码。**按 Mega 与 boss *共享* 的属性标注**(共享属性才给糖),
      绝不把 boss 自身属性套到 Mega 上;每个 属性 / 弱点 都对 `gamemaster` 核对。
 6. Build both free-form regions from **this run's** finalized `events.json` +
@@ -56,6 +58,12 @@ Checklist:
 7. Never ship empty ranking panels. If tier or raid parsing fails, keep only the
    affected structured panel from last good content and report the problem to State +
    Validator.
+8. **Token discipline (AGENTS.md, binding):** if the `tiers-*` caches are hash-unchanged
+   since last run AND the live boss set didn't change, keep the corresponding structured
+   panels as-is (verified when written) — rewrite only regions whose inputs changed.
+   Verify names via `scripts/fetch.sh zh`; `grep`/`jq` the tier files and gamemaster for
+   the entries you need — never read `tiers-pokebase.txt` (~120KB) or gamemaster (~900KB,
+   single line) wholesale.
 
 Output to the coordinator: edited marker names, source sections parsed, and any panels
 kept from last good content.

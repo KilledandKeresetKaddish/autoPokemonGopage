@@ -17,8 +17,10 @@ Checklist:
 1. Set `public/data/meta.json.lastUpdated` to the current UTC ISO 8601 timestamp.
 2. You are the **sole writer** of `data/state.json` (Source Scout reports its notes to
    you; it does not write the file). Keep it a fixed object keyed by source: last
-   fetch/check times, content hashes if useful, and concise notes about source problems
-   — fold in Source Scout's notes here. Do not append a growing chronological log.
+   fetch/check times, **the 16-hex sha256 of each cache** (as printed by `fetch.sh list` —
+   next run's skip/fast-path decisions depend on these, so they are mandatory), and concise
+   notes about source problems — fold in Source Scout's notes here. Do not append a growing
+   chronological log.
 3. Self-check before validation:
    - no duplicate event ids;
    - no event ended before the retention window;
@@ -28,6 +30,9 @@ Checklist:
    - rotations are parsed / corroborated, not invented;
    - every 简体中文 Pokémon name & move is verified against `gamemaster` (no hallucinated / garbled names);
    - ranking panels are not empty;
+   - `featured.json` is an array of ids that all still exist in `events.json` (Calendar pruned
+     it — validate.sh hard-rejects stale featured ids);
+   - no internal pipeline details (`data/raw/*` paths, script names) in user-visible text;
    - render contract holds (AGENTS.md《渲染契约》): every `raid-battles` event has a matching
      `rotations.json` 角标 segment (or is `longTerm`), single-day segment `pokemon[]` match their drawer
      event, Mega/5★ segments use BASE dex ids — `preflight.sh` checks these.

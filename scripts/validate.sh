@@ -39,23 +39,36 @@ done
 #     renamed/broken source like app.js.bak that would ship a blank dashboard.
 grep -qE 'src="app\.js(\?[^"]*)?"' "$H" || { say "FAIL app.js <script> src must be app.js or app.js?<cache-bust>"; fail=1; }
 
-# 3) AI editable-region markers must exist and be balanced.
+# 3) AI editable-region markers must exist and be balanced. Count occurrences,
+#    not lines (grep -c would under-count two markers sharing a line).
 for region in calendar-notes rankings-current rankings-attackers rankings-defenders rankings-raid; do
   grep -qF "AI:START $region" "$H" || { say "FAIL missing marker: AI:START $region"; fail=1; }
   grep -qF "AI:END $region"   "$H" || { say "FAIL missing marker: AI:END $region"; fail=1; }
 done
-starts=$(grep -c 'AI:START' "$H"); ends=$(grep -c 'AI:END' "$H")
+starts=$(grep -o 'AI:START' "$H" | wc -l); ends=$(grep -o 'AI:END' "$H" | wc -l)
 [ "$starts" = "$ends" ] || { say "FAIL marker imbalance (START=$starts END=$ends)"; fail=1; }
+
+# Extract one AI region's body. Markers are first split onto their own lines so
+# content sharing a physical line with a marker is still captured — a line-wise
+# awk would both false-FAIL a one-line region as "empty" AND let dangerous HTML
+# on a marker line escape the 5b safety scan.
+ai_region() {
+  sed -e 's/<!-- AI:/\n<!-- AI:/g' -e 's/-->/-->\n/g' "$H" \
+    | awk -v r="$1" '
+        index($0, "AI:START " r " ") { f=1; next }
+        index($0, "AI:END " r " ")   { f=0 }
+        f { print }'
+}
 
 # 3b) Each AI region must be non-empty — hard-enforces the "never ship empty
 #     rankings" rule that was previously only a soft prompt instruction.
 for region in calendar-notes rankings-current rankings-attackers rankings-defenders rankings-raid; do
-  body=$(awk -v r="$region" 'index($0,"AI:START "r){f=1;next} index($0,"AI:END "r){f=0} f{print}' "$H")
+  body=$(ai_region "$region")
   [ -n "$(printf '%s' "$body" | tr -d '[:space:]')" ] || { say "FAIL AI region empty: $region"; fail=1; }
 done
 
 # 4) Data files the agent writes must be valid JSON.
-for j in public/data/events.json public/data/meta.json public/data/rotations.json public/data/categories.json public/data/mega.json data/state.json; do
+for j in public/data/events.json public/data/meta.json public/data/rotations.json public/data/categories.json public/data/mega.json public/data/featured.json data/state.json; do
   if [ -f "$j" ]; then
     jq empty "$j" >/dev/null 2>&1 || { say "FAIL invalid JSON: $j"; fail=1; }
   else
@@ -131,6 +144,19 @@ if [ -f "$M" ] && jq empty "$M" >/dev/null 2>&1; then
   [ "${dupe:-0}" = 0 ] || { say "FAIL mega.json has $dupe duplicate en name(s) — each Mega/Primal form needs a unique en"; fail=1; }
 fi
 
+# 4f) featured.json — admin-curated featured event ids. Shape: array of strings;
+#     every id must still exist in events.json (the agent is required to prune
+#     ids of removed events, AGENTS.md "Retention"/self-check).
+F=public/data/featured.json
+if [ -f "$F" ] && jq empty "$F" >/dev/null 2>&1; then
+  if ! jq -e 'type == "array" and all(.[]; type == "string")' "$F" >/dev/null 2>&1; then
+    say "FAIL featured.json must be an array of event-id strings"; fail=1
+  elif [ -f "$E" ] && jq empty "$E" >/dev/null 2>&1; then
+    orph=$(jq --slurpfile ev "$E" '($ev[0] | map(.id)) as $ids | [.[] as $id | select(($ids | index($id)) | not)] | length' "$F" 2>/dev/null || echo 0)
+    [ "${orph:-0}" = 0 ] || { say "FAIL featured.json has $orph id(s) not present in events.json (prune stale featured ids)"; fail=1; }
+  fi
+fi
+
 # 5) No stray <script> injected into the editable regions of index.html
 #    (agent-written HTML must be inert). app.js is the only allowed script.
 if [ "$(grep -c '<script' "$H")" -ne 1 ]; then
@@ -141,7 +167,7 @@ fi
 #     <embed>, event-handler attributes (onerror, onload, onclick…), javascript: URIs,
 #     or any href/src whose scheme isn't on the allowlist (defeats entity-encoded bypasses).
 for region in calendar-notes rankings-current rankings-attackers rankings-defenders rankings-raid; do
-  body=$(awk -v r="$region" 'index($0,"AI:START "r){f=1;next} index($0,"AI:END "r){f=0} f{print}' "$H")
+  body=$(ai_region "$region")
   if printf '%s' "$body" | grep -qiE '<(style|iframe|object|embed)[ >]'; then
     say "FAIL AI region $region contains forbidden tag (<style>/<iframe>/<object>/<embed>)"; fail=1
   fi

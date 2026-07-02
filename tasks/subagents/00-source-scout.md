@@ -11,8 +11,16 @@ Goal: make the raw source cache ready for the content curators without over-fetc
    - `eggs` / `research`: only when the current event needs them.
 4. Fetch only needed sources with `scripts/fetch.sh <name> ...`.
 5. Inspect refreshed `data/raw/*` enough to brief downstream agents on:
-   - empty / flaky / changed formats;
-   - likely monthly article sections for rotations;
+   - **which sources actually CHANGED** — compare each cache's sha256 from `fetch.sh list`
+     with the hash recorded in `data/state.json`; unchanged sources need no re-derivation
+     downstream (this drives AGENTS.md's quiet-day fast path — say explicitly when
+     everything event-bearing is unchanged);
+   - empty / flaky / changed formats (hand grep/jq extraction recipes for the big files,
+     not file dumps — gamemaster is a ~900KB single line);
+   - the **URL of the current month's Hub rotation/roundup article** — `events-hub.txt` is only
+     the `/post/event/` index, the schedule body is NOT in it: locate the article link there (or
+     via `scripts/discover.sh "raid bosses <month> <year>"`), confirm it with `scripts/fetch.sh
+     url`, and hand the URL to the Rotation curator;
    - event source coverage and any detail pages worth fetching later;
    - **missing per-event URLs** — when an event needs a page the bulk feeds don't carry (e.g. a
      Hub per-boss raid guide), find it with `scripts/discover.sh "<english keywords>"`, verify

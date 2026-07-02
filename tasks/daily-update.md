@@ -5,12 +5,14 @@ this repository. **Read `AGENTS.md` first and follow it exactly** — it defines
 you may edit, the hard rules, the data sources, schemas, and validation gate.
 
 This run is intentionally split into focused sub-agent workstreams. If your coding
-agent supports sub-agents / parallel workers — e.g. Pi via a sub-agent extension
-(`pi-subagents` / `pi-sub-agent`), which runs each brief in an isolated `--no-session`
-subprocess (optionally worktree-isolated) — delegate each brief below as a bounded
-read-only or write scope. The only concurrent step is **Calendar ∥ Rotations** (2
-tasks, well within the default maxTasks 8 / concurrency 4); every other phase is
-sequential. Isolated sub-agents do **not** inherit this prompt, so each brief restates
+agent supports sub-agents — e.g. Pi via a sub-agent extension (`pi-subagents` /
+`pi-sub-agent`), which runs each brief in an isolated `--no-session` subprocess
+(optionally worktree-isolated) — delegate each brief below as a bounded read-only or
+write scope. **All phases run sequentially**: Rotations copies its single-day
+segments' `pokemon[]` from Calendar's finalized `raid-battles` events (and
+`preflight.sh` hard-FAILs any 角标↔抽屉 divergence), so Calendar must finish before
+Rotations starts — disjoint *write* scopes do not make that read-coupled contract
+race-free. Isolated sub-agents do **not** inherit this prompt, so each brief restates
 that it must read `AGENTS.md` first. If your agent has no sub-agent support, execute
 the same phases yourself in order; the briefs are still the checklist of
 responsibilities.
@@ -20,7 +22,9 @@ responsibilities.
 - `tasks/subagents/00-source-scout.md` — inspect `data/state.json`, run
   `scripts/fetch.sh list`, decide what is stale, fetch only needed sources, and
   summarize source health / notable raw-file structure changes.
-- `tasks/subagents/10-calendar-curator.md` — own `public/data/events.json` and,
+- `tasks/subagents/10-calendar-curator.md` — own `public/data/events.json`,
+  `public/data/featured.json` (admin/operator-note feature requests + pruning stale
+  ids), `public/data/mega.json` (append-only: new Mega/Primal roster rows) and,
   only if needed for new event types, `public/data/categories.json`.
 - `tasks/subagents/20-rotation-curator.md` — own `public/data/rotations.json`.
 - `tasks/subagents/30-ranking-curator.md` — own only the AI-marked ranking / notes
@@ -32,27 +36,37 @@ responsibilities.
 
 1. Read `AGENTS.md`, `data/state.json`, and every sub-agent brief above.
 2. Run the Source Scout phase first. Do **not** blindly refetch everything; refresh
-   by age / relevance using only `scripts/fetch.sh`.
-3. After the raw sources are available, run Calendar and Rotations as separate
-   workstreams. They may run in parallel because their write scopes are disjoint:
-   - Calendar writes `public/data/events.json` and maybe `public/data/categories.json`.
-   - Rotations writes `public/data/rotations.json`.
-4. Wait for Calendar and Rotations to finish, then start Rankings with the finalized
-   `public/data/events.json` and `public/data/rotations.json` (or pass those exact
-   results explicitly). Rankings must not build `calendar-notes` or
-   `rankings-current` from previous/stale calendar or rotation files while sibling
-   workstreams are still writing today's outputs. Rankings writes only inside the
-   five allowed AI markers in `public/index.html`.
+   by age / relevance using only `scripts/fetch.sh`. Have the Scout report **which
+   sources' hashes changed** vs `data/state.json`, and pass that delta to every curator:
+   unchanged sources need no re-derivation, and if nothing event-bearing changed, take
+   AGENTS.md's **quiet-day fast path** (date-driven maintenance only) instead of
+   dispatching full rebuilds.
+3. After the raw sources are available, run **Calendar first**, to completion: it
+   writes `public/data/events.json` (plus `featured.json` / `mega.json` /
+   `categories.json` when their duties apply).
+4. Then run **Rotations** with Calendar's finalized `public/data/events.json` as an
+   explicit input (its single-day segments must copy those events' `pokemon[]`; if
+   its sources reveal a boss the calendar missed, report back — you re-dispatch
+   Calendar, then Rotations again). Then run **Rankings** with both finalized files
+   (or pass those exact results explicitly). Rankings must not build
+   `calendar-notes` or `rankings-current` from previous/stale calendar or rotation
+   files. Rankings writes only inside the five allowed AI markers in
+   `public/index.html`.
 5. Run the State + Validator phase last: it sets `public/data/meta.json.lastUpdated`,
    records fixed per-source notes in `data/state.json` (it is the **sole writer** of
    `data/state.json`), self-checks, and runs `scripts/preflight.sh` **then**
    `scripts/validate.sh` (`run-daily.sh` enforces both before publish — either non-zero
    rolls the run back). **You (the coordinator) own the fix loop:** if **either** gate
-   fails, read the reported failures, re-dispatch the responsible owner (Calendar /
-   Rotations / Rankings) to fix its own scope, then re-run the gates — repeat until both
-   pass. `preflight.sh` flags render-contract breakage (orphan raids, 角标↔抽屉 mismatch,
-   mega form-id) that `validate.sh`'s structural checks can't see. State + Validator
-   reports; it never reaches into another owner's scope.
+   fails, read the reported failures, re-dispatch the responsible owner to fix its own
+   scope, then re-run the gates. Owner map: events/featured/mega/categories → Calendar ·
+   rotations → Rotations · AI regions → Rankings · meta/state → State + Validator.
+   **Cap the loop at 3 rounds**; if a failure class has no owner or survives 3 rounds
+   (e.g. a protected-file hash mismatch you cannot legitimately fix), stop, record the
+   exact failure in `data/state.json` for a developer, and let `run-daily.sh` roll the
+   run back rather than forcing it. `preflight.sh` flags render-contract breakage
+   (orphan raids, 角标↔抽屉 mismatch, mega form-id) that `validate.sh`'s structural
+   checks can't see. State + Validator reports; it never reaches into another owner's
+   scope.
 6. If a source is unreachable or unparsable, keep the last good content, record the
    issue in `data/state.json`, and still pass validation. Never ship empty rankings.
 
@@ -75,5 +89,11 @@ splitting a multi-day event (传奇之路 / GO Fest 前置周) into per-day Boss
 not Calendar-as-chips. Day-badges come **only** from `rotations.json`; an `events.json` `raid-hour`
 chip can never become a 角标. Follow AGENTS.md《渲染契约》: one banner event + an all-day `raid-battles`
 per Boss (Calendar) **and** matching single-day `5star`/`mega` segments (Rotations) whose `pokemon[]`
-equal those events. `scripts/preflight.sh` rejects orphan raids and 角标↔抽屉 mismatch, so Calendar and
-Rotations must be dispatched **together** for such a note.
+equal those events. `scripts/preflight.sh` rejects orphan raids and 角标↔抽屉 mismatch, so such a note
+must reach **both** workstreams — dispatched **in order** (Calendar first, then Rotations reading its
+finalized events).
+
+When the note asks to **feature / unfeature an event(金框)**, route it to **Calendar**: it owns
+`public/data/featured.json` — add or remove that event's `id` only on such an explicit request, and
+prune ids whose events left `events.json`. A newly announced **Mega/Primal** likewise routes to
+Calendar (`mega.json`, append-only, per AGENTS.md).

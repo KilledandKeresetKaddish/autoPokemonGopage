@@ -56,18 +56,28 @@ def pday(s):
 def ids_of(obj):
     return {p.get('id') for p in (obj.get('pokemon') or []) if p.get('id')}
 
-# ---- mirror app.js category/long-term logic -------------------------------
+# ---- mirror app.js category/long-term/pvp logic ----------------------------
 CHIP_TYPES = {'pokemon-spotlight-hour','spotlight-hour','raid-hour','max-mondays'}
 for k, v in (cats.items() if isinstance(cats, dict) else []):
     if isinstance(v, dict) and v.get('kind') == 'chip': CHIP_TYPES.add(k)
-LONG_TYPES = {'season','go-pass','go-battle-league'}
+PVP_TYPES  = {'go-battle-league'}
+LONG_TYPES = {'season','go-pass'}
+
+def is_pvp(e):   # mirrors app.js isPvp(); checked BEFORE long-term, like app.js
+    if e.get('pvp') is True or e.get('display') == 'pvp': return True
+    if e.get('pvp') is False: return False
+    return e.get('type') in PVP_TYPES
 
 def is_long(e):
+    if is_pvp(e): return False
     if e.get('longTerm') is True or e.get('display') == 'banner': return True
     if e.get('longTerm') is False or e.get('display') == 'bar': return False
     if e.get('type') in LONG_TYPES: return True
     s, en = pday(e.get('start')), pday(e.get('end')) or pday(e.get('start'))
     return bool(s and en and (en - s).days >= 14)
+
+def off_grid(e): # rendered in the 长期/PVP band, not the day grid
+    return is_long(e) or is_pvp(e)
 
 # Rotation segments that become day-icons (app.js): every track with a key,
 # unless it opts out with showOnCalendar:false. (Was hardcoded 5★/Mega; app.js is
@@ -132,14 +142,14 @@ def in_month_days(E, y, m):
 
 # ---- Check 1 (WARN): over-long chip names crowd a day cell ----------------
 for e in events:
-    if e.get('type') in CHIP_TYPES and not is_long(e):
+    if e.get('type') in CHIP_TYPES and not off_grid(e):
         nm = e.get('name', '')
         if len(nm) > 14:
             warn(f"long chip name ({len(nm)} chars) — consider shortening or using a 角标 (CSS will ellipsis if kept): {e.get('id')} «{nm}»")
 
 # ---- Check 2 (FAIL): orphan raid-battles that day-icons hide & never link --
 for E in events:
-    if E.get('type') != 'raid-battles' or is_long(E): continue
+    if E.get('type') != 'raid-battles' or off_grid(E): continue
     if segs_matching_event(E): continue          # reachable via some day-icon
     s, en = pday(E.get('start')), pday(E.get('end')) or pday(E.get('start'))
     if not s: continue

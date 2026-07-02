@@ -29,7 +29,7 @@ from `public/`.
 | `public/data/meta.json` | `lastUpdated` timestamp shown in header. |
 | `public/data/mega.json` | Mega/Primal roster for the 「超级进化」view. Agent-editable, but the ONLY per-Pokémon field that drives mechanics is `initialCost`; everything else is derived. |
 | `public/assets/icons/` | Type and item icons (mixed `.png`/`.webp`). |
-| `scripts/` | Shell scripts for the daily agent (`fetch.sh`, `discover.sh`, `validate.sh`, `preflight.sh`, `run-daily.sh`). |
+| `scripts/` | Shell scripts for the daily agent (`fetch.sh`, `discover.sh`, `validate.sh`, `preflight.sh`, `run-daily.sh`, `publish.sh`). **Editing anything in `scripts/`, `AGENTS.md`, `tasks/*.md`, or `CLAUDE.md` requires regenerating the integrity file in the same commit** (`validate.sh` hash-checks them): `sha256sum public/app.js public/style.css scripts/*.sh AGENTS.md CLAUDE.md tasks/daily-update.md tasks/subagents/*.md > scripts/protected.sha256`. Also commit maintainer work before a daily run — `run-daily.sh` refuses a dirty tree (its rollback would destroy uncommitted changes). |
 | `data/state.json` | Daily agent bookkeeping (fetch timestamps, notes). |
 | `data/raw/` | Cached raw source data (daily agent writes). |
 | `AGENTS.md` | Instructions for the daily content-update agent. **Not for you.** |
@@ -49,7 +49,7 @@ from `public/`.
 ### CSS class vocabulary (for HTML in AI marker regions)
 
 Containers: `.panel` `.panel-head` `.note-grid` `.callout`
-Lists: `.rank-list` `.rank-item` `.pill` `.pillrow` `.badge` `.btn`
+Lists: `.rank-list` `.rank-item` `.pill` `.pillrow` `.badge` `.btn` `.meta` `.muted`
 Pokemon: `.mon-icon` `.mon-row` `.mon` `.shiny` `.tier` (`.tier-S` `.tier-A` `.tier-B` `.tier-C`)
 Sprites/icons: `<img class="spr">` `<img class="ico">` `<img class="ico-lg">`
 Raid blocks: `.raid-wall` `.raid-block` `.raid-boss` `.boss-icon` `.binfo` `.btop` `.raid-mega` `.rank-list.mini`
