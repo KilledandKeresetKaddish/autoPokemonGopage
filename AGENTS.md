@@ -122,6 +122,10 @@ or touch them.**
     | Mega Rayquaza | `flying`,`dragon`,`psychic` (wind group) |
   - `initialCost` = the first-time Mega Energy cost. **Must be one of `{100,200,300,400,7500}` — or `null`
     if TBD/pre-release** (the view then shows「待定」). Do **NOT** invent a value; leave `null` until confirmed.
+  - `superMax` (optional boolean) = this form can reach the **超级最高 (Super Max)** level. Set `true`
+    **only when officially announced** for that form (at the 2026-02-20 launch: Victreebel, Dragonite,
+    Skarmory, Malamar, Falinks, Mewtwo X/Y). Omit the field otherwise — never guess. The view's planner
+    hides the Super-Max target row for forms without it.
   - `sprite` (Mega/Primal form image — required, base dex sprite can't show the form) + `hub` (form slug
     e.g. `6-Mega_X`, `382-Primal`) follow the same conventions as `rotations.json` mega segments.
     **Both are enforced by `validate.sh`** (sprite must be an `https://` URL, hub non-empty): without them

@@ -115,14 +115,17 @@ const MEGA_LEVEL_BONUSES = [
   { label: '捕捉 XP 加成',     vals: [null, '+50 XP', '+100 XP', '+200 XP'] },
   { label: 'CP 等级加成',      vals: [null, null, null, '+2 级'] },
 ];
-// Table 3 — re-Mega-Evolve Energy cost by "No. of times Mega Evolved / Primal
-// Reverted" (array index 0 = the 1st time). Verified to reproduce Bulbapedia's
-// grid exactly. Rule for the 100/200 group (the 300/400/7500 group is exactly 2×):
+// Table 3 — Mega Energy to INSTANTLY buy the Mega Level up to High/Max/SuperMax
+// (Bulbapedia "Mega Level Costs", feature live since 2026-05-18), keyed by
+// "No. of times Mega Evolved / Primal Reverted" (array index 0 = 1 time done).
+// NOT the in-rest re-activation discount — that one is proportional to remaining
+// rest time and is computed by the planner, not tabulated. Verified to reproduce
+// Bulbapedia's grid exactly. Rule for the 100/200 group (300/400/7500 is exactly 2×):
 //   High:     480 − 80·i                          for i = 0..5   (6 entries)
 //   Max:      1400 − 80·min(i,6) − 40·max(i−6,0)  for i = 0..28  (29 entries)
 //   SuperMax: Max(i) + 5000  for i = 0..28, then 5000 at i = 29  (30 entries)
-// Base level has no re-evolve discount (it is the entry level), so it is omitted.
-const MEGA_REMEGA = (function () {
+// Base level is the entry level (reached by the 1st activation), so it has no column.
+const MEGA_LEVELUP = (function () {
   const max100 = [];
   for (let i = 0; i < 29; i++) max100.push(1400 - 80 * Math.min(i, 6) - 40 * Math.max(i - 6, 0));
   const high100 = [];
@@ -134,8 +137,15 @@ const MEGA_REMEGA = (function () {
     lg: { high: dbl(high100), max: dbl(max100), superMax: dbl(max100).map(v => v + 5000).concat([5000]) },
   };
 })();
-// Which re-evolve cost group an Initial Cost falls in (100/200 vs 300/400/7500).
+// Which cost group an Initial Cost falls in (100/200 vs 300/400/7500).
 function megaGroup(cost) { return (cost != null && cost <= 200) ? 'sm' : 'lg'; }
+// Rest period in days per level, and total activations needed to reach a level.
+// Level progress accrues at most ONCE PER DAY (so 1 activation/day is the fastest
+// mega-based route); Super Max is bought with a flat 5,000 Energy at Max, not
+// counted in activations. Both facts are load-bearing for the planner below.
+const MEGA_REST = { base: 7, high: 5, max: 3, superMax: 1 };
+const MEGA_NEED = { base: 1, high: 7, max: 30 };
+function megaLevelAfter(n) { return n >= 30 ? 'max' : n >= 7 ? 'high' : n >= 1 ? 'base' : null; }
 // 12345 → "12,345" (matches the source tables' thousands separators).
 function megaComma(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
 
@@ -733,9 +743,131 @@ function megaTypeIcons(types) {
     `<img class="ico" src="assets/icons/${ICONS[t] || (t + '.png')}" alt="${escapeHtml(t)}" title="${escapeHtml(t)}" onerror="this.style.display='none'">`
   ).join('');
 }
+/* Planner: given how many times the selected Pokémon has already Mega-Evolved,
+ * compare the three real routes to each remaining level — wait out the full rest
+ * period for free (7/5/3 d), pay the prorated re-activation price once per day
+ * (level progress caps at 1/day, so this is the fastest mega-based route), or
+ * buy the level instantly (exact MEGA_LEVELUP prices). Daily-mode costs are
+ * estimates: the in-rest price decays linearly with remaining rest time and the
+ * game's rounding is unverified, so we show ceil(cost·(rest−1)/rest) with ≈. */
+let megaPlanN = 0;        // "已超级进化次数" — kept across selections on purpose
+let megaCurrent = null;   // entry currently shown in #mega-detail
+
+function megaDailyStep(cost, lvl) {
+  return Math.ceil(MEGA_ENERGY[cost][lvl] * (MEGA_REST[lvl] - 1) / MEGA_REST[lvl]);
+}
+// Aggregate one route from `n` activations done up to `target` total activations.
+function megaPlanTo(cost, n, target) {
+  const known = cost != null && !!MEGA_ENERGY[cost];
+  const waits = {};                      // rest-length → count, e.g. {7:6, 5:23}
+  let waitDays = 0, dailyDays = 0, dailyEnergy = 0, firstCost = 0;
+  for (let k = n + 1; k <= target; k++) {
+    const lvl = megaLevelAfter(k - 1);   // level during the wait before activation #k
+    if (!lvl) { firstCost = known ? cost : null; continue; }   // #1 is instant, full price
+    waitDays += MEGA_REST[lvl];
+    waits[MEGA_REST[lvl]] = (waits[MEGA_REST[lvl]] || 0) + 1;
+    dailyDays += 1;
+    if (known) dailyEnergy += megaDailyStep(cost, lvl);
+  }
+  return { steps: Math.max(0, target - n), waitDays, waits, dailyDays,
+           dailyEnergy: known ? dailyEnergy : null, firstCost };
+}
+// Exact instant price to reach `key` from `n` activations done (null = unknown tier).
+// From n = 0 the first activation (full initial cost) must happen first, then the
+// row for "1 time Mega Evolved" applies — both are folded into the returned total.
+function megaInstantCost(cost, n, key) {
+  if (cost == null || !MEGA_ENERGY[cost]) return null;
+  const arr = MEGA_LEVELUP[megaGroup(cost)][key];
+  const i = Math.max(n, 1) - 1;
+  return i < arr.length ? arr[i] + (n < 1 ? cost : 0) : null;
+}
+const MEGA_LVL_ZH = { base: '普通', high: '高级', max: '最高', superMax: '超级最高' };
+function megaWaitBreakdown(waits) {
+  return Object.keys(waits).sort((a, b) => b - a).map(d => `${waits[d]}×${d}天`).join(' + ');
+}
+function megaPlanHtml(entry, n) {
+  const cost = entry.initialCost;
+  const known = cost != null && !!MEGA_ENERGY[cost];
+  const lvl = megaLevelAfter(n);
+  const en = v => v == null ? '待定' : megaComma(v) + ' 能量';
+
+  let status;
+  if (!lvl) {
+    status = '尚未进行首次超级进化' + (known ? `——首次消耗 ${megaComma(cost)} 能量,已计入下表全部路线。` : '。');
+  } else if (lvl === 'max') {
+    status = `当前等级:<strong>最高</strong>(第 ${MEGA_NEED.max} 次已达成)· 本级休息期 ${MEGA_REST.max} 天`;
+  } else {
+    const next = lvl === 'base' ? 'high' : 'max';
+    status = `当前等级:<strong>${MEGA_LVL_ZH[lvl]}</strong> · 距${MEGA_LVL_ZH[next]}还差 ${MEGA_NEED[next] - n} 次 · 本级休息期 ${MEGA_REST[lvl]} 天`;
+  }
+
+  const targets = [];
+  if (n < MEGA_NEED.high) targets.push({ key: 'high', need: MEGA_NEED.high, plus: 0 });
+  if (n < MEGA_NEED.max) targets.push({ key: 'max', need: MEGA_NEED.max, plus: 0 });
+  if (entry.superMax) targets.push({ key: 'superMax', need: MEGA_NEED.max, plus: 5000 });
+
+  let html = `<p class="muted mega-plan-status">${status}</p>`;
+  if (!targets.length) {
+    html += `<p class="muted">已达最高等级,没有可继续提升的目标${entry.superMax ? '' : '(该宝可梦暂不开放超级最高)'}。</p>`;
+    return html;
+  }
+
+  const cell = (t, e) => `<td><div class="mp-t">${t}</div><div class="mp-e">${e}</div></td>`;
+  const rows = targets.map(t => {
+    const p = megaPlanTo(cost, n, t.need);
+    const extra = p.firstCost == null ? null : p.firstCost + t.plus;
+    const need = p.steps
+      ? `${p.steps} 次进化${t.plus ? ' + 5,000 能量' : ''}`
+      : (t.plus ? '5,000 能量' : '—');
+    const waitT = p.waitDays ? `${p.waitDays} 天` : '立即';
+    const waitB = p.waitDays ? `<div class="mp-b">${megaWaitBreakdown(p.waits)}</div>` : '';
+    const waitE = extra == null ? '待定' : (extra ? en(extra) : '免费');
+    const dayT = p.dailyDays ? `${p.dailyDays} 天` : '立即';
+    const dayE = (p.dailyEnergy == null || extra == null)
+      ? '待定' : (p.dailyEnergy ? '≈' : '') + en(p.dailyEnergy + extra);
+    const inst = megaInstantCost(cost, n, t.key);
+    return `<tr><th>${MEGA_LVL_ZH[t.key]}<div class="mp-b">第 ${t.need} 次${t.plus ? ' + 能量' : ''}</div></th>`
+      + `<td>${need}</td>`
+      + cell(waitT + waitB, waitE)
+      + cell(dayT, dayE)
+      + cell('立即', en(inst))
+      + '</tr>';
+  }).join('');
+  html += `<div class="mega-scroll"><table class="mega-cost-table mega-plan-table"><thead>`
+    + `<tr><th>目标等级</th><th>还需</th><th>只等休息期<div class="mp-b">免费·最慢</div></th>`
+    + `<th>每天付费进化一次<div class="mp-b">折中·1 次/天</div></th>`
+    + `<th>立即升级<div class="mp-b">最快·最贵</div></th></tr>`
+    + `</thead><tbody>${rows}</tbody></table></div>`;
+
+  if (n < MEGA_NEED.max) {
+    let steps = '';
+    for (let k = n + 1; k <= MEGA_NEED.max; k++) {
+      const l0 = megaLevelAfter(k - 1);
+      steps += l0
+        ? `<tr><th>第 ${k} 次</th><td>${MEGA_LVL_ZH[l0]}</td><td>${MEGA_REST[l0]} 天</td>`
+          + `<td>${known ? '≈' + megaComma(megaDailyStep(cost, l0)) : '待定'}</td></tr>`
+        : `<tr><th>第 1 次</th><td>—</td><td>无需等待</td><td>${known ? megaComma(cost) + '(首次全额)' : '待定'}</td></tr>`;
+    }
+    html += `<details class="mega-remega"><summary>逐次明细(第 ${n + 1} – ${MEGA_NEED.max} 次)</summary>`
+      + `<div class="mega-scroll"><table class="mega-cost-table"><thead>`
+      + `<tr><th>次数</th><th>期间等级</th><th>免费需等</th><th>等 24 小时后进化 ≈能量</th></tr>`
+      + `</thead><tbody>${steps}</tbody></table></div></details>`;
+  }
+
+  html += `<ul class="muted mega-plan-notes">`
+    + `<li>等级进度每天最多累计 1 次:休息期内反复花能量再进化<strong>不会</strong>更快升级,「立即升级」是唯一的加速通道。</li>`
+    + `<li>「每天付费一次」为估算:休息期内再进化的费用随剩余时间线性递减(此处按等满 24 小时折算并向上取整),实际取整以游戏内显示为准。</li>`
+    + (entry.superMax
+        ? `<li>超级最高:达到最高等级后一次性消耗 5,000 能量解锁;三条路线均已计入这 5,000(「立即升级」列的价目表本身含它)。</li>`
+        : `<li>该宝可梦暂不开放超级最高等级,故无此目标行。</li>`)
+    + `</ul>`;
+  return html;
+}
+
 function renderMegaDetail(entry) {
   const box = $('#mega-detail');
   if (!box) return;
+  megaCurrent = entry || null;
   if (!entry) { box.innerHTML = '<p class="muted">暂无超级进化数据。</p>'; return; }
   const cost = (entry.initialCost == null) ? null : entry.initialCost;
   const energy = (cost != null) ? MEGA_ENERGY[cost] : null;   // undefined for an unknown tier
@@ -746,7 +878,16 @@ function renderMegaDetail(entry) {
     + `<p class="muted">${escapeHtml(entry.en || '')}${entry.release ? ' · ' + escapeHtml(entry.release) : ''}</p>`
     + `<div class="mega-types">${megaTypeIcons(entry.boostedTypes)}</div>`
     + `<span class="badge mega-cost">首次进化消耗 ${escapeHtml(costTxt)}</span>`
+    + (entry.superMax ? ` <span class="badge mega-cost">可达超级最高</span>` : '')
     + `</div></div>`;
+
+  const planner = `<h4>升级规划器(按当前进度动态比较)</h4>`
+    + `<div class="mega-plan-bar"><span>已超级进化次数</span>`
+    + `<button type="button" class="btn mega-step" data-d="-1" aria-label="减一">−</button>`
+    + `<input id="mega-plan-n" type="number" inputmode="numeric" min="0" max="30" step="1" value="${megaPlanN}">`
+    + `<button type="button" class="btn mega-step" data-d="1" aria-label="加一">+</button>`
+    + `<span class="muted">(0 = 还没进化过,30 = 已满)</span></div>`
+    + `<div id="mega-plan-out">${megaPlanHtml(entry, megaPlanN)}</div>`;
 
   const head = `<tr><th>Mega 等级</th>${MEGA_LEVELS.map(l => `<th>${l.label}</th>`).join('')}</tr>`;
   const energyTbl = energy
@@ -761,9 +902,9 @@ function renderMegaDetail(entry) {
       ).join('')
     + `</tbody></table>`;
 
-  let remega = '';
+  let levelup = '';
   if (energy) {
-    const g = MEGA_REMEGA[megaGroup(cost)];
+    const g = MEGA_LEVELUP[megaGroup(cost)];
     const cols = [{ key: 'high', label: '高级' }, { key: 'max', label: '最高' }, { key: 'superMax', label: '超级最高' }];
     let rows = '';
     for (let i = 0; i < 30; i++) {
@@ -773,17 +914,22 @@ function renderMegaDetail(entry) {
       }).join('') + '</tr>';
     }
     const grp = megaGroup(cost) === 'sm' ? '100 / 200' : '300 / 400 / 7500';
-    remega = `<h4>重复升华费用递减</h4>`
-      + `<details class="mega-remega"><summary>按「已升华次数」展开(第 1–30 次)</summary>`
+    levelup = `<details class="mega-remega"><summary>立即升级价目表 — 按「已超级进化次数」查询(第 1–30 次)</summary>`
       + `<div class="mega-scroll"><table class="mega-cost-table"><thead><tr><th>次数</th>`
       + cols.map(c => `<th>${c.label}</th>`).join('') + `</tr></thead><tbody>${rows}</tbody></table></div>`
-      + `<p class="muted">按初始费用分档:此为 ${grp} 组。普通等级为入门等级,不适用递减。</p></details>`;
+      + `<p class="muted">花超级能量把 Mega 等级一步买到该档(2026-05-18 起开放),即上方规划器「立即升级」列的完整价目。`
+      + `按初始费用分档:此为 ${grp} 组。「—」= 该次数下等级已自然达成。</p></details>`;
   }
 
+  const src = `<p class="muted mega-src">数据来源:<a href="https://bulbapedia.bulbagarden.net/wiki/Mega_Evolution_(GO)"`
+    + ` target="_blank" rel="noopener noreferrer">Bulbapedia — Mega Evolution (GO)</a>(机制常量核对于 2026-07)。</p>`;
+
   box.innerHTML = header
-    + `<h4>各等级升华所需超级能量</h4>${energyTbl}`
-    + `<h4>各等级加成(全宝可梦通用)</h4>${bonusTbl}`
-    + remega;
+    + planner
+    + `<h4>静态查询表</h4>` + src
+    + `<h5>各等级升华所需超级能量</h5>${energyTbl}`
+    + `<h5>各等级加成(全宝可梦通用)</h5>${bonusTbl}`
+    + levelup;
 }
 function renderMega() {
   const list = state.mega || [];
@@ -811,9 +957,38 @@ function renderMega() {
   }
   renderMegaDetail(list[0]);
 }
+function megaClampN(v) { return Math.max(0, Math.min(30, Math.floor(+v || 0))); }
+function updateMegaPlan() {
+  const out = $('#mega-plan-out');
+  if (out && megaCurrent) out.innerHTML = megaPlanHtml(megaCurrent, megaPlanN);
+}
 function setupMega() {
   const sel = $('#mega-select');
   if (sel) sel.addEventListener('change', () => renderMegaDetail((state.mega || [])[+sel.value]));
+  const det = $('#mega-detail');
+  if (det) {
+    // Delegated: #mega-detail's innerHTML is replaced on every selection change,
+    // so the stepper/input can't hold their own listeners. Only #mega-plan-out is
+    // re-rendered on count edits, keeping the input focused while typing.
+    det.addEventListener('click', e => {
+      const b = e.target.closest('.mega-step');
+      if (!b) return;
+      const inp = $('#mega-plan-n');
+      if (!inp) return;
+      megaPlanN = megaClampN((+inp.value || 0) + +b.getAttribute('data-d'));
+      inp.value = String(megaPlanN);
+      updateMegaPlan();
+    });
+    det.addEventListener('input', e => {
+      if (!e.target || e.target.id !== 'mega-plan-n') return;
+      megaPlanN = megaClampN(e.target.value);
+      updateMegaPlan();
+    });
+    det.addEventListener('change', e => {          // normalize out-of-range typing on blur
+      if (!e.target || e.target.id !== 'mega-plan-n') return;
+      e.target.value = String(megaPlanN);
+    });
+  }
   const ov = $('#mega-overview');
   if (ov) ov.addEventListener('click', e => {
     if (e.target.closest('a')) return;               // let sprite → hub links work
