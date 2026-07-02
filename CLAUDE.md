@@ -27,7 +27,7 @@ from `public/`.
 | `public/data/featured.json` | Admin-curated featured event IDs — gold border on calendar. Daily agent maintains on admin's behalf. |
 | `public/data/categories.json` | Custom event-type palette registrations. |
 | `public/data/meta.json` | `lastUpdated` timestamp shown in header. |
-| `public/data/mega.json` | Mega/Primal roster for the 「超级进化」view. Agent-editable, but the ONLY per-Pokémon field that drives mechanics is `initialCost`; everything else is derived. |
+| `public/data/mega.json` | Mega/Primal roster for the 「超级进化」view. Agent-editable; the per-Pokémon fields that drive mechanics are `initialCost` (every cost/time number derives from it) and the optional `superMax` boolean (gates the Super-Max planner target + badge). |
 | `public/assets/icons/` | Type and item icons (mixed `.png`/`.webp`). |
 | `scripts/` | Shell scripts for the daily agent (`fetch.sh`, `discover.sh`, `validate.sh`, `preflight.sh`, `run-daily.sh`, `publish.sh`). **Editing anything in `scripts/`, `AGENTS.md`, `tasks/*.md`, or `CLAUDE.md` requires regenerating the integrity file in the same commit** (`validate.sh` hash-checks them): `sha256sum public/app.js public/style.css scripts/*.sh AGENTS.md CLAUDE.md tasks/daily-update.md tasks/subagents/*.md > scripts/protected.sha256`. Also commit maintainer work before a daily run — `run-daily.sh` refuses a dirty tree (its rollback would destroy uncommitted changes). |
 | `data/state.json` | Daily agent bookkeeping (fetch timestamps, notes). |
@@ -44,7 +44,7 @@ from `public/`.
 - Sprites: PokeAPI (`raw.githubusercontent.com/PokeAPI/sprites/.../<dexId>.png`). Form overrides via `"sprite"` field or Hub DB images.
 - `app.js` auto-links all rendered sprites to `db.pokemongohub.net/pokemon/<id>` (via `data-hub` attribute for forms).
 - Type icon files have inconsistent extensions — see the map in `AGENTS.md` under "属性→图标文件".
-- Mega reference view (`#view-mega`, owner-maintained shell like `#view-todo`) is JS-filled by `renderMega` / `renderMegaDetail` / `setupMega` from `mega.json`. Tables 1–3 (per-level energy `MEGA_ENERGY`, generic bonuses `MEGA_LEVEL_BONUSES`, re-Mega curve `MEGA_REMEGA`) are **constants in `app.js`** keyed off `initialCost` — the daily agent only appends roster rows, never the mechanics. `mega.json` is validated in `validate.sh` (step 4e).
+- Mega reference view (`#view-mega`, owner-maintained shell like `#view-todo`) is JS-filled by `renderMega` / `renderMegaDetail` / `setupMega` from `mega.json`. Tables 1–3 (per-level energy `MEGA_ENERGY`, generic bonuses `MEGA_LEVEL_BONUSES`, instant level-up prices `MEGA_LEVELUP` — Bulbapedia "Mega Level Costs") are **constants in `app.js`** keyed off `initialCost`, as are the rest periods/level thresholds (`MEGA_REST`/`MEGA_NEED`) feeding the 升级规划器 (`megaPlanTo`/`megaPlanHtml`, module state `megaPlanN`) — the daily agent only appends roster rows, never the mechanics. `mega.json` is validated in `validate.sh` (step 4e).
 
 ### CSS class vocabulary (for HTML in AI marker regions)
 

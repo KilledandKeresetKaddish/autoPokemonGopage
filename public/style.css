@@ -715,6 +715,25 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .mega-ov-types{display:flex;gap:.28rem;justify-content:center;flex-wrap:wrap;}
 .mega-ov-types .ico{width:20px;height:20px;}
 .mega-cost-table td.mega-ov-cost{color:var(--gold-bright);font-weight:600;}
+/* — 升级规划器 — */
+#view-mega h5{color:var(--gold-dim);font-family:var(--serif);margin:.95rem 0 .4rem;font-size:.9rem;letter-spacing:.02em;}
+.mega-plan-bar{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:.25rem 0 .65rem;
+  color:var(--gold-dim);font-family:var(--sans);font-size:.88rem;}
+.mega-plan-bar input{width:4.4rem;text-align:center;background:var(--panel2);color:var(--ink);
+  border:1px solid var(--line);border-radius:8px;padding:.32rem .35rem;font-family:var(--sans);font-size:.95rem;
+  -moz-appearance:textfield;appearance:textfield;}
+.mega-plan-bar input::-webkit-outer-spin-button,.mega-plan-bar input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+.mega-plan-bar input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 6px rgba(var(--gold-rgb),.35);}
+.mega-step{min-width:2.1rem;padding:.28rem .55rem;}
+.mega-plan-status{margin:.15rem 0 .5rem;font-size:.86rem;}
+.mega-plan-status strong{color:var(--gold-bright);}
+.mega-plan-table td .mp-t{font-weight:700;}
+.mega-plan-table td .mp-e{font-size:.78rem;color:var(--gold-dim);margin-top:.12rem;}
+.mp-b{font-size:.7rem;color:var(--muted);font-weight:400;margin-top:.1rem;white-space:nowrap;}
+.mega-plan-notes{margin:.55rem 0 .2rem;padding-left:1.15em;font-size:.78rem;line-height:1.55;}
+.mega-plan-notes li{margin:.18rem 0;}
+.mega-plan-notes strong{color:var(--gold-bright);font-weight:600;}
+.mega-src{font-size:.8rem;margin:.1rem 0 .55rem;}
 
 /* ---------- Footer ---------- */
 .site-footer{position:relative;z-index:1;text-align:center;padding:1.6rem 1rem 2.2rem;}
