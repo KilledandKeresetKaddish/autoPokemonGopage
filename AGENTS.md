@@ -123,7 +123,8 @@ or touch them.**
     **Both are enforced by `validate.sh`** (sprite must be an `https://` URL, hub non-empty): without them
     the view falls back to the base Pokémon's art and links the base Hub page — wrong for every Mega.
     If no form image exists yet, use the Hub DB pattern `…/images/official/full/<3-digit dex>_mega[_x|_y]/_primal_with_bg.webp`
-    and confirm it renders; do not append the row without a working sprite.
+    and confirm it **exists** via `scripts/fetch.sh url <该图片URL>` — image URLs get a HEAD check
+    (expect `HTTP/… 200` + `content-type: image/…`); do not append the row without a confirmed sprite.
   - **Sourcing:** Bulbapedia's Mega tables are the human reference but are **off-allowlist and 403 to
     automated fetch** — take roster/cost from the admin (screenshots) or corroborate via allowlisted
     Fandom/官方 sources; never fabricate.
@@ -131,10 +132,13 @@ or touch them.**
     they need not match (one is "ever existed", the other is "live this week").
 
 ## HARD RULES (validation rejects the run if broken)
-- **NEVER** edit `public/app.js`, `public/style.css`, `scripts/*`, or anything in
-  `public/index.html` **outside** the AI markers. Keep every `AI:START`/`AI:END`
-  marker present and balanced, and keep the `.rank-panel` wrappers and all `id="…"`
-  attributes intact.
+- **NEVER** edit `public/app.js`, `public/style.css`, `scripts/*`, `AGENTS.md`, `tasks/*.md`,
+  `CLAUDE.md`, or anything in `public/index.html` **outside** the AI markers. Keep every
+  `AI:START`/`AI:END` marker present and balanced, and keep the `.rank-panel` wrappers and all
+  `id="…"` attributes intact. (Enforced: `validate.sh` hash-checks the protected files against
+  `scripts/protected.sha256`, and `run-daily.sh` git-reverts any change under `scripts/`, `tasks/`,
+  `AGENTS.md`, `CLAUDE.md` and fails the gate; `index.html` structure is checked via required
+  tokens + markers.)
 - The HTML you write must be **inert**: no `<script>`, no `<style>`, no `<iframe>`/`<object>`/`<embed>`,
   no event-handler attributes (`onerror`, `onload`, `onclick`, …), no `javascript:` URIs, no external CSS/JS.
 - Keep `public/data/*.json` valid JSON in the schemas below.
@@ -147,7 +151,8 @@ or touch them.**
 
 ## 渲染契约 — 改 `events.json` / `rotations.json` 前必读
 日历的两种"标记"由**不同文件**驱动,**选错文件 = 看不到效果**。这是硬约定,
-`scripts/preflight.sh` 会据此在发布前拦截(orphan / 不一致 / form-id / 超长 chip)。
+`scripts/preflight.sh` 会据此在发布前拦截(orphan / 不一致 / form-id;**超长 chip 只 WARN、
+不拦截** —— chip 名称请自行控制在 ≤14 字)。
 
 - **日期数字旁的小角标 = 由 `rotations.json` 的轨(track)产生**,覆盖到的每一天画一个。`events.json` 里的
   事件**永远变不成角标** —— 它们只会是横跨日的 **bar** 或格子里的 **chip**。所以"给某些天加 Boss 角标"
@@ -163,11 +168,13 @@ or touch them.**
 - **角标 ↔ 抽屉必须一致**:`renderRotations()` **逐字**渲染 `seg.pokemon`。单日段的 `pokemon[]` 应直接等于
   当天对应 `raid-battles` 事件的 `pokemon[]`(5★ 段 = 事件里非超级/原始的 Boss;超级段 = 当天的超级/原始)。
   段里出现抽屉没有的 Boss、或抽屉里的 Boss 在任何角标都不出现,都会被 preflight 拦下。角标本身只显示前 3 只
-  (多只会循环),但 rotation 面板会**列全** `seg.pokemon` —— 所以**别只放 3 只"代表"**,要放全;池子太大时
+  (多只会循环);rotation 面板显示前 4 只精灵并以 `+N` 汇总(完整名单在悬停提示),而 preflight 按**完整**
+  `seg.pokemon` 核对角标↔抽屉一致 —— 所以**别只放 3 只"代表"**,要放全;池子太大时
   用段名 `cn` 标注"多种轮替"。
 - **Mega/形态段用 BASE 全国图鉴 id**(= 该 Boss 在 `events.json` 里用的 id)+ `"sprite"` 形态图覆盖。用
   form id(≥10000)会让角标匹配不到事件、打开空抽屉(preflight 报 `mega base-id`)。形态精灵图优先用可核验的
-  PokeAPI 形态 id(`raw.githubusercontent.com/PokeAPI/sprites/.../<formId>.png`),写前可 `fetch.sh url` 拉下来确认。
+  PokeAPI 形态 id(`raw.githubusercontent.com/PokeAPI/sprites/.../<formId>.png`),写前可 `fetch.sh url` 确认
+  (图片 URL 走 HEAD 检查,回显 HTTP 状态与 Content-Type,2xx + `image/*` 即存在)。
 - **多日"每日轮换"事件 playbook(传奇之路 / GO Fest 前置周等)**:
   ① 主活动在 `events.json` 出**一条横幅事件**(`event`/`pokemon-go-fest`,跨度大可 `longTerm:true`)。
   ② 当天每个 Boss 在 `events.json` 出**全天 `raid-battles` 事件**(承载 counters/links/summary 抽屉)。
@@ -193,7 +200,7 @@ refetch everything.** Then read the files in `data/raw/`.
 | `tiers-attackers` | Hub "Max Attackers Tier List" page (**含属性榜**, per-type picks) | older than ~3 days | `data/raw/tiers-attackers.txt` |
 | `tiers-defenders` | Hub "Max Defenders Tier List" page | older than ~3 days | `data/raw/tiers-defenders.txt` |
 | `tiers-pokebase` | pokébase tier lists (cross-check / second opinion) | older than ~3 days | `data/raw/tiers-pokebase.txt` |
-| `events-hub` | Hub events hub + monthly article (events **and** weekly rotations) | older than ~1 day | `data/raw/events-hub.txt` |
+| `events-hub` | Hub events **index** (`/post/event/` — it *links to* the monthly roundup article but does **not** contain its body; find the article URL in it and open it via `fetch.sh url`) | older than ~1 day | `data/raw/events-hub.txt` |
 | `events-pokebase` | pokébase events list | older than ~1 day | `data/raw/events-pokebase.txt` |
 | `events-official` | pokemongo.com official news/events | older than ~1 day | `data/raw/events-official.txt` |
 
@@ -332,19 +339,26 @@ read before you write, as always.
    - **New event types.** If a source introduces a `type` that isn't styled yet (it would otherwise
      fall back to a generic grey marker), register it in `public/data/categories.json` with a palette
      key + 简体中文 label + kind (see schema). Assign the family colour that fits — you can't pick a hex.
-   - **Retention.** Forward: keep the **current month through the end of next month**. Backward:
+   - **Retention.** Forward: keep **at least the current month through the end of next month**;
+     a confirmed, already-announced farther-future event (e.g. a GO Tour / City Safari date) may
+     stay — but note `discover.sh new` only sweeps through the end of next month. Backward:
      **drop events that ended more than ~90 days (≈3 months) ago** (validate.sh hard-rejects events
-     ended >90 days ago, so prune well before that). Use a **stable `id`**
+     ended >90 days ago, so prune well before that — but do NOT prune at the month boundary: the
+     calendar has a ‹ 上月 button, and blanking last month loses real history). Use a **stable `id`**
      so re-runs map the same event to the same row and can never accumulate duplicates.
-     **ID algorithm:** take the source slug (e.g. LeekDuck's URL slug `community-day-june-2026`)
-     and normalize: lowercase, keep `[a-z0-9-]`, strip trailing date fragments if they duplicate
-     the start date, but **keep** the year-month to prevent cross-month collisions. Examples:
-     `community-day-june-2026`, `raidhour20260617`, `season-of-discovery-2026`. If no slug exists,
-     compose `<type>-<startYYYYMMDD>` (e.g. `spotlight-hour-20260701`). Never use sequential
+     **ID algorithm:** when the source provides a slug / feed id (ScrapedDuck's `eventID` =
+     LeekDuck's URL slug), use it **VERBATIM** — `discover.sh new` dedups by comparing feed
+     `eventID`s against your `id`s **exactly**, so any "normalizing" or renaming makes every
+     already-covered event resurface as NEW forever. Real examples in current use:
+     `june-communityday2026`, `raidhour20260617`, `road-of-legends-2026`. Only when no source slug
+     exists, compose `<type>-<startYYYYMMDD>` (e.g. `spotlight-hour-20260701`). Never use sequential
      counters or random values.
 5. **Rotations** → rewrite `public/data/rotations.json` (schema below): the **current month's**
    5★ / Mega / Max weekly boss rotation, parsed from the Hub monthly article and corroborated
-   with `data/raw/raids.json`. Dex id per boss for the sprite; dates `YYYY-MM-DD`.
+   with `data/raw/raids.json`. **The monthly article's body is NOT in `events-hub.txt`** (that
+   file is only the `/post/event/` index): find the article's URL in the index (or via
+   `scripts/discover.sh "raid bosses <month> <year>"`) and open it with `scripts/fetch.sh url <URL>`
+   before parsing. Dex id per boss for the sprite; dates `YYYY-MM-DD`.
    **Parse the bosses — never invent them.**
 6. **Rankings** → rewrite the regions in `index.html`:
    - `rankings-attackers` / `rankings-defenders` → parse the tier tables from
@@ -363,7 +377,7 @@ read before you write, as always.
      **属性用图标,不用文字:** in the boss `.meta` render its 属性 and 弱点 as
      `<img class="ico" src="assets/icons/<type>.<ext>">`, and **prepend each counter's move 属性 icon(s)**
      before its move text (move→type from `gamemaster`). Type files vary by extension — see the map in
-     *Ranking HTML pattern*; `一般`/normal has no icon, keep the text. Justify counters/types with
+     *Ranking HTML pattern* (`一般` = `normal.webp`, like every other type). Justify counters/types with
      `gamemaster`; don't invent.
    - **Mega Booster — inline on each boss, NOT a separate bottom list.** Mechanic: an **active** Mega
      gives **+1 糖 when you catch a Pokémon sharing that Mega's 属性** (chance of extra / XL) — it is
@@ -384,6 +398,9 @@ read before you write, as always.
    - `calendar-notes` (**free-form**) → a short 本月看点 (see *Free-form synthesis*).
 7. Set `public/data/meta.json` `lastUpdated` to now (ISO 8601); record per-source fetch
    times/notes in `data/state.json` (a fixed object keyed by source — **not** a growing log).
+   (In the sub-agent orchestration, curators do **not** write `data/state.json` themselves —
+   report gaps/notes in your output to the coordinator for State+Validator (90), its sole
+   writer; a single-agent run writes it directly.)
 8. **Self-check before validating:** one row per real event (no duplicate `id`s), `links[]`
    aggregated (≥2 sources per event where possible), no event ended >3 months ago, long events
    flagged, rotations parsed not invented, `highlight` only on Community Day / Raid Day /
@@ -393,8 +410,12 @@ read before you write, as always.
    garbled names)**, all `links[].url` actually confirmed to exist and point to THIS event
    (not a same-category article for a different Pokémon).
 9. Run `scripts/validate.sh`. Fix what it reports until it passes. (It hard-rejects duplicate
-   ids, >250 events, events ended >90 days ago, empty `type` fields, dangerous HTML in AI
-   regions, and rotation segments without `start`/`pokemon[]` — so prune, dedup, and check.)
+   ids, >250 **or <5** events, events ended >90 days ago, empty `id`/`name`/`start`/`type`,
+   `end` earlier than `start`, dangerous HTML in AI regions, **any empty AI region** (all five
+   must have content — never blank one to "start clean"), missing `public/data/*.json` /
+   `data/state.json` files, a `featured.json` that isn't an array of ids all present in
+   `events.json`, more than one `<script>` tag, protected-file changes, and rotation segments
+   without `start`/`pokemon[]` — so prune, dedup, and check.)
 
 ---
 
@@ -419,7 +440,7 @@ read before you write, as always.
   "bonuses": ["双倍星尘", "..."],
   "pokemon": [{ "name": "皮卡丘", "id": 25, "shiny": true }],
   "counters": [{ "id": 248, "name": "班基拉斯", "fast": "齿突", "charged": "啃咬" }],
-  "sections": [{ "title": "付费内容", "items": [":ticket: 票务 4.99 美元", "..."] }],
+  "sections": [{ "title": "付费内容", "items": [":pokeball: 票务 4.99 美元", "..."] }],
   "longTerm": false,
   "highlight": false
 }
@@ -438,7 +459,8 @@ read before you write, as always.
 - **Clickable sprites → Hub DB (automatic).** Every Pokémon sprite the site renders — event drawer,
   weekly rotations, all ranking panels, the free-form notes — is **auto-linked** to
   `https://db.pokemongohub.net/pokemon/<id>` by `app.js`; you don't hand-write `<a>` tags. (Only the
-  **calendar grid day-icons + 长期 band** are left un-linked, because their icons open the in-page drawer.)
+  **calendar grid day-icons + 长期/PVP band** are left un-linked, because their icons/pills open the
+  in-page drawer.)
   A base `id` only links to the base page, so for a **form** add an optional **`hub`** slug on that
   `pokemon[]` / `counters[]` / rotation-segment entry to hit the exact form page: `"hub": "212-Mega"` ·
   `"150-Mega_Y"` · `"77-Galarian"` · `"105-Alolan"` (id `-Form`, `_` for X/Y). In the **static** ranking
@@ -458,7 +480,7 @@ read before you write, as always.
   (inline) / `ico-lg` (standalone) class. In `bonuses`/`sections` text use a `:token:` (e.g.
   `:stardust: 捕捉星尘 ×3`, `:water: 水属性`); in the free-form regions write
   `<img class="ico" src="assets/icons/<file>">`. Tokens — types: `bug dark dragon electric fairy fighting
-  fire flying ghost grass ground ice poison psychic rock steel water`; items: `candy xl-candy rare-candy
+  fire flying ghost grass ground ice normal poison psychic rock steel water`; items: `candy xl-candy rare-candy
   stardust xp lure incense incubator golden-razz silver-berry pokeball pokestop raid spawn rocket trading`.
   Unknown tokens fall back to `<token>.png`; missing files hide. Use where it adds clarity (e.g. a type
   icon next to a counter, an item icon next to a bonus). **Only use tokens from the two lists above** —
@@ -535,7 +557,8 @@ canvases** — compose them freshly each run with judgment. The other regions
 (`rankings-attackers/defenders/raid`) stay structured: parse the sources, don't free-style.
 Use **only** these whitelisted, theme-correct classes (no inline colors, no `<style>`, no `<script>`):
 - containers: `.panel` / `.panel-head`, `.note-grid` (auto-responsive columns), `.callout` (highlight box)
-- lists/atoms: `.rank-list` / `.rank-item`, `.pill` / `.pillrow`, `.badge`, `.btn` / `.btn-primary`, `.muted`
+- lists/atoms: `.rank-list` / `.rank-item`, `.pill` / `.pillrow`, `.badge`, `.btn` / `.btn-primary`, `.muted`,
+  `.meta`(rank-item / boss 头里的小字附注行)
 - Pokémon/tiers: `.mon-icon`, `.mon-row` / `.mon` / `.shiny`, `.tier` + `.tier-S|tier-A|tier-B|tier-C`
 - sprites/icons: `<img class="spr">` or `class="mon-icon"` (PokeAPI dex-id URL); `<img class="ico">` /
   `class="ico-lg"` for the local resource icons in `assets/icons/` (size locked).
@@ -593,8 +616,8 @@ attackers/tanks to use (e.g. a Max/Dynamax event → the relevant Max picks).
 ```
 **属性→图标文件**(扩展名不统一,务必照此):`fire.png water.webp grass.webp electric.webp ice.webp
 fighting.png poison.webp ground.webp flying.png psychic.webp bug.png rock.webp ghost.webp dragon.png
-dark.webp steel.webp fairy.webp normal.webp`;`一般` = `normal.webp`(若该文件已存在于 `assets/icons/`,
-否则暂保留文字)。counter 招式属性由 `gamemaster` 的 move→type 求得。Keep it readable on mobile.
+dark.webp steel.webp fairy.webp normal.webp`;`一般` = `normal.webp`。counter 招式属性由
+`gamemaster` 的 move→type 求得。Keep it readable on mobile.
 
 ---
 
@@ -644,3 +667,10 @@ These mistakes have been observed in past runs. **Check for each one** during st
    local / in-person events are in scope, not noise** — never discard one merely because LeekDuck lacks
    it. (Recording a genuinely-unconfirmable event as a gap in `data/state.json` is still correct — just
    don't reach that conclusion from LeekDuck alone, and never paper over the gap with a fabricated link.)
+
+8. **Internal pipeline details leaking into user-visible text.** Never mention `data/raw/*`
+   paths, script names, fetch mechanics, or run bookkeeping in any AI region, `summary`,
+   `bonuses`, or `sections` — users see a dashboard, not the pipeline ("上游数据源暂未更新"
+   is fine; "`data/raw/raids.json` 仍是旧的" is not). Such notes belong in `data/state.json`.
+   Also remember the free-form regions are raw HTML: markdown backticks are **not** rendered,
+   they ship to users verbatim.

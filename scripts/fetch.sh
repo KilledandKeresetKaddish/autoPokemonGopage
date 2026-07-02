@@ -131,6 +131,18 @@ fetch_url() {
     [[ "$host" == "$d" || "$host" == *."$d" ]] && { ok=1; break; }
   done
   if [ "$ok" != 1 ]; then echo "REFUSED off-allowlist host: ${host:-?}  ($url)" >&2; return 2; fi
+  # Image URLs (sprite / form-art existence checks): don't pipe pixels through
+  # the Jina reader or cat raw bytes to the terminal — do a HEAD request and
+  # report status + type + size. 2xx + content-type image/* = the image exists.
+  case "${url%%\?*}" in
+    *.png|*.webp|*.jpg|*.jpeg|*.gif)
+      if curl -fsSIL -A "$UA" --max-time 45 "$url" | tr -d '\r' \
+           | grep -iE '^(HTTP/|content-type:|content-length:)'; then
+        return 0
+      else
+        echo "FAIL url <- $url  (image HEAD failed — image likely absent)" >&2; return 1
+      fi ;;
+  esac
   local tmp; tmp="$(mktemp)"
   case "$host" in
     raw.githubusercontent.com|*.githubusercontent.com|pokeapi.co|*.pokeapi.co)

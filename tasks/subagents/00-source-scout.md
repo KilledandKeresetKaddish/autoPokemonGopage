@@ -12,7 +12,10 @@ Goal: make the raw source cache ready for the content curators without over-fetc
 4. Fetch only needed sources with `scripts/fetch.sh <name> ...`.
 5. Inspect refreshed `data/raw/*` enough to brief downstream agents on:
    - empty / flaky / changed formats;
-   - likely monthly article sections for rotations;
+   - the **URL of the current month's Hub rotation/roundup article** — `events-hub.txt` is only
+     the `/post/event/` index, the schedule body is NOT in it: locate the article link there (or
+     via `scripts/discover.sh "raid bosses <month> <year>"`), confirm it with `scripts/fetch.sh
+     url`, and hand the URL to the Rotation curator;
    - event source coverage and any detail pages worth fetching later;
    - **missing per-event URLs** — when an event needs a page the bulk feeds don't carry (e.g. a
      Hub per-boss raid guide), find it with `scripts/discover.sh "<english keywords>"`, verify

@@ -14,7 +14,11 @@ if git diff --cached --quiet; then
   exit 0
 fi
 
-git commit -q -m "chore(daily): content update $(date -u +%F)"
+# cron environments often lack a git identity — fall back to a bot identity
+# rather than dying (set -e) after the gates already passed.
+GITID=()
+git config user.email >/dev/null 2>&1 || GITID=(-c user.name='pogo-daily' -c user.email='pogo-daily@localhost')
+git ${GITID[@]+"${GITID[@]}"} commit -q -m "chore(daily): content update $(date -u +%F)"
 echo "publish: committed."
 
 if [ "${PUBLISH_PUSH:-0}" = "1" ]; then

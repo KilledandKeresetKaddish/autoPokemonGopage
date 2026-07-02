@@ -17,6 +17,17 @@ exec > >(tee -a "$LOG") 2>&1
 
 echo "===== daily run $(date -u +%FT%TZ) ====="
 
+# Refuse to run over uncommitted maintainer work: the failure path restores
+# public/ + data/state.json with checkout/clean (which would destroy it), and the
+# protected-area check below assumes HEAD is the clean baseline. Commit or stash
+# first (data/raw is gitignored and doesn't count).
+if [ -n "$(git status --porcelain -- public data scripts tasks AGENTS.md CLAUDE.md 2>/dev/null)" ]; then
+  echo "!!! uncommitted changes in public/ data/ scripts/ tasks/ or the agent guides —"
+  echo "!!! commit or stash them before the daily run (rollback would destroy them). Aborting."
+  git status --porcelain -- public data scripts tasks AGENTS.md CLAUDE.md
+  exit 1
+fi
+
 # keep the log dir bounded — drop run logs older than ~30 days
 find logs -maxdepth 1 -name 'daily-*.log' -type f -mtime +30 -delete 2>/dev/null || true
 find logs -maxdepth 1 -name 'pi-events-*.jsonl' -type f -mtime +7 -delete 2>/dev/null || true
@@ -68,14 +79,20 @@ fi
 run_agent() {
   case "$AGENT_CLI" in
     claude)
-      # Headless Claude Code, sandboxed to this project dir.
+      # Headless Claude Code. NOTE: this is NOT sandboxed — the bare `Bash`
+      # allowlist pre-approves every shell command and acceptEdits auto-accepts
+      # file edits; the real guardrails are the gates + protected-area check
+      # below. --bare (recent CLIs) skips hooks/plugins and this repo's
+      # coding-agent CLAUDE.md; web tools are hidden so the agent relies on
+      # fetch.sh/discover.sh exactly as AGENTS.md promises.
       claude -p "$PROMPT" \
+        --bare \
         --permission-mode acceptEdits \
         --allowedTools "Bash Read Edit Write Glob Grep" \
-        --add-dir "$ROOT"
+        --disallowedTools "WebFetch WebSearch"
       ;;
     aider)
-      aider --yes --no-auto-commit --message "$PROMPT"
+      aider --yes-always --no-auto-commits --message "$PROMPT"
       ;;
     gemini)
       gemini -p "$PROMPT" -y
@@ -124,16 +141,30 @@ run_agent() {
 echo "--- invoking agent: $AGENT_CLI ---"
 run_agent || echo "WARN agent exited non-zero (continuing to validation)"
 
+# Protected-area check FIRST, and restore before running the gates: preflight.sh
+# and validate.sh live in scripts/, so an agent edit there could otherwise
+# neutralize the very gates about to run. The pre-run guard guaranteed these
+# paths started clean, so any diff here is the agent's doing.
+echo "--- protected-area check (scripts / tasks / AGENTS.md / CLAUDE.md) ---"
+pa=0
+if [ -n "$(git status --porcelain -- scripts tasks AGENTS.md CLAUDE.md 2>/dev/null)" ]; then
+  echo "!!! agent modified protected program/instruction files — restoring them and failing the gate:"
+  git status --porcelain -- scripts tasks AGENTS.md CLAUDE.md
+  git checkout -- scripts tasks AGENTS.md CLAUDE.md 2>/dev/null || true
+  git clean -fdq scripts tasks 2>/dev/null || true
+  pa=1
+fi
+
 echo "--- preflight (render dry-run) ---"
 scripts/preflight.sh; pf=$?
 echo "--- validating ---"
 scripts/validate.sh; vl=$?
-if [ "$pf" = 0 ] && [ "$vl" = 0 ]; then
+if [ "$pa" = 0 ] && [ "$pf" = 0 ] && [ "$vl" = 0 ]; then
   echo "--- publishing ---"
-  scripts/publish.sh
+  scripts/publish.sh || { echo "!!! publish FAILED (commit error — content left in working tree)"; exit 1; }
   echo "===== done OK $(date -u +%FT%TZ) ====="
 else
-  echo "!!! gate FAILED (preflight=$pf validate=$vl) — rolling back working tree to last good commit"
+  echo "!!! gate FAILED (protected=$pa preflight=$pf validate=$vl) — rolling back working tree to last good commit"
   git checkout -- public data/state.json 2>/dev/null || true
   git clean -fdq public 2>/dev/null || true
   echo "===== rolled back $(date -u +%FT%TZ) ====="

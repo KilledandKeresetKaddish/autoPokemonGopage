@@ -7,6 +7,12 @@ not inherit the coordinator's context.
 
 Write scope:
 - `public/data/events.json`
+- `public/data/featured.json` — admin-curated gold-border ids. Add/remove an id **only** on an
+  explicit admin / operator-note request; every run, prune ids whose events are no longer in
+  `events.json` (validate.sh hard-rejects stale featured ids).
+- `public/data/mega.json` — append-only: when a NEW Mega/Primal is announced, add one roster row
+  per AGENTS.md's mega.json rules (verified 简体中文 name, `boostedTypes` keys, `initialCost` tier
+  or `null`, form `sprite` + `hub` — both gated by validate.sh). Never touch the derived mechanics.
 - `public/data/categories.json` only when a new event type needs registration
 
 Inputs:
@@ -22,8 +28,11 @@ Inputs:
   Real fetched URLs only — never guess one.
 
 Checklist:
-1. Keep current month through end of next month; drop events that ended before the
-   current month started. **Include local / in-person AND region- / country-limited events**
+1. Keep at least the current month through end of next month (confirmed farther-future
+   announcements may stay); backward, keep past events until ~90 days after they end and prune
+   before validate.sh's hard >90d cutoff — do **not** prune at the month boundary: the calendar
+   has a ‹ 上月 button, and blanking last month loses real history.
+   **Include local / in-person AND region- / country-limited events**
    (Safari Zone, City Safari, GO Tour 线下场, 区域线下活动 …) — never skip an event for
    being location-specific, and **never drop one just because LeekDuck 404s / omits it**: a "doesn't
    exist" verdict requires an empty **searchable** sweep — `scripts/discover.sh` (LeekDuck + Hub + 官网 +
