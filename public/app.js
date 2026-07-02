@@ -874,6 +874,7 @@ function renderMegaDetail(entry) {
   if (!entry) { box.innerHTML = '<p class="muted">暂无超级进化数据。</p>'; return; }
   const cost = (entry.initialCost == null) ? null : entry.initialCost;
   const energy = (cost != null) ? MEGA_ENERGY[cost] : null;   // undefined for an unknown tier
+  const levels = entry.superMax ? MEGA_LEVELS : MEGA_LEVELS.slice(0, -1);
   const img = `<img class="mon-icon" src="${escapeHtml(monSprite(entry))}" alt="${escapeHtml(entry.name)}" loading="lazy" onerror="this.style.visibility='hidden'">`;
   const costTxt = (cost == null) ? '待定' : (megaComma(cost) + ' 超级能量');
   const header = `<div class="mega-header">${linkSprite(img, entry)}<div class="mega-head-txt">`
@@ -892,23 +893,24 @@ function renderMegaDetail(entry) {
     + `<span class="muted">(0 = 还没进化过,30 = 已满)</span></div>`
     + `<div id="mega-plan-out">${megaPlanHtml(entry, megaPlanN)}</div>`;
 
-  const head = `<tr><th>Mega 等级</th>${MEGA_LEVELS.map(l => `<th>${l.label}</th>`).join('')}</tr>`;
+  const head = `<tr><th>Mega 等级</th>${levels.map(l => `<th>${l.label}</th>`).join('')}</tr>`;
   const energyTbl = energy
     ? `<table class="mega-cost-table"><thead>${head}</thead><tbody><tr><th>升华所需能量</th>`
-        + MEGA_LEVELS.map(l => `<td>${megaComma(energy[l.key])}</td>`).join('') + `</tr></tbody></table>`
+        + levels.map(l => `<td>${megaComma(energy[l.key])}</td>`).join('') + `</tr></tbody></table>`
     : '<p class="muted">升华所需能量:待定(该宝可梦尚无已知的首次消耗档位)。</p>';
 
   const dash = v => (v == null ? '—' : v);
   const bonusTbl = `<table class="mega-cost-table"><thead>${head}</thead><tbody>`
     + MEGA_LEVEL_BONUSES.map(r =>
-        `<tr><th>${escapeHtml(r.label)}</th>${r.vals.map(v => `<td>${escapeHtml(String(dash(v)))}</td>`).join('')}</tr>`
+        `<tr><th>${escapeHtml(r.label)}</th>${r.vals.slice(0, levels.length).map(v => `<td>${escapeHtml(String(dash(v)))}</td>`).join('')}</tr>`
       ).join('')
     + `</tbody></table>`;
 
   let levelup = '';
   if (energy) {
     const g = MEGA_LEVELUP[megaGroup(cost)];
-    const cols = [{ key: 'high', label: '高级' }, { key: 'max', label: '最高' }, { key: 'superMax', label: '超级最高' }];
+    const cols = [{ key: 'high', label: '高级' }, { key: 'max', label: '最高' }];
+    if (entry.superMax) cols.push({ key: 'superMax', label: '超级最高' });
     let rows = '';
     for (let i = 0; i < 30; i++) {
       rows += `<tr><th>${i + 1}</th>` + cols.map(c => {
