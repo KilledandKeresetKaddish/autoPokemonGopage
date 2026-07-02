@@ -37,12 +37,16 @@ source's English/romanized form — a hallucinated or garbled name is worse than
 
 **How to verify in practice.** `gamemaster.json` contains English species names; it does
 **not** contain 简体中文. To produce a verified 简体中文 name: (1) identify the national-dex id
-from the source data or `gamemaster.json`; (2) look up the Chinese name via
-`scripts/fetch.sh url https://pokeapi.co/api/v2/pokemon-species/<dexId>/` — the `names[]`
-array has `language.name == "zh-Hans"` entries; (3) use that Chinese name verbatim. If
-PokeAPI returns no Chinese name for a species, keep the English/romanized form — do **not**
-translate from memory. Common game vocabulary (属性 names like 火/水/草, item names like
-星尘/糖果, mechanic terms) is **not** covered by this rule — only species and move names.
+from the source data or `gamemaster.json`; (2) run **`scripts/fetch.sh zh <dexId>`** (species)
+or **`scripts/fetch.sh zh move:<move-slug>`** (moves) — it answers one TSV line
+(`key  en  zh-Hans`) from the permanent local dictionary `data/raw/zh-names.json`, hitting
+PokeAPI only the first time a key is seen (names never change); (3) use that Chinese name
+verbatim. Do **NOT** `fetch.sh url https://pokeapi.co/api/v2/pokemon-species/…` just to check
+a name — that dumps 50–100KB of flavor text for one line of signal (the raw species/form URLs
+remain for *form* research: form ids, sprites). If the lookup prints `NO-ZH-NAME`, keep the
+English/romanized form — do **not** translate from memory. Common game vocabulary (属性 names
+like 火/水/草, item names like 星尘/糖果, mechanic terms) is **not** covered by this rule —
+only species and move names.
 
 **`gamemaster` is authoritative for *stable facts* only — NOT for what *exists this season*.**
 Use it to confirm a dex→species mapping, a Pokémon's 属性, or a move→type (the counter type-icons).
@@ -189,7 +193,11 @@ or touch them.**
 ## Data sources — fetch via `scripts/fetch.sh <name>`
 Start by running `scripts/fetch.sh list` and reading `data/state.json` to see what is
 already cached and how old it is. **Decide what to refresh by age — do not blindly
-refetch everything.** Then read the files in `data/raw/`.
+refetch everything.** `list` prints each cache's sha256 (16 hex) — compare it with the
+`sha256` recorded per source in `data/state.json`: **an unchanged hash means every
+conclusion you drew from that source last run still stands** — do not re-parse,
+re-verify, or re-derive content from it. Then read *what changed* in `data/raw/`
+(grep/jq the big files — see *Token discipline* below).
 
 | source | what | refresh when | output |
 |---|---|---|---|
@@ -238,6 +246,32 @@ the `"sprite"` override: `https://db.pokemongohub.net/images/official/full/<dexI
 > unreachable), **keep the last good content in place**, record the problem in
 > `data/state.json`, and still pass validation. Never ship empty rankings.
 
+### Token discipline (cost control — as binding as the content rules)
+Every byte you read or write passes through the model. The verification density above is
+deliberate; paying for it wastefully is not. Four rules:
+1. **Never read a big cache wholesale.** `gamemaster.json` is ~900KB **minified onto a single
+   line** — reading it dumps the entire file into your context. Extract entries instead, e.g.
+   `jq '.pokemon[] | select(.dex==212)' data/raw/gamemaster.json` ·
+   `jq '.moves[] | select(.moveId=="IRON_HEAD")' data/raw/gamemaster.json` (adapt to the file's
+   current structure, as always). Same for `tiers-pokebase.txt` (~120KB) and other large caches:
+   `grep`/`sed` the sections you need — never cat the whole file.
+2. **Name checks via `scripts/fetch.sh zh`**, never a raw species-URL dump (see *How to verify
+   in practice* above). One TSV line out, cached forever in `data/raw/zh-names.json`.
+3. **Edit `public/data/events.json` in place.** Never regenerate/rewrite the whole file when a
+   handful of events changed: a full re-emit of ~170KB re-pays every byte as output tokens AND
+   risks transcription drift in the untouched 90%. Add / update / delete just the affected rows
+   (same for `rotations.json` and the ranking regions).
+4. **Verify links once.** A `links[].url` you verified in a previous run — it is already in
+   `events.json` and its event is unchanged in the sources — is **trusted**: do not re-open it.
+   Re-verify only newly added links and links on events whose source entry changed.
+
+**Quiet-day fast path.** If `events`, `events-hub`, `events-official`, `events-pokebase` and
+`raids` all re-fetch to an **unchanged hash**, skip rebuilding calendar/rotation content
+entirely: do only date-driven maintenance (prune events ended >90d and their `featured.json`
+ids, flags that flip with the calendar), update `meta.json` + `data/state.json`, and leave the
+ranking regions as-is when the `tiers-*` caches are also unchanged. Then still run
+`preflight.sh` + `validate.sh` as usual.
+
 ### Looking things up (ad-hoc, allowlisted)
 The named sources above are the backbone. When you need a **specific detail page** the bulk feeds
 don't cover — an individual LeekDuck event, a Hub article, a pokébase Pokémon/event page, an
@@ -282,11 +316,14 @@ read before you write, as always.
 ---
 
 ## Daily procedure
-1. `scripts/fetch.sh list` + read `data/state.json` → decide what is stale.
+1. `scripts/fetch.sh list` + read `data/state.json` → decide what is stale, and note which
+   caches' sha256 match last run's recorded hashes (those sources need **no** re-derivation).
 2. Fetch only what's needed, e.g.
    `scripts/fetch.sh events raids events-hub events-pokebase tiers-attackers`.
-3. Read the raw files; adapt to their **current** structure.
-4. **Calendar** → rewrite `public/data/events.json` (schema below). Backbone = `events`
+3. Read what changed in the raw files (grep/jq the big ones — *Token discipline*); adapt to
+   their **current** structure. If nothing event-bearing changed, take the quiet-day fast path.
+4. **Calendar** → update `public/data/events.json` **in place** (schema below; surgical row
+   edits — never a full-file rewrite). Backbone = `events`
    (ScrapedDuck); then **merge across sources**:
    - **Dedup by event identity.** The same real-world event shows up in 2–4 sources
      (LeekDuck / Hub / pokébase / official). Decide which entries are the *same* event and
@@ -305,7 +342,9 @@ read before you write, as always.
      a link you haven't seen. Confirm each link is about THIS exact event/Pokémon — not a same-category
      article for a different subject; omit rather than attach a wrong one.** Most events should end up
      with ≥2 source links; do **not** settle for LeekDuck-only unless you actually checked the other
-     sources and nothing fits. Keep `link` = the primary one.
+     sources and nothing fits. Keep `link` = the primary one. (Verification effort goes to **new or
+     changed** events — links already verified in a previous run on unchanged events are trusted;
+     see *Token discipline* rule 4.)
    - **Populate Pokémon, bonuses & a summary.** Fill `pokemon[]` (dex id + 简体中文 name + `shiny`),
      `bonuses[]`, and a **concise 简体中文 `summary`** (1–2 sentences) for every event from the articles —
      so the calendar isn't empty and the detail drawer is actually useful (not just a title + date).
@@ -353,14 +392,18 @@ read before you write, as always.
      `june-communityday2026`, `raidhour20260617`, `road-of-legends-2026`. Only when no source slug
      exists, compose `<type>-<startYYYYMMDD>` (e.g. `spotlight-hour-20260701`). Never use sequential
      counters or random values.
-5. **Rotations** → rewrite `public/data/rotations.json` (schema below): the **current month's**
+5. **Rotations** → update `public/data/rotations.json` (schema below; edit segments in place —
+   if the monthly article and `raids.json` are hash-unchanged and the month is current, keep the
+   file as-is): the **current month's**
    5★ / Mega / Max weekly boss rotation, parsed from the Hub monthly article and corroborated
    with `data/raw/raids.json`. **The monthly article's body is NOT in `events-hub.txt`** (that
    file is only the `/post/event/` index): find the article's URL in the index (or via
    `scripts/discover.sh "raid bosses <month> <year>"`) and open it with `scripts/fetch.sh url <URL>`
    before parsing. Dex id per boss for the sprite; dates `YYYY-MM-DD`.
    **Parse the bosses — never invent them.**
-6. **Rankings** → rewrite the regions in `index.html`:
+6. **Rankings** → refresh the regions in `index.html` — but only those whose inputs changed:
+   if the `tiers-*` caches are hash-unchanged since last run and the live boss set didn't
+   change, keep the corresponding structured panels as-is (they were verified when written):
    - `rankings-attackers` / `rankings-defenders` → parse the tier tables from
      `data/raw/tiers-*.txt` (S/A/B…, Pokémon, recommended moves); cross-check with
      `tiers-pokebase`. Surface the attackers page's **per-type 属性榜** (best pick per type).

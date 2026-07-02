@@ -58,6 +58,12 @@ Checklist:
 7. Never ship empty ranking panels. If tier or raid parsing fails, keep only the
    affected structured panel from last good content and report the problem to State +
    Validator.
+8. **Token discipline (AGENTS.md, binding):** if the `tiers-*` caches are hash-unchanged
+   since last run AND the live boss set didn't change, keep the corresponding structured
+   panels as-is (verified when written) — rewrite only regions whose inputs changed.
+   Verify names via `scripts/fetch.sh zh`; `grep`/`jq` the tier files and gamemaster for
+   the entries you need — never read `tiers-pokebase.txt` (~120KB) or gamemaster (~900KB,
+   single line) wholesale.
 
 Output to the coordinator: edited marker names, source sections parsed, and any panels
 kept from last good content.

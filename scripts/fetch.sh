@@ -56,10 +56,14 @@ ALL=(events raids eggs research gamemaster tiers-attackers tiers-defenders tiers
 ALLOW_HOSTS=(leekduck.com pokemongohub.net db.pokemongohub.net pokebase.app pokemongo.com dialgadex.com raw.githubusercontent.com pvpoke.com pokeapi.co serebii.net pokemongo.fandom.com)
 
 list_status() {
+  # sha256 (16 hex) lets the agent compare against the hashes recorded in
+  # data/state.json: an unchanged source means last run's conclusions still
+  # stand — no re-parsing/re-verifying needed (AGENTS.md "Token discipline").
   for k in "${ALL[@]}"; do
     f="$RAW/$k.$(ext_of "$k")"
     if [ -f "$f" ]; then
-      printf '%-18s cached %8sb  @ %s\n' "$k" "$(wc -c <"$f")" "$(date -u -r "$f" +%FT%TZ 2>/dev/null)"
+      printf '%-18s cached %8sb  @ %s  sha256:%.16s\n' "$k" "$(wc -c <"$f")" \
+        "$(date -u -r "$f" +%FT%TZ 2>/dev/null)" "$(sha256sum "$f" | cut -d' ' -f1)"
     else
       printf '%-18s (not fetched)\n' "$k"
     fi
@@ -114,6 +118,36 @@ fetch_one() {
   fi
 }
 
+# --- verified 简体中文 name lookup, cached forever ---------------------------
+# fetch.sh zh <dexId|species-slug|move:<move-slug>> ...
+# One TSV line per query: "<key>\t<en>\t<zh-Hans|NO-ZH-NAME>". Answers come from
+# the local dictionary data/raw/zh-names.json; PokeAPI is queried only on first
+# sight of a key (names never change), so a verification costs one line of
+# context instead of a 50-100KB species JSON dump via `fetch.sh url`.
+ZH_DICT="$RAW/zh-names.json"
+zh_lookup() {
+  local key="$1" url tmp row entry
+  [[ "$key" =~ ^(move:)?[a-z0-9-]+$ ]] || { echo "FAIL zh: bad key '$key' (use a dex id, species slug, or move:<move-slug>)" >&2; return 2; }
+  [ -s "$ZH_DICT" ] || echo '{}' > "$ZH_DICT"
+  row="$(jq -r --arg k "$key" '.[$k] // empty | [$k, .en, (.zh // "NO-ZH-NAME")] | @tsv' "$ZH_DICT" 2>/dev/null)"
+  if [ -n "$row" ]; then printf '%s\n' "$row"; return 0; fi
+  if [[ "$key" == move:* ]]; then url="https://pokeapi.co/api/v2/move/${key#move:}/"
+  else url="https://pokeapi.co/api/v2/pokemon-species/$key/"; fi
+  tmp="$(mktemp)"
+  if fetch_plain "$url" "$tmp" && jq empty "$tmp" >/dev/null 2>&1; then
+    entry="$(jq -c '{en: .name, zh: (first(.names[]? | select(.language.name == "zh-Hans") | .name) // null)}' "$tmp" 2>/dev/null)"
+    if [ -n "$entry" ] && [ "$entry" != null ]; then
+      jq --arg k "$key" --argjson e "$entry" '.[$k] = $e' "$ZH_DICT" > "$tmp.d" && mv "$tmp.d" "$ZH_DICT"
+      rm -f "$tmp"
+      jq -rn --arg k "$key" --argjson e "$entry" '[$k, $e.en, ($e.zh // "NO-ZH-NAME")] | @tsv'
+      return 0
+    fi
+  fi
+  rm -f "$tmp"
+  echo "FAIL zh $key  <- $url" >&2
+  return 1
+}
+
 # Ad-hoc single-page fetch, restricted to ALLOW_HOSTS. Prints the page to stdout
 # (site domains go through the CF-solver; raw file/API hosts via plain curl).
 fetch_url() {
@@ -153,10 +187,12 @@ fetch_url() {
   cat "$tmp"; rm -f "$tmp"
 }
 
-[ $# -eq 0 ] && { echo "usage: fetch.sh <list|all|url <URL...>|${ALL[*]}>"; exit 1; }
+[ $# -eq 0 ] && { echo "usage: fetch.sh <list|all|zh <key...>|url <URL...>|${ALL[*]}>"; exit 1; }
 case "$1" in
   list)      list_status; exit 0 ;;
-  -h|--help) echo "sources: ${ALL[*]}"; echo "ad-hoc:  fetch.sh url <URL...>  (hosts: ${ALLOW_HOSTS[*]})"; exit 0 ;;
+  -h|--help) echo "sources: ${ALL[*]}"; echo "names:   fetch.sh zh <dexId|species-slug|move:<move-slug>>...  (cached 简体中文 lookup)"; echo "ad-hoc:  fetch.sh url <URL...>  (hosts: ${ALLOW_HOSTS[*]})"; exit 0 ;;
+  zh)        shift; [ $# -eq 0 ] && { echo "usage: fetch.sh zh <dexId|species-slug|move:<move-slug>>..." >&2; exit 1; }
+             rc=0; for k in "$@"; do zh_lookup "$k" || rc=1; done; exit $rc ;;
   url)       shift; [ $# -eq 0 ] && { echo "usage: fetch.sh url <URL...>" >&2; exit 1; }
              rc=0; for u in "$@"; do fetch_url "$u" || rc=1; done; exit $rc ;;
   all)       set -- "${ALL[@]}" ;;

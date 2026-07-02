@@ -36,7 +36,11 @@ responsibilities.
 
 1. Read `AGENTS.md`, `data/state.json`, and every sub-agent brief above.
 2. Run the Source Scout phase first. Do **not** blindly refetch everything; refresh
-   by age / relevance using only `scripts/fetch.sh`.
+   by age / relevance using only `scripts/fetch.sh`. Have the Scout report **which
+   sources' hashes changed** vs `data/state.json`, and pass that delta to every curator:
+   unchanged sources need no re-derivation, and if nothing event-bearing changed, take
+   AGENTS.md's **quiet-day fast path** (date-driven maintenance only) instead of
+   dispatching full rebuilds.
 3. After the raw sources are available, run **Calendar first**, to completion: it
    writes `public/data/events.json` (plus `featured.json` / `mega.json` /
    `categories.json` when their duties apply).

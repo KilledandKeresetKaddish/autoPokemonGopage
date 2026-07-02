@@ -78,5 +78,11 @@ Checklist:
    为这些天加**单日段**、`pokemon[]` 与你的事件对齐。每个 `raid-battles` 都要有匹配角标,否则 `preflight.sh`
    会判它 orphan(被角标隐藏 bar 后静默消失)。
 
+10. **Token discipline (AGENTS.md, binding):** edit `events.json` **in place** — never a
+    full-file rewrite; skip re-deriving from hash-unchanged sources (quiet-day fast path);
+    verify names via `scripts/fetch.sh zh <dexId>` / `zh move:<slug>` (one cached TSV line —
+    never dump a species JSON); re-verify links only on new/changed events; `jq`/`grep` the
+    big caches (gamemaster is a ~900KB single line — never read it wholesale).
+
 Output to the coordinator: changed files, event count, long-term count, highlighted
 count, known source gaps kept from last good content.

@@ -162,11 +162,20 @@ scripts/validate.sh; vl=$?
 if [ "$pa" = 0 ] && [ "$pf" = 0 ] && [ "$vl" = 0 ]; then
   echo "--- publishing ---"
   scripts/publish.sh || { echo "!!! publish FAILED (commit error — content left in working tree)"; exit 1; }
+  # Sweep agent temp/backup files under data/ (untracked, non-ignored — e.g. a
+  # state.json.bak): publish only commits public + data/state.json, so a stray
+  # would survive and trip tomorrow's dirty-tree guard. git clean without -x
+  # keeps the ignored data/raw cache.
+  git clean -fdq data 2>/dev/null || true
   echo "===== done OK $(date -u +%FT%TZ) ====="
 else
   echo "!!! gate FAILED (protected=$pa preflight=$pf validate=$vl) — rolling back working tree to last good commit"
-  git checkout -- public data/state.json 2>/dev/null || true
-  git clean -fdq public 2>/dev/null || true
+  # checkout+clean cover BOTH guarded content paths (public + data): a stray
+  # untracked file under data/ would otherwise survive rollback and deadlock
+  # every future run at the dirty-tree guard. -x is deliberately absent so the
+  # ignored data/raw/* cache is preserved.
+  git checkout -- public data 2>/dev/null || true
+  git clean -fdq public data 2>/dev/null || true
   echo "===== rolled back $(date -u +%FT%TZ) ====="
   exit 1
 fi

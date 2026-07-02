@@ -52,5 +52,10 @@ Checklist:
 10. **发布前跑 `scripts/preflight.sh`** 自检(拦截 orphan raid、角标↔抽屉不一致、form-id 误用);
     `run-daily.sh` 已在 `validate.sh` 前强制运行。详见 AGENTS.md《渲染契约》。
 
+11. **Token discipline (AGENTS.md, binding):** if the monthly article and `raids.json` are
+    hash-unchanged and `month` is current, keep `rotations.json` as-is; otherwise edit
+    segments in place. Verify names via `scripts/fetch.sh zh`; `jq` gamemaster for dex/属性
+    entries — never read the ~900KB single-line file wholesale.
+
 Output to the coordinator: changed file, parsed source sections, any uncertainties or
 kept-last-good segments.
