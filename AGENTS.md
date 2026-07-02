@@ -98,9 +98,11 @@ or touch them.**
 - `data/state.json` — your own bookkeeping (last-fetch times, source hashes, notes).
 - `public/data/mega.json` — the cumulative **超级进化 / 原始回归 roster** shown in the 「超级进化」view.
   Your **one and only job** here: when the game announces a NEW Mega/Primal, **append one row**.
-  Everything the view shows (per-level energy costs, generic bonuses, the re-Mega cost curve) is
-  DERIVED from the single field `initialCost` via mechanics tables baked into `app.js` — you **never**
-  compute or edit those numbers, and you never touch `app.js`/the `#view-mega` HTML.
+  Every cost/time number the view shows (per-level energy costs, generic bonuses, instant level-up
+  prices, the 升级规划器 comparisons) is DERIVED from the single field `initialCost` via mechanics
+  tables baked into `app.js`; the only other mechanics-relevant field is the optional `superMax`
+  flag below. You **never** compute or edit those numbers, and you never touch `app.js`/the
+  `#view-mega` HTML.
   Row schema (flat array; reuses the usual sprite/link conventions):
   ```json
   { "id": 3, "name": "超级妙蛙花", "en": "Mega Venusaur",
@@ -123,7 +125,7 @@ or touch them.**
   - `initialCost` = the first-time Mega Energy cost. **Must be one of `{100,200,300,400,7500}` — or `null`
     if TBD/pre-release** (the view then shows「待定」). Do **NOT** invent a value; leave `null` until confirmed.
   - `superMax` (optional boolean) = this form can reach the **超级最高 (Super Max)** level. Set `true`
-    **only when officially announced** for that form (at the 2026-02-20 launch: Victreebel, Dragonite,
+    **only when officially announced** for that form (as of 2026-07 exactly seven: Victreebel, Dragonite,
     Skarmory, Malamar, Falinks, Mewtwo X/Y). Omit the field otherwise — never guess. The view's planner
     hides the Super-Max target row for forms without it.
   - `sprite` (Mega/Primal form image — required, base dex sprite can't show the form) + `hub` (form slug

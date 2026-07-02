@@ -219,7 +219,7 @@
     <section id="view-mega" class="view">
       <div class="panel" style="padding:.85rem 1.05rem">
         <div class="panel-head"><span class="dia">◆</span><h3>超级进化参考</h3></div>
-        <p class="muted">选择一只宝可梦,填入它已超级进化的次数,规划器会动态比较三条升级路线:免费等满休息期(7 / 5 / 3 天)、每天付费进化一次、花能量立即升级。下方附静态查询表(各等级消耗、通用加成、立即升级价目)与 Bulbapedia 来源链接。信息全部由「首次消耗(Initial Cost)」这一个值推算——新超级进化公布时,只需在 <code>data/mega.json</code> 里加一行(名称 + 首次消耗),其余自动生成。</p>
+        <p class="muted">选择一只宝可梦,填入它已超级进化的次数,规划器会动态比较三条升级路线:免费等满休息期(7 / 5 / 3 天)、每天付费进化一次、花能量立即升级。下方附静态查询表(各等级消耗、通用加成、立即升级价目)与 Bulbapedia 来源链接。所有费用与时长均由「首次消耗(Initial Cost)」推算——新超级进化公布时,只需在 <code>data/mega.json</code> 里加一行(名称 + 首次消耗,可达超级最高的再标 <code>superMax</code>),其余自动生成。</p>
         <label class="mega-picker">选择宝可梦
           <select id="mega-select"></select>
         </label>
