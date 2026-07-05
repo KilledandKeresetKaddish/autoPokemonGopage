@@ -1,25 +1,25 @@
 {
-  "lastUpdated": "2026-07-03T16:35:00Z",
+  "lastUpdated": "2026-07-05T05:38:27Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-07-03T16:32:21Z",
-      "lastChecked": "2026-07-03T16:35:00Z",
+      "lastFetch": "2026-07-05T05:38:27Z",
+      "lastChecked": "2026-07-05T05:38:27Z",
       "status": "ok",
-      "bytes": 53123,
-      "note": "2026-07-03 刷新 OK; hash changed from aa5e→6b22; 纸御剑/铁火辉夜已从 feed 消失(6 月过期); raichu-super-mega-raid-day type=raid-day 已更正; 新增 gbl-mega-edition 9/1–9/8。",
-      "sha256": "6b22cae7bd2930d9"
+      "bytes": 51320,
+      "note": "2026-07-05 刷新 OK; hash changed from 6b22→087a; Calendar 核对后无需改动, 事件统计保持 92 条。",
+      "sha256": "087a5608a80c1320"
     },
     "raids": {
-      "lastFetch": "2026-07-03T16:32:21Z",
-      "lastChecked": "2026-07-03T16:35:00Z",
+      "lastFetch": "2026-07-05T05:38:27Z",
+      "lastChecked": "2026-07-05T05:38:27Z",
       "status": "ok",
       "bytes": 17780,
-      "note": "2026-07-03 刷新 OK; hash changed from d611→890e; 现在正确反映七月团战池(三神鸟+超级路卡利欧+暗影帕路奇亚+Shadow raids)。",
+      "note": "2026-07-05 刷新 OK; hash unchanged 890e; 当前团战池未变化。",
       "sha256": "890e0a5e2cdb7a8a"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-03T16:35:00Z",
+      "lastChecked": "2026-07-05T05:38:27Z",
       "status": "ok",
       "bytes": 29466,
       "note": "本轮未刷新; 非本次核心变更。",
@@ -27,7 +27,7 @@
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-03T16:35:00Z",
+      "lastChecked": "2026-07-05T05:38:27Z",
       "status": "ok",
       "bytes": 70308,
       "note": "本轮未刷新; 非本次核心变更。",
@@ -35,84 +35,88 @@
     },
     "gamemaster": {
       "lastFetch": "2026-07-01T10:16:57Z",
-      "lastChecked": "2026-07-03T16:35:00Z",
+      "lastChecked": "2026-07-05T05:38:27Z",
       "status": "ok",
       "bytes": 918527,
-      "note": "2 天前刷新,7 天窗口内; hash unchanged bfd7; 用于 dex/属性/招式核验。",
+      "note": "7 天窗口内; hash unchanged bfd7; 用于 dex/属性/招式核验。",
       "sha256": "bfd70277b21ec866"
     },
     "tiers-attackers": {
-      "lastFetch": "2026-07-01T10:17:00Z",
-      "lastChecked": "2026-07-03T16:35:00Z",
+      "lastFetch": "2026-07-05T05:38:27Z",
+      "lastChecked": "2026-07-05T05:38:27Z",
       "status": "ok",
       "bytes": 35479,
-      "note": "2 天前刷新,3 天窗口内; hash unchanged 037b; 排行榜面板沿用上次内容。",
+      "note": "2026-07-05 刷新 OK; hash unchanged 037b; 结构化 Max 攻手面板沿用已验证内容。",
       "sha256": "037bf6a8ed8a2df8"
     },
     "tiers-defenders": {
-      "lastFetch": "2026-07-01T10:17:04Z",
-      "lastChecked": "2026-07-03T16:35:00Z",
+      "lastFetch": "2026-07-05T05:38:27Z",
+      "lastChecked": "2026-07-05T05:38:27Z",
       "status": "ok",
       "bytes": 39579,
-      "note": "2 天前刷新,3 天窗口内; hash unchanged 17e3; 排行榜面板沿用上次内容。",
+      "note": "2026-07-05 刷新 OK; hash unchanged 17e3; 结构化 Max 防守面板沿用已验证内容。",
       "sha256": "17e3e7e077fbe798"
     },
     "tiers-pokebase": {
-      "lastFetch": "2026-07-01T10:17:15Z",
-      "lastChecked": "2026-07-03T16:35:00Z",
+      "lastFetch": "2026-07-05T05:38:27Z",
+      "lastChecked": "2026-07-05T05:38:27Z",
       "status": "ok",
       "bytes": 121480,
-      "note": "2 天前刷新,3 天窗口内; hash unchanged c808; 交叉参考沿用。",
-      "sha256": "c8087c678438e548"
+      "note": "2026-07-05 刷新 OK; hash changed from c808→7138; 仅交叉参考变化, 结构化面板未重写。",
+      "sha256": "7138c1e21645b7a3"
     },
     "events-hub": {
-      "lastFetch": "2026-07-03T16:32:24Z",
-      "lastChecked": "2026-07-03T16:35:00Z",
+      "lastFetch": "2026-07-05T05:38:27Z",
+      "lastChecked": "2026-07-05T05:38:27Z",
       "status": "ok",
-      "bytes": 30383,
-      "note": "2026-07-03 刷新 OK; hash changed from 2082→d6f4; index 页面内容微调。",
-      "sha256": "d6f4b5778f0f03df"
+      "bytes": 30430,
+      "note": "2026-07-05 刷新 OK; hash changed from d6f4→f0b3; 已确认 July 2026 roundup 与 Road of Legends Hub 页面。",
+      "sha256": "f0b3c4f051e84ba7"
     },
     "events-pokebase": {
-      "lastFetch": "2026-07-03T16:32:32Z",
-      "lastChecked": "2026-07-03T16:35:00Z",
+      "lastFetch": "2026-07-05T05:38:27Z",
+      "lastChecked": "2026-07-05T05:38:27Z",
       "status": "ok",
-      "bytes": 30266,
-      "note": "2026-07-03 刷新 OK; hash changed from a412→98b6; 事件列表微调。",
-      "sha256": "98b664cf3e165386"
+      "bytes": 30365,
+      "note": "2026-07-05 刷新 OK; hash changed from 98b6→9298; Calendar 核对后无需改动。",
+      "sha256": "9298106c068f1104"
     },
     "events-official": {
-      "lastFetch": "2026-07-03T16:32:39Z",
-      "lastChecked": "2026-07-03T16:35:00Z",
+      "lastFetch": "2026-07-05T05:38:27Z",
+      "lastChecked": "2026-07-05T05:38:27Z",
       "status": "ok",
-      "bytes": 6965,
-      "note": "2026-07-03 刷新 OK; hash unchanged 9fc8; 官网通用首页,低信息量。",
-      "sha256": "9fc85a4f6b7d2fea"
+      "bytes": 9821,
+      "note": "2026-07-05 刷新 OK; hash changed from 9fc8→4b9c; event-calendar-2026 已核实为功能/新闻页, 不是可游玩活动。",
+      "sha256": "4b9cc69f8d18437b"
     }
   },
   "discovery": {
-    "lastChecked": "2026-07-03T16:33:24Z",
+    "lastChecked": "2026-07-05T05:38:27Z",
     "status": "ok",
-    "note": "scripts/discover.sh new 运行; 仅发现 1 条 OFFICIAL-LEAD(通用日历页面), 无新活动需补入。"
+    "note": "discover new 仅返回 OFFICIAL-LEAD https://pokemongo.com/news/event-calendar-2026; 已验证为功能/新闻说明, 不新增日历事件。"
   },
   "contentStatus": {
-    "checkedAt": "2026-07-03T16:35:00Z",
+    "checkedAt": "2026-07-05T05:38:27Z",
     "status": "ready-for-validation",
-    "note": "Calendar: 92 条事件(删 shadow-dialga +1 gbl-mega-edition); 修正 skarmory/raichu super-mega-raid-day type→raid-day; Max 轮换丑丑鱼日期修正(7/26→7/27); calendar-notes+rankings-current 更新至 7/3; raids 数据现正确反映七月池。"
+    "note": "Calendar 无变更: 92 条事件, longTerm=17, pvp=12, highlight=12。Rotations: 7/8 5★ 莱希拉姆 id 643 标记 shiny:true 并使用闪光 sprite。Rankings: 仅 calendar-notes 与 rankings-current 更新; 结构化面板沿用。"
   },
   "validation": {
-    "checkedAt": "2026-07-03T16:35:00Z",
+    "checkedAt": "2026-07-05T05:38:47Z",
     "status": "passed",
-    "note": "scripts/preflight.sh exit 0: OK(1 WARN long chip raidhour20260624); scripts/validate.sh exit 0: OK all checks passed."
+    "note": "preflight exit 0: OK render checks passed with 1 known WARN long chip raidhour20260624; validate exit 0: OK all checks passed."
   },
   "notes": {
     "preflight_known_warn": {
       "fact": "raidhour20260624《纸御剑 与 铁火辉夜 团战时刻》仍触发 long chip name WARN。",
-      "decision": "preflight 仅 WARN 且 exit 0,不阻断发布; 后续可由 Calendar 缩短标题。"
+      "decision": "preflight 仅 WARN 且不阻断发布; 本轮不属于 State+Validator 可编辑范围。"
     },
     "operator_note_decoded": {
-      "fact": "Operator note 为 mojibake(乱码); 可辨识意图: (1) 超级团战日事件应同时显示为日历 chip + 角标; (2) 删除已结束的暗影帝牙卢卡。",
-      "decision": "skarmory/raichu super-mega-raid-day type 已由 raid-battles 改为 raid-day; shadow-dialga 已删除; 均已验证通过。"
+      "fact": "Operator note 为 mojibake(乱码); 可辨识意图: 对比每日更新, 修正 bug, 莱希拉姆 5★ 团战确认闪光首发, 轮换图标替换为闪光莱希拉姆。",
+      "decision": "Rotations 已由上游改为 7/8 Reshiram id 643, shiny:true, sprite 指向 PokeAPI shiny/643.png; 本阶段仅记录并验证。"
+    },
+    "source_health": {
+      "fact": "Hub July roundup 与 Road of Legends Hub/official 已确认; events/Hub/Pokébase/official hash 均有变化, raids 与主要 Max tier 面板源未变。",
+      "decision": "Calendar 未发现需新增的可游玩活动; 结构化排行榜未因交叉参考变化重写。"
     }
   }
 }

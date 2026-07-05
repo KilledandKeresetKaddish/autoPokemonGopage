@@ -128,7 +128,9 @@
             },
             {
               "id": 643,
-              "name": "莱希拉姆"
+              "name": "莱希拉姆",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/643.png",
+              "shiny": true
             },
             {
               "id": 800,
