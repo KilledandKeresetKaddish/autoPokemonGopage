@@ -1,25 +1,25 @@
 {
-  "lastUpdated": "2026-07-05T05:38:27Z",
+  "lastUpdated": "2026-07-06T05:17:22Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-07-05T05:38:27Z",
-      "lastChecked": "2026-07-05T05:38:27Z",
+      "lastFetch": "2026-07-06T05:08:34Z",
+      "lastChecked": "2026-07-06T05:17:22Z",
       "status": "ok",
-      "bytes": 51320,
-      "note": "2026-07-05 刷新 OK; hash changed from 6b22→087a; Calendar 核对后无需改动, 事件统计保持 92 条。",
-      "sha256": "087a5608a80c1320"
+      "bytes": 38189,
+      "note": "2026-07-06 刷新 OK; hash changed from 087a→32ac; Calendar 已同步 7/22 索尔迦雷欧闪光首发相关文案/标记。",
+      "sha256": "32acd89d5347a0ab"
     },
     "raids": {
-      "lastFetch": "2026-07-05T05:38:27Z",
-      "lastChecked": "2026-07-05T05:38:27Z",
+      "lastFetch": "2026-07-06T05:08:15Z",
+      "lastChecked": "2026-07-06T05:17:22Z",
       "status": "ok",
       "bytes": 17780,
-      "note": "2026-07-05 刷新 OK; hash unchanged 890e; 当前团战池未变化。",
+      "note": "2026-07-06 刷新 OK; hash unchanged 890e; 当前团战池未变化。",
       "sha256": "890e0a5e2cdb7a8a"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-05T05:38:27Z",
+      "lastChecked": "2026-07-06T05:17:22Z",
       "status": "ok",
       "bytes": 29466,
       "note": "本轮未刷新; 非本次核心变更。",
@@ -27,7 +27,7 @@
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-05T05:38:27Z",
+      "lastChecked": "2026-07-06T05:17:22Z",
       "status": "ok",
       "bytes": 70308,
       "note": "本轮未刷新; 非本次核心变更。",
@@ -35,88 +35,88 @@
     },
     "gamemaster": {
       "lastFetch": "2026-07-01T10:16:57Z",
-      "lastChecked": "2026-07-05T05:38:27Z",
+      "lastChecked": "2026-07-06T05:17:22Z",
       "status": "ok",
       "bytes": 918527,
-      "note": "7 天窗口内; hash unchanged bfd7; 用于 dex/属性/招式核验。",
+      "note": "7 天窗口内未刷新; hash bfd7; 用于 dex/属性/招式核验。",
       "sha256": "bfd70277b21ec866"
     },
     "tiers-attackers": {
-      "lastFetch": "2026-07-05T05:38:27Z",
-      "lastChecked": "2026-07-05T05:38:27Z",
+      "lastFetch": "2026-07-05T05:31:09Z",
+      "lastChecked": "2026-07-06T05:17:22Z",
       "status": "ok",
       "bytes": 35479,
-      "note": "2026-07-05 刷新 OK; hash unchanged 037b; 结构化 Max 攻手面板沿用已验证内容。",
+      "note": "3 天窗口内未刷新; hash 037b; 结构化 Max 攻手面板沿用已验证内容。",
       "sha256": "037bf6a8ed8a2df8"
     },
     "tiers-defenders": {
-      "lastFetch": "2026-07-05T05:38:27Z",
-      "lastChecked": "2026-07-05T05:38:27Z",
+      "lastFetch": "2026-07-05T05:31:12Z",
+      "lastChecked": "2026-07-06T05:17:22Z",
       "status": "ok",
       "bytes": 39579,
-      "note": "2026-07-05 刷新 OK; hash unchanged 17e3; 结构化 Max 防守面板沿用已验证内容。",
+      "note": "3 天窗口内未刷新; hash 17e3; 结构化 Max 防守面板沿用已验证内容。",
       "sha256": "17e3e7e077fbe798"
     },
     "tiers-pokebase": {
-      "lastFetch": "2026-07-05T05:38:27Z",
-      "lastChecked": "2026-07-05T05:38:27Z",
+      "lastFetch": "2026-07-05T05:31:15Z",
+      "lastChecked": "2026-07-06T05:17:22Z",
       "status": "ok",
       "bytes": 121480,
-      "note": "2026-07-05 刷新 OK; hash changed from c808→7138; 仅交叉参考变化, 结构化面板未重写。",
+      "note": "3 天窗口内未刷新; hash 7138; 仅作交叉参考。",
       "sha256": "7138c1e21645b7a3"
     },
     "events-hub": {
-      "lastFetch": "2026-07-05T05:38:27Z",
-      "lastChecked": "2026-07-05T05:38:27Z",
+      "lastFetch": "2026-07-06T05:08:35Z",
+      "lastChecked": "2026-07-06T05:17:22Z",
       "status": "ok",
-      "bytes": 30430,
-      "note": "2026-07-05 刷新 OK; hash changed from d6f4→f0b3; 已确认 July 2026 roundup 与 Road of Legends Hub 页面。",
-      "sha256": "f0b3c4f051e84ba7"
+      "bytes": 30431,
+      "note": "2026-07-06 刷新/按需读取 OK; hash changed; Hub 7 月月历确认 7/22–7/28 索尔迦雷欧 5★ 与 7/22 团战时刻。",
+      "sha256": "c6bc5a9dc4fde694"
     },
     "events-pokebase": {
-      "lastFetch": "2026-07-05T05:38:27Z",
-      "lastChecked": "2026-07-05T05:38:27Z",
+      "lastFetch": "2026-07-06T05:08:27Z",
+      "lastChecked": "2026-07-06T05:17:22Z",
       "status": "ok",
-      "bytes": 30365,
-      "note": "2026-07-05 刷新 OK; hash changed from 98b6→9298; Calendar 核对后无需改动。",
-      "sha256": "9298106c068f1104"
+      "bytes": 30019,
+      "note": "2026-07-06 刷新 OK; hash changed from 9298→78f7; 未发现需新增的可游玩事件。",
+      "sha256": "78f74f3221aa590e"
     },
     "events-official": {
-      "lastFetch": "2026-07-05T05:38:27Z",
-      "lastChecked": "2026-07-05T05:38:27Z",
+      "lastFetch": "2026-07-06T05:08:35Z",
+      "lastChecked": "2026-07-06T05:17:22Z",
       "status": "ok",
       "bytes": 9821,
-      "note": "2026-07-05 刷新 OK; hash changed from 9fc8→4b9c; event-calendar-2026 已核实为功能/新闻页, 不是可游玩活动。",
+      "note": "2026-07-06 检查 OK; hash unchanged 4b9c; event-calendar-2026 仍为功能/新闻页, 不是可游玩活动。",
       "sha256": "4b9cc69f8d18437b"
     }
   },
   "discovery": {
-    "lastChecked": "2026-07-05T05:38:27Z",
+    "lastChecked": "2026-07-06T05:17:22Z",
     "status": "ok",
     "note": "discover new 仅返回 OFFICIAL-LEAD https://pokemongo.com/news/event-calendar-2026; 已验证为功能/新闻说明, 不新增日历事件。"
   },
   "contentStatus": {
-    "checkedAt": "2026-07-05T05:38:27Z",
+    "checkedAt": "2026-07-06T05:17:22Z",
     "status": "ready-for-validation",
-    "note": "Calendar 无变更: 92 条事件, longTerm=17, pvp=12, highlight=12。Rotations: 7/8 5★ 莱希拉姆 id 643 标记 shiny:true 并使用闪光 sprite。Rankings: 仅 calendar-notes 与 rankings-current 更新; 结构化面板沿用。"
+    "note": "Calendar: 92 条事件; 7/22 索尔迦雷欧 5★/团战时刻标记 shiny debut, 暗影帕路奇亚长周期标记 longTerm。Rotations: 7/22 索尔迦雷欧段同步 shiny:true, 7/8 莱希拉姆闪光角标保留。Rankings: calendar-notes 与 rankings-current 更新; 结构化面板沿用。"
   },
   "validation": {
-    "checkedAt": "2026-07-05T05:38:47Z",
+    "checkedAt": "2026-07-06T05:17:22Z",
     "status": "passed",
     "note": "preflight exit 0: OK render checks passed with 1 known WARN long chip raidhour20260624; validate exit 0: OK all checks passed."
   },
   "notes": {
     "preflight_known_warn": {
       "fact": "raidhour20260624《纸御剑 与 铁火辉夜 团战时刻》仍触发 long chip name WARN。",
-      "decision": "preflight 仅 WARN 且不阻断发布; 本轮不属于 State+Validator 可编辑范围。"
+      "decision": "preflight 仅 WARN 且不阻断发布; 本轮不改历史 chip 名。"
     },
     "operator_note_decoded": {
-      "fact": "Operator note 为 mojibake(乱码); 可辨识意图: 对比每日更新, 修正 bug, 莱希拉姆 5★ 团战确认闪光首发, 轮换图标替换为闪光莱希拉姆。",
-      "decision": "Rotations 已由上游改为 7/8 Reshiram id 643, shiny:true, sprite 指向 PokeAPI shiny/643.png; 本阶段仅记录并验证。"
+      "fact": "Operator note 为 mojibake(乱码); 可辨识意图包含每日更新、修正 bug、7/22 团战/5★ 闪光首发与闪光图标。",
+      "decision": "实际来源核实 7/22 为索尔迦雷欧而非莱希拉姆; 已为索尔迦雷欧 5★ 与团战时刻标记闪光首发, 并同步 7/22 轮换 shiny:true。既有 7/8 莱希拉姆闪光角标保持不变。"
     },
     "source_health": {
-      "fact": "Hub July roundup 与 Road of Legends Hub/official 已确认; events/Hub/Pokébase/official hash 均有变化, raids 与主要 Max tier 面板源未变。",
-      "decision": "Calendar 未发现需新增的可游玩活动; 结构化排行榜未因交叉参考变化重写。"
+      "fact": "events/events-hub/events-pokebase hashes changed; raids/official/tiers/gamemaster 未出现需重算结构化面板的变化。",
+      "decision": "保留已验证结构化排行榜; 仅刷新自由文案与相关日历/轮换字段。"
     }
   }
 }
