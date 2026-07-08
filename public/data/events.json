@@ -1504,6 +1504,41 @@
     "highlight": true
   },
   {
+    "id": "pokemon-go-10th-anniversary-celebration-twitch-drops",
+    "name": "十周年庆典 Twitch 掉宝",
+    "type": "twitch-drops",
+    "heading": "Twitch Drops",
+    "start": "2026-07-09T22:30:00Z",
+    "end": "2026-07-10T01:30:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-09-pokemon-go-10th-anniversary-celebration-twitch-drops/rewards.jpg",
+    "link": "https://leekduck.com/events/pokemon-go-10th-anniversary-celebration-twitch-drops/",
+    "summary": "观看 Pokémon GO 十周年庆典 Twitch 直播连续 30 分钟可领取掉宝兑换码;直播时间为 7/9 22:30Z–7/10 01:30Z。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-go-10th-anniversary-celebration-twitch-drops/"
+      }
+    ],
+    "bonuses": [
+      ":pokeball: 精灵球 ×10、超级球 ×10、高级球 ×10",
+      "伤药 ×10、厉害伤药 ×10、全满药 ×10",
+      "活力碎片 ×10、活力块 ×10",
+      ":rare-candy: 神奇糖果 ×10、神奇糖果XL ×10、幸运蛋 ×10"
+    ],
+    "sections": [
+      {
+        "title": "领取方式",
+        "items": [
+          "关注 Twitch.tv/PokemonGO,并将 Pokémon Trainer Club 账号连接到 Twitch。",
+          "7/9 18时30分–21时30分 EDT 连续观看至少 30 分钟;最小化直播可能暂停 Twitch 掉宝进度。",
+          "在 Twitch 聊天弹窗或 Drops Inventory 领取掉宝,复制兑换码后前往 Offer Redemption 页面兑换。",
+          "兑换码限时有效,每位训练家每个 Twitch Drop 只能领取一次。"
+        ]
+      }
+    ],
+    "highlight": false
+  },
+  {
     "id": "july-communityday2026",
     "name": "泪眼蜥 社区日",
     "type": "community-day",
@@ -5110,6 +5145,10 @@
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/solgaleo-in-5-star-raid-battles-july-2026/"
+      },
+      {
+        "label": "Hub 月历",
+        "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
       },
       {
         "label": "Hub 索尔迦雷欧指南",
