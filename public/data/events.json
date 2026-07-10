@@ -3371,11 +3371,15 @@
     "end": "2026-07-16T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-16/",
-    "summary": "聚焦时刻 18:00–19:00 超音蝠 大量出现,并有 捕捉经验 ×2 加成。",
+    "summary": "聚焦时刻 18:00–19:00 超音蝠 大量出现,并有 捕捉经验 ×2 加成;运气好可遇见闪光个体。",
     "links": [
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/pokemonspotlighthour2026-07-16/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/spotlight-raid-hours/"
       }
     ],
     "pokemon": [
@@ -3386,23 +3390,6 @@
     ],
     "bonuses": [
       ":xp: 捕捉经验 ×2"
-    ]
-  },
-  {
-    "id": "weekend-event-july-2026",
-    "name": "周末活动",
-    "type": "event",
-    "heading": "Event",
-    "start": "2026-07-18T10:00:00",
-    "end": "2026-07-18T20:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/weekend-event-july-2026/",
-    "summary": "周末活动:限定主题宝可梦增加出现与短期加成。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/weekend-event-july-2026/"
-      }
     ]
   },
   {
@@ -3515,11 +3502,15 @@
     "end": "2026-07-23T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-23/",
-    "summary": "聚焦时刻 18:00–19:00 伊布 大量出现,并有 捕捉糖果 ×2 加成。",
+    "summary": "聚焦时刻 18:00–19:00 伊布 大量出现,并有 捕捉糖果 ×2 加成;运气好可遇见闪光个体。",
     "links": [
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/pokemonspotlighthour2026-07-23/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/spotlight-raid-hours/"
       }
     ],
     "pokemon": [
@@ -3541,17 +3532,60 @@
     "end": "2026-08-03T20:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/choose-your-path-evergreen.jpg",
     "link": "https://leekduck.com/events/choose-your-path-fairy-trail-2026/",
-    "summary": "「选择你的道路:妖精之路」限时调查,二选一路线主题为妖精系。",
+    "summary": "「选择你的道路:妖精之路」限时调查,可从探索/捕捉/对战三条路线中任选其一,决定本周任务与奖励;本期主题为妖精系。",
     "links": [
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/choose-your-path-fairy-trail-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/choose-your-path-timed-research-daily-discovery-updates-spotlight-hour-returns/"
       }
     ],
     "bonuses": [
       "限时调查双线选择",
       ":candy: 完成后可领取对应奖励"
     ]
+  },
+  {
+    "id": "2026_ana_red",
+    "name": "ANA×宝可梦「红色宝可梦喷射机」(日本机场)",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-07-28T16:00:00",
+    "end": "2027-08-31T20:00:00",
+    "link": "https://pokemongo.com/news/2026_ana_red",
+    "summary": "庆祝宝可梦 30 周年「红色宝可梦喷射机」启航,Pokémon GO 与全日空(ANA)在日本各地机场举办线下联动:参与机场的道馆中小火龙进驻团体战(带喷射机主题场景背景,每馆每日限 1 场),到场还可领取一次性限时调查。",
+    "links": [
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/2026_ana_red"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/ana-and-pokemon-go-partnership-red-pokemon-jet/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 4,
+        "name": "小火龙",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "第一阶段参与机场",
+        "items": [
+          "新千岁机场 · 函馆机场 · 秋田机场 · 仙台机场",
+          "羽田机场(第 2、第 3 航站楼)· 成田机场(第 1 航站楼)",
+          "限时调查每人仅可在任一参与机场领取一次,领取后 3 天内有效",
+          "第二、三阶段(绿色/蓝色喷射机)机场名单后续公布"
+        ]
+      }
+    ],
+    "longTerm": true
   },
   {
     "id": "gbl-forever-forward_great-league_master-premier",
@@ -3584,11 +3618,15 @@
     "end": "2026-07-30T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-30/",
-    "summary": "聚焦时刻 18:00–19:00 大牙狸 大量出现,并有 转移糖果 ×2 加成。",
+    "summary": "聚焦时刻 18:00–19:00 大牙狸 大量出现,并有 转移糖果 ×2 加成;运气好可遇见闪光个体。",
     "links": [
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/pokemonspotlighthour2026-07-30/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/spotlight-raid-hours/"
       }
     ],
     "pokemon": [
@@ -3637,6 +3675,10 @@
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/hatch-day-august-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/save-the-date-for-next-seasons-community-days-and-events-4/"
       }
     ],
     "bonuses": [
@@ -3652,11 +3694,15 @@
     "end": "2026-08-17T20:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/choose-your-path-evergreen.jpg",
     "link": "https://leekduck.com/events/choose-your-path-venom-and-vines-2026/",
-    "summary": "「选择你的道路:毒与藤蔓」限时调查,二选一路线主题为毒系与草系;具体宝可梦待官方公布。",
+    "summary": "「选择你的道路:毒与藤蔓」限时调查,可从探索/捕捉/对战三条路线中任选其一,决定本周任务与奖励;本期主题为毒系与草系,具体宝可梦待官方公布。",
     "links": [
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/choose-your-path-venom-and-vines-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/choose-your-path-timed-research-daily-discovery-updates-spotlight-hour-returns/"
       }
     ],
     "bonuses": [
@@ -3687,23 +3733,69 @@
   },
   {
     "id": "august-communityday2026",
-    "name": "8 月社区日",
+    "name": "狡小狐 社区日",
     "type": "community-day",
     "heading": "Community Day",
     "start": "2026-08-16T14:00:00",
     "end": "2026-08-16T17:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/cd-default.jpg",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-16-august-communityday2026/nickit-august-cd-2026.jpg",
     "link": "https://leekduck.com/events/august-communityday2026/",
-    "summary": "8 月社区日,14:00–17:00 限时举行;主角宝可梦与限定招式官方尚未公布,稍后补充。",
+    "summary": "8 月社区日主角为社区投票冠军狡小狐(恶属性),野外大量出现且闪光概率提升(约 1/20);活动期间或结束后 4 小时内进化可获得会限定招式的猾大狐。",
     "links": [
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/august-communityday2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/nickit-community-day-august-2026/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/communityday-august-2026-nickit"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 827,
+        "name": "狡小狐",
+        "shiny": true
+      },
+      {
+        "id": 828,
+        "name": "猾大狐",
+        "shiny": true
       }
     ],
     "bonuses": [
       "✨ 闪光概率提升",
-      ":candy: 捕捉糖果加成(待官方公布)"
+      ":spawn: 狡小狐野外大量出现",
+      ":stardust: 捕捉星尘 ×3",
+      ":incense: 3 小时熏香",
+      ":lure: 1 小时诱饵模块*",
+      ":candy: 捕捉糖果 ×2",
+      ":xl-candy: 糖果 XL 概率 ×2",
+      ":trading: 当日可多进行 1 次特殊交换(上限 2 次)*",
+      ":stardust: 交换所需星尘减少 50%*"
+    ],
+    "sections": [
+      {
+        "title": "限定招式",
+        "items": [
+          ":ice: 活动期间或结束后 4 小时内,将狡小狐进化为猾大狐可习得特殊招式「冰冻之风」(冰属性)"
+        ]
+      },
+      {
+        "title": "延长加成与诱饵机制",
+        "body": "带 * 的加成从当日 14 点持续到 21 点。同一时段内,普通诱饵模块将大幅提升狡小狐出现概率,吸引来的狡小狐仍有更高闪光概率并可能带特殊背景。"
+      },
+      {
+        "title": "付费特殊调查(1.99 美元)",
+        "items": [
+          "共 3 阶段,任务以捕捉宝可梦、投球与旋转补给站为主",
+          "奖励含多次狡小狐相遇(含特殊背景)、狡小狐糖果 ×50、星尘 ×7500、稀有糖果、高级对战护照与 XL 稀有糖果"
+        ]
+      }
     ],
     "highlight": true
   },
@@ -3743,6 +3835,10 @@
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/raid-day-august-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/save-the-date-for-next-seasons-community-days-and-events-4/"
       }
     ],
     "bonuses": [
@@ -5617,6 +5713,170 @@
     "highlight": false
   },
   {
+    "id": "sparks-caretaking-quest",
+    "name": "队长 Spark 主题周:照料之旅(GO 通行证)",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-06-02T10:00:00",
+    "end": "2026-06-08T20:00:00",
+    "link": "https://pokemongohub.net/post/event/sparks-caretaking-quest/",
+    "summary": "与队长 Spark 一起孵蛋探索的主题周,为 GO Fest 2026 芝加哥站预热:7km 蛋、孵化加成与 GO 通行证奖励,Rank 30 可遇 Spark 主题特殊背景的电击怪。",
+    "links": [
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/sparks-caretaking-quest/"
+      },
+      {
+        "label": "Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Spark's_Caretaking_Quest"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 239,
+        "name": "电击怪"
+      }
+    ],
+    "bonuses": [
+      ":incubator: GO 通行证 Rank 10 起孵化距离 1/2",
+      ":candy: Rank 20 起孵化糖果 ×1.5"
+    ]
+  },
+  {
+    "id": "candelas-quest-for-victory",
+    "name": "队长 Candela 主题周:胜利之旅(GO 通行证)",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-06-09T10:00:00",
+    "end": "2026-06-15T20:00:00",
+    "link": "https://pokemongohub.net/post/event/candelas-quest-for-victory/",
+    "summary": "与队长 Candela 一起专注团战与对战的主题周,为 GO Fest 2026 哥本哈根站预热:GO 通行证奖励,Rank 30 可遇 Candela 主题饰品的小火马。",
+    "links": [
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/candelas-quest-for-victory/"
+      },
+      {
+        "label": "Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Candela's_Quest_for_Victory"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 77,
+        "name": "小火马"
+      }
+    ],
+    "bonuses": [
+      ":raid: GO 通行证 Rank 10 起好友团战攻击加成提升",
+      ":stardust: Rank 20 起团战星尘 ×1.5"
+    ]
+  },
+  {
+    "id": "lego-stores-x-pokemon-go-stamp-rally-raids-and-more",
+    "name": "乐高门店×宝可梦 GO 集章活动(美/英/法/德/波/澳线下)",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-08-03T00:00:00",
+    "end": "2026-09-30T20:00:00",
+    "link": "https://pokemongohub.net/post/event/lego-stores-x-pokemon-go-stamp-rally-raids-and-more/",
+    "summary": "线下联动:美国、英国、波兰、法国、德国与澳大利亚的参与乐高门店内,可参加乐高主题集章活动、皮卡丘团战与限时调查,集章可遇见带特殊背景的皮卡丘。",
+    "links": [
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/lego-stores-x-pokemon-go-stamp-rally-raids-and-more/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 25,
+        "name": "皮卡丘",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "玩法一览",
+        "items": [
+          ":raid: 参与门店附近团战中皮卡丘更常出现,运气好可遇闪光或特殊背景个体",
+          ":pokestop: 集章活动:在指定补给站/道馆旋转集满印章,可遇带特殊背景的皮卡丘",
+          ":pokestop: 到店打开游戏可领限时调查(需在 9/30 20:00 前完成并领取),还有活动主题贴纸"
+        ]
+      }
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "pokemon-30th-anniversary-tour-pokexciting",
+    "name": "宝可梦 30 周年巡回 PokéXciting(亚洲多城线下)",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-09-12T10:00:00",
+    "end": "2027-02-14T20:00:00",
+    "link": "https://pokemongohub.net/post/event/pokemon-30th-anniversary-tour-pokexciting/",
+    "summary": "宝可梦 30 周年亚洲巡回庆典:吉隆坡、台北、新加坡、马尼拉、曼谷五站线下活动,含舞台表演、打卡体验与 Pokémon GO 限定玩法(详情后续公布)。",
+    "links": [
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokemon-30th-anniversary-tour-pokexciting/"
+      }
+    ],
+    "sections": [
+      {
+        "title": "巡回日程",
+        "items": [
+          "吉隆坡:2026/9/12–9/13(KLCC 公园,免费入场)",
+          "台北:2026/10/10–10/11",
+          "新加坡:2026/11/7–11/8",
+          "马尼拉:2027/1/23–1/24",
+          "曼谷:2027/2/13–2/14"
+        ]
+      }
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "pokemon-run-30-event",
+    "name": "Pokémon RUN 30 路跑活动(亚洲多地线下)",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-10-03T06:00:00",
+    "end": "2027-01-24T20:00:00",
+    "link": "https://pokemongohub.net/post/event/pokemon-run-30-event/",
+    "summary": "宝可梦 30 周年主题路跑活动登陆亚洲七地:菲律宾、台湾、新加坡、印尼、泰国、香港等,现场设免费入场的庆典区,Pokémon GO 同步推出场地限定活动与两次免费限时调查。",
+    "links": [
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokemon-run-30-event/"
+      }
+    ],
+    "bonuses": [
+      ":incense: 熏香持续时间 ×2(每日冒险熏香除外)",
+      ":xp: 新补给站首转经验 ×10 · 补给站经验 ×2",
+      ":incubator: 孵化距离 1/2"
+    ],
+    "sections": [
+      {
+        "title": "举办地与日程",
+        "items": [
+          "菲律宾:2026/10/3–10/4(SM Mall of Asia)",
+          "台湾:2026/10/17–10/18 台中中央公园 · 10/31–11/1 高雄梦时代 · 11/14–11/15 新北大都会公园",
+          "新加坡:2026/11/7–11/8(The Kallang)",
+          "印尼:2026/12/12–12/13(雅加达 GBK)",
+          "泰国:2027/1/9–1/10(场地待定)· 香港:2027/1/23–1/24(香港科学园)· 马来西亚:待定"
+        ]
+      },
+      {
+        "title": "限时调查",
+        "items": [
+          "活动区域内可免费领取两次限时调查,奖励含经验、星尘、道具与皮卡丘及随机御三家相遇",
+          "第一份需在当站活动结束后 1 日内完成,第二份(After the Run)需在 7 日内完成"
+        ]
+      }
+    ],
+    "longTerm": true
+  },
+  {
     "id": "city-safari-2026-sep",
     "name": "城市狩猎 City Safari 2026(6城线下:波士顿/慕尼黑/马赛/里斯本/布里斯班/里约)",
     "type": "event",
@@ -5674,7 +5934,7 @@
       },
       {
         "title": "票务",
-        "body": "购票活动。两日票 10.00 美元;单日票 8.00 美元,可加购第二天附加项(价格按当地货币换算,��加适用税费)。票务先到先得、不可退款,可在 Niantic 票务网站购买。"
+        "body": "购票活动。两日票 10.00 美元;单日票 8.00 美元,可加购第二天附加项(价格按当地货币换算,另加适用税费)。票务先到先得、不可退款,可在 Niantic 票务网站购买。"
       },
       {
         "title": "玩法亮点",

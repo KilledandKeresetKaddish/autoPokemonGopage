@@ -1,25 +1,25 @@
 {
-  "lastUpdated": "2026-07-08T08:34:04Z",
+  "lastUpdated": "2026-07-09T23:42:00Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-07-08T08:23:18Z",
-      "lastChecked": "2026-07-08T08:34:04Z",
+      "lastFetch": "2026-07-09T23:21:12Z",
+      "lastChecked": "2026-07-09T23:42:00Z",
       "status": "ok",
       "bytes": 44736,
-      "note": "2026-07-08 刷新 OK; hash changed 32ac→ae59; 新增十周年庆典 Twitch 掉宝, 索尔迦雷欧闪光首发字段保持并补 Hub 月历链接。",
-      "sha256": "ae5905c1bbc43ccc"
+      "note": "2026-07-09 刷新 OK; hash changed ae59→b538; 狡小狐 8 月社区日详情落地, weekend-event-july-2026 已从 feed 消失且 LeekDuck 404, 多源清查为空后删除。",
+      "sha256": "b538d0e3e0d13470"
     },
     "raids": {
-      "lastFetch": "2026-07-08T08:22:43Z",
-      "lastChecked": "2026-07-08T08:34:04Z",
+      "lastFetch": "2026-07-09T23:08:20Z",
+      "lastChecked": "2026-07-09T23:42:00Z",
       "status": "ok",
-      "bytes": 11274,
-      "note": "2026-07-08 刷新 OK; hash changed 890e→3f21; 当前团战 Counter 已按新缓存刷新。",
-      "sha256": "3f21cafa18f978b5"
+      "bytes": 10396,
+      "note": "2026-07-09 刷新 OK; hash changed 3f21→b1dd; 7/9 阵容: 王者苍响/藏玛然特 5★ + 超级耿鬼 + 暗影帕路奇亚, 当前团战 Counter 已按此重建。",
+      "sha256": "b1ddc195df340d97"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-08T08:34:04Z",
+      "lastChecked": "2026-07-09T23:42:00Z",
       "status": "ok",
       "bytes": 29466,
       "note": "本轮未刷新; 非本次核心变更。",
@@ -27,7 +27,7 @@
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-08T08:34:04Z",
+      "lastChecked": "2026-07-09T23:42:00Z",
       "status": "ok",
       "bytes": 70308,
       "note": "本轮未刷新; 非本次核心变更。",
@@ -35,88 +35,92 @@
     },
     "gamemaster": {
       "lastFetch": "2026-07-08T08:23:15Z",
-      "lastChecked": "2026-07-08T08:34:04Z",
+      "lastChecked": "2026-07-09T23:42:00Z",
       "status": "ok",
       "bytes": 919435,
-      "note": "2026-07-08 刷新 OK; hash changed bfd7→a208; 用于 dex/属性/招式核验。",
+      "note": "1 天新, 本轮跳过重取; hash unchanged a208; 用于 dex/属性/招式核验。",
       "sha256": "a2087181b5bde9a1"
     },
     "tiers-attackers": {
-      "lastFetch": "2026-07-08T08:23:01Z",
-      "lastChecked": "2026-07-08T08:34:04Z",
+      "lastFetch": "2026-07-09T23:08:40Z",
+      "lastChecked": "2026-07-09T23:42:00Z",
       "status": "ok",
       "bytes": 35479,
-      "note": "2026-07-08 刷新 OK; hash unchanged 037b; Max 攻手面板沿用已验证内容。",
+      "note": "2026-07-09 刷新 OK; hash unchanged 037b; Max 攻手面板沿用已验证内容。",
       "sha256": "037bf6a8ed8a2df8"
     },
     "tiers-defenders": {
-      "lastFetch": "2026-07-08T08:23:06Z",
-      "lastChecked": "2026-07-08T08:34:04Z",
+      "lastFetch": "2026-07-09T23:08:43Z",
+      "lastChecked": "2026-07-09T23:42:00Z",
       "status": "ok",
       "bytes": 39579,
-      "note": "2026-07-08 刷新 OK; hash unchanged 17e3; Max 防守面板沿用已验证内容。",
+      "note": "2026-07-09 刷新 OK; hash unchanged 17e3; Max 防守面板沿用已验证内容。",
       "sha256": "17e3e7e077fbe798"
     },
     "tiers-pokebase": {
-      "lastFetch": "2026-07-08T08:23:14Z",
-      "lastChecked": "2026-07-08T08:34:04Z",
+      "lastFetch": "2026-07-09T23:08:46Z",
+      "lastChecked": "2026-07-09T23:42:00Z",
       "status": "ok",
       "bytes": 121480,
-      "note": "2026-07-08 刷新 OK; hash unchanged 7138; 仅作交叉参考。",
+      "note": "2026-07-09 刷新 OK; hash unchanged 7138; 仅作交叉参考。",
       "sha256": "7138c1e21645b7a3"
     },
     "events-hub": {
-      "lastFetch": "2026-07-08T08:23:19Z",
-      "lastChecked": "2026-07-08T08:34:04Z",
+      "lastFetch": "2026-07-09T23:21:13Z",
+      "lastChecked": "2026-07-09T23:42:00Z",
       "status": "ok",
-      "bytes": 30429,
-      "note": "2026-07-08 刷新/按需读取 OK; hash changed c6bc→c509; Hub 7 月月历确认 7/22–7/28 索尔迦雷欧 5★、7/22 团战时刻与 7/22–7/28 超级暴飞龙。",
-      "sha256": "c5098084a5223694"
+      "bytes": 30430,
+      "note": "2026-07-09 刷新 OK; hash changed c509→5e72(23:21 复取, 早前 23:08 一次为 08e1, 索引页轻微漂移); 8 月 roundup 文章尚不存在, 仅 7 月文章 + save-the-date; 用于未来事件第二来源链接。",
+      "sha256": "5e7229a890eb0a95"
     },
     "events-pokebase": {
-      "lastFetch": "2026-07-08T08:22:53Z",
-      "lastChecked": "2026-07-08T08:34:04Z",
+      "lastFetch": "2026-07-09T23:08:31Z",
+      "lastChecked": "2026-07-09T23:42:00Z",
       "status": "ok",
-      "bytes": 29998,
-      "note": "2026-07-08 刷新 OK; hash changed 78f7→c069; 未发现 Twitch 掉宝独立覆盖。",
-      "sha256": "c069c67a55c05b54"
+      "bytes": 29976,
+      "note": "2026-07-09 刷新 OK; hash changed c069→9ed3; 用于新事件与第二来源链接核对。",
+      "sha256": "9ed31491c1d78d7c"
     },
     "events-official": {
-      "lastFetch": "2026-07-08T08:23:19Z",
-      "lastChecked": "2026-07-08T08:34:04Z",
+      "lastFetch": "2026-07-09T23:21:13Z",
+      "lastChecked": "2026-07-09T23:42:00Z",
       "status": "ok",
       "bytes": 9579,
-      "note": "2026-07-08 刷新 OK; hash changed 4b9c→be96; official leads 已检查, 未新增需入日历事件。",
+      "note": "2026-07-09 刷新 OK; hash unchanged be96; official leads 已检查, 未新增需入日历事件。",
       "sha256": "be96ff5efd76c38c"
     }
   },
   "discovery": {
-    "lastChecked": "2026-07-08T08:34:04Z",
+    "lastChecked": "2026-07-09T23:42:00Z",
     "status": "ok",
-    "note": "discover new 发现 LeekDuck 十周年庆典 Twitch 掉宝并已验证加入日历; 其他 OFFICIAL-LEAD/communityday-august-2026-nickit、2026_ana_red、go-fest-2026-global-final-details、scopely-explore-2026 为后续新闻/说明或已覆盖内容, 本轮不新增。"
+    "note": "discover new 线索全部处理: nickit 社区日→详情已落地; 2026_ana_red→已加入日历(日本机场, 7/28→2027/8/31); go-fest-final-details→已有事件覆盖; scopely-explore→企业新闻非活动; 10th-anniversary-art→非活动。另新增 sparks/candelas 任务、乐高联动、30 周年巡回 Pokexciting、Pokemon Run 30。"
   },
   "contentStatus": {
-    "checkedAt": "2026-07-08T08:34:04Z",
+    "checkedAt": "2026-07-09T23:42:00Z",
     "status": "ready-for-validation",
-    "note": "Calendar: 93 条事件, 新增 7/9–7/10 十周年庆典 Twitch 掉宝; 7/22 索尔迦雷欧 5★/团战时刻保持 shiny:true 并补充 Hub 月历链接。Rotations: 未改, 7/22–7/28 索尔迦雷欧段与 raid-battles 事件 pokemon[] 含 shiny:true 完全一致。Rankings: calendar-notes、rankings-current、rankings-raid 已按 7/8 与新 raids 缓存刷新; Max 攻/防沿用。"
+    "note": "Calendar: 93→98 条(新增 6 删除 1), 22 longTerm, 12 highlight; 7 个未来单链接事件补齐已验证第二来源; city-safari 乱码修复; featured.json 20 个 id 全部有效未改。Rotations: 未改, 全部段与新 raids/feed 相互印证; 8 月 Hub roundup 尚未发布, 7 月下旬需复查以延展 8/4 之后, 8/22 团战日 Boss 仍 TBA。Rankings: rankings-raid 重建(9 张 boss 卡, 含 7/10 起源双神/原始双神, mega.json+gamemaster 攻击排序的头右 Mega 网格); rankings-current + calendar-notes 重建(13 个 data-event-id 均已核验存在); Max 攻/防面板沿用(tiers-* hash 未变)。"
   },
   "validation": {
-    "checkedAt": "2026-07-08T08:34:04Z",
+    "checkedAt": "2026-07-09T23:45:00Z",
     "status": "passed",
     "note": "preflight exit 0: OK render checks passed with 2 WARN long chip names (raidhour20260624, pokemon-go-10th-anniversary-celebration-twitch-drops); validate exit 0: OK all checks passed."
   },
   "notes": {
     "preflight_known_warn": {
-      "fact": "raidhour20260624《纸御剑 与 铁火辉夜 团战时刻》与新增 pokemon-go-10th-anniversary-celebration-twitch-drops《十周年庆典 Twitch 掉宝》触发 long chip name WARN。",
+      "fact": "raidhour20260624《纸御剑 与 铁火辉夜 团战时刻》与 pokemon-go-10th-anniversary-celebration-twitch-drops《十周年庆典 Twitch 掉宝》触发 long chip name WARN(仅 WARN 不拦截)。",
       "decision": "preflight 仅 WARN 且不阻断发布; 保留活动名称以保持含义清楚。"
     },
     "operator_note_decoded": {
-      "fact": "Operator note 要求每日更新/纠错, 并确认 7/22 索尔迦雷欧 5★/团战时刻为 shiny debut、图标应为 shiny 索尔迦雷欧。",
-      "decision": "LeekDuck 结构化事件确认 Solgaleo canBeShiny:true 且提供 shiny 图标; events.json 的 5★ 与团战时刻 pokemon[].shiny 均为 true, rotations 7/22–7/28 5★ 段也为 shiny:true。"
+      "fact": "Operator note 要求更仔细的战力排行/总结/未来 events。",
+      "decision": "已满足: rankings-raid/rankings-current/calendar-notes 全部重建; 未来事件充实(狡小狐社区日详情、ANA、乐高、Pokexciting、Run 30, 以及 7 个未来事件的第二来源链接)。"
     },
     "source_health": {
-      "fact": "events/raids/events-hub/events-pokebase/events-official/gamemaster hashes changed; tiers-* hashes unchanged。",
-      "decision": "重算日历新增与当前团战 Counter; tier 攻/防结构化面板沿用已验证内容。"
+      "fact": "events/raids/events-hub/events-pokebase hashes changed; events-official/tiers-*/gamemaster unchanged; eggs/research 本轮跳过。",
+      "decision": "重算日历新增与当前团战 Counter; tier 攻/防结构化面板与 rotations 沿用已验证内容。"
+    },
+    "pipeline_gap_fetch_zh": {
+      "fact": "scripts/fetch.sh zh 查询损坏: PokeAPI 返回语言名 'zh-hans'(小写)而脚本过滤 'zh-Hans', 导致所有查询返回 NO-ZH-NAME, data/raw/zh-names.json 已被 41 条 zh:null 记录污染。",
+      "decision": "受保护文件, 日常运行无法修复; 本轮 curator 通过 fetch.sh url species/move JSON + 大小写不敏感 jq 绕过。需维护者修复脚本的语言过滤并清除 null 缓存条目。"
     }
   }
 }
