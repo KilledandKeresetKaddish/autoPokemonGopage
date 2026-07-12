@@ -3744,7 +3744,7 @@
     "end": "2026-08-16T17:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-16-august-communityday2026/nickit-august-cd-2026.jpg",
     "link": "https://leekduck.com/events/august-communityday2026/",
-    "summary": "8 月社区日主角为社区投票冠军狡小狐(恶属性),野外大量出现且闪光概率提升(约 1/20);活动期间或结束后 4 小时内进化可获得会限定招式的猾大狐。",
+    "summary": "8 月社区日主角为社区投票冠军狡小狐(恶属性),野外大量出现且闪光概率提升;活动期间或结束后 4 小时内进化可获得会限定招式「冰冻之风」的猾大狐。",
     "links": [
       {
         "label": "LeekDuck",
@@ -3775,8 +3775,9 @@
       "✨ 闪光概率提升",
       ":spawn: 狡小狐野外大量出现",
       ":stardust: 捕捉星尘 ×3",
-      ":incense: 3 小时熏香",
-      ":lure: 1 小时诱饵模块*",
+      ":incense: 3 小时熏香(不含每日探险熏香)",
+      "拍摄快照可获得惊喜",
+      ":lure: 1 小时普通诱饵模块*",
       ":candy: 捕捉糖果 ×2",
       ":xl-candy: 糖果 XL 概率 ×2",
       ":trading: 当日可多进行 1 次特殊交换(上限 2 次)*",

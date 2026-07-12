@@ -1,25 +1,25 @@
 {
-  "lastUpdated": "2026-07-11T09:15:23Z",
+  "lastUpdated": "2026-07-12T01:06:52Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-07-11T09:08:07Z",
-      "lastChecked": "2026-07-11T09:15:23Z",
+      "lastFetch": "2026-07-12T01:01:58Z",
+      "lastChecked": "2026-07-12T01:06:52Z",
       "status": "ok",
-      "bytes": 44736,
-      "note": "刷新成功，hash 未变；继续作为活动日历的结构化骨架。",
-      "sha256": "b538d0e3e0d13470"
+      "bytes": 44137,
+      "note": "刷新成功，hash 已变；已审计新增及既有活动。",
+      "sha256": "5235890be0a1a415"
     },
     "raids": {
-      "lastFetch": "2026-07-11T09:07:55Z",
-      "lastChecked": "2026-07-11T09:15:23Z",
+      "lastFetch": "2026-07-12T01:00:22Z",
+      "lastChecked": "2026-07-12T01:06:52Z",
       "status": "ok",
-      "bytes": 10994,
-      "note": "hash 已变；当前池已切换为 GO Fest 阵容，当前团战内容据此刷新。",
-      "sha256": "106f3537c31f92d0"
+      "bytes": 19092,
+      "note": "刷新成功，hash 已变；当前 GO Fest 团战池用于时效内容。",
+      "sha256": "8d3ef9e8c8b7a84d"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-11T09:15:23Z",
+      "lastChecked": "2026-07-12T01:06:52Z",
       "status": "ok",
       "bytes": 29466,
       "note": "本轮未刷新，非本次核心变更。",
@@ -27,7 +27,7 @@
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-11T09:15:23Z",
+      "lastChecked": "2026-07-12T01:06:52Z",
       "status": "ok",
       "bytes": 70308,
       "note": "本轮未刷新，非本次核心变更。",
@@ -35,7 +35,7 @@
     },
     "gamemaster": {
       "lastFetch": "2026-07-08T08:23:15Z",
-      "lastChecked": "2026-07-11T09:15:23Z",
+      "lastChecked": "2026-07-12T01:06:52Z",
       "status": "ok",
       "bytes": 919435,
       "note": "缓存仍在七日刷新窗内；用于 dex、属性和招式核验。",
@@ -43,7 +43,7 @@
     },
     "tiers-attackers": {
       "lastFetch": "2026-07-09T23:08:40Z",
-      "lastChecked": "2026-07-11T09:15:23Z",
+      "lastChecked": "2026-07-12T01:06:52Z",
       "status": "ok",
       "bytes": 35479,
       "note": "hash 未变，Max 攻手面板沿用已验证内容。",
@@ -51,7 +51,7 @@
     },
     "tiers-defenders": {
       "lastFetch": "2026-07-09T23:08:43Z",
-      "lastChecked": "2026-07-11T09:15:23Z",
+      "lastChecked": "2026-07-12T01:06:52Z",
       "status": "ok",
       "bytes": 39579,
       "note": "hash 未变，Max 防守面板沿用已验证内容。",
@@ -59,51 +59,51 @@
     },
     "tiers-pokebase": {
       "lastFetch": "2026-07-09T23:08:46Z",
-      "lastChecked": "2026-07-11T09:15:23Z",
+      "lastChecked": "2026-07-12T01:06:52Z",
       "status": "ok",
       "bytes": 121480,
       "note": "hash 未变，继续作为排行交叉参考。",
       "sha256": "7138c1e21645b7a3"
     },
     "events-hub": {
-      "lastFetch": "2026-07-11T09:08:08Z",
-      "lastChecked": "2026-07-11T09:15:23Z",
-      "status": "degraded",
-      "bytes": 30430,
-      "note": "最终缓存 hash 已变（含后续 URL/discovery solver 活动）；月度文章正文仍无法可靠解析，保留既有 rotations，并以 raids 当前池交叉印证。",
-      "sha256": "326c07a918027e5a"
+      "lastFetch": "2026-07-12T01:01:58Z",
+      "lastChecked": "2026-07-12T01:06:52Z",
+      "status": "ok",
+      "bytes": 30431,
+      "note": "刷新成功，7 月月度活动文章本轮可解析并用于轮换核对。",
+      "sha256": "8ec8583836ab2111"
     },
     "events-pokebase": {
-      "lastFetch": "2026-07-11T09:08:06Z",
-      "lastChecked": "2026-07-11T09:15:23Z",
+      "lastFetch": "2026-07-12T01:00:33Z",
+      "lastChecked": "2026-07-12T01:06:52Z",
       "status": "ok",
-      "bytes": 28851,
-      "note": "最终缓存 hash 已变；用于活动与链接交叉核对。",
-      "sha256": "5dcd2751d4839d24"
+      "bytes": 28894,
+      "note": "刷新成功，hash 已变；用于活动交叉核对。",
+      "sha256": "36af83c917de5d31"
     },
     "events-official": {
-      "lastFetch": "2026-07-11T09:08:11Z",
-      "lastChecked": "2026-07-11T09:15:23Z",
+      "lastFetch": "2026-07-12T01:01:58Z",
+      "lastChecked": "2026-07-12T01:06:52Z",
       "status": "ok",
       "bytes": 9579,
-      "note": "discovery 刷新后最终缓存恢复为既有内容，hash 未变。",
+      "note": "最终缓存恢复为既有 hash；核实了官方新增线索。",
       "sha256": "be96ff5efd76c38c"
     }
   },
   "discovery": {
-    "lastChecked": "2026-07-11T09:15:23Z",
+    "lastChecked": "2026-07-12T01:06:52Z",
     "status": "ok",
-    "note": "discover new 线索均已处理：已知活动均已有日历覆盖；企业宣传项目判定为非游戏活动并排除。"
+    "note": "已核实新线索：8 月狡小狐社区日、日本 ANA 红色宝可梦喷射机机场活动均已覆盖；GO Fest 最终详情用于补充；Scopely Explore 非游戏活动，未收录。"
   },
   "contentStatus": {
-    "checkedAt": "2026-07-11T09:15:23Z",
+    "checkedAt": "2026-07-12T01:06:52Z",
     "status": "ready-for-validation",
-    "note": "Calendar：GO Fest 链接与机制说明已修正。Rotations：Hub 正文不可解析，故保留已验证轮换，并由最新 raids 池 corroborate。Rankings：当前团战、本期推荐和本月看点已按 GO Fest 当前内容刷新；Max 攻防榜因 tiers hash 未变而沿用。"
+    "note": "活动细节已审计并修正；丑丑鱼 Max 轮换起始日修正为 7 月 26 日；本月看点、本期推荐与当前团战已按 7 月 12 日刷新，输入未变的 Max 攻防榜保留。"
   },
   "validation": {
-    "checkedAt": "2026-07-11T09:16:34Z",
+    "checkedAt": "2026-07-12T01:07:15Z",
     "status": "passed",
-    "note": "preflight exit 0：render checks passed，含 2 条已知 long chip name WARN；validate exit 0：all checks passed。"
+    "note": "preflight exit 0：render checks passed，含 2 条非阻塞长名称警告；validate exit 0：all checks passed。"
   },
   "notes": {
     "pipeline_gap_fetch_zh": {
@@ -111,8 +111,8 @@
       "decision": "受保护脚本不在本角色写入范围；内容维护者继续通过允许的原始 species/move JSON 并使用大小写不敏感过滤核验。需维护者修复语言过滤并清除 null 缓存条目。"
     },
     "source_health": {
-      "fact": "events 与 official 最终 hash 未变；raids、Hub、pokebase 最终 hash 已变；tiers 与 gamemaster 未变。",
-      "decision": "按 GO Fest raids 池刷新时效内容；保留无法从 Hub 正文重新解析但已由 raids 佐证的轮换。"
+      "fact": "events、raids、Hub 与 pokébase 内容发生变化；official 最终 hash 未变；tiers 与 gamemaster 未刷新。",
+      "decision": "完成活动全面审计；从可解析的 Hub 7 月月度文章修正轮换，并按当前团战池刷新时效面板。"
     }
   }
 }
