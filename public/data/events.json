@@ -3476,6 +3476,121 @@
     "highlight": true
   },
   {
+    "id": "ultra-unlock-10th-anniversary-edition",
+    "name": "究极解锁:十周年纪念版",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-07-21T10:00:00",
+    "end": "2026-07-27T20:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-21-ultra-unlock-10th-anniversary-edition/ultra-unlock-10th-anniversary-edition.jpg",
+    "link": "https://leekduck.com/events/ultra-unlock-10th-anniversary-edition/",
+    "summary": "历代最初的伙伴按世代分三阶段轮换,捕捉经验依次提升至 ×6、×8、×10;还可获取队伍主题特殊背景、历代御三家限定招式与十周年 GO 通行证奖励。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/ultra-unlock-10th-anniversary-edition/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/ultra-unlock-10th-anniversary-edition/"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Ultra_Unlock%3A_10th_Anniversary_Edition"
+      }
+    ],
+    "bonuses": [
+      ":xp: 7/21–7/23 捕捉经验 ×6",
+      ":xp: 7/23–7/25 捕捉经验 ×8",
+      ":xp: 7/25–7/27 捕捉经验 ×10",
+      ":spawn: 最初的伙伴按世代轮换,有机会带队伍主题特殊背景",
+      ":candy: GO 通行证里程碑可解锁捕捉糖果 ×2 与糖果 XL 概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 1,
+        "name": "妙蛙种子",
+        "shiny": true
+      },
+      {
+        "id": 4,
+        "name": "小火龙",
+        "shiny": true
+      },
+      {
+        "id": 7,
+        "name": "杰尼龟",
+        "shiny": true
+      },
+      {
+        "id": 252,
+        "name": "木守宫",
+        "shiny": true
+      },
+      {
+        "id": 255,
+        "name": "火稚鸡",
+        "shiny": true
+      },
+      {
+        "id": 258,
+        "name": "水跃鱼",
+        "shiny": true
+      },
+      {
+        "id": 816,
+        "name": "泪眼蜥",
+        "shiny": true
+      },
+      {
+        "id": 912,
+        "name": "润水鸭",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "野外轮换",
+        "items": [
+          "7/21 10时–7/23 10时：关都、城都、丰缘地区的最初伙伴。",
+          "7/23 10时–7/25 10时：神奥、合众、卡洛斯地区的最初伙伴。",
+          "7/25 10时–7/27 20时：阿罗拉、伽勒尔、帕底亚地区的最初伙伴。"
+        ]
+      },
+      {
+        "title": "限定招式",
+        "items": [
+          "活动期间进化草属性最初伙伴的最终进化形,可获得限定充能招式「疯狂植物」。",
+          "活动期间进化火属性最初伙伴的最终进化形,可获得限定充能招式「爆炸烈焰」。",
+          "活动期间进化水属性最初伙伴的最终进化形,可获得限定充能招式「加农水炮」。"
+        ]
+      },
+      {
+        "title": "诱饵、团战与调查",
+        "items": [
+          "普通诱饵模块可吸引铁哑铃、圆陆鲨与 Dreepy。",
+          "1★团战出现派对帽 Grimer;3★团战出现派对帽 Raticate、Nidorino、Gengar 与 Wobbuffet。",
+          "活动主题实地调查奖励包含精灵球及活动主题宝可梦遭遇。"
+        ]
+      },
+      {
+        "title": "十周年 GO 通行证",
+        "items": [
+          "7/21 10时自动获得免费 GO 通行证,可在 7/27 20时前累积 GO 点数。",
+          "7/25 0时–7/27 19时59分期间取消每日 GO 点数获取上限;奖励须在 7/29 19时59分前领取。",
+          "付费豪华版 4.99 美元;豪华版 + 6 Rank 为 6.99 美元。"
+        ]
+      },
+      {
+        "title": "付费大师调查",
+        "items": [
+          "4.99 美元「感恩之光」大师调查最终奖励为闪光 Shaymin;已取得该调查的训练家不能重复购买。"
+        ]
+      }
+    ],
+    "highlight": false
+  },
+  {
     "id": "gbl-forever-forward_great-league_ultra-league_master-league-split-2",
     "name": "超级 / 高级 / 大师联赛",
     "type": "go-battle-league",
@@ -3805,6 +3920,97 @@
     "highlight": true
   },
   {
+    "id": "water-festival-2026",
+    "name": "究极解锁:水之庆典",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-08-18T10:00:00",
+    "end": "2026-08-24T20:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-18-water-festival-2026/water-festival-2026.jpg?v2",
+    "link": "https://leekduck.com/events/water-festival-2026/",
+    "summary": "Arrokuda、Barraskewda 与 Cramorant 首次登场;雨天诱饵模块可吸引 Arrokuda,Ducklett 与 Dewpider 闪光概率提升,捕捉经验和星尘分阶段递增。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/water-festival-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/water-festival-2026/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/en/news/water-festival-2026"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Ultra_Unlock%3A_Water_Festival"
+      }
+    ],
+    "bonuses": [
+      "✨ Ducklett 与 Dewpider 闪光概率提升",
+      ":lure: 雨天诱饵模块可吸引 Arrokuda",
+      ":xp: 8/18–8/20 捕捉经验 ×2;8/20–8/22 ×3;8/22–8/24 ×4",
+      ":stardust: 同期捕捉星尘依次为 ×3、×4、×5",
+      ":candy: GO 通行证 Rank 10 解锁捕捉糖果 ×2;Rank 20 解锁孵化距离减半"
+    ],
+    "pokemon": [
+      {
+        "id": 846,
+        "name": "Arrokuda"
+      },
+      {
+        "id": 847,
+        "name": "Barraskewda"
+      },
+      {
+        "id": 845,
+        "name": "Cramorant"
+      },
+      {
+        "id": 580,
+        "name": "Ducklett",
+        "shiny": true
+      },
+      {
+        "id": 751,
+        "name": "Dewpider",
+        "shiny": true
+      },
+      {
+        "id": 349,
+        "name": "丑丑鱼",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "首次登场",
+        "items": [
+          "Arrokuda 可从实地调查、GO 通行证与雨天诱饵模块获得,消耗 50 颗糖果可进化为 Barraskewda。",
+          "Cramorant 可从蛋、GO 通行证与 GO 对战联盟 Rank 16 起的奖励遭遇获得。"
+        ]
+      },
+      {
+        "title": "野外与区域团战",
+        "items": [
+          "野外更常出现 Psyduck、Goldeen、Mareanie、Wimpod 等;丑丑鱼与 Clamperl 为较稀有遭遇。",
+          "1★团战:泳圈 Psyduck 与区域形态 Tatsugiri;3★团战:围巾 Lapras、Hisuian Samurott 与 Dondozo。",
+          "Tatsugiri 区域:欧洲/中东/非洲为 Curly Form,美洲为 Droopy Form,亚洲太平洋为 Stretchy Form。"
+        ]
+      },
+      {
+        "title": "水之庆典 GO 通行证",
+        "items": [
+          "8/18 10时自动获得免费通行证,可在 8/24 20时前累积 GO 点数;奖励须在 8/26 20时前领取。",
+          "付费豪华版 4.99 美元;豪华版 + 6 Rank 为 6.99 美元。",
+          "奖励包含雨天诱饵模块、神奇糖果、金色蔓莓果;豪华版另含神奇糖果 XL、孵化器等。"
+        ]
+      }
+    ],
+    "highlight": true
+  },
+  {
     "id": "gbl-forever-forward_great-league_scroll-cup-great-league-edition",
     "name": "超级联赛 · 卷轴杯",
     "type": "go-battle-league",
@@ -3943,7 +4149,7 @@
           {
             "id": 142,
             "name": "超级化石翼龙",
-            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png",
+            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10042.png",
             "hub": "142-Mega"
           }
         ]
@@ -3971,7 +4177,7 @@
       {
         "id": 142,
         "name": "超级化石翼龙",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10042.png",
         "hub": "142-Mega"
       },
       {

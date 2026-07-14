@@ -745,26 +745,6 @@
           "end": "2026-07-12"
         },
         {
-          "name": "Mega Raichu X / Y",
-          "cn": "超级雷丘 X / Y",
-          "pokemon": [
-            {
-              "id": 26,
-              "name": "超级雷丘 X",
-              "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
-              "hub": "26-Mega_X"
-            },
-            {
-              "id": 26,
-              "name": "超级雷丘 Y",
-              "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp",
-              "hub": "26-Mega_Y"
-            }
-          ],
-          "start": "2026-07-18",
-          "end": "2026-07-18"
-        },
-        {
           "name": "Mega Lucario",
           "cn": "超级路卡利欧",
           "pokemon": [
@@ -791,6 +771,26 @@
           ],
           "start": "2026-07-15",
           "end": "2026-07-21"
+        },
+        {
+          "name": "Mega Raichu X / Y",
+          "cn": "超级雷丘 X / Y",
+          "pokemon": [
+            {
+              "id": 26,
+              "name": "超级雷丘 X",
+              "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
+              "hub": "26-Mega_X"
+            },
+            {
+              "id": 26,
+              "name": "超级雷丘 Y",
+              "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp",
+              "hub": "26-Mega_Y"
+            }
+          ],
+          "start": "2026-07-18",
+          "end": "2026-07-18"
         },
         {
           "name": "Mega Salamence",
