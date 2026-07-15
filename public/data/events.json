@@ -4033,30 +4033,146 @@
     "longTerm": true
   },
   {
-    "id": "raid-day-august-2026",
-    "name": "团战日(8 月)",
+    "id": "starmie-super-mega-raid-day-2026",
+    "name": "Starmie 超级超级团战日",
     "type": "raid-day",
     "heading": "Raid Day",
-    "start": "2026-08-22T14:00:00",
+    "start": "2026-08-22T11:00:00",
     "end": "2026-08-22T17:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/raid-day-august-2026/",
-    "summary": "8 月团战日,14:00–17:00 限时举行;主角 Boss 与闪光窗口官方尚未公布,稍后补充。",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-22-starmie-super-mega-raid-day-2026/starmie-super-mega-raid-day-2026.jpg",
+    "link": "https://leekduck.com/events/starmie-super-mega-raid-day-2026/",
+    "summary": "超级 Starmie 在超级超级团战中首次登场;团战额外奖励 5000 经验,捕获的 Starmie 直接解锁超级等级 1。",
     "links": [
       {
         "label": "LeekDuck",
-        "url": "https://leekduck.com/events/raid-day-august-2026/"
+        "url": "https://leekduck.com/events/starmie-super-mega-raid-day-2026/"
       },
       {
         "label": "Hub",
-        "url": "https://pokemongohub.net/post/news/save-the-date-for-next-seasons-community-days-and-events-4/"
+        "url": "https://pokemongohub.net/post/event/super-mega-starmie-raid-day/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/en/news/starmie-super-mega-raid-day-2026"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Ultra_Unlock%3A_Starmie_Super_Mega_Raid_Day"
       }
     ],
     "bonuses": [
-      "✨ 闪光概率提升",
-      ":raid: 限时增援团战入场券加成(待官方公布)"
+      "✨ Starmie 闪光概率提升",
+      ":xp: 每场团战额外 5000 经验",
+      ":xl-candy: 团战获得神奇糖果 XL 的概率提升",
+      ":raid: 转动道馆转盘最多领取 6 张免费团战入场券",
+      ":raid: 远程团战每日上限在指定全球时段提高至 20 次"
+    ],
+    "pokemon": [
+      {
+        "id": 121,
+        "name": "超级 Starmie",
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/official/detail/121_mega.png",
+        "hub": "121-Mega"
+      }
+    ],
+    "counters": [
+      {
+        "id": 94,
+        "name": "耿鬼",
+        "fast": "暗影爪",
+        "charged": "暗影球"
+      },
+      {
+        "id": 248,
+        "name": "班基拉斯",
+        "fast": "咬住",
+        "charged": "狂舞挥打"
+      },
+      {
+        "id": 635,
+        "name": "三首恶龙",
+        "fast": "咬住",
+        "charged": "狂舞挥打"
+      }
+    ],
+    "sections": [
+      {
+        "title": "活动限时调查",
+        "body": "活动期间完成限时调查,可获得 1 张特级对战入场券并遇见巨钳螳螂;任务和奖励须在活动结束前领取。"
+      },
+      {
+        "title": "付费入场券",
+        "items": [
+          "4.99 美元;转动道馆转盘最多领取 14 张团战入场券。",
+          "团战额外奖励 5000 经验;神奇糖果 XL 概率进一步提高,成功捕获 Starmie 时必得神奇糖果 XL。"
+        ]
+      }
     ],
     "highlight": true
+  },
+  {
+    "id": "gigantamax-rillaboom-max-battle-day-2026",
+    "name": "超极巨化 Rillaboom 极巨对战日",
+    "type": "max-battles",
+    "heading": "Max Battles",
+    "start": "2026-08-01T14:00:00",
+    "end": "2026-08-01T17:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-01-gigantamax-rillaboom-max-battle-day-2026/gigantamax-rillaboom-max-battle-day.jpg",
+    "link": "https://leekduck.com/events/gigantamax-rillaboom-max-battle-day-2026/",
+    "summary": "六星极巨对战由超极巨化 Rillaboom 占据全部能量点,其闪光形态首次登场;适合组队准备火、飞行等极巨攻手。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gigantamax-rillaboom-max-battle-day-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/gigantamax-rillaboom-max-battle-day-august-2026/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/en/news/gigantamax-rillaboom-max-battle-day-2026"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Gigantamax_Rillaboom_Max_Battle_Day"
+      }
+    ],
+    "bonuses": [
+      "✨ 超极巨化 Rillaboom 闪光形态首次登场",
+      ":spawn: 所有能量点均出现超极巨化 Rillaboom,刷新更频繁并增加额外能量点",
+      ":candy: 能量点获取的极巨粒子 ×8,每日收集上限提高至 1600",
+      ":trading: 当天最多进行 3 次特殊交换",
+      ":raid: 远程团战每日上限在指定全球时段提高至 20 次"
+    ],
+    "pokemon": [
+      {
+        "id": 812,
+        "name": "超极巨化 Rillaboom",
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/official/detail/812_gmax.png",
+        "hub": "812-Gigantamax"
+      }
+    ],
+    "sections": [
+      {
+        "title": "探索加成",
+        "items": [
+          "8 月 1 日 0时–17时:探索获得极巨粒子 ×2。",
+          "8 月 1 日 0时–17时:通过探索领取极巨粒子的距离缩短为 1/4。"
+        ]
+      },
+      {
+        "title": "付费限时调查",
+        "body": "4.99 美元;奖励包括 1 个极巨菇菇、25000 经验、6400 极巨粒子,并在活动期间提供极巨对战经验 ×2。"
+      },
+      {
+        "title": "组队建议",
+        "body": "Hub 指南建议由主攻手负责输出、钢铠鸦承伤,并安排治疗手;大型极巨对战应提前升级极巨招式并与队友分工。"
+      }
+    ],
+    "highlight": false
   },
   {
     "id": "gbl-forever-forward_great-league_ultra-league_master-league-split-3",
@@ -5076,7 +5192,7 @@
     "end": "2026-07-14T22:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
     "link": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/",
-    "summary": "Hub 7 月月历确认 7/13–7/14 急冻鸟、闪电鸟、火焰鸟再次回到 5★团战;对应日历角标可打开本抽屉查看来源与轻量 Counter。",
+    "summary": "7/13–7/14，急冻鸟、闪电鸟与火焰鸟再次回到 5★ 团战；三只均有机会以闪光形态出现。",
     "links": [
       {
         "label": "Hub 7月月历",
@@ -5113,7 +5229,7 @@
       }
     ],
     "bonuses": [
-      "5★团战 Boss 与 rotations 7/13–7/14 角标一致",
+      ":raid: 7/13–7/14 急冻鸟、闪电鸟与火焰鸟回归 5★ 团战",
       "✨ 可遇闪光(常规传说团战闪光率,非活动提升)"
     ],
     "counters": [
@@ -5471,10 +5587,11 @@
     ],
     "counters": [
       {
-        "id": 409,
-        "name": "战槌龙",
-        "fast": "击落",
-        "charged": "岩崩"
+        "id": 635,
+        "name": "暗影三首恶龙",
+        "hub": "635-Shadow",
+        "fast": "咬住",
+        "charged": "狂舞挥打"
       },
       {
         "id": 229,
@@ -5982,6 +6099,72 @@
       ":raid: GO 通行证 Rank 10 起好友团战攻击加成提升",
       ":stardust: Rank 20 起团战星尘 ×1.5"
     ]
+  },
+  {
+    "id": "national-trust-x-pokemon-go-events-2026",
+    "name": "National Trust×宝可梦 GO(英格兰/威尔士/北爱尔兰线下)",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-07-18T00:00:00",
+    "end": "2026-09-06T23:59:00",
+    "link": "https://pokemongohub.net/post/event/national-trust-x-pokemon-go-events/",
+    "summary": "英格兰、威尔士及北爱尔兰参与 National Trust 景点的长期线下活动:140 处地点新增补给站、道馆和路线,其中 27 处提供地区限定 1★团战及地点背景。",
+    "links": [
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/national-trust-x-pokemon-go-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 187,
+        "name": "Hoppip"
+      },
+      {
+        "id": 540,
+        "name": "Sewaddle"
+      },
+      {
+        "id": 204,
+        "name": "Pineco"
+      },
+      {
+        "id": 273,
+        "name": "Seedot"
+      },
+      {
+        "id": 252,
+        "name": "Treecko"
+      },
+      {
+        "id": 253,
+        "name": "Grovyle"
+      },
+      {
+        "id": 254,
+        "name": "Sceptile"
+      }
+    ],
+    "sections": [
+      {
+        "title": "地区 1★团战",
+        "items": [
+          "英格兰南部海岸:Hoppip;中部及伦敦:Sewaddle。",
+          "北部:Pineco;西南部及威尔士:Seedot。",
+          "27 处指定景点的首只活动宝可梦可带该景点地点背景。"
+        ]
+      },
+      {
+        "title": "限时调查",
+        "items": [
+          "参与景点在 7 月、8 月、9 月分别开放任务与奖励。",
+          "地点调查奖励 Treecko、Grovyle 与 Sceptile,并可带该景点地点背景。",
+          "无法前往景点的英格兰、威尔士及北爱尔兰训练家也可参加全国性调查。"
+        ]
+      }
+    ],
+    "longTerm": true,
+    "highlight": false
   },
   {
     "id": "lego-stores-x-pokemon-go-stamp-rally-raids-and-more",

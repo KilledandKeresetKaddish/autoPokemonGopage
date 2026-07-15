@@ -745,5 +745,18 @@
     "release": "2026-05-23",
     "sprite": "https://db.pokemongohub.net/images/official/full/870_mega_with_bg.webp",
     "hub": "870-Mega"
+  },
+  {
+    "id": 121,
+    "name": "超级 Starmie",
+    "en": "Mega Starmie",
+    "boostedTypes": [
+      "water",
+      "psychic"
+    ],
+    "initialCost": null,
+    "release": "2026-08-22",
+    "sprite": "https://db.pokemongohub.net/images/official/full/121_mega_with_bg.webp",
+    "hub": "121-Mega"
   }
 ]

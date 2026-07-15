@@ -1,4 +1,5 @@
 {
   "mlb-game-day": { "palette": "blue", "label": "MLB 主题赛", "kind": "chip" },
-  "twitch-drops": { "palette": "teallt", "label": "直播掉宝", "kind": "chip" }
+  "twitch-drops": { "palette": "teallt", "label": "直播掉宝", "kind": "chip" },
+  "max-battles": { "palette": "mauve", "label": "极巨对战", "kind": "chip" }
 }

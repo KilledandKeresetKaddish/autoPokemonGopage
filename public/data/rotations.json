@@ -886,6 +886,21 @@
           ],
           "start": "2026-07-26",
           "end": "2026-08-02"
+        },
+        {
+          "name": "Gigantamax Rillaboom Max Battle Day",
+          "cn": "超极巨化 Rillaboom 极巨对战日",
+          "pokemon": [
+            {
+              "id": 812,
+              "name": "超极巨化 Rillaboom",
+              "shiny": true,
+              "sprite": "https://db.pokemongohub.net/images/official/detail/812_gmax.png",
+              "hub": "812-Gigantamax"
+            }
+          ],
+          "start": "2026-08-01",
+          "end": "2026-08-01"
         }
       ],
       "tag": "MX"

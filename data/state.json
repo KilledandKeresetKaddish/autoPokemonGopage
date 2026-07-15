@@ -1,118 +1,122 @@
 {
-  "lastUpdated": "2026-07-14T15:04:13Z",
+  "lastUpdated": "2026-07-15T04:13:02Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-07-14T14:40:11Z",
-      "lastChecked": "2026-07-14T15:04:13Z",
+      "lastFetch": "2026-07-15T03:13:42Z",
+      "lastChecked": "2026-07-15T04:09:07Z",
       "status": "ok",
-      "bytes": 44030,
+      "bytes": 44269,
       "note": "刷新成功，hash 已变；已审计新增及既有活动。",
-      "sha256": "9ba929c47b9df697"
+      "sha256": "923b63087c730f1f"
     },
     "raids": {
-      "lastFetch": "2026-07-14T14:36:38Z",
-      "lastChecked": "2026-07-14T15:04:13Z",
+      "lastFetch": "2026-07-15T03:11:07Z",
+      "lastChecked": "2026-07-15T04:09:07Z",
       "status": "ok",
       "bytes": 18538,
-      "note": "刷新成功，hash 已变；已据当前团战池刷新时效内容。",
+      "note": "刷新成功且 hash 未变；团战 bulk 缓存仍反映紧邻 7 月 15 日轮换前的池，现行 Boss 以已打开核实的日期化活动详情与 7 月月度排期为准。",
       "sha256": "79ea788c4c96a28d"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-14T15:04:13Z",
+      "lastChecked": "2026-07-15T04:09:07Z",
       "status": "ok",
       "bytes": 29466,
-      "note": "本轮未刷新，新增活动不需要蛋池明细。",
+      "note": "本轮未刷新，与本次内容更新无关。",
       "sha256": "bf0d68f3851420d0"
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-14T15:04:13Z",
+      "lastChecked": "2026-07-15T04:09:07Z",
       "status": "ok",
       "bytes": 70308,
-      "note": "本轮未刷新，新增活动不需要调查任务池明细。",
+      "note": "本轮未刷新，与本次内容更新无关。",
       "sha256": "02025eab72ec1451"
     },
     "gamemaster": {
       "lastFetch": "2026-07-08T08:23:15Z",
-      "lastChecked": "2026-07-14T15:04:13Z",
+      "lastChecked": "2026-07-15T04:09:07Z",
       "status": "ok",
       "bytes": 919435,
-      "note": "仍在七日刷新窗内；用于 dex、属性和招式核验。",
+      "note": "本轮未刷新，处于约七日阈值；仅用于稳定事实核验。",
       "sha256": "a2087181b5bde9a1"
     },
     "tiers-attackers": {
       "lastFetch": "2026-07-14T14:36:55Z",
-      "lastChecked": "2026-07-14T15:04:13Z",
+      "lastChecked": "2026-07-15T04:09:07Z",
       "status": "ok",
       "bytes": 35479,
-      "note": "刷新成功，hash 未变；Max 攻手面板沿用已验证内容。",
+      "note": "昨日刷新且 hash 未变；Max 攻手面板保留已验证内容。",
       "sha256": "037bf6a8ed8a2df8"
     },
     "tiers-defenders": {
       "lastFetch": "2026-07-14T14:36:58Z",
-      "lastChecked": "2026-07-14T15:04:13Z",
+      "lastChecked": "2026-07-15T04:09:07Z",
       "status": "ok",
       "bytes": 39579,
-      "note": "刷新成功，hash 未变；Max 防守面板沿用已验证内容。",
+      "note": "昨日刷新且 hash 未变；Max 防守面板保留已验证内容。",
       "sha256": "17e3e7e077fbe798"
     },
     "tiers-pokebase": {
       "lastFetch": "2026-07-14T14:37:06Z",
-      "lastChecked": "2026-07-14T15:04:13Z",
+      "lastChecked": "2026-07-15T04:09:07Z",
       "status": "ok",
       "bytes": 121480,
-      "note": "刷新成功，hash 未变；继续作为排行交叉参考。",
+      "note": "昨日刷新且 hash 未变；继续作为排行交叉参考。",
       "sha256": "7138c1e21645b7a3"
     },
     "events-hub": {
-      "lastFetch": "2026-07-14T14:40:11Z",
-      "lastChecked": "2026-07-14T15:04:13Z",
+      "lastFetch": "2026-07-15T03:13:42Z",
+      "lastChecked": "2026-07-15T04:09:07Z",
       "status": "ok",
       "bytes": 30430,
-      "note": "刷新成功，hash 已变；7 月月度文章及新增活动详情可解析。",
-      "sha256": "6e449c497d89e10d"
+      "note": "刷新成功，hash 已变；7 月月度文章与新增活动已核实。",
+      "sha256": "4ecd9ff54e3e9551"
     },
     "events-pokebase": {
-      "lastFetch": "2026-07-14T14:36:48Z",
-      "lastChecked": "2026-07-14T15:04:13Z",
+      "lastFetch": "2026-07-15T03:11:14Z",
+      "lastChecked": "2026-07-15T04:09:07Z",
       "status": "ok",
-      "bytes": 30601,
+      "bytes": 30435,
       "note": "刷新成功，hash 已变；用于活动交叉核对。",
-      "sha256": "504b1cc003fb7d13"
+      "sha256": "d138abb9561cdac1"
     },
     "events-official": {
-      "lastFetch": "2026-07-14T14:40:11Z",
-      "lastChecked": "2026-07-14T15:04:13Z",
+      "lastFetch": "2026-07-15T03:13:43Z",
+      "lastChecked": "2026-07-15T04:09:07Z",
       "status": "ok",
       "bytes": 6973,
-      "note": "刷新成功，hash 已变；用于官方活动线索核对。",
+      "note": "刷新成功，hash 未变；官方活动结论沿用。",
       "sha256": "7cc05eebcdcf253b"
     }
   },
   "discovery": {
-    "lastChecked": "2026-07-14T15:04:13Z",
+    "lastChecked": "2026-07-15T04:09:07Z",
     "status": "ok",
-    "note": "已核实并收录究极解锁：十周年纪念版与水之庆典；完成 Hub、官网、LeekDuck、Pokébase 与可搜索 Wiki 的新活动审计。"
+    "note": "已核实 8 月 1 日 Gigantamax Rillaboom、8 月 22 日 Mega Starmie 团战日及 7 月 18 日至 9 月 6 日 National Trust 英国地区活动；National Trust 经 Hub、官网、LeekDuck、Pokébase、Fandom 全面检索后，仅 Hub 有精确活动页，故保留该唯一精确来源并记录二次来源缺口。"
   },
   "contentStatus": {
-    "checkedAt": "2026-07-14T15:04:13Z",
-    "status": "ready-for-validation",
-    "note": "新增两项已确认活动，修正超级化石翼龙图片与超级团战轮换顺序，并按 7 月 14 日当前团战刷新看点、推荐和 Counter；Max 攻防榜因来源未变而保留。"
+    "checkedAt": "2026-07-15T04:11:27Z",
+    "status": "validated",
+    "note": "7 月 15 日盖欧卡/超级蜥蜴王由已打开核实的活动详情与 7 月月度排期确立；未变化的 raids bulk 缓存仍是紧邻轮换前的池，因此时效排行采用日期化已验证排期，并纳入活动中的特别周年皮卡丘与当前 Max 轮换。日历、8 月 1 日 MX 单日轮换、精选列表及 Mega Starmie 名录已完成；Mega Starmie 首次能量成本未获确认，保持 null/待定，Max 攻防榜沿用昨日已验证版本。"
   },
   "validation": {
-    "checkedAt": "2026-07-14T15:04:13Z",
+    "checkedAt": "2026-07-15T04:13:41Z",
     "status": "passed",
-    "note": "preflight exit 0：render checks passed，含 2 条非阻塞长名称警告；validate exit 0：all checks passed。"
+    "note": "最新 owner 修复后完整自检通过；scripts/preflight.sh exit 0：render checks passed，含 3 条非阻塞长名称警告；scripts/validate.sh exit 0：all checks passed。"
   },
   "notes": {
     "pipeline_gap_fetch_zh": {
       "fact": "scripts/fetch.sh zh 的语言大小写过滤仍会导致部分查询返回 NO-ZH-NAME，且本地字典含 zh:null 缓存条目。",
       "decision": "受保护脚本不在每日内容角色写入范围；本轮对无可用简体中文结果的新宝可梦保留英文名，需维护者修复过滤并清理空缓存。"
     },
+    "mega_starmie_proof": {
+      "fact": "Hub DB 形态图 https://db.pokemongohub.net/images/official/full/121_mega_with_bg.webp 经 HEAD 返回 HTTP 200、Content-Type image/webp，且精确 Hub DB 121-Mega 形态页已打开核实。",
+      "decision": "Mega Starmie 形态图与 hub 标识证据充分；首次超级能量成本仍无已确认来源，initialCost 保持 null。"
+    },
     "source_health": {
-      "fact": "五个活动承载源与 raids 的 hash 均变化；三个 tiers 源刷新后 hash 未变；gamemaster 仍在刷新窗内。",
-      "decision": "完成新活动全面审计与时效面板更新；保留 Hub 当前明确发布的 7 月 26 日 Max 轮换重叠。"
+      "fact": "events、events-hub 与 events-pokebase 的 hash 已变化；raids 与 events-official 未变；未变化的 raids bulk 缓存仍反映紧邻 7 月 15 日轮换前的池。蛋池、调查、gamemaster 与三个 tiers 源按时效跳过。",
+      "decision": "现行团战采用已打开核实的日期化活动详情与 7 月月度排期（盖欧卡/超级蜥蜴王），排行同时纳入活动中的特别周年皮卡丘与当前 Max 轮换；National Trust 经 Hub、官网、LeekDuck、Pokébase、Fandom 检索仅找到 Hub 精确活动页，二次精确来源缺失，未补造链接。"
     }
   }
 }
