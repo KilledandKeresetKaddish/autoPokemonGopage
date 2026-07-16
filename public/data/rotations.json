@@ -62,31 +62,38 @@
           "pokemon": [
             {
               "id": 144,
-              "name": "急冻鸟"
+              "name": "急冻鸟",
+              "shiny": true
             },
             {
               "id": 145,
-              "name": "闪电鸟"
+              "name": "闪电鸟",
+              "shiny": true
             },
             {
               "id": 146,
-              "name": "火焰鸟"
+              "name": "火焰鸟",
+              "shiny": true
             },
             {
               "id": 382,
-              "name": "盖欧卡"
+              "name": "盖欧卡",
+              "shiny": true
             },
             {
               "id": 383,
-              "name": "固拉多"
+              "name": "固拉多",
+              "shiny": true
             },
             {
               "id": 384,
-              "name": "烈空坐"
+              "name": "烈空坐",
+              "shiny": true
             },
             {
               "id": 800,
-              "name": "奈克洛兹玛"
+              "name": "奈克洛兹玛",
+              "shiny": true
             }
           ],
           "start": "2026-07-06",
@@ -100,17 +107,20 @@
               "id": 646,
               "name": "酋雷姆",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png",
-              "hub": "646-White"
+              "hub": "646-White",
+              "shiny": true
             },
             {
               "id": 644,
-              "name": "捷克罗姆"
+              "name": "捷克罗姆",
+              "shiny": true
             },
             {
               "id": 800,
               "name": "奈克洛兹玛",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10156.png",
-              "hub": "800-Dawn_Wings"
+              "hub": "800-Dawn_Wings",
+              "shiny": true
             }
           ],
           "start": "2026-07-07",
@@ -124,19 +134,20 @@
               "id": 646,
               "name": "酋雷姆",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10022.png",
-              "hub": "646-Black"
+              "hub": "646-Black",
+              "shiny": true
             },
             {
               "id": 643,
               "name": "莱希拉姆",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/643.png",
               "shiny": true
             },
             {
               "id": 800,
               "name": "奈克洛兹玛",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10155.png",
-              "hub": "800-Dusk_Mane"
+              "hub": "800-Dusk_Mane",
+              "shiny": true
             }
           ],
           "start": "2026-07-08",
@@ -150,13 +161,15 @@
               "id": 888,
               "name": "苍响",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10188.png",
-              "hub": "888-Crowned_Sword"
+              "hub": "888-Crowned_Sword",
+              "shiny": true
             },
             {
               "id": 889,
               "name": "藏玛然特",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10189.png",
-              "hub": "889-Crowned_Shield"
+              "hub": "889-Crowned_Shield",
+              "shiny": true
             }
           ],
           "start": "2026-07-09",
@@ -170,13 +183,15 @@
               "id": 483,
               "name": "帝牙卢卡",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10245.png",
-              "hub": "483-Origin"
+              "hub": "483-Origin",
+              "shiny": true
             },
             {
               "id": 484,
               "name": "帕路奇亚",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10246.png",
-              "hub": "484-Origin"
+              "hub": "484-Origin",
+              "shiny": true
             }
           ],
           "start": "2026-07-10",
@@ -648,7 +663,8 @@
               "id": 373,
               "name": "暴飞龙",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png",
-              "hub": "373-Mega"
+              "hub": "373-Mega",
+              "shiny": true
             }
           ],
           "start": "2026-07-06",
@@ -662,7 +678,8 @@
               "id": 248,
               "name": "班基拉斯",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png",
-              "hub": "248-Mega"
+              "hub": "248-Mega",
+              "shiny": true
             }
           ],
           "start": "2026-07-07",
@@ -676,7 +693,8 @@
               "id": 282,
               "name": "沙奈朵",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10051.png",
-              "hub": "282-Mega"
+              "hub": "282-Mega",
+              "shiny": true
             }
           ],
           "start": "2026-07-08",
@@ -690,7 +708,8 @@
               "id": 94,
               "name": "耿鬼",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png",
-              "hub": "94-Mega"
+              "hub": "94-Mega",
+              "shiny": true
             }
           ],
           "start": "2026-07-09",
@@ -704,13 +723,15 @@
               "id": 382,
               "name": "盖欧卡",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png",
-              "hub": "382-Primal"
+              "hub": "382-Primal",
+              "shiny": true
             },
             {
               "id": 383,
               "name": "固拉多",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png",
-              "hub": "383-Primal"
+              "hub": "383-Primal",
+              "shiny": true
             }
           ],
           "start": "2026-07-10",
@@ -723,6 +744,7 @@
             {
               "id": 150,
               "name": "超梦",
+              "shiny": true,
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png",
               "hub": "150-Mega_X"
             }
@@ -737,6 +759,7 @@
             {
               "id": 150,
               "name": "超梦",
+              "shiny": true,
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png",
               "hub": "150-Mega_Y"
             }
@@ -779,12 +802,14 @@
             {
               "id": 26,
               "name": "超级雷丘 X",
+              "shiny": true,
               "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
               "hub": "26-Mega_X"
             },
             {
               "id": 26,
               "name": "超级雷丘 Y",
+              "shiny": true,
               "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp",
               "hub": "26-Mega_Y"
             }

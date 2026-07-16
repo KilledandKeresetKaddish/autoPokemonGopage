@@ -3643,6 +3643,84 @@
     ]
   },
   {
+    "id": "pokemon-go-fest-2026-global-sunday-raid-makeup",
+    "name": "GO Fest 2026 全球活动·周日团战补偿",
+    "type": "pokemon-go-fest",
+    "heading": "Pokémon GO Fest",
+    "start": "2026-07-26T10:00:00",
+    "end": "2026-07-26T19:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-26-pokemon-go-fest-2026-global-sunday-raid-makeup/pokemon-go-fest-2026-global-sunday-raid-makeup.jpg",
+    "link": "https://leekduck.com/events/pokemon-go-fest-2026-global-sunday-raid-makeup/",
+    "summary": "仅限 UTC+14 至 UTC+0 时区（亚太、欧洲、中东与非洲）的训练家参加，补开 GO Fest 全球活动原周日的完整团战阵容；超级超梦 Y 超级超级团战同步回归。远程团战不限次数则对全球训练家生效。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-go-fest-2026-global-sunday-raid-makeup/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/pokemon-go-fest-2026-raid-make-up-event/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/gofest2026-global-update"
+      }
+    ],
+    "bonuses": [
+      ":raid: 转动道馆转盘每天最多获得 9 张免费团战入场券",
+      ":raid: 团战后使用纪念球捕捉宝可梦时更加有效",
+      "5★、超级及超级超级团战捕获的宝可梦有机会带特殊背景",
+      ":raid: 远程团战不限次数：7 月 25 日 PDT 13 时至 7 月 26 日 PDT 12 时（全球生效）",
+      "曾购买传奇之路豪华通行证：完成团战额外获得 5000 经验；完成 5★及以上团战额外获得 3 颗糖果和 1 颗糖果 XL",
+      "连接能量上限提高至 2000"
+    ],
+    "pokemon": [
+      {
+        "id": 150,
+        "name": "超级超梦 Y",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png",
+        "hub": "150-Mega_Y"
+      },
+      {
+        "id": 25,
+        "name": "皮卡丘",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "参加范围与准备提示",
+        "items": [
+          "活动按当地时间 10 时至 19 时举行，但团战补偿仅开放给 UTC+14 至 UTC+0 时区；UTC-1 至 UTC-12 地区不在补偿活动范围内。",
+          "远程团战不限次数的全球时段与当地活动时段不同，计划跨区远程参战时请以 PDT 公布窗口为准。",
+          "1★团战为戴直觉、神秘或勇气队帽子的皮卡丘；超级超级团战全天为超级超梦 Y。"
+        ]
+      },
+      {
+        "title": "10 时至 13 时：锻地领域",
+        "items": [
+          "超级团战：超级巨金怪、超级烈咬陆鲨、超级差不多娃娃。",
+          "5★团战：雷吉洛克、雷吉艾斯、雷吉斯奇鲁、起源帝牙卢卡、起源帕路奇亚、席多蓝恩、雷吉奇卡斯、龙卷云/雷电云/土地云两种形态、眷恋云两种形态、雷吉艾勒奇与雷吉铎拉戈。"
+        ]
+      },
+      {
+        "title": "13 时至 16 时：翠绿异常",
+        "items": [
+          "超级团战：超级大针蜂、超级凯罗斯、超级蜥蜴王。",
+          "5★团战：代欧奇希斯四种形态、盖诺赛克特及四种卡带形态、卡璞家族、虚吾伊德、恶食大王、奈克洛兹玛，以及按地区出现的费洛美螂、电束木、铁火辉夜、纸御剑、垒磊石和砰头小丑。"
+        ]
+      },
+      {
+        "title": "16 时至 19 时：暮光战场",
+        "items": [
+          "超级团战：超级班基拉斯、超级沙奈朵、超级路卡利欧。",
+          "5★团战：拉帝亚斯、拉帝欧斯、克雷色利亚、达克莱伊、勾帕路翁、代拉基翁、毕力吉翁、百战勇者苍响与百战勇者藏玛然特。"
+        ]
+      }
+    ]
+  },
+  {
     "id": "choose-your-path-fairy-trail-2026",
     "name": "选择你的道路:妖精之路",
     "type": "choose-your-path",
@@ -3759,6 +3837,90 @@
     ]
   },
   {
+    "id": "summer-marathon-2026",
+    "name": "夏日马拉松：极地余烬",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-08-04T10:00:00",
+    "end": "2026-08-10T20:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-04-summer-marathon-2026/summer-marathon-2026.jpg",
+    "link": "https://leekduck.com/events/summer-marathon-2026/",
+    "summary": "冰与火主题野外、5 km 蛋及调查阵容登场，Snom 首次开放闪光；完成活动 GO 通行证里程碑可解锁补给站经验与孵化距离加成。小火马、Slugma、雪笠怪和 Vanillite 的闪光概率提升。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/summer-marathon-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/summer-marathon-arctic-embers-event/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/summer-marathon-2026"
+      }
+    ],
+    "bonuses": [
+      "✨ Snom 闪光形态首次登场",
+      "✨ 小火马、Slugma、雪笠怪和 Vanillite 闪光概率提升",
+      ":xp: GO 通行证 Rank 10：转动补给站经验 ×2；豪华版为 ×3",
+      ":incubator: GO 通行证 Rank 20：活动期间放入孵化器的蛋孵化距离减半；豪华版缩短至 1/4"
+    ],
+    "pokemon": [
+      {
+        "id": 872,
+        "name": "Snom",
+        "shiny": true
+      },
+      {
+        "id": 77,
+        "name": "小火马",
+        "shiny": true
+      },
+      {
+        "id": 218,
+        "name": "Slugma",
+        "shiny": true
+      },
+      {
+        "id": 459,
+        "name": "雪笠怪",
+        "shiny": true
+      },
+      {
+        "id": 582,
+        "name": "Vanillite",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "野外出现",
+        "items": [
+          "Vulpix、Alolan Vulpix、Growlithe、小山猪与 Snorunt 更常出现。",
+          "8 月 4、6、8、10 日：小火马与雪笠怪；8 月 5、7、9、10 日：Slugma 与 Vanillite。",
+          "需要刷闪时可按日期选目标；8 月 10 日两组轮换目标都会出现。"
+        ]
+      },
+      {
+        "title": "5 km 蛋与实地调查",
+        "items": [
+          "5 km 蛋可孵出 Sneasel、Darumaka、伽勒尔火红不倒翁、Sizzlipede 与 Snom，均有机会为闪光。",
+          "活动实地调查可遇见小火马、Slugma、雪笠怪、Vanillite 等主题宝可梦。"
+        ]
+      },
+      {
+        "title": "GO 通行证与限时调查",
+        "items": [
+          "8 月 4 日 10 时自动获得免费夏日马拉松 GO 通行证；点数与等级须在 8 月 10 日 20 时前完成，已解锁奖励须在 8 月 12 日 20 时前领取。",
+          "免费限时调查奖励包含 16800 经验与戴马拉松遮阳帽的皮卡丘；任务及奖励须在活动结束前完成和领取。",
+          "豪华版 4.99 美元；豪华版 + 6 Rank 为 6.99 美元并直接提供升至 Rank 7 所需点数。"
+        ]
+      }
+    ],
+    "highlight": true
+  },
+  {
     "id": "gbl-forever-forward_ultra-league_weather-cup-great-league-edition",
     "name": "高级联赛 · 天气杯(超级联赛规则)",
     "type": "go-battle-league",
@@ -3782,14 +3944,14 @@
   },
   {
     "id": "hatch-day-august-2026",
-    "name": "孵化日(8 月)",
+    "name": "冰与火孵化日",
     "type": "event",
-    "heading": "Event",
+    "heading": "Hatch Day",
     "start": "2026-08-08T11:00:00",
     "end": "2026-08-08T17:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "image": "https://lh3.googleusercontent.com/8KgePCUGwstBc6yENgfQNbE-19oyaN9Tb_cPX3y5DeIZax7fKeX1o3sjc9lRoKtos0Y4Mv3jLm228G9FKzknlRCO2mlnAe8oPPwqnhoQHQ=s0-e365",
     "link": "https://leekduck.com/events/hatch-day-august-2026/",
-    "summary": "8 月孵化日,11:00–17:00 限时举行;主角宝可梦与加成官方尚未公布,稍后补充。",
+    "summary": "活动期间从补给站更容易获得 2 km 蛋，Smoochum 与 Magby 会更频繁孵出且闪光概率提升；5 km 蛋还有机会孵出燃烧虫。孵蛋糖果翻倍和距离减半不会与其他活动或 GO 通行证的同类加成叠加。",
     "links": [
       {
         "label": "LeekDuck",
@@ -3797,12 +3959,54 @@
       },
       {
         "label": "Hub",
-        "url": "https://pokemongohub.net/post/news/save-the-date-for-next-seasons-community-days-and-events-4/"
+        "url": "https://pokemongohub.net/post/event/fire-and-ice-hatch-day/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/fire-and-ice-hatch-day-2026"
       }
     ],
     "bonuses": [
-      ":incubator: 孵化相关加成(待官方公布)"
-    ]
+      ":candy: 孵蛋糖果 ×2（不与其他活动或 GO 通行证加成叠加）",
+      ":incubator: 孵化距离减半（不与其他活动或 GO 通行证加成叠加）",
+      "✨ Smoochum 与 Magby 闪光孵化概率提升",
+      ":pokestop: 转动补给站获得 2 km 蛋的概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 238,
+        "name": "Smoochum",
+        "shiny": true
+      },
+      {
+        "id": 240,
+        "name": "Magby",
+        "shiny": true
+      },
+      {
+        "id": 636,
+        "name": "燃烧虫",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "蛋池重点",
+        "items": [
+          "2 km 蛋：Smoochum 与 Magby 的孵出频率提高，且两者闪光概率提升。",
+          "5 km 蛋：有机会孵出燃烧虫，也有机会为闪光。",
+          "先清出蛋位再转补给站，避免错过活动 2 km 蛋；所有孵蛋加成仅在 11 时至 17 时有效。"
+        ]
+      },
+      {
+        "title": "限时调查与票务",
+        "items": [
+          "免费活动限定限时调查奖励为孵化器与经验；任务及奖励须在 8 月 8 日 17 时前完成和领取。",
+          "官方商店 1.99 美元超值入场券组合包含活动入场券，并额外附送 1 颗幸运蛋。"
+        ]
+      }
+    ],
+    "highlight": true
   },
   {
     "id": "choose-your-path-venom-and-vines-2026",
@@ -6269,6 +6473,66 @@
       }
     ],
     "longTerm": true
+  },
+  {
+    "id": "wild-area-2026-sendai",
+    "name": "GO 荒野地区 2026：日本仙台（线下）",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-11-06T00:00:00",
+    "end": "2026-11-08T23:59:59",
+    "link": "https://pokemongo.com/news/save-the-date-go-wild-area-2026",
+    "summary": "官方确认 2026 年 GO 荒野地区线下活动将于 11 月 6–8 日在日本仙台举行，玩法覆盖城市范围；门票、每日时段与活动内容将在下一赛季公布。",
+    "links": [
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/save-the-date-go-wild-area-2026"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/pokemon-go-wild-area-2026-event-dates-announced/"
+      }
+    ]
+  },
+  {
+    "id": "wild-area-2026-mexico-city",
+    "name": "GO 荒野地区 2026：墨西哥城（线下）",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-11-06T00:00:00",
+    "end": "2026-11-08T23:59:59",
+    "link": "https://pokemongo.com/news/save-the-date-go-wild-area-2026",
+    "summary": "官方确认 2026 年 GO 荒野地区线下活动将于 11 月 6–8 日在墨西哥墨西哥城举行，玩法覆盖城市范围；门票、每日时段与活动内容将在下一赛季公布。",
+    "links": [
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/save-the-date-go-wild-area-2026"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/pokemon-go-wild-area-2026-event-dates-announced/"
+      }
+    ]
+  },
+  {
+    "id": "wild-area-2026-global",
+    "name": "GO 荒野地区 2026：全球",
+    "type": "event",
+    "heading": "Global Event",
+    "start": "2026-11-14T00:00:00",
+    "end": "2026-11-15T23:59:59",
+    "link": "https://pokemongo.com/news/save-the-date-go-wild-area-2026",
+    "summary": "GO 荒野地区全球活动确定于 11 月 14–15 日举行，世界各地均可参与；每日时段、门票和具体玩法将在下一赛季公布。",
+    "links": [
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/save-the-date-go-wild-area-2026"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/pokemon-go-wild-area-2026-event-dates-announced/"
+      }
+    ]
   },
   {
     "id": "city-safari-2026-sep",
