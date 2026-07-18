@@ -9,34 +9,6 @@
       "tag": "5★",
       "segments": [
         {
-          "name": "Necrozma",
-          "cn": "奈克洛兹玛",
-          "pokemon": [
-            {
-              "id": 800,
-              "name": "奈克洛兹玛"
-            }
-          ],
-          "start": "2026-06-17",
-          "end": "2026-06-23"
-        },
-        {
-          "name": "Kartana / Celesteela",
-          "cn": "纸御剑 / 铁火辉夜",
-          "pokemon": [
-            {
-              "id": 798,
-              "name": "纸御剑"
-            },
-            {
-              "id": 797,
-              "name": "铁火辉夜"
-            }
-          ],
-          "start": "2026-06-24",
-          "end": "2026-06-30"
-        },
-        {
           "name": "Articuno / Zapdos / Moltres",
           "cn": "急冻鸟 / 闪电鸟 / 火焰鸟",
           "pokemon": [
@@ -599,48 +571,6 @@
       "color": "#9c7bb0",
       "tag": "M",
       "segments": [
-        {
-          "name": "Mega Scizor",
-          "cn": "超级巨钳螳螂",
-          "pokemon": [
-            {
-              "id": 212,
-              "name": "巨钳螳螂",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10046.png",
-              "hub": "212-Mega"
-            }
-          ],
-          "start": "2026-06-17",
-          "end": "2026-06-23"
-        },
-        {
-          "name": "Mega Pidgeot",
-          "cn": "超级大比鸟",
-          "pokemon": [
-            {
-              "id": 18,
-              "name": "大比鸟",
-              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10073.png",
-              "hub": "18-Mega"
-            }
-          ],
-          "start": "2026-06-24",
-          "end": "2026-06-30"
-        },
-        {
-          "name": "Mega Skarmory Raid Day",
-          "cn": "超级盔甲鸟团战日",
-          "pokemon": [
-            {
-              "id": 227,
-              "name": "超级盔甲鸟",
-              "sprite": "https://db.pokemongohub.net/images/official/full/227_mega_with_bg.webp",
-              "hub": "227-Mega"
-            }
-          ],
-          "start": "2026-06-27",
-          "end": "2026-06-27"
-        },
         {
           "name": "Mega Lucario",
           "cn": "超级路卡利欧",

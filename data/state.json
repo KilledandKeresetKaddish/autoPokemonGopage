@@ -1,118 +1,118 @@
 {
-  "lastUpdated": "2026-07-16T17:43:46Z",
+  "lastUpdated": "2026-07-18T05:14:28Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-07-16T17:16:03Z",
-      "lastChecked": "2026-07-16T17:43:46Z",
+      "lastFetch": "2026-07-18T04:44:33Z",
+      "lastChecked": "2026-07-18T05:03:02Z",
       "status": "ok",
-      "bytes": 43487,
-      "sha256": "e73329e5166d7686",
-      "note": "刷新成功，hash 已变化；新增与变更活动已审计。"
+      "bytes": 41902,
+      "sha256": "c70f163a0fa360cc",
+      "note": "刷新成功，hash 已变化；活动增删与规范化标识已审计。"
     },
     "raids": {
-      "lastFetch": "2026-07-16T17:10:00Z",
-      "lastChecked": "2026-07-16T17:43:46Z",
+      "lastFetch": "2026-07-18T04:37:43Z",
+      "lastChecked": "2026-07-18T05:03:02Z",
       "status": "ok",
       "bytes": 19185,
       "sha256": "2b43d04bf1beadae",
-      "note": "刷新成功，hash 已变化；现行团战池已用于轮换与排行核对。"
+      "note": "刷新成功，hash 未变化；现行团战池已用于轮换与排行核对。"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-16T17:43:46Z",
+      "lastChecked": "2026-07-18T05:03:02Z",
       "status": "ok",
       "bytes": 29466,
       "sha256": "bf0d68f3851420d0",
-      "note": "按本轮相关性与时效决定跳过刷新；缓存未变。"
+      "note": "按本轮相关性决定跳过刷新；缓存未变。"
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-16T17:43:46Z",
+      "lastChecked": "2026-07-18T05:03:02Z",
       "status": "ok",
       "bytes": 70308,
       "sha256": "02025eab72ec1451",
-      "note": "按本轮相关性与时效决定跳过刷新；缓存未变。"
+      "note": "按本轮相关性决定跳过刷新；缓存未变。"
     },
     "gamemaster": {
       "lastFetch": "2026-07-16T17:12:06Z",
-      "lastChecked": "2026-07-16T17:43:46Z",
+      "lastChecked": "2026-07-18T05:03:02Z",
       "status": "ok",
       "bytes": 921212,
       "sha256": "cb80270b96e9d376",
-      "note": "刷新成功，hash 已变化；用于属性、招式与稳定事实核验。"
+      "note": "缓存仍在时效范围，跳过刷新且 hash 未变化；用于属性、招式与稳定事实核验。"
     },
     "tiers-attackers": {
-      "lastFetch": "2026-07-14T14:36:55Z",
-      "lastChecked": "2026-07-16T17:43:46Z",
+      "lastFetch": "2026-07-18T04:38:00Z",
+      "lastChecked": "2026-07-18T05:03:02Z",
       "status": "ok",
       "bytes": 35479,
       "sha256": "037bf6a8ed8a2df8",
-      "note": "缓存未变且仍在时效范围；攻手榜保留已验证版本。"
+      "note": "刷新成功，hash 未变化；攻手榜保留已验证版本。"
     },
     "tiers-defenders": {
-      "lastFetch": "2026-07-14T14:36:58Z",
-      "lastChecked": "2026-07-16T17:43:46Z",
+      "lastFetch": "2026-07-18T04:38:04Z",
+      "lastChecked": "2026-07-18T05:03:02Z",
       "status": "ok",
       "bytes": 39579,
       "sha256": "17e3e7e077fbe798",
-      "note": "缓存未变且仍在时效范围；防守榜保留已验证版本。"
+      "note": "刷新成功，hash 未变化；防守榜保留已验证版本。"
     },
     "tiers-pokebase": {
-      "lastFetch": "2026-07-14T14:37:06Z",
-      "lastChecked": "2026-07-16T17:43:46Z",
+      "lastFetch": "2026-07-18T04:38:06Z",
+      "lastChecked": "2026-07-18T05:03:02Z",
       "status": "ok",
       "bytes": 121480,
       "sha256": "7138c1e21645b7a3",
-      "note": "缓存未变且仍在时效范围；继续作为排行交叉参考。"
+      "note": "刷新成功，hash 未变化；继续作为排行交叉参考。"
     },
     "events-hub": {
-      "lastFetch": "2026-07-16T17:16:03Z",
-      "lastChecked": "2026-07-16T17:43:46Z",
+      "lastFetch": "2026-07-18T04:44:34Z",
+      "lastChecked": "2026-07-18T05:03:02Z",
       "status": "ok",
-      "bytes": 30430,
-      "sha256": "e095ac6782808803",
-      "note": "刷新成功，hash 已变化；7 月月度文章与新增活动已核实。"
+      "bytes": 30432,
+      "sha256": "db7623c02fa7b1ea",
+      "note": "刷新成功；详情与发现工作后缓存较交接值再次变化，当前最终缓存为准，7 月月度文章与孵化日详情已核实。"
     },
     "events-pokebase": {
-      "lastFetch": "2026-07-15T03:11:14Z",
-      "lastChecked": "2026-07-16T17:43:46Z",
-      "status": "degraded",
-      "bytes": 30435,
-      "sha256": "d138abb9561cdac1",
-      "note": "本轮刷新 120 秒超时且无返回字节；保留 7 月 15 日可用的最后良好缓存。"
+      "lastFetch": "2026-07-18T04:37:53Z",
+      "lastChecked": "2026-07-18T05:03:02Z",
+      "status": "ok",
+      "bytes": 30824,
+      "sha256": "d69cf6cca90e66c9",
+      "note": "刷新恢复正常，hash 已变化；动态倒计时可能贡献差异。"
     },
     "events-official": {
-      "lastFetch": "2026-07-16T17:16:04Z",
-      "lastChecked": "2026-07-16T17:43:46Z",
+      "lastFetch": "2026-07-18T04:44:34Z",
+      "lastChecked": "2026-07-18T05:03:02Z",
       "status": "ok",
       "bytes": 9703,
       "sha256": "9e40ae76b85a9888",
-      "note": "刷新成功，hash 已变化；官方公告已用于新增日期与活动核对。"
+      "note": "刷新成功，hash 未变化；官方公告缓存健康。"
     }
   },
   "discovery": {
-    "lastChecked": "2026-07-16T17:43:46Z",
+    "lastChecked": "2026-07-18T05:03:02Z",
     "status": "ok",
-    "note": "已打开核实 GO Fest 团战补偿、Summer Marathon、Fire/Ice Hatch 详情，以及官网与 Hub 的三场 Wild Area 日期公告；7 月 Hub 月度文章为 https://pokemongohub.net/post/event/july-2026-pokemon-go-events/ 。National Trust 全面检索后仍仅有 Hub 精确来源，未补造链接。"
+    "note": "发现流程成功；已核实 7 月 Hub 月度文章 https://pokemongohub.net/post/event/july-2026-pokemon-go-events/ 及 Fire/Ice Hatch 详情页。"
   },
   "contentStatus": {
-    "checkedAt": "2026-07-16T17:44:56Z",
+    "checkedAt": "2026-07-18T05:14:28Z",
     "status": "validated",
-    "note": "日历现有 107 个唯一活动，新增 GO Fest 团战补偿、Summer Marathon 与三场 Wild Area 日期活动，并更新 Fire/Ice Hatch；7 月轮换已同步。本月看点、本期推荐与当前团战已刷新，攻防榜沿用未变化来源的最后良好版本。"
+    "note": "日历现有 103 个唯一活动；Fire/Ice Hatch 已采用规范标识，4 个过期 6 月团战抽屉与 5 个过时 6 月轮换段已移除，跨月、当前与即将开始的内容保留。本月看点、本期推荐与当前团战已刷新至 7 月 18 日，未变化的攻防榜保留；Mega Booster 顺序修正后已完成终验。"
   },
   "validation": {
-    "checkedAt": "2026-07-16T17:44:56Z",
+    "checkedAt": "2026-07-18T05:14:28Z",
     "status": "passed",
-    "note": "scripts/preflight.sh exit 0：render checks passed，含 3 条非阻塞长名称警告；scripts/validate.sh exit 0：all checks passed。"
+    "note": "最终复验：scripts/preflight.sh exit 0，render checks passed（3 条非阻塞长名称警告）；scripts/validate.sh exit 0，all checks passed。"
   },
   "notes": {
     "pipeline_gap_fetch_zh": {
-      "fact": "受保护的 scripts/fetch.sh zh 查询仍会使部分有效物种返回 NO-ZH-NAME，且本地字典存在 zh:null 条目。",
+      "fact": "受保护的 fetch zh 查询仍会使部分有效物种返回 NO-ZH-NAME，且本地字典存在 zh:null 条目。",
       "decision": "脚本不在本轮写入范围；策展内容对无法取得可靠简体中文结果的名称保留英文或罗马字，不臆造翻译。"
     },
     "source_health": {
-      "fact": "events、raids、events-hub、events-official 与 gamemaster 的 hash 已变化；events-pokebase 刷新超时，其他跳过来源缓存未变。",
-      "decision": "变更来源已重新核对；Pokébase 活动源使用最后良好缓存并标记降级，未以来源故障为由清空内容或虚构链接。"
+      "fact": "全部来源请求健康；events、events-hub 与 events-pokebase 的 hash 有变化，events-pokebase 已从上轮降级状态恢复。",
+      "decision": "变更来源已重新核对；未以来源波动为由清空内容或虚构链接。"
     }
   }
 }

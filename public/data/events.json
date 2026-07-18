@@ -474,108 +474,6 @@
     "longTerm": true
   },
   {
-    "id": "mega-scizor-in-mega-raids-june-2026",
-    "name": "超级巨钳螳螂 现身超级团战",
-    "type": "raid-battles",
-    "heading": "Raid Battles",
-    "start": "2026-06-17T06:00:00",
-    "end": "2026-06-24T06:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
-    "link": "https://leekduck.com/events/mega-scizor-in-mega-raids-june-2026/",
-    "summary": "超级巨钳螳螂(虫/钢)现身超级团战,击败可获得超级能量。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/mega-scizor-in-mega-raids-june-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/mega-scizor-raid-guide/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 212,
-        "name": "巨钳螳螂",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10046.png",
-        "hub": "212-Mega",
-        "shiny": true
-      }
-    ],
-    "counters": [
-      {
-        "id": 257,
-        "name": "火焰鸡",
-        "fast": "火焰旋涡",
-        "charged": "爆炸烈焰"
-      },
-      {
-        "id": 609,
-        "name": "水晶灯火灵",
-        "fast": "火焰旋涡",
-        "charged": "过热"
-      }
-    ],
-    "bonuses": [
-      "✨ 可遇闪光"
-    ]
-  },
-  {
-    "id": "necrozma-in-5-star-raid-battles-june-2026",
-    "name": "奈克洛兹玛现身 5★ 团战",
-    "type": "raid-battles",
-    "heading": "Raid Battles",
-    "start": "2026-06-17T06:00:00",
-    "end": "2026-06-23T22:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/necrozma-in-5-star-raid-battles-june-2026/",
-    "summary": "奈克洛兹玛现身 5★ 团战,超能系传说宝可梦,可遇闪光。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/necrozma-in-5-star-raid-battles-june-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/current-go-raids/"
-      },
-      {
-        "label": "Hub 指南",
-        "url": "https://pokemongohub.net/post/guide/necrozma-raid-guide/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 800,
-        "name": "奈克洛兹玛",
-        "shiny": true
-      }
-    ],
-    "bonuses": [
-      "✨ 可遇闪光"
-    ],
-    "counters": [
-      {
-        "id": 491,
-        "name": "达克莱伊",
-        "fast": "大声咆哮",
-        "charged": "暗影球"
-      },
-      {
-        "id": 635,
-        "name": "三首恶龙",
-        "fast": "咬住",
-        "charged": "暗影球"
-      },
-      {
-        "id": 609,
-        "name": "水晶灯火灵",
-        "fast": "祸不单行",
-        "charged": "暗影球"
-      }
-    ]
-  },
-  {
     "id": "choose-your-path-fossil-fun-2026",
     "name": "选择你的道路:化石乐趣",
     "type": "choose-your-path",
@@ -907,110 +805,6 @@
       }
     ],
     "longTerm": true
-  },
-  {
-    "id": "celesteela-kartana-in-5-star-raid-battles-june-2026",
-    "name": "纸御剑 与 铁火辉夜 现身 5★ 团战",
-    "type": "raid-battles",
-    "heading": "Raid Battles",
-    "start": "2026-06-24T06:00:00",
-    "end": "2026-06-30T22:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/celesteela-kartana-in-5-star-raid-battles-june-2026/",
-    "summary": "究极异兽纸御剑(草/钢)与铁火辉夜(钢/飞)轮换登场 5★ 团战。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/celesteela-kartana-in-5-star-raid-battles-june-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/current-go-raids/"
-      },
-      {
-        "label": "Hub 纸御剑",
-        "url": "https://pokemongohub.net/post/guide/kartana-ultra-beast-raid-guide/"
-      },
-      {
-        "label": "Hub 铁火辉夜",
-        "url": "https://pokemongohub.net/post/guide/celesteela-ultra-beast-raid-guide/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 798,
-        "name": "纸御剑"
-      },
-      {
-        "id": 797,
-        "name": "铁火辉夜"
-      }
-    ],
-    "counters": [
-      {
-        "id": 609,
-        "name": "水晶灯火灵",
-        "fast": "祸不单行",
-        "charged": "过热"
-      },
-      {
-        "id": 257,
-        "name": "火焰鸡",
-        "fast": "火焰旋涡",
-        "charged": "过热"
-      }
-    ],
-    "bonuses": [
-      ":raid: 北半球:纸御剑",
-      ":raid: 南半球:铁火辉夜"
-    ]
-  },
-  {
-    "id": "mega-pidgeot-in-mega-raids-june-2026",
-    "name": "超级大比鸟 现身超级团战",
-    "type": "raid-battles",
-    "heading": "Raid Battles",
-    "start": "2026-06-24T06:00:00",
-    "end": "2026-07-01T06:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
-    "link": "https://leekduck.com/events/mega-pidgeot-in-mega-raids-june-2026/",
-    "summary": "超级大比鸟(一般/飞)现身超级团战,击败可获得超级能量。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/mega-pidgeot-in-mega-raids-june-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/mega-pidgeot-raid-guide/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 18,
-        "name": "大比鸟",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10073.png",
-        "hub": "18-Mega",
-        "shiny": true
-      }
-    ],
-    "counters": [
-      {
-        "id": 248,
-        "name": "班基拉斯"
-      }
-    ],
-    "bonuses": [
-      "✨ 可遇闪光"
-    ],
-    "sections": [
-      {
-        "title": "克制属性提示",
-        "items": [
-          "Hub 指南列出电、冰、岩石系为主要克制属性;日历抽屉仅保留轻量提示,详表见当前团战 Counter。"
-        ]
-      }
-    ]
   },
   {
     "id": "raidhour20260624",
@@ -3943,19 +3737,19 @@
     "longTerm": true
   },
   {
-    "id": "hatch-day-august-2026",
+    "id": "fire-and-ice-hatch-day-2026",
     "name": "冰与火孵化日",
     "type": "event",
     "heading": "Hatch Day",
     "start": "2026-08-08T11:00:00",
     "end": "2026-08-08T17:00:00",
-    "image": "https://lh3.googleusercontent.com/8KgePCUGwstBc6yENgfQNbE-19oyaN9Tb_cPX3y5DeIZax7fKeX1o3sjc9lRoKtos0Y4Mv3jLm228G9FKzknlRCO2mlnAe8oPPwqnhoQHQ=s0-e365",
-    "link": "https://leekduck.com/events/hatch-day-august-2026/",
-    "summary": "活动期间从补给站更容易获得 2 km 蛋，Smoochum 与 Magby 会更频繁孵出且闪光概率提升；5 km 蛋还有机会孵出燃烧虫。孵蛋糖果翻倍和距离减半不会与其他活动或 GO 通行证的同类加成叠加。",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-08-fire-and-ice-hatch-day-2026/fire-and-ice-hatch-day-2026.jpg",
+    "link": "https://leekduck.com/events/fire-and-ice-hatch-day-2026/",
+    "summary": "活动期间从补给站更容易获得 2 km 蛋，Smoochum 与 Magby 会更频繁孵出且闪光概率提升；5 km 蛋还有机会孵出 Larvesta。孵蛋糖果翻倍和距离减半不会与其他活动或 GO 通行证的同类加成叠加。",
     "links": [
       {
         "label": "LeekDuck",
-        "url": "https://leekduck.com/events/hatch-day-august-2026/"
+        "url": "https://leekduck.com/events/fire-and-ice-hatch-day-2026/"
       },
       {
         "label": "Hub",
@@ -3985,7 +3779,7 @@
       },
       {
         "id": 636,
-        "name": "燃烧虫",
+        "name": "Larvesta",
         "shiny": true
       }
     ],
@@ -3994,7 +3788,7 @@
         "title": "蛋池重点",
         "items": [
           "2 km 蛋：Smoochum 与 Magby 的孵出频率提高，且两者闪光概率提升。",
-          "5 km 蛋：有机会孵出燃烧虫，也有机会为闪光。",
+          "5 km 蛋：有机会孵出 Larvesta，也有机会为闪光。",
           "先清出蛋位再转补给站，避免错过活动 2 km 蛋；所有孵蛋加成仅在 11 时至 17 时有效。"
         ]
       },
