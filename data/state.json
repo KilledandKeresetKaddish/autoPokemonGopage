@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-18T05:14:28Z",
+  "lastUpdated": "2026-07-19T21:06:37Z",
   "sources": {
     "events": {
       "lastFetch": "2026-07-18T04:44:33Z",
@@ -91,17 +91,17 @@
     }
   },
   "discovery": {
-    "lastChecked": "2026-07-18T05:03:02Z",
+    "lastChecked": "2026-07-19T21:06:37Z",
     "status": "ok",
-    "note": "发现流程成功；已核实 7 月 Hub 月度文章 https://pokemongohub.net/post/event/july-2026-pokemon-go-events/ 及 Fire/Ice Hatch 详情页。"
+    "note": "发现流程成功；没有未覆盖的结构化活动。已核实超极巨化 Rillaboom 极巨对战日的 LeekDuck、Hub、官方与 Wiki 页面，并核实 GO Fest 周日团战补偿官方更新。"
   },
   "contentStatus": {
-    "checkedAt": "2026-07-18T05:14:28Z",
+    "checkedAt": "2026-07-19T21:06:37Z",
     "status": "validated",
-    "note": "日历现有 103 个唯一活动；Fire/Ice Hatch 已采用规范标识，4 个过期 6 月团战抽屉与 5 个过时 6 月轮换段已移除，跨月、当前与即将开始的内容保留。本月看点、本期推荐与当前团战已刷新至 7 月 18 日，未变化的攻防榜保留；Mega Booster 顺序修正后已完成终验。"
+    "note": "日历保留 103 个唯一活动；按官方更新修正 GO Fest 2026 周日团战补偿为全球开放、最多 12 张免费券与正确远程时段；按管理员要求将超极巨化 Rillaboom 极巨对战日加入精选金框。本月看点、本期推荐与当前团战已推进至 7 月 19 日；轮换与未变化攻防榜保留。"
   },
   "validation": {
-    "checkedAt": "2026-07-18T05:14:28Z",
+    "checkedAt": "2026-07-19T21:06:37Z",
     "status": "passed",
     "note": "最终复验：scripts/preflight.sh exit 0，render checks passed（3 条非阻塞长名称警告）；scripts/validate.sh exit 0，all checks passed。"
   },
@@ -111,8 +111,12 @@
       "decision": "脚本不在本轮写入范围；策展内容对无法取得可靠简体中文结果的名称保留英文或罗马字，不臆造翻译。"
     },
     "source_health": {
-      "fact": "全部来源请求健康；events、events-hub 与 events-pokebase 的 hash 有变化，events-pokebase 已从上轮降级状态恢复。",
-      "decision": "变更来源已重新核对；未以来源波动为由清空内容或虚构链接。"
+      "fact": "events 与 raids hash 未变化；events-hub、events-pokebase、events-official hash 变化，全部来源请求健康。",
+      "decision": "采用事件源安静日路径，仅重核变化来源与运营方指定活动；未以来源波动为由清空内容或虚构链接。"
+    },
+    "operator_note": {
+      "fact": "管理员要求 feature 超极巨化 Rillaboom 极巨对战日。",
+      "decision": "已将规范活动 id gigantamax-rillaboom-max-battle-day-2026 加入 public/data/featured.json，并以 LeekDuck、Hub、官方及 Wiki 页面复核活动详情。"
     }
   }
 }
