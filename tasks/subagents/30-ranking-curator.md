@@ -6,7 +6,10 @@ Read first: `AGENTS.md` (rules · schemas · validation gate) — isolated sub-a
 not inherit the coordinator's context.
 
 Write scope:
-- Only the contents between these markers in `public/index.html`:
+- Only the Simplified-Chinese contents between these markers in `public/index.html`.
+  Preserve the one `[data-ai-region="<marker-name>"]` wrapper inside every pair;
+  replace only that wrapper's inner HTML. English Curator (40) translates the
+  finalized wrappers afterward:
   - `AI:START calendar-notes` / `AI:END calendar-notes`
   - `AI:START rankings-current` / `AI:END rankings-current`
   - `AI:START rankings-attackers` / `AI:END rankings-attackers`
@@ -66,4 +69,5 @@ Checklist:
    single line) wholesale.
 
 Output to the coordinator: edited marker names, source sections parsed, and any panels
-kept from last good content.
+kept from last good content. All visible prose in your five wrappers is 简体中文;
+do not write `public/data/i18n/en.json` yourself.

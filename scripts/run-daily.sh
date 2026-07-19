@@ -12,19 +12,37 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 mkdir -p logs
+# One checkout, one writer. Concurrent cron/manual runs can otherwise mix two
+# agents' edits and let one process validate while the other is still writing.
+command -v flock >/dev/null 2>&1 || {
+  echo "flock is required for a race-free daily run (install util-linux); aborting"
+  exit 1
+}
+exec 9>logs/.daily-run.lock
+if ! flock -n 9; then
+  echo "daily run already active for this checkout; refusing a concurrent run"
+  exit 1
+fi
 LOG="logs/daily-$(date -u +%F).log"
 exec > >(tee -a "$LOG") 2>&1
 
 echo "===== daily run $(date -u +%FT%TZ) ====="
 
-# Refuse to run over uncommitted maintainer work: the failure path restores
-# public/ + data/state.json with checkout/clean (which would destroy it), and the
-# protected-area check below assumes HEAD is the clean baseline. Commit or stash
-# first (data/raw is gitignored and doesn't count).
-if [ -n "$(git status --porcelain -- public data scripts tasks AGENTS.md CLAUDE.md 2>/dev/null)" ]; then
-  echo "!!! uncommitted changes in public/ data/ scripts/ tasks/ or the agent guides —"
-  echo "!!! commit or stash them before the daily run (rollback would destroy them). Aborting."
-  git status --porcelain -- public data scripts tasks AGENTS.md CLAUDE.md
+# Refuse to run over ANY uncommitted maintainer work. Logs, raw caches, local Pi
+# artifacts and note.txt are gitignored; everything else must start at HEAD so an
+# allowed-diff check can attribute every post-agent change to this invocation.
+if ! GIT_STATUS="$(git status --porcelain --untracked-files=all)"; then
+  echo "!!! cannot inspect the Git working tree — refusing to run without a trustworthy baseline"
+  exit 1
+fi
+if [ -n "$GIT_STATUS" ]; then
+  echo "!!! uncommitted/untracked files outside ignored runtime caches —"
+  echo "!!! commit, stash or remove them before the daily run. Aborting."
+  git status --short --untracked-files=all
+  exit 1
+fi
+if ! BASE_HEAD="$(git rev-parse --verify 'HEAD^{commit}')"; then
+  echo "!!! cannot resolve the committed Git baseline — aborting before agent invocation"
   exit 1
 fi
 
@@ -33,10 +51,12 @@ find logs -maxdepth 1 -name 'daily-*.log' -type f -mtime +30 -delete 2>/dev/null
 find logs -maxdepth 1 -name 'pi-events-*.jsonl' -type f -mtime +7 -delete 2>/dev/null || true
 
 AGENT_CLI="${AGENT_CLI:-claude}"
+PI_EVENT_LOG=""
+[ "$AGENT_CLI" = "pi" ] && [ "${PI_VERBOSE:-0}" = "1" ] && PI_EVENT_LOG="logs/pi-events-$(date -u +%F).jsonl"
 
 # The agent prompt = the coordinator brief + every sub-agent brief, concatenated so
 # the coordinator (and the single-agent fallback) has the full delegated detail
-# in-context, not just file references. Briefs are ordered by their 00/10/20/30/90
+# in-context, not just file references. Briefs are ordered by their 00/10/20/30/40/90
 # filename prefixes. (When real sub-agents are used they still read their own brief
 # file directly; this just guarantees the coordinator sees everything.)
 PROMPT="$(cat tasks/daily-update.md)"
@@ -125,8 +145,12 @@ run_agent() {
       [ "${PI_VERBOSE:-0}" = "1" ] && pi_args=(--mode json)
       [ -n "${PI_PROVIDER:-}" ] && pi_args+=(--provider "$PI_PROVIDER")
       [ -n "${PI_MODEL:-}" ] && pi_args+=(--model "$PI_MODEL")
+      # Safe cron default: hide subagent/intercom tools and let the coordinator
+      # execute the same phases itself. Set PI_SUBAGENTS=1 only after upgrading
+      # the extensions and confirming foreground-only behavior interactively.
+      [ "${PI_SUBAGENTS:-0}" = "1" ] || pi_args+=(--exclude-tools "subagent,subagent_wait,subagent_supervisor,intercom")
       if [ "${PI_VERBOSE:-0}" = "1" ]; then
-        pi "${pi_args[@]}" "$PROMPT" > "logs/pi-events-$(date -u +%F).jsonl"
+        pi "${pi_args[@]}" "$PROMPT" > "$PI_EVENT_LOG"
       else
         pi "${pi_args[@]}" "$PROMPT"
       fi
@@ -139,27 +163,123 @@ run_agent() {
 }
 
 echo "--- invoking agent: $AGENT_CLI ---"
-run_agent || echo "WARN agent exited non-zero (continuing to validation)"
+# Capture this invocation separately (the daily log may contain an earlier run
+# from the same UTC day). Pi subagent completion warnings mean the headless
+# coordinator did not acknowledge a child result; publishing after that can
+# miss dependent phases or race a detached writer, even when JSON happens to
+# validate. Treat that exact condition as a failed agent gate.
+AGENT_CAPTURE="logs/.agent-run-$(date -u +%Y%m%dT%H%M%S)-$$.out"
+run_agent 2>&1 | tee "$AGENT_CAPTURE"
+agent_rc=${PIPESTATUS[0]}
+agent_gate=0
+async_unack=0
+if [ "$agent_rc" -ne 0 ]; then
+  echo "!!! agent exited non-zero (rc=$agent_rc) — publication is blocked"
+  # Any CLI can leave a valid-looking partial edit behind. Keep running the
+  # diagnostic gates, but fail closed and roll the working tree back afterward.
+  agent_gate=1
+fi
+if grep -qF 'Subagent async grouped result intercom delivery was not acknowledged' "$AGENT_CAPTURE" \
+   || { [ -n "$PI_EVENT_LOG" ] && grep -qF 'Subagent async grouped result intercom delivery was not acknowledged' "$PI_EVENT_LOG"; }; then
+  echo "!!! unacknowledged Pi subagent result — refusing to validate/publish an incomplete orchestration"
+  echo "!!! daily subagents must run foreground; inspect the result path printed above, then update pi-subagents/pi-intercom"
+  agent_gate=1
+  async_unack=1
+fi
+rm -f "$AGENT_CAPTURE"
 
-# Protected-area check FIRST, and restore before running the gates: preflight.sh
-# and validate.sh live in scripts/, so an agent edit there could otherwise
-# neutralize the very gates about to run. The pre-run guard guaranteed these
-# paths started clean, so any diff here is the agent's doing.
-echo "--- protected-area check (scripts / tasks / AGENTS.md / CLAUDE.md) ---"
-pa=0
-if [ -n "$(git status --porcelain -- scripts tasks AGENTS.md CLAUDE.md 2>/dev/null)" ]; then
-  echo "!!! agent modified protected program/instruction files — restoring them and failing the gate:"
-  git status --porcelain -- scripts tasks AGENTS.md CLAUDE.md
-  git checkout -- scripts tasks AGENTS.md CLAUDE.md 2>/dev/null || true
-  git clean -fdq scripts tasks 2>/dev/null || true
-  pa=1
+# An unacknowledged async result may mean a detached writer is still alive. Do
+# NOT validate, checkout, clean or claim rollback: touching the checkout would
+# race that process. Default Pi runs disable subagent tools, so this path exists
+# only for an explicit PI_SUBAGENTS=1 opt-in or a broken extension. Leave the
+# tree for diagnosis; the next run's clean-tree guard will block automatically.
+if [ "$async_unack" = 1 ]; then
+  echo "!!! run stopped without rollback because writer termination is unproven"
+  echo "!!! inspect/stop the child result process, then restore or commit the working tree manually"
+  exit 1
 fi
 
+# Whole-repository write-scope check FIRST. Restore every tracked/untracked path
+# outside the explicit daily whitelist before executing protected gate scripts;
+# otherwise an agent could edit the validator itself or leave README/etc dirty.
+echo "--- allowed-diff check (whole repository) ---"
+pa=0
+is_daily_path() {
+  case "$1" in
+    public/data/events.json|public/data/rotations.json|public/data/categories.json|public/data/meta.json|\
+    public/data/featured.json|public/data/mega.json|public/data/i18n/en.json|\
+    public/index.html|data/state.json) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+if ! CURRENT_HEAD="$(git rev-parse --verify 'HEAD^{commit}')"; then
+  echo "!!! cannot resolve HEAD after the agent run — failing closed"
+  pa=1
+elif [ "$CURRENT_HEAD" != "$BASE_HEAD" ]; then
+  echo "!!! agent changed git history — resetting to the clean pre-run HEAD and failing"
+  git reset --hard -q "$BASE_HEAD" 2>/dev/null || true
+  git clean -fdq 2>/dev/null || true     # ignored raw/log caches survive (no -x)
+  pa=1
+else
+  # Do not consume Git output through process substitutions: their exit status is
+  # invisible to the parent shell. Materialize each NUL-delimited listing under
+  # ignored logs/ and require every command to succeed before trusting the scope.
+  scope_prefix="logs/.daily-scope-$$"
+  scope_ok=1
+  if ! git diff --name-only -z > "$scope_prefix.work"; then
+    echo "!!! cannot enumerate unstaged changes — failing closed"
+    scope_ok=0
+  fi
+  if ! git diff --cached --name-only -z > "$scope_prefix.index"; then
+    echo "!!! cannot enumerate staged changes — failing closed"
+    scope_ok=0
+  fi
+  if ! git ls-files --others --exclude-standard -z > "$scope_prefix.untracked"; then
+    echo "!!! cannot enumerate untracked files — failing closed"
+    scope_ok=0
+  fi
+  if [ "$scope_ok" = 1 ] && ! sort -zu "$scope_prefix.work" "$scope_prefix.index" > "$scope_prefix.tracked"; then
+    echo "!!! cannot combine tracked change lists — failing closed"
+    scope_ok=0
+  fi
+
+  bad_tracked=(); bad_untracked=()
+  if [ "$scope_ok" = 1 ]; then
+    while IFS= read -r -d '' path; do
+      is_daily_path "$path" || bad_tracked+=("$path")
+    done < "$scope_prefix.tracked"
+    while IFS= read -r -d '' path; do
+      is_daily_path "$path" || bad_untracked+=("$path")
+    done < "$scope_prefix.untracked"
+  else
+    pa=1
+  fi
+  rm -f "$scope_prefix.work" "$scope_prefix.index" "$scope_prefix.tracked" "$scope_prefix.untracked"
+
+  if [ "$scope_ok" = 1 ] && { [ "${#bad_tracked[@]}" -gt 0 ] || [ "${#bad_untracked[@]}" -gt 0 ]; }; then
+    echo "!!! agent modified paths outside the daily whitelist — restoring them and failing:"
+    printf '  tracked:   %s\n' "${bad_tracked[@]}"
+    printf '  untracked: %s\n' "${bad_untracked[@]}"
+    [ "${#bad_tracked[@]}" -eq 0 ] || {
+      git reset -q HEAD -- "${bad_tracked[@]}" 2>/dev/null || true
+      git checkout -- "${bad_tracked[@]}" 2>/dev/null || true
+    }
+    [ "${#bad_untracked[@]}" -eq 0 ] || rm -rf -- "${bad_untracked[@]}"
+    pa=1
+  fi
+  # Normalize accidental staging while preserving allowed working-tree edits.
+  # A failed reset could leave staged out-of-scope content for publish.sh, so it
+  # is a hard gate failure rather than a best-effort cleanup.
+  if [ "$scope_ok" = 1 ] && ! git reset -q HEAD -- .; then
+    echo "!!! cannot normalize the Git index — failing closed"
+    pa=1
+  fi
+fi
 echo "--- preflight (render dry-run) ---"
-scripts/preflight.sh; pf=$?
+POGO_DAILY_RUN=1 scripts/preflight.sh; pf=$?
 echo "--- validating ---"
-scripts/validate.sh; vl=$?
-if [ "$pa" = 0 ] && [ "$pf" = 0 ] && [ "$vl" = 0 ]; then
+POGO_DAILY_RUN=1 scripts/validate.sh; vl=$?
+if [ "$agent_gate" = 0 ] && [ "$pa" = 0 ] && [ "$pf" = 0 ] && [ "$vl" = 0 ]; then
   echo "--- publishing ---"
   scripts/publish.sh || { echo "!!! publish FAILED (commit error — content left in working tree)"; exit 1; }
   # Sweep agent temp/backup files under data/ (untracked, non-ignored — e.g. a
@@ -169,7 +289,7 @@ if [ "$pa" = 0 ] && [ "$pf" = 0 ] && [ "$vl" = 0 ]; then
   git clean -fdq data 2>/dev/null || true
   echo "===== done OK $(date -u +%FT%TZ) ====="
 else
-  echo "!!! gate FAILED (protected=$pa preflight=$pf validate=$vl) — rolling back working tree to last good commit"
+  echo "!!! gate FAILED (agent=$agent_gate protected=$pa preflight=$pf validate=$vl) — rolling back working tree to last good commit"
   # checkout+clean cover BOTH guarded content paths (public + data): a stray
   # untracked file under data/ would otherwise survive rollback and deadlock
   # every future run at the dirty-tree guard. -x is deliberately absent so the

@@ -85,4 +85,6 @@ Checklist:
     big caches (gamemaster is a ~900KB single line — never read it wholesale).
 
 Output to the coordinator: changed files, event count, long-term count, highlighted
-count, known source gaps kept from last good content.
+count, known source gaps kept from last good content. Keep canonical visible text
+简体中文; English Curator (40) updates the text-only English overlay after all facts are
+finalized, so do not edit `public/data/i18n/en.json`.

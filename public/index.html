@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pokémon GO 面板</title>
+  <title data-i18n="site.documentTitle">Pokémon GO 面板</title>
   <link rel="icon" type="image/x-icon" href="pokemongocalender.ico?v=14" />
-  <link rel="stylesheet" href="style.css?v=23" />
+  <link rel="stylesheet" href="style.css?v=24" />
 </head>
 <body>
   <!-- =====================================================================
@@ -17,20 +17,22 @@
 
   <div class="bg-orn" aria-hidden="true"></div>
 
+  <button id="lang-toggle" class="lang-toggle" type="button">English</button>
+
   <header class="masthead">
     <div class="orn"><span class="dia">✦ &nbsp;◆&nbsp; ✦</span></div>
-    <p class="kicker">Pokémon GO Calendar · Pi-agent</p>
-    <h1 class="site-title">Pokémon GO 面板</h1>
-    <p class="meta"><span id="last-updated" class="muted">加载中…</span></p>
+    <p class="kicker" data-i18n="masthead.kicker">Pokémon GO Calendar · Pi-agent</p>
+    <h1 class="site-title" data-i18n="masthead.title">Pokémon GO 面板</h1>
+    <p class="meta"><span id="last-updated" class="muted" data-i18n="status.loading">加载中…</span></p>
   </header>
 
   <nav class="tabs" id="main-tabs">
-    <button data-view="calendar" class="active"><span class="t-ico">☾</span> 当月日历</button>
-    <button data-view="rankings"><span class="t-ico">⚔</span> 战力榜</button>
-    <button data-view="mega"><span class="t-ico">✷</span> 超级进化</button>
-    <button data-view="clock"><span class="t-ico">🕓</span> 世界时钟</button>
-    <button data-view="todo"><span class="t-ico">📋</span> 多账号 TODO</button>
-    <button data-view="links"><span class="t-ico">🔗</span> 实用链接</button>
+    <button data-view="calendar" class="active"><span class="t-ico">☾</span> <span data-i18n="tabs.calendar">当月日历</span></button>
+    <button data-view="rankings"><span class="t-ico">⚔</span> <span data-i18n="tabs.rankings">战力榜</span></button>
+    <button data-view="mega"><span class="t-ico">✷</span> <span data-i18n="tabs.mega">超级进化</span></button>
+    <button data-view="clock"><span class="t-ico">🕓</span> <span data-i18n="tabs.clock">世界时钟</span></button>
+    <button data-view="todo"><span class="t-ico">📋</span> <span data-i18n="tabs.todo">多账号 TODO</span></button>
+    <button data-view="links"><span class="t-ico">🔗</span> <span data-i18n="tabs.links">实用链接</span></button>
   </nav>
 
   <main>
@@ -39,10 +41,10 @@
          render as spanning bars; single-day point events render as day chips. -->
     <section id="view-calendar" class="view active">
       <div class="cal-toolbar">
-        <button id="cal-prev" class="btn" aria-label="上个月">‹</button>
+        <button id="cal-prev" class="btn" aria-label="上个月" data-i18n-aria-label="calendar.prev">‹</button>
         <h2 id="cal-title">—</h2>
-        <button id="cal-next" class="btn" aria-label="下个月">›</button>
-        <button id="cal-today" class="btn btn-ghost">今天</button>
+        <button id="cal-next" class="btn" aria-label="下个月" data-i18n-aria-label="calendar.next">›</button>
+        <button id="cal-today" class="btn btn-ghost" data-i18n="calendar.today">今天</button>
       </div>
 
       <div id="cal-legend" class="cal-legend" aria-hidden="true"></div>
@@ -58,29 +60,29 @@
       <div id="pvp-band" class="lt-band" hidden></div>
 
       <aside class="cal-notes panel">
-        <div class="panel-head"><span class="dia">◆</span><h3>本月看点</h3></div>
+        <div class="panel-head"><span class="dia">◆</span><h3 data-i18n="calendar.highlights">本月看点</h3></div>
         <!-- AI:START calendar-notes -->
-<p><strong>今天（7/18）优先短窗口：</strong><span class="event-link" data-event-id="raichu-super-mega-raid-day-2026">雷丘超级团战日</span>仅 14:00–17:00，闪光概率提升并可领取最多 5 张免费团战入场券；两种超级雷丘都以地面攻手应对。</p>
+<div data-ai-region="calendar-notes"><p><strong>今天（7/18）优先短窗口：</strong><span class="event-link" data-event-id="raichu-super-mega-raid-day-2026">雷丘超级团战日</span>仅 14:00–17:00，闪光概率提升并可领取最多 5 张免费团战入场券；两种超级雷丘都以地面攻手应对。</p>
 <ul>
   <li><span class="event-link" data-event-id="kyogre-in-5-star-raid-battles-july-2026"><strong>盖欧卡 5★团战</strong></span>与<span class="event-link" data-event-id="mega-sceptile-in-mega-raids-july-2026"><strong>超级蜥蜴王团战</strong></span>持续至 7/21；本周末另有暗影帕路奇亚，先约队并准备净化结晶。</li>
   <li><span class="event-link" data-event-id="special-anniversary-pikachu-celebration-2026"><strong>特别周年皮卡丘庆典</strong></span>7/20 20:00 截止；<span class="event-link" data-event-id="national-trust-x-pokemon-go-events-2026"><strong>National Trust 线下活动</strong></span>今天起仅在英格兰、威尔士及北爱尔兰参与景点开放。</li>
   <li><strong>下轮团战：</strong>7/22 起为索尔迦雷欧、超级暴飞龙；Max 轮换则在 7/20 转为破破袋。<span class="event-link" data-event-id="ultra-unlock-10th-anniversary-edition"><strong>究极解锁：十周年纪念版</strong></span>7/21 开始，捕捉经验按阶段升至 ×6、×8、×10。</li>
   <li><strong>8 月孵化规划：</strong><span class="event-link" data-event-id="summer-marathon-2026">夏日马拉松：极地余烬</span>（8/4–8/10）有孵化距离里程碑；<span class="event-link" data-event-id="fire-and-ice-hatch-day-2026">冰与火孵化日</span>（8/8 11:00–17:00）的孵蛋糖果与距离加成不会和同类活动加成叠加，先清蛋位再转补给站。</li>
-</ul>
+</ul></div>
 <!-- AI:END calendar-notes -->
       </aside>
 
       <!-- 本月 Weekly Rotations — data-driven by app.js from public/data/rotations.json.
            Owner-maintained structure; the daily agent only writes rotations.json. -->
       <section class="rot-wrap panel">
-        <div class="panel-head"><span class="dia">◆</span><h3>本月 Weekly Rotations</h3></div>
+        <div class="panel-head"><span class="dia">◆</span><h3 data-i18n="calendar.rotations">本月 Weekly Rotations</h3></div>
         <p id="rot-note" class="muted"></p>
         <div id="rotations"></div>
       </section>
 
       <!-- Event detail drawer (populated by app.js on click) -->
       <aside id="event-detail" class="drawer" hidden>
-        <button id="detail-close" class="drawer-close" aria-label="关闭">×</button>
+        <button id="detail-close" class="drawer-close" aria-label="关闭" data-i18n-aria-label="common.close">×</button>
         <div id="detail-body"></div>
       </aside>
     </section>
@@ -90,27 +92,26 @@
          wrappers and sub-tab switching are protected structure. -->
     <section id="view-rankings" class="view">
       <nav class="subtabs" id="rank-subtabs">
-        <button data-rank="current" class="active">🔥 本期推荐</button>
-        <button data-rank="attackers">Max 攻手</button>
-        <button data-rank="defenders">Max 坦克</button>
-        <button data-rank="raid">当前团战 Counter</button>
+        <button data-rank="current" class="active"><span>🔥</span> <span data-i18n="rank.current">本期推荐</span></button>
+        <button data-rank="attackers" data-i18n="rank.attackers">Max 攻手</button>
+        <button data-rank="defenders" data-i18n="rank.defenders">Max 坦克</button>
+        <button data-rank="raid" data-i18n="rank.raid">当前团战 Counter</button>
       </nav>
 
       <div class="rank-body">
         <div class="rank-panel active" data-rank-panel="current">
           <!-- AI:START rankings-current -->
-<div class="callout"><strong>本期优先级（7/18）</strong><p>今天先锁定 14:00–17:00 的雷丘超级团战日；地面攻手能同时覆盖两种超级雷丘与当前铝钢龙。其余团战资源再投向 7/21 结束的盖欧卡、超级蜥蜴王；完整阵容见「当前团战 Counter」。</p></div>
+<div data-ai-region="rankings-current"><div class="callout"><strong>本期优先级（7/18）</strong><p>今天先锁定 14:00–17:00 的雷丘超级团战日；地面攻手能同时覆盖两种超级雷丘与当前铝钢龙。其余团战资源再投向 7/21 结束的盖欧卡、超级蜥蜴王；完整阵容见「当前团战 Counter」。</p></div>
 <div class="note-grid">
   <div class="panel"><div class="panel-head"><h4>今天先做</h4></div><ul><li>团战日前清出道具空间并规划免费券路线；活动时段闪光概率提升，最多可获 5 张免费团战入场券。</li><li>暗影帕路奇亚本周末开放，准备净化结晶并提前约队；盖欧卡用草、电输出，超级蜥蜴王优先冰系。</li><li>单首龙 Max 轮换至 7/19，妖精输出最直接；已有极巨化沙奈朵可优先投入。</li></ul></div>
   <div class="panel"><div class="panel-head"><h4>临近截止</h4></div><ul><li>特别周年皮卡丘庆典与专属通行证进度 7/20 20:00 截止，按换装缺口刷 1★，不要挤占高星团战资源。</li><li>盖欧卡、超级蜥蜴王均在 7/21 结束；需要超级能量时，超级蜥蜴王的双弱冰更适合快速周转。</li><li>National Trust 线下活动今天起开放，但仅限英格兰、威尔士及北爱尔兰参与景点，出发前先核对地点。</li></ul></div>
   <div class="panel"><div class="panel-head"><h4>下周准备</h4></div><ul><li>7/20 Max 轮换转为破破袋；7/22 起 5★为索尔迦雷欧、超级团战为超级暴飞龙，可预先整理地面、幽灵与冰系队伍。</li><li>7/21 起十周年究极解锁逐段提高捕捉经验，冲等级玩家可把幸运蛋留给 ×8、×10 阶段。</li><li>8/4–8/10 夏日马拉松与 8/8 冰与火孵化日有重叠，但同类孵化距离加成不叠加；优先准备空蛋位与孵化器。</li></ul></div>
-</div>
+</div></div>
 <!-- AI:END rankings-current -->
         </div>
         <div class="rank-panel" data-rank-panel="attackers">
           <!-- AI:START rankings-attackers -->
-
-<p class="muted">来源：Pokémon GO Hub「Max Attackers Tier List (July 2026)」与 PokéBase 总榜交叉查看；按源页面 A/B Tier 表格展示，中文宝可梦名沿用已核对名称。</p>
+<div data-ai-region="rankings-attackers"><p class="muted">来源：Pokémon GO Hub「Max Attackers Tier List (July 2026)」与 PokéBase 总榜交叉查看；按源页面 A/B Tier 表格展示，中文宝可梦名沿用已核对名称。</p>
 <h4 class="muted">A Tier</h4>
 <div class="rank-list">
   <div class="rank-item"><span class="tier tier-A">A</span><img class="mon-icon" data-hub="861-Gigantamax" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/861.png" alt="超极巨长毛巨魔"><div><strong>超极巨长毛巨魔</strong><div class="meta">Max 招式属性：恶</div></div></div>
@@ -135,13 +136,12 @@
   <div class="rank-item"><span class="tier tier-B">B</span><img class="mon-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/376.png" alt="极巨化巨金怪"><div><strong>极巨化巨金怪</strong><div class="meta">Max 招式属性：超能力 / 钢 / 虫</div></div></div>
   <div class="rank-item"><span class="tier tier-B">B</span><img class="mon-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/635.png" alt="极巨化三首恶龙"><div><strong>极巨化三首恶龙</strong><div class="meta">Max 招式属性：龙 / 恶</div></div></div>
   <div class="rank-item"><span class="tier tier-B">B</span><img class="mon-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/530.png" alt="极巨化龙头地鼠"><div><strong>极巨化龙头地鼠</strong><div class="meta">Max 招式属性：钢 / 地面</div></div></div>
-</div>
+</div></div>
 <!-- AI:END rankings-attackers -->
         </div>
         <div class="rank-panel" data-rank-panel="defenders">
           <!-- AI:START rankings-defenders -->
-
-<p class="muted">来源：Pokémon GO Hub「Max Defenders Tier List (July 2026)」；S/A/B Tier 与推荐快速招式来自源表，宝可梦中文名沿用已核对名称。</p>
+<div data-ai-region="rankings-defenders"><p class="muted">来源：Pokémon GO Hub「Max Defenders Tier List (July 2026)」；S/A/B Tier 与推荐快速招式来自源表，宝可梦中文名沿用已核对名称。</p>
 <h4 class="muted">S Tier</h4>
 <div class="rank-list">
   <div class="rank-item"><span class="tier tier-S">S</span><img class="mon-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/379.png" alt="雷吉斯奇鲁"><div><strong>雷吉斯奇鲁</strong><div class="meta">推荐快速招式：锁定 / 金属爪 · 抗性面最广</div></div></div>
@@ -162,12 +162,12 @@
   <div class="rank-item"><span class="tier tier-B">B</span><img class="mon-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/884.png" alt="铝钢龙"><div><strong>铝钢龙</strong><div class="meta">推荐快速招式：金属爪</div></div></div>
   <div class="rank-item"><span class="tier tier-B">B</span><img class="mon-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/139.png" alt="多刺菊石兽"><div><strong>多刺菊石兽</strong><div class="meta">推荐快速招式：泥巴射击 / 水枪</div></div></div>
   <div class="rank-item"><span class="tier tier-B">B</span><img class="mon-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/381.png" alt="拉帝欧斯"><div><strong>拉帝欧斯</strong><div class="meta">推荐快速招式：龙息</div></div></div>
-</div>
+</div></div>
 <!-- AI:END rankings-defenders -->
         </div>
         <div class="rank-panel" data-rank-panel="raid">
           <!-- AI:START rankings-raid -->
-<p class="muted">按 7/18 的已确认时段：盖欧卡、超级蜥蜴王、3★首领与周年换装皮卡丘正在开放，雷丘超级团战日于 14:00–17:00 登场，单首龙 Max 持续至 7/19；今天是周末，暗影帕路奇亚与暗影团战池同步开放。头右精灵均与首领共享属性，可加成捕捉糖果；实际可共享属性的超级进化少于 6 种时按实数展示。</p>
+<div data-ai-region="rankings-raid"><p class="muted">按 7/18 的已确认时段：盖欧卡、超级蜥蜴王、3★首领与周年换装皮卡丘正在开放，雷丘超级团战日于 14:00–17:00 登场，单首龙 Max 持续至 7/19；今天是周末，暗影帕路奇亚与暗影团战池同步开放。头右精灵均与首领共享属性，可加成捕捉糖果；实际可共享属性的超级进化少于 6 种时按实数展示。</p>
 <div class="raid-wall">
   <div class="raid-block">
     <div class="raid-boss"><img class="boss-icon" src="https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp" data-hub="26-Mega_X" alt="超级雷丘 X / Y"><div class="binfo"><div class="btop"><span class="badge">团战日</span><strong>超级雷丘 X / Y</strong></div><div class="meta"><img class="ico" src="assets/icons/electric.webp" alt="电"> · 弱 <img class="ico" src="assets/icons/ground.webp" alt="地面"></div></div><div class="raid-mega"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png" data-hub="382-Primal" title="原始盖欧卡 · 共享电" alt="原始盖欧卡"><img src="https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp" data-hub="26-Mega_Y" title="超级雷丘 Y · 共享电" alt="超级雷丘 Y"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10045.png" data-hub="181-Mega" title="超级电龙 · 共享电" alt="超级电龙"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10055.png" data-hub="310-Mega" title="超级雷电兽 · 共享电" alt="超级雷电兽"><img src="https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp" data-hub="26-Mega_X" title="超级雷丘 X · 共享电" alt="超级雷丘 X"></div></div>
@@ -234,7 +234,7 @@
     <div class="rank-list mini"><div class="rank-item"><img class="mon-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/282.png" alt="极巨化沙奈朵"><strong>极巨化沙奈朵</strong><div class="meta"><img class="ico" src="assets/icons/fairy.webp" alt=""> 撒娇 / 魔法闪耀</div></div><div class="rank-item"><img class="mon-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png" alt="极巨化快龙"><strong>极巨化快龙</strong><div class="meta"><img class="ico" src="assets/icons/dragon.png" alt=""> 龙尾 / 逆鳞</div></div><div class="rank-item"><img class="mon-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/448.png" alt="极巨化路卡利欧"><strong>极巨化路卡利欧</strong><div class="meta"><img class="ico" src="assets/icons/fighting.png" alt=""> 双倍奉还 / 波导弹</div></div></div>
   </div>
 </div>
-<p class="muted">高星组队建议：雷丘超级团战日优先地面输出；盖欧卡一般准备 3–6 人；超级蜥蜴王双弱冰，建议 3–4 人。Max 单首龙优先妖精输出并升级极巨招式；暗影帕路奇亚需净化结晶与预先组队。</p>
+<p class="muted">高星组队建议：雷丘超级团战日优先地面输出；盖欧卡一般准备 3–6 人；超级蜥蜴王双弱冰，建议 3–4 人。Max 单首龙优先妖精输出并升级极巨招式；暗影帕路奇亚需净化结晶与预先组队。</p></div>
 <!-- AI:END rankings-raid -->
         </div>
       </div>
@@ -249,16 +249,16 @@
          mechanics tables, or any logic. -->
     <section id="view-mega" class="view">
       <div class="panel" style="padding:.85rem 1.05rem">
-        <div class="panel-head"><span class="dia">◆</span><h3>超级进化参考</h3></div>
-        <p class="muted">选择一只宝可梦,填入它已超级进化的次数,规划器会动态比较三条升级路线:免费等满休息期(7 / 5 / 3 天)、每天付费进化一次、花能量立即升级。下方附静态查询表(各等级消耗、通用加成、立即升级价目)与 Bulbapedia 来源链接。所有费用与时长均由「首次消耗(Initial Cost)」推算——新超级进化公布时,只需在 <code>data/mega.json</code> 里加一行(名称 + 首次消耗,可达超级最高的再标 <code>superMax</code>),其余自动生成。</p>
-        <label class="mega-picker">选择宝可梦
+        <div class="panel-head"><span class="dia">◆</span><h3 data-i18n="mega.referenceTitle">超级进化参考</h3></div>
+        <p class="muted" data-i18n-html="mega.intro">选择一只宝可梦,填入它已超级进化的次数,规划器会动态比较三条升级路线:免费等满休息期(7 / 5 / 3 天)、每天付费进化一次、花能量立即升级。下方附静态查询表(各等级消耗、通用加成、立即升级价目)与 Bulbapedia 来源链接。所有费用与时长均由「首次消耗(Initial Cost)」推算——新超级进化公布时,只需在 <code>data/mega.json</code> 里加一行(名称 + 首次消耗,可达超级最高的再标 <code>superMax</code>),其余自动生成。</p>
+        <label class="mega-picker"><span data-i18n="mega.select">选择宝可梦</span>
           <select id="mega-select"></select>
         </label>
         <div id="mega-detail"></div>
       </div>
       <div class="panel" style="padding:.85rem 1.05rem">
-        <div class="panel-head"><span class="dia">◆</span><h3>全部超级进化</h3></div>
-        <p class="muted">点击任意一行查看该宝可梦的完整信息。</p>
+        <div class="panel-head"><span class="dia">◆</span><h3 data-i18n="mega.allTitle">全部超级进化</h3></div>
+        <p class="muted" data-i18n="mega.allHint">点击任意一行查看该宝可梦的完整信息。</p>
         <div id="mega-overview"></div>
       </div>
     </section>
@@ -268,26 +268,26 @@
     <section id="view-clock" class="view">
       <div id="wc-pin" class="wc-pin wc-pin-float"></div>
       <div class="panel" style="padding:.85rem 1.05rem">
-        <div class="panel-head"><span class="dia">◆</span><h3>世界时钟 · 时段筛选</h3></div>
-        <p class="muted">默认按「最早 → 最晚」列出各时区代表地。选择时段则筛选此刻当地处于该时段的地区;「结束」为上界且不含本身(如 14 → 17 = 14:00–17:00),可选到 24:00(当日结束);跨午夜把「结束」设得比「起始」小(如 22 → 02)。</p>
+        <div class="panel-head"><span class="dia">◆</span><h3 data-i18n="clock.title">世界时钟 · 时段筛选</h3></div>
+        <p class="muted" data-i18n-html="clock.intro">默认按「最早 → 最晚」列出各时区代表地。选择时段则筛选此刻当地处于该时段的地区;「结束」为上界且不含本身(如 14 → 17 = 14:00–17:00),可选到 24:00(当日结束);跨午夜把「结束」设得比「起始」小(如 22 → 02)。</p>
         <div class="wc-controls">
-          <button id="wc-all" class="btn">全部时段</button>
-          <label class="wc-field">起始 <select id="wc-start"></select></label>
+          <button id="wc-all" class="btn" data-i18n="clock.all">全部时段</button>
+          <label class="wc-field"><span data-i18n="clock.start">起始</span> <select id="wc-start"></select></label>
           <span class="wc-sep">→</span>
-          <label class="wc-field">结束 <select id="wc-end"></select></label>
+          <label class="wc-field"><span data-i18n="clock.end">结束</span> <select id="wc-end"></select></label>
           <span id="wc-summary" class="wc-summary muted"></span>
         </div>
         <div id="wc-now" class="wc-now"></div>
       </div>
       <details class="wc-axis-collapse" open>
-        <summary>24 小时时间轴</summary>
+        <summary data-i18n="clock.axis">24 小时时间轴</summary>
         <div id="wc-axis"></div>
       </details>
       <div class="wc-layout">
         <div id="wc-results" class="wc-results"></div>
         <aside id="wc-spots" class="wc-spots"></aside>
       </div>
-      <p class="muted wc-foot">列表覆盖 UTC+14 → −12 的全部时区,每档列出代表地点(同一时区可能多地并列);精选地点为社区常用 PoGo 热点,坐标可点击跳转地图。各地时间按所在时区实时计算(含夏令时),仅供参考。</p>
+      <p class="muted wc-foot" data-i18n-html="clock.foot">列表覆盖 UTC+14 → −12 的全部时区,每档列出代表地点(同一时区可能多地并列);精选地点为社区常用 PoGo 热点,坐标可点击跳转地图。各地时间按所在时区实时计算(含夏令时),仅供参考。</p>
     </section>
 
     <!-- ========================= VIEW 4: MULTI-ACCOUNT TODO ========================= -->
@@ -297,8 +297,8 @@
          All DOM is built by app.js (setupTodo / renderTodo) into #todo-mount. -->
     <section id="view-todo" class="view">
       <div class="panel todo-panel" style="padding:.85rem 1.05rem">
-        <div class="panel-head"><span class="dia">◆</span><h3>多账号 TODO</h3></div>
-        <p class="muted">每个账号一行,每项任务一列;勾选记录完成情况。账号名前的 ⏳ 可开始 2 小时 CD:点击开始,进行中点击可切换「剩余 ⇄ 开始时间」,长按取消。数据只保存在本机浏览器(localStorage),不会上传;勾选不会自动清空,需手动点「清空勾选」;清空后顶部日期会更新为当天(以你本机时间为准),在下次清空前保持不变,账号/任务列与进行中的 CD 始终保留。</p>
+        <div class="panel-head"><span class="dia">◆</span><h3 data-i18n="todo.title">多账号 TODO</h3></div>
+        <p class="muted" data-i18n-html="todo.intro">每个账号一行,每项任务一列;勾选记录完成情况。账号名前的 ⏳ 可开始 2 小时 CD:点击开始,进行中点击可切换「剩余 ⇄ 开始时间」,长按取消。数据只保存在本机浏览器(localStorage),不会上传;勾选不会自动清空,需手动点「清空勾选」;清空后顶部日期会更新为当天(以你本机时间为准),在下次清空前保持不变,账号/任务列与进行中的 CD 始终保留。</p>
         <div id="todo-status" class="todo-status muted"></div>
         <div id="todo-mount"></div>
       </div>
@@ -307,7 +307,7 @@
     <!-- ========================= VIEW 5: USEFUL LINKS ========================= -->
     <!-- Placeholder — owner-maintained (no AI region; the daily agent never fills it). -->
     <section id="view-links" class="view">
-      <div class="panel-head"><span class="dia">◆</span><h3>实用链接</h3></div>
+      <div class="panel-head"><span class="dia">◆</span><h3 data-i18n="links.title">实用链接</h3></div>
 
       <!-- Pokémon GO Hub (primary) -->
       <div class="callout">
@@ -315,16 +315,16 @@
           <img class="ico-lg" src="https://pokemongohub.net/favicon.ico" alt="">
           <h3><a href="https://pokemongohub.net/" target="_blank" rel="noopener">Pokémon GO Hub</a></h3>
         </div>
-        <p class="muted">综合资讯 · 攻略 · 强度榜</p>
+        <p class="muted" data-i18n="links.hubDesc">综合资讯 · 攻略 · 强度榜</p>
         <div class="detail-links">
-          <a class="btn" href="https://pokemongohub.net/post/guide/current-go-raids/" target="_blank" rel="noopener">当前团战 Boss</a>
-          <a class="btn" href="https://pokemongohub.net/post/guide/spotlight-raid-hours/" target="_blank" rel="noopener">聚焦时刻 &amp; 团战时刻</a>
-          <a class="btn" href="https://pokemongohub.net/post/category/event/" target="_blank" rel="noopener">活动一览</a>
-          <a class="btn" href="https://pokemongohub.net/post/category/guide/" target="_blank" rel="noopener">攻略合集</a>
-          <a class="btn" href="https://pokemongohub.net/post/guide/max-attackers-tier-list/" target="_blank" rel="noopener">Max 攻手榜</a>
-          <a class="btn" href="https://pokemongohub.net/post/guide/max-defenders-tier-list/" target="_blank" rel="noopener">Max 坦克榜</a>
-          <a class="btn" href="https://pokemongohub.net/post/guide/max-healers-tier-list-june-2025/" target="_blank" rel="noopener">Max 治疗榜</a>
-          <a class="btn" href="https://db.pokemongohub.net/" target="_blank" rel="noopener">数据库 db.pokemongohub.net</a>
+          <a class="btn" href="https://pokemongohub.net/post/guide/current-go-raids/" target="_blank" rel="noopener"><span data-i18n="links.currentRaids">当前团战 Boss</span></a>
+          <a class="btn" href="https://pokemongohub.net/post/guide/spotlight-raid-hours/" target="_blank" rel="noopener"><span data-i18n="links.hours">聚焦时刻 &amp; 团战时刻</span></a>
+          <a class="btn" href="https://pokemongohub.net/post/category/event/" target="_blank" rel="noopener"><span data-i18n="links.events">活动一览</span></a>
+          <a class="btn" href="https://pokemongohub.net/post/category/guide/" target="_blank" rel="noopener"><span data-i18n="links.guides">攻略合集</span></a>
+          <a class="btn" href="https://pokemongohub.net/post/guide/max-attackers-tier-list/" target="_blank" rel="noopener"><span data-i18n="links.maxAttackers">Max 攻手榜</span></a>
+          <a class="btn" href="https://pokemongohub.net/post/guide/max-defenders-tier-list/" target="_blank" rel="noopener"><span data-i18n="links.maxDefenders">Max 坦克榜</span></a>
+          <a class="btn" href="https://pokemongohub.net/post/guide/max-healers-tier-list-june-2025/" target="_blank" rel="noopener"><span data-i18n="links.maxHealers">Max 治疗榜</span></a>
+          <a class="btn" href="https://db.pokemongohub.net/" target="_blank" rel="noopener"><span data-i18n="links.database">数据库 db.pokemongohub.net</span></a>
         </div>
       </div>
 
@@ -332,15 +332,15 @@
       <div class="callout">
         <div class="panel-head">
           <img class="ico-lg" src="https://pokemongo.com/favicon.ico" alt="">
-          <h3><a href="https://pokemongo.com/" target="_blank" rel="noopener">官方 Pokémon GO</a></h3>
+          <h3><a href="https://pokemongo.com/" target="_blank" rel="noopener" data-i18n="links.officialName">官方 Pokémon GO</a></h3>
         </div>
-        <p class="muted">新闻 · 官方地图 · 活动 · 线下活动 · 网页商店</p>
+        <p class="muted" data-i18n="links.officialDesc">新闻 · 官方地图 · 活动 · 线下活动 · 网页商店</p>
         <div class="detail-links">
-          <a class="btn" href="https://pokemongo.com/news" target="_blank" rel="noopener">新闻</a>
-          <a class="btn" href="https://pokemongo.com/map" target="_blank" rel="noopener">官方地图</a>
-          <a class="btn" href="https://pokemongo.com/en/events/" target="_blank" rel="noopener">官方活动</a>
-          <a class="btn" href="https://pokemongo.com/en/featured-in-person-events" target="_blank" rel="noopener">线下活动</a>
-          <a class="btn" href="https://store.pokemongo.com/" target="_blank" rel="noopener">网页氪金</a>
+          <a class="btn" href="https://pokemongo.com/news" target="_blank" rel="noopener"><span data-i18n="links.news">新闻</span></a>
+          <a class="btn" href="https://pokemongo.com/map" target="_blank" rel="noopener"><span data-i18n="links.map">官方地图</span></a>
+          <a class="btn" href="https://pokemongo.com/en/events/" target="_blank" rel="noopener"><span data-i18n="links.officialEvents">官方活动</span></a>
+          <a class="btn" href="https://pokemongo.com/en/featured-in-person-events" target="_blank" rel="noopener"><span data-i18n="links.inPerson">线下活动</span></a>
+          <a class="btn" href="https://store.pokemongo.com/" target="_blank" rel="noopener"><span data-i18n="links.store">网页氪金</span></a>
         </div>
       </div>
 
@@ -351,11 +351,11 @@
             <img class="ico-lg" src="https://leekduck.com/assets/img/favicon/favicon.ico" alt="">
             <h3><a href="https://leekduck.com/" target="_blank" rel="noopener">LeekDuck</a></h3>
           </div>
-          <p class="muted">活动 / 团战权威数据</p>
+          <p class="muted" data-i18n="links.leekduckDesc">活动 / 团战权威数据</p>
           <div class="detail-links">
-            <a class="btn" href="https://leekduck.com/raid-bosses/" target="_blank" rel="noopener">当前团战 Boss</a>
-            <a class="btn" href="https://leekduck.com/events/" target="_blank" rel="noopener">活动日历</a>
-            <a class="btn" href="https://leekduck.com/shiny/" target="_blank" rel="noopener">💫 闪光图鉴</a>
+            <a class="btn" href="https://leekduck.com/raid-bosses/" target="_blank" rel="noopener"><span data-i18n="links.currentRaids">当前团战 Boss</span></a>
+            <a class="btn" href="https://leekduck.com/events/" target="_blank" rel="noopener"><span data-i18n="links.calendar">活动日历</span></a>
+            <a class="btn" href="https://leekduck.com/shiny/" target="_blank" rel="noopener"><span data-i18n="links.shiny">💫 闪光图鉴</span></a>
           </div>
         </div>
 
@@ -365,10 +365,10 @@
             <img class="ico-lg" src="https://pokebase.app/favicon.ico" alt="">
             <h3><a href="https://pokebase.app/pokemon-go" target="_blank" rel="noopener">Pokébase</a></h3>
           </div>
-          <p class="muted">强度榜 / 团战</p>
+          <p class="muted" data-i18n="links.pokebaseDesc">强度榜 / 团战</p>
           <div class="detail-links">
-            <a class="btn" href="https://pokebase.app/pokemon-go/tier-lists/" target="_blank" rel="noopener">强度榜 Tier List</a>
-            <a class="btn" href="https://pokebase.app/pokemon-go/raids" target="_blank" rel="noopener">团战</a>
+            <a class="btn" href="https://pokebase.app/pokemon-go/tier-lists/" target="_blank" rel="noopener"><span data-i18n="links.tierList">强度榜 Tier List</span></a>
+            <a class="btn" href="https://pokebase.app/pokemon-go/raids" target="_blank" rel="noopener"><span data-i18n="links.raids">团战</span></a>
           </div>
         </div>
 
@@ -378,9 +378,9 @@
             <img class="ico-lg" src="https://www.dialgadex.com/res/favicon-96x96.png" alt="">
             <h3><a href="https://www.dialgadex.com" target="_blank" rel="noopener">DialgaDex</a></h3>
           </div>
-          <p class="muted">各属性最佳团战输出查询</p>
+          <p class="muted" data-i18n="links.dialgaDesc">各属性最佳团战输出查询</p>
           <div class="detail-links">
-            <a class="btn" href="https://www.dialgadex.com" target="_blank" rel="noopener">打开 DialgaDex</a>
+            <a class="btn" href="https://www.dialgadex.com" target="_blank" rel="noopener"><span data-i18n="links.openDialga">打开 DialgaDex</span></a>
           </div>
         </div>
 
@@ -390,16 +390,16 @@
             <img class="ico-lg" src="https://pokestealordeal.com/favicon.ico" alt="">
             <h3><a href="https://pokestealordeal.com" target="_blank" rel="noopener">Worth or Steal?</a></h3>
           </div>
-          <p class="muted">强化 / 进化价值速查</p>
+          <p class="muted" data-i18n="links.worthDesc">强化 / 进化价值速查</p>
           <div class="detail-links">
-            <a class="btn" href="https://pokestealordeal.com" target="_blank" rel="noopener">打开 Worth or Steal?</a>
+            <a class="btn" href="https://pokestealordeal.com" target="_blank" rel="noopener"><span data-i18n="links.openWorth">打开 Worth or Steal?</span></a>
           </div>
         </div>
 
         <!-- Infographics -->
         <div class="callout">
-          <div class="panel-head"><span class="dia">◆</span><h3>信息图 Infographics</h3></div>
-          <p class="muted">活动 · 团战 · Counter 信息图</p>
+          <div class="panel-head"><span class="dia">◆</span><h3 data-i18n="links.infoTitle">信息图 Infographics</h3></div>
+          <p class="muted" data-i18n="links.infoDesc">活动 · 团战 · Counter 信息图</p>
           <div class="detail-links">
             <a class="btn" href="https://linktr.ee/flareblaze" target="_blank" rel="noopener"><img class="ico" src="https://linktr.ee/favicon.ico" alt="">Flareblaze</a>
             <a class="btn" href="https://www.g47ix.pro/" target="_blank" rel="noopener"><img class="ico" src="https://www.g47ix.pro/favicon.ico" alt="">G47IX</a>
@@ -410,9 +410,9 @@
         <div class="callout">
           <div class="panel-head">
             <img class="ico-lg" src="https://static.wikia.nocookie.net/pokemongo/images/4/4a/Site-favicon.ico" alt="">
-            <h3>Wikis 维基</h3>
+            <h3 data-i18n="links.wikiTitle">Wikis 维基</h3>
           </div>
-          <p class="muted">百科 / 图鉴资料</p>
+          <p class="muted" data-i18n="links.wikiDesc">百科 / 图鉴资料</p>
           <div class="detail-links">
             <a class="btn" href="https://pokemongo.fandom.com/wiki/Pok%C3%A9mon_GO_Wiki" target="_blank" rel="noopener"><img class="ico" src="https://static.wikia.nocookie.net/pokemongo/images/4/4a/Site-favicon.ico" alt="">Fandom Wiki</a>
             <a class="btn" href="https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_GO" target="_blank" rel="noopener"><img class="ico" src="https://bulbapedia.bulbagarden.net/favicon.ico" alt="">Bulbapedia</a>
@@ -421,7 +421,7 @@
       </div>
 
       <!-- data-source attribution (moved out of the page footer) -->
-      <p class="muted" style="margin-top:1.4rem;text-align:center">
+      <p class="muted" style="margin-top:1.4rem;text-align:center" data-i18n-html="links.sources">
         数据来源:事件 <a href="https://leekduck.com/" target="_blank" rel="noopener">LeekDuck</a>
         (via ScrapedDuck) · 属性 <a href="https://pvpoke.com/" target="_blank" rel="noopener">PvPoke</a>
         · 图标 <a href="https://pokeapi.co/" target="_blank" rel="noopener">PokeAPI</a>
@@ -433,6 +433,6 @@
     <div class="muted">by: adonais·anabiosis</div>
   </footer>
 
-  <script src="app.js?v=20" defer></script>
+  <script src="app.js?v=21" defer></script>
 </body>
 </html>

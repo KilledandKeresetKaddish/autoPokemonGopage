@@ -27,9 +27,11 @@ from `public/`.
 | `public/data/featured.json` | Admin-curated featured event IDs — gold border on calendar. Daily agent maintains on admin's behalf. |
 | `public/data/categories.json` | Custom event-type palette registrations. |
 | `public/data/meta.json` | `lastUpdated` timestamp shown in header. |
+| `public/data/i18n/ui.json` | Owner-maintained zh-CN/en static UI dictionary; checksum-protected. |
+| `public/data/i18n/en.json` | Daily-agent English text overlay keyed by canonical event IDs/rotation track order, plus five localized rich-region HTML strings. Beyond required lookup keys, it contains no duplicated structural IDs, dates, links, or sprites. |
 | `public/data/mega.json` | Mega/Primal roster for the 「超级进化」view. Agent-editable; the per-Pokémon fields that drive mechanics are `initialCost` (every cost/time number derives from it) and the optional `superMax` boolean (gates the Super-Max planner target + badge). |
 | `public/assets/icons/` | Type and item icons (mixed `.png`/`.webp`). |
-| `scripts/` | Shell scripts for the daily agent (`fetch.sh`, `discover.sh`, `validate.sh`, `preflight.sh`, `run-daily.sh`, `publish.sh`). **Editing anything in `scripts/`, `AGENTS.md`, `tasks/*.md`, or `CLAUDE.md` requires regenerating the integrity file in the same commit** (`validate.sh` hash-checks them): `sha256sum public/app.js public/style.css scripts/*.sh AGENTS.md CLAUDE.md tasks/daily-update.md tasks/subagents/*.md > scripts/protected.sha256`. Also commit maintainer work before a daily run — `run-daily.sh` refuses a dirty tree (its rollback would destroy uncommitted changes). |
+| `scripts/` | Shell scripts for the daily agent (`fetch.sh`, `discover.sh`, `validate.sh`, `preflight.sh`, `run-daily.sh`, `publish.sh`). **Editing anything in `scripts/`, `AGENTS.md`, `tasks/*.md`, `CLAUDE.md`, `.gitignore`, `app.js`, `style.css`, or the static UI dictionary requires regenerating the integrity file in the same commit** (`validate.sh` hash-checks them): `sha256sum .gitignore public/app.js public/style.css public/data/i18n/ui.json scripts/*.sh AGENTS.md CLAUDE.md tasks/daily-update.md tasks/subagents/*.md > scripts/protected.sha256`. Also commit maintainer work before a daily run — `run-daily.sh` refuses a dirty tree (its rollback would destroy uncommitted changes). |
 | `data/state.json` | Daily agent bookkeeping (fetch timestamps, notes). |
 | `data/raw/` | Cached raw source data (daily agent writes). |
 | `AGENTS.md` | Instructions for the daily content-update agent. **Not for you.** |
@@ -37,7 +39,8 @@ from `public/`.
 ### Architecture notes
 
 - No framework, no bundler — vanilla JS + CSS.
-- Calendar renders from `events.json`; day-number raid icons render from `rotations.json`.
+- Bilingual model: canonical JSON + the Chinese AI wrappers carry shared facts/default zh-CN text; `i18n/en.json` overlays text only. The header toggle persists `pogo-locale`, updates `<html lang>`, and rerenders every view. `validate.sh` enforces event/rotation/nested-array parity and safe non-CJK English rich HTML.
+- Calendar renders from `events.json`; day-number raid icons render from `rotations.json`. On phones, one bounded per-day raid trigger opens a full-size track chooser so 5★/Mega/Max badges cannot overlap adjacent dates.
 - `highlight: true` in events.json → ✨ icon (shiny boost indicator only).
 - `featured.json` → gold border on matching events (admin-controlled, independent of highlight).
 - Event detail drawer: `#event-detail` aside, opened by `openDetail()`, closed by X / Escape / click-outside.
@@ -56,6 +59,6 @@ Raid blocks: `.raid-wall` `.raid-block` `.raid-boss` `.boss-icon` `.binfo` `.bto
 
 ### Testing
 
-- `scripts/validate.sh` — structural JSON validation + HTML safety checks.
+- `scripts/validate.sh` — structural JSON validation + bilingual overlay parity + HTML safety checks.
 - `scripts/preflight.sh` — semantic checks (orphan raids, rotation/event consistency, chip overflow).
 - Both run in `run-daily.sh`; either failing rolls back the daily agent's changes.
