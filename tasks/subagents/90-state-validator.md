@@ -10,7 +10,7 @@ Write scope:
 - `data/state.json`
 
 Inputs:
-- Final outputs from Calendar, Rotations, and Rankings.
+- Final outputs from Calendar, Rotations, Rankings, and English Curator.
 - Source Scout fetch / source-health notes.
 
 Checklist:
@@ -29,7 +29,11 @@ Checklist:
    - source links are aggregated where available;
    - rotations are parsed / corroborated, not invented;
    - every 简体中文 Pokémon name & move is verified against `gamemaster` (no hallucinated / garbled names);
-   - ranking panels are not empty;
+   - Chinese ranking panels are not empty and each keeps its required
+     `[data-ai-region="…"]` wrapper;
+   - `public/data/i18n/en.json` has exact canonical event IDs, category/track keys,
+     segment + nested-array lengths, five non-empty safe English regions, and no CJK
+     fallback; `public/data/i18n/ui.json` remains checksum-protected and untouched;
    - `featured.json` is an array of ids that all still exist in `events.json` (Calendar pruned
      it — validate.sh hard-rejects stale featured ids);
    - no internal pipeline details (`data/raw/*` paths, script names) in user-visible text;

@@ -2,8 +2,11 @@
 data/raw/*
 !data/raw/.gitkeep
 
-# Run logs
+# Run logs / local agent artifacts / one-off operator notes
 logs/
+.pi-subagents/
+.pi-tmp/
+note.txt
 *.log
 
 # OS / editor cruft

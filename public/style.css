@@ -19,6 +19,7 @@
   --line-soft:rgba(199,154,79,.14);
   --radius:12px;
   --cell-min:112px;
+  --num-h:30px;
   --serif:Georgia,Cambria,"Times New Roman","Songti SC","STSong",SimSun,"Source Han Serif SC","Noto Serif CJK SC",serif;
   --sans:system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;
   --display:"SF Pro Rounded",system-ui,-apple-system,"Segoe UI","PingFang SC",sans-serif;
@@ -71,6 +72,11 @@ a{color:var(--gold-bright);}
   text-shadow:0 0 32px rgba(var(--gold-rgb),.25);}
 .meta{margin:0;font-size:11px;letter-spacing:.16em;color:var(--gold-dim);}
 .meta .muted{color:var(--gold-dim);}
+.lang-toggle{position:absolute;top:22px;right:max(16px,calc((100vw - 1240px)/2 + 18px));z-index:3;
+  min-width:5.4rem;border:1px solid var(--gold-line);border-radius:999px;padding:.38rem .8rem;
+  background:rgba(12,11,16,.76);color:var(--gold-bright);font:700 .78rem var(--sans);
+  letter-spacing:.04em;cursor:pointer;backdrop-filter:blur(5px);}
+.lang-toggle:hover,.lang-toggle:focus-visible{border-color:var(--gold);background:rgba(var(--gold-rgb),.15);outline:none;}
 
 /* ---------- Nav tabs ---------- */
 .tabs{position:relative;z-index:1;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;
@@ -154,7 +160,7 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .cal-day.weekend:not(.out){background:rgba(var(--gold-rgb),.045);}
 .cal-day.today{box-shadow:inset 0 0 0 2px var(--gold), inset 0 0 24px rgba(var(--gold-rgb),.1);}
 
-.cal-daynum{height:30px;display:flex;align-items:center;gap:6px;}
+.cal-daynum{height:var(--num-h);display:flex;align-items:center;gap:6px;}
 .cal-daynum .dn{font-family:var(--display);font-weight:700;font-size:1rem;color:var(--gold-bright);}
 .cal-day.out .cal-daynum .dn{color:var(--gold-dim);font-weight:600;}
 .cal-daynum .moy{font-family:var(--sans);font-size:.62rem;font-weight:700;color:var(--gold-dim);
@@ -162,6 +168,14 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 
 /* weekly 5★/Mega rotation icons next to the day number (from rotations.json) */
 .daynum-raids{display:flex;align-items:center;gap:3px;margin-left:auto;flex:none;}
+/* One bounded phone trigger replaces the unbounded per-track row below 560px. */
+.raid-day-trigger{display:none;position:relative;margin-left:auto;width:25px;height:25px;padding:0;border:0;
+  border-radius:7px;cursor:pointer;background:rgba(var(--gold-rgb),.1);color:var(--gold-bright);
+  box-shadow:0 0 0 1.5px var(--gold-line);flex:none;align-items:center;justify-content:center;}
+.raid-day-trigger img{width:22px;height:22px;object-fit:contain;image-rendering:pixelated;}
+.raid-day-trigger b{position:absolute;right:-4px;bottom:-4px;min-width:13px;height:13px;padding:0 2px;
+  border-radius:999px;background:var(--gold);color:#17130b;font:800 .5rem/13px var(--display);
+  box-shadow:0 1px 4px rgba(0,0,0,.65);}
 .raid-ico{position:relative;width:22px;height:22px;border:0;padding:0;cursor:pointer;flex:none;
   display:flex;align-items:center;justify-content:center;border-radius:6px;
   background:rgba(var(--gold-rgb),.08);box-shadow:0 0 0 1.5px var(--ring,var(--gold-line));
@@ -333,6 +347,21 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 #detail-body details[open] summary{border-bottom:1px solid var(--line);}
 #detail-body .det-body{padding:.45rem .7rem;}
 #detail-body .det-body ul{margin:.2rem 0;padding-left:1.1rem;}
+/* Phone raid-day chooser: every track remains reachable as a readable 44px row. */
+.raid-day-options{display:flex;flex-direction:column;gap:.55rem;margin-top:.75rem;}
+.raid-day-option{min-height:52px;width:100%;display:flex;align-items:center;gap:.65rem;text-align:left;
+  padding:.45rem .65rem;border:1px solid var(--ring,var(--gold-line));border-radius:10px;
+  background:rgba(var(--gold-rgb),.06);color:var(--ink);cursor:pointer;}
+.raid-day-option:hover,.raid-day-option:focus-visible{background:rgba(var(--gold-rgb),.15);outline:none;
+  box-shadow:0 0 0 2px rgba(var(--gold-rgb),.2);}
+.raid-day-tier{min-width:2.2rem;text-align:center;padding:.18rem .3rem;border-radius:6px;
+  background:var(--ring,var(--gold));color:#17130b;font:800 .72rem var(--display);}
+.raid-day-sprites{display:flex;align-items:center;min-width:38px;}
+.raid-day-sprites img{width:34px;height:34px;object-fit:contain;image-rendering:pixelated;margin-left:-8px;}
+.raid-day-sprites img:first-child{margin-left:0;}
+.raid-day-copy{min-width:0;display:flex;flex-direction:column;gap:.08rem;}
+.raid-day-copy strong{color:var(--h1);font-family:var(--serif);}
+.raid-day-copy small{color:var(--muted);white-space:normal;}
 .ctr-row{display:flex;align-items:center;gap:.5rem;padding:.28rem 0;}
 .ctr-row .spr{width:32px;height:32px;object-fit:contain;image-rendering:pixelated;flex:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5));}
 .ctr-row strong{color:var(--h1);}
@@ -745,7 +774,9 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   .cal-bar{font-size:.62rem;padding:0 5px;}
 }
 @media (max-width:560px){
-  :root{--cell-min:80px;}
+  :root{--cell-min:96px;--num-h:46px;}
+  .masthead{padding-top:58px;}
+  .lang-toggle{top:14px;right:14px;}
   .cal-wd{padding:.45rem .3rem;font-size:.6rem;letter-spacing:.06em;}
   .cal-day{padding:3px 3px 5px;}
   /* Keep a truncated label rather than an anonymous colour strip: most bar
@@ -753,7 +784,16 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   .cal-bar{padding:0 4px;font-size:.56rem;gap:3px;}
   .cal-bar .spr{width:12px;height:12px;}
   .cal-chip{font-size:.6rem;}
+  .cal-daynum{position:relative;display:block;min-width:0;}
+  .cal-daynum .dn{position:absolute;left:0;top:1px;}
+  .cal-daynum .moy{display:none;}
+  .daynum-raids{display:none;}
+  .raid-day-trigger{display:flex;position:absolute;right:1px;bottom:4px;margin:0;}
+  .raid-day-trigger b{right:0;bottom:0;}
   .raid-ico{width:18px;height:18px;}
   .raid-ico img{width:16px;height:16px;}
-  .daynum-raids{gap:2px;}
+}
+@media (hover:none){
+  .raid-ico:hover{transform:none;}
+  .raid-ico .tg{opacity:1;}
 }

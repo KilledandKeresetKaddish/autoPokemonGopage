@@ -6,11 +6,38 @@
  * ========================================================================== */
 'use strict';
 
-const state = { events: [], rotations: null, categories: {}, mega: [], calYear: 0, calMonth: 0 };
-const WEEKDAYS = ['一', '二', '三', '四', '五', '六', '日']; // Monday-first
+const state = {
+  events: [], rotations: null, categories: {}, mega: [], meta: null,
+  ui: {}, en: null, zhRegions: {}, locale: 'zh-CN', calYear: 0, calMonth: 0,
+};
+const LOCALE_KEY = 'pogo-locale';
+const REGION_NAMES = ['calendar-notes', 'rankings-current', 'rankings-attackers', 'rankings-defenders', 'rankings-raid'];
+const WEEKDAYS = {
+  'zh-CN': ['一', '二', '三', '四', '五', '六', '日'],
+  en: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+}; // Monday-first
+
+function initialLocale() {
+  try {
+    const requested = new URLSearchParams(location.search).get('lang');
+    if (requested === 'en') return 'en';
+    if (requested === 'zh-CN' || requested === 'zh') return 'zh-CN';
+    return localStorage.getItem(LOCALE_KEY) === 'en' ? 'en' : 'zh-CN';
+  } catch (e) { return 'zh-CN'; }
+}
+state.locale = initialLocale();
+function isEnglish() { return state.locale === 'en'; }
+function i18n(key, vars, fallback) {
+  const dict = state.ui && state.ui[state.locale] || {};
+  let out = dict[key];
+  if (out == null) out = fallback == null ? key : fallback;
+  return String(out).replace(/\{([a-zA-Z0-9_]+)\}/g, (_, k) =>
+    vars && Object.prototype.hasOwnProperty.call(vars, k) ? String(vars[k]) : `{${k}}`);
+}
 
 /* ---------- calendar geometry (px) ---------- */
-const NUM_H = 30;   // height reserved for the day-number row
+// Day-number height is CSS-driven (--num-h) so phones can stack one bounded
+// raid trigger below the date without changing the seven-column geometry.
 const LANE_H = 23;  // vertical pitch of one spanning-bar lane
 
 /* ---------- event categories -------------------------------------------------
@@ -38,28 +65,30 @@ const PALETTE = {
  * ('bar' spans the days it covers, 'chip' is a single-day marker; bg = muted
  * long-running band). data/categories.json is merged OVER these for new types. */
 const CATEGORY_DEFAULTS = {
-  'pokemon-go-fest':        { palette:'purple',  label:'GO Fest',  kind:'bar' },
-  'community-day':          { palette:'green',   label:'社区日',    kind:'bar' },
-  'pokemon-spotlight-hour': { palette:'greenlt', label:'聚焦时刻',  kind:'chip' },
-  'spotlight-hour':         { palette:'greenlt', label:'聚焦时刻',  kind:'chip' },
-  'raid-battles':           { palette:'rust',    label:'团战 Boss', kind:'bar' },
-  'raid-hour':              { palette:'orange',  label:'团战时刻',  kind:'chip' },
-  'raid-day':               { palette:'red',     label:'团战日',    kind:'bar' },
-  'research':               { palette:'teal',    label:'调查',      kind:'bar' },
-  'choose-your-path':       { palette:'teallt',  label:'限时调查',  kind:'bar' },
-  'event':                  { palette:'blue',    label:'活动',      kind:'bar' },
-  'go-battle-league':       { palette:'indigo',  label:'对战联盟',  kind:'bar' },
-  'max-mondays':            { palette:'mauve',   label:'Max 周一',  kind:'chip' },
-  'go-pass':                { palette:'gold',    label:'GO Pass',   kind:'bar', bg:true, fg:'#1d1402' },
-  'season':                 { palette:'brown',   label:'赛季',      kind:'bar', bg:true, fg:'#fbeccb' },
+  'pokemon-go-fest':        { palette:'purple',  label:'GO Fest',  labelKey:'category.goFest', kind:'bar' },
+  'community-day':          { palette:'green',   label:'社区日',    labelKey:'category.communityDay', kind:'bar' },
+  'pokemon-spotlight-hour': { palette:'greenlt', label:'聚焦时刻',  labelKey:'category.spotlightHour', kind:'chip' },
+  'spotlight-hour':         { palette:'greenlt', label:'聚焦时刻',  labelKey:'category.spotlightHour', kind:'chip' },
+  'raid-battles':           { palette:'rust',    label:'团战 Boss', labelKey:'category.raidBoss', kind:'bar' },
+  'raid-hour':              { palette:'orange',  label:'团战时刻',  labelKey:'category.raidHour', kind:'chip' },
+  'raid-day':               { palette:'red',     label:'团战日',    labelKey:'category.raidDay', kind:'bar' },
+  'research':               { palette:'teal',    label:'调查',      labelKey:'category.research', kind:'bar' },
+  'choose-your-path':       { palette:'teallt',  label:'限时调查',  labelKey:'category.timedResearch', kind:'bar' },
+  'event':                  { palette:'blue',    label:'活动',      labelKey:'category.event', kind:'bar' },
+  'go-battle-league':       { palette:'indigo',  label:'对战联盟',  labelKey:'category.gbl', kind:'bar' },
+  'max-mondays':            { palette:'mauve',   label:'Max 周一',  labelKey:'category.maxMonday', kind:'chip' },
+  'go-pass':                { palette:'gold',    label:'GO Pass',   labelKey:'category.goPass', kind:'bar', bg:true, fg:'#1d1402' },
+  'season':                 { palette:'brown',   label:'赛季',      labelKey:'category.season', kind:'bar', bg:true, fg:'#fbeccb' },
 };
 // Resolve a category def ({palette,label,kind,bg?,fg?}) to render fields. An
 // unknown palette key falls back to a muted hashed colour (validation blocks it).
-function resolveCat(def) {
+function resolveCat(def, type) {
+  let label = def.labelKey ? i18n(def.labelKey, null, def.label) : (def.label || def.palette || i18n('category.event', null, '活动'));
+  if (isEnglish() && state.en && state.en.categories && state.en.categories[type]) label = state.en.categories[type];
   return {
     color: PALETTE[def.palette] || hashColor(def.palette || def.label || ''),
     fg: def.fg || INK_DARK,
-    label: def.label || def.palette || '活动',
+    label,
     kind: def.kind === 'chip' ? 'chip' : 'bar',
     bg: !!def.bg,
   };
@@ -72,12 +101,15 @@ function resolveCat(def) {
  * rotation track shows up in the day cells automatically, no code change needed.
  * Per-track `color` (from the data) drives the ring via inline --ring regardless. */
 const RAID_META = {
-  '5star': { cls: 's5',   tag: '5★', label: '5★ 团战' },
-  'mega':  { cls: 'mega', tag: 'M',  label: '超级团战' },
-  'max':   { cls: 'max',  tag: 'MX', label: '极巨团战' },
+  '5star': { cls: 's5',   tag: '5★', label: '5★ 团战', labelKey:'raid.fiveStar' },
+  'mega':  { cls: 'mega', tag: 'M',  label: '超级团战', labelKey:'raid.mega' },
+  'max':   { cls: 'max',  tag: 'MX', label: '极巨团战', labelKey:'raid.max' },
 };
 function raidMeta(key) {
-  return RAID_META[key] || { cls: 'gen', tag: (key || '').slice(0, 2).toUpperCase() || '★', label: (key || '团战') + ' 团战' };
+  const raw = RAID_META[key];
+  if (raw) return Object.assign({}, raw, { label: i18n(raw.labelKey, null, raw.label) });
+  const name = key || i18n('raid.generic', null, '团战');
+  return { cls: 'gen', tag: name.slice(0, 2).toUpperCase() || '★', label: i18n('raid.named', { name }, `${name} 团战`) };
 }
 
 /* ---------- Mega Evolution reference tables ---------------------------------
@@ -90,10 +122,10 @@ function raidMeta(key) {
 
 // Column order + 中文 labels shared by every mega table.
 const MEGA_LEVELS = [
-  { key: 'base',     label: '普通' },
-  { key: 'high',     label: '高级' },
-  { key: 'max',      label: '最高' },
-  { key: 'superMax', label: '超级最高' },
+  { key: 'base',     label: '普通',     labelKey:'mega.level.base' },
+  { key: 'high',     label: '高级',     labelKey:'mega.level.high' },
+  { key: 'max',      label: '最高',     labelKey:'mega.level.max' },
+  { key: 'superMax', label: '超级最高', labelKey:'mega.level.superMax' },
 ];
 // Table 1 — Mega Energy to Mega-Evolve at each level, keyed by Initial Cost.
 // NOT a clean formula (see the 7500 row → 150, not 1500), so it is an explicit lookup.
@@ -106,14 +138,14 @@ const MEGA_ENERGY = {
 };
 // Table 2 — generic per-level bonuses (identical for every Pokémon). null → —.
 const MEGA_LEVEL_BONUSES = [
-  { label: '所需超级进化次数', vals: [1, 7, 30, 30] },
-  { label: '所需超级能量',     vals: [null, null, null, '5000 能量'] },
-  { label: '休息时间',         vals: ['7 天', '5 天', '3 天', '24 小时'] },
-  { label: '超级能量消耗减免', vals: ['80%', '90%', '95%', '98.3%'] },
-  { label: '捕捉糖果加成',     vals: ['🍬 1', '🍬 1', '🍬 2', '🍬 3'] },
-  { label: 'XL 糖果几率提升',  vals: [null, '+10%', '+25%', '+30%'] },
-  { label: '捕捉 XP 加成',     vals: [null, '+50 XP', '+100 XP', '+200 XP'] },
-  { label: 'CP 等级加成',      vals: [null, null, null, '+2 级'] },
+  { key:'evolutions', label: '所需超级进化次数', vals: [1, 7, 30, 30] },
+  { key:'energy',     label: '所需超级能量',     vals: [null, null, null, '5000 能量'] },
+  { key:'rest',       label: '休息时间',         vals: ['7 天', '5 天', '3 天', '24 小时'] },
+  { key:'discount',   label: '超级能量消耗减免', vals: ['80%', '90%', '95%', '98.3%'] },
+  { key:'candy',      label: '捕捉糖果加成',     vals: ['🍬 1', '🍬 1', '🍬 2', '🍬 3'] },
+  { key:'xl',         label: 'XL 糖果几率提升',  vals: [null, '+10%', '+25%', '+30%'] },
+  { key:'xp',         label: '捕捉 XP 加成',     vals: [null, '+50 XP', '+100 XP', '+200 XP'] },
+  { key:'cp',         label: 'CP 等级加成',      vals: [null, null, null, '+2 级'] },
 ];
 // Table 3 — Mega Energy to INSTANTLY buy the Mega Level up to High/Max/SuperMax
 // (Bulbapedia "Mega Level Costs", feature live since 2026-05-18), keyed by
@@ -166,6 +198,50 @@ function escapeHtml(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
+// Localized rich text is validated before publish, but it is still data loaded
+// at runtime. Sanitize again in-browser so quote/entity parser edge cases can
+// never turn a translation file into executable markup.
+const SAFE_RICH_TAGS = new Set(['a','br','code','div','em','h3','h4','img','li','ol','p','small','span','strong','ul']);
+const SAFE_RICH_ATTRS = new Set(['alt','aria-label','class','data-event-id','data-hub','href','loading','rel','src','target','title']);
+const SAFE_RICH_CLASSES = new Set([
+  'panel','panel-head','note-grid','callout','rank-list','rank-item','pill','pillrow','badge','btn','btn-primary',
+  'muted','meta','mon-icon','mon-row','mon','shiny','tier','tier-S','tier-A','tier-B','tier-C','spr','ico','ico-lg',
+  'event-link','raid-wall','raid-block','raid-boss','boss-icon','binfo','btop','raid-mega','mini','detail-links',
+]);
+function sanitizeLocalizedHtml(html) {
+  const template = document.createElement('template');
+  template.innerHTML = String(html == null ? '' : html);
+  [...template.content.querySelectorAll('*')].forEach(el => {
+    const tag = el.tagName.toLowerCase();
+    if (!SAFE_RICH_TAGS.has(tag)) { el.remove(); return; }
+    [...el.attributes].forEach(attr => {
+      const name = attr.name.toLowerCase();
+      if (!SAFE_RICH_ATTRS.has(name) || name.startsWith('on')) { el.removeAttribute(attr.name); return; }
+      const value = attr.value.trim();
+      if (name === 'class') {
+        const safe = value.split(/\s+/).filter(x => SAFE_RICH_CLASSES.has(x));
+        if (safe.length) el.setAttribute('class', safe.join(' ')); else el.removeAttribute('class');
+      } else if (name === 'href' && !(value.startsWith('https://') || value.startsWith('#'))) {
+        el.removeAttribute('href');
+      } else if (name === 'src' && !(value.startsWith('https://') || value.startsWith('assets/'))) {
+        el.removeAttribute('src');
+      } else if ((name === 'data-event-id' || name === 'data-hub') && !/^[A-Za-z0-9._:-]+$/.test(value)) {
+        el.removeAttribute(attr.name);
+      } else if (name === 'target' && value !== '_blank') {
+        el.removeAttribute('target');
+      }
+    });
+    if (tag === 'a' && el.getAttribute('target') === '_blank') el.setAttribute('rel', 'noopener');
+  });
+  return template.innerHTML;
+}
+// Use only for dictionary entries that intentionally contain inert markup
+// (currently <strong>/<code>/<a>). Plain translations must use textContent or
+// escapeHtml() at their insertion site instead.
+function i18nRich(key, vars, fallback) {
+  return sanitizeLocalizedHtml(i18n(key, vars, fallback));
+}
+
 function spriteUrl(id) {
   return id ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png` : '';
 }
@@ -182,9 +258,10 @@ function dayDiff(a, b) { return Math.round((b - a) / 86400000); }
 function addDays(base, n) { return new Date(base.getFullYear(), base.getMonth(), base.getDate() + n); }
 function catOf(ev) {
   const def = (state.categories && state.categories[ev.type]) || CATEGORY_DEFAULTS[ev.type];
-  if (def) return resolveCat(def);
+  if (def) return resolveCat(def, ev.type);
   const span = ev._s && ev._e ? dayDiff(ev._s, ev._e) : 0;
-  return { color: hashColor(ev.type), fg: INK_DARK, label: ev.heading || ev.type || '活动', kind: span >= 1 ? 'bar' : 'chip' };
+  const lev = localizedEvent(ev);
+  return { color: hashColor(ev.type), fg: INK_DARK, label: lev.heading || ev.type || i18n('category.event', null, '活动'), kind: span >= 1 ? 'bar' : 'chip' };
 }
 /* PVP events (GO Battle League seasons, cups, Battle Weekend/Day…) are pulled
  * into their own 「PVP活动」 band, mirroring the long-term band's form. The daily
@@ -211,19 +288,33 @@ function isLongTerm(ev) {
   return dayDiff(ev._s, ev._e) >= 14;
 }
 function fmtDateTime(s) {
+  // A date-only value has no clock component and must not take the UTC parsing
+  // path (which shifts it into the prior local day west of UTC).
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s || '')) return fmtDateShort(s);
   const d = new Date(s); if (isNaN(d.getTime())) return s || '';
+  if (isEnglish()) return new Intl.DateTimeFormat('en-US', {
+    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).format(d);
   return `${d.getMonth() + 1}月${d.getDate()}日 ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 }
 function fmtRange(start, end) {
-  if (!start) return '时间待定';
+  if (!start) return i18n('date.pending', null, '时间待定');
   const s = fmtDateTime(start);
   if (!end || end === start) return s;
   return `${s} — ${fmtDateTime(end)}`;
 }
 // Month/day only — the long-event band and rotation tracks don't need HH:MM.
 function fmtDateShort(s) {
-  const d = new Date(s); if (isNaN(d.getTime())) return s || '';
+  // Canonical rotation dates are YYYY-MM-DD. new Date('YYYY-MM-DD') means UTC
+  // midnight and displays the previous day west of UTC; parseDay keeps them at
+  // local midnight while still accepting full timestamps.
+  const d = parseDay(s); if (!d) return s || '';
+  if (isEnglish()) return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(d);
   return `${d.getMonth() + 1}月${d.getDate()}日`;
+}
+function fmtMonthTitle(year, month) {
+  if (isEnglish()) return new Intl.DateTimeFormat('en-US', { year:'numeric', month:'long' }).format(new Date(year, month, 1));
+  return `${year}年${month + 1}月`;
 }
 // Sprite for a pokemon/counter/rotation entry: an explicit `sprite` URL wins
 // (needed for Mega/Primal/GMax/regional forms the base dex id can't represent),
@@ -269,10 +360,86 @@ function linkifySprites(root) {
   });
 }
 
+const SOURCE_LABEL_KEYS = {
+  '官方':'source.official', 'Official':'source.official', '活动页':'source.eventPage', 'Event page':'source.eventPage',
+  '链接':'source.link', 'Link':'source.link', 'Hub':'source.hub', 'LeekDuck':'source.leekduck',
+  'Pokébase':'source.pokebase', 'Fandom':'source.fandom', 'Serebii':'source.serebii',
+};
+function localizedSourceLabel(label) {
+  const key = SOURCE_LABEL_KEYS[label];
+  return key ? i18n(key, null, label) : label;
+}
+// English content is a text-only overlay. IDs, dates, links, sprites, flags and
+// every other behavioural field remain canonical in the Chinese source files.
+function localizedEvent(ev) {
+  if (!isEnglish() || !ev || !state.en || !state.en.events) return ev;
+  const tx = state.en.events[ev.id];
+  if (!tx) return ev;
+  const out = Object.assign({}, ev, {
+    name: tx.name || ev.name,
+    heading: tx.heading || ev.heading,
+    summary: tx.summary || '',
+    bonuses: Array.isArray(tx.bonuses) ? tx.bonuses.slice() : [],
+  });
+  out.pokemon = (ev.pokemon || []).map((p, i) => Object.assign({}, p, {
+    name: (tx.pokemon && tx.pokemon[i]) || p.name,
+  }));
+  out.counters = (ev.counters || []).map((c, i) => {
+    const ct = tx.counters && tx.counters[i] || {};
+    return Object.assign({}, c, {
+      name: ct.name || c.name,
+      fast: ct.fast || '', charged: ct.charged || '',
+    });
+  });
+  out.sections = (ev.sections || []).map((s, i) => {
+    const st = tx.sections && tx.sections[i] || {};
+    const sec = Object.assign({}, s, {
+      title: st.title || s.title,
+      items: Array.isArray(st.items) ? st.items.slice() : [],
+      body: st.body || '',
+    });
+    sec.mons = (s.mons || []).map((m, j) => Object.assign({}, m, {
+      name: (st.mons && st.mons[j]) || m.name,
+    }));
+    return sec;
+  });
+  out.links = (ev.links || []).map(x => Object.assign({}, x, { label: localizedSourceLabel(x.label) }));
+  return out;
+}
+function localizedRotations() {
+  const data = state.rotations;
+  if (!isEnglish() || !data || !state.en || !state.en.rotations) return data;
+  const rt = state.en.rotations;
+  return Object.assign({}, data, {
+    note: rt.note || data.note,
+    tracks: (data.tracks || []).map(trk => {
+      const tt = rt.tracks && rt.tracks[trk.key] || {};
+      return Object.assign({}, trk, {
+        label: tt.label || trk.label,
+        segments: (trk.segments || []).map((seg, i) => {
+          const st = tt.segments && tt.segments[i] || {};
+          return Object.assign({}, seg, {
+            name: st.name || seg.name,
+            cn: st.cn || st.name || seg.cn || seg.name,
+            pokemon: (seg.pokemon || []).map((p, j) => Object.assign({}, p, {
+              name: (st.pokemon && st.pokemon[j]) || p.name,
+            })),
+          });
+        }),
+      });
+    }),
+  });
+}
+
 /* ---------- data ---------- */
 async function loadData() {
+  const bust = '?t=' + Date.now();
+  try { state.ui = await (await fetch('data/i18n/ui.json' + bust)).json(); }
+  catch (e) { state.ui = {}; }
+  try { state.en = await (await fetch('data/i18n/en.json' + bust)).json(); }
+  catch (e) { state.en = null; }
   try {
-    const r = await fetch('data/events.json?t=' + Date.now());
+    const r = await fetch('data/events.json' + bust);
     const raw = await r.json();
     state.events = (Array.isArray(raw) ? raw : []).map(ev => {
       const s = parseDay(ev.start);
@@ -280,23 +447,21 @@ async function loadData() {
       return Object.assign({}, ev, { _s: s, _e: e });
     });
   } catch (e) { state.events = []; }
+  try { state.meta = await (await fetch('data/meta.json' + bust)).json(); }
+  catch (e) { state.meta = null; }
   try {
-    const m = await (await fetch('data/meta.json?t=' + Date.now())).json();
-    $('#last-updated').textContent = m && m.lastUpdated ? ('更新于 ' + fmtDateTime(m.lastUpdated)) : '尚未更新';
-  } catch (e) { $('#last-updated').textContent = ''; }
-  try {
-    state.rotations = await (await fetch('data/rotations.json?t=' + Date.now())).json();
+    state.rotations = await (await fetch('data/rotations.json' + bust)).json();
   } catch (e) { state.rotations = null; }
   try {
-    state.categories = (await (await fetch('data/categories.json?t=' + Date.now())).json()) || {};
+    state.categories = (await (await fetch('data/categories.json' + bust)).json()) || {};
   } catch (e) { state.categories = {}; }
   try {
-    const ft = await (await fetch('data/featured.json?t=' + Date.now())).json();
+    const ft = await (await fetch('data/featured.json' + bust)).json();
     const ftSet = new Set(Array.isArray(ft) ? ft : []);
     state.events.forEach(ev => { if (ftSet.has(ev.id)) ev._featured = true; });
   } catch (e) { /* no featured.json — fine */ }
   try {
-    const mg = await (await fetch('data/mega.json?t=' + Date.now())).json();
+    const mg = await (await fetch('data/mega.json' + bust)).json();
     state.mega = Array.isArray(mg) ? mg : [];
   } catch (e) { state.mega = []; }
 }
@@ -334,16 +499,53 @@ function findRaidEvent(rd) {
     return (ev.pokemon || []).some(p => p && ids.has(p.id));
   }) || null;
 }
+let detailReturnFocus = null;
+function raidFallbackEvent(rd) {
+  return {
+    name: rd.name, heading: i18n('category.raidBoss', null, '团战 Boss'), type: 'raid-battles',
+    start: rd.start, end: rd.end, pokemon: rd.mons,
+  };
+}
+function openRaidDay(date, raids, opener) {
+  const panel = $('#event-detail'), body = $('#detail-body');
+  if (!panel || !body) return;
+  detailReturnFocus = opener || null;
+  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-modal', 'true');
+  panel.setAttribute('aria-label', i18n('calendar.raidChooserLabel', null, '选择团战角标'));
+  body.innerHTML = `<span class="detail-cat" style="--c:${PALETTE.rust}">${escapeHtml(i18n('calendar.raidChooserTag', null, '当日团战'))}</span>`
+    + `<h3>${escapeHtml(i18n('calendar.raidChooserTitle', { date: fmtDateShort(ymd(date)) }, `${fmtDateShort(ymd(date))} · 团战角标`))}</h3>`
+    + `<p class="muted">${escapeHtml(i18n('calendar.raidChooserHint', null, '选择一个团战档次查看 Boss 与详情。'))}</p>`
+    + '<div class="raid-day-options"></div>';
+  const list = body.querySelector('.raid-day-options');
+  raids.forEach(rd => {
+    const meta = raidMeta(rd.tier);
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'raid-day-option';
+    if (rd.color) b.style.setProperty('--ring', rd.color);
+    const mons = rd.mons || [];
+    const names = mons.map(m => m.name).filter(Boolean).join(' / ');
+    b.innerHTML = `<span class="raid-day-tier">${escapeHtml((rd.tag || meta.tag).slice(0, 2))}</span>`
+      + `<span class="raid-day-sprites">${mons.slice(0, 3).map(m => `<img src="${escapeHtml(monSprite(m))}" alt="" loading="lazy">`).join('')}</span>`
+      + `<span class="raid-day-copy"><strong>${escapeHtml(rd.name || names || meta.label)}</strong>`
+      + `<small>${escapeHtml(meta.label)}${names ? ' · ' + escapeHtml(names) : ''}</small></span>`;
+    b.setAttribute('aria-label', `${meta.label}: ${rd.name || names}`);
+    b.addEventListener('click', () => openDetail(findRaidEvent(rd) || raidFallbackEvent(rd), opener));
+    list.appendChild(b);
+  });
+  panel.hidden = false;
+  const first = list.querySelector('button'); if (first) first.focus();
+}
 
 function renderCalendar() {
-  $('#cal-title').textContent = `${state.calYear}年${state.calMonth + 1}月`;
+  $('#cal-title').textContent = fmtMonthTitle(state.calYear, state.calMonth);
   const root = $('#calendar');
   root.innerHTML = '';
 
   // weekday header
   const dow = document.createElement('div');
   dow.className = 'cal-dow';
-  WEEKDAYS.forEach((w, i) => {
+  (WEEKDAYS[state.locale] || WEEKDAYS['zh-CN']).forEach((w, i) => {
     const c = document.createElement('div');
     c.className = 'cal-wd' + (i >= 5 ? ' weekend' : '');
     c.textContent = w; dow.appendChild(c);
@@ -360,14 +562,15 @@ function renderCalendar() {
   // showOnCalendar:false, so a new boss tier appears in the cells with no code change.
   const raidsByDay = {};
   const raidTracks = new Map(); // track.key → {key,color,tag,name} for tracks shown this month (legend)
-  (state.rotations && state.rotations.tracks || [])
+  const rotationData = localizedRotations();
+  (rotationData && rotationData.tracks || [])
     .filter(t => t && t.key && t.showOnCalendar !== false)
     .forEach(t => (t.segments || []).forEach(seg => {
       const si = dayDiff(gridStart, parseDay(seg.start));
       const ei = dayDiff(gridStart, parseDay(seg.end || seg.start));
       const mons = (seg.pokemon || []).filter(p => p && (p.id || p.sprite));
       if (!mons.length || isNaN(si) || isNaN(ei) || ei < 0 || si > 41) return;
-      raidTracks.set(t.key, { key: t.key, color: t.color, tag: t.tag, name: t.name });
+      raidTracks.set(t.key, { key: t.key, color: t.color, tag: t.tag, name: t.label || t.name });
       for (let i = Math.max(0, si); i <= Math.min(41, ei); i++) {
         (raidsByDay[i] = raidsByDay[i] || []).push(
           { tier: t.key, color: t.color, tag: t.tag, mons, name: seg.cn || seg.name, start: seg.start, end: seg.end });
@@ -378,7 +581,8 @@ function renderCalendar() {
 
   // map every event into grid indices, clipped to the visible 0..41 range
   const bars = [], chipsByDay = {}, longTerm = [], pvp = [];
-  state.events.forEach(ev => {
+  state.events.forEach(rawEv => {
+    const ev = localizedEvent(rawEv);
     if (!ev._s) return;
     const si = dayDiff(gridStart, ev._s);
     const ei = dayDiff(gridStart, ev._e);
@@ -436,7 +640,10 @@ function renderCalendar() {
 
       const num = document.createElement('div');
       num.className = 'cal-daynum';
-      const moy = date.getDate() === 1 ? `<span class="moy">${date.getMonth() + 1}月</span>` : '';
+      const monthMark = isEnglish()
+        ? new Intl.DateTimeFormat('en-US', { month:'short' }).format(date)
+        : `${date.getMonth() + 1}月`;
+      const moy = date.getDate() === 1 ? `<span class="moy">${escapeHtml(monthMark)}</span>` : '';
       num.innerHTML = `<span class="dn">${date.getDate()}</span>${moy}`;
       // weekly raid icons (one per track; cycles if the segment has >1 boss)
       const raids = inMonth ? (raidsByDay[idx] || []) : [];
@@ -447,20 +654,31 @@ function renderCalendar() {
           const mons = rd.mons.slice(0, 3);
           const b = document.createElement('button');
           const meta = raidMeta(rd.tier);
+          b.type = 'button';
           b.className = 'raid-ico ' + meta.cls + (mons.length > 1 ? ' slide n' + mons.length : '');
           if (rd.color) b.style.setProperty('--ring', rd.color);
           const badge = (rd.tag || meta.tag).slice(0, 2);
+          const names = rd.mons.map(m => m.name).filter(Boolean).join(' / ');
           b.title = `${rd.name} · ${fmtDateShort(rd.start)}–${fmtDateShort(rd.end)}`;
+          b.setAttribute('aria-label', `${meta.label}: ${rd.name || names}`);
           b.innerHTML = mons.map(p => `<img src="${escapeHtml(monSprite(p))}" alt="" loading="lazy" onerror="this.style.display='none'">`).join('')
             + `<span class="tg">${escapeHtml(badge)}</span>`;
-          b.addEventListener('click', () => openDetail(
-            findRaidEvent(rd) || {
-              name: rd.name, heading: '团战 Boss', type: 'raid-battles',
-              start: rd.start, end: rd.end, pokemon: rd.mons
-            }));
+          b.addEventListener('click', () => openDetail(findRaidEvent(rd) || raidFallbackEvent(rd), b));
           rbox.appendChild(b);
         });
         num.appendChild(rbox);
+
+        // Phones cannot fit an unbounded number of track buttons into one of
+        // seven columns. CSS swaps the desktop row for this single bounded
+        // trigger; its drawer exposes every track as a full-size touch target.
+        const mobile = document.createElement('button');
+        mobile.type = 'button'; mobile.className = 'raid-day-trigger';
+        const first = raids[0].mons[0];
+        mobile.innerHTML = (first ? `<img src="${escapeHtml(monSprite(first))}" alt="" loading="lazy">` : '<span>★</span>')
+          + `<b>${raids.length}</b>`;
+        mobile.setAttribute('aria-label', i18n('calendar.raidDayCount', { date: fmtDateShort(ymd(date)), count: raids.length }, `${fmtDateShort(ymd(date))}: ${raids.length} 个团战角标`));
+        mobile.addEventListener('click', () => openRaidDay(date, raids, mobile));
+        num.appendChild(mobile);
       }
       cell.appendChild(num);
 
@@ -482,7 +700,7 @@ function renderCalendar() {
           chip.innerHTML = `<i class="dot"></i>${sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}`
             + (ev.highlight ? '<span class="hl-star">✨</span>' : '')
             + `<span class="cn">${escapeHtml(ev.name)}</span>`;
-          chip.addEventListener('click', () => openDetail(ev));
+          chip.addEventListener('click', () => openDetail(ev, chip));
           cw.appendChild(chip);
         });
         if (list.length > 3) {
@@ -510,7 +728,7 @@ function renderCalendar() {
         + (featured ? ' ft' : '') + (b.ev.highlight ? ' hl' : '') + (quiet ? ' q' : '') + (isL ? '' : ' cont');
       bar.style.left = `calc(${leftCol / 7 * 100}% + 3px)`;
       bar.style.width = `calc(${span / 7 * 100}% - 6px)`;
-      bar.style.top = (NUM_H + b.lane * LANE_H) + 'px';
+      bar.style.top = `calc(var(--num-h, 30px) + ${b.lane * LANE_H}px)`;
       if (quiet) {
         bar.style.setProperty('--c', b.cat.color);   // .q renders tint + left strip from --c
       } else {
@@ -522,7 +740,7 @@ function renderCalendar() {
       bar.innerHTML = (sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
         + (isL && b.ev.highlight ? '<span class="hl-star">✨</span>' : '')
         + `<span class="bn">${escapeHtml(b.ev.name)}</span>`;
-      bar.addEventListener('click', () => openDetail(b.ev));
+      bar.addEventListener('click', () => openDetail(b.ev, bar));
       layer.appendChild(bar);
     });
     week.appendChild(layer);
@@ -531,8 +749,8 @@ function renderCalendar() {
 
   root.appendChild(weeks);
   renderLegend(present, raidTracks);
-  renderBand('#long-term', '长期活动', longTerm);
-  renderBand('#pvp-band', 'PVP活动', pvp);
+  renderBand('#long-term', i18n('calendar.longTerm', null, '长期活动'), longTerm);
+  renderBand('#pvp-band', i18n('calendar.pvp', null, 'PVP活动'), pvp);
 }
 
 // Legend reflects only the categories actually present in the current month.
@@ -583,7 +801,7 @@ function renderBand(boxId, title, list) {
     pill.innerHTML = (sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
       + `<span class="lt-name">${escapeHtml(ev.name)}</span>`
       + `<span class="lt-range">${escapeHtml(fmtDateShort(ev.start))}–${escapeHtml(fmtDateShort(ev.end))}</span>`;
-    pill.addEventListener('click', () => openDetail(ev));
+    pill.addEventListener('click', () => openDetail(ev, pill));
     box.appendChild(pill);
   });
 }
@@ -594,12 +812,12 @@ function renderBand(boxId, title, list) {
 function renderRotations() {
   const box = $('#rotations'); if (!box) return;
   const note = $('#rot-note');
-  const data = state.rotations;
+  const data = localizedRotations();
   const tracks = (data && Array.isArray(data.tracks)) ? data.tracks : [];
   if (note) note.textContent = (data && data.note) ? data.note : '';
   box.innerHTML = '';
   if (!tracks.length) {
-    box.innerHTML = '<p class="muted">本月轮换将在每日更新后显示。</p>';
+    box.innerHTML = `<p class="muted">${escapeHtml(i18n('rotation.empty', null, '本月轮换将在每日更新后显示。'))}</p>`;
     return;
   }
   // 三栏并列:每条轨道一列,列内纵向列出周段;当前日期落在 [start,end] 内的段高亮。
@@ -638,7 +856,7 @@ function renderRotations() {
       // 优先用 curated 段名(seg.cn 已是短标题,且保留「超级/原始」与双 Boss 信息);
       // 仅当它缺失时,多只回退「传说轮替 ×N」、单只回退首只名。完整名单始终进 tooltip。
       const label = seg.cn || seg.name
-        || (many ? `传说轮替 ×${mons.length}` : ((mons[0] && mons[0].name) || ''));
+        || (many ? i18n('rotation.multi', { count: mons.length }, `传说轮替 ×${mons.length}`) : ((mons[0] && mons[0].name) || ''));
       const range = (seg.start || seg.end)
         ? `<span class="rot-range">${escapeHtml(fmtDateShort(seg.start))}${seg.end && seg.end !== seg.start ? '–' + escapeHtml(fmtDateShort(seg.end)) : ''}</span>`
         : '';
@@ -646,7 +864,7 @@ function renderRotations() {
       cell.innerHTML =
         `<div class="rot-spr">${sprHtml}${overflow}</div>`
         + `<div class="rot-txt"><span class="rot-name" title="${escapeHtml(fullNames)}">${escapeHtml(label)}</span>${range}</div>`
-        + (active ? '<span class="rot-now">进行中</span>' : '');
+        + (active ? `<span class="rot-now">${escapeHtml(i18n('rotation.active', null, '进行中'))}</span>` : '');
       col.appendChild(cell);
     });
     board.appendChild(col);
@@ -678,7 +896,14 @@ function iconify(s) {
   return escapeHtml(s).replace(/:([a-z0-9_-]{1,24}):/g, (m, n) =>
     `<img class="ico" src="assets/icons/${escapeHtml(ICONS[n] || (n + '.png'))}" alt="" onerror="this.style.display='none'">`);
 }
-function openDetail(ev) {
+function openDetail(ev, opener) {
+  ev = localizedEvent(ev);
+  const active = document.activeElement;
+  detailReturnFocus = opener || (active && active !== document.body ? active : detailReturnFocus);
+  const panel = $('#event-detail');
+  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-modal', 'true');
+  panel.setAttribute('aria-label', ev.name || i18n('drawer.label', null, '活动详情'));
   const cat = catOf(ev);
   const mons = (ev.pokemon || []).map(p => {
     const img = `<img class="mon-icon" src="${escapeHtml(monSprite(p))}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'">`;
@@ -711,10 +936,10 @@ function openDetail(ev) {
   }).join('');
   // Prefer the aggregated multi-source links[]; fall back to the legacy single link.
   const linkList = (ev.links && ev.links.length) ? ev.links
-    : (ev.link ? [{ label: '活动页', url: ev.link }] : []);
+    : (ev.link ? [{ label: i18n('source.eventPage', null, '活动页'), url: ev.link }] : []);
   const links = linkList
     .filter(l => l && l.url)
-    .map((l, i) => `<a class="btn ${i === 0 ? 'btn-primary' : ''}" href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.label || '链接')} ↗</a>`)
+    .map((l, i) => `<a class="btn ${i === 0 ? 'btn-primary' : ''}" href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(localizedSourceLabel(l.label) || i18n('source.link', null, '链接'))} ↗</a>`)
     .join('');
   $('#detail-body').innerHTML = `
     <span class="detail-cat" style="--c:${cat.color}">${escapeHtml(cat.label)}</span>
@@ -723,13 +948,14 @@ function openDetail(ev) {
     <p class="muted">${escapeHtml(ev.heading || ev.type || '')} · ${escapeHtml(fmtRange(ev.start, ev.end))}</p>
     ${ev.summary ? `<p class="detail-summary">${escapeHtml(ev.summary)}</p>` : ''}
     ${mons ? `<div class="mon-row">${mons}</div>` : ''}
-    ${bonuses ? `<h4>加成</h4><ul>${bonuses}</ul>` : ''}
-    ${counters ? `<details><summary>团战 Counter</summary><div class="det-body">${counters}</div></details>` : ''}
+    ${bonuses ? `<h4>${escapeHtml(i18n('drawer.bonuses', null, '加成'))}</h4><ul>${bonuses}</ul>` : ''}
+    ${counters ? `<details><summary>${escapeHtml(i18n('drawer.counters', null, '团战 Counter'))}</summary><div class="det-body">${counters}</div></details>` : ''}
     ${sections}
     ${links ? `<div class="detail-links">${links}</div>` : ''}
   `;
-  $('#event-detail').hidden = false;
+  panel.hidden = false;
   linkifySprites($('#detail-body'));
+  const close = $('#detail-close'); if (close) close.focus();
 }
 
 /* ---------- Mega Evolution reference (view-mega) ------------------------------
@@ -784,24 +1010,42 @@ function megaInstantCost(cost, n, key) {
   const i = Math.max(n, 1) - 1;
   return i < arr.length ? arr[i] + (n < 1 ? cost : 0) : null;
 }
-const MEGA_LVL_ZH = { base: '普通', high: '高级', max: '最高', superMax: '超级最高' };
+function megaLevelLabel(key) {
+  const row = MEGA_LEVELS.find(x => x.key === key);
+  return row ? i18n(row.labelKey, null, row.label) : key;
+}
+function megaDisplayName(entry) { return isEnglish() ? (entry.en || entry.name) : entry.name; }
 function megaWaitBreakdown(waits) {
-  return Object.keys(waits).sort((a, b) => b - a).map(d => `${waits[d]}×${d}天`).join(' + ');
+  return Object.keys(waits).sort((a, b) => b - a).map(d =>
+    i18n('mega.waitPart', { count: waits[d], days: d }, `${waits[d]}×${d}天`)).join(' + ');
+}
+function megaEnergyText(v) {
+  return v == null ? i18n('mega.pending', null, '待定')
+    : i18n('mega.energyAmount', { amount: megaComma(v) }, `${megaComma(v)} 能量`);
+}
+function megaDays(v) { return i18n('mega.days', { count: v }, `${v} 天`); }
+function megaBonusValue(row, value, index) {
+  if (value == null) return '—';
+  return i18n(`mega.bonusValue.${row.key}.${index}`, null, String(value));
 }
 function megaPlanHtml(entry, n) {
   const cost = entry.initialCost;
   const known = cost != null && !!MEGA_ENERGY[cost];
   const lvl = megaLevelAfter(n);
-  const en = v => v == null ? '待定' : megaComma(v) + ' 能量';
 
   let status;
   if (!lvl) {
-    status = '尚未进行首次超级进化' + (known ? `——首次消耗 ${megaComma(cost)} 能量,已计入下表全部路线。` : '。');
+    status = known
+      ? i18nRich('mega.status.noneKnown', { energy: megaComma(cost) }, `尚未进行首次超级进化——首次消耗 ${megaComma(cost)} 能量，已计入下表全部路线。`)
+      : i18nRich('mega.status.noneUnknown', null, '尚未进行首次超级进化。');
   } else if (lvl === 'max') {
-    status = `当前等级:<strong>最高</strong>(第 ${MEGA_NEED.max} 次已达成)· 本级休息期 ${MEGA_REST.max} 天`;
+    status = i18nRich('mega.status.max', { level: megaLevelLabel('max'), count: MEGA_NEED.max, days: MEGA_REST.max },
+      `当前等级：<strong>${megaLevelLabel('max')}</strong>（第 ${MEGA_NEED.max} 次已达成）· 本级休息期 ${MEGA_REST.max} 天`);
   } else {
     const next = lvl === 'base' ? 'high' : 'max';
-    status = `当前等级:<strong>${MEGA_LVL_ZH[lvl]}</strong> · 距${MEGA_LVL_ZH[next]}还差 ${MEGA_NEED[next] - n} 次 · 本级休息期 ${MEGA_REST[lvl]} 天`;
+    status = i18nRich('mega.status.progress', {
+      level: megaLevelLabel(lvl), next: megaLevelLabel(next), count: MEGA_NEED[next] - n, days: MEGA_REST[lvl],
+    }, `当前等级：<strong>${megaLevelLabel(lvl)}</strong> · 距${megaLevelLabel(next)}还差 ${MEGA_NEED[next] - n} 次 · 本级休息期 ${MEGA_REST[lvl]} 天`);
   }
 
   const targets = [];
@@ -811,35 +1055,41 @@ function megaPlanHtml(entry, n) {
 
   let html = `<p class="muted mega-plan-status">${status}</p>`;
   if (!targets.length) {
-    html += `<p class="muted">已达最高等级,没有可继续提升的目标${entry.superMax ? '' : '(该宝可梦暂不开放超级最高)'}。</p>`;
+    html += `<p class="muted">${escapeHtml(entry.superMax
+      ? i18n('mega.complete', null, '已达最高等级，没有可继续提升的目标。')
+      : i18n('mega.completeNoSuper', null, '已达最高等级，没有可继续提升的目标（该宝可梦暂不开放超级最高）。'))}</p>`;
     return html;
   }
 
-  const cell = (t, e) => `<td><div class="mp-t">${t}</div><div class="mp-e">${e}</div></td>`;
+  const cell = (title, energy, breakdown) => `<td><div class="mp-t">${escapeHtml(title)}</div>`
+    + (breakdown ? `<div class="mp-b">${escapeHtml(breakdown)}</div>` : '')
+    + `<div class="mp-e">${escapeHtml(energy)}</div></td>`;
   const rows = targets.map(t => {
-    const p = megaPlanTo(cost, n, t.need);
-    const extra = p.firstCost == null ? null : p.firstCost + t.plus;
-    const need = p.steps
-      ? `${p.steps} 次进化${t.plus ? ' + 5,000 能量' : ''}`
-      : (t.plus ? '5,000 能量' : '—');
-    const waitT = p.waitDays ? `${p.waitDays} 天` : '立即';
-    const waitB = p.waitDays ? `<div class="mp-b">${megaWaitBreakdown(p.waits)}</div>` : '';
-    const waitE = extra == null ? '待定' : (extra ? en(extra) : '免费');
-    const dayT = p.dailyDays ? `${p.dailyDays} 天` : '立即';
-    const dayE = (p.dailyEnergy == null || extra == null)
-      ? '待定' : (p.dailyEnergy ? '≈' : '') + en(p.dailyEnergy + extra);
-    const inst = megaInstantCost(cost, n, t.key);
-    return `<tr><th>${MEGA_LVL_ZH[t.key]}<div class="mp-b">第 ${t.need} 次${t.plus ? ' + 能量' : ''}</div></th>`
-      + `<td>${need}</td>`
-      + cell(waitT + waitB, waitE)
-      + cell(dayT, dayE)
-      + cell('立即', en(inst))
+    const plan = megaPlanTo(cost, n, t.need);
+    const extra = plan.firstCost == null ? null : plan.firstCost + t.plus;
+    const need = plan.steps
+      ? i18n('mega.needEvolutions', { count: plan.steps, extra: t.plus ? i18n('mega.plus5000', null, ' + 5,000 能量') : '' }, `${plan.steps} 次进化${t.plus ? ' + 5,000 能量' : ''}`)
+      : (t.plus ? i18n('mega.energy5000', null, '5,000 能量') : '—');
+    const waitTitle = plan.waitDays ? megaDays(plan.waitDays) : i18n('mega.now', null, '立即');
+    const waitBreakdown = plan.waitDays ? megaWaitBreakdown(plan.waits) : '';
+    const waitEnergy = extra == null ? i18n('mega.pending', null, '待定') : (extra ? megaEnergyText(extra) : i18n('mega.free', null, '免费'));
+    const dailyTitle = plan.dailyDays ? megaDays(plan.dailyDays) : i18n('mega.now', null, '立即');
+    const dailyEnergy = (plan.dailyEnergy == null || extra == null)
+      ? i18n('mega.pending', null, '待定')
+      : (plan.dailyEnergy ? '≈' : '') + megaEnergyText(plan.dailyEnergy + extra);
+    const instant = megaInstantCost(cost, n, t.key);
+    return `<tr><th>${escapeHtml(megaLevelLabel(t.key))}<div class="mp-b">${escapeHtml(i18n('mega.nth', { count: t.need }, `第 ${t.need} 次`))}${t.plus ? escapeHtml(i18n('mega.plusEnergy', null, ' + 能量')) : ''}</div></th>`
+      + `<td>${escapeHtml(need)}</td>`
+      + cell(waitTitle, waitEnergy, waitBreakdown)
+      + cell(dailyTitle, dailyEnergy)
+      + cell(i18n('mega.now', null, '立即'), megaEnergyText(instant))
       + '</tr>';
   }).join('');
   html += `<div class="mega-scroll"><table class="mega-cost-table mega-plan-table"><thead>`
-    + `<tr><th>目标等级</th><th>还需</th><th>只等休息期<div class="mp-b">免费·最慢</div></th>`
-    + `<th>每天付费进化一次<div class="mp-b">折中·1 次/天</div></th>`
-    + `<th>立即升级<div class="mp-b">最快·最贵</div></th></tr>`
+    + `<tr><th>${escapeHtml(i18n('mega.targetLevel', null, '目标等级'))}</th><th>${escapeHtml(i18n('mega.remaining', null, '还需'))}</th>`
+    + `<th>${escapeHtml(i18n('mega.waitOnly', null, '只等休息期'))}<div class="mp-b">${escapeHtml(i18n('mega.freeSlow', null, '免费·最慢'))}</div></th>`
+    + `<th>${escapeHtml(i18n('mega.dailyPaid', null, '每天付费进化一次'))}<div class="mp-b">${escapeHtml(i18n('mega.compromise', null, '折中·1 次/天'))}</div></th>`
+    + `<th>${escapeHtml(i18n('mega.instantUpgrade', null, '立即升级'))}<div class="mp-b">${escapeHtml(i18n('mega.fastest', null, '最快·最贵'))}</div></th></tr>`
     + `</thead><tbody>${rows}</tbody></table></div>`;
 
   if (n < MEGA_NEED.max) {
@@ -847,22 +1097,24 @@ function megaPlanHtml(entry, n) {
     for (let k = n + 1; k <= MEGA_NEED.max; k++) {
       const l0 = megaLevelAfter(k - 1);
       steps += l0
-        ? `<tr><th>第 ${k} 次</th><td>${MEGA_LVL_ZH[l0]}</td><td>${MEGA_REST[l0]} 天</td>`
-          + `<td>${known ? '≈' + megaComma(megaDailyStep(cost, l0)) : '待定'}</td></tr>`
-        : `<tr><th>第 1 次</th><td>—</td><td>无需等待</td><td>${known ? megaComma(cost) + '(首次全额)' : '待定'}</td></tr>`;
+        ? `<tr><th>${escapeHtml(i18n('mega.nth', { count: k }, `第 ${k} 次`))}</th><td>${escapeHtml(megaLevelLabel(l0))}</td><td>${escapeHtml(megaDays(MEGA_REST[l0]))}</td>`
+          + `<td>${known ? '≈' + megaComma(megaDailyStep(cost, l0)) : escapeHtml(i18n('mega.pending', null, '待定'))}</td></tr>`
+        : `<tr><th>${escapeHtml(i18n('mega.nth', { count: 1 }, '第 1 次'))}</th><td>—</td><td>${escapeHtml(i18n('mega.noWait', null, '无需等待'))}</td>`
+          + `<td>${known ? megaComma(cost) + escapeHtml(i18n('mega.firstFull', null, '（首次全额）')) : escapeHtml(i18n('mega.pending', null, '待定'))}</td></tr>`;
     }
-    html += `<details class="mega-remega"><summary>逐次明细(第 ${n + 1} – ${MEGA_NEED.max} 次)</summary>`
+    html += `<details class="mega-remega"><summary>${escapeHtml(i18n('mega.stepDetails', { from: n + 1, to: MEGA_NEED.max }, `逐次明细（第 ${n + 1}–${MEGA_NEED.max} 次）`))}</summary>`
       + `<div class="mega-scroll"><table class="mega-cost-table"><thead>`
-      + `<tr><th>次数</th><th>期间等级</th><th>免费需等</th><th>等 24 小时后进化 ≈能量</th></tr>`
+      + `<tr><th>${escapeHtml(i18n('mega.count', null, '次数'))}</th><th>${escapeHtml(i18n('mega.duringLevel', null, '期间等级'))}</th>`
+      + `<th>${escapeHtml(i18n('mega.freeWait', null, '免费需等'))}</th><th>${escapeHtml(i18n('mega.after24', null, '等 24 小时后进化 ≈能量'))}</th></tr>`
       + `</thead><tbody>${steps}</tbody></table></div></details>`;
   }
 
   html += `<ul class="muted mega-plan-notes">`
-    + `<li>等级进度每天最多累计 1 次:休息期内反复花能量再进化<strong>不会</strong>更快升级,「立即升级」是唯一的加速通道。</li>`
-    + `<li>「每天付费一次」为估算:休息期内再进化的费用随剩余时间线性递减(此处按等满 24 小时折算并向上取整),实际取整以游戏内显示为准。</li>`
+    + `<li>${i18nRich('mega.note.progress', null, '等级进度每天最多累计 1 次：休息期内反复花能量再进化<strong>不会</strong>更快升级，「立即升级」是唯一的加速通道。')}</li>`
+    + `<li>${escapeHtml(i18n('mega.note.estimate', null, '「每天付费一次」为估算：休息期内再进化的费用随剩余时间线性递减（此处按等满 24 小时折算并向上取整），实际取整以游戏内显示为准。'))}</li>`
     + (entry.superMax
-        ? `<li>超级最高:达到最高等级后一次性消耗 5,000 能量解锁;三条路线均已计入这 5,000(「立即升级」列的价目表本身含它)。</li>`
-        : `<li>该宝可梦暂不开放超级最高等级,故无此目标行。</li>`)
+      ? `<li>${escapeHtml(i18n('mega.note.super', null, '超级最高：达到最高等级后一次性消耗 5,000 能量解锁；三条路线均已计入这 5,000。'))}</li>`
+      : `<li>${escapeHtml(i18n('mega.note.noSuper', null, '该宝可梦暂不开放超级最高等级，故无此目标行。'))}</li>`)
     + `</ul>`;
   return html;
 }
@@ -871,97 +1123,102 @@ function renderMegaDetail(entry) {
   const box = $('#mega-detail');
   if (!box) return;
   megaCurrent = entry || null;
-  if (!entry) { box.innerHTML = '<p class="muted">暂无超级进化数据。</p>'; return; }
-  const cost = (entry.initialCost == null) ? null : entry.initialCost;
-  const energy = (cost != null) ? MEGA_ENERGY[cost] : null;   // undefined for an unknown tier
+  if (!entry) { box.innerHTML = `<p class="muted">${escapeHtml(i18n('mega.noData', null, '暂无超级进化数据。'))}</p>`; return; }
+  const name = megaDisplayName(entry);
+  const cost = entry.initialCost == null ? null : entry.initialCost;
+  const energy = cost != null ? MEGA_ENERGY[cost] : null;
   const levels = entry.superMax ? MEGA_LEVELS : MEGA_LEVELS.slice(0, -1);
-  const img = `<img class="mon-icon" src="${escapeHtml(monSprite(entry))}" alt="${escapeHtml(entry.name)}" loading="lazy" onerror="this.style.visibility='hidden'">`;
-  const costTxt = (cost == null) ? '待定' : (megaComma(cost) + ' 超级能量');
+  const img = `<img class="mon-icon" src="${escapeHtml(monSprite(entry))}" alt="${escapeHtml(name)}" loading="lazy" onerror="this.style.visibility='hidden'">`;
+  const costText = cost == null ? i18n('mega.pending', null, '待定') : megaEnergyText(cost);
+  const secondary = isEnglish() ? '' : entry.en;
   const header = `<div class="mega-header">${linkSprite(img, entry)}<div class="mega-head-txt">`
-    + `<h3>${escapeHtml(entry.name)}${entry.variant ? ` <span class="mega-var">${escapeHtml(entry.variant)}</span>` : ''}</h3>`
-    + `<p class="muted">${escapeHtml(entry.en || '')}${entry.release ? ' · ' + escapeHtml(entry.release) : ''}</p>`
+    + `<h3>${escapeHtml(name)}${entry.variant ? ` <span class="mega-var">${escapeHtml(entry.variant)}</span>` : ''}</h3>`
+    + `<p class="muted">${escapeHtml(secondary || '')}${entry.release ? ' · ' + escapeHtml(entry.release) : ''}</p>`
     + `<div class="mega-types">${megaTypeIcons(entry.boostedTypes)}</div>`
-    + `<span class="badge mega-cost">首次进化消耗 ${escapeHtml(costTxt)}</span>`
-    + (entry.superMax ? ` <span class="badge mega-cost">可达超级最高</span>` : '')
+    + `<span class="badge mega-cost">${escapeHtml(i18n('mega.firstCost', { cost: costText }, `首次进化消耗 ${costText}`))}</span>`
+    + (entry.superMax ? ` <span class="badge mega-cost">${escapeHtml(i18n('mega.superEligible', null, '可达超级最高'))}</span>` : '')
     + `</div></div>`;
 
-  const planner = `<h4>升级规划器(按当前进度动态比较)</h4>`
-    + `<div class="mega-plan-bar"><span>已超级进化次数</span>`
-    + `<button type="button" class="btn mega-step" data-d="-1" aria-label="减一">−</button>`
+  const planner = `<h4>${escapeHtml(i18n('mega.plannerTitle', null, '升级规划器（按当前进度动态比较）'))}</h4>`
+    + `<div class="mega-plan-bar"><span>${escapeHtml(i18n('mega.evolvedCount', null, '已超级进化次数'))}</span>`
+    + `<button type="button" class="btn mega-step" data-d="-1" aria-label="${escapeHtml(i18n('mega.minusOne', null, '减一'))}">−</button>`
     + `<input id="mega-plan-n" type="number" inputmode="numeric" min="0" max="30" step="1" value="${megaPlanN}">`
-    + `<button type="button" class="btn mega-step" data-d="1" aria-label="加一">+</button>`
-    + `<span class="muted">(0 = 还没进化过,30 = 已满)</span></div>`
+    + `<button type="button" class="btn mega-step" data-d="1" aria-label="${escapeHtml(i18n('mega.plusOne', null, '加一'))}">+</button>`
+    + `<span class="muted">${escapeHtml(i18n('mega.planHint', null, '（0 = 还没进化过，30 = 已满）'))}</span></div>`
     + `<div id="mega-plan-out">${megaPlanHtml(entry, megaPlanN)}</div>`;
 
-  const head = `<tr><th>Mega 等级</th>${levels.map(l => `<th>${l.label}</th>`).join('')}</tr>`;
-  const energyTbl = energy
-    ? `<table class="mega-cost-table"><thead>${head}</thead><tbody><tr><th>升华所需能量</th>`
-        + levels.map(l => `<td>${megaComma(energy[l.key])}</td>`).join('') + `</tr></tbody></table>`
-    : '<p class="muted">升华所需能量:待定(该宝可梦尚无已知的首次消耗档位)。</p>';
+  const head = `<tr><th>${escapeHtml(i18n('mega.levelHeader', null, 'Mega 等级'))}</th>${levels.map(x => `<th>${escapeHtml(megaLevelLabel(x.key))}</th>`).join('')}</tr>`;
+  const energyTable = energy
+    ? `<table class="mega-cost-table"><thead>${head}</thead><tbody><tr><th>${escapeHtml(i18n('mega.elevationEnergy', null, '升华所需能量'))}</th>`
+      + levels.map(x => `<td>${megaComma(energy[x.key])}</td>`).join('') + `</tr></tbody></table>`
+    : `<p class="muted">${escapeHtml(i18n('mega.unknownEnergy', null, '升华所需能量：待定（该宝可梦尚无已知的首次消耗档位）。'))}</p>`;
 
-  const dash = v => (v == null ? '—' : v);
-  const bonusTbl = `<table class="mega-cost-table"><thead>${head}</thead><tbody>`
-    + MEGA_LEVEL_BONUSES.map(r =>
-        `<tr><th>${escapeHtml(r.label)}</th>${r.vals.slice(0, levels.length).map(v => `<td>${escapeHtml(String(dash(v)))}</td>`).join('')}</tr>`
-      ).join('')
+  const bonusTable = `<table class="mega-cost-table"><thead>${head}</thead><tbody>`
+    + MEGA_LEVEL_BONUSES.map(row => `<tr><th>${escapeHtml(i18n(`mega.bonus.${row.key}`, null, row.label))}</th>`
+      + row.vals.slice(0, levels.length).map((value, i) => `<td>${escapeHtml(megaBonusValue(row, value, i))}</td>`).join('') + '</tr>').join('')
     + `</tbody></table>`;
 
   let levelup = '';
   if (energy) {
-    const g = MEGA_LEVELUP[megaGroup(cost)];
-    const cols = [{ key: 'high', label: '高级' }, { key: 'max', label: '最高' }];
-    if (entry.superMax) cols.push({ key: 'superMax', label: '超级最高' });
+    const group = MEGA_LEVELUP[megaGroup(cost)];
+    const cols = [{ key:'high' }, { key:'max' }];
+    if (entry.superMax) cols.push({ key:'superMax' });
     let rows = '';
     for (let i = 0; i < 30; i++) {
-      rows += `<tr><th>${i + 1}</th>` + cols.map(c => {
-        const arr = g[c.key], v = (arr && i < arr.length) ? arr[i] : null;
-        return `<td>${v == null ? '—' : megaComma(v)}</td>`;
+      rows += `<tr><th>${i + 1}</th>` + cols.map(col => {
+        const arr = group[col.key], value = arr && i < arr.length ? arr[i] : null;
+        return `<td>${value == null ? '—' : megaComma(value)}</td>`;
       }).join('') + '</tr>';
     }
-    const grp = megaGroup(cost) === 'sm' ? '100 / 200' : '300 / 400 / 7500';
-    levelup = `<details class="mega-remega"><summary>立即升级价目表 — 按「已超级进化次数」查询(第 1–30 次)</summary>`
-      + `<div class="mega-scroll"><table class="mega-cost-table"><thead><tr><th>次数</th>`
-      + cols.map(c => `<th>${c.label}</th>`).join('') + `</tr></thead><tbody>${rows}</tbody></table></div>`
-      + `<p class="muted">花超级能量把 Mega 等级一步买到该档(2026-05-18 起开放),即上方规划器「立即升级」列的完整价目。`
-      + `按初始费用分档:此为 ${grp} 组。「—」= 该次数下等级已自然达成。</p></details>`;
+    const tier = megaGroup(cost) === 'sm' ? '100 / 200' : '300 / 400 / 7500';
+    levelup = `<details class="mega-remega"><summary>${escapeHtml(i18n('mega.instantTable', null, '立即升级价目表 — 按「已超级进化次数」查询（第 1–30 次）'))}</summary>`
+      + `<div class="mega-scroll"><table class="mega-cost-table"><thead><tr><th>${escapeHtml(i18n('mega.count', null, '次数'))}</th>`
+      + cols.map(col => `<th>${escapeHtml(megaLevelLabel(col.key))}</th>`).join('') + `</tr></thead><tbody>${rows}</tbody></table></div>`
+      + `<p class="muted">${escapeHtml(i18n('mega.instantExplain', { tier }, `花超级能量把 Mega 等级一步买到该档（2026-05-18 起开放），即上方规划器「立即升级」列的完整价目。按初始费用分档：此为 ${tier} 组。「—」= 该次数下等级已自然达成。`))}</p></details>`;
   }
 
-  const src = `<p class="muted mega-src">数据来源:<a href="https://bulbapedia.bulbagarden.net/wiki/Mega_Evolution_(GO)"`
-    + ` target="_blank" rel="noopener noreferrer">Bulbapedia — Mega Evolution (GO)</a>(机制常量核对于 2026-07)。</p>`;
-
-  box.innerHTML = header
-    + planner
-    + `<h4>静态查询表</h4>` + src
-    + `<h5>各等级升华所需超级能量</h5>${energyTbl}`
-    + `<h5>各等级加成(全宝可梦通用)</h5>${bonusTbl}`
+  const source = `<p class="muted mega-src">${escapeHtml(i18n('mega.source', null, '数据来源：'))}<a href="https://bulbapedia.bulbagarden.net/wiki/Mega_Evolution_(GO)" target="_blank" rel="noopener noreferrer">Bulbapedia — Mega Evolution (GO)</a>${escapeHtml(i18n('mega.sourceChecked', null, '（机制常量核对于 2026-07）。'))}</p>`;
+  box.innerHTML = header + planner
+    + `<h4>${escapeHtml(i18n('mega.staticTables', null, '静态查询表'))}</h4>` + source
+    + `<h5>${escapeHtml(i18n('mega.energyTitle', null, '各等级升华所需超级能量'))}</h5>${energyTable}`
+    + `<h5>${escapeHtml(i18n('mega.bonusTitle', null, '各等级加成（全宝可梦通用）'))}</h5>${bonusTable}`
     + levelup;
 }
 function renderMega() {
   const list = state.mega || [];
   const sel = $('#mega-select');
-  if (sel) sel.innerHTML = list.map((m, i) => `<option value="${i}">${escapeHtml(m.name)}</option>`).join('');
-  const ov = $('#mega-overview');
-  if (ov) {
+  let selected = megaCurrent ? list.indexOf(megaCurrent) : 0;
+  if (selected < 0) selected = 0;
+  if (sel) {
+    const prior = Number.isFinite(+sel.value) ? +sel.value : selected;
+    selected = Math.max(0, Math.min(list.length - 1, prior));
+    sel.innerHTML = list.map((m, i) => `<option value="${i}">${escapeHtml(megaDisplayName(m))}</option>`).join('');
+    if (list.length) sel.value = String(selected);
+  }
+  const overview = $('#mega-overview');
+  if (overview) {
     if (!list.length) {
-      ov.innerHTML = '<p class="muted">暂无超级进化数据。</p>';
+      overview.innerHTML = `<p class="muted">${escapeHtml(i18n('mega.noData', null, '暂无超级进化数据。'))}</p>`;
     } else {
       const rows = list.map((m, i) => {
-        const img = `<img class="spr" src="${escapeHtml(monSprite(m))}" alt="${escapeHtml(m.name)}" loading="lazy" onerror="this.style.visibility='hidden'">`;
-        const cost = (m.initialCost == null) ? '待定' : megaComma(m.initialCost);
-        return `<tr data-mega-idx="${i}">`
-          + `<td class="mega-ov-spr">${linkSprite(img, m)}</td>`
-          + `<td class="mega-ov-name">${escapeHtml(m.name)}<div class="muted mega-ov-en">${escapeHtml(m.en || '')}</div></td>`
-          + `<td class="mega-ov-types">${megaTypeIcons(m.boostedTypes)}</td>`
-          + `<td class="mega-ov-cost">${cost}</td>`
+        const name = megaDisplayName(m);
+        const secondary = isEnglish() ? '' : m.en;
+        const img = `<img class="spr" src="${escapeHtml(monSprite(m))}" alt="${escapeHtml(name)}" loading="lazy" onerror="this.style.visibility='hidden'">`;
+        const cost = m.initialCost == null ? i18n('mega.pending', null, '待定') : megaComma(m.initialCost);
+        return `<tr data-mega-idx="${i}"><td class="mega-ov-spr">${linkSprite(img, m)}</td>`
+          + `<td class="mega-ov-name">${escapeHtml(name)}<div class="muted mega-ov-en">${escapeHtml(secondary || '')}</div></td>`
+          + `<td class="mega-ov-types">${megaTypeIcons(m.boostedTypes)}</td><td class="mega-ov-cost">${escapeHtml(cost)}</td>`
           + `<td class="mega-ov-rel">${escapeHtml(m.release || '—')}</td></tr>`;
       }).join('');
-      ov.innerHTML = `<div class="mega-scroll"><table class="mega-cost-table mega-overview-table"><thead>`
-        + `<tr><th>精灵</th><th>名称</th><th>加成属性</th><th>首次消耗</th><th>发布日期</th></tr></thead>`
-        + `<tbody>${rows}</tbody></table></div>`;
+      overview.innerHTML = `<div class="mega-scroll"><table class="mega-cost-table mega-overview-table"><thead><tr>`
+        + `<th>${escapeHtml(i18n('mega.table.sprite', null, '精灵'))}</th><th>${escapeHtml(i18n('mega.table.name', null, '名称'))}</th>`
+        + `<th>${escapeHtml(i18n('mega.table.types', null, '加成属性'))}</th><th>${escapeHtml(i18n('mega.table.initial', null, '首次消耗'))}</th>`
+        + `<th>${escapeHtml(i18n('mega.table.release', null, '发布日期'))}</th></tr></thead><tbody>${rows}</tbody></table></div>`;
     }
   }
-  renderMegaDetail(list[0]);
+  renderMegaDetail(list[selected]);
 }
+
 function megaClampN(v) { return Math.max(0, Math.min(30, Math.floor(+v || 0))); }
 function updateMegaPlan() {
   const out = $('#mega-plan-out');
@@ -1017,13 +1274,26 @@ function setupMega() {
  * Multi-zone countries list each OFFICIAL zone (e.g. US ×7); single-tz countries
  * (China = UTC+8 only) list once. Zone ids are validated against Node ICU before
  * shipping; flags from flagcdn.com (renders cross-platform, unlike emoji flags). */
-const WC_LOCK = { 1: '锁区', 2: '部分可玩' };
-const WC_NOTE = {
-  cn: '中国大陆官方使用 UTC+8(北京时间)。多数内地城市为空地图,海南、东北、新疆及粤/桂部分口岸(珠海、深圳等)附近有可玩区域。',
-  ru: 'Niantic 已暂停俄罗斯的游玩,社区普遍视为锁区。',
-  by: '与俄罗斯同批被 Niantic 暂停游玩,社区视为锁区。',
+const WC_LOCK = {
+  'zh-CN': { 1:'锁区', 2:'部分可玩' },
+  en: { 1:'Unavailable', 2:'Partly playable' },
 };
-const WC_WD = { Mon:'一', Tue:'二', Wed:'三', Thu:'四', Fri:'五', Sat:'六', Sun:'日' };
+const WC_NOTE = {
+  'zh-CN': {
+    cn: '中国大陆官方使用 UTC+8（北京时间）。多数内地城市为空地图，海南、东北、新疆及粤/桂部分口岸附近有可玩区域。',
+    ru: 'Niantic 已暂停俄罗斯的游玩，社区普遍视为锁区。',
+    by: '与俄罗斯同批被 Niantic 暂停游玩，社区视为锁区。',
+  },
+  en: {
+    cn: 'Mainland China officially uses UTC+8 (China Standard Time). Most inland cities have an empty map; limited play areas exist near some borders and coastal regions.',
+    ru: 'Niantic has suspended gameplay in Russia; the community generally treats it as unavailable.',
+    by: 'Gameplay was suspended alongside Russia; the community generally treats it as unavailable.',
+  },
+};
+const WC_WD = {
+  'zh-CN': { Mon:'一', Tue:'二', Wed:'三', Thu:'四', Fri:'五', Sat:'六', Sun:'日' },
+  en: { Mon:'Mon', Tue:'Tue', Wed:'Wed', Thu:'Thu', Fri:'Fri', Sat:'Sat', Sun:'Sun' },
+};
 const WC_DATA = [
   // 覆盖 UTC+14 → −12 的全部时区(用户指定的代表地点)。同一时区可多国并列。
   ['基里巴斯','圣诞岛 Kiritimati','ki','Pacific/Kiritimati'],
@@ -1097,6 +1367,43 @@ const WC_SPOTS = [
   ['Honolulu / 416 cookie','美国 · 夏威夷檀香山','us','Pacific/Honolulu','最后尾巴时区', 21.2793, -157.8294],
 ];
 
+const WC_SPOTS_EN = {
+  'Pacific/Auckland': ['Wellington Botanic Garden / Auckland', 'New Zealand · Wellington / Auckland', 'Earliest major time-zone starting point; useful for event and raid rollouts'],
+  'Australia/Sydney': ['Sydney Opera House area', 'Australia · Sydney', 'Early-zone raid and event option'],
+  'Asia/Tokyo': ['Shibuya / Shinjuku', 'Japan · Tokyo', 'Major hotspot used for GO Fest, raids, and city play'],
+  'Asia/Taipei': ['Taipei Main Station', 'Taiwan · Taipei', 'Long-running raid hotspot; current activity is debated'],
+  'Asia/Dubai': ['Dubai Marina', 'United Arab Emirates · Dubai', 'Strong catch-event area, driven mainly by Lures'],
+  'Europe/Madrid': ['Plaza de Europa', 'Spain · Zaragoza', 'High spawn density'],
+  'Europe/Budapest': ['Margaret Island', 'Hungary · Budapest', 'Sometimes rated above Zaragoza; evidence is mixed'],
+  'America/Sao_Paulo': ['Ibirapuera Park', 'Brazil · São Paulo', 'Dense PokéStops and heavy Lure use; strong on event days'],
+  'America/New_York': ['Bryant Park / Central Park / Times Square', 'United States · New York City', 'Strong spawns, Lures, and raids'],
+  'America/Chicago': ['Lincoln Park / City of Dallas', 'United States · Chicago / Dallas', 'GO Fest and city play; density is event-dependent'],
+  'America/Mexico_City': ['Calle República de El Salvador 21', 'Mexico · Mexico City', 'Community hotspot with dense PokéStops and Gyms'],
+  'America/Los_Angeles': ['PIER 39 / Union Square', 'United States · San Francisco', 'Traditional pier hotspot; current reviews are mixed'],
+  'Pacific/Honolulu': ['Honolulu / 416 cookie', 'United States · Honolulu, Hawaii', 'One of the final practical event time zones'],
+};
+function wcZoneLabel(zone) {
+  const tail = String(zone || '').split('/').slice(1).join(' / ') || zone || '';
+  return tail.replace(/_/g, ' ');
+}
+function wcCountryName(cc, fallback) {
+  if (!isEnglish()) return fallback;
+  try { return new Intl.DisplayNames(['en'], { type:'region' }).of(String(cc).toUpperCase()) || fallback; }
+  catch (e) { return fallback; }
+}
+function wcSpotText(spot) {
+  if (!isEnglish()) return { name:spot[0], place:spot[1], note:spot[4] };
+  const en = WC_SPOTS_EN[spot[3]];
+  return en ? { name:en[0], place:en[1], note:en[2] }
+    : { name:wcZoneLabel(spot[3]), place:wcCountryName(spot[2], spot[1]), note:'' };
+}
+function wcWeekday(code) { return (WC_WD[state.locale] || WC_WD['zh-CN'])[code] || ''; }
+function wcDayDelta(delta) {
+  if (delta > 0) return i18n('clock.nextDay', null, '次日');
+  if (delta < 0) return i18n('clock.previousDay', null, '昨日');
+  return '';
+}
+
 let wcActive = false; // false = 显示全部(最早→最晚);true = 按所选时段筛选
 
 const wcPad = n => String(n).padStart(2, '0');
@@ -1132,10 +1439,10 @@ function renderWcNow(now) {
   const el = $('#wc-now'); if (!el) return;
   let zone = '';
   try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
-  const wd = ['日', '一', '二', '三', '四', '五', '六'][now.getDay()];
-  el.innerHTML = `<span class="wc-now-label muted">你的当地时间</span>`
+  const weekday = new Intl.DateTimeFormat(isEnglish() ? 'en-US' : 'zh-CN', { weekday:'short' }).format(now);
+  el.innerHTML = `<span class="wc-now-label muted">${escapeHtml(i18n('clock.yourLocalTime', null, '你的当地时间'))}</span>`
     + `<span class="wc-now-time">${wcPad(now.getHours())}:${wcPad(now.getMinutes())}</span>`
-    + `<span class="wc-now-wd muted">周${wd}</span>`
+    + `<span class="wc-now-wd muted">${escapeHtml(weekday)}</span>`
     + `<span class="wc-off">${wcFmtOffset(-now.getTimezoneOffset())}</span>`
     + (zone ? `<span class="wc-now-zone muted">${escapeHtml(zone)}</span>` : '');
 }
@@ -1144,41 +1451,46 @@ function renderWorldClock() {
   if (!startSel || !endSel || !box) return;
   const start = +startSel.value, end = +endSel.value, now = new Date();
   renderWcNow(now);
-  // ----- 国家列表:按当前 UTC 偏移分组;不选时段=全部,选了则筛选;最早→最晚 -----
   const groups = new Map();
-  WC_DATA.forEach(t => {
-    let c; try { c = wcCompute(t[3], now); } catch (e) { return; }
-    if (wcActive && !wcInRange(c.h, start, end)) return;
-    if (!groups.has(c.offset)) groups.set(c.offset, { off: c.offset, s: c, items: [] });
-    groups.get(c.offset).items.push({ country: t[0], city: t[1], cc: t[2], lock: t[4] || 0 });
+  WC_DATA.forEach(row => {
+    let computed; try { computed = wcCompute(row[3], now); } catch (e) { return; }
+    if (wcActive && !wcInRange(computed.h, start, end)) return;
+    if (!groups.has(computed.offset)) groups.set(computed.offset, { off:computed.offset, s:computed, items:[] });
+    groups.get(computed.offset).items.push({
+      country: wcCountryName(row[2], row[0]),
+      city: isEnglish() ? wcZoneLabel(row[3]) : row[1],
+      cc: row[2], lock: row[4] || 0,
+    });
   });
-  const arr = [...groups.values()].sort((a, b) => b.off - a.off); // 最早(高偏移)→ 最晚
-  const total = arr.reduce((n, g) => n + g.items.length, 0);
-  const sum = $('#wc-summary');
-  if (sum) sum.textContent = wcActive
-    ? `当地 ${wcPad(start)}:00–${wcPad(end)}:00 · 命中 ${arr.length} 个时区 / ${total} 个地区`
-    : `全部时段 · ${arr.length} 个时区(最早 → 最晚)`;
-  box.innerHTML = arr.length ? arr.map(g => {
-    const dd = g.s.dayDelta > 0 ? ' <span class="wc-dd">次日</span>' : (g.s.dayDelta < 0 ? ' <span class="wc-dd">昨日</span>' : '');
-    const items = g.items.slice().sort((a, b) => a.country.localeCompare(b.country, 'zh-Hans')).map(it => {
-      const note = WC_NOTE[it.cc] ? ` title="${escapeHtml(WC_NOTE[it.cc])}"` : '';
-      const badge = it.lock ? `<span class="wc-lock l${it.lock}">${WC_LOCK[it.lock]}</span>` : '';
-      return `<div class="wc-item${it.lock ? ' locked' : ''}"${note}>`
-        + `<img class="wc-flag" src="https://flagcdn.com/w40/${it.cc}.png" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`
-        + `<div class="wc-meta"><span class="wc-country">${escapeHtml(it.country)}</span>`
-        + `<span class="wc-city">${escapeHtml(it.city)}</span></div>${badge}</div>`;
+  const groupsSorted = [...groups.values()].sort((a, b) => b.off - a.off);
+  const total = groupsSorted.reduce((n, group) => n + group.items.length, 0);
+  const summary = $('#wc-summary');
+  if (summary) summary.textContent = wcActive
+    ? i18n('clock.rangeSummary', { start:wcPad(start), end:wcPad(end), zones:groupsSorted.length, places:total }, `当地 ${wcPad(start)}:00–${wcPad(end)}:00 · 命中 ${groupsSorted.length} 个时区 / ${total} 个地区`)
+    : i18n('clock.allSummary', { zones:groupsSorted.length }, `全部时段 · ${groupsSorted.length} 个时区（最早 → 最晚）`);
+  const notes = WC_NOTE[state.locale] || WC_NOTE['zh-CN'];
+  const locks = WC_LOCK[state.locale] || WC_LOCK['zh-CN'];
+  const compareLocale = isEnglish() ? 'en' : 'zh-Hans';
+  box.innerHTML = groupsSorted.length ? groupsSorted.map(group => {
+    const delta = wcDayDelta(group.s.dayDelta);
+    const deltaHtml = delta ? ` <span class="wc-dd">${escapeHtml(delta)}</span>` : '';
+    const items = group.items.slice().sort((a, b) => a.country.localeCompare(b.country, compareLocale)).map(item => {
+      const note = notes[item.cc] ? ` title="${escapeHtml(notes[item.cc])}"` : '';
+      const badge = item.lock ? `<span class="wc-lock l${item.lock}">${escapeHtml(locks[item.lock])}</span>` : '';
+      return `<div class="wc-item${item.lock ? ' locked' : ''}"${note}>`
+        + `<img class="wc-flag" src="https://flagcdn.com/w40/${item.cc}.png" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`
+        + `<div class="wc-meta"><span class="wc-country">${escapeHtml(item.country)}</span>`
+        + `<span class="wc-city">${escapeHtml(item.city)}</span></div>${badge}</div>`;
     }).join('');
-    return `<div class="wc-group"><div class="wc-group-head">`
-      + `<span class="wc-time">${wcPad(g.s.h)}:${wcPad(g.s.m)}</span>`
-      + `<span class="wc-off">${wcFmtOffset(g.off)}</span>`
-      + `<span class="wc-wd muted">周${WC_WD[g.s.wd] || ''}${dd}</span>`
-      + `<span class="wc-count muted">${g.items.length}</span></div>`
-      + `<div class="wc-list">${items}</div></div>`;
-  }).join('') : '<p class="muted" style="padding:1rem;text-align:center">该时段暂无匹配的地区。</p>';
+    return `<div class="wc-group"><div class="wc-group-head"><span class="wc-time">${wcPad(group.s.h)}:${wcPad(group.s.m)}</span>`
+      + `<span class="wc-off">${wcFmtOffset(group.off)}</span><span class="wc-wd muted">${escapeHtml(wcWeekday(group.s.wd))}${deltaHtml}</span>`
+      + `<span class="wc-count muted">${group.items.length}</span></div><div class="wc-list">${items}</div></div>`;
+  }).join('') : `<p class="muted" style="padding:1rem;text-align:center">${escapeHtml(i18n('clock.noMatches', null, '该时段暂无匹配的地区。'))}</p>`;
   renderWcSpots(start, end, now);
   renderWcPin(start, end, now);
   renderWcAxis(start, end, now);
 }
+
 // 把"所选时段(以该精选地点的当地时间计)"换算成当前用户的本地时间窗口。用户时区取自
 // 浏览器;无法判断时回退到中国时间(UTC+8)。返回 "HH:MM–HH:MM"。
 function wcUserWindow(spotOffset, start, end) {
@@ -1196,72 +1508,74 @@ function wcUserWindow(spotOffset, start, end) {
 // 保留 ✦ HH:MM–HH:MM(你的当地时段窗口)。「激活」强调只出现在悬浮条与时间轴。
 function renderWcSpots(start, end, now) {
   const box = $('#wc-spots'); if (!box) return;
-  const rows = WC_SPOTS.map(s => {
-    let c; try { c = wcCompute(s[3], now); } catch (e) { c = null; }
-    return { s, c };
-  }).filter(x => x.c).sort((a, b) => b.c.offset - a.c.offset);
-  box.innerHTML = '<div class="wc-spots-head"><span class="dia">◆</span><h3>精选地点</h3></div>'
+  const rows = WC_SPOTS.map(spot => {
+    let computed; try { computed = wcCompute(spot[3], now); } catch (e) { computed = null; }
+    return { spot, computed };
+  }).filter(x => x.computed).sort((a, b) => b.computed.offset - a.computed.offset);
+  box.innerHTML = `<div class="wc-spots-head"><span class="dia">◆</span><h3>${escapeHtml(i18n('clock.featured', null, '精选地点'))}</h3></div>`
     + '<div class="wc-spots-scroll">'
-    + rows.map(({ s, c }) => {
-      const dd = c.dayDelta > 0 ? ' 次日' : (c.dayDelta < 0 ? ' 昨日' : '');
-      const geo = `${s[5].toFixed(4)}, ${s[6].toFixed(4)}`;
-      return `<div class="wc-spot">`
-        + `<div class="wc-spot-top">`
-        + `<img class="wc-flag" src="https://flagcdn.com/w40/${s[2]}.png" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`
-        + `<span class="wc-spot-time">${wcPad(c.h)}:${wcPad(c.m)}</span>`
-        + `<span class="wc-off">${wcFmtOffset(c.offset)}</span>`
-        + `<span class="wc-spot-wd muted">周${WC_WD[c.wd] || ''}${dd}</span></div>`
-        + `<div class="wc-spot-name">${escapeHtml(s[0])}</div>`
-        + `<div class="wc-spot-sub muted">${escapeHtml(s[1])} · ${escapeHtml(s[3])}</div>`
-        + `<div class="wc-spot-note muted">${escapeHtml(s[4])}</div>`
-        + `<div class="wc-spot-foot"><a class="wc-spot-geo" href="https://www.google.com/maps?q=${s[5]},${s[6]}" target="_blank" rel="noopener">📍 ${geo}</a>`
-        + (wcActive ? `<span class="wc-spot-you" title="你的当地时间(该地点处于所选时段时)"><span class="dia">✦</span> ${wcUserWindow(c.offset, start, end)}</span>` : '')
+    + rows.map(({ spot, computed }) => {
+      const text = wcSpotText(spot), delta = wcDayDelta(computed.dayDelta);
+      const geo = `${spot[5].toFixed(4)}, ${spot[6].toFixed(4)}`;
+      return `<div class="wc-spot"><div class="wc-spot-top">`
+        + `<img class="wc-flag" src="https://flagcdn.com/w40/${spot[2]}.png" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`
+        + `<span class="wc-spot-time">${wcPad(computed.h)}:${wcPad(computed.m)}</span><span class="wc-off">${wcFmtOffset(computed.offset)}</span>`
+        + `<span class="wc-spot-wd muted">${escapeHtml(wcWeekday(computed.wd))}${delta ? ' ' + escapeHtml(delta) : ''}</span></div>`
+        + `<div class="wc-spot-name">${escapeHtml(text.name)}</div>`
+        + `<div class="wc-spot-sub muted">${escapeHtml(text.place)} · ${escapeHtml(spot[3])}</div>`
+        + `<div class="wc-spot-note muted">${escapeHtml(text.note)}</div>`
+        + `<div class="wc-spot-foot"><a class="wc-spot-geo" href="https://www.google.com/maps?q=${spot[5]},${spot[6]}" target="_blank" rel="noopener">📍 ${geo}</a>`
+        + (wcActive ? `<span class="wc-spot-you" title="${escapeHtml(i18n('clock.yourWindowTitle', null, '你的当地时间（该地点处于所选时段时）'))}"><span class="dia">✦</span> ${wcUserWindow(computed.offset, start, end)}</span>` : '')
         + `</div></div>`;
-    }).join('')
-    + '</div>';
+    }).join('') + '</div>';
 }
-// 悬浮条:只列出当前命中所选时段的精选热点;未选时段 / 无命中 → 提示语。
 function renderWcPin(start, end, now) {
   const box = $('#wc-pin'); if (!box) return;
-  const hot = WC_SPOTS.map(s => { let c; try { c = wcCompute(s[3], now); } catch (e) { c = null; } return { s, c }; })
-    .filter(x => x.c && wcActive && wcInRange(x.c.h, start, end))
-    .sort((a, b) => b.c.offset - a.c.offset);
+  const hot = WC_SPOTS.map(spot => {
+    let computed; try { computed = wcCompute(spot[3], now); } catch (e) { computed = null; }
+    return { spot, computed };
+  }).filter(x => x.computed && wcActive && wcInRange(x.computed.h, start, end))
+    .sort((a, b) => b.computed.offset - a.computed.offset);
   let inner;
-  if (!wcActive) inner = '<div class="wc-pin-empty">选择上方时段后,正处于该时段的热点会固定显示在这里。</div>';
-  else if (!hot.length) inner = `<div class="wc-pin-empty">当地 ${wcPad(start)}:00–${wcPad(end)}:00 暂无精选热点激活,试试相邻时段。</div>`;
-  else inner = '<div class="wc-pin-row">' + hot.map(({ s, c }) =>
-    `<div class="wc-pinchip"><img class="wc-flag" src="https://flagcdn.com/w40/${s[2]}.png" alt="" onerror="this.style.visibility='hidden'">`
-    + `<span class="pc-time">${wcPad(c.h)}:${wcPad(c.m)}</span>`
-    + `<div class="pc-body"><span class="pc-name">${escapeHtml(s[0])}</span>`
-    + `<span class="pc-meta">${escapeHtml(s[1])} · ✦ <b>${wcUserWindow(c.offset, start, end)}</b></span></div></div>`).join('') + '</div>';
-  box.innerHTML = '<div class="wc-pin-label"><span class="dot"></span>现在激活 · 所选时段命中的热点</div>' + inner;
+  if (!wcActive) inner = `<div class="wc-pin-empty">${escapeHtml(i18n('clock.pinChoose', null, '选择上方时段后，正处于该时段的热点会固定显示在这里。'))}</div>`;
+  else if (!hot.length) inner = `<div class="wc-pin-empty">${escapeHtml(i18n('clock.pinNone', { start:wcPad(start), end:wcPad(end) }, `当地 ${wcPad(start)}:00–${wcPad(end)}:00 暂无精选热点激活，试试相邻时段。`))}</div>`;
+  else inner = '<div class="wc-pin-row">' + hot.map(({ spot, computed }) => {
+    const text = wcSpotText(spot);
+    return `<div class="wc-pinchip"><img class="wc-flag" src="https://flagcdn.com/w40/${spot[2]}.png" alt="" onerror="this.style.visibility='hidden'">`
+      + `<span class="pc-time">${wcPad(computed.h)}:${wcPad(computed.m)}</span><div class="pc-body"><span class="pc-name">${escapeHtml(text.name)}</span>`
+      + `<span class="pc-meta">${escapeHtml(text.place)} · ✦ <b>${wcUserWindow(computed.offset, start, end)}</b></span></div></div>`;
+  }).join('') + '</div>';
+  box.innerHTML = `<div class="wc-pin-label"><span class="dot"></span>${escapeHtml(i18n('clock.pinLabel', null, '现在激活 · 所选时段命中的热点'))}</div>` + inner;
 }
-// 反向时间轴:较晚在左、00:00 在右。所选时段=金色光带;命中=hot 绿点。
 function renderWcAxis(start, end, now) {
   const box = $('#wc-axis'); if (!box) return;
-  const X = f => (1 - f) * 100;
+  const x = fraction => (1 - fraction) * 100;
   let ticks = '';
-  for (let i = 0; i <= 24; i += 3) ticks += `<div class="wc-axis-tick" style="left:${X(i / 24)}%"><i></i><span>${wcPad(i % 24)}</span></div>`;
+  for (let i = 0; i <= 24; i += 3) ticks += `<div class="wc-axis-tick" style="left:${x(i / 24)}%"><i></i><span>${wcPad(i % 24)}</span></div>`;
   let bands = '';
   if (wcActive && start !== end) {
-    const segs = start < end ? [[start, end]] : [[start, 24], [0, end]];
-    segs.forEach((sg, idx) => {
-      const f0 = sg[0] / 24, f1 = sg[1] / 24;
+    const segments = start < end ? [[start, end]] : [[start, 24], [0, end]];
+    segments.forEach((segment, index) => {
+      const f0 = segment[0] / 24, f1 = segment[1] / 24;
       bands += `<div class="wc-axis-band" style="left:${(1 - f1) * 100}%;width:${(f1 - f0) * 100}%">`
-        + `${idx === 0 ? `<span class="band-lbl">所选 ${wcPad(start)}–${wcPad(end)} 点</span>` : ''}</div>`;
+        + `${index === 0 ? `<span class="band-lbl">${escapeHtml(i18n('clock.selectedHours', { start:wcPad(start), end:wcPad(end) }, `所选 ${wcPad(start)}–${wcPad(end)} 点`))}</span>` : ''}</div>`;
     });
   }
-  const rows = WC_SPOTS.map(s => { let c; try { c = wcCompute(s[3], now); } catch (e) { c = null; } return { s, c }; })
-    .filter(x => x.c).sort((a, b) => b.c.offset - a.c.offset);
-  const pins = rows.map(({ s, c }, i) => {
-    const isHot = wcActive && wcInRange(c.h, start, end);
-    const cls = 'wc-pin2 ' + (i % 2 === 0 ? 'up' : 'down') + (isHot ? ' hot' : (wcActive ? ' cool' : ''));
-    return `<div class="${cls}" style="left:${X((c.h + c.m / 60) / 24)}%" title="${escapeHtml(s[0])} · ${wcPad(c.h)}:${wcPad(c.m)}">`
-      + `<div class="lab"><img class="wc-flag" src="https://flagcdn.com/w40/${s[2]}.png" alt="" onerror="this.style.visibility='hidden'"><span class="pt">${wcPad(c.h)}:${wcPad(c.m)}</span></div>`
+  const rows = WC_SPOTS.map(spot => {
+    let computed; try { computed = wcCompute(spot[3], now); } catch (e) { computed = null; }
+    return { spot, computed };
+  }).filter(x => x.computed).sort((a, b) => b.computed.offset - a.computed.offset);
+  const pins = rows.map(({ spot, computed }, index) => {
+    const hot = wcActive && wcInRange(computed.h, start, end);
+    const cls = 'wc-pin2 ' + (index % 2 === 0 ? 'up' : 'down') + (hot ? ' hot' : (wcActive ? ' cool' : ''));
+    const text = wcSpotText(spot);
+    return `<div class="${cls}" style="left:${x((computed.h + computed.m / 60) / 24)}%" title="${escapeHtml(text.name)} · ${wcPad(computed.h)}:${wcPad(computed.m)}">`
+      + `<div class="lab"><img class="wc-flag" src="https://flagcdn.com/w40/${spot[2]}.png" alt="" onerror="this.style.visibility='hidden'"><span class="pt">${wcPad(computed.h)}:${wcPad(computed.m)}</span></div>`
       + `<div class="stem"></div><div class="dot"></div></div>`;
   }).join('');
   box.innerHTML = `<div class="wc-axis"><div class="wc-axis-track"></div>${bands}${ticks}${pins}</div>`;
 }
+
 function setupWorldClock() {
   const startSel = $('#wc-start'), endSel = $('#wc-end'), allBtn = $('#wc-all');
   if (!startSel || !endSel) return;
@@ -1295,6 +1609,81 @@ function setupWorldClock() {
   }, 30000);
 }
 
+/* ---------- language / locale ---------- */
+function captureLocalizedRegions() {
+  REGION_NAMES.forEach(name => {
+    const el = document.querySelector(`[data-ai-region="${name}"]`);
+    if (el) state.zhRegions[name] = el.innerHTML;
+  });
+}
+function enhanceEventLinks(root) {
+  (root || document).querySelectorAll('[data-event-id]').forEach(el => {
+    if (!el.hasAttribute('tabindex')) el.tabIndex = 0;
+    if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+  });
+}
+function renderLocalizedRegions() {
+  REGION_NAMES.forEach(name => {
+    const el = document.querySelector(`[data-ai-region="${name}"]`);
+    if (!el) return;
+    const english = state.en && state.en.regions && state.en.regions[name];
+    el.innerHTML = sanitizeLocalizedHtml(isEnglish() && english != null ? english : (state.zhRegions[name] || ''));
+    enhanceEventLinks(el);
+  });
+}
+function renderUpdated() {
+  const el = $('#last-updated'); if (!el) return;
+  el.textContent = state.meta && state.meta.lastUpdated
+    ? i18n('status.updated', { date: fmtDateTime(state.meta.lastUpdated) }, `更新于 ${fmtDateTime(state.meta.lastUpdated)}`)
+    : i18n('status.never', null, '尚未更新');
+}
+function applyStaticTranslations() {
+  document.documentElement.lang = state.locale;
+  const dict = state.ui && state.ui[state.locale] || {};
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = dict[el.dataset.i18n]; if (v != null) el.textContent = v;
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const v = dict[el.dataset.i18nHtml]; if (v != null) el.innerHTML = sanitizeLocalizedHtml(v);
+  });
+  document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
+    const v = dict[el.dataset.i18nAriaLabel]; if (v != null) el.setAttribute('aria-label', v);
+  });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const v = dict[el.dataset.i18nTitle]; if (v != null) el.title = v;
+  });
+  document.title = i18n('site.documentTitle', null, 'Pokémon GO 面板');
+  const toggle = $('#lang-toggle');
+  if (toggle) {
+    toggle.textContent = i18n('lang.switch', null, isEnglish() ? '中文' : 'English');
+    toggle.setAttribute('aria-label', i18n('lang.switchAria', null, isEnglish() ? '切换到中文' : 'Switch to English'));
+    toggle.setAttribute('aria-pressed', isEnglish() ? 'true' : 'false');
+  }
+}
+function applyLocale() {
+  try { localStorage.setItem(LOCALE_KEY, state.locale); } catch (e) {}
+  // A drawer holds a localized snapshot. Closing it avoids stale-language
+  // content; the language toggle already owns focus during a switch.
+  const drawer = $('#event-detail');
+  if (drawer && !drawer.hidden) { drawer.hidden = true; detailReturnFocus = null; }
+  applyStaticTranslations();
+  renderUpdated();
+  renderLocalizedRegions();
+  renderCalendar();
+  renderRotations();
+  renderMega();
+  renderWorldClock();
+  if (todoState) renderTodo();
+  linkifySprites(document.body);
+}
+function setupLanguage() {
+  const b = $('#lang-toggle'); if (!b) return;
+  b.addEventListener('click', () => {
+    state.locale = isEnglish() ? 'zh-CN' : 'en';
+    applyLocale();
+  });
+}
+
 /* ---------- wiring ---------- */
 function setupTabs() {
   $('#main-tabs').addEventListener('click', e => {
@@ -1326,9 +1715,24 @@ function shiftMonth(delta) {
 }
 function setupDetail() {
   const panel = $('#event-detail');
-  const close = () => { panel.hidden = true; };
+  const close = () => {
+    if (panel.hidden) return;
+    panel.hidden = true;
+    const back = detailReturnFocus; detailReturnFocus = null;
+    if (back && back.isConnected && back.focus) back.focus();
+  };
   $('#detail-close').addEventListener('click', close);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  document.addEventListener('keydown', e => {
+    if (panel.hidden) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+    if (e.key !== 'Tab') return;
+    const focusable = [...panel.querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')]
+      .filter(el => !el.disabled && el.getClientRects().length);
+    if (!focusable.length) { e.preventDefault(); return; }
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
   document.addEventListener('mousedown', e => { if (!panel.hidden && !panel.contains(e.target)) close(); });
 }
 // Generic hook: any element carrying data-event-id opens that event's detail drawer
@@ -1337,12 +1741,20 @@ function setupDetail() {
 // <a class="event-link" data-event-id="<events.json id>">名称</a> (or a <span>).
 // Delegated on document, so it keeps working for the agent-rewritten marker HTML.
 function setupEventLinks() {
+  const activate = t => {
+    const ev = state.events.find(x => x.id === t.getAttribute('data-event-id'));
+    if (ev) openDetail(ev, t);                // unknown id → element stays inert text
+  };
   document.addEventListener('click', e => {
     const t = e.target.closest('[data-event-id]');
     if (!t) return;
     e.preventDefault();                       // never let an href="#" jump the page
-    const ev = state.events.find(x => x.id === t.getAttribute('data-event-id'));
-    if (ev) openDetail(ev);                   // unknown id → element stays inert text
+    activate(t);
+  });
+  document.addEventListener('keydown', e => {
+    const t = e.target.closest && e.target.closest('[data-event-id]');
+    if (!t || (e.key !== 'Enter' && e.key !== ' ')) return;
+    e.preventDefault(); activate(t);
   });
 }
 
@@ -1374,12 +1786,12 @@ function todoToday() {
   const d = new Date(), p = n => String(n).padStart(2, '0');
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;   // local calendar day
 }
-const TODO_WEEK = ['日', '一', '二', '三', '四', '五', '六'];
-function todoDayLabel(dayStr) { // "2026-06-24" → "2026-06-24 星期三" (weekday from a LOCAL-parsed date)
+function todoDayLabel(dayStr) {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dayStr || '');
   if (!m) return dayStr || '';
-  const wd = new Date(+m[1], +m[2] - 1, +m[3]).getDay();
-  return `${dayStr} 星期${TODO_WEEK[wd]}`;
+  const date = new Date(+m[1], +m[2] - 1, +m[3]);
+  const weekday = new Intl.DateTimeFormat(isEnglish() ? 'en-US' : 'zh-CN', { weekday:'long' }).format(date);
+  return `${dayStr} ${weekday}`;
 }
 function todoLoad() {
   let data = null;
@@ -1413,9 +1825,9 @@ function renderTodo() {
   if (status) {
     status.textContent = '';
     const day = document.createElement('span');
-    day.className = 'todo-day'; day.textContent = '今天 ' + todoDayLabel(data.day);
+    day.className = 'todo-day'; day.textContent = i18n('todo.today', null, '今天') + ' ' + todoDayLabel(data.day);
     const note = document.createElement('span');
-    note.textContent = '勾选仅手动清空,清空后日期记为当天';
+    note.textContent = i18n('todo.manualNote', null, '勾选仅手动清空，清空后日期记为当天');
     status.append(day, note);
   }
 
@@ -1427,17 +1839,17 @@ function renderTodo() {
     b.type = 'button'; b.className = cls; b.textContent = label;
     b.addEventListener('click', fn); return b;
   };
-  bar.appendChild(mkBtn('btn', '＋ 添加账号', () => {
+  bar.appendChild(mkBtn('btn', i18n('todo.addAccount', null, '＋ 添加账号'), () => {
     data.accounts.push({ id: todoId('a'), name: '', cdStart: null, cdView: 'dur' }); todoSave(data); renderTodo();
     const last = mount.querySelector('tbody tr:last-child .todo-name'); if (last) last.focus();
   }));
-  bar.appendChild(mkBtn('btn', '＋ 添加任务', () => {
+  bar.appendChild(mkBtn('btn', i18n('todo.addTask', null, '＋ 添加任务'), () => {
     data.tasks.push({ id: todoId('t'), name: '' }); todoSave(data); renderTodo();
     const heads = mount.querySelectorAll('thead .todo-task .todo-name');
     if (heads.length) heads[heads.length - 1].focus();
   }));
-  bar.appendChild(mkBtn('btn btn-ghost', '清空勾选', () => {
-    if (Object.keys(data.checks).length && !confirm('清空全部勾选?')) return;
+  bar.appendChild(mkBtn('btn btn-ghost', i18n('todo.clear', null, '清空勾选'), () => {
+    if (Object.keys(data.checks).length && !confirm(i18n('todo.confirmClear', null, '清空全部勾选？'))) return;
     data.checks = {};
     data.day = todoToday();   // manual clear stamps today → header date updates, then holds
     todoSave(data); renderTodo();
@@ -1447,7 +1859,7 @@ function renderTodo() {
   if (!data.accounts.length && !data.tasks.length) {
     const e = document.createElement('p');
     e.className = 'todo-empty';
-    e.textContent = '还没有内容。点「＋ 添加账号」加一行账号(填昵称),点「＋ 添加任务」加一列任务(填自定义内容),再逐格勾选即可。';
+    e.textContent = i18n('todo.empty', null, '还没有内容。点「＋ 添加账号」加一行账号（填昵称），点「＋ 添加任务」加一列任务（填自定义内容），再逐格勾选即可。');
     mount.appendChild(e);
     return;
   }
@@ -1483,7 +1895,7 @@ function renderTodo() {
       const active = todoCdRemain(a) > 0;
       b.classList.toggle('on-cd', active);
       b.textContent = todoCdLabel(a);
-      b.title = active ? '点击切换显示(剩余 ⇄ 开始时间) · 长按取消' : '点击开始 2 小时 CD';
+      b.title = active ? i18n('todo.cdActive', null, '点击切换显示（剩余 ⇄ 开始时间）· 长按取消') : i18n('todo.cdStart', null, '点击开始 2 小时 CD');
     };
     b.__sync = sync;
     let lp = false, timer = null;
@@ -1514,16 +1926,16 @@ function renderTodo() {
   const thead = document.createElement('thead');
   const hr = document.createElement('tr');
   const corner = document.createElement('th');
-  corner.className = 'todo-corner'; corner.textContent = '账号 ＼ 任务';
+  corner.className = 'todo-corner'; corner.textContent = i18n('todo.corner', null, '账号 ＼ 任务');
   hr.appendChild(corner);
   data.tasks.forEach(t => {
     const th = document.createElement('th');
     th.className = 'todo-task';
     const wrap = document.createElement('div');
     wrap.className = 'todo-head-in';
-    wrap.appendChild(sizerInput(t.name, '任务名', v => { t.name = v; todoSave(data); }));
-    wrap.appendChild(delBtn('删除任务', () => {
-      if (!confirm('删除这一列任务?该列的勾选也会一起删除。')) return;
+    wrap.appendChild(sizerInput(t.name, i18n('todo.taskName', null, '任务名'), v => { t.name = v; todoSave(data); }));
+    wrap.appendChild(delBtn(i18n('todo.deleteTask', null, '删除任务'), () => {
+      if (!confirm(i18n('todo.confirmDeleteTask', null, '删除这一列任务？该列的勾选也会一起删除。'))) return;
       data.tasks = data.tasks.filter(x => x.id !== t.id);
       Object.keys(data.checks).forEach(k => { if (k.endsWith('|' + t.id)) delete data.checks[k]; });
       todoSave(data); renderTodo();
@@ -1542,9 +1954,9 @@ function renderTodo() {
     const wrap = document.createElement('div');
     wrap.className = 'todo-head-in';
     wrap.appendChild(cdBtn(a)); // per-account ⏳ cooldown control, before the nickname
-    wrap.appendChild(nameInput(a.name, '昵称', v => { a.name = v; todoSave(data); }));
-    wrap.appendChild(delBtn('删除账号', () => {
-      if (!confirm('删除这个账号?该行的勾选也会一起删除。')) return;
+    wrap.appendChild(nameInput(a.name, i18n('todo.nickname', null, '昵称'), v => { a.name = v; todoSave(data); }));
+    wrap.appendChild(delBtn(i18n('todo.deleteAccount', null, '删除账号'), () => {
+      if (!confirm(i18n('todo.confirmDeleteAccount', null, '删除这个账号？该行的勾选也会一起删除。'))) return;
       data.accounts = data.accounts.filter(x => x.id !== a.id);
       Object.keys(data.checks).forEach(k => { if (k.startsWith(a.id + '|')) delete data.checks[k]; });
       todoSave(data); renderTodo();
@@ -1601,22 +2013,22 @@ function setupTodo() {
 }
 
 async function init() {
+  // Capture the daily agent's Chinese rich regions before a saved English
+  // preference can replace them. Switching back restores these exact nodes.
+  captureLocalizedRegions();
   setupTabs();
   setupCalNav();
   setupDetail();
   setupEventLinks();
+  setupLanguage();
+  await loadData();
   setupTodo();
   setupMega();
   setupWorldClock();
-  await loadData();
-  renderCalendar();
-  renderRotations();
-  renderMega();
-  // make the static ranking-panel sprites clickable → Pokémon GO Hub DB
-  // auto-link every Pokémon sprite the agent renders (rankings, rotations,
-  // free-form notes, …) → hub. Calendar grid + 长期 band are excluded inside
-  // linkifySprites (their icons open the in-page drawer instead).
-  linkifySprites(document.body);
+  applyLocale();
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => init().catch(error => {
+  console.error('pogo-agent init failed', error);
+  document.body.dataset.initError = error && (error.stack || error.message) || String(error);
+}));

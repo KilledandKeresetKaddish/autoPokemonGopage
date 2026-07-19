@@ -8,13 +8,24 @@ This run is intentionally split into focused sub-agent workstreams. If your codi
 agent supports sub-agents — e.g. Pi via a sub-agent extension (`pi-subagents` /
 `pi-sub-agent`), which runs each brief in an isolated `--no-session` subprocess
 (optionally worktree-isolated) — delegate each brief below as a bounded read-only or
-write scope. **All phases run sequentially**: Rotations copies its single-day
-segments' `pokemon[]` from Calendar's finalized `raid-battles` events (and
-`preflight.sh` hard-FAILs any 角标↔抽屉 divergence), so Calendar must finish before
-Rotations starts — disjoint *write* scopes do not make that read-coupled contract
-race-free. Isolated sub-agents do **not** inherit this prompt, so each brief restates
-that it must read `AGENTS.md` first. If your agent has no sub-agent support, execute
-the same phases yourself in order; the briefs are still the checklist of
+write scope. **This is a headless run-to-completion workflow: never launch async /
+background subagents.** Every phase must use foreground execution (`async:false`, or
+the foreground default), return a terminal result, and report its changed paths before
+the next phase starts. Never mistake a launch acknowledgement or result-file path for
+completion. If async work is launched despite this rule, call
+`subagent_wait({all:true})`, inspect every terminal status, and do not return while any
+current-session child remains. An unacknowledged grouped-result warning is a run
+failure, not permission to continue.
+
+**All phases run sequentially**: Rotations copies its single-day segments' `pokemon[]`
+from Calendar's finalized `raid-battles` events (and `preflight.sh` hard-FAILs any
+角标↔抽屉 divergence), so Calendar must finish before Rotations starts — disjoint
+*write* scopes do not make that read-coupled contract race-free. The English text
+layer likewise runs only after finalized Chinese content; “bilingual in parallel”
+means both editions are maintained in the same daily run, not two fact pipelines
+racing each other. Isolated sub-agents do **not** inherit this prompt, so each brief
+restates that it must read `AGENTS.md` first. If your agent has no sub-agent support,
+execute the same phases yourself in order; the briefs are still the checklist of
 responsibilities.
 
 ## Sub-agent briefs
@@ -27,8 +38,11 @@ responsibilities.
   ids), `public/data/mega.json` (append-only: new Mega/Primal roster rows) and,
   only if needed for new event types, `public/data/categories.json`.
 - `tasks/subagents/20-rotation-curator.md` — own `public/data/rotations.json`.
-- `tasks/subagents/30-ranking-curator.md` — own only the AI-marked ranking / notes
-  regions inside `public/index.html`.
+- `tasks/subagents/30-ranking-curator.md` — own only the AI-marked Chinese ranking /
+  notes regions inside `public/index.html`.
+- `tasks/subagents/40-english-curator.md` — own `public/data/i18n/en.json`, the
+  text-only English overlay for finalized events, rotations, categories and all five
+  rich regions. It never duplicates dates, IDs, links, sprites or flags.
 - `tasks/subagents/90-state-validator.md` — own `public/data/meta.json` and
   `data/state.json`, then run validation after all content owners finish.
 
@@ -52,14 +66,20 @@ responsibilities.
    `calendar-notes` or `rankings-current` from previous/stale calendar or rotation
    files. Rankings writes only inside the five allowed AI markers in
    `public/index.html`.
-5. Run the State + Validator phase last: it sets `public/data/meta.json.lastUpdated`,
+5. Run **English Curator** after Rankings. It reads the finalized canonical Chinese
+   files + five Chinese region wrappers and updates the English text overlay in
+   `public/data/i18n/en.json`. It must finish with exact event/track/segment/array
+   parity and all five non-empty English region strings; it never writes structural
+   facts. If Chinese content is unchanged, keep its verified English entries as-is.
+6. Run the State + Validator phase last: it sets `public/data/meta.json.lastUpdated`,
    records fixed per-source notes in `data/state.json` (it is the **sole writer** of
    `data/state.json`), self-checks, and runs `scripts/preflight.sh` **then**
    `scripts/validate.sh` (`run-daily.sh` enforces both before publish — either non-zero
    rolls the run back). **You (the coordinator) own the fix loop:** if **either** gate
    fails, read the reported failures, re-dispatch the responsible owner to fix its own
    scope, then re-run the gates. Owner map: events/featured/mega/categories → Calendar ·
-   rotations → Rotations · AI regions → Rankings · meta/state → State + Validator.
+   rotations → Rotations · Chinese AI regions → Rankings · English overlay/regions →
+   English Curator · meta/state → State + Validator.
    **Cap the loop at 3 rounds**; if a failure class has no owner or survives 3 rounds
    (e.g. a protected-file hash mismatch you cannot legitimately fix), stop, record the
    exact failure in `data/state.json` for a developer, and let `run-daily.sh` roll the
@@ -67,11 +87,13 @@ responsibilities.
    (orphan raids, 角标↔抽屉 mismatch, mega form-id) that `validate.sh`'s structural
    checks can't see. State + Validator reports; it never reaches into another owner's
    scope.
-6. If a source is unreachable or unparsable, keep the last good content, record the
+7. If a source is unreachable or unparsable, keep the last good content, record the
    issue in `data/state.json`, and still pass validation. Never ship empty rankings.
 
-Stay strictly within the files `AGENTS.md` allows during daily content updates. All
-user-facing text must be 简体中文.
+Stay strictly within the files `AGENTS.md` allows during daily content updates.
+Canonical files and the five `index.html` marker regions use 简体中文;
+`public/data/i18n/en.json` uses English only. Both editions must describe the same
+facts and ship atomically.
 
 If an **OPERATOR NOTE** block is appended at the very end of this prompt, treat it as a
 one-off extra requirement for this run only: fold it into whichever workstream(s) it

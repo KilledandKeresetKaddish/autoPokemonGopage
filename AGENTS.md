@@ -11,7 +11,18 @@ You are the **brain**. The deterministic scripts only download bytes — *you* d
 what to fetch, whether it's even needed today, and how to interpret it. Third-party
 formats change: never assume fixed field positions; **re-read and adapt every run.**
 
-UI text shown to users must be **Simplified Chinese (简体中文)**.
+The dashboard is bilingual. Canonical content (`events.json`, `rotations.json`,
+`categories.json`, `mega.json` and the five `index.html` AI wrappers) must be
+**Simplified Chinese (简体中文)**; the text-only overlay
+`public/data/i18n/en.json` must be **English-only**. Both editions describe one
+shared set of IDs/dates/links/sprites and publish atomically.
+
+**Headless orchestration safety.** Daily phases are run-to-completion and must execute
+foreground/sequentially. Never launch async/background subagents, never treat a launch
+receipt/result path as completion, and never return while a child is active. If async
+work was accidentally started, call `subagent_wait({all:true})` and verify every
+terminal status before doing anything else. This applies to every isolated phase
+because each reads this file; phase agents must not create nested background writers.
 
 **You have full network access — use it, never refuse.** You reach the internet **only**
 through `scripts/fetch.sh` and `scripts/discover.sh` (plain Bash commands). You do **not** have
@@ -46,7 +57,10 @@ a name — that dumps 50–100KB of flavor text for one line of signal (the raw 
 remain for *form* research: form ids, sprites). If the lookup prints `NO-ZH-NAME`, keep the
 English/romanized form — do **not** translate from memory. Common game vocabulary (属性 names
 like 火/水/草, item names like 星尘/糖果, mechanic terms) is **not** covered by this rule —
-only species and move names.
+only species and move names. The same lookup also verifies the English edition:
+column 2 is the source/PokeAPI English name and column 3 is `zh-Hans`; English Curator
+must use column 2 (or an exact live-source spelling), never literal-translate a proper
+Pokémon/move/form name.
 
 **`gamemaster` is authoritative for *stable facts* only — NOT for what *exists this season*.**
 Use it to confirm a dex→species mapping, a Pokémon's 属性, or a move→type (the counter type-icons).
@@ -69,6 +83,8 @@ Day", treat <X>'s Mega as real and render the Mega form, even if gamemaster lack
    from `rotations.json`.
 2. **Rankings** (`#view-rankings`) — Max attackers / Max defenders / raid counters, plus
    a "本期推荐" panel tied to what's live right now.
+A header language button switches all owner UI, canonical event/rotation text and the
+five rich regions between 简体中文 and English without duplicating structural facts.
 The other two views — **世界时钟** (`#view-clock`) and **实用链接** (`#view-links`) — are
 **owner-maintained placeholders** (static, no AI markers). **Not your concern — never read
 or touch them.**
@@ -84,7 +100,14 @@ or touch them.**
 - `public/data/categories.json` — register a NEW event `type` (palette key + 简体中文 label + kind)
   when a source introduces one the built-ins don't cover. **Palette KEY only — never a raw colour.**
 - `public/data/meta.json` — set `lastUpdated` (ISO 8601); the header shows it.
-- The AI regions inside `public/index.html`, **strictly between** these marker pairs:
+- `public/data/i18n/en.json` — English **text-only overlay**, owned only by English
+  Curator (40). It mirrors canonical event IDs and nested-array order, rotation track/
+  segment order, custom category keys and all five rich regions; it never contains
+  dates, dex IDs, URLs, sprites, flags, booleans or other structural facts.
+- The Simplified-Chinese AI regions inside `public/index.html`, **strictly between**
+  these marker pairs. Each pair contains one required
+  `<div data-ai-region="<region-name>">…</div>`; preserve the wrapper and replace only
+  its inner HTML:
   - `<!-- AI:START calendar-notes -->` … `<!-- AI:END calendar-notes -->`
   - `<!-- AI:START rankings-current -->` … `<!-- AI:END rankings-current -->`
   - `<!-- AI:START rankings-attackers -->` … `<!-- AI:END rankings-attackers -->`
@@ -142,16 +165,21 @@ or touch them.**
     they need not match (one is "ever existed", the other is "live this week").
 
 ## HARD RULES (validation rejects the run if broken)
-- **NEVER** edit `public/app.js`, `public/style.css`, `scripts/*`, `AGENTS.md`, `tasks/*.md`,
-  `CLAUDE.md`, or anything in `public/index.html` **outside** the AI markers. Keep every
-  `AI:START`/`AI:END` marker present and balanced, and keep the `.rank-panel` wrappers and all
-  `id="…"` attributes intact. (Enforced: `validate.sh` hash-checks the protected files against
+- **NEVER** edit `.gitignore`, `public/app.js`, `public/style.css`,
+  `public/data/i18n/ui.json`, `scripts/*`, `AGENTS.md`, `tasks/*.md`, `CLAUDE.md`, or anything in
+  `public/index.html` **outside** the AI markers. Keep every `AI:START`/`AI:END` marker
+  present and balanced, preserve each required `data-ai-region` wrapper, and keep the
+  `.rank-panel` wrappers and all `id="…"` attributes intact. (Enforced:
+  `validate.sh` hash-checks the protected files against
   `scripts/protected.sha256`, and `run-daily.sh` git-reverts any change under `scripts/`, `tasks/`,
   `AGENTS.md`, `CLAUDE.md` and fails the gate; `index.html` structure is checked via required
   tokens + markers.)
 - The HTML you write must be **inert**: no `<script>`, no `<style>`, no `<iframe>`/`<object>`/`<embed>`,
   no event-handler attributes (`onerror`, `onload`, `onclick`, …), no `javascript:` URIs, no external CSS/JS.
-- Keep `public/data/*.json` valid JSON in the schemas below.
+- Keep `public/data/*.json` and `public/data/i18n/*.json` valid JSON in the schemas below.
+  English overlay IDs/track keys and every localized nested-array length/order must
+  exactly match canonical data; English rich HTML follows the same inert-HTML rules
+  and `en.json` must contain no CJK fallback text.
 - **Fetch only via `scripts/fetch.sh` / `scripts/discover.sh`**: the named sources below, ad-hoc
   detail pages on the allowlisted domains via `scripts/fetch.sh url <URL>`, and candidate-URL
   search via `scripts/discover.sh "<keywords>"` (see *Looking things up*). Never fetch
@@ -275,8 +303,10 @@ deliberate; paying for it wastefully is not. Four rules:
 `raids` all re-fetch to an **unchanged hash**, skip rebuilding calendar/rotation content
 entirely: do only date-driven maintenance (prune events ended >90d and their `featured.json`
 ids, flags that flip with the calendar), update `meta.json` + `data/state.json`, and leave the
-ranking regions as-is when the `tiers-*` caches are also unchanged. Then still run
-`preflight.sh` + `validate.sh` as usual.
+ranking regions **and their English overlay regions** as-is when the `tiers-*` caches
+are also unchanged. If retention/date-driven maintenance changes any canonical ID or
+visible Chinese region, update only the matching English overlay entry/region. Then
+still run `preflight.sh` + `validate.sh` as usual.
 
 ### Looking things up (ad-hoc, allowlisted)
 The named sources above are the backbone. When you need a **specific detail page** the bulk feeds
@@ -445,23 +475,35 @@ read before you write, as always.
      windows, and a directional "练哪类攻手". Full counter tables belong in 当前团战 Counter — point
      there, don't duplicate them (see *Free-form synthesis* below).
    - `calendar-notes` (**free-form**) → a short 本月看点 (see *Free-form synthesis*).
-7. Set `public/data/meta.json` `lastUpdated` to now (ISO 8601); record per-source fetch
+7. **English text layer** → after Calendar, Rotations and Chinese Rankings are fully
+   finalized, update `public/data/i18n/en.json` surgically. Facts are interpreted once:
+   translate text only, keep exact canonical event IDs, custom-category/track keys and
+   nested-array lengths/order, and translate all five wrapper inner-HTML regions while
+   preserving classes, URLs, `data-event-id`, sprites and numeric facts. Remove overlay
+   rows for pruned events. Verify official English Pokémon/move names from column 2 of
+   `scripts/fetch.sh zh …` or the exact English source spelling. English visible content
+   must contain no CJK fallback. On a quiet day with unchanged canonical content, leave
+   the already-verified overlay unchanged.
+8. Set `public/data/meta.json` `lastUpdated` to now (ISO 8601); record per-source fetch
    times/notes in `data/state.json` (a fixed object keyed by source — **not** a growing log).
    (In the sub-agent orchestration, curators do **not** write `data/state.json` themselves —
    report gaps/notes in your output to the coordinator for State+Validator (90), its sole
    writer; a single-agent run writes it directly.)
-8. **Self-check before validating:** one row per real event (no duplicate `id`s), `links[]`
+9. **Self-check before validating:** one row per real event (no duplicate `id`s), `links[]`
    aggregated (≥2 sources per event where possible), no event ended >3 months ago, long events
    flagged, rotations parsed not invented, `highlight` only on Community Day / Raid Day /
    boosted-shiny events (standard raid encounters at base shiny rate do NOT qualify),
    `featured.json` pruned of stale IDs (events no longer in `events.json`),
    **every 简体中文 name/move verified against `gamemaster` or PokeAPI (no hallucinated or
    garbled names)**, all `links[].url` actually confirmed to exist and point to THIS event
-   (not a same-category article for a different Pokémon).
-9. Run `scripts/validate.sh`. Fix what it reports until it passes. (It hard-rejects duplicate
+   (not a same-category article for a different Pokémon), every Chinese AI marker retains
+   its `data-ai-region` wrapper, and English overlay IDs/arrays/regions exactly mirror the
+   finalized canonical content with verified English names and no Chinese leakage.
+10. Run `scripts/validate.sh`. Fix what it reports until it passes. (It hard-rejects duplicate
    ids, >250 **or <5** events, events ended >90 days ago, empty `id`/`name`/`start`/`type`,
-   `end` earlier than `start`, dangerous HTML in AI regions, **any empty AI region** (all five
-   must have content — never blank one to "start clean"), missing `public/data/*.json` /
+   `end` earlier than `start`, dangerous HTML in either language's rich regions, **any empty AI region**
+   (all five per language must have content — never blank one to "start clean"), bilingual
+   ID/shape drift or CJK text in the English overlay, missing `public/data/*.json` /
    `data/state.json` files, a `featured.json` that isn't an array of ids all present in
    `events.json`, more than one `<script>` tag, protected-file changes, and rotation segments
    without `start`/`pokemon[]` — so prune, dedup, and check.)
@@ -585,6 +627,50 @@ read before you write, as always.
 { "lastUpdated": "2026-06-15T08:00:00Z", "note": "optional short status" }
 ```
 
+
+`public/data/i18n/en.json` — English text-only overlay over the canonical files:
+```json
+{
+  "version": 1,
+  "events": {
+    "canonical-event-id": {
+      "name": "English title", "heading": "English heading", "summary": "English summary",
+      "bonuses": ["same count/order as canonical bonuses[]"],
+      "pokemon": ["English name per canonical pokemon[] entry"],
+      "counters": [{ "name": "English Pokémon", "fast": "English move", "charged": "English move" }],
+      "sections": [{ "title": "English title", "items": [], "body": "", "mons": [] }]
+    }
+  },
+  "rotations": {
+    "note": "English note",
+    "tracks": { "5star": { "label": "5★ Raids", "segments": [
+      { "name": "English name", "cn": "English display name", "pokemon": ["English names"] }
+    ] } }
+  },
+  "categories": { "every-custom-category-key": "English label" },
+  "regions": {
+    "calendar-notes": "<inert English inner HTML>",
+    "rankings-current": "<inert English inner HTML>",
+    "rankings-attackers": "<inert English inner HTML>",
+    "rankings-defenders": "<inert English inner HTML>",
+    "rankings-raid": "<inert English inner HTML>"
+  }
+}
+```
+- It contains **text only**. IDs/dates/URLs/dex IDs/sprites/flags/mechanics remain in
+  canonical files and are never duplicated here.
+- `events` keys exactly equal canonical event IDs. `bonuses`/`pokemon`/`counters`/
+  `sections`, and each section's `items`/`mons`, exactly mirror canonical lengths/order.
+  Use empty arrays/strings only where the corresponding canonical field is absent.
+- Rotation tracks are keyed by canonical `track.key`; segment arrays and their Pokémon
+  name arrays exactly mirror canonical order/length. `categories` keys exactly equal
+  `categories.json` keys.
+- `regions` values are the inner HTML only (no marker/wrapper); same inert-HTML and class
+  policy as Chinese. All five are required and non-empty. `validate.sh` rejects any CJK
+  character in this English file to prevent mixed-language fallback.
+- `public/data/i18n/ui.json` is the owner-maintained static UI dictionary. It is
+  checksum-protected and **never** a daily-agent write target.
+
 `public/data/categories.json` — register NEW event types (colours are code, you assign a family, not a hex):
 ```json
 { "some-new-type-slug": { "palette": "blue", "label": "新活动类型", "kind": "bar" } }
@@ -604,7 +690,10 @@ read before you write, as always.
 `calendar-notes` (本月看点) and `rankings-current` (本期推荐) are **free-form inert-HTML
 canvases** — compose them freshly each run with judgment. The other regions
 (`rankings-attackers/defenders/raid`) stay structured: parse the sources, don't free-style.
-Use **only** these whitelisted, theme-correct classes (no inline colors, no `<style>`, no `<script>`):
+Inside each marker, preserve its existing `<div data-ai-region="…">` and write Chinese
+content inside that wrapper; English Curator copies the finalized meaning/structure into
+`en.json.regions` (without the wrapper itself). Use **only** these whitelisted,
+theme-correct classes (no inline colors, no `<style>`, no `<script>`):
 - containers: `.panel` / `.panel-head`, `.note-grid` (auto-responsive columns), `.callout` (highlight box)
 - lists/atoms: `.rank-list` / `.rank-item`, `.pill` / `.pillrow`, `.badge`, `.btn` / `.btn-primary`, `.muted`,
   `.meta`(rank-item / boss 头里的小字附注行)
@@ -672,7 +761,7 @@ dark.webp steel.webp fairy.webp normal.webp`;`一般` = `normal.webp`。counter 
 
 ## Common data-analysis mistakes to avoid
 
-These mistakes have been observed in past runs. **Check for each one** during step 8 (self-check).
+These mistakes have been observed in past runs. **Check for each one** during step 9 (self-check).
 
 1. **Wrong link attribution.** Don't attach a generic category guide URL (e.g. a "Spotlight & Raid
    Hours" schedule page) as the Hub link for a Community Day event. Confirm each `links[].url`
@@ -697,10 +786,11 @@ These mistakes have been observed in past runs. **Check for each one** during st
    via `events-official`). Major events (Community Day, Fest, anniversaries) almost always have
    coverage in all 4 sources — a single-source major event signals a missed merge opportunity.
 
-5. **English text leaking into Chinese UI.** Every `name`, `pokemon[].name`, `counters[].name`, `cn`,
-   and ranking HTML visible text must be 简体中文. `alt` attributes on sprites should also be 简体中文
-   for consistency. English `heading` is acceptable (it's a machine key, rarely displayed). Check your
-   output for any English Pokémon names in user-visible positions.
+5. **Language leakage.** In canonical files and the five `index.html` wrappers, every
+   `name`, `pokemon[].name`, `counters[].name`, `cn`, visible ranking phrase and sprite
+   `alt` must be 简体中文 (an English machine `heading` remains acceptable). Conversely,
+   every visible string in `i18n/en.json` must be English—validation rejects CJK there.
+   Verify official proper names in both directions; never copy one locale as fallback.
 
 6. **Fabricating URLs.** Never construct a URL from a pattern (e.g., guessing a Hub article slug from
    an event name). Only emit URLs you have actually seen in a source page or feed. If you cannot find

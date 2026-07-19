@@ -58,4 +58,5 @@ Checklist:
     entries — never read the ~900KB single-line file wholesale.
 
 Output to the coordinator: changed file, parsed source sections, any uncertainties or
-kept-last-good segments.
+kept-last-good segments. Keep canonical display names 简体中文; English Curator (40)
+translates the finalized text after this phase, so do not edit `public/data/i18n/en.json`.
