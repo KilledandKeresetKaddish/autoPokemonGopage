@@ -3548,6 +3548,11 @@
     "end": "2027-08-31T20:00:00",
     "link": "https://pokemongo.com/news/2026_ana_red",
     "summary": "庆祝宝可梦 30 周年「红色宝可梦喷射机」启航,Pokémon GO 与全日空(ANA)在日本各地机场举办线下联动:参与机场的道馆中小火龙进驻团体战(带喷射机主题场景背景,每馆每日限 1 场),到场还可领取一次性限时调查。",
+    "bonuses": [
+      ":raid: 参与机场的道馆每天各有 1 场小火龙团战",
+      ":pokestop: 到场可领取一次性限时调查",
+      "团战小火龙可带喷射机主题场景背景"
+    ],
     "links": [
       {
         "label": "官方",
@@ -4111,7 +4116,7 @@
   },
   {
     "id": "gigantamax-rillaboom-max-battle-day-2026",
-    "name": "超极巨化 Rillaboom 极巨对战日",
+    "name": "超极巨Rillaboom战日",
     "type": "max-battles",
     "heading": "Max Battles",
     "start": "2026-08-01T14:00:00",
@@ -4351,12 +4356,12 @@
     "bonuses": [
       ":raid: 主题赛当天球场道馆出现皮卡丘团战(有机会带场地背景)",
       ":lure: 诱饵模组持续 1 小时,吸引凯西 / 腕力 / 卡拉卡拉(幸运可遇卡比兽 / 投掷猴)",
-      ":pokestop: 进入球场可领主题限时调查(2026/9/30 20:00 前完成)",
+      ":pokestop: 进入球场可领主题限时调查（2026/9/30 20 时前完成）",
       ":pokestop: 主题赛当天转动补给站获得主场球队帽子头像道具(4/22–9/30)"
     ],
     "sections": [
       {
-        "title": "主题赛日程与坐标(11 站已定档)",
+        "title": "主题赛日程（13 站已定档）",
         "items": [
           "06/17 · 密尔沃基酿酒人(American Family Field · 坐标 43.0280,-87.9712)",
           "07/02 · 克利夫兰守护者(Progressive Field · 坐标 41.4962,-81.6852)",
@@ -4365,6 +4370,8 @@
           "08/07 · 迈阿密马林鱼(LoanDepot Park · 坐标 25.7781,-80.2197)",
           "08/11 · 亚利桑那响尾蛇(Chase Field · 坐标 33.4453,-112.0667)",
           "08/22 · 德州游骑兵(Globe Life Field · 坐标 32.7473,-97.0847)",
+          "08/25 · 纽约大都会(Citi Field)",
+          "08/27 · 旧金山巨人(Oracle Park · 世界锦标赛之夜)",
           "08/30 · 华盛顿国民(Nationals Park · 坐标 38.8730,-77.0074)",
           "09/13 · 坦帕湾光芒(Tropicana Field · 坐标 27.7683,-82.6534)",
           "09/22 · 西雅图水手(T-Mobile Park · 坐标 47.5914,-122.3325)",
@@ -4406,12 +4413,8 @@
         ]
       },
       {
-        "title": "待定场次",
-        "items": [
-          "纽约大都会(Citi Field)— 日期待公布(TBA)",
-          "旧金山巨人(Oracle Park)— 日期待公布(TBA)",
-          "日程可能调整或新增场次,以官方公告为准。"
-        ]
+        "title": "日程提示",
+        "body": "旧金山巨人 8 月 27 日场次同时是世界锦标赛之夜；官方说明所有日期仍可能调整、取消或新增。"
       }
     ],
     "pokemon": [
@@ -4452,8 +4455,8 @@
     "name": "MLB 主题赛:酿酒人",
     "type": "mlb-game-day",
     "heading": "MLB Theme Game",
-    "start": "2026-06-17T12:00:00",
-    "end": "2026-06-17T22:00:00",
+    "start": "2026-06-17T00:00:00",
+    "end": "2026-06-17T23:59:59",
     "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
     "link": "https://pokemongo.com/post/mlb-2026",
     "summary": "密尔沃基酿酒人 主场「宝可梦 GO 主题赛」:American Family Field(坐标 43.0280,-87.9712)球场内可遇带场地背景的皮卡丘团战、限时调查与球队头像道具。",
@@ -4498,8 +4501,8 @@
     "name": "MLB 主题赛:守护者",
     "type": "mlb-game-day",
     "heading": "MLB Theme Game",
-    "start": "2026-07-02T12:00:00",
-    "end": "2026-07-02T22:00:00",
+    "start": "2026-07-02T00:00:00",
+    "end": "2026-07-02T23:59:59",
     "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
     "link": "https://pokemongo.com/post/mlb-2026",
     "summary": "克利夫兰守护者 主场「宝可梦 GO 主题赛」:Progressive Field(坐标 41.4962,-81.6852)球场内可遇带场地背景的皮卡丘团战、限时调查与球队头像道具。",
@@ -4544,8 +4547,8 @@
     "name": "MLB 主题赛:白袜",
     "type": "mlb-game-day",
     "heading": "MLB Theme Game",
-    "start": "2026-07-08T12:00:00",
-    "end": "2026-07-08T22:00:00",
+    "start": "2026-07-08T00:00:00",
+    "end": "2026-07-08T23:59:59",
     "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
     "link": "https://pokemongo.com/post/mlb-2026",
     "summary": "芝加哥白袜 主场「宝可梦 GO 主题赛」:Guaranteed Rate Field(坐标 41.8300,-87.6338)球场内可遇带场地背景的皮卡丘团战、限时调查与球队头像道具。",
@@ -4590,11 +4593,16 @@
     "name": "MLB 主题赛:金莺",
     "type": "mlb-game-day",
     "heading": "MLB Theme Game",
-    "start": "2026-08-04T12:00:00",
-    "end": "2026-08-04T22:00:00",
+    "start": "2026-08-04T00:00:00",
+    "end": "2026-08-04T23:59:59",
     "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
     "link": "https://pokemongo.com/post/mlb-2026",
     "summary": "巴尔的摩金莺 主场「宝可梦 GO 主题赛」:Oriole Park(坐标 39.2839,-76.6217)球场内可遇带场地背景的皮卡丘团战、限时调查与球队头像道具。",
+    "bonuses": [
+      ":raid: 球场道馆出现皮卡丘 1★团战",
+      ":lure: 普通诱饵持续 1 小时",
+      ":pokestop: 入场可获得主题限时调查与活动实地调查"
+    ],
     "links": [
       {
         "label": "官方",
@@ -4636,11 +4644,16 @@
     "name": "MLB 主题赛:马林鱼",
     "type": "mlb-game-day",
     "heading": "MLB Theme Game",
-    "start": "2026-08-07T12:00:00",
-    "end": "2026-08-07T22:00:00",
+    "start": "2026-08-07T00:00:00",
+    "end": "2026-08-07T23:59:59",
     "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
     "link": "https://pokemongo.com/post/mlb-2026",
     "summary": "迈阿密马林鱼 主场「宝可梦 GO 主题赛」:LoanDepot Park(坐标 25.7781,-80.2197)球场内可遇带场地背景的皮卡丘团战、限时调查与球队头像道具。",
+    "bonuses": [
+      ":raid: 球场道馆出现皮卡丘 1★团战",
+      ":lure: 普通诱饵持续 1 小时",
+      ":pokestop: 入场可获得主题限时调查与活动实地调查"
+    ],
     "links": [
       {
         "label": "官方",
@@ -4682,11 +4695,16 @@
     "name": "MLB 主题赛:响尾蛇",
     "type": "mlb-game-day",
     "heading": "MLB Theme Game",
-    "start": "2026-08-11T12:00:00",
-    "end": "2026-08-11T22:00:00",
+    "start": "2026-08-11T00:00:00",
+    "end": "2026-08-11T23:59:59",
     "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
     "link": "https://pokemongo.com/post/mlb-2026",
     "summary": "亚利桑那响尾蛇 主场「宝可梦 GO 主题赛」:Chase Field(坐标 33.4453,-112.0667)球场内可遇带场地背景的皮卡丘团战、限时调查与球队头像道具。",
+    "bonuses": [
+      ":raid: 球场道馆出现皮卡丘 1★团战",
+      ":lure: 普通诱饵持续 1 小时",
+      ":pokestop: 入场可获得主题限时调查与活动实地调查"
+    ],
     "links": [
       {
         "label": "官方",
@@ -4728,11 +4746,16 @@
     "name": "MLB 主题赛:游骑兵",
     "type": "mlb-game-day",
     "heading": "MLB Theme Game",
-    "start": "2026-08-22T12:00:00",
-    "end": "2026-08-22T22:00:00",
+    "start": "2026-08-22T00:00:00",
+    "end": "2026-08-22T23:59:59",
     "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
     "link": "https://pokemongo.com/post/mlb-2026",
     "summary": "德州游骑兵 主场「宝可梦 GO 主题赛」:Globe Life Field(坐标 32.7473,-97.0847)球场内可遇带场地背景的皮卡丘团战、限时调查与球队头像道具。",
+    "bonuses": [
+      ":raid: 球场道馆出现皮卡丘 1★团战",
+      ":lure: 普通诱饵持续 1 小时",
+      ":pokestop: 入场可获得主题限时调查与活动实地调查"
+    ],
     "links": [
       {
         "label": "官方",
@@ -4774,11 +4797,16 @@
     "name": "MLB 主题赛:国民",
     "type": "mlb-game-day",
     "heading": "MLB Theme Game",
-    "start": "2026-08-30T12:00:00",
-    "end": "2026-08-30T22:00:00",
+    "start": "2026-08-30T00:00:00",
+    "end": "2026-08-30T23:59:59",
     "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
     "link": "https://pokemongo.com/post/mlb-2026",
     "summary": "华盛顿国民 主场「宝可梦 GO 主题赛」:Nationals Park(坐标 38.8730,-77.0074)球场内可遇带场地背景的皮卡丘团战、限时调查与球队头像道具。",
+    "bonuses": [
+      ":raid: 球场道馆出现皮卡丘 1★团战",
+      ":lure: 普通诱饵持续 1 小时",
+      ":pokestop: 入场可获得主题限时调查与活动实地调查"
+    ],
     "links": [
       {
         "label": "官方",
@@ -4820,8 +4848,8 @@
     "name": "MLB 主题赛:光芒",
     "type": "mlb-game-day",
     "heading": "MLB Theme Game",
-    "start": "2026-09-13T12:00:00",
-    "end": "2026-09-13T22:00:00",
+    "start": "2026-09-13T00:00:00",
+    "end": "2026-09-13T23:59:59",
     "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
     "link": "https://pokemongo.com/post/mlb-2026",
     "summary": "坦帕湾光芒 主场「宝可梦 GO 主题赛」:Tropicana Field(坐标 27.7683,-82.6534)球场内可遇带场地背景的皮卡丘团战、限时调查与球队头像道具。",
@@ -4866,8 +4894,8 @@
     "name": "MLB 主题赛:水手",
     "type": "mlb-game-day",
     "heading": "MLB Theme Game",
-    "start": "2026-09-22T12:00:00",
-    "end": "2026-09-22T22:00:00",
+    "start": "2026-09-22T00:00:00",
+    "end": "2026-09-22T23:59:59",
     "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
     "link": "https://pokemongo.com/post/mlb-2026",
     "summary": "西雅图水手 主场「宝可梦 GO 主题赛」:T-Mobile Park(坐标 47.5914,-122.3325)球场内可遇带场地背景的皮卡丘团战、限时调查与球队头像道具。",
@@ -4912,8 +4940,8 @@
     "name": "MLB 主题赛:红袜",
     "type": "mlb-game-day",
     "heading": "MLB Theme Game",
-    "start": "2026-09-25T12:00:00",
-    "end": "2026-09-25T22:00:00",
+    "start": "2026-09-25T00:00:00",
+    "end": "2026-09-25T23:59:59",
     "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
     "link": "https://pokemongo.com/post/mlb-2026",
     "summary": "波士顿红袜 主场「宝可梦 GO 主题赛」:Fenway Park(坐标 42.3467,-71.0972)球场内可遇带场地背景的皮卡丘团战、限时调查与球队头像道具。",
@@ -6107,10 +6135,19 @@
     "end": "2026-09-06T23:59:00",
     "link": "https://pokemongohub.net/post/event/national-trust-x-pokemon-go-events/",
     "summary": "英格兰、威尔士及北爱尔兰参与 National Trust 景点的长期线下活动:140 处地点新增补给站、道馆和路线,其中 27 处提供地区限定 1★团战及地点背景。",
+    "bonuses": [
+      ":pokestop: 140 处参与地点新增补给站、道馆与官方路线",
+      ":raid: 27 处指定景点提供地区限定 1★团战与地点背景",
+      "参与景点按月开放全国性与本地限时调查"
+    ],
     "links": [
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/event/national-trust-x-pokemon-go-events/"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/National_Trust_collaboration"
       }
     ],
     "pokemon": [
@@ -6147,8 +6184,8 @@
       {
         "title": "地区 1★团战",
         "items": [
-          "英格兰南部海岸:Hoppip;中部及伦敦:Sewaddle。",
-          "北部:Pineco;西南部及威尔士:Seedot。",
+          "英格兰南部海岸：Hoppip；中部及伦敦：Sewaddle。",
+          "北部：Pineco；西南部及威尔士：Seedot。",
           "27 处指定景点的首只活动宝可梦可带该景点地点背景。"
         ]
       },
@@ -6173,10 +6210,19 @@
     "end": "2026-09-30T20:00:00",
     "link": "https://pokemongohub.net/post/event/lego-stores-x-pokemon-go-stamp-rally-raids-and-more/",
     "summary": "线下联动:美国、英国、波兰、法国、德国与澳大利亚的参与乐高门店内,可参加乐高主题集章活动、皮卡丘团战与限时调查,集章可遇见带特殊背景的皮卡丘。",
+    "bonuses": [
+      ":raid: 参与门店附近的团战中皮卡丘更常出现",
+      ":pokestop: 完成 GO 集章活动可遇见带特殊背景的皮卡丘",
+      "到店可领取限时调查与活动主题贴纸"
+    ],
     "links": [
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/event/lego-stores-x-pokemon-go-stamp-rally-raids-and-more/"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/LEGO_Stores_collaboration"
       }
     ],
     "pokemon": [
@@ -6192,7 +6238,7 @@
         "items": [
           ":raid: 参与门店附近团战中皮卡丘更常出现,运气好可遇闪光或特殊背景个体",
           ":pokestop: 集章活动:在指定补给站/道馆旋转集满印章,可遇带特殊背景的皮卡丘",
-          ":pokestop: 到店打开游戏可领限时调查(需在 9/30 20:00 前完成并领取),还有活动主题贴纸"
+          ":pokestop: 到店打开游戏可领限时调查（需在 9/30 20 时前完成并领取），还有活动主题贴纸"
         ]
       }
     ],
@@ -6395,5 +6441,1236 @@
     ],
     "longTerm": false,
     "highlight": true
+  },
+  {
+    "id": "max-mondays-2026-08-03",
+    "name": "Max周一·Magmar",
+    "type": "max-mondays",
+    "heading": "Max Mondays",
+    "start": "2026-08-03T06:00:00",
+    "end": "2026-08-03T21:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+    "link": "https://leekduck.com/events/max-mondays-2026-08-03/",
+    "summary": "8 月 3 日当地时间 6–21 时，极巨化 Magmar 出现在极巨对战；18–19 时为本周重点轮换时段，能量点会更频繁刷新。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-mondays-2026-08-03/"
+      },
+      {
+        "label": "Hub·8 月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
+      }
+    ],
+    "bonuses": [
+      ":raid: 6–21 时开放本周极巨对战轮换",
+      ":xl-candy: 现场完成极巨对战可获得 1 颗神奇糖果 XL",
+      ":spawn: 周一启用更多能量点且刷新更频繁"
+    ],
+    "pokemon": [
+      {
+        "id": 126,
+        "name": "Magmar",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "max-mondays-2026-08-10",
+    "name": "Max周一·铁哑铃",
+    "type": "max-mondays",
+    "heading": "Max Mondays",
+    "start": "2026-08-10T06:00:00",
+    "end": "2026-08-10T21:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+    "link": "https://leekduck.com/events/max-mondays-2026-08-10/",
+    "summary": "8 月 10 日当地时间 6–21 时，极巨化铁哑铃出现在极巨对战；18–19 时为本周重点轮换时段，能量点会更频繁刷新。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-mondays-2026-08-10/"
+      },
+      {
+        "label": "Hub·8 月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
+      }
+    ],
+    "bonuses": [
+      ":raid: 6–21 时开放本周极巨对战轮换",
+      ":xl-candy: 现场完成极巨对战可获得 1 颗神奇糖果 XL",
+      ":spawn: 周一启用更多能量点且刷新更频繁"
+    ],
+    "pokemon": [
+      {
+        "id": 374,
+        "name": "铁哑铃",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "max-mondays-2026-08-17",
+    "name": "Max周一·Magikarp",
+    "type": "max-mondays",
+    "heading": "Max Mondays",
+    "start": "2026-08-17T06:00:00",
+    "end": "2026-08-17T21:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+    "link": "https://leekduck.com/events/max-mondays-2026-08-17/",
+    "summary": "8 月 17 日当地时间 6–21 时，极巨化 Magikarp 出现在极巨对战；18–19 时为本周重点轮换时段，能量点会更频繁刷新。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-mondays-2026-08-17/"
+      },
+      {
+        "label": "Hub·8 月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
+      }
+    ],
+    "bonuses": [
+      ":raid: 6–21 时开放本周极巨对战轮换",
+      ":xl-candy: 现场完成极巨对战可获得 1 颗神奇糖果 XL",
+      ":spawn: 周一启用更多能量点且刷新更频繁"
+    ],
+    "pokemon": [
+      {
+        "id": 129,
+        "name": "Magikarp",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "max-mondays-2026-08-24",
+    "name": "Max周一Hitmontop",
+    "type": "max-mondays",
+    "heading": "Max Mondays",
+    "start": "2026-08-24T06:00:00",
+    "end": "2026-08-24T21:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+    "link": "https://leekduck.com/events/max-mondays-2026-08-24/",
+    "summary": "8 月 24 日当地时间 6–21 时，极巨化 Hitmontop 出现在极巨对战；18–19 时为本周重点轮换时段，能量点会更频繁刷新。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-mondays-2026-08-24/"
+      },
+      {
+        "label": "Hub·8 月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
+      }
+    ],
+    "bonuses": [
+      ":raid: 6–21 时开放本周极巨对战轮换",
+      ":xl-candy: 现场完成极巨对战可获得 1 颗神奇糖果 XL",
+      ":spawn: 周一启用更多能量点且刷新更频繁"
+    ],
+    "pokemon": [
+      {
+        "id": 237,
+        "name": "Hitmontop",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "max-mondays-2026-08-31",
+    "name": "Max周一·伊布",
+    "type": "max-mondays",
+    "heading": "Max Mondays",
+    "start": "2026-08-31T06:00:00",
+    "end": "2026-08-31T21:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+    "link": "https://leekduck.com/events/max-mondays-2026-08-31/",
+    "summary": "8 月 31 日当地时间 6–21 时，极巨化伊布出现在极巨对战；18–19 时为本周重点轮换时段，能量点会更频繁刷新。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-mondays-2026-08-31/"
+      },
+      {
+        "label": "Hub·8 月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
+      }
+    ],
+    "bonuses": [
+      ":raid: 6–21 时开放本周极巨对战轮换",
+      ":xl-candy: 现场完成极巨对战可获得 1 颗神奇糖果 XL",
+      ":spawn: 周一启用更多能量点且刷新更频繁"
+    ],
+    "pokemon": [
+      {
+        "id": 133,
+        "name": "伊布",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "raidhour20260805",
+    "name": "湖之传说团战时刻",
+    "type": "raid-hour",
+    "heading": "Raid Hour",
+    "start": "2026-08-05T18:00:00",
+    "end": "2026-08-05T19:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+    "link": "https://leekduck.com/events/raidhour20260805/",
+    "summary": "8 月 5 日当地时间 18–19 时，三只湖之传说按地区集中出现在 5★团战：亚太为由克希，欧洲、中东、印度和非洲为艾姆利多，美洲和格陵兰为亚克诺姆。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/raidhour20260805/"
+      },
+      {
+        "label": "Hub·8 月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
+      }
+    ],
+    "bonuses": [
+      ":raid: 当地时间 18–19 时集中刷新 5★团战"
+    ],
+    "pokemon": [
+      {
+        "id": 480,
+        "name": "由克希",
+        "shiny": true
+      },
+      {
+        "id": 481,
+        "name": "艾姆利多",
+        "shiny": true
+      },
+      {
+        "id": 482,
+        "name": "亚克诺姆",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "raidhour20260812",
+    "name": "固拉多团战时刻",
+    "type": "raid-hour",
+    "heading": "Raid Hour",
+    "start": "2026-08-12T18:00:00",
+    "end": "2026-08-12T19:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+    "link": "https://leekduck.com/events/raidhour20260812/",
+    "summary": "8 月 12 日当地时间 18–19 时，各处道馆集中刷新固拉多 5★团战。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/raidhour20260812/"
+      },
+      {
+        "label": "Hub·固拉多指南",
+        "url": "https://pokemongohub.net/post/guide/groudon-raid-boss/"
+      }
+    ],
+    "bonuses": [
+      ":raid: 当地时间 18–19 时集中刷新 5★团战"
+    ],
+    "pokemon": [
+      {
+        "id": 383,
+        "name": "固拉多",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "raidhour20260819",
+    "name": "露奈雅拉团战时刻",
+    "type": "raid-hour",
+    "heading": "Raid Hour",
+    "start": "2026-08-19T18:00:00",
+    "end": "2026-08-19T19:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+    "link": "https://leekduck.com/events/raidhour20260819/",
+    "summary": "8 月 19 日当地时间 18–19 时，各处道馆集中刷新露奈雅拉 5★团战。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/raidhour20260819/"
+      },
+      {
+        "label": "Hub·露奈雅拉指南",
+        "url": "https://pokemongohub.net/post/guide/lunala-raid-guide-best-counters-100-ivs-cps/"
+      }
+    ],
+    "bonuses": [
+      ":raid: 当地时间 18–19 时集中刷新 5★团战"
+    ],
+    "pokemon": [
+      {
+        "id": 792,
+        "name": "露奈雅拉",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "raidhour20260826",
+    "name": "三圣柱团战时刻",
+    "type": "raid-hour",
+    "heading": "Raid Hour",
+    "start": "2026-08-26T18:00:00",
+    "end": "2026-08-26T19:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+    "link": "https://leekduck.com/events/raidhour20260826/",
+    "summary": "8 月 26 日当地时间 18–19 时，雷吉洛克、雷吉艾斯与雷吉斯奇鲁集中出现在 5★团战。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/raidhour20260826/"
+      },
+      {
+        "label": "Hub·8 月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
+      }
+    ],
+    "bonuses": [
+      ":raid: 当地时间 18–19 时集中刷新 5★团战"
+    ],
+    "pokemon": [
+      {
+        "id": 377,
+        "name": "雷吉洛克",
+        "shiny": true
+      },
+      {
+        "id": 378,
+        "name": "雷吉艾斯",
+        "shiny": true
+      },
+      {
+        "id": 379,
+        "name": "雷吉斯奇鲁",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "uxie-mesprit-azelf-in-5-star-raid-battles-august-2026",
+    "name": "由克希 / 艾姆利多 / 亚克诺姆现身 5★团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-08-05T06:00:00",
+    "end": "2026-08-11T22:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/uxie-mesprit-azelf-in-5-star-raid-battles-august-2026/",
+    "summary": "8 月 5–11 日，湖之传说按地区出现在 5★团战：亚太为由克希，欧洲、中东、印度和非洲为艾姆利多，美洲和格陵兰为亚克诺姆。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/uxie-mesprit-azelf-in-5-star-raid-battles-august-2026/"
+      },
+      {
+        "label": "Hub·由克希指南",
+        "url": "https://pokemongohub.net/post/guide/uxie-raid-counters-guide/"
+      },
+      {
+        "label": "Hub·艾姆利多指南",
+        "url": "https://pokemongohub.net/post/guide/mesprit-raid-guide/"
+      },
+      {
+        "label": "Hub·亚克诺姆指南",
+        "url": "https://pokemongohub.net/post/guide/azelf-raid-guide/"
+      }
+    ],
+    "bonuses": [
+      "✨ 三只均可遇闪光（标准 5★团战概率）"
+    ],
+    "pokemon": [
+      {
+        "id": 480,
+        "name": "由克希",
+        "shiny": true
+      },
+      {
+        "id": 481,
+        "name": "艾姆利多",
+        "shiny": true
+      },
+      {
+        "id": 482,
+        "name": "亚克诺姆",
+        "shiny": true
+      }
+    ],
+    "counters": [
+      {
+        "id": 800,
+        "name": "Dawn Wings Necrozma",
+        "fast": "Shadow Claw",
+        "charged": "Moongeist Beam",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10156.png",
+        "hub": "800-Dawn_Wings"
+      },
+      {
+        "id": 94,
+        "name": "超级耿鬼",
+        "fast": "Lick",
+        "charged": "Shadow Ball",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png",
+        "hub": "94-Mega"
+      },
+      {
+        "id": 248,
+        "name": "超级班基拉斯",
+        "fast": "Bite",
+        "charged": "Brutal Swing",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png",
+        "hub": "248-Mega"
+      }
+    ],
+    "sections": [
+      {
+        "title": "地区分布",
+        "items": [
+          "亚太地区：由克希",
+          "欧洲、中东、印度和非洲：艾姆利多",
+          "美洲和格陵兰：亚克诺姆"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "groudon-in-5-star-raid-battles-august-2026",
+    "name": "固拉多现身 5★团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-08-12T06:00:00",
+    "end": "2026-08-18T22:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/groudon-in-5-star-raid-battles-august-2026/",
+    "summary": "8 月 12–18 日，固拉多出现在 5★团战；可优先使用强力水、冰或草属性攻手。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/groudon-in-5-star-raid-battles-august-2026/"
+      },
+      {
+        "label": "Hub·固拉多指南",
+        "url": "https://pokemongohub.net/post/guide/groudon-raid-boss/"
+      }
+    ],
+    "bonuses": [
+      "✨ 固拉多可遇闪光（标准 5★团战概率）"
+    ],
+    "pokemon": [
+      {
+        "id": 383,
+        "name": "固拉多",
+        "shiny": true
+      }
+    ],
+    "counters": [
+      {
+        "id": 382,
+        "name": "原始盖欧卡",
+        "fast": "Waterfall",
+        "charged": "Origin Pulse",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png",
+        "hub": "382-Primal"
+      },
+      {
+        "id": 646,
+        "name": "White Kyurem",
+        "fast": "Ice Fang",
+        "charged": "Ice Burn",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png",
+        "hub": "646-White"
+      },
+      {
+        "id": 254,
+        "name": "超级蜥蜴王",
+        "fast": "Fury Cutter",
+        "charged": "Frenzy Plant",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png",
+        "hub": "254-Mega"
+      }
+    ]
+  },
+  {
+    "id": "lunala-in-5-star-raid-battles-august-2026",
+    "name": "露奈雅拉现身 5★团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-08-19T06:00:00",
+    "end": "2026-08-25T22:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/lunala-in-5-star-raid-battles-august-2026/",
+    "summary": "8 月 19–25 日，露奈雅拉出现在 5★团战；幽灵与恶属性攻手能利用其双重弱点。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/lunala-in-5-star-raid-battles-august-2026/"
+      },
+      {
+        "label": "Hub·露奈雅拉指南",
+        "url": "https://pokemongohub.net/post/guide/lunala-raid-guide-best-counters-100-ivs-cps/"
+      }
+    ],
+    "bonuses": [
+      "✨ 露奈雅拉可遇闪光（标准 5★团战概率）"
+    ],
+    "pokemon": [
+      {
+        "id": 792,
+        "name": "露奈雅拉",
+        "shiny": true
+      }
+    ],
+    "counters": [
+      {
+        "id": 248,
+        "name": "超级班基拉斯",
+        "fast": "Bite",
+        "charged": "Brutal Swing",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png",
+        "hub": "248-Mega"
+      },
+      {
+        "id": 800,
+        "name": "Dawn Wings Necrozma",
+        "fast": "Shadow Claw",
+        "charged": "Moongeist Beam",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10156.png",
+        "hub": "800-Dawn_Wings"
+      },
+      {
+        "id": 94,
+        "name": "超级耿鬼",
+        "fast": "Lick",
+        "charged": "Shadow Ball",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png",
+        "hub": "94-Mega"
+      }
+    ]
+  },
+  {
+    "id": "regirock-regice-registeel-in-5-star-raid-battles-august-2026",
+    "name": "雷吉洛克 / 雷吉艾斯 / 雷吉斯奇鲁现身 5★团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-08-26T06:00:00",
+    "end": "2026-09-08T22:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/regirock-regice-registeel-in-5-star-raid-battles-august-2026/",
+    "summary": "8 月 26 日至 9 月 8 日，雷吉洛克、雷吉艾斯与雷吉斯奇鲁共同出现在 5★团战；格斗属性可克制三者。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/regirock-regice-registeel-in-5-star-raid-battles-august-2026/"
+      },
+      {
+        "label": "Hub·雷吉洛克指南",
+        "url": "https://pokemongohub.net/post/guide/regirock-raid-guide-raid-counters-fight-overview-iv-chart/"
+      },
+      {
+        "label": "Hub·雷吉艾斯指南",
+        "url": "https://pokemongohub.net/post/guide/regice-raid-guide-counters-weather-ivs-cps/"
+      },
+      {
+        "label": "Hub·雷吉斯奇鲁指南",
+        "url": "https://pokemongohub.net/post/guide/registeel-raid-guide/"
+      }
+    ],
+    "bonuses": [
+      "✨ 三只均可遇闪光（标准 5★团战概率）"
+    ],
+    "pokemon": [
+      {
+        "id": 377,
+        "name": "雷吉洛克",
+        "shiny": true
+      },
+      {
+        "id": 378,
+        "name": "雷吉艾斯",
+        "shiny": true
+      },
+      {
+        "id": 379,
+        "name": "雷吉斯奇鲁",
+        "shiny": true
+      }
+    ],
+    "counters": [
+      {
+        "id": 448,
+        "name": "超级路卡利欧",
+        "fast": "Force Palm",
+        "charged": "Aura Sphere",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png",
+        "hub": "448-Mega"
+      },
+      {
+        "id": 257,
+        "name": "超级火焰鸡",
+        "fast": "Counter",
+        "charged": "Aura Sphere",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png",
+        "hub": "257-Mega"
+      },
+      {
+        "id": 647,
+        "name": "Resolute Keldeo",
+        "fast": "Low Kick",
+        "charged": "Secret Sword",
+        "sprite": "https://db.pokemongohub.net/images/official/detail/647_f2.png",
+        "hub": "647-Resolute"
+      }
+    ]
+  },
+  {
+    "id": "mega-blaziken-in-mega-raids-august-2026",
+    "name": "超级火焰鸡现身超级团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-08-05T06:00:00",
+    "end": "2026-08-11T22:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+    "link": "https://leekduck.com/events/mega-blaziken-in-mega-raids-august-2026/",
+    "summary": "8 月 5–11 日，超级火焰鸡出现在超级团战；击败后可获得超级能量，水、地面、飞行与超能力属性攻手均可有效应对。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-blaziken-in-mega-raids-august-2026/"
+      },
+      {
+        "label": "Hub·超级火焰鸡指南",
+        "url": "https://pokemongohub.net/post/guide/mega-blaziken-raid-guide/"
+      }
+    ],
+    "bonuses": [
+      "击败可获得超级火焰鸡超级能量",
+      "✨ 火焰鸡可遇闪光（标准超级团战概率）"
+    ],
+    "pokemon": [
+      {
+        "id": 257,
+        "name": "超级火焰鸡",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png",
+        "hub": "257-Mega"
+      }
+    ],
+    "counters": [
+      {
+        "id": 384,
+        "name": "超级烈空坐",
+        "fast": "Air Slash",
+        "charged": "Dragon Ascent",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png",
+        "hub": "384-Mega"
+      },
+      {
+        "id": 150,
+        "name": "超级超梦 Y",
+        "fast": "Confusion",
+        "charged": "Psystrike",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png",
+        "hub": "150-Mega_Y"
+      },
+      {
+        "id": 382,
+        "name": "原始盖欧卡",
+        "fast": "Waterfall",
+        "charged": "Origin Pulse",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png",
+        "hub": "382-Primal"
+      }
+    ]
+  },
+  {
+    "id": "mega-garchomp-in-mega-raids-august-2026",
+    "name": "超级烈咬陆鲨现身超级团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-08-12T06:00:00",
+    "end": "2026-08-18T22:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+    "link": "https://leekduck.com/events/mega-garchomp-in-mega-raids-august-2026/",
+    "summary": "8 月 12–18 日，超级烈咬陆鲨出现在超级团战；冰属性可利用其双重弱点。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-garchomp-in-mega-raids-august-2026/"
+      },
+      {
+        "label": "Hub·超级烈咬陆鲨指南",
+        "url": "https://pokemongohub.net/post/guide/mega-garchomp-raid-counters-guide/"
+      }
+    ],
+    "bonuses": [
+      "击败可获得超级烈咬陆鲨超级能量",
+      "✨ 烈咬陆鲨可遇闪光（标准超级团战概率）"
+    ],
+    "pokemon": [
+      {
+        "id": 445,
+        "name": "超级烈咬陆鲨",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png",
+        "hub": "445-Mega"
+      }
+    ],
+    "counters": [
+      {
+        "id": 646,
+        "name": "White Kyurem",
+        "fast": "Ice Fang",
+        "charged": "Ice Burn",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png",
+        "hub": "646-White"
+      },
+      {
+        "id": 384,
+        "name": "超级烈空坐",
+        "fast": "Dragon Tail",
+        "charged": "Breaking Swipe",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png",
+        "hub": "384-Mega"
+      },
+      {
+        "id": 998,
+        "name": "Baxcalibur",
+        "fast": "Ice Fang",
+        "charged": "Avalanche"
+      }
+    ]
+  },
+  {
+    "id": "mega-swampert-in-mega-raids-august-2026",
+    "name": "超级巨沼怪现身超级团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-08-19T06:00:00",
+    "end": "2026-08-25T22:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+    "link": "https://leekduck.com/events/mega-swampert-in-mega-raids-august-2026/",
+    "summary": "8 月 19–25 日，超级巨沼怪出现在超级团战；草属性可利用其双重弱点。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-swampert-in-mega-raids-august-2026/"
+      },
+      {
+        "label": "Hub·超级巨沼怪指南",
+        "url": "https://pokemongohub.net/post/guide/mega-swampert-raid-guide/"
+      }
+    ],
+    "bonuses": [
+      "击败可获得超级巨沼怪超级能量",
+      "✨ 巨沼怪可遇闪光（标准超级团战概率）"
+    ],
+    "pokemon": [
+      {
+        "id": 260,
+        "name": "超级巨沼怪",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10064.png",
+        "hub": "260-Mega"
+      }
+    ],
+    "counters": [
+      {
+        "id": 254,
+        "name": "超级蜥蜴王",
+        "fast": "Bullet Seed",
+        "charged": "Frenzy Plant",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png",
+        "hub": "254-Mega"
+      },
+      {
+        "id": 798,
+        "name": "纸御剑",
+        "fast": "Razor Leaf",
+        "charged": "Leaf Blade"
+      },
+      {
+        "id": 893,
+        "name": "Zarude",
+        "fast": "Vine Whip",
+        "charged": "Power Whip"
+      }
+    ]
+  },
+  {
+    "id": "mega-gyarados-in-mega-raids-august-2026",
+    "name": "超级暴鲤龙现身超级团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-08-26T06:00:00",
+    "end": "2026-09-08T22:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+    "link": "https://leekduck.com/events/mega-gyarados-in-mega-raids-august-2026/",
+    "summary": "8 月 26 日至 9 月 8 日，超级暴鲤龙出现在超级团战；格斗、草、电、虫与妖精属性攻手均可有效应对。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-gyarados-in-mega-raids-august-2026/"
+      },
+      {
+        "label": "Hub·超级暴鲤龙指南",
+        "url": "https://pokemongohub.net/post/guide/mega-gyarados-raid-counters-guide/"
+      }
+    ],
+    "bonuses": [
+      "击败可获得超级暴鲤龙超级能量",
+      "✨ 暴鲤龙可遇闪光（标准超级团战概率）"
+    ],
+    "pokemon": [
+      {
+        "id": 130,
+        "name": "超级暴鲤龙",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10041.png",
+        "hub": "130-Mega"
+      }
+    ],
+    "counters": [
+      {
+        "id": 448,
+        "name": "超级路卡利欧",
+        "fast": "Force Palm",
+        "charged": "Aura Sphere",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png",
+        "hub": "448-Mega"
+      },
+      {
+        "id": 647,
+        "name": "Resolute Keldeo",
+        "fast": "Low Kick",
+        "charged": "Secret Sword",
+        "sprite": "https://db.pokemongohub.net/images/official/detail/647_f2.png",
+        "hub": "647-Resolute"
+      },
+      {
+        "id": 257,
+        "name": "超级火焰鸡",
+        "fast": "Counter",
+        "charged": "Aura Sphere",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png",
+        "hub": "257-Mega"
+      }
+    ]
+  },
+  {
+    "id": "go-pass-august-2026",
+    "name": "GO 通行证：8 月",
+    "type": "go-pass",
+    "heading": "GO Pass",
+    "start": "2026-08-04T10:00:00",
+    "end": "2026-09-08T10:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-04-go-pass-august-2026/go-pass-august-2026.jpg",
+    "link": "https://leekduck.com/events/go-pass-august-2026/",
+    "summary": "8 月 GO 通行证于 8 月 4 日 10 时自动发放，可累积 GO 点数至 9 月 8 日 10 时；Rank 100 奖励包含拉帝亚斯遭遇，豪华版最终奖励包含幸运饰品。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/go-pass-august-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/go-pass-august-2026-latias-bonuses-and-lucky-trinket-returns/"
+      }
+    ],
+    "bonuses": [
+      ":candy: Rank 1：交换宝可梦额外获得 1 颗糖果",
+      ":xl-candy: Rank 1：31 级以上训练家交换时必得 1 颗糖果 XL",
+      "Rank 25：每天最多开启 40 份礼物、从补给站和道馆获得 125 份礼物，并可多携带 10 份",
+      ":incense: Rank 50：每日探险熏香持续时间 ×2",
+      ":xp: Rank 75：孵蛋获得的经验与星尘增加",
+      "9 月 5–6 日不设每日 GO 点数获取上限"
+    ],
+    "pokemon": [
+      {
+        "id": 380,
+        "name": "拉帝亚斯",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "领取与截止时间",
+        "items": [
+          "8 月 4 日 10 时自动获得；9 月 8 日 10 时停止累积 GO 点数。",
+          "已解锁奖励须在 9 月 10 日 10 时前领取。",
+          "豪华版幸运饰品须在 9 月 13 日 23 时 59 分前使用。"
+        ]
+      },
+      {
+        "title": "豪华版",
+        "items": [
+          "GO 通行证豪华版 7.99 美元；豪华版 + 10 Rank 为 9.99 美元。",
+          "豪华版可同时领取免费与付费路线奖励，并提供幸运饰品及更多宝可梦遭遇。"
+        ]
+      }
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "shadow-giratina-altered-in-shadow-raids-august-2026",
+    "name": "暗影骑拉帝纳（别种形态）现身暗影团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-08-05T06:00:00",
+    "end": "2026-09-08T22:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/shadow-giratina-altered-in-shadow-raids-august-2026/",
+    "summary": "暗影骑拉帝纳（别种形态）首次登场，并于 8 月 5 日至 9 月 8 日之间的每个周末出现在 5★暗影团战；平日不开放该 Boss。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/shadow-giratina-altered-in-shadow-raids-august-2026/"
+      },
+      {
+        "label": "Hub·8 月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
+      },
+      {
+        "label": "Hub·骑拉帝纳指南",
+        "url": "https://pokemongohub.net/post/guide/giratina-altered-raid/"
+      }
+    ],
+    "bonuses": [
+      "暗影骑拉帝纳（别种形态）首次在暗影团战登场",
+      "✨ 有机会遇见闪光暗影骑拉帝纳（标准暗影团战概率）",
+      ":raid: 仅活动日期范围内的周末开放"
+    ],
+    "pokemon": [
+      {
+        "id": 487,
+        "name": "暗影骑拉帝纳（别种形态）",
+        "shiny": true,
+        "hub": "487-Altered_Shadow"
+      }
+    ],
+    "counters": [
+      {
+        "id": 384,
+        "name": "超级烈空坐",
+        "fast": "Dragon Tail",
+        "charged": "Breaking Swipe",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png",
+        "hub": "384-Mega"
+      },
+      {
+        "id": 445,
+        "name": "超级烈咬陆鲨",
+        "fast": "Dragon Tail",
+        "charged": "Breaking Swipe",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png",
+        "hub": "445-Mega"
+      },
+      {
+        "id": 94,
+        "name": "超级耿鬼",
+        "fast": "Lick",
+        "charged": "Shadow Ball",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png",
+        "hub": "94-Mega"
+      }
+    ],
+    "sections": [
+      {
+        "title": "开放规则",
+        "body": "该 Boss 只在活动日期范围内的周六、周日出现；8 月 5 日与 9 月 8 日是轮换边界，并不代表平日开放。"
+      }
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "pokemon-xp-2026-worlds",
+    "name": "Pokémon XP 与 2026 世界锦标赛",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-08-25T10:00:00",
+    "end": "2026-08-30T20:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/pokemon-xp-2026-worlds/",
+    "summary": "Pokémon XP 与 2026 世界锦标赛联动活动已定于 8 月 25 日 10 时至 8 月 30 日 20 时举行；玩法、奖励与出场宝可梦尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-xp-2026-worlds/"
+      },
+      {
+        "label": "Hub·8 月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
+      }
+    ],
+    "sections": [
+      {
+        "title": "已确认信息",
+        "body": "目前仅公布活动名称与日期；具体加成、遭遇和奖励待后续公告，请勿提前按未证实信息规划资源。"
+      }
+    ]
+  },
+  {
+    "id": "pokemon-spotlight-hour-20260806",
+    "name": "Delibird 聚焦时刻",
+    "type": "pokemon-spotlight-hour",
+    "heading": "Pokémon Spotlight Hour",
+    "start": "2026-08-06T18:00:00",
+    "end": "2026-08-06T19:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
+    "link": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/",
+    "summary": "8 月 6 日当地时间 18–19 时，Delibird 在野外大量出现，并提供捕捉星尘 ×2 加成。",
+    "links": [
+      {
+        "label": "Hub·8 月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Pok%C3%A9mon_Spotlight_Hour"
+      }
+    ],
+    "bonuses": [
+      ":stardust: 捕捉星尘 ×2"
+    ],
+    "pokemon": [
+      {
+        "id": 225,
+        "name": "Delibird",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "pokemon-spotlight-hour-20260813",
+    "name": "刺尾虫聚焦时刻",
+    "type": "pokemon-spotlight-hour",
+    "heading": "Pokémon Spotlight Hour",
+    "start": "2026-08-13T18:00:00",
+    "end": "2026-08-13T19:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
+    "link": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/",
+    "summary": "8 月 13 日当地时间 18–19 时，刺尾虫在野外大量出现，并提供进化经验 ×2 加成。",
+    "links": [
+      {
+        "label": "Hub·8 月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Pok%C3%A9mon_Spotlight_Hour"
+      }
+    ],
+    "bonuses": [
+      ":xp: 进化经验 ×2"
+    ],
+    "pokemon": [
+      {
+        "id": 265,
+        "name": "刺尾虫",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "pokemon-spotlight-hour-20260820",
+    "name": "Magikarp 聚焦时刻",
+    "type": "pokemon-spotlight-hour",
+    "heading": "Pokémon Spotlight Hour",
+    "start": "2026-08-20T18:00:00",
+    "end": "2026-08-20T19:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
+    "link": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/",
+    "summary": "8 月 20 日当地时间 18–19 时，Magikarp 在野外大量出现，并提供捕捉经验 ×2 加成。",
+    "links": [
+      {
+        "label": "Hub·8 月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Pok%C3%A9mon_Spotlight_Hour"
+      }
+    ],
+    "bonuses": [
+      ":xp: 捕捉经验 ×2"
+    ],
+    "pokemon": [
+      {
+        "id": 129,
+        "name": "Magikarp",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "pokemon-spotlight-hour-20260827",
+    "name": "Mankey 聚焦时刻",
+    "type": "pokemon-spotlight-hour",
+    "heading": "Pokémon Spotlight Hour",
+    "start": "2026-08-27T18:00:00",
+    "end": "2026-08-27T19:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
+    "link": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/",
+    "summary": "8 月 27 日当地时间 18–19 时，Mankey 在野外大量出现，并提供捕捉糖果 ×2 加成。",
+    "links": [
+      {
+        "label": "Hub·8 月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Pok%C3%A9mon_Spotlight_Hour"
+      }
+    ],
+    "bonuses": [
+      ":candy: 捕捉糖果 ×2"
+    ],
+    "pokemon": [
+      {
+        "id": 56,
+        "name": "Mankey",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "summer-quest",
+    "name": "Summer Quest（英国全境 / 伦敦 Shoreditch 线下）",
+    "type": "event",
+    "heading": "In-Person and UK Event",
+    "start": "2026-08-01T10:00:00",
+    "end": "2026-08-09T23:59:00",
+    "image": "https://pokemongohub.net/wp-content/uploads/2026/07/pokemon-summer-quest.jpg",
+    "link": "https://pokemongo.com/news/summer-quest",
+    "summary": "英国训练家可在 8 月 1–9 日自动获得免费 Summer Quest 限时调查；伦敦 Shoreditch 的 The Green at Boxpark 于 8 月 1–2 日及 8–9 日另有本地调查、快闪咖啡站与抽奖机会。两项调查均可完成至 8 月 31 日。",
+    "links": [
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/summer-quest"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-summer-quest/"
+      }
+    ],
+    "bonuses": [
+      "英国全境免费 Summer Quest 限时调查",
+      "伦敦 Shoreditch 活动区域另有本地限时调查",
+      "完成本地调查第一阶段后可先到先得兑换免费咖啡"
+    ],
+    "sections": [
+      {
+        "title": "英国全境玩法",
+        "items": [
+          "8 月 1 日 10 时至 8 月 9 日 23 时 59 分，英国训练家自动获得免费限时调查。",
+          "取得后须在 8 月 31 日 23 时 59 分前完成并领取奖励。",
+          "完成全国调查后可按官方步骤参加双人 GO Fest 2027 欧洲之旅抽奖。"
+        ]
+      },
+      {
+        "title": "伦敦 Shoreditch 线下玩法",
+        "items": [
+          "地点：The Green at Boxpark 周边；领取窗口为 8 月 1 日 10 时至 2 日 23 时 59 分，以及 8 月 8 日 10 时至 9 日 23 时 59 分。",
+          "快闪咖啡站仅在上述四天 10–19 时开放；完成本地调查第一阶段后可先到先得兑换免费咖啡。",
+          "本地调查取得后同样可完成至 8 月 31 日 23 时 59 分；完成者可按官方步骤参加双人日本五晚之旅抽奖。"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mlb-game-20260825",
+    "name": "MLB主题赛·大都会",
+    "type": "mlb-game-day",
+    "heading": "MLB Theme Game",
+    "start": "2026-08-25T00:00:00",
+    "end": "2026-08-25T23:59:59",
+    "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
+    "link": "https://pokemongo.com/post/mlb-2026",
+    "summary": "纽约大都会于 8 月 25 日在 Citi Field 举办宝可梦 GO 主题赛；官方未公布游戏玩法时段，因此日历按全天日期标示。球场内可参加皮卡丘团战、主题调查并领取球队头像道具。",
+    "bonuses": [
+      ":raid: 球场道馆出现皮卡丘 1★团战",
+      ":lure: 普通诱饵持续 1 小时",
+      ":pokestop: 入场可获得主题限时调查与活动实地调查"
+    ],
+    "links": [
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/post/mlb-2026"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/the-pokemon-go-and-major-league-baseball-collaboration-returns-for-2026-season/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 25,
+        "name": "皮卡丘",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "地点",
+        "body": "Citi Field（纽约）；官方仅确认 8 月 25 日日期，未公布游戏玩法开始或结束时间。"
+      },
+      {
+        "title": "球场内容",
+        "items": [
+          ":raid: 球场道馆出现皮卡丘 1★团战（有机会为闪光或带场地背景）",
+          ":lure: 普通诱饵持续 1 小时，可吸引凯西、腕力、卡拉卡拉等",
+          ":pokestop: 入场可领取主题限时调查，补给站提供活动实地调查与球队帽子头像道具"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mlb-game-20260827",
+    "name": "MLB世界赛之夜·巨人",
+    "type": "mlb-game-day",
+    "heading": "MLB Theme Game",
+    "start": "2026-08-27T00:00:00",
+    "end": "2026-08-27T23:59:59",
+    "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
+    "link": "https://pokemongo.com/post/mlb-2026",
+    "summary": "旧金山巨人于 8 月 27 日在 Oracle Park 举办世界锦标赛之夜暨宝可梦 GO 主题赛；官方未公布游戏玩法时段，因此日历按全天日期标示。",
+    "bonuses": [
+      ":raid: 球场道馆出现皮卡丘 1★团战",
+      ":lure: 普通诱饵持续 1 小时",
+      ":pokestop: 入场可获得主题限时调查与活动实地调查"
+    ],
+    "links": [
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/post/mlb-2026"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/the-pokemon-go-and-major-league-baseball-collaboration-returns-for-2026-season/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 25,
+        "name": "皮卡丘",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "地点",
+        "body": "Oracle Park（旧金山）；官方仅确认 8 月 27 日日期，未公布游戏玩法开始或结束时间。"
+      },
+      {
+        "title": "球场内容",
+        "items": [
+          ":raid: 球场道馆出现皮卡丘 1★团战（有机会为闪光或带场地背景）",
+          ":lure: 普通诱饵持续 1 小时，可吸引凯西、腕力、卡拉卡拉等",
+          ":pokestop: 入场可领取主题限时调查，补给站提供活动实地调查与球队帽子头像道具"
+        ]
+      }
+    ]
   }
 ]

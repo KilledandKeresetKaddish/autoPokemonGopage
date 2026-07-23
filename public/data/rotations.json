@@ -1,6 +1,6 @@
 {
-  "month": "2026-07",
-  "note": "2026 年 7 月 5★/超级团战按 Hub 7 月月历与 LeekDuck 团战事件核对;7/6–7/10 传奇之路、7/11–7/12 GO Fest 为每日特殊轮换;Max 团战按 Hub July 2026 Max Battles 周轮换。",
+  "month": "2026-08",
+  "note": "8 月 5★/超级团战按周三轮换，Max 团战按周轮换；8/1、8/22 另有特别场次，周末暗影团战见长期活动。",
   "tracks": [
     {
       "key": "5star",
@@ -557,11 +557,84 @@
           "pokemon": [
             {
               "id": 646,
-              "name": "酋雷姆"
+              "name": "酋雷姆",
+              "shiny": true
             }
           ],
           "start": "2026-07-29",
           "end": "2026-08-04"
+        },
+        {
+          "name": "Uxie / Mesprit / Azelf",
+          "cn": "由克希 / 艾姆利多 / 亚克诺姆",
+          "pokemon": [
+            {
+              "id": 480,
+              "name": "由克希",
+              "shiny": true
+            },
+            {
+              "id": 481,
+              "name": "艾姆利多",
+              "shiny": true
+            },
+            {
+              "id": 482,
+              "name": "亚克诺姆",
+              "shiny": true
+            }
+          ],
+          "start": "2026-08-05",
+          "end": "2026-08-11"
+        },
+        {
+          "name": "Groudon",
+          "cn": "固拉多",
+          "pokemon": [
+            {
+              "id": 383,
+              "name": "固拉多",
+              "shiny": true
+            }
+          ],
+          "start": "2026-08-12",
+          "end": "2026-08-18"
+        },
+        {
+          "name": "Lunala",
+          "cn": "露奈雅拉",
+          "pokemon": [
+            {
+              "id": 792,
+              "name": "露奈雅拉",
+              "shiny": true
+            }
+          ],
+          "start": "2026-08-19",
+          "end": "2026-08-25"
+        },
+        {
+          "name": "Regirock / Regice / Registeel",
+          "cn": "雷吉洛克 / 雷吉艾斯 / 雷吉斯奇鲁",
+          "pokemon": [
+            {
+              "id": 377,
+              "name": "雷吉洛克",
+              "shiny": true
+            },
+            {
+              "id": 378,
+              "name": "雷吉艾斯",
+              "shiny": true
+            },
+            {
+              "id": 379,
+              "name": "雷吉斯奇鲁",
+              "shiny": true
+            }
+          ],
+          "start": "2026-08-26",
+          "end": "2026-09-08"
         }
       ]
     },
@@ -767,13 +840,89 @@
           "pokemon": [
             {
               "id": 306,
-              "name": "波士可多拉",
+              "name": "超级波士可多拉",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10053.png",
-              "hub": "306-Mega"
+              "hub": "306-Mega",
+              "shiny": true
             }
           ],
           "start": "2026-07-29",
           "end": "2026-08-04"
+        },
+        {
+          "name": "Mega Blaziken",
+          "cn": "超级火焰鸡",
+          "pokemon": [
+            {
+              "id": 257,
+              "name": "超级火焰鸡",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png",
+              "hub": "257-Mega"
+            }
+          ],
+          "start": "2026-08-05",
+          "end": "2026-08-11"
+        },
+        {
+          "name": "Mega Garchomp",
+          "cn": "超级烈咬陆鲨",
+          "pokemon": [
+            {
+              "id": 445,
+              "name": "超级烈咬陆鲨",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png",
+              "hub": "445-Mega"
+            }
+          ],
+          "start": "2026-08-12",
+          "end": "2026-08-18"
+        },
+        {
+          "name": "Mega Swampert",
+          "cn": "超级巨沼怪",
+          "pokemon": [
+            {
+              "id": 260,
+              "name": "超级巨沼怪",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10064.png",
+              "hub": "260-Mega"
+            }
+          ],
+          "start": "2026-08-19",
+          "end": "2026-08-25"
+        },
+        {
+          "name": "Super Mega Starmie Raid Day",
+          "cn": "Starmie 超级超级团战日",
+          "pokemon": [
+            {
+              "id": 121,
+              "name": "超级 Starmie",
+              "shiny": true,
+              "sprite": "https://db.pokemongohub.net/images/official/detail/121_mega.png",
+              "hub": "121-Mega"
+            }
+          ],
+          "start": "2026-08-22",
+          "end": "2026-08-22"
+        },
+        {
+          "name": "Mega Gyarados",
+          "cn": "超级暴鲤龙",
+          "pokemon": [
+            {
+              "id": 130,
+              "name": "超级暴鲤龙",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10041.png",
+              "hub": "130-Mega"
+            }
+          ],
+          "start": "2026-08-26",
+          "end": "2026-09-08"
         }
       ]
     },
@@ -856,6 +1005,71 @@
           ],
           "start": "2026-08-01",
           "end": "2026-08-01"
+        },
+        {
+          "name": "Magmar",
+          "cn": "Magmar",
+          "pokemon": [
+            {
+              "id": 126,
+              "name": "Magmar",
+              "shiny": true
+            }
+          ],
+          "start": "2026-08-03",
+          "end": "2026-08-09"
+        },
+        {
+          "name": "Beldum",
+          "cn": "铁哑铃",
+          "pokemon": [
+            {
+              "id": 374,
+              "name": "铁哑铃",
+              "shiny": true
+            }
+          ],
+          "start": "2026-08-10",
+          "end": "2026-08-16"
+        },
+        {
+          "name": "Magikarp",
+          "cn": "Magikarp",
+          "pokemon": [
+            {
+              "id": 129,
+              "name": "Magikarp",
+              "shiny": true
+            }
+          ],
+          "start": "2026-08-17",
+          "end": "2026-08-23"
+        },
+        {
+          "name": "Hitmontop",
+          "cn": "Hitmontop",
+          "pokemon": [
+            {
+              "id": 237,
+              "name": "Hitmontop",
+              "shiny": true
+            }
+          ],
+          "start": "2026-08-24",
+          "end": "2026-08-30"
+        },
+        {
+          "name": "Eevee",
+          "cn": "伊布",
+          "pokemon": [
+            {
+              "id": 133,
+              "name": "伊布",
+              "shiny": true
+            }
+          ],
+          "start": "2026-08-31",
+          "end": "2026-09-06"
         }
       ],
       "tag": "MX"
