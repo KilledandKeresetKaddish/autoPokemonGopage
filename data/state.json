@@ -1,25 +1,25 @@
 {
-  "lastUpdated": "2026-07-23T12:00:19Z",
+  "lastUpdated": "2026-07-25T15:19:30Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-07-23T10:24:57Z",
-      "lastChecked": "2026-07-23T12:00:19Z",
+      "lastFetch": "2026-07-25T15:15:32Z",
+      "lastChecked": "2026-07-25T15:19:30Z",
       "status": "ok",
-      "bytes": 55701,
-      "sha256": "7f7feeff2d3ab54e",
-      "note": "刷新成功，hash 已变化；结构化活动源健康，已用于 8 月活动审计。"
+      "bytes": 54582,
+      "sha256": "57bdfb7f65bfd09d",
+      "note": "刷新成功，hash 已变化；唯一新增 feed 活动为 9 月 2 日三圣柱团战时刻，已核实并补入日历；未找到明确涵盖该 9 月 2 日场次的第二篇详情页，故仅保留已验证的 LeekDuck 链接。"
     },
     "raids": {
-      "lastFetch": "2026-07-23T10:24:29Z",
-      "lastChecked": "2026-07-23T12:00:19Z",
+      "lastFetch": "2026-07-25T15:15:17Z",
+      "lastChecked": "2026-07-25T15:19:30Z",
       "status": "ok",
       "bytes": 13409,
       "sha256": "79f3fa93a69929b7",
-      "note": "刷新成功，hash 已变化；现行团战池健康，已用于轮换与当前团战核对。"
+      "note": "刷新成功，hash 未变化；现行团战池与 7 月 23 日一致，当前团战面板保留已验证版本。"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-23T12:00:19Z",
+      "lastChecked": "2026-07-25T15:19:30Z",
       "status": "ok",
       "bytes": 29466,
       "sha256": "bf0d68f3851420d0",
@@ -27,7 +27,7 @@
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-23T12:00:19Z",
+      "lastChecked": "2026-07-25T15:19:30Z",
       "status": "ok",
       "bytes": 70308,
       "sha256": "02025eab72ec1451",
@@ -35,73 +35,73 @@
     },
     "gamemaster": {
       "lastFetch": "2026-07-23T10:24:53Z",
-      "lastChecked": "2026-07-23T12:00:19Z",
+      "lastChecked": "2026-07-25T15:19:30Z",
       "status": "ok",
       "bytes": 920925,
       "sha256": "5994f0ac34591633",
-      "note": "刷新成功，hash 已变化；缓存健康，已用于属性、招式与稳定事实核验。"
+      "note": "未超过约 7 日刷新阈值，跳过刷新；保留健康缓存。"
     },
     "tiers-attackers": {
       "lastFetch": "2026-07-23T10:24:45Z",
-      "lastChecked": "2026-07-23T12:00:19Z",
+      "lastChecked": "2026-07-25T15:19:30Z",
       "status": "ok",
       "bytes": 35479,
       "sha256": "037bf6a8ed8a2df8",
-      "note": "刷新成功，hash 未变化；攻手榜保留已验证版本。"
+      "note": "未超过约 3 日刷新阈值，跳过刷新；攻手榜保留已验证版本。"
     },
     "tiers-defenders": {
       "lastFetch": "2026-07-23T10:24:49Z",
-      "lastChecked": "2026-07-23T12:00:19Z",
+      "lastChecked": "2026-07-25T15:19:30Z",
       "status": "ok",
       "bytes": 39579,
       "sha256": "17e3e7e077fbe798",
-      "note": "刷新成功，hash 未变化；防守榜保留已验证版本。"
+      "note": "未超过约 3 日刷新阈值，跳过刷新；防守榜保留已验证版本。"
     },
     "tiers-pokebase": {
       "lastFetch": "2026-07-23T10:24:53Z",
-      "lastChecked": "2026-07-23T12:00:19Z",
+      "lastChecked": "2026-07-25T15:19:30Z",
       "status": "ok",
       "bytes": 121480,
       "sha256": "7138c1e21645b7a3",
-      "note": "刷新成功，hash 未变化；继续作为排行交叉参考。"
+      "note": "未超过约 3 日刷新阈值，跳过刷新；继续作为排行交叉参考。"
     },
     "events-hub": {
-      "lastFetch": "2026-07-23T10:25:00Z",
-      "lastChecked": "2026-07-23T12:00:19Z",
-      "status": "degraded",
-      "bytes": 30971,
-      "sha256": "b217a9ec038a2ece",
-      "note": "命名批量源初次返回 HTTP 503，随后经发现流程变化，但 8 月索引仍陈旧且不完整；8 月月度文章及所需指南、详情直链均成功核实。"
+      "lastFetch": "2026-07-25T15:15:33Z",
+      "lastChecked": "2026-07-25T15:19:30Z",
+      "status": "ok",
+      "bytes": 31018,
+      "sha256": "fad8ad6a2522bdf8",
+      "note": "刷新成功，hash 已变化；批量索引仍以 7 月为主，但 8 月月度文章直链健康并完成轮换复核。"
     },
     "events-pokebase": {
-      "lastFetch": "2026-07-23T10:24:41Z",
-      "lastChecked": "2026-07-23T12:00:19Z",
+      "lastFetch": "2026-07-25T15:15:27Z",
+      "lastChecked": "2026-07-25T15:19:30Z",
       "status": "ok",
-      "bytes": 13883,
-      "sha256": "f14f35e09f941620",
-      "note": "刷新成功，hash 已变化且来源健康；当前内容仍以 7 月为主。"
+      "bytes": 31710,
+      "sha256": "025402d046b52ca9",
+      "note": "刷新成功，hash 已变化；缓存健康，当前活动列表仍以 7 月内容为主。"
     },
     "events-official": {
-      "lastFetch": "2026-07-23T10:25:00Z",
-      "lastChecked": "2026-07-23T12:00:19Z",
-      "status": "degraded",
-      "bytes": 5745,
-      "sha256": "84d756382af658db",
-      "note": "hash 已变化，但通用命名缓存降级；所需官方新闻直链均可正常读取并已核实。"
+      "lastFetch": "2026-07-25T15:15:33Z",
+      "lastChecked": "2026-07-25T15:19:30Z",
+      "status": "ok",
+      "bytes": 5755,
+      "sha256": "6c1a10c11da6f3ee",
+      "note": "刷新成功，hash 已变化；通用缓存内容有限，既有已验证官方直链继续保留。"
     }
   },
   "discovery": {
-    "lastChecked": "2026-07-23T12:00:19Z",
+    "lastChecked": "2026-07-25T15:19:30Z",
     "status": "ok",
-    "note": "发现流程成功：确认全部 20 个 LeekDuck 8 月候选，并补齐 4 场聚焦时刻、英国 Summer Quest 与 2 场新定档 MLB 活动；未发现额外 City Safari。"
+    "note": "新活动发现扫描完成；除已补入的 9 月 2 日三圣柱团战时刻外，本周期无遗漏 feed 活动。8 月月度文章已重新读取并确认 5★、超级、Max、团战时刻及聚焦时刻日程未变。"
   },
   "contentStatus": {
-    "checkedAt": "2026-07-23T12:00:19Z",
+    "checkedAt": "2026-07-25T15:19:30Z",
     "status": "validated",
-    "note": "日历由 103 增至 130 个唯一活动（新增 27、更新 16），其中 44 个于 8 月开始；2026-08 的 5★、超级与 Max 轮换完整。中英文活动 130/130 且嵌套结构一致；中文本月看点、本期推荐与当前团战已更新，输入未变的攻防榜保留。"
+    "note": "日历现有 131 个唯一活动；本轮补入 feed 新增的 2026-09-02 三圣柱团战时刻，并同步英文覆盖。8 月 5★、超级与 Max 轮换经 Hub 月度文章复核无变化；现行团战池及 tiers 来源未变，中文排行与对应英文区域保留已验证版本。"
   },
   "validation": {
-    "checkedAt": "2026-07-23T12:00:19Z",
+    "checkedAt": "2026-07-25T15:19:30Z",
     "status": "passed",
     "note": "最终复验：scripts/preflight.sh exit 0，render checks passed（2 条已知非阻塞长 chip 警告）；scripts/validate.sh exit 0，all checks passed。"
   },
@@ -111,12 +111,12 @@
       "decision": "对无法取得可靠简体中文结果的名称保留来源罗马字，不臆造翻译。"
     },
     "source_health": {
-      "fact": "Hub 8 月批量索引与官方通用缓存本轮降级，但精确月度文章、指南、详情及官方新闻直链均成功读取；其他已刷新来源健康。",
-      "decision": "采用已核实的精确页面补足批量源缺口，不因来源波动清空内容或虚构链接。"
+      "fact": "结构化活动、Hub、Pokébase 与官方批量源本轮 hash 变化；现行团战池未变。Hub 8 月精确月度文章可正常读取，批量索引仍偏 7 月。",
+      "decision": "以已核实的 8 月精确月度文章复核轮换；保留输入未变的排行与现行团战内容，仅补充新确认活动。"
     },
     "operator_note": {
-      "fact": "管理员要求精选 gigantamax-rillaboom-max-battle-day-2026 与 starmie-super-mega-raid-day-2026。",
-      "decision": "两个规范活动 id 均已存在于精选列表，本轮无需新增精选编辑。"
+      "fact": "管理员要求进行日常更新并修正错误，未指定新的精选或取消精选活动。",
+      "decision": "执行正常来源审计，补齐缺失活动，不主动更改精选列表。"
     },
     "known_tba": {
       "fact": "Pokémon XP 活动详情仍为 TBA。",

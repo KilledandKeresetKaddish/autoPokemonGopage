@@ -7627,6 +7627,43 @@
     ]
   },
   {
+    "id": "raidhour20260902",
+    "name": "三圣柱团战时刻",
+    "type": "raid-hour",
+    "heading": "Raid Hour",
+    "start": "2026-09-02T18:00:00",
+    "end": "2026-09-02T19:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+    "link": "https://leekduck.com/events/raidhour20260902/",
+    "summary": "9 月 2 日当地时间 18–19 时，雷吉洛克、雷吉艾斯与雷吉斯奇鲁集中出现在 5★团战。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/raidhour20260902/"
+      }
+    ],
+    "bonuses": [
+      ":raid: 当地时间 18–19 时集中刷新 5★团战"
+    ],
+    "pokemon": [
+      {
+        "id": 377,
+        "name": "雷吉洛克",
+        "shiny": true
+      },
+      {
+        "id": 378,
+        "name": "雷吉艾斯",
+        "shiny": true
+      },
+      {
+        "id": 379,
+        "name": "雷吉斯奇鲁",
+        "shiny": true
+      }
+    ]
+  },
+  {
     "id": "mlb-game-20260827",
     "name": "MLB世界赛之夜·巨人",
     "type": "mlb-game-day",

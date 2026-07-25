@@ -3920,6 +3920,21 @@
         }
       ]
     },
+    "raidhour20260902": {
+      "name": "Regirock, Regice, and Registeel Raid Hour",
+      "heading": "Raid Hour",
+      "summary": "On September 2 from 18:00–19:00 local time, Regirock, Regice, and Registeel appear more frequently in 5★ raids.",
+      "bonuses": [
+        ":raid: 5★ raids appear more frequently from 18:00–19:00 local time"
+      ],
+      "pokemon": [
+        "Regirock",
+        "Regice",
+        "Registeel"
+      ],
+      "counters": [],
+      "sections": []
+    },
     "mlb-game-20260827": {
       "name": "MLB World Championships Night: Giants",
       "heading": "MLB Theme Game",
