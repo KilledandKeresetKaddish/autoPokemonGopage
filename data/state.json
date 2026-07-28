@@ -1,126 +1,122 @@
 {
-  "lastUpdated": "2026-07-26T07:34:17Z",
+  "lastUpdated": "2026-07-28T05:29:12Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-07-26T07:29:34Z",
-      "lastChecked": "2026-07-26T07:34:17Z",
+      "lastFetch": "2026-07-28T05:02:23Z",
+      "lastChecked": "2026-07-28T05:29:12Z",
       "status": "ok",
-      "bytes": 54582,
-      "sha256": "57bdfb7f65bfd09d",
-      "note": "刷新成功，hash 未变化；新活动扫描无新增，沿用已验证日历事实。"
+      "bytes": 53232,
+      "sha256": "ee282d680bec74d5",
+      "note": "刷新成功，hash 已变化；结构化 JSON 健康，新活动扫描无未覆盖的本月/下月 LeekDuck ID。"
     },
     "raids": {
-      "lastFetch": "2026-07-25T15:15:17Z",
-      "lastChecked": "2026-07-26T07:34:17Z",
+      "lastFetch": "2026-07-28T05:01:51Z",
+      "lastChecked": "2026-07-28T05:29:12Z",
       "status": "ok",
       "bytes": 13409,
       "sha256": "79f3fa93a69929b7",
-      "note": "未超过约 1 日阈值，跳过刷新；保留 7 月 25 日已验证现行团战池。"
+      "note": "刷新成功，hash 未变化；现行团战池继续沿用已验证事实。"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-26T07:34:17Z",
+      "lastChecked": "2026-07-28T05:29:12Z",
       "status": "ok",
       "bytes": 29466,
       "sha256": "bf0d68f3851420d0",
-      "note": "按本轮相关性跳过刷新；保留既有缓存。"
+      "note": "hash 未变化；按本轮相关性跳过刷新，保留既有缓存。"
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-07-26T07:34:17Z",
+      "lastChecked": "2026-07-28T05:29:12Z",
       "status": "ok",
       "bytes": 70308,
       "sha256": "02025eab72ec1451",
-      "note": "按本轮相关性跳过刷新；保留既有缓存。"
+      "note": "hash 未变化；按本轮相关性跳过刷新，保留既有缓存。"
     },
     "gamemaster": {
       "lastFetch": "2026-07-23T10:24:53Z",
-      "lastChecked": "2026-07-26T07:34:17Z",
+      "lastChecked": "2026-07-28T05:29:12Z",
       "status": "ok",
       "bytes": 920925,
       "sha256": "5994f0ac34591633",
-      "note": "未超过约 7 日阈值，跳过刷新；保留健康缓存。"
+      "note": "hash 未变化；未超过约 7 日阈值，跳过刷新并保留健康缓存。"
     },
     "tiers-attackers": {
-      "lastFetch": "2026-07-23T10:24:45Z",
-      "lastChecked": "2026-07-26T07:34:17Z",
-      "status": "ok",
-      "bytes": 35479,
-      "sha256": "037bf6a8ed8a2df8",
-      "note": "未超过约 3 日阈值，跳过刷新；攻手榜保留已验证版本。"
+      "lastFetch": "2026-07-28T05:02:05Z",
+      "lastChecked": "2026-07-28T05:29:12Z",
+      "status": "degraded",
+      "bytes": 36617,
+      "sha256": "5de33f8bdc142453",
+      "note": "hash 已变化且页面切至 8 月，但 S Tier 为空、每属性榜缺失；判定源回归，保留此前已验证的攻手与每属性榜。"
     },
     "tiers-defenders": {
-      "lastFetch": "2026-07-23T10:24:49Z",
-      "lastChecked": "2026-07-26T07:34:17Z",
+      "lastFetch": "2026-07-28T05:02:12Z",
+      "lastChecked": "2026-07-28T05:29:12Z",
       "status": "ok",
-      "bytes": 39579,
-      "sha256": "17e3e7e077fbe798",
-      "note": "未超过约 3 日阈值，跳过刷新；防守榜保留已验证版本。"
+      "bytes": 40381,
+      "sha256": "eee81da5bf60c01c",
+      "note": "刷新成功，hash 已变化；页面健康且防守榜已更新。"
     },
     "tiers-pokebase": {
-      "lastFetch": "2026-07-23T10:24:53Z",
-      "lastChecked": "2026-07-26T07:34:17Z",
+      "lastFetch": "2026-07-28T05:02:17Z",
+      "lastChecked": "2026-07-28T05:29:12Z",
       "status": "ok",
       "bytes": 121480,
       "sha256": "7138c1e21645b7a3",
-      "note": "未超过约 3 日阈值，跳过刷新；继续作为排行交叉参考。"
+      "note": "刷新成功，hash 未变化；继续作为排行交叉参考。"
     },
     "events-hub": {
-      "lastFetch": "2026-07-26T07:29:36Z",
-      "lastChecked": "2026-07-26T07:34:17Z",
+      "lastFetch": "2026-07-28T05:02:24Z",
+      "lastChecked": "2026-07-28T05:29:12Z",
       "status": "ok",
-      "bytes": 30962,
-      "sha256": "55a1f46a351cbcee",
-      "note": "刷新成功，hash 已变化；索引新增/提升了 GO Fest 全球周日团战补偿等内容，已打开精确文章复核；活动本身已在日历中。"
+      "bytes": 31018,
+      "sha256": "d03f7e7f955d63a5",
+      "note": "刷新成功，hash 已变化且索引可解析；7 月月度文章已用于校正轮换，并核实索财灵闪光宝箱期限。"
     },
     "events-pokebase": {
-      "lastFetch": "2026-07-25T15:15:27Z",
-      "lastChecked": "2026-07-26T07:34:17Z",
+      "lastFetch": "2026-07-28T05:02:02Z",
+      "lastChecked": "2026-07-28T05:29:12Z",
       "status": "ok",
-      "bytes": 31710,
-      "sha256": "025402d046b52ca9",
-      "note": "未超过约 1 日阈值，跳过刷新；保留健康缓存。"
+      "bytes": 29519,
+      "sha256": "6fa5e67bccf1a491",
+      "note": "刷新成功，hash 已变化；活动列表 markdown 可解析并已用于交叉核对。"
     },
     "events-official": {
-      "lastFetch": "2026-07-26T07:29:38Z",
-      "lastChecked": "2026-07-26T07:34:17Z",
-      "status": "ok",
+      "lastFetch": "2026-07-28T05:02:24Z",
+      "lastChecked": "2026-07-28T05:29:12Z",
+      "status": "degraded",
       "bytes": 5755,
       "sha256": "6c1a10c11da6f3ee",
-      "note": "刷新成功，hash 未变化；GO Fest 全球周日团战补偿官方页健康，已复核全球范围、12 张免费券与远程团战窗口。"
+      "note": "刷新成功，hash 未变化但批量索引信号偏低，遗漏日本麦当劳地区文章；已通过定向发现打开官方文章并补足。"
     }
   },
   "discovery": {
-    "lastChecked": "2026-07-26T07:34:17Z",
+    "lastChecked": "2026-07-28T05:29:12Z",
     "status": "ok",
-    "note": "新活动发现扫描完成，本周期相对当前日历无新增活动；Hub 7 月月度文章与 GO Fest 全球周日团战补偿文章已读取，现有日历事实完整。"
+    "note": "新活动扫描无未覆盖的本月/下月 LeekDuck ID；定向发现并核实日本限定麦当劳合作（官方 + Fandom），同时由 Hub 周年文章与 Fandom 核实索财灵闪光宝箱截至 2026-07-31 23:59 当地时间。"
   },
   "contentStatus": {
-    "checkedAt": "2026-07-26T07:34:17Z",
+    "checkedAt": "2026-07-28T05:29:12Z",
     "status": "validated",
-    "note": "日历保持 131 个唯一活动；事件、官方与现行团战事实无新增，轮换与结构化排行保留已验证版本。修正了中文与英文“本月看点 / 本期推荐”的过期 7 月 23 日措辞，改为 7 月 26 日全球团战补偿与当日资源优先级。"
+    "note": "日历 127 个唯一活动；新增 event-20260731 与 202607backtomcd，移除 6 条过期记录，保留截至端点的 7 月 21–28 日 GBL。轮换校正为 7 月且 Boss 段匹配；中英文精确对齐。防守榜及日期驱动区域更新，攻手榜和现行团战榜保留可靠版本。"
   },
   "validation": {
-    "checkedAt": "2026-07-26T07:34:34Z",
+    "checkedAt": "2026-07-28T05:31:19Z",
     "status": "passed",
     "note": "最终复验：scripts/preflight.sh exit 0，render checks passed（2 条已知非阻塞长 chip 警告）；scripts/validate.sh exit 0，all checks passed。"
   },
   "notes": {
-    "pipeline_gap_fetch_zh": {
-      "fact": "部分有效物种查询仍会返回 NO-ZH-NAME。",
-      "decision": "对无法取得可靠简体中文结果的名称保留来源罗马字，不臆造翻译。"
-    },
     "source_health": {
-      "fact": "结构化活动与官方源 hash 未变；Hub 活动索引 hash 变化并包含 GO Fest 全球周日团战补偿文章。其余未到刷新阈值或无本轮相关性。",
-      "decision": "复核变化文章；无新增事件，保留稳定日历、轮换和结构化排行，仅修正日期驱动的推荐区域。"
+      "fact": "已变化：events、events-hub、events-pokebase、tiers-attackers、tiers-defenders；未变化：raids、events-official、tiers-pokebase、gamemaster、eggs、research。攻手源的新 8 月页面 S Tier 为空且缺失每属性榜；官方批量索引遗漏日本地区文章。",
+      "decision": "健康变化源已解析；攻手及每属性榜保留此前可靠版本。日本麦当劳活动改由定向发现并用官方与 Fandom 核实。"
     },
     "operator_note": {
-      "fact": "管理员要求进行日常更新并修正错误，未指定新的精选或取消精选活动。",
-      "decision": "完成来源审计，并修正推荐区域中过期的 7 月 23 日“今天/今晚”表述；不主动更改精选列表。"
+      "fact": "管理员要求完成日常更新与错误修正，并明确关注地区活动与索财灵截止期；未提出精选或取消精选请求。",
+      "decision": "已补入日本限定麦当劳合作并标明地区，已补入索财灵闪光宝箱活动及 7 月 31 日 23:59 当地时间期限；不主动改动精选列表。"
     },
-    "known_tba": {
-      "fact": "Pokémon XP 活动详情仍为 TBA。",
-      "decision": "保留待定状态，不补写未经来源确认的细节。"
+    "content_decision": {
+      "fact": "7 月月度 Hub 文章已打开并用于团战轮换；现行 raids hash 未变。",
+      "decision": "将轮换月份纠正为 2026-07，保持 Boss 事实与现行团战池一致；中英文事件、轮换和五个区域已建立精确奇偶校验。"
     }
   }
 }
