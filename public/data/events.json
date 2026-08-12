@@ -2012,61 +2012,6 @@
     ]
   },
   {
-    "id": "go-pass-july-2026",
-    "name": "GO 通行证:7 月",
-    "type": "go-pass",
-    "heading": "GO Pass",
-    "start": "2026-07-07T10:00:00",
-    "end": "2026-08-04T10:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-07-go-pass-july-2026/go-pass-july-2026.jpg",
-    "link": "https://leekduck.com/events/go-pass-july-2026/",
-    "summary": "7 月 GO 通行证于 7/7 10:00–8/4 10:00 开放,Rank 100 可遇凤王,Rank 101 与 200 可遇持十周年纪念硬币的索财灵;奖励需在 8/6 10:00 前领取。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/go-pass-july-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/go-pass-july-2026/"
-      }
-    ],
-    "longTerm": true,
-    "pokemon": [
-      {
-        "id": 250,
-        "name": "凤王",
-        "shiny": true
-      },
-      {
-        "id": 999,
-        "name": "索财灵",
-        "shiny": true
-      }
-    ],
-    "bonuses": [
-      ":candy: Rank 1:交换宝可梦额外 +1 糖果;31 级以上交换保证 +1 糖果 XL",
-      "Rank 25:礼物开启/接收/携带上限提升",
-      ":incense: Rank 50:每日探险熏香持续时间 ×2",
-      ":stardust: Rank 75:孵蛋星尘与孵蛋 XP 提升",
-      "8/1 00:00–8/2 23:59 GO 点数无每日上限"
-    ],
-    "sections": [
-      {
-        "title": "主要奖励",
-        "items": [
-          "免费轨道:Rank 100 凤王遭遇、Rank 101 与 200 十周年纪念硬币索财灵遭遇、400 宝可币、星尘、XP、Max 粒子等。",
-          "豪华轨道:额外 1000 宝可币(合计 1400)、额外索财灵遭遇、超级孵化器与更多宝可梦遭遇。",
-          "GO Pass Deluxe + 10 Ranks 可直接到 Rank 11;网页商店购买有究极球、极巨复活、高级战斗通行证、极巨药水等赠品。"
-        ]
-      },
-      {
-        "title": "领取期限",
-        "body": "GO 通行证:7 月奖励会在 8/6 10:00(当地时间)过期,请在期限前领取已解锁奖励。"
-      }
-    ]
-  },
-  {
     "id": "road-of-legends-raids-20260708",
     "name": "传奇之路团战:黑酋雷姆与超级沙奈朵",
     "type": "raid-battles",
@@ -3253,28 +3198,6 @@
     "highlight": false
   },
   {
-    "id": "gbl-forever-forward_great-league_ultra-league_master-league-split-2",
-    "name": "超级 / 高级 / 大师联赛",
-    "type": "go-battle-league",
-    "heading": "GO Battle League",
-    "start": "2026-07-21T20:00:00Z",
-    "end": "2026-07-28T20:00:00Z",
-    "image": "https://cdn.leekduck.com/assets/img/events/go-battle-league-season-27-forever-forward.jpg",
-    "link": "https://leekduck.com/events/gbl-forever-forward_great-league_ultra-league_master-league-split-2/",
-    "summary": "GO 对战联盟:超级联赛、高级联赛与大师联赛同时开放。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/gbl-forever-forward_great-league_ultra-league_master-league-split-2/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/pvp/go-battle-league-forever-forward/"
-      }
-    ],
-    "longTerm": true
-  },
-  {
     "id": "pokemonspotlighthour2026-07-23",
     "name": "伊布聚焦时刻",
     "type": "pokemon-spotlight-hour",
@@ -3452,28 +3375,6 @@
     "longTerm": true
   },
   {
-    "id": "gbl-forever-forward_great-league_master-premier",
-    "name": "超级联赛 · 大师超级锦标赛",
-    "type": "go-battle-league",
-    "heading": "GO Battle League",
-    "start": "2026-07-28T20:00:00Z",
-    "end": "2026-08-04T20:00:00Z",
-    "image": "https://cdn.leekduck.com/assets/img/events/gobattle-greatleague-key.jpg",
-    "link": "https://leekduck.com/events/gbl-forever-forward_great-league_master-premier/",
-    "summary": "GO 对战联盟:超级联赛与大师超级锦标赛开放。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/gbl-forever-forward_great-league_master-premier/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/pvp/go-battle-league-forever-forward/"
-      }
-    ],
-    "longTerm": true
-  },
-  {
     "id": "pokemonspotlighthour2026-07-30",
     "name": "大牙狸聚焦时刻",
     "type": "pokemon-spotlight-hour",
@@ -3588,28 +3489,6 @@
     "highlight": true
   },
   {
-    "id": "gbl-forever-forward_ultra-league_weather-cup-great-league-edition",
-    "name": "高级联赛 · 天气杯(超级联赛规则)",
-    "type": "go-battle-league",
-    "heading": "GO Battle League",
-    "start": "2026-08-04T20:00:00Z",
-    "end": "2026-08-11T20:00:00Z",
-    "image": "https://cdn.leekduck.com/assets/img/events/go-battle-league-ultra-league-machamp-swampert.jpg",
-    "link": "https://leekduck.com/events/gbl-forever-forward_ultra-league_weather-cup-great-league-edition/",
-    "summary": "GO 对战联盟:高级联赛与天气杯(超级联赛规则,CP 上限 1500)开放。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/gbl-forever-forward_ultra-league_weather-cup-great-league-edition/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/pvp/go-battle-league-forever-forward/"
-      }
-    ],
-    "longTerm": true
-  },
-  {
     "id": "fire-and-ice-hatch-day-2026",
     "name": "冰与火孵化日",
     "type": "event",
@@ -3684,7 +3563,7 @@
     "end": "2026-08-17T20:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/choose-your-path-evergreen.jpg",
     "link": "https://leekduck.com/events/choose-your-path-venom-and-vines-2026/",
-    "summary": "「选择你的道路:毒与藤蔓」限时调查,可从探索/捕捉/对战三条路线中任选其一,决定本周任务与奖励;本期主题为毒系与草系,具体宝可梦待官方公布。",
+    "summary": "「选择你的道路:毒与藤蔓」限时调查可选择探索、捕捉或对战路线；部分训练家一次选择整周加成，部分训练家可每日从六种加成中重新选择，任务奖励包含 Venonat 与 Fomantis 遭遇。",
     "links": [
       {
         "label": "LeekDuck",
@@ -3696,7 +3575,31 @@
       }
     ],
     "bonuses": [
-      "限时调查双线选择"
+      ":xp: 探索路线：转动补给站经验 ×5，或孵蛋距离减半",
+      ":candy: 捕捉路线：Nice 及以上投球捕捉经验 ×1.5，或额外捕捉糖果",
+      ":raid: 对战路线：完成团战额外获得 5000 经验，或火箭队手下掉落更多神秘零件"
+    ],
+    "pokemon": [
+      {
+        "id": 48,
+        "name": "Venonat",
+        "shiny": true
+      },
+      {
+        "id": 753,
+        "name": "Fomantis",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "选择规则",
+        "items": [
+          "一部分训练家只能在最后三种加成中选择一次，选定后整周不可更改",
+          "另一部分训练家可每天从六种加成中选择，并领取当日到期的对应限时调查",
+          "所有任务与奖励须在 8 月 17 日 20 时前完成和领取"
+        ]
+      }
     ]
   },
   {
@@ -5701,61 +5604,6 @@
     "highlight": false
   },
   {
-    "id": "shadow-palkia-in-shadow-raids-july-2026",
-    "name": "暗影帕路奇亚 现身暗影团战",
-    "type": "raid-battles",
-    "heading": "Raid Battles",
-    "start": "2026-07-01T06:00:00",
-    "end": "2026-08-04T22:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/shadow-palkia-in-shadow-raids-july-2026/",
-    "summary": "7/1–8/4 周末暗影帕路奇亚(水/龙)现身暗影团战,可遇闪光。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/shadow-palkia-in-shadow-raids-july-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 484,
-        "name": "帕路奇亚",
-        "hub": "484-Shadow",
-        "shiny": true
-      }
-    ],
-    "counters": [
-      {
-        "id": 461,
-        "name": "玛狃拉",
-        "fast": "冰砾",
-        "charged": "雪崩"
-      },
-      {
-        "id": 471,
-        "name": "冰伊布",
-        "fast": "冰息",
-        "charged": "冰冻光束"
-      },
-      {
-        "id": 473,
-        "name": "象牙猪",
-        "fast": "细雪",
-        "charged": "冰锥"
-      }
-    ],
-    "bonuses": [
-      "✨ 帕路奇亚可遇闪光",
-      ":raid: 周末暗影团战登场"
-    ],
-    "highlight": false,
-    "longTerm": true
-  },
-  {
     "id": "special-anniversary-pikachu-celebration-2026",
     "name": "特别周年皮卡丘庆典",
     "type": "event",
@@ -6070,20 +5918,25 @@
     "highlight": false
   },
   {
-    "id": "lego-stores-x-pokemon-go-stamp-rally-raids-and-more",
+    "id": "lego-pokemon-go-2026",
     "name": "乐高门店×宝可梦 GO 集章活动(美/英/法/德/波/澳线下)",
     "type": "event",
     "heading": "In-Person Event",
-    "start": "2026-08-03T00:00:00",
-    "end": "2026-09-30T20:00:00",
-    "link": "https://pokemongohub.net/post/event/lego-stores-x-pokemon-go-stamp-rally-raids-and-more/",
+    "start": "2026-08-03T10:00:00",
+    "end": "2026-09-30T23:59:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-03-lego-pokemon-go-2026/lego-stores-pokemon-go.jpg",
+    "link": "https://leekduck.com/events/lego-pokemon-go-2026/",
     "summary": "线下联动:美国、英国、波兰、法国、德国与澳大利亚的参与乐高门店内,可参加乐高主题集章活动、皮卡丘团战与限时调查,集章可遇见带特殊背景的皮卡丘。",
     "bonuses": [
       ":raid: 参与门店附近的团战中皮卡丘更常出现",
       ":pokestop: 完成 GO 集章活动可遇见带特殊背景的皮卡丘",
-      "到店可领取限时调查与活动主题贴纸"
+      "到店可领取限时调查、主题贴纸与头像道具"
     ],
     "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/lego-pokemon-go-2026/"
+      },
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/event/lego-stores-x-pokemon-go-stamp-rally-raids-and-more/"
@@ -6105,8 +5958,9 @@
         "title": "玩法一览",
         "items": [
           ":raid: 参与门店附近团战中皮卡丘更常出现,运气好可遇闪光或特殊背景个体",
-          ":pokestop: 集章活动:在指定补给站/道馆旋转集满印章,可遇带特殊背景的皮卡丘",
-          ":pokestop: 到店打开游戏可领限时调查（需在 9/30 20 时前完成并领取），还有活动主题贴纸"
+          ":pokestop: 集章活动:在指定补给站/道馆收集印章,可遇带特殊背景的皮卡丘",
+          ":pokestop: 到店打开游戏可领限时调查；任务与奖励须在 9/30 23 时 59 分前完成和领取",
+          "兑换码可领取额外限时调查与免费树果道具"
         ]
       }
     ],
@@ -7261,21 +7115,58 @@
     "end": "2026-08-30T20:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
     "link": "https://leekduck.com/events/pokemon-xp-2026-worlds/",
-    "summary": "Pokémon XP 与 2026 世界锦标赛联动活动已定于 8 月 25 日 10 时至 8 月 30 日 20 时举行；玩法、奖励与出场宝可梦尚未公布。",
+    "summary": "联动活动分为 8 月 25–28 日的 Pokémon XP 阶段与 8 月 28–30 日的世界锦标赛阶段；全球训练家可参加主题野外遭遇、1★团战、GO 通行证与直播掉宝。",
     "links": [
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/pokemon-xp-2026-worlds/"
       },
       {
-        "label": "Hub·8 月月历",
-        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-2026-world-championships-event-guide/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/en/news/world-championships-event-2026"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Pok%C3%A9monXP_%26_2026_Pok%C3%A9mon_World_Championships"
+      }
+    ],
+    "bonuses": [
+      "GO 对战联盟每日对战组数由 5 组提高至 15 组",
+      "GO 对战联盟奖励遭遇的个体值范围扩大",
+      ":stardust: GO 通行证 Rank 10 起捕捉星尘 ×2",
+      ":xp: GO 通行证 Rank 20 起团战额外获得 3000 经验"
+    ],
+    "pokemon": [
+      {
+        "id": 25,
+        "name": "皮卡丘",
+        "shiny": true
       }
     ],
     "sections": [
       {
-        "title": "已确认信息",
-        "body": "目前仅公布活动名称与日期；具体加成、遭遇和奖励待后续公告，请勿提前按未证实信息规划资源。"
+        "title": "两个活动阶段",
+        "items": [
+          "Pokémon XP：8 月 25 日 10 时至 8 月 28 日 10 时",
+          "2026 世界锦标赛：8 月 28 日 10 时至 8 月 30 日 20 时",
+          "两阶段的野外遭遇与 1★团战阵容不同；两种换装皮卡丘首次登场"
+        ]
+      },
+      {
+        "title": "GO 通行证",
+        "items": [
+          "8 月 25 日 10 时自动获得；可在 8 月 30 日 20 时前累积 GO 点数",
+          "8 月 29 日 0 时至 8 月 30 日 19 时 59 分取消 GO 点数每日上限",
+          "已解锁奖励须在 9 月 1 日 19 时 59 分前领取"
+        ]
+      },
+      {
+        "title": "直播奖励",
+        "body": "8 月 28–30 日观看 Pokémon GO、Pokémon 与 Pokémon XP 直播，可按 30、45 或 60 分钟门槛领取队伍组建、世界冠军队伍及换装皮卡丘相关限时调查。"
       }
     ]
   },
@@ -7311,16 +7202,20 @@
     ]
   },
   {
-    "id": "pokemon-spotlight-hour-20260813",
+    "id": "pokemonspotlighthour2026-08-13",
     "name": "刺尾虫聚焦时刻",
     "type": "pokemon-spotlight-hour",
     "heading": "Pokémon Spotlight Hour",
     "start": "2026-08-13T18:00:00",
     "end": "2026-08-13T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
-    "link": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/",
+    "link": "https://leekduck.com/events/pokemonspotlighthour2026-08-13/",
     "summary": "8 月 13 日当地时间 18–19 时，刺尾虫在野外大量出现，并提供进化经验 ×2 加成。",
     "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemonspotlighthour2026-08-13/"
+      },
       {
         "label": "Hub·8 月月历",
         "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
@@ -7342,16 +7237,20 @@
     ]
   },
   {
-    "id": "pokemon-spotlight-hour-20260820",
+    "id": "pokemonspotlighthour2026-08-20",
     "name": "Magikarp 聚焦时刻",
     "type": "pokemon-spotlight-hour",
     "heading": "Pokémon Spotlight Hour",
     "start": "2026-08-20T18:00:00",
     "end": "2026-08-20T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
-    "link": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/",
+    "link": "https://leekduck.com/events/pokemonspotlighthour2026-08-20/",
     "summary": "8 月 20 日当地时间 18–19 时，Magikarp 在野外大量出现，并提供捕捉经验 ×2 加成。",
     "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemonspotlighthour2026-08-20/"
+      },
       {
         "label": "Hub·8 月月历",
         "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
@@ -7373,16 +7272,20 @@
     ]
   },
   {
-    "id": "pokemon-spotlight-hour-20260827",
+    "id": "pokemonspotlighthour2026-08-27",
     "name": "Mankey 聚焦时刻",
     "type": "pokemon-spotlight-hour",
     "heading": "Pokémon Spotlight Hour",
     "start": "2026-08-27T18:00:00",
     "end": "2026-08-27T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
-    "link": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/",
+    "link": "https://leekduck.com/events/pokemonspotlighthour2026-08-27/",
     "summary": "8 月 27 日当地时间 18–19 时，Mankey 在野外大量出现，并提供捕捉糖果 ×2 加成。",
     "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemonspotlighthour2026-08-27/"
+      },
       {
         "label": "Hub·8 月月历",
         "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
@@ -7660,5 +7563,399 @@
     ],
     "longTerm": true,
     "highlight": false
+  },
+  {
+    "id": "pokemon-world-championships-2026-timed-research-twitch-drops",
+    "name": "2026 世界锦标赛 Twitch 掉宝限时调查",
+    "type": "research",
+    "heading": "Research",
+    "start": "2026-08-28T16:00:00Z",
+    "end": "2026-08-31T03:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-28-pokemon-world-championships-2026-timed-research-twitch-drops/2026-worlds-go-drops.jpg",
+    "link": "https://leekduck.com/events/pokemon-world-championships-2026-timed-research-twitch-drops/",
+    "summary": "观看 2026 世界锦标赛及 Pokémon XP 官方直播，可获得队伍组建、世界冠军队伍和两种换装 Pikachu 相关限时调查；各兑换码须在 9 月 11 日 20:00 UTC 前使用。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-world-championships-2026-timed-research-twitch-drops/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-2026-world-championships-event-guide/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/en/news/world-championships-event-2026"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Pok%C3%A9monXP_%26_2026_Pok%C3%A9mon_World_Championships"
+      }
+    ],
+    "bonuses": [
+      "观看 30 分钟：超级联赛队伍组建限时调查",
+      "观看 60 分钟：2025 世界冠军队伍 Tinkaton 限时调查与厉害特殊招式学习器",
+      "官方共同直播观看 45 分钟：世界锦标赛 2026 Pikachu 限时调查",
+      "Pokémon XP 专题观看 30 分钟：穿 Cosmog 太空服的 Pikachu 限时调查"
+    ],
+    "pokemon": [
+      {
+        "id": 108,
+        "name": "Lickitung"
+      },
+      {
+        "id": 158,
+        "name": "Totodile"
+      },
+      {
+        "id": 194,
+        "name": "Paldean Wooper"
+      },
+      {
+        "id": 959,
+        "name": "Tinkaton"
+      },
+      {
+        "id": 25,
+        "name": "Pikachu"
+      }
+    ],
+    "sections": [
+      {
+        "title": "领取步骤",
+        "items": [
+          "将 Pokémon Trainer Club 账号与 Twitch 账号连接",
+          "在对应直播频道达到观看门槛后，于 Twitch 掉宝库存领取奖励",
+          "前往 rewards.pokemon.com 取得一次性兑换码，再到 Pokémon GO 兑换页面使用"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mega-ascension",
+    "name": "超级进阶（Mega Ascension）",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-08-31T10:00:00",
+    "end": "2026-09-04T23:59:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-31-mega-ascension/mega-ascension.jpg",
+    "link": "https://leekduck.com/events/mega-ascension/",
+    "summary": "GO Fest 2026：超级终章的前置活动，以每日轮换的超级团战、野外遭遇和分支限时调查为核心；训练家可从 Chespin、Fennekin 或 Froakie 中选择伙伴并开启对应 GO 通行证路线。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-ascension/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/mega-ascension/"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Mega_Ascension"
+      }
+    ],
+    "bonuses": [
+      ":raid: 远程团战每日上限提高至 30 场",
+      ":raid: 超级团战捕获的宝可梦有机会带超级进化主题特殊背景",
+      "分支限时调查可选择 Chespin、Fennekin 或 Froakie",
+      "8 月 31 日起开放 GO 通行证：超级终章"
+    ],
+    "pokemon": [
+      {
+        "id": 650,
+        "name": "Chespin",
+        "shiny": true
+      },
+      {
+        "id": 653,
+        "name": "Fennekin",
+        "shiny": true
+      },
+      {
+        "id": 656,
+        "name": "Froakie",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "超级团战日程",
+        "items": [
+          "8 月 31 日：Mega Victreebel、Mega Dragonite、Mega Malamar",
+          "9 月 1 日：Mega Falinks",
+          "9 月 2 日：Mega Skarmory",
+          "9 月 3 日：Mega Starmie",
+          "9 月 4 日：Mega Raichu X、Mega Raichu Y",
+          "活动全程另有 Mega Latias 与 Mega Latios"
+        ]
+      },
+      {
+        "title": "通行证提示",
+        "body": "免费路线可获得所选伙伴的遭遇、糖果、连接能量与足够完成一次对应超级进化的能量；豪华路线另有闪光提升、超级团战额外糖果/糖果 XL/经验及更多超级能量。"
+      }
+    ]
+  },
+  {
+    "id": "pokemon-go-fest-2026-mega-finale",
+    "name": "Pokémon GO Fest 2026：超级终章",
+    "type": "pokemon-go-fest",
+    "heading": "Pokémon GO Fest",
+    "start": "2026-09-05T10:00:00",
+    "end": "2026-09-06T18:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-05-pokemon-go-fest-2026-mega-finale/pokemon-go-fest-2026-mega-finale.jpg",
+    "link": "https://leekduck.com/events/pokemon-go-fest-2026-mega-finale/",
+    "summary": "免费全球活动以八个轮换栖息地和大量超级团战收官 GO Fest 2026；Mega Mewtwo X 于周六、Mega Mewtwo Y 于周日登场，Mega Chesnaught、Mega Delphox 与 Mega Greninja 同期首次进入 Pokémon GO。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-go-fest-2026-mega-finale/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-fest-2026-mega-finale/"
+      },
+      {
+        "label": "官方预告",
+        "url": "https://pokemongo.com/en/news/gofest2026-mega-finale-incoming"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Pok%C3%A9mon_GO_Fest_2026%3A_Mega_Finale"
+      }
+    ],
+    "bonuses": [
+      ":raid: 9 月 5–6 日远程团战不限次数",
+      "所有已超级进化宝可梦在活动期间获得额外 CP 提升",
+      ":raid: 超级团战捕获的宝可梦有机会带超级进化主题特殊背景",
+      "豪华通行证提供部分超级团战与活动遭遇的闪光概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 650,
+        "name": "Chespin",
+        "shiny": true
+      },
+      {
+        "id": 653,
+        "name": "Fennekin",
+        "shiny": true
+      },
+      {
+        "id": 656,
+        "name": "Froakie",
+        "shiny": true
+      },
+      {
+        "id": 150,
+        "name": "超级超梦 X",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png",
+        "hub": "150-Mega_X"
+      },
+      {
+        "id": 150,
+        "name": "超级超梦 Y",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png",
+        "hub": "150-Mega_Y"
+      }
+    ],
+    "sections": [
+      {
+        "title": "超级进化新成员",
+        "body": "活动前置阶段与周末期间可推进所选伙伴路线，最终将对应伙伴超级进化为 Mega Chesnaught、Mega Delphox 或 Mega Greninja。"
+      },
+      {
+        "title": "超级超级团战",
+        "items": [
+          "9 月 5 日：Mega Mewtwo X",
+          "9 月 6 日：Mega Mewtwo Y",
+          "超级超梦仅在部分道馆出现；其他道馆按当前栖息地开放超级团战"
+        ]
+      },
+      {
+        "title": "栖息地与团战",
+        "body": "两天各有四个栖息地，每个栖息地轮换两次；野外遭遇与超级团战 Boss 会随栖息地切换。"
+      }
+    ]
+  },
+  {
+    "id": "september-communitydayclassic2026",
+    "name": "9 月社区日经典回顾",
+    "type": "community-day",
+    "heading": "Community Day",
+    "start": "2026-09-12T14:00:00",
+    "end": "2026-09-12T17:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/cd-default.jpg",
+    "link": "https://leekduck.com/events/september-communitydayclassic2026/",
+    "summary": "9 月社区日经典回顾确定于 9 月 12 日当地时间 14–17 时举行；主角、限定招式与完整加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/september-communitydayclassic2026/"
+      },
+      {
+        "label": "Hub·秋季日期",
+        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+      }
+    ],
+    "bonuses": [
+      "✨ 社区日闪光概率提升；主角待公布"
+    ],
+    "highlight": true
+  },
+  {
+    "id": "super-mega-raid-day-september-2026",
+    "name": "9 月超级超级团战日",
+    "type": "raid-day",
+    "heading": "Raid Day",
+    "start": "2026-09-19T14:00:00",
+    "end": "2026-09-19T17:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/super-mega-raid-day-september-2026/",
+    "summary": "9 月超级超级团战日确定于 9 月 19 日当地时间 14–17 时举行；主角、团战奖励与完整加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/super-mega-raid-day-september-2026/"
+      },
+      {
+        "label": "Hub·秋季日期",
+        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+      }
+    ],
+    "bonuses": [
+      "✨ 团战日闪光概率提升；主角待公布"
+    ],
+    "highlight": true
+  },
+  {
+    "id": "catch-mastery-september-2026",
+    "name": "9 月捕捉精通",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-09-26T10:00:00",
+    "end": "2026-09-26T20:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/catch-mastery-september-2026/",
+    "summary": "捕捉精通活动确定于 9 月 26 日当地时间 10–20 时举行；主题宝可梦、调查与加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/catch-mastery-september-2026/"
+      },
+      {
+        "label": "Hub·秋季日期",
+        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+      }
+    ]
+  },
+  {
+    "id": "pokexciting-cross-region-go-stamp-rally",
+    "name": "PokéXciting 亚太跨地区集章活动(吉隆坡/台北/新加坡/马尼拉线下)",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-09-12T00:00:00",
+    "end": "2029-09-11T23:59:00",
+    "image": "https://pokemongohub.net/wp-content/uploads/2026/08/event-apac-stamp-rally-2026.jpg",
+    "link": "https://pokemongohub.net/post/event/pokexciting-cross-region-go-stamp-rally/",
+    "summary": "亚太长期线下集章活动在吉隆坡、台北、新加坡与马尼拉设置城市专属印章；到场转动指定补给站，可遇见穿当地配色服装并带地点背景的 PokéXciting Pikachu。曼谷地点与日期待公布。",
+    "links": [
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokexciting-cross-region-go-stamp-rally/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 25,
+        "name": "Pikachu"
+      }
+    ],
+    "sections": [
+      {
+        "title": "首批四处地点",
+        "items": [
+          "吉隆坡：KLCC Park Esplanade 前方",
+          "台北：香堤大道",
+          "新加坡：樟宜机场第三航站楼出发大厅",
+          "马尼拉：SM Mall of Asia 的 MOA Sky",
+          "首批地点开放期为 2026 年 9 月 12 日至 2029 年 9 月 11 日"
+        ]
+      },
+      {
+        "title": "跨地区规则",
+        "body": "每座城市提供一枚独立数字印章；收集对应印章即可获得该城市配色的 PokéXciting Pikachu 与当地地点背景。此活动与各巡回城市在主活动期间开放的本地五枚印章路线不同。"
+      }
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "raid-battles-20260831",
+    "name": "超级进阶 8 月 31 日超级团战",
+    "type": "raid-battles",
+    "heading": "Mega Ascension Raids",
+    "start": "2026-08-31T00:01:00",
+    "end": "2026-08-31T23:59:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-31-mega-ascension/mega-ascension.jpg",
+    "link": "https://leekduck.com/events/mega-ascension/",
+    "summary": "超级进阶首日以 Mega Victreebel、Mega Dragonite 与 Mega Malamar 为当日轮换，Mega Latias 和 Mega Latios 也可能在活动全程出现；活动团战自当地时间 00:01 起替代常规赛季团战。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-ascension/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/mega-ascension/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 71,
+        "name": "超级大食花",
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/official/full/071_mega_with_bg.webp",
+        "hub": "71-Mega"
+      },
+      {
+        "id": 149,
+        "name": "超级快龙",
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp",
+        "hub": "149-Mega"
+      },
+      {
+        "id": 687,
+        "name": "超级乌贼王",
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/official/full/687_mega_with_bg.webp",
+        "hub": "687-Mega"
+      },
+      {
+        "id": 380,
+        "name": "超级拉帝亚斯",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10062.png",
+        "hub": "380-Mega"
+      },
+      {
+        "id": 381,
+        "name": "超级拉帝欧斯",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png",
+        "hub": "381-Mega"
+      }
+    ],
+    "bonuses": [
+      ":raid: 活动团战捕获的宝可梦有机会带超级进化主题特殊背景"
+    ],
+    "sections": [
+      {
+        "title": "轮换说明",
+        "body": "Mega Victreebel、Mega Dragonite 与 Mega Malamar 为 8 月 31 日当日 Boss；Mega Latias 与 Mega Latios 是活动全程的额外超级团战 Boss。"
+      }
+    ]
   }
 ]

@@ -758,5 +758,44 @@
     "release": "2026-08-22",
     "sprite": "https://db.pokemongohub.net/images/official/full/121_mega_with_bg.webp",
     "hub": "121-Mega"
+  },
+  {
+    "id": 652,
+    "name": "超级 Chesnaught",
+    "en": "Mega Chesnaught",
+    "boostedTypes": [
+      "grass",
+      "fighting"
+    ],
+    "initialCost": null,
+    "release": "2026-09-05",
+    "sprite": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm652.fMEGA.icon.png",
+    "hub": "652-Mega"
+  },
+  {
+    "id": 655,
+    "name": "超级 Delphox",
+    "en": "Mega Delphox",
+    "boostedTypes": [
+      "fire",
+      "psychic"
+    ],
+    "initialCost": null,
+    "release": "2026-09-05",
+    "sprite": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm655.fMEGA.icon.png",
+    "hub": "655-Mega"
+  },
+  {
+    "id": 658,
+    "name": "超级 Greninja",
+    "en": "Mega Greninja",
+    "boostedTypes": [
+      "water",
+      "dark"
+    ],
+    "initialCost": null,
+    "release": "2026-09-05",
+    "sprite": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm658.fMEGA.icon.png",
+    "hub": "658-Mega"
   }
 ]

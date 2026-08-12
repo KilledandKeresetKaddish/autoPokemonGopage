@@ -1,6 +1,6 @@
 {
-  "month": "2026-07",
-  "note": "7 月 5★/超级团战按周三轮换，Max 团战按周轮换；7/6–7/12 有传奇之路与 GO Fest 特别场次，7/18 有超级雷丘团战日，周末暗影团战见长期活动。",
+  "month": "2026-08",
+  "note": "8 月 5★/超级团战按周三轮换，Max 团战按周轮换；另有 8/1 Max 对战日、8/22 超级超级团战日及 8/31 超级进阶特别轮换。",
   "tracks": [
     {
       "key": "5star",
@@ -799,28 +799,6 @@
           "end": "2026-07-21"
         },
         {
-          "name": "Mega Raichu X / Y",
-          "cn": "超级雷丘 X / Y",
-          "pokemon": [
-            {
-              "id": 26,
-              "name": "超级雷丘 X",
-              "shiny": true,
-              "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
-              "hub": "26-Mega_X"
-            },
-            {
-              "id": 26,
-              "name": "超级雷丘 Y",
-              "shiny": true,
-              "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp",
-              "hub": "26-Mega_Y"
-            }
-          ],
-          "start": "2026-07-18",
-          "end": "2026-07-18"
-        },
-        {
           "name": "Mega Salamence",
           "cn": "超级暴飞龙",
           "pokemon": [
@@ -923,6 +901,49 @@
           ],
           "start": "2026-08-26",
           "end": "2026-09-08"
+        },
+        {
+          "name": "Mega Ascension: August 31",
+          "cn": "超级进阶 8 月 31 日(多种轮替)",
+          "pokemon": [
+            {
+              "id": 71,
+              "name": "超级大食花",
+              "shiny": true,
+              "sprite": "https://db.pokemongohub.net/images/official/full/071_mega_with_bg.webp",
+              "hub": "71-Mega"
+            },
+            {
+              "id": 149,
+              "name": "超级快龙",
+              "shiny": true,
+              "sprite": "https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp",
+              "hub": "149-Mega"
+            },
+            {
+              "id": 687,
+              "name": "超级乌贼王",
+              "shiny": true,
+              "sprite": "https://db.pokemongohub.net/images/official/full/687_mega_with_bg.webp",
+              "hub": "687-Mega"
+            },
+            {
+              "id": 380,
+              "name": "超级拉帝亚斯",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10062.png",
+              "hub": "380-Mega"
+            },
+            {
+              "id": 381,
+              "name": "超级拉帝欧斯",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png",
+              "hub": "381-Mega"
+            }
+          ],
+          "start": "2026-08-31",
+          "end": "2026-08-31"
         }
       ]
     },
@@ -931,54 +952,6 @@
       "label": "Max 团战",
       "color": "#bd7f97",
       "segments": [
-        {
-          "name": "Pidove",
-          "cn": "豆豆鸽",
-          "pokemon": [
-            {
-              "id": 519,
-              "name": "豆豆鸽"
-            }
-          ],
-          "start": "2026-06-29",
-          "end": "2026-07-05"
-        },
-        {
-          "name": "Chansey",
-          "cn": "吉利蛋",
-          "pokemon": [
-            {
-              "id": 113,
-              "name": "吉利蛋"
-            }
-          ],
-          "start": "2026-07-06",
-          "end": "2026-07-12"
-        },
-        {
-          "name": "Deino",
-          "cn": "单首龙",
-          "pokemon": [
-            {
-              "id": 633,
-              "name": "单首龙"
-            }
-          ],
-          "start": "2026-07-13",
-          "end": "2026-07-19"
-        },
-        {
-          "name": "Trubbish",
-          "cn": "破破袋",
-          "pokemon": [
-            {
-              "id": 568,
-              "name": "破破袋"
-            }
-          ],
-          "start": "2026-07-20",
-          "end": "2026-07-26"
-        },
         {
           "name": "Feebas",
           "cn": "丑丑鱼",
