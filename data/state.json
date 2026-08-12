@@ -1,17 +1,17 @@
 {
-  "lastUpdated": "2026-08-12T15:40:58Z",
+  "lastUpdated": "2026-08-12T15:50:33Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-08-12T15:13:45Z",
-      "lastChecked": "2026-08-12T15:40:58Z",
+      "lastFetch": "2026-08-12T15:49:32Z",
+      "lastChecked": "2026-08-12T15:50:33Z",
       "status": "ok",
       "bytes": 49580,
       "sha256": "57bbd5713dcb07cb",
-      "note": "刷新成功且 hash 未变化；新活动扫描未发现缺失的 feed ID，本轮未增删或改名事件 ID。"
+      "note": "刷新成功且 hash 未变化；新活动扫描未发现缺失的 feed ID，本轮采用安静日快速路径。"
     },
     "raids": {
       "lastFetch": "2026-08-12T14:05:58Z",
-      "lastChecked": "2026-08-12T15:40:58Z",
+      "lastChecked": "2026-08-12T15:50:33Z",
       "status": "degraded",
       "bytes": 17053,
       "sha256": "21e98a3877c41509",
@@ -19,7 +19,7 @@
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-08-12T15:40:58Z",
+      "lastChecked": "2026-08-12T15:50:33Z",
       "status": "ok",
       "bytes": 29466,
       "sha256": "bf0d68f3851420d0",
@@ -27,7 +27,7 @@
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-08-12T15:40:58Z",
+      "lastChecked": "2026-08-12T15:50:33Z",
       "status": "ok",
       "bytes": 70308,
       "sha256": "02025eab72ec1451",
@@ -35,7 +35,7 @@
     },
     "gamemaster": {
       "lastFetch": "2026-08-12T14:06:13Z",
-      "lastChecked": "2026-08-12T15:40:58Z",
+      "lastChecked": "2026-08-12T15:50:33Z",
       "status": "ok",
       "bytes": 926068,
       "sha256": "5c8588afed57c0f8",
@@ -43,7 +43,7 @@
     },
     "tiers-attackers": {
       "lastFetch": "2026-08-12T14:06:17Z",
-      "lastChecked": "2026-08-12T15:40:58Z",
+      "lastChecked": "2026-08-12T15:50:33Z",
       "status": "degraded",
       "bytes": 36617,
       "sha256": "5de33f8bdc142453",
@@ -51,7 +51,7 @@
     },
     "tiers-defenders": {
       "lastFetch": "2026-08-12T14:06:20Z",
-      "lastChecked": "2026-08-12T15:40:58Z",
+      "lastChecked": "2026-08-12T15:50:33Z",
       "status": "ok",
       "bytes": 40381,
       "sha256": "eee81da5bf60c01c",
@@ -59,64 +59,64 @@
     },
     "tiers-pokebase": {
       "lastFetch": "2026-08-12T14:06:28Z",
-      "lastChecked": "2026-08-12T15:40:58Z",
+      "lastChecked": "2026-08-12T15:50:33Z",
       "status": "ok",
       "bytes": 121480,
       "sha256": "7138c1e21645b7a3",
       "note": "hash 未变化；继续作为排行交叉参考。"
     },
     "events-hub": {
-      "lastFetch": "2026-08-12T15:13:45Z",
-      "lastChecked": "2026-08-12T15:40:58Z",
+      "lastFetch": "2026-08-12T15:49:36Z",
+      "lastChecked": "2026-08-12T15:50:33Z",
       "status": "degraded",
       "bytes": 30039,
       "sha256": "e588bf1597884d63",
-      "note": "hash 由 def28ad33642653a 变为 e588bf1597884d63，属于动态索引波动；索引会漏掉仍可直达的周计划与 PokéXciting 指南。已读取完整 PokéXciting 指南补充既有活动，并用 8 月月度文章逐项核对轮换。"
+      "note": "刷新成功且 hash 未变化；已重新打开并确认 8 月月度活动文章，现有 5★／超级／Max 轮换与文章一致。"
     },
     "events-pokebase": {
       "lastFetch": "2026-08-12T14:06:10Z",
-      "lastChecked": "2026-08-12T15:40:58Z",
+      "lastChecked": "2026-08-12T15:50:33Z",
       "status": "ok",
       "bytes": 30922,
       "sha256": "467ddcb296d41300",
       "note": "hash 未变化；保留既有活动交叉核对结论。"
     },
     "events-official": {
-      "lastFetch": "2026-08-12T15:13:45Z",
-      "lastChecked": "2026-08-12T15:40:58Z",
+      "lastFetch": "2026-08-12T15:49:37Z",
+      "lastChecked": "2026-08-12T15:50:33Z",
       "status": "degraded",
       "bytes": 5755,
       "sha256": "6c1a10c11da6f3ee",
-      "note": "hash 未变化且批量索引持续低信号，不作为活动不存在的依据。"
+      "note": "刷新成功且 hash 未变化；批量索引仍为低信号，不作为活动不存在的依据。"
     }
   },
   "discovery": {
-    "lastChecked": "2026-08-12T15:40:58Z",
-    "status": "degraded",
-    "note": "新活动扫描未发现新 feed ID；Hub 可达详情页补足了索引缺口。Fandom 当前团战页返回 403；Hub 已确认现行 3★名单，但中文名称字典返回 NO-ZH-NAME，因此未加入未经验证的 3★卡片。"
+    "lastChecked": "2026-08-12T15:50:33Z",
+    "status": "ok",
+    "note": "discover new 未发现当前及下月窗口内缺失的 feed ID；未发现需要新增的地区／线下活动线索。"
   },
   "contentStatus": {
-    "checkedAt": "2026-08-12T15:40:58Z",
+    "checkedAt": "2026-08-12T15:50:33Z",
     "status": "validated",
-    "note": "仅补充既有 pokemon-30th-anniversary-tour-pokexciting 的 Hub 完整指南内容；事件共 130 条、长期活动 16 条、高亮 17 条。事件 ID、精选、超级进化 roster、分类与轮换均未变化；中文排行区域经审计后未改，英文仅同步同一活动。"
+    "note": "安静日快速路径：所有内容源 hash 与上轮相同，事件 130 条、长期活动 16 条、高亮 17 条；日历、轮换、五个中文区域和英文覆盖保持既有已验证内容。"
   },
   "validation": {
-    "checkedAt": "2026-08-12T15:40:58Z",
+    "checkedAt": "2026-08-12T15:50:34Z",
     "status": "passed",
-    "note": "最终发布门禁已按顺序复核：preflight 与 validate 均 exit 0。"
+    "note": "最终发布门禁按顺序执行：preflight exit 0；validate exit 0。"
   },
   "notes": {
     "source_health": {
-      "fact": "events、raids、gamemaster、tiers 三源、events-pokebase 与 events-official 的结论 hash 未变化；events-hub 因动态索引变为 e588bf1597884d63。eggs 与 research 按相关性跳过。",
-      "decision": "不把 Hub 索引遗漏、官方低信号、Fandom 403 或过渡期 raids 缓存当作活动不存在的证据；采用已读取的 Hub 详情页和月度文章，无法验证中文名的 3★卡片继续省略。"
+      "fact": "events、raids、gamemaster、tiers 三源、events-hub、events-pokebase 与 events-official 的缓存 hash 均与上轮记录一致；eggs 与 research 按相关性跳过。",
+      "decision": "采用安静日快速路径，不重推导未变化内容；Hub 8 月月度文章已直达复核，现有轮换一致。"
     },
     "content_decision": {
-      "fact": "8 月 Hub 月度文章与现有 rotations.json 完全一致；当前团战面板仍为 Groudon、Mega Garchomp 与 Dynamax Beldum，攻手源仍无每属性榜。",
-      "decision": "轮换及五个中文排行区域不改；只修补 PokéXciting 既有事件及其完全同形的英文文本层，不扩写未经名称核验的内容。"
+      "fact": "discover new 无新增；保留 130 条事件与既有 8 月轮换，未发现超过 90 天保留窗的事件或失效精选 ID。",
+      "decision": "不改事件、精选、超级进化 roster、分类、轮换、中文区域或英文覆盖，只更新元数据与固定状态记录。"
     },
     "operator_note": {
-      "fact": "运营方将本阶段定为前次结果的纠正／缺口审计，并确认没有 feature 或 unfeature 请求。",
-      "decision": "不改 featured.json，也不主动新增精选；仅核对现有精选 ID 有效。"
+      "fact": "本轮没有追加 OPERATOR NOTE，也没有 feature 或 unfeature 请求。",
+      "decision": "不改 featured.json，不主动新增精选。"
     }
   }
 }
