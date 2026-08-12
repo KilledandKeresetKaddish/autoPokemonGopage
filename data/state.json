@@ -1,122 +1,122 @@
 {
-  "lastUpdated": "2026-08-12T14:58:34Z",
+  "lastUpdated": "2026-08-12T15:40:58Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-08-12T14:06:33Z",
-      "lastChecked": "2026-08-12T14:57:41Z",
+      "lastFetch": "2026-08-12T15:13:45Z",
+      "lastChecked": "2026-08-12T15:40:58Z",
       "status": "ok",
       "bytes": 49580,
       "sha256": "57bbd5713dcb07cb",
-      "note": "刷新成功且结构化 JSON 健康；hash 已变化，已用于 8—9 月活动更新与 feed ID 原样规范化。"
+      "note": "刷新成功且 hash 未变化；新活动扫描未发现缺失的 feed ID，本轮未增删或改名事件 ID。"
     },
     "raids": {
       "lastFetch": "2026-08-12T14:05:58Z",
-      "lastChecked": "2026-08-12T14:57:41Z",
-      "status": "ok",
+      "lastChecked": "2026-08-12T15:40:58Z",
+      "status": "degraded",
       "bytes": 17053,
       "sha256": "21e98a3877c41509",
-      "note": "刷新成功且 hash 已变化；当前缓存含 19 条团战记录，过渡期内容已结合 Hub 月度文章与周计划交叉核对。"
+      "note": "缓存仍处轮换过渡期，列出 Lake Trio／Mega Blaziken；已以可达的 Hub 现行页面确认 8 月 12—18 日为 Groudon／Mega Garchomp，保留已验证的当前团战面板。"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-08-12T14:57:41Z",
+      "lastChecked": "2026-08-12T15:40:58Z",
       "status": "ok",
       "bytes": 29466,
       "sha256": "bf0d68f3851420d0",
-      "note": "本轮无需要蛋池细节的具体请求，按相关性跳过刷新并保留既有缓存。"
+      "note": "本轮与蛋池无关，按相关性跳过刷新并保留既有缓存。"
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-08-12T14:57:41Z",
+      "lastChecked": "2026-08-12T15:40:58Z",
       "status": "ok",
       "bytes": 70308,
       "sha256": "02025eab72ec1451",
-      "note": "本轮无需要调查池细节的具体请求，按相关性跳过刷新并保留既有缓存。"
+      "note": "本轮与调查池无关，按相关性跳过刷新并保留既有缓存。"
     },
     "gamemaster": {
       "lastFetch": "2026-08-12T14:06:13Z",
-      "lastChecked": "2026-08-12T14:57:41Z",
+      "lastChecked": "2026-08-12T15:40:58Z",
       "status": "ok",
       "bytes": 926068,
       "sha256": "5c8588afed57c0f8",
-      "note": "刷新成功且 hash 已变化；缓存健康，供属性、招式与稳定事实核验。"
+      "note": "hash 未变化；继续用于属性、招式与稳定事实核验。"
     },
     "tiers-attackers": {
       "lastFetch": "2026-08-12T14:06:17Z",
-      "lastChecked": "2026-08-12T14:57:41Z",
+      "lastChecked": "2026-08-12T15:40:58Z",
       "status": "degraded",
       "bytes": 36617,
       "sha256": "5de33f8bdc142453",
-      "note": "刷新成功但 hash 未变化；页面仍缺 S Tier 与每属性榜，继续保留此前已验证的结构化攻手面板。"
+      "note": "hash 未变化；来源仍缺每属性榜，审计后保留此前已验证的中文攻手面板。"
     },
     "tiers-defenders": {
       "lastFetch": "2026-08-12T14:06:20Z",
-      "lastChecked": "2026-08-12T14:57:41Z",
+      "lastChecked": "2026-08-12T15:40:58Z",
       "status": "ok",
       "bytes": 40381,
       "sha256": "eee81da5bf60c01c",
-      "note": "刷新成功且 hash 未变化；来源健康，保留此前已验证的结构化防守面板。"
+      "note": "hash 未变化；审计后保留此前已验证的中文防守面板。"
     },
     "tiers-pokebase": {
       "lastFetch": "2026-08-12T14:06:28Z",
-      "lastChecked": "2026-08-12T14:57:41Z",
+      "lastChecked": "2026-08-12T15:40:58Z",
       "status": "ok",
       "bytes": 121480,
       "sha256": "7138c1e21645b7a3",
-      "note": "刷新成功且 hash 未变化；继续作为排行交叉参考。"
+      "note": "hash 未变化；继续作为排行交叉参考。"
     },
     "events-hub": {
-      "lastFetch": "2026-08-12T14:06:33Z",
-      "lastChecked": "2026-08-12T14:57:41Z",
-      "status": "ok",
+      "lastFetch": "2026-08-12T15:13:45Z",
+      "lastChecked": "2026-08-12T15:40:58Z",
+      "status": "degraded",
       "bytes": 30039,
-      "sha256": "def28ad33642653a",
-      "note": "当前缓存健康且索引可解析；hash 已变化，8 月月度文章、现行团战指南与周计划已用于活动及轮换核对。"
+      "sha256": "e588bf1597884d63",
+      "note": "hash 由 def28ad33642653a 变为 e588bf1597884d63，属于动态索引波动；索引会漏掉仍可直达的周计划与 PokéXciting 指南。已读取完整 PokéXciting 指南补充既有活动，并用 8 月月度文章逐项核对轮换。"
     },
     "events-pokebase": {
       "lastFetch": "2026-08-12T14:06:10Z",
-      "lastChecked": "2026-08-12T14:57:41Z",
+      "lastChecked": "2026-08-12T15:40:58Z",
       "status": "ok",
       "bytes": 30922,
       "sha256": "467ddcb296d41300",
-      "note": "刷新成功且 hash 已变化；活动列表可解析并用于多源交叉核对。"
+      "note": "hash 未变化；保留既有活动交叉核对结论。"
     },
     "events-official": {
-      "lastFetch": "2026-08-12T14:06:34Z",
-      "lastChecked": "2026-08-12T14:57:41Z",
+      "lastFetch": "2026-08-12T15:13:45Z",
+      "lastChecked": "2026-08-12T15:40:58Z",
       "status": "degraded",
       "bytes": 5755,
       "sha256": "6c1a10c11da6f3ee",
-      "note": "刷新成功且 hash 未变化；无空文件，但批量索引仍信号偏低，不作为活动不存在的依据。"
+      "note": "hash 未变化且批量索引持续低信号，不作为活动不存在的依据。"
     }
   },
   "discovery": {
-    "lastChecked": "2026-08-12T14:57:41Z",
-    "status": "ok",
-    "note": "新活动扫描及定向页面核验已完成；确认新增 8—9 月全球与地区活动。PokéPark KANTO 因官方与 Hub 均未给出具体结束日期而省略，避免 start-only 记录被留存校验判为陈旧。"
+    "lastChecked": "2026-08-12T15:40:58Z",
+    "status": "degraded",
+    "note": "新活动扫描未发现新 feed ID；Hub 可达详情页补足了索引缺口。Fandom 当前团战页返回 403；Hub 已确认现行 3★名单，但中文名称字典返回 NO-ZH-NAME，因此未加入未经验证的 3★卡片。"
   },
   "contentStatus": {
-    "checkedAt": "2026-08-12T14:58:34Z",
+    "checkedAt": "2026-08-12T15:40:58Z",
     "status": "validated",
-    "note": "完成大规模 8—9 月全球与地区内容更新：feed ID 已原样规范化，过期长期/PVP 条目已移除，新增已确认活动并追加 3 条新超级进化 roster。攻手源仍降级且未变化，结构化攻手/防守面板均保留；团战与日程以及 3 个中英文区域已更新。管理员未提出精选变更请求。"
+    "note": "仅补充既有 pokemon-30th-anniversary-tour-pokexciting 的 Hub 完整指南内容；事件共 130 条、长期活动 16 条、高亮 17 条。事件 ID、精选、超级进化 roster、分类与轮换均未变化；中文排行区域经审计后未改，英文仅同步同一活动。"
   },
   "validation": {
-    "checkedAt": "2026-08-12T14:58:34Z",
+    "checkedAt": "2026-08-12T15:40:58Z",
     "status": "passed",
-    "note": "最终门禁：scripts/preflight.sh exit 0，render checks passed（2 条非阻塞长 chip 警告）；scripts/validate.sh exit 0，all checks passed。"
+    "note": "最终发布门禁已按顺序复核：preflight 与 validate 均 exit 0。"
   },
   "notes": {
     "source_health": {
-      "fact": "已变化：events、raids、gamemaster、events-hub、events-pokebase；未变化：events-official、tiers-attackers、tiers-defenders、tiers-pokebase。eggs 与 research 按相关性跳过。所有命名刷新命令均 exit 0 且无空文件。",
-      "decision": "健康变化源已解析；官方批量索引维持低信号，攻手源维持结构退化，因此保留已验证的结构化攻手/防守内容并仅更新有可靠输入的区域。"
+      "fact": "events、raids、gamemaster、tiers 三源、events-pokebase 与 events-official 的结论 hash 未变化；events-hub 因动态索引变为 e588bf1597884d63。eggs 与 research 按相关性跳过。",
+      "decision": "不把 Hub 索引遗漏、官方低信号、Fandom 403 或过渡期 raids 缓存当作活动不存在的证据；采用已读取的 Hub 详情页和月度文章，无法验证中文名的 3★卡片继续省略。"
     },
     "content_decision": {
-      "fact": "本轮为非 quiet-day 的 8—9 月大更新，涵盖全球与地区活动、轮换、当前团战以及新超级进化形态。",
-      "decision": "使用 feed 原始 ID 消除同一活动的替代 ID；清理已结束的长期/PVP band；加入已核实活动和 3 条 Mega roster，并同步 3 个中英文可见区域。PokéPark KANTO 因缺少具体结束日期而不发布。"
+      "fact": "8 月 Hub 月度文章与现有 rotations.json 完全一致；当前团战面板仍为 Groudon、Mega Garchomp 与 Dynamax Beldum，攻手源仍无每属性榜。",
+      "decision": "轮换及五个中文排行区域不改；只修补 PokéXciting 既有事件及其完全同形的英文文本层，不扩写未经名称核验的内容。"
     },
     "operator_note": {
-      "fact": "管理员要求完成最终状态与门禁，并明确今日为 2026-08-12 UTC；未提出 feature/unfeature 请求。",
-      "decision": "不主动改动 featured.json；仅确认其中 ID 均仍存在。"
+      "fact": "运营方将本阶段定为前次结果的纠正／缺口审计，并确认没有 feature 或 unfeature 请求。",
+      "decision": "不改 featured.json，也不主动新增精选；仅核对现有精选 ID 有效。"
     }
   }
 }

@@ -5973,24 +5973,142 @@
     "heading": "In-Person Event",
     "start": "2026-09-12T10:00:00",
     "end": "2027-02-14T20:00:00",
-    "link": "https://pokemongohub.net/post/event/pokemon-30th-anniversary-tour-pokexciting/",
-    "summary": "宝可梦 30 周年亚洲巡回庆典:吉隆坡、台北、新加坡、马尼拉、曼谷五站线下活动,含舞台表演、打卡体验与 Pokémon GO 限定玩法(详情后续公布)。",
+    "link": "https://pokemongohub.net/post/event/pokexciting-pokemon-30th-anniversary-tour/",
+    "summary": "宝可梦 30 周年 PokéXciting 亚洲五城巡回每站举办两天,带来地区专属配色的 PokéXciting! Pikachu、集章、免费调查、主题遭遇与超极巨化对战。吉隆坡、台北、新加坡、马尼拉和曼谷各有指定活动区域。",
     "links": [
       {
         "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/pokemon-30th-anniversary-tour-pokexciting/"
+        "url": "https://pokemongohub.net/post/event/pokexciting-pokemon-30th-anniversary-tour/"
+      }
+    ],
+    "bonuses": [
+      ":spawn: 每日可通过 GO Snapshot 获得 5 次惊喜遭遇",
+      "活动期间每小时出现 1 次奖励气球,提供额外补给与好物"
+    ],
+    "pokemon": [
+      {
+        "id": 3,
+        "name": "Gigantamax Venusaur",
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/ingame/normal/pm3.fGIGANTAMAX.icon.png",
+        "hub": "3-Gigantamax"
+      },
+      {
+        "id": 6,
+        "name": "Gigantamax Charizard",
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/ingame/normal/pm6.fGIGANTAMAX.icon.png",
+        "hub": "6-Gigantamax"
+      },
+      {
+        "id": 9,
+        "name": "Gigantamax Blastoise",
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/ingame/normal/pm9.fGIGANTAMAX.icon.png",
+        "hub": "9-Gigantamax"
       }
     ],
     "sections": [
       {
-        "title": "巡回日程",
+        "title": "巡回日程与活动区域",
         "items": [
-          "吉隆坡:2026/9/12–9/13(KLCC 公园,免费入场)",
-          "台北:2026/10/10–10/11",
-          "新加坡:2026/11/7–11/8",
-          "马尼拉:2027/1/23–1/24",
-          "曼谷:2027/2/13–2/14"
+          "吉隆坡:2026/9/12–9/13,KLCC 公园",
+          "台北:2026/10/10–10/11,信义区指定区域(不含山区)",
+          "新加坡:2026/11/7–11/8,全市",
+          "马尼拉:2027/1/23–1/24,SM 亚洲商城周边",
+          "曼谷:2027/2/13–2/14,活动区域待公布"
         ]
+      },
+      {
+        "title": "地区装扮与城市集章",
+        "items": [
+          "每个地区都有当地灵感配色的专属 PokéXciting! Pikachu;当地活动结束后,该装扮仍会在对应城市野外出现 1 个月",
+          "活动时段前往指定宝可补给站收集印章;集齐 5 枚可遇见带地点背景的 PokéXciting! Pikachu",
+          "各城市的本地 GO 印章拉力自该站活动开始起持续 1 个月",
+          "城市本地的 1 个月印章拉力与另一个独立、为期 3 年的跨地区印章拉力并非同一活动"
+        ]
+      },
+      {
+        "title": "免费调查",
+        "items": [
+          "开放 2 条免费限时调查,奖励包括 PokéXciting! Pikachu 遭遇、特级对战入场券、活动贴纸等",
+          "活动期间开放主题田野调查,完成任务可获得额外活动奖励"
+        ]
+      },
+      {
+        "title": "野外出现",
+        "mons": [
+          { "id": 1, "name": "Bulbasaur" },
+          { "id": 4, "name": "Charmander" },
+          { "id": 7, "name": "Squirtle" },
+          { "id": 20, "name": "Raticate" },
+          { "id": 25, "name": "Pikachu" },
+          { "id": 39, "name": "Jigglypuff" },
+          { "id": 52, "name": "Meowth" },
+          { "id": 54, "name": "Psyduck" },
+          { "id": 79, "name": "Slowpoke" },
+          { "id": 88, "name": "Grimer" },
+          { "id": 133, "name": "Eevee" },
+          { "id": 143, "name": "Snorlax" },
+          { "id": 147, "name": "Dratini" },
+          { "id": 152, "name": "Chikorita" },
+          { "id": 155, "name": "Cyndaquil" },
+          { "id": 158, "name": "Totodile" },
+          { "id": 176, "name": "Togetic" },
+          { "id": 252, "name": "Treecko" },
+          { "id": 255, "name": "Torchic" },
+          { "id": 258, "name": "Mudkip" },
+          { "id": 280, "name": "Ralts" },
+          { "id": 374, "name": "Beldum" },
+          { "id": 427, "name": "Buneary" },
+          { "id": 443, "name": "Gible" }
+        ]
+      },
+      {
+        "title": "诱饵模组出现",
+        "mons": [
+          { "id": 94, "name": "Gengar" },
+          { "id": 130, "name": "Gyarados" },
+          { "id": 181, "name": "Ampharos" },
+          { "id": 248, "name": "Tyranitar" },
+          { "id": 282, "name": "Gardevoir" },
+          { "id": 334, "name": "Altaria" },
+          { "id": 445, "name": "Garchomp" },
+          { "id": 722, "name": "Rowlet" },
+          { "id": 725, "name": "Litten" },
+          { "id": 728, "name": "Popplio" },
+          { "id": 810, "name": "Grookey" },
+          { "id": 813, "name": "Scorbunny" },
+          { "id": 816, "name": "Sobble" }
+        ]
+      },
+      {
+        "title": "各城市熏香限定",
+        "items": [
+          "台北:Unown T、Unown W",
+          "新加坡:Unown S、Unown G",
+          "吉隆坡:Unown M、Unown Y",
+          "马尼拉:Unown P、Unown H",
+          "曼谷:Unown T、Unown H"
+        ]
+      },
+      {
+        "title": "其他熏香出现",
+        "mons": [
+          { "id": 387, "name": "Turtwig" },
+          { "id": 390, "name": "Chimchar" },
+          { "id": 393, "name": "Piplup" },
+          { "id": 495, "name": "Snivy" },
+          { "id": 498, "name": "Tepig" },
+          { "id": 501, "name": "Oshawott" },
+          { "id": 650, "name": "Chespin" },
+          { "id": 653, "name": "Fennekin" },
+          { "id": 656, "name": "Froakie" }
+        ]
+      },
+      {
+        "title": "超极巨化对战",
+        "body": "活动期间将出现 Gigantamax Venusaur、Gigantamax Charizard 与 Gigantamax Blastoise;若运气好,还可能遇见闪光个体。"
       }
     ],
     "longTerm": true

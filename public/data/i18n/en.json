@@ -3050,21 +3050,133 @@
     "pokemon-30th-anniversary-tour-pokexciting": {
       "name": "Pokémon 30th Anniversary Tour: PokéXciting (In-Person Across Asia)",
       "heading": "In-Person Event",
-      "summary": "Pokémon's 30th anniversary tour across Asia features in-person celebrations in Kuala Lumpur, Taipei, Singapore, Manila, and Bangkok, with stage shows, interactive experiences, and exclusive Pokémon GO gameplay (details to be announced).",
-      "bonuses": [],
-      "pokemon": [],
+      "summary": "Each stop on the five-city Pokémon 30th Anniversary PokéXciting tour in Asia runs for two days, featuring PokéXciting! Pikachu in region-exclusive color schemes, stamp rallies, free research, themed encounters, and Gigantamax Battles. Kuala Lumpur, Taipei, Singapore, Manila, and Bangkok each have designated event areas.",
+      "bonuses": [
+        ":spawn: Earn five surprise encounters each day via GO Snapshot",
+        "One bonus balloon appears each hour during event hours, offering extra supplies and goodies"
+      ],
+      "pokemon": [
+        "Gigantamax Venusaur",
+        "Gigantamax Charizard",
+        "Gigantamax Blastoise"
+      ],
       "counters": [],
       "sections": [
         {
-          "title": "Tour Schedule",
+          "title": "Tour Schedule and Event Areas",
           "items": [
-            "Kuala Lumpur: 2026/9/12–9/13 (KLCC Park, free admission)",
-            "Taipei: 2026/10/10–10/11",
-            "Singapore: 2026/11/7–11/8",
-            "Manila: 2027/1/23–1/24",
-            "Bangkok: 2027/2/13–2/14"
+            "Kuala Lumpur: 2026/9/12–9/13, KLCC Park",
+            "Taipei: 2026/10/10–10/11, designated areas in Xinyi District (excluding mountainous areas)",
+            "Singapore: 2026/11/7–11/8, citywide",
+            "Manila: 2027/1/23–1/24, around SM Mall of Asia",
+            "Bangkok: 2027/2/13–2/14, event area to be announced"
           ],
           "body": "",
+          "mons": []
+        },
+        {
+          "title": "Regional Costumes and City Stamp Rallies",
+          "items": [
+            "Each region features an exclusive PokéXciting! Pikachu in a locally inspired color scheme; after the local event ends, this costume will continue appearing in the wild in that city for one month",
+            "Visit designated PokéStops during event hours to collect stamps; collect five to encounter PokéXciting! Pikachu with a Location Background",
+            "Each city's local GO Stamp Rally lasts for one month beginning when that tour stop's event starts",
+            "The one-month local city Stamp Rally is separate from another independent, three-year cross-region Stamp Rally"
+          ],
+          "body": "",
+          "mons": []
+        },
+        {
+          "title": "Free Research",
+          "items": [
+            "Two free Timed Research stories will be available, with rewards including encounters with PokéXciting! Pikachu, Premium Battle Passes, event stickers, and more",
+            "Themed Field Research will be available during the event; complete tasks to earn additional event rewards"
+          ],
+          "body": "",
+          "mons": []
+        },
+        {
+          "title": "Wild Encounters",
+          "items": [],
+          "body": "",
+          "mons": [
+            "Bulbasaur",
+            "Charmander",
+            "Squirtle",
+            "Raticate",
+            "Pikachu",
+            "Jigglypuff",
+            "Meowth",
+            "Psyduck",
+            "Slowpoke",
+            "Grimer",
+            "Eevee",
+            "Snorlax",
+            "Dratini",
+            "Chikorita",
+            "Cyndaquil",
+            "Totodile",
+            "Togetic",
+            "Treecko",
+            "Torchic",
+            "Mudkip",
+            "Ralts",
+            "Beldum",
+            "Buneary",
+            "Gible"
+          ]
+        },
+        {
+          "title": "Lure Module Encounters",
+          "items": [],
+          "body": "",
+          "mons": [
+            "Gengar",
+            "Gyarados",
+            "Ampharos",
+            "Tyranitar",
+            "Gardevoir",
+            "Altaria",
+            "Garchomp",
+            "Rowlet",
+            "Litten",
+            "Popplio",
+            "Grookey",
+            "Scorbunny",
+            "Sobble"
+          ]
+        },
+        {
+          "title": "City-Exclusive Incense Encounters",
+          "items": [
+            "Taipei: Unown T, Unown W",
+            "Singapore: Unown S, Unown G",
+            "Kuala Lumpur: Unown M, Unown Y",
+            "Manila: Unown P, Unown H",
+            "Bangkok: Unown T, Unown H"
+          ],
+          "body": "",
+          "mons": []
+        },
+        {
+          "title": "Additional Incense Encounters",
+          "items": [],
+          "body": "",
+          "mons": [
+            "Turtwig",
+            "Chimchar",
+            "Piplup",
+            "Snivy",
+            "Tepig",
+            "Oshawott",
+            "Chespin",
+            "Fennekin",
+            "Froakie"
+          ]
+        },
+        {
+          "title": "Gigantamax Battles",
+          "items": [],
+          "body": "Gigantamax Venusaur, Gigantamax Charizard, and Gigantamax Blastoise will appear during the event; if you're lucky, you may encounter Shiny ones.",
           "mons": []
         }
       ]
