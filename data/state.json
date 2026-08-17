@@ -1,122 +1,122 @@
 {
-  "lastUpdated": "2026-08-12T15:50:33Z",
+  "lastUpdated": "2026-08-17T17:34:48Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-08-12T15:49:32Z",
-      "lastChecked": "2026-08-12T15:50:33Z",
+      "lastFetch": "2026-08-17T17:10:44Z",
+      "lastChecked": "2026-08-17T17:34:48Z",
       "status": "ok",
-      "bytes": 49580,
-      "sha256": "57bbd5713dcb07cb",
-      "note": "刷新成功且 hash 未变化；新活动扫描未发现缺失的 feed ID，本轮采用安静日快速路径。"
+      "bytes": 44309,
+      "sha256": "e54797116556ddbe",
+      "note": "刷新成功且 hash 变化；已用于本轮日历更新与新增活动核对。"
     },
     "raids": {
-      "lastFetch": "2026-08-12T14:05:58Z",
-      "lastChecked": "2026-08-12T15:50:33Z",
-      "status": "degraded",
-      "bytes": 17053,
-      "sha256": "21e98a3877c41509",
-      "note": "缓存仍处轮换过渡期，列出 Lake Trio／Mega Blaziken；已以可达的 Hub 现行页面确认 8 月 12—18 日为 Groudon／Mega Garchomp，保留已验证的当前团战面板。"
+      "lastFetch": "2026-08-17T17:00:26Z",
+      "lastChecked": "2026-08-17T17:34:48Z",
+      "status": "ok",
+      "bytes": 15921,
+      "sha256": "aa6b8a4afb24e36a",
+      "note": "刷新成功且 hash 变化；当前团战与对应排行面板已复核。"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-08-12T15:50:33Z",
-      "status": "ok",
+      "lastChecked": "2026-08-17T17:34:48Z",
+      "status": "skipped",
       "bytes": 29466,
       "sha256": "bf0d68f3851420d0",
       "note": "本轮与蛋池无关，按相关性跳过刷新并保留既有缓存。"
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-08-12T15:50:33Z",
-      "status": "ok",
+      "lastChecked": "2026-08-17T17:34:48Z",
+      "status": "skipped",
       "bytes": 70308,
       "sha256": "02025eab72ec1451",
-      "note": "本轮与调查池无关，按相关性跳过刷新并保留既有缓存。"
+      "note": "本轮未需调查池批量数据，按相关性跳过刷新并保留既有缓存；十周年调查由活动详情来源确认。"
     },
     "gamemaster": {
-      "lastFetch": "2026-08-12T14:06:13Z",
-      "lastChecked": "2026-08-12T15:50:33Z",
+      "lastFetch": "2026-08-17T17:07:58Z",
+      "lastChecked": "2026-08-17T17:34:48Z",
       "status": "ok",
-      "bytes": 926068,
-      "sha256": "5c8588afed57c0f8",
-      "note": "hash 未变化；继续用于属性、招式与稳定事实核验。"
+      "bytes": 927622,
+      "sha256": "587d793b298e5712",
+      "note": "刷新成功且 hash 变化；用于属性、招式与稳定事实核验。"
     },
     "tiers-attackers": {
-      "lastFetch": "2026-08-12T14:06:17Z",
-      "lastChecked": "2026-08-12T15:50:33Z",
-      "status": "degraded",
+      "lastFetch": "2026-08-17T17:00:43Z",
+      "lastChecked": "2026-08-17T17:34:48Z",
+      "status": "ok",
       "bytes": 36617,
       "sha256": "5de33f8bdc142453",
-      "note": "hash 未变化；来源仍缺每属性榜，审计后保留此前已验证的中文攻手面板。"
+      "note": "刷新成功且 hash 未变化；保留此前已验证的攻手面板。"
     },
     "tiers-defenders": {
-      "lastFetch": "2026-08-12T14:06:20Z",
-      "lastChecked": "2026-08-12T15:50:33Z",
+      "lastFetch": "2026-08-17T17:00:49Z",
+      "lastChecked": "2026-08-17T17:34:48Z",
       "status": "ok",
       "bytes": 40381,
       "sha256": "eee81da5bf60c01c",
-      "note": "hash 未变化；审计后保留此前已验证的中文防守面板。"
+      "note": "刷新成功且 hash 未变化；保留此前已验证的防守面板。"
     },
     "tiers-pokebase": {
-      "lastFetch": "2026-08-12T14:06:28Z",
-      "lastChecked": "2026-08-12T15:50:33Z",
+      "lastFetch": "2026-08-17T17:00:53Z",
+      "lastChecked": "2026-08-17T17:34:48Z",
       "status": "ok",
-      "bytes": 121480,
-      "sha256": "7138c1e21645b7a3",
-      "note": "hash 未变化；继续作为排行交叉参考。"
+      "bytes": 121861,
+      "sha256": "ba0797cf64e24aec",
+      "note": "刷新成功且 hash 变化；已作为排行交叉参考。"
     },
     "events-hub": {
-      "lastFetch": "2026-08-12T15:49:36Z",
-      "lastChecked": "2026-08-12T15:50:33Z",
-      "status": "degraded",
-      "bytes": 30039,
-      "sha256": "e588bf1597884d63",
-      "note": "刷新成功且 hash 未变化；已重新打开并确认 8 月月度活动文章，现有 5★／超级／Max 轮换与文章一致。"
+      "lastFetch": "2026-08-17T17:10:45Z",
+      "lastChecked": "2026-08-17T17:34:48Z",
+      "status": "ok",
+      "bytes": 29909,
+      "sha256": "5275be0bbeb92378",
+      "note": "刷新成功且 hash 变化；用于活动、月度轮换及特别超级团战池复核。"
     },
     "events-pokebase": {
-      "lastFetch": "2026-08-12T14:06:10Z",
-      "lastChecked": "2026-08-12T15:50:33Z",
+      "lastFetch": "2026-08-17T17:00:37Z",
+      "lastChecked": "2026-08-17T17:34:48Z",
       "status": "ok",
-      "bytes": 30922,
-      "sha256": "467ddcb296d41300",
-      "note": "hash 未变化；保留既有活动交叉核对结论。"
+      "bytes": 30742,
+      "sha256": "baa0c1033984ffec",
+      "note": "刷新成功且 hash 变化；用于活动交叉核对。"
     },
     "events-official": {
-      "lastFetch": "2026-08-12T15:49:37Z",
-      "lastChecked": "2026-08-12T15:50:33Z",
-      "status": "degraded",
-      "bytes": 5755,
-      "sha256": "6c1a10c11da6f3ee",
-      "note": "刷新成功且 hash 未变化；批量索引仍为低信号，不作为活动不存在的依据。"
+      "lastFetch": "2026-08-17T17:10:45Z",
+      "lastChecked": "2026-08-17T17:34:48Z",
+      "status": "ok",
+      "bytes": 9779,
+      "sha256": "7e7c7d7f1fbe7129",
+      "note": "刷新成功且 hash 变化；用于官方活动与地区活动核对。"
     }
   },
   "discovery": {
-    "lastChecked": "2026-08-12T15:50:33Z",
+    "lastChecked": "2026-08-17T17:34:48Z",
     "status": "ok",
-    "note": "discover new 未发现当前及下月窗口内缺失的 feed ID；未发现需要新增的地区／线下活动线索。"
+    "note": "新活动扫描发现十周年超梦调查及官方线索；经 LeekDuck、Hub 与官方详情确认后纳入。"
   },
   "contentStatus": {
-    "checkedAt": "2026-08-12T15:50:33Z",
+    "checkedAt": "2026-08-17T17:34:48Z",
     "status": "validated",
-    "note": "安静日快速路径：所有内容源 hash 与上轮相同，事件 130 条、长期活动 16 条、高亮 17 条；日历、轮换、五个中文区域和英文覆盖保持既有已验证内容。"
+    "note": "日历共 139 条事件，其中长期活动 17 条、高亮 18 条；保留本月与下月，精选 ID 全部有效。轮换为 5★ 16 段、超级 24 段、Max 7 段；中英文事件、轮换及五个富文本区域保持完整同构。"
   },
   "validation": {
-    "checkedAt": "2026-08-12T15:50:34Z",
+    "checkedAt": "2026-08-17T17:35:41Z",
     "status": "passed",
-    "note": "最终发布门禁按顺序执行：preflight exit 0；validate exit 0。"
+    "note": "最终发布门禁按顺序执行：preflight exit 0（仅两条既有超长 chip 警告）；validate exit 0。"
   },
   "notes": {
     "source_health": {
-      "fact": "events、raids、gamemaster、tiers 三源、events-hub、events-pokebase 与 events-official 的缓存 hash 均与上轮记录一致；eggs 与 research 按相关性跳过。",
-      "decision": "采用安静日快速路径，不重推导未变化内容；Hub 8 月月度文章已直达复核，现有轮换一致。"
+      "fact": "所有本轮命名来源刷新均成功；events、raids、gamemaster、tiers-pokebase 及三项活动来源 hash 变化，攻手与防守排行来源未变化；eggs、research 按相关性跳过。多项 zh 查询未返回可用简体中文名。",
+      "decision": "无来源中断或回退需求；无可用新译名时复用已核验的规范中文／超级进化 roster 名称，英文保持来源原名。"
     },
     "content_decision": {
-      "fact": "discover new 无新增；保留 130 条事件与既有 8 月轮换，未发现超过 90 天保留窗的事件或失效精选 ID。",
-      "decision": "不改事件、精选、超级进化 roster、分类、轮换、中文区域或英文覆盖，只更新元数据与固定状态记录。"
+      "fact": "新增十周年完美超梦调查、吉隆坡 KLCC 线下活动、月光下起舞地区活动及 9 月 1—6 日每日超级团战抽屉；补充超级进化启程、超级进化终章与 8 月 31 日抽屉。",
+      "decision": "超级进化启程及 GO Fest 2026 超级进化终章在 8 月 31 日至 9 月 6 日采用逐日全天抽屉与精确匹配的超级轮换段；普通超级暴鲤龙从 9 月 7 日开始，避免与特别活动池冲突。无日期窗口的 Explorer Gadget 分阶段功能发布不作为日历活动。"
     },
     "operator_note": {
-      "fact": "本轮没有追加 OPERATOR NOTE，也没有 feature 或 unfeature 请求。",
-      "decision": "不改 featured.json，不主动新增精选。"
+      "fact": "管理员明确要求为超级进化启程与 GO Fest 2026 超级进化终章提供每日超级角标，全面补充活动与地区内容，并精选 GO Fest。",
+      "decision": "已新增对应每日 raid-battles 抽屉和轮换段，补充父活动与经核验的吉隆坡、月光地区活动，并精选 pokemon-go-fest-2026-mega-finale；保留 pokemon-go-fest-2026-global。未请求或尝试任何受保护文件变更。"
     }
   }
 }
