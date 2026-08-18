@@ -1775,13 +1775,18 @@ function spotCountryName(countryCode) {
     return new Intl.DisplayNames([isEnglish() ? 'en' : 'zh-CN'], { type:'region' }).of(code) || code;
   } catch (e) { return code; }
 }
+function spotCountryFlag(countryCode) {
+  const code = String(countryCode || '').toUpperCase();
+  return /^[A-Z]{2}$/.test(code)
+    ? String.fromCodePoint(...[...code].map(letter => 127397 + letter.charCodeAt(0))) : '';
+}
 function spotKindLabel(kind) {
   return i18n(`spots.kind.${kind}`, null, String(kind || '—'));
 }
 function spotStatusLabel(status) {
   return i18n(`spots.status.${status}`, null, String(status || '—'));
 }
-function spotCoordinates(spot) { return `${spot.lat},${spot.lng}`; }
+function spotCoordinates(spot) { return `${spot.lat}, ${spot.lng}`; }
 function spotMapUrl(spot) {
   const params = new URLSearchParams({ is_login_event:'1', lat:String(spot.lat), lng:String(spot.lng) });
   return `https://pokemongo.com/map?${params}`;
@@ -1939,7 +1944,7 @@ function renderSpots() {
     const rating = spotRatingStars(spot.rating);
     const ratingFact = rating ? `<div><dt>${escapeHtml(i18n('spots.rating', null, '评分'))}</dt><dd>${rating}</dd></div>` : '';
     return `<article class="spots-card panel" data-spot-id="${escapeHtml(spot.id)}">`
-      + `<header class="spots-card-head"><img class="spots-flag" src="https://flagcdn.com/w80/${escapeHtml(spot.countryCode.toLowerCase())}.png" alt="${escapeHtml(view.country)}" loading="lazy">`
+      + `<header class="spots-card-head"><span class="spots-flag" role="img" aria-label="${escapeHtml(view.country)}">${spotCountryFlag(spot.countryCode)}</span>`
       + `<div class="spots-title"><span class="spots-country">${escapeHtml(view.country)}</span><h3>${escapeHtml(spot.name)}</h3></div>`
       + `<div class="spots-badges"><span class="badge">${escapeHtml(spotKindLabel(spot.kind))}</span>`
       + `<span class="badge spots-status-${escapeHtml(spot.status)}">${escapeHtml(spotStatusLabel(spot.status))}</span>`
@@ -2454,7 +2459,7 @@ if (typeof module === 'object' && module.exports) {
   module.exports = {
     detectBrowserTimeZone, isValidIanaTimeZone, spotZonedParts, timeZoneOffsetMinutes,
     zonedWallTimeToInstant, nextLocalScheduleInstant, formatTargetForZone, wcInRange,
-    spotMapUrl, spotMatches, sortSpotViews, spotRatingStars, spotNoteBlock,
+    spotCountryFlag, spotCoordinates, spotMapUrl, spotMatches, sortSpotViews, spotRatingStars, spotNoteBlock,
     spotLoadPreferences, spotSavePreferences, SPOT_KIND_OPTIONS, SPOT_SORT_VALUES,
   };
 }

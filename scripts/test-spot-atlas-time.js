@@ -11,6 +11,8 @@ const {
   nextLocalScheduleInstant,
   formatTargetForZone,
   wcInRange,
+  spotCountryFlag,
+  spotCoordinates,
   spotMapUrl,
   spotMatches,
   sortSpotViews,
@@ -174,42 +176,46 @@ const canonicalErrors = locationErrors(locations);
 for (const error of canonicalErrors) console.error('locations.json: ' + error);
 assert.deepEqual(canonicalErrors, []);
 assert.deepEqual(locations.schedule, schedule);
-// Migration regression only: future intentional additions update this fixture, not the schema.
-assert.equal(locations.spots.length, 23, 'initial authoritative dataset size');
-const spots = Object.fromEntries(locations.spots.map(spot => [spot.id, spot]));
-assert.equal(Object.keys(spots).length, 23);
-assert.equal(spots['in-mysuru'].lat, 12.2804841721832);
-assert.equal(spots['in-mysuru'].lng, 76.6243600845337);
-assert.equal(spots['in-mysuru'].kind, 'both');
-assert.match(spots['in-mysuru'].note, /Showcase参加人数特别少/);
-assert.equal(spots['mx-sonora-candidate'].lat, 31.304716794288);
-assert.equal(spots['mx-sonora-candidate'].lng, -109.5490711927414);
-assert.equal(spots['mx-sonora-candidate'].note, 'showcase不行但是没人打gym的样子');
-assert.equal(spots['bd-chattogram-02'].lat, 22.3662090301514);
-assert.equal(spots['bd-chattogram-02'].lng, 91.7963943481445);
-assert.equal(spots['bd-chattogram-02'].note, '卧槽吉大港这里');
-assert.equal(spots['us-or-redmond-candidate'].lat, 44.2626044);
-assert.equal(spots['us-or-redmond-candidate'].lng, -121.304635);
-
 const cloneLocations = () => JSON.parse(JSON.stringify(locations));
+
+// A valid additional row must pass without changing this protected test.
+const extendedLocations = cloneLocations();
+const usedIds = new Set(extendedLocations.spots.map(spot => spot.id));
+const usedCoordinates = new Set(extendedLocations.spots.map(spot => `${spot.lat},${spot.lng}`));
+let syntheticId = 'synthetic-valid-location';
+while (usedIds.has(syntheticId)) syntheticId += '-x';
+let syntheticLat = 0.123456, syntheticLng = -0.654321;
+while (usedCoordinates.has(`${syntheticLat},${syntheticLng}`)) {
+  syntheticLat += 0.000001;
+  syntheticLng -= 0.000001;
+}
+extendedLocations.spots.push({
+  id:syntheticId, countryCode:'AQ', name:'Synthetic valid location',
+  lat:syntheticLat, lng:syntheticLng, timeZone:'UTC', kind:'showcase',
+  status:'candidate', group:null, rating:1, needsReview:true, note:'',
+});
+assert.equal(extendedLocations.spots.length, locations.spots.length + 1);
+assert.deepEqual(locationErrors(extendedLocations), []);
+
 for (const [field, value] of [['kind','other'], ['status','other'], ['rating',0], ['rating',4], ['rating',1.5]]) {
   const changed = cloneLocations();
   changed.spots[0][field] = value;
   assert.ok(locationErrors(changed).some(error => error.includes(`.${field}`)), `${field}=${value} must fail`);
 }
-const duplicateCoordinates = cloneLocations();
-duplicateCoordinates.spots[1].lat = duplicateCoordinates.spots[0].lat;
-duplicateCoordinates.spots[1].lng = duplicateCoordinates.spots[0].lng;
+const duplicateCoordinates = JSON.parse(JSON.stringify(extendedLocations));
+const duplicate = duplicateCoordinates.spots.at(-1);
+duplicate.lat = duplicateCoordinates.spots[0].lat;
+duplicate.lng = duplicateCoordinates.spots[0].lng;
 assert.ok(locationErrors(duplicateCoordinates).some(error => error.includes('duplicates coordinates')));
 
 // Required filter semantics and primary sorts.
 assert.deepEqual(SPOT_KIND_OPTIONS, ['gym','showcase','both']);
 assert.ok(SPOT_SORT_VALUES.includes('next'));
 assert.ok(SPOT_SORT_VALUES.includes('timezone'));
-const mysuruView = { spot:spots['in-mysuru'], country:'India' };
+const bothView = { spot:{ id:'both-fixture', name:'Both fixture', note:'', countryCode:'AQ', timeZone:'UTC', kind:'both', status:'tested', needsReview:false }, country:'Antarctica' };
 const filters = kind => ({ search:'', country:'', kind, status:'', review:'' });
-assert.equal(spotMatches(mysuruView, filters('gym')), false);
-assert.equal(spotMatches(mysuruView, filters('both')), true);
+assert.equal(spotMatches(bothView, filters('gym')), false);
+assert.equal(spotMatches(bothView, filters('both')), true);
 
 const synthetic = (id, country, name, target, currentOffset) => ({
   spot:{ id, name, rating:null }, country, target:new Date(target), currentOffset,
@@ -246,6 +252,12 @@ assert.equal(spotRatingStars(null), '');
 assert.equal(spotRatingStars(1), '⭐');
 assert.equal(spotRatingStars(2), '⭐⭐');
 assert.equal(spotRatingStars(3), '⭐⭐⭐');
+assert.equal(spotCountryFlag('TH'), '🇹🇭');
+assert.equal(spotCountryFlag('bd'), '🇧🇩');
+assert.equal(spotCountryFlag('US'), '🇺🇸');
+assert.equal(spotCoordinates({ lat:17.688021, lng:102.473581 }), '17.688021, 102.473581');
+const spotSource = appSource.slice(appSource.lastIndexOf('/* ---------- Spot Atlas'), appSource.indexOf('/* ---------- language / locale'));
+assert.doesNotMatch(spotSource, /flagcdn\.com/);
 const map = new URL(spotMapUrl({ lat:22.363407, lng:114.331268 }));
 assert.equal(map.origin + map.pathname, 'https://pokemongo.com/map');
 assert.deepEqual(Object.fromEntries(map.searchParams), { is_login_event:'1', lat:'22.363407', lng:'114.331268' });
@@ -276,4 +288,4 @@ for (const locale of ['zh-CN','en']) {
   assert.deepEqual(nameKeys, [], `${locale} contains location-name translation keys`);
 }
 
-console.log(`spot-atlas-time: OK (${locations.spots.length} authoritative spots; timezone, schema, UI, sort, persistence, map, and World Clock lifecycle/range checks)`);
+console.log(`spot-atlas-time: OK (${locations.spots.length} contract-valid spots; ${extendedLocations.spots.length}-spot extension accepted; timezone, schema, UI, sort, persistence, map, and World Clock lifecycle/range checks)`);

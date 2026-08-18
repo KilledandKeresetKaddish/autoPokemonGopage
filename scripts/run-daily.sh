@@ -82,7 +82,7 @@ EXTRA="${1:-${EXTRA_INSTRUCTIONS:-}}"
 operator_requests_location_edit() {
   local note="$1"
   local action='(新增|添加|增加|移除|删除|修改|更改|修正|纠正|更新|重命名|改名|(^|[^[:alpha:]])(add|remove|delete|change|update|correct|rename|edit)([^[:alpha:]]|$))'
-  local direct='(spot[[:space:]-]*atlas|locations\.json)'
+  local direct='(spot[[:space:]-]*atlas|locations\.json|地点图鉴|点位图鉴)'
   local kind='(道馆|(^|[^[:alpha:]])(gym|showcase)([^[:alpha:]]|$))'
   local coordinates='(坐标|经纬度|(^|[^[:alpha:]])(coordinates?|latitude|longitude|lat|lng)([^[:alpha:]]|$))'
   local zone='(时区|(^|[^[:alpha:]])(timezone|time[[:space:]-]+zone)([^[:alpha:]]|$))'

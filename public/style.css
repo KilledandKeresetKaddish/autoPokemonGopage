@@ -675,8 +675,8 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .spots-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:.85rem;margin-top:.9rem;align-items:stretch;}
 .spots-card{padding:.85rem .9rem .8rem;display:flex;flex-direction:column;min-width:0;}
 .spots-card-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.35rem .65rem;align-items:center;}
-.spots-flag{width:42px;height:29px;object-fit:cover;border:1px solid var(--gold-line);border-radius:5px;
-  box-shadow:0 2px 7px rgba(0,0,0,.45);grid-row:1;}
+.spots-flag{width:42px;height:29px;display:grid;place-items:center;font-size:1.55rem;line-height:1;
+  border:1px solid var(--gold-line);border-radius:5px;box-shadow:0 2px 7px rgba(0,0,0,.45);grid-row:1;}
 .spots-title{min-width:0;grid-row:1;}
 .spots-country{display:block;color:var(--muted);font-size:.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .spots-title h3{margin:.05rem 0 0;font:800 1.02rem/1.25 var(--display);color:var(--h1);overflow-wrap:anywhere;letter-spacing:.01em;}
