@@ -77,6 +77,12 @@ done
 # (the default). Still bounded by AGENTS.md + validate.sh — out-of-scope asks are noted
 # and skipped, never forced through.
 EXTRA="${1:-${EXTRA_INSTRUCTIONS:-}}"
+# locations.json is admin-curated. Require both a note and a dedicated write-scope
+# opt-in so an unrelated operator note cannot authorize location changes.
+LOCATION_EDIT_ALLOWED=0
+if [ -n "$EXTRA" ] && [ "${ALLOW_LOCATION_EDIT:-0}" = 1 ]; then
+  LOCATION_EDIT_ALLOWED=1
+fi
 if [ -n "$EXTRA" ]; then
   PROMPT+="
 
@@ -209,6 +215,7 @@ is_daily_path() {
     public/data/events.json|public/data/rotations.json|public/data/categories.json|public/data/meta.json|\
     public/data/featured.json|public/data/mega.json|public/data/i18n/en.json|\
     public/index.html|data/state.json) return 0 ;;
+    public/data/locations.json) [ "$LOCATION_EDIT_ALLOWED" = 1 ] ;;
     *) return 1 ;;
   esac
 }

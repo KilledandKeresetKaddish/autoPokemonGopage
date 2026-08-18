@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title data-i18n="site.documentTitle">Pokémon GO 面板</title>
   <link rel="icon" type="image/x-icon" href="pokemongocalender.ico?v=14" />
-  <link rel="stylesheet" href="style.css?v=24" />
+  <link rel="stylesheet" href="style.css?v=25" />
 </head>
 <body>
   <!-- =====================================================================
@@ -31,6 +31,7 @@
     <button data-view="rankings"><span class="t-ico">⚔</span> <span data-i18n="tabs.rankings">战力榜</span></button>
     <button data-view="mega"><span class="t-ico">✷</span> <span data-i18n="tabs.mega">超级进化</span></button>
     <button data-view="clock"><span class="t-ico">🕓</span> <span data-i18n="tabs.clock">世界时钟</span></button>
+    <button data-view="spots"><span class="t-ico">⌖</span> <span data-i18n="tabs.spots">地点图鉴</span></button>
     <button data-view="todo"><span class="t-ico">📋</span> <span data-i18n="tabs.todo">多账号 TODO</span></button>
     <button data-view="links"><span class="t-ico">🔗</span> <span data-i18n="tabs.links">实用链接</span></button>
   </nav>
@@ -290,7 +291,44 @@
       <p class="muted wc-foot" data-i18n-html="clock.foot">列表覆盖 UTC+14 → −12 的全部时区,每档列出代表地点(同一时区可能多地并列);精选地点为社区常用 PoGo 热点,坐标可点击跳转地图。各地时间按所在时区实时计算(含夏令时),仅供参考。</p>
     </section>
 
-    <!-- ========================= VIEW 4: MULTI-ACCOUNT TODO ========================= -->
+    <!-- ========================= VIEW: SPOT ATLAS ========================= -->
+    <!-- Owner-maintained shell. Cards are built by app.js from locations.json;
+         daily automation may change that file only on an explicit operator request. -->
+    <section id="view-spots" class="view">
+      <div class="panel spots-shell">
+        <div class="panel-head"><span class="dia">◆</span><h3 data-i18n="spots.title">Spot Atlas · 地点图鉴</h3></div>
+        <p class="muted" data-i18n="spots.intro">每个地点按当地下一次周二 20:00 计算，并自动转换成当前浏览器的本地时间。</p>
+        <div id="spots-summary" class="spots-summary" aria-live="polite"></div>
+        <form id="spots-controls" class="spots-controls">
+          <label class="spots-field spots-search"><span data-i18n="spots.search">搜索</span>
+            <input id="spots-search" type="search" autocomplete="off" data-i18n-placeholder="spots.searchPlaceholder" placeholder="名称、备注、国家或时区">
+          </label>
+          <label class="spots-field"><span data-i18n="spots.country">国家/地区</span><select id="spots-country"></select></label>
+          <label class="spots-field"><span data-i18n="spots.kind">类型</span><select id="spots-kind"></select></label>
+          <label class="spots-field"><span data-i18n="spots.status">状态</span><select id="spots-status"></select></label>
+          <label class="spots-field"><span data-i18n="spots.reviewFilter">复核</span>
+            <select id="spots-review">
+              <option value="" data-i18n="spots.reviewAll">全部</option>
+              <option value="yes" data-i18n="spots.reviewOnly">仅待复核</option>
+              <option value="no" data-i18n="spots.reviewedOnly">仅已复核</option>
+            </select>
+          </label>
+          <label class="spots-field"><span data-i18n="spots.sort">排序</span>
+            <select id="spots-sort">
+              <option value="next" data-i18n="spots.sortNext">下一目标时间</option>
+              <option value="name" data-i18n="spots.sortName">地点名称</option>
+              <option value="country" data-i18n="spots.sortCountry">国家/地区</option>
+              <option value="rating" data-i18n="spots.sortRating">评分（高到低）</option>
+            </select>
+          </label>
+          <button id="spots-reset" class="btn btn-ghost" type="button" data-i18n="spots.reset">重置筛选</button>
+        </form>
+        <div id="spots-feedback" class="spots-feedback" role="status" aria-live="polite"></div>
+      </div>
+      <div id="spots-results" class="spots-grid" aria-live="polite"></div>
+    </section>
+
+    <!-- ========================= VIEW 5: MULTI-ACCOUNT TODO ========================= -->
     <!-- Owner-maintained; no AI region. Fully client-side: the grid + checks live in
          localStorage (key "pogo-todo"); checks persist until the user manually clears,
          which stamps the header date to that day.
@@ -304,7 +342,7 @@
       </div>
     </section>
 
-    <!-- ========================= VIEW 5: USEFUL LINKS ========================= -->
+    <!-- ========================= VIEW 6: USEFUL LINKS ========================= -->
     <!-- Placeholder — owner-maintained (no AI region; the daily agent never fills it). -->
     <section id="view-links" class="view">
       <div class="panel-head"><span class="dia">◆</span><h3 data-i18n="links.title">实用链接</h3></div>
@@ -433,6 +471,6 @@
     <div class="muted">by: adonais·anabiosis</div>
   </footer>
 
-  <script src="app.js?v=21" defer></script>
+  <script src="app.js?v=22" defer></script>
 </body>
 </html>

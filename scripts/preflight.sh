@@ -22,7 +22,9 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-command -v python3 >/dev/null 2>&1 || { echo "preflight: WARN python3 not found — render checks skipped"; exit 0; }
+command -v node >/dev/null 2>&1 || { echo "preflight: FAIL node is required for Spot Atlas timezone checks"; exit 1; }
+node scripts/test-spot-atlas-time.js || { echo "preflight: FAIL Spot Atlas timezone checks"; exit 1; }
+command -v python3 >/dev/null 2>&1 || { echo "preflight: WARN python3 not found — calendar render checks skipped"; exit 0; }
 
 python3 - <<'PY'
 import json, sys, os, re
@@ -35,8 +37,9 @@ def load(p):
         print(f"preflight: WARN cannot read {p} ({e}) — skipping render checks (validate.sh owns JSON validity)")
         sys.exit(0)
 
-events = load('public/data/events.json')
-rot    = load('public/data/rotations.json')
+events   = load('public/data/events.json')
+rot      = load('public/data/rotations.json')
+locations = load('public/data/locations.json')
 try:
     cats = load('public/data/categories.json')
 except SystemExit:
@@ -47,6 +50,49 @@ if not isinstance(rot, dict): rot = {}
 fails, warns = [], []
 def fail(m): fails.append(m)
 def warn(m): warns.append(m)
+
+# ---- Spot Atlas stable-data preflight -------------------------------------
+if not isinstance(locations, dict):
+    fail('locations.json must be an object')
+else:
+    if set(locations) != {'schemaVersion','schedule','spots'}:
+        fail('locations.json top level must contain only schemaVersion/schedule/spots')
+    schedule = locations.get('schedule')
+    if not isinstance(schedule, dict):
+        fail('locations.json schedule must be an object')
+    else:
+        if 'displayTimeZone' in schedule:
+            fail('locations.json must not persist schedule.displayTimeZone')
+        if set(schedule) != {'isoWeekday','hour','minute'}:
+            fail('locations.json schedule must contain only isoWeekday/hour/minute')
+    spots = locations.get('spots')
+    if not isinstance(spots, list):
+        fail('locations.json spots must be an array')
+    else:
+        try:
+            from zoneinfo import ZoneInfo
+        except ImportError:
+            ZoneInfo = None
+        spot_keys = {'id','countryCode','name','lat','lng','timeZone','kind','status','group','rating','needsReview','note'}
+        for i, spot in enumerate(spots):
+            if not isinstance(spot, dict):
+                fail(f'locations spot #{i + 1} must be an object')
+                continue
+            if set(spot) != spot_keys:
+                fail(f"locations spot '{spot.get('id', i)}' keys do not exactly match the schema")
+            if not isinstance(spot.get('name'), str) or not spot.get('name','').strip():
+                fail(f'locations spot #{i + 1} has an empty name')
+            zone = spot.get('timeZone')
+            if not isinstance(zone, str) or not zone:
+                fail(f"locations spot '{spot.get('id', i)}' has an empty timeZone")
+            elif ZoneInfo is not None:
+                try: ZoneInfo(zone)
+                except Exception: fail(f"locations spot '{spot.get('id', i)}' has invalid IANA timeZone {zone!r}")
+            for key in ('nameZh','nameEn','displayTimeZone','flag','utcOffset','browserTime','displayTime','chinaTime','nextTuesday','mapUrl'):
+                if key in spot: fail(f"locations spot '{spot.get('id', i)}' persists forbidden field {key}")
+
+# Browser display-zone detection and UTC fallback are exercised above by the
+# production-helper Node fixtures; no fixed display zone is read from data.
 
 def pday(s):
     if not s: return None
