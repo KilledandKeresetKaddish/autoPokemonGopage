@@ -7,7 +7,7 @@
 'use strict';
 
 const state = {
-  events: [], rotations: null, categories: {}, mega: [], meta: null,
+  events: [], rotations: null, categories: {}, mega: [], locations: null, locationsError: '', meta: null,
   ui: {}, en: null, zhRegions: {}, locale: 'zh-CN', calYear: 0, calMonth: 0,
 };
 const LOCALE_KEY = 'pogo-locale';
@@ -464,6 +464,17 @@ async function loadData() {
     const mg = await (await fetch('data/mega.json' + bust)).json();
     state.mega = Array.isArray(mg) ? mg : [];
   } catch (e) { state.mega = []; }
+  try {
+    const response = await fetch('data/locations.json' + bust);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const locations = await response.json();
+    if (!locations || !Array.isArray(locations.spots) || !locations.schedule) throw new Error('invalid locations schema');
+    state.locations = locations;
+    state.locationsError = '';
+  } catch (e) {
+    state.locations = null;
+    state.locationsError = e && e.message || String(e);
+  }
 }
 
 /* ---------- calendar ---------- */
@@ -1428,6 +1439,140 @@ function wcFmtOffset(min) {
   const h = Math.floor(a / 60), m = a % 60;
   return 'UTC' + sign + h + (m ? ':' + wcPad(m) : '');
 }
+
+
+/* ---------- Spot Atlas timezone helpers -------------------------------------
+ * Intl can format an instant in an IANA zone, but it cannot directly turn a
+ * local wall-clock value into an instant. Keep that conversion here, pure and
+ * dependency-free, so browser rendering and Node fixtures exercise the same
+ * DST/half-hour-aware implementation. */
+const spotPartFormatters = new Map();
+function isValidIanaTimeZone(zone) {
+  if (typeof zone !== 'string' || !zone.trim()) return false;
+  try { new Intl.DateTimeFormat('en-US', { timeZone:zone }).format(0); return true; }
+  catch (e) { return false; }
+}
+function detectBrowserTimeZone(resolver) {
+  try {
+    const browserTimeZone = resolver
+      ? resolver()
+      : Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (isValidIanaTimeZone(browserTimeZone)) return { timeZone:browserTimeZone, fallback:false };
+  } catch (e) { /* explicit UTC fallback below */ }
+  return { timeZone:'UTC', fallback:true };
+}
+function spotPartsFormatter(timeZone) {
+  if (!isValidIanaTimeZone(timeZone)) throw new RangeError(`Invalid IANA time zone: ${timeZone}`);
+  let formatter = spotPartFormatters.get(timeZone);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat('en-CA-u-ca-iso8601-nu-latn', {
+      timeZone, calendar:'iso8601', numberingSystem:'latn', hourCycle:'h23',
+      year:'numeric', month:'2-digit', day:'2-digit',
+      hour:'2-digit', minute:'2-digit', second:'2-digit',
+    });
+    spotPartFormatters.set(timeZone, formatter);
+  }
+  return formatter;
+}
+function spotZonedParts(instant, timeZone) {
+  const date = instant instanceof Date ? instant : new Date(instant);
+  if (isNaN(date.getTime())) throw new RangeError('Invalid instant');
+  const values = {};
+  spotPartsFormatter(timeZone).formatToParts(date).forEach(part => {
+    if (part.type !== 'literal') values[part.type] = part.value;
+  });
+  const year = +values.year, month = +values.month, day = +values.day;
+  const hour = (+values.hour) % 24, minute = +values.minute, second = +values.second;
+  const isoWeekday = ((new Date(Date.UTC(year, month - 1, day)).getUTCDay() + 6) % 7) + 1;
+  return { year, month, day, hour, minute, second, isoWeekday };
+}
+function spotWallStamp(parts) {
+  return Date.UTC(parts.year, parts.month - 1, parts.day, parts.hour || 0, parts.minute || 0, parts.second || 0);
+}
+function spotSameWall(a, b) {
+  return a.year === b.year && a.month === b.month && a.day === b.day
+    && (a.hour || 0) === (b.hour || 0) && (a.minute || 0) === (b.minute || 0)
+    && (a.second || 0) === (b.second || 0);
+}
+function timeZoneOffsetMinutes(instant, timeZone) {
+  const date = instant instanceof Date ? instant : new Date(instant);
+  const parts = spotZonedParts(date, timeZone);
+  const wholeSecond = Math.floor(date.getTime() / 1000) * 1000;
+  return Math.round((spotWallStamp(parts) - wholeSecond) / 60000);
+}
+function zonedWallTimeToInstant(wall, timeZone) {
+  const wanted = {
+    year:+wall.year, month:+wall.month, day:+wall.day,
+    hour:+wall.hour || 0, minute:+wall.minute || 0, second:+wall.second || 0,
+  };
+  const wantedStamp = spotWallStamp(wanted);
+  if (!isFinite(wantedStamp)) throw new RangeError('Invalid wall-clock time');
+
+  // Candidate offsets sampled on both sides of the date cover ordinary and
+  // transition-day offsets. Exact matches are unique normally; during a fold,
+  // choose the earlier instant (Temporal-compatible disambiguation).
+  const offsets = new Set();
+  [-48,-36,-24,-12,0,12,24,36,48].forEach(hours => {
+    offsets.add(timeZoneOffsetMinutes(new Date(wantedStamp + hours * 3600000), timeZone));
+  });
+  const exact = [];
+  offsets.forEach(offset => {
+    const candidate = new Date(wantedStamp - offset * 60000);
+    if (spotSameWall(spotZonedParts(candidate, timeZone), wanted)) exact.push(candidate);
+  });
+  if (exact.length) return new Date(Math.min(...exact.map(date => date.getTime())));
+
+  // A nonexistent wall time (spring-forward gap) is moved forward by the gap,
+  // matching Temporal's "compatible" behavior. This slow path is transition-
+  // only; Spot Atlas's Tuesday 20:00 schedule always takes the exact path.
+  let best = null, bestDelta = Infinity;
+  for (let minute = -36 * 60; minute <= 36 * 60; minute++) {
+    const candidate = new Date(wantedStamp + minute * 60000);
+    const delta = spotWallStamp(spotZonedParts(candidate, timeZone)) - wantedStamp;
+    if (delta >= 0 && (delta < bestDelta || (delta === bestDelta && (!best || candidate < best)))) {
+      best = candidate; bestDelta = delta;
+    }
+  }
+  if (!best) throw new RangeError(`Cannot resolve wall-clock time in ${timeZone}`);
+  return best;
+}
+function spotAddLocalDays(parts, days) {
+  const date = new Date(Date.UTC(parts.year, parts.month - 1, parts.day + days));
+  return { year:date.getUTCFullYear(), month:date.getUTCMonth() + 1, day:date.getUTCDate() };
+}
+function nextLocalScheduleInstant(nowInstant, locationZone, schedule) {
+  const now = nowInstant instanceof Date ? new Date(nowInstant.getTime()) : new Date(nowInstant);
+  if (isNaN(now.getTime())) throw new RangeError('Invalid current instant');
+  const isoWeekday = Number(schedule && schedule.isoWeekday);
+  const hour = Number(schedule && schedule.hour), minute = Number(schedule && schedule.minute);
+  if (!Number.isInteger(isoWeekday) || isoWeekday < 1 || isoWeekday > 7
+      || !Number.isInteger(hour) || hour < 0 || hour > 23
+      || !Number.isInteger(minute) || minute < 0 || minute > 59) {
+    throw new RangeError('Invalid schedule');
+  }
+  const localNow = spotZonedParts(now, locationZone);
+  const deltaDays = (isoWeekday - localNow.isoWeekday + 7) % 7;
+  let localDate = spotAddLocalDays(localNow, deltaDays);
+  let target = zonedWallTimeToInstant(Object.assign(localDate, { hour, minute, second:0 }), locationZone);
+  if (target.getTime() < now.getTime()) {
+    localDate = spotAddLocalDays(localDate, 7);
+    target = zonedWallTimeToInstant(Object.assign(localDate, { hour, minute, second:0 }), locationZone);
+  }
+  return target;
+}
+function formatTargetForZone(targetInstant, displayZone, locale) {
+  const date = targetInstant instanceof Date ? targetInstant : new Date(targetInstant);
+  const parts = spotZonedParts(date, displayZone);
+  const localeTag = locale === 'en' ? 'en-US' : 'zh-CN';
+  const weekday = new Intl.DateTimeFormat(localeTag, { timeZone:displayZone, weekday:'short' }).format(date);
+  const dateText = `${parts.year}-${wcPad(parts.month)}-${wcPad(parts.day)}`;
+  const time = `${wcPad(parts.hour)}:${wcPad(parts.minute)}`;
+  return {
+    date:dateText, weekday, time, timeZone:displayZone,
+    offsetMinutes:timeZoneOffsetMinutes(date, displayZone),
+    text:`${dateText} ${weekday} ${time}`,
+  };
+}
 // Half-open [start, end) on a 24h clock, hour granularity: 「结束」exclusive
 // (end may be 24 = 当日结束). Wraps past midnight when start > end; start === end → empty.
 function wcInRange(h, start, end) {
@@ -1489,6 +1634,10 @@ function renderWorldClock() {
   renderWcSpots(start, end, now);
   renderWcPin(start, end, now);
   renderWcAxis(start, end, now);
+}
+function refreshWorldClockIfActive() {
+  const view = $('#view-clock');
+  if (view && view.classList.contains('active')) renderWorldClock();
 }
 
 // 把"所选时段(以该精选地点的当地时间计)"换算成当前用户的本地时间窗口。用户时区取自
@@ -1602,10 +1751,281 @@ function setupWorldClock() {
   if (allBtn) allBtn.classList.toggle('active', !wcActive);
   dimWc();
   renderWorldClock();
-  // tick so times/groups shift as the minute rolls — only while the clock view is open
+  // Refresh immediately when suspended timers resume; keep the existing foreground tick.
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) refreshWorldClockIfActive();
+  });
+  window.addEventListener('pageshow', refreshWorldClockIfActive);
+  setInterval(refreshWorldClockIfActive, 30000);
+}
+
+
+/* ---------- Spot Atlas -------------------------------------------------------
+ * locations.json owns stable facts only. Flags, offsets, target instants, map
+ * URLs and browser-local display values are derived for each render. */
+const SPOT_KIND_OPTIONS = ['gym','showcase','both'];
+const SPOT_KIND_VALUES = ['', ...SPOT_KIND_OPTIONS];
+const SPOT_SORT_VALUES = ['next','timezone','name','country','rating'];
+const SPOT_KIND_STORAGE_KEY = 'pogo-spot-filter';
+const SPOT_SORT_STORAGE_KEY = 'pogo-spot-sort';
+let spotsCopyFeedback = null;
+function spotCountryName(countryCode) {
+  const code = String(countryCode || '').toUpperCase();
+  try {
+    return new Intl.DisplayNames([isEnglish() ? 'en' : 'zh-CN'], { type:'region' }).of(code) || code;
+  } catch (e) { return code; }
+}
+function spotCountryFlag(countryCode) {
+  const code = String(countryCode || '').toUpperCase();
+  return /^[A-Z]{2}$/.test(code)
+    ? String.fromCodePoint(...[...code].map(letter => 127397 + letter.charCodeAt(0))) : '';
+}
+function spotKindLabel(kind) {
+  return i18n(`spots.kind.${kind}`, null, String(kind || '—'));
+}
+function spotStatusLabel(status) {
+  return i18n(`spots.status.${status}`, null, String(status || '—'));
+}
+function spotCoordinates(spot) { return `${spot.lat}, ${spot.lng}`; }
+function spotMapUrl(spot) {
+  const params = new URLSearchParams({ is_login_event:'1', lat:String(spot.lat), lng:String(spot.lng) });
+  return `https://pokemongo.com/map?${params}`;
+}
+function spotLoadPreferences(storage) {
+  const preferences = { kind:'', sort:'next' };
+  try {
+    const store = storage || localStorage;
+    const kind = store.getItem(SPOT_KIND_STORAGE_KEY);
+    const sort = store.getItem(SPOT_SORT_STORAGE_KEY);
+    if (SPOT_KIND_VALUES.includes(kind)) preferences.kind = kind;
+    if (SPOT_SORT_VALUES.includes(sort)) preferences.sort = sort;
+  } catch (e) { /* storage may be disabled */ }
+  return preferences;
+}
+function spotSavePreferences(filters, storage) {
+  try {
+    const store = storage || localStorage;
+    const kind = SPOT_KIND_VALUES.includes(filters.kind) ? filters.kind : '';
+    const sort = SPOT_SORT_VALUES.includes(filters.sort) ? filters.sort : 'next';
+    store.setItem(SPOT_KIND_STORAGE_KEY, kind);
+    store.setItem(SPOT_SORT_STORAGE_KEY, sort);
+  } catch (e) { /* storage may be disabled */ }
+}
+function spotSetOptions(select, rows, allLabel) {
+  if (!select) return;
+  const selected = select.value;
+  select.textContent = '';
+  const all = document.createElement('option'); all.value = ''; all.textContent = allLabel;
+  select.appendChild(all);
+  rows.forEach(row => {
+    const option = document.createElement('option'); option.value = row.value; option.textContent = row.label;
+    select.appendChild(option);
+  });
+  if ([...select.options].some(option => option.value === selected)) select.value = selected;
+}
+function renderSpotFilterOptions(spots) {
+  const countries = [...new Set(spots.map(spot => spot.countryCode))]
+    .map(code => ({ value:code, label:spotCountryName(code) }))
+    .sort((a, b) => a.label.localeCompare(b.label, isEnglish() ? 'en' : 'zh-Hans'));
+  const kinds = SPOT_KIND_OPTIONS.map(kind => ({ value:kind, label:spotKindLabel(kind) }));
+  const statuses = [...new Set(spots.map(spot => spot.status))]
+    .map(status => ({ value:status, label:spotStatusLabel(status) }));
+  spotSetOptions($('#spots-country'), countries, i18n('spots.allCountries', null, '全部国家/地区'));
+  spotSetOptions($('#spots-kind'), kinds, i18n('spots.allKinds', null, '全部类型'));
+  spotSetOptions($('#spots-status'), statuses, i18n('spots.allStatuses', null, '全部状态'));
+}
+function spotView(spot, now, schedule, browserZone) {
+  const target = nextLocalScheduleInstant(now, spot.timeZone, schedule);
+  return {
+    spot, target,
+    country:spotCountryName(spot.countryCode),
+    localNow:formatTargetForZone(now, spot.timeZone, state.locale),
+    localTarget:formatTargetForZone(target, spot.timeZone, state.locale),
+    browserTarget:formatTargetForZone(target, browserZone, state.locale),
+    currentOffset:timeZoneOffsetMinutes(now, spot.timeZone),
+  };
+}
+function spotFilterState() {
+  return {
+    search:($('#spots-search') && $('#spots-search').value || '').trim().toLocaleLowerCase(),
+    country:$('#spots-country') && $('#spots-country').value || '',
+    kind:$('#spots-kind') && $('#spots-kind').value || '',
+    status:$('#spots-status') && $('#spots-status').value || '',
+    review:$('#spots-review') && $('#spots-review').value || '',
+    sort:$('#spots-sort') && $('#spots-sort').value || 'next',
+  };
+}
+function spotMatches(view, filters) {
+  const spot = view.spot;
+  if (filters.country && spot.countryCode !== filters.country) return false;
+  if (filters.kind && spot.kind !== filters.kind) return false;
+  if (filters.status && spot.status !== filters.status) return false;
+  if (filters.review === 'yes' && !spot.needsReview) return false;
+  if (filters.review === 'no' && spot.needsReview) return false;
+  if (filters.search) {
+    const haystack = [spot.name, spot.note, spot.countryCode, view.country, spot.timeZone]
+      .join(' ').toLocaleLowerCase();
+    if (!haystack.includes(filters.search)) return false;
+  }
+  return true;
+}
+function sortSpotViews(views, mode) {
+  const locale = isEnglish() ? 'en' : 'zh-Hans';
+  const tie = (a, b) => a.country.localeCompare(b.country, locale)
+    || a.spot.name.localeCompare(b.spot.name, locale)
+    || a.spot.id.localeCompare(b.spot.id, locale);
+  return views.sort((a, b) => {
+    if (mode === 'timezone') return b.currentOffset - a.currentOffset || tie(a, b);
+    if (mode === 'name') return a.spot.name.localeCompare(b.spot.name, locale)
+      || a.spot.id.localeCompare(b.spot.id, locale);
+    if (mode === 'country') return tie(a, b);
+    if (mode === 'rating') {
+      const ar = a.spot.rating == null ? -Infinity : +a.spot.rating;
+      const br = b.spot.rating == null ? -Infinity : +b.spot.rating;
+      return br - ar || a.target - b.target || tie(a, b);
+    }
+    return a.target - b.target || tie(a, b);
+  });
+}
+function spotRatingStars(rating) {
+  return [1,2,3].includes(rating) ? '⭐'.repeat(rating) : '';
+}
+function spotNoteBlock(note) {
+  if (!note) return '';
+  return `<div class="spots-note"><span class="spots-label">${escapeHtml(i18n('spots.note', null, '备注'))}</span>`
+    + `<p>${escapeHtml(note)}</p></div>`;
+}
+function spotTimeBlock(label, value, extraClass) {
+  return `<div class="spots-time ${extraClass || ''}"><span class="spots-label">${escapeHtml(label)}</span>`
+    + `<strong>${escapeHtml(value.text)}</strong></div>`;
+}
+function renderSpots() {
+  const results = $('#spots-results'), summary = $('#spots-summary');
+  if (!results || !summary) return;
+  const browser = detectBrowserTimeZone();
+  const now = new Date();
+  if (!state.locations) {
+    summary.innerHTML = `<span class="spots-error">${escapeHtml(i18n('spots.loadError', null, '地点数据加载失败。'))}</span>`;
+    results.innerHTML = `<div class="spots-empty panel">${escapeHtml(i18n('spots.loadErrorHint', null, '请稍后重新加载页面。'))}</div>`;
+    return;
+  }
+
+  const spots = state.locations.spots || [];
+  renderSpotFilterOptions(spots);
+  const filters = spotFilterState();
+  const views = [];
+  spots.forEach(spot => {
+    try { views.push(spotView(spot, now, state.locations.schedule, browser.timeZone)); }
+    catch (error) { console.warn('Spot Atlas skipped invalid row', spot && spot.id, error); }
+  });
+  const filtered = sortSpotViews(views.filter(view => spotMatches(view, filters)), filters.sort);
+  const browserNow = formatTargetForZone(now, browser.timeZone, state.locale);
+  const zoneText = browser.fallback
+    ? i18n('spots.timeZoneFallback', { zone:browser.timeZone }, `${browser.timeZone}（检测失败，已回退）`)
+    : browser.timeZone;
+  summary.innerHTML = `<div class="spots-summary-item"><span>${escapeHtml(i18n('spots.browserNow', null, '浏览器当前时间'))}</span><strong>${escapeHtml(browserNow.text)}</strong></div>`
+    + `<div class="spots-summary-item"><span>${escapeHtml(i18n('spots.browserZone', null, '浏览器 IANA timezone'))}</span><strong${browser.fallback ? ' class="spots-fallback"' : ''}>${escapeHtml(zoneText)}</strong></div>`
+    + `<div class="spots-summary-item"><span>${escapeHtml(i18n('spots.total', null, '数据点总数'))}</span><strong>${views.length}</strong></div>`
+    + `<div class="spots-summary-item"><span>${escapeHtml(i18n('spots.filtered', null, '筛选后点数'))}</span><strong>${filtered.length}</strong></div>`;
+
+  const feedback = $('#spots-feedback');
+  if (feedback) feedback.textContent = spotsCopyFeedback && spotsCopyFeedback.until > Date.now()
+    ? i18n(spotsCopyFeedback.key, null, spotsCopyFeedback.key === 'spots.copySuccess' ? '坐标已复制。' : '复制失败。') : '';
+  if (!filtered.length) {
+    results.innerHTML = `<div class="spots-empty panel">${escapeHtml(i18n('spots.empty', null, '没有符合当前筛选条件的地点。'))}</div>`;
+    return;
+  }
+  results.innerHTML = filtered.map(view => {
+    const spot = view.spot, coords = spotCoordinates(spot);
+    const copied = spotsCopyFeedback && spotsCopyFeedback.id === spot.id
+      && spotsCopyFeedback.key === 'spots.copySuccess' && spotsCopyFeedback.until > Date.now();
+    const reviewLabel = spot.needsReview
+      ? i18n('spots.needsReview', null, '待复核') : i18n('spots.reviewed', null, '已复核');
+    const rating = spotRatingStars(spot.rating);
+    const ratingFact = rating ? `<div><dt>${escapeHtml(i18n('spots.rating', null, '评分'))}</dt><dd>${rating}</dd></div>` : '';
+    return `<article class="spots-card panel" data-spot-id="${escapeHtml(spot.id)}">`
+      + `<header class="spots-card-head"><span class="spots-flag" role="img" aria-label="${escapeHtml(view.country)}">${spotCountryFlag(spot.countryCode)}</span>`
+      + `<div class="spots-title"><span class="spots-country">${escapeHtml(view.country)}</span><h3>${escapeHtml(spot.name)}</h3></div>`
+      + `<div class="spots-badges"><span class="badge">${escapeHtml(spotKindLabel(spot.kind))}</span>`
+      + `<span class="badge spots-status-${escapeHtml(spot.status)}">${escapeHtml(spotStatusLabel(spot.status))}</span>`
+      + `<span class="badge ${spot.needsReview ? 'spots-review-needed' : 'spots-review-ok'}">${escapeHtml(reviewLabel)}</span></div></header>`
+      + `<dl class="spots-facts">${ratingFact}`
+      + `<div><dt>${escapeHtml(i18n('spots.coordinates', null, '经纬度'))}</dt><dd><code>${escapeHtml(coords)}</code></dd></div>`
+      + `<div><dt>${escapeHtml(i18n('spots.locationZone', null, '地点 timezone'))}</dt><dd><code>${escapeHtml(spot.timeZone)}</code></dd></div>`
+      + `<div><dt>${escapeHtml(i18n('spots.currentOffset', null, '当前 UTC offset'))}</dt><dd>${escapeHtml(wcFmtOffset(view.currentOffset))}</dd></div></dl>`
+      + `<div class="spots-times">${spotTimeBlock(i18n('spots.localNow', null, '当地现在'), view.localNow)}`
+      + `${spotTimeBlock(i18n('spots.nextLocalTarget', null, '下一个当地周二 20:00'), view.localTarget)}`
+      + `${spotTimeBlock(i18n('spots.browserTime', null, '我的时间'), view.browserTarget, 'spots-my-time')}</div>`
+      + spotNoteBlock(spot.note)
+      + `<footer class="spots-actions"><a class="btn" href="${escapeHtml(spotMapUrl(spot))}" target="_blank" rel="noopener">${escapeHtml(i18n('spots.openMap', null, '打开官方地图'))}</a>`
+      + `<button class="btn spots-copy" type="button" data-copy-spot="${escapeHtml(spot.id)}">${escapeHtml(copied ? i18n('spots.copied', null, '已复制') : i18n('spots.copyCoordinates', null, '复制坐标'))}</button></footer>`
+      + `</article>`;
+  }).join('');
+}
+function fallbackCopyText(text) {
+  const area = document.createElement('textarea');
+  area.value = text; area.readOnly = true; area.style.position = 'fixed'; area.style.opacity = '0';
+  document.body.appendChild(area); area.select();
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+  area.remove();
+  if (!ok) throw new Error('copy command failed');
+}
+async function copySpotCoordinates(spot) {
+  const text = spotCoordinates(spot);
+  let key = 'spots.copySuccess';
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) await navigator.clipboard.writeText(text);
+    else fallbackCopyText(text);
+  } catch (error) {
+    try { fallbackCopyText(text); }
+    catch (fallbackError) { key = 'spots.copyError'; }
+  }
+  spotsCopyFeedback = { id:spot.id, key, until:Date.now() + 2200 };
+  renderSpots();
+  setTimeout(() => {
+    if (spotsCopyFeedback && spotsCopyFeedback.id === spot.id && spotsCopyFeedback.until <= Date.now()) {
+      spotsCopyFeedback = null;
+      const view = $('#view-spots'); if (view && view.classList.contains('active')) renderSpots();
+    }
+  }, 2300);
+}
+function setupSpots() {
+  const controls = $('#spots-controls'), results = $('#spots-results');
+  if (!controls || !results) return;
+  renderSpotFilterOptions(state.locations ? state.locations.spots || [] : []);
+  const preferences = spotLoadPreferences();
+  const kind = $('#spots-kind'), sort = $('#spots-sort');
+  if (kind) kind.value = preferences.kind;
+  if (sort) sort.value = preferences.sort;
+  controls.addEventListener('submit', event => event.preventDefault());
+  controls.addEventListener('input', renderSpots);
+  controls.addEventListener('change', () => {
+    spotSavePreferences(spotFilterState());
+    renderSpots();
+  });
+  const reset = $('#spots-reset');
+  if (reset) reset.addEventListener('click', () => {
+    const search = $('#spots-search'); if (search) search.value = '';
+    ['#spots-country','#spots-kind','#spots-status','#spots-review'].forEach(sel => { const el = $(sel); if (el) el.value = ''; });
+    const sortSelect = $('#spots-sort'); if (sortSelect) sortSelect.value = 'next';
+    spotSavePreferences(spotFilterState());
+    renderSpots();
+  });
+  results.addEventListener('click', event => {
+    const button = event.target.closest('[data-copy-spot]');
+    if (!button || !state.locations) return;
+    const spot = state.locations.spots.find(row => row.id === button.dataset.copySpot);
+    if (spot) copySpotCoordinates(spot);
+  });
+  document.addEventListener('visibilitychange', () => {
+    const view = $('#view-spots');
+    if (!document.hidden && view && view.classList.contains('active')) renderSpots();
+  });
+  renderSpots();
   setInterval(() => {
-    const v = $('#view-clock');
-    if (v && v.classList.contains('active')) renderWorldClock();
+    const view = $('#view-spots');
+    if (view && view.classList.contains('active')) renderSpots();
   }, 30000);
 }
 
@@ -1652,6 +2072,9 @@ function applyStaticTranslations() {
   document.querySelectorAll('[data-i18n-title]').forEach(el => {
     const v = dict[el.dataset.i18nTitle]; if (v != null) el.title = v;
   });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const v = dict[el.dataset.i18nPlaceholder]; if (v != null) el.setAttribute('placeholder', v);
+  });
   document.title = i18n('site.documentTitle', null, 'Pokémon GO 面板');
   const toggle = $('#lang-toggle');
   if (toggle) {
@@ -1673,6 +2096,7 @@ function applyLocale() {
   renderRotations();
   renderMega();
   renderWorldClock();
+  renderSpots();
   if (todoState) renderTodo();
   linkifySprites(document.body);
 }
@@ -1691,6 +2115,8 @@ function setupTabs() {
     document.querySelectorAll('#main-tabs button').forEach(x => x.classList.toggle('active', x === b));
     const v = b.dataset.view;
     document.querySelectorAll('.view').forEach(s => s.classList.toggle('active', s.id === `view-${v}`));
+    if (v === 'clock') renderWorldClock();
+    if (v === 'spots') renderSpots();
     if (v === 'todo') todoRefreshCds();   // refresh the per-account CD timers each time it's opened
   });
   $('#rank-subtabs').addEventListener('click', e => {
@@ -2025,10 +2451,19 @@ async function init() {
   setupTodo();
   setupMega();
   setupWorldClock();
+  setupSpots();
   applyLocale();
 }
 
-document.addEventListener('DOMContentLoaded', () => init().catch(error => {
+if (typeof module === 'object' && module.exports) {
+  module.exports = {
+    detectBrowserTimeZone, isValidIanaTimeZone, spotZonedParts, timeZoneOffsetMinutes,
+    zonedWallTimeToInstant, nextLocalScheduleInstant, formatTargetForZone, wcInRange,
+    spotCountryFlag, spotCoordinates, spotMapUrl, spotMatches, sortSpotViews, spotRatingStars, spotNoteBlock,
+    spotLoadPreferences, spotSavePreferences, SPOT_KIND_OPTIONS, SPOT_SORT_VALUES,
+  };
+}
+if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded', () => init().catch(error => {
   console.error('pogo-agent init failed', error);
   document.body.dataset.initError = error && (error.stack || error.message) || String(error);
 }));

@@ -15,7 +15,9 @@ The dashboard is bilingual. Canonical content (`events.json`, `rotations.json`,
 `categories.json`, `mega.json` and the five `index.html` AI wrappers) must be
 **Simplified Chinese (简体中文)**; the text-only overlay
 `public/data/i18n/en.json` must be **English-only**. Both editions describe one
-shared set of IDs/dates/links/sprites and publish atomically.
+shared set of IDs/dates/links/sprites and publish atomically. Spot Atlas is separate:
+`locations.json` keeps one operator-supplied `name` and `note` verbatim (Chinese, English or mixed)
+for both locales and never duplicates them into the English overlay.
 
 **Headless orchestration safety.** Daily phases are run-to-completion and must execute
 foreground/sequentially. Never launch async/background subagents, never treat a launch
@@ -74,7 +76,7 @@ Day", treat <X>'s Mega as real and render the Mega form, even if gamemaster lack
 
 ---
 
-## The site (2 content sections + owner placeholders)
+## The site (calendar/rankings + owner tools)
 1. **Calendar** (`#view-calendar`) — month grid **+ a 长期活动 band + a PVP活动 band** (events
    pulled out of the grid) **+ a 本月 Weekly Rotations** section. Data-driven from
    `public/data/events.json` and `public/data/rotations.json`: short headline events live in
@@ -83,11 +85,16 @@ Day", treat <X>'s Mega as real and render the Mega form, even if gamemaster lack
    from `rotations.json`.
 2. **Rankings** (`#view-rankings`) — Max attackers / Max defenders / raid counters, plus
    a "本期推荐" panel tied to what's live right now.
-A header language button switches all owner UI, canonical event/rotation text and the
-five rich regions between 简体中文 and English without duplicating structural facts.
-The other two views — **世界时钟** (`#view-clock`) and **实用链接** (`#view-links`) — are
-**owner-maintained placeholders** (static, no AI markers). **Not your concern — never read
-or touch them.**
+3. **Spot Atlas** (`#view-spots`) — a bilingual, data-driven location atlas loaded from
+   `public/data/locations.json`. Each spot targets its own next local Tuesday 20:00 and the
+   browser converts that instant to its dynamically detected local IANA timezone.
+A header language button switches owner UI, canonical event/rotation text and the five rich
+regions between 简体中文 and English without duplicating structural facts. Spot `name`, `note`
+and coordinates are canonical raw values and **never change with locale**.
+The **世界时钟** (`#view-clock`), **多账号 TODO** (`#view-todo`) and **实用链接**
+(`#view-links`) shells are owner-maintained (no AI markers). Do not edit their HTML/app logic.
+`locations.json` is the sole exception described below: maintain its data only on an explicit
+admin/operator request.
 
 ## What you MAY edit — and nothing else
 > **This whitelist (and the HARD RULES below) bind _you, the daily content-update agent_.** They keep an
@@ -100,6 +107,10 @@ or touch them.**
 - `public/data/categories.json` — register a NEW event `type` (palette key + 简体中文 label + kind)
   when a source introduces one the built-ins don't cover. **Palette KEY only — never a raw colour.**
 - `public/data/meta.json` — set `lastUpdated` (ISO 8601); the header shows it.
+- `public/data/locations.json` — Spot Atlas stable location records. **Edit only when the
+  admin/operator explicitly asks to add, remove or change a location**; never refresh or
+  rewrite it autonomously from event sources. Preserve the top-level schedule and the single
+  canonical `name` field rules under “Spot Atlas schema” below.
 - `public/data/i18n/en.json` — English **text-only overlay**, owned only by English
   Curator (40). It mirrors canonical event IDs and nested-array order, rotation track/
   segment order, custom category keys and all five rich regions; it never contains
@@ -475,7 +486,13 @@ read before you write, as always.
      windows, and a directional "练哪类攻手". Full counter tables belong in 当前团战 Counter — point
      there, don't duplicate them (see *Free-form synthesis* below).
    - `calendar-notes` (**free-form**) → a short 本月看点 (see *Free-form synthesis*).
-7. **English text layer** → after Calendar, Rotations and Chinese Rankings are fully
+7. **Spot Atlas (operator-note only)** → leave `public/data/locations.json` byte-for-byte
+   unchanged on ordinary daily runs. When an explicit operator note requests a location change,
+   update only the affected row(s): retain a stable URL-safe `id`; keep exactly one untranslated
+   `name`; copy coordinates/timezone/note from the operator rather than inventing or geocoding;
+   validate the supplied IANA `timeZone`; and never persist flags, offsets, next-target times,
+   browser times or map URLs. Locale switching must not create an English/Chinese name variant.
+8. **English text layer** → after Calendar, Rotations and Chinese Rankings are fully
    finalized, update `public/data/i18n/en.json` surgically. Facts are interpreted once:
    translate text only, keep exact canonical event IDs, custom-category/track keys and
    nested-array lengths/order, and translate all five wrapper inner-HTML regions while
@@ -484,12 +501,12 @@ read before you write, as always.
    `scripts/fetch.sh zh …` or the exact English source spelling. English visible content
    must contain no CJK fallback. On a quiet day with unchanged canonical content, leave
    the already-verified overlay unchanged.
-8. Set `public/data/meta.json` `lastUpdated` to now (ISO 8601); record per-source fetch
+9. Set `public/data/meta.json` `lastUpdated` to now (ISO 8601); record per-source fetch
    times/notes in `data/state.json` (a fixed object keyed by source — **not** a growing log).
    (In the sub-agent orchestration, curators do **not** write `data/state.json` themselves —
    report gaps/notes in your output to the coordinator for State+Validator (90), its sole
    writer; a single-agent run writes it directly.)
-9. **Self-check before validating:** one row per real event (no duplicate `id`s), `links[]`
+10. **Self-check before validating:** one row per real event (no duplicate `id`s), `links[]`
    aggregated (≥2 sources per event where possible), no event ended >3 months ago, long events
    flagged, rotations parsed not invented, `highlight` only on Community Day / Raid Day /
    boosted-shiny events (standard raid encounters at base shiny rate do NOT qualify),
@@ -498,8 +515,10 @@ read before you write, as always.
    garbled names)**, all `links[].url` actually confirmed to exist and point to THIS event
    (not a same-category article for a different Pokémon), every Chinese AI marker retains
    its `data-ai-region` wrapper, and English overlay IDs/arrays/regions exactly mirror the
-   finalized canonical content with verified English names and no Chinese leakage.
-10. Run `scripts/validate.sh`. Fix what it reports until it passes. (It hard-rejects duplicate
+   finalized canonical content with verified English names and no Chinese leakage. If an operator
+   requested a Spot Atlas edit, also verify unique ids, non-empty single `name`, valid IANA zones,
+   unchanged schedule shape, and absence of every runtime-only field listed below.
+11. Run `scripts/validate.sh`. Fix what it reports until it passes. (It hard-rejects duplicate
    ids, >250 **or <5** events, events ended >90 days ago, empty `id`/`name`/`start`/`type`,
    `end` earlier than `start`, dangerous HTML in either language's rich regions, **any empty AI region**
    (all five per language must have content — never blank one to "start clean"), bilingual
@@ -621,6 +640,35 @@ read before you write, as always.
   `events.json` raid entry** — i.e. the **BASE national-dex id** (Mega 巨钳螳螂 → `212`, *not* the
   mega-form id `10046`), with the mega look supplied via `"sprite"`. Put a mega-form id here and the
   icon opens a **bare, link-less drawer** (it can't find its event — this is a real bug, not cosmetic).
+
+`public/data/locations.json` — Spot Atlas stable facts (operator-note maintenance only):
+```json
+{
+  "schemaVersion": 1,
+  "schedule": { "isoWeekday": 2, "hour": 20, "minute": 0 },
+  "spots": [{
+    "id": "stable-url-safe-id", "countryCode": "TH", "name": "Ban Phue",
+    "lat": 17.688021, "lng": 102.473581, "timeZone": "Asia/Bangkok",
+    "kind": "gym", "status": "tested", "group": null, "rating": null,
+    "needsReview": false, "note": "人少、资源也较少"
+  }]
+}
+```
+- `name` is the only location-name field: required, string, trim-non-empty, and shown verbatim
+  in both locales. Never add `nameZh` / `nameEn`, and never put spot names in an i18n file.
+- `schedule` contains only `isoWeekday` / `hour` / `minute`; never add `displayTimeZone`.
+  Each row's `timeZone` is an IANA zone for that location. The viewer's display zone is detected
+  at runtime by the browser and is never stored here or selected from the website locale.
+- Never infer a timezone from longitude and never save a fixed offset. The following are runtime
+  derivatives and forbidden in every spot row: `flag`, `utcOffset`, `browserTime`, `displayTime`,
+  `chinaTime`, `nextTuesday`, `mapUrl`.
+- Keep `id` stable and lowercase URL-safe; `countryCode` is uppercase ISO alpha-2; latitude /
+  longitude are numeric and in range, and two rows may not share the exact same numeric pair.
+  `kind` is exactly `gym` / `showcase` / `both`; `status` is exactly `tested` / `candidate` /
+  `mixed`; `rating` is exactly `null` / `1` / `2` / `3` (integers only); `group` is null or a
+  non-empty string; `needsReview` is boolean; `note` remains the operator's original text.
+  Add/change/remove rows only from explicit operator facts—do not discover, translate, geocode or
+  “clean up” them on your own.
 
 `public/data/meta.json`:
 ```json

@@ -36,6 +36,9 @@ Checklist:
      fallback; `public/data/i18n/ui.json` remains checksum-protected and untouched;
    - `featured.json` is an array of ids that all still exist in `events.json` (Calendar pruned
      it — validate.sh hard-rejects stale featured ids);
+   - `locations.json` has unique stable ids, one trim-non-empty raw `name` per spot, valid IANA
+     zones, only `isoWeekday/hour/minute` in its schedule, and no persisted runtime fields; unless
+     an explicit operator note requested a Spot Atlas change, Calendar left it byte-identical;
    - no internal pipeline details (`data/raw/*` paths, script names) in user-visible text;
    - render contract holds (AGENTS.md《渲染契约》): every `raid-battles` event has a matching
      `rotations.json` 角标 segment (or is `longTerm`), single-day segment `pokemon[]` match their drawer

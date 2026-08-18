@@ -35,8 +35,10 @@ responsibilities.
   summarize source health / notable raw-file structure changes.
 - `tasks/subagents/10-calendar-curator.md` — own `public/data/events.json`,
   `public/data/featured.json` (admin/operator-note feature requests + pruning stale
-  ids), `public/data/mega.json` (append-only: new Mega/Primal roster rows) and,
-  only if needed for new event types, `public/data/categories.json`.
+  ids), `public/data/mega.json` (append-only: new Mega/Primal roster rows), and,
+  only when an operator note explicitly changes Spot Atlas data,
+  `public/data/locations.json`; only if needed for new event types it also owns
+  `public/data/categories.json`.
 - `tasks/subagents/20-rotation-curator.md` — own `public/data/rotations.json`.
 - `tasks/subagents/30-ranking-curator.md` — own only the AI-marked Chinese ranking /
   notes regions inside `public/index.html`.
@@ -57,7 +59,8 @@ responsibilities.
    dispatching full rebuilds.
 3. After the raw sources are available, run **Calendar first**, to completion: it
    writes `public/data/events.json` (plus `featured.json` / `mega.json` /
-   `categories.json` when their duties apply).
+   `categories.json` when their duties apply). It writes `locations.json` only when the
+   operator note explicitly requests a Spot Atlas row change; ordinary runs leave it untouched.
 4. Then run **Rotations** with Calendar's finalized `public/data/events.json` as an
    explicit input (its single-day segments must copy those events' `pokemon[]`; if
    its sources reveal a boss the calendar missed, report back — you re-dispatch
@@ -77,7 +80,7 @@ responsibilities.
    `scripts/validate.sh` (`run-daily.sh` enforces both before publish — either non-zero
    rolls the run back). **You (the coordinator) own the fix loop:** if **either** gate
    fails, read the reported failures, re-dispatch the responsible owner to fix its own
-   scope, then re-run the gates. Owner map: events/featured/mega/categories → Calendar ·
+   scope, then re-run the gates. Owner map: events/featured/mega/categories/explicit locations changes → Calendar ·
    rotations → Rotations · Chinese AI regions → Rankings · English overlay/regions →
    English Curator · meta/state → State + Validator.
    **Cap the loop at 3 rounds**; if a failure class has no owner or survives 3 rounds
@@ -114,6 +117,13 @@ per Boss (Calendar) **and** matching single-day `5star`/`mega` segments (Rotatio
 equal those events. `scripts/preflight.sh` rejects orphan raids and 角标↔抽屉 mismatch, so such a note
 must reach **both** workstreams — dispatched **in order** (Calendar first, then Rotations reading its
 finalized events).
+
+When the note asks to **add / remove / rename / correct a Spot Atlas location**, route it to
+**Calendar** as an operator-only data edit. It may change `public/data/locations.json` but must not
+translate names or invent missing coordinates/timezones. Keep one raw `name`, a stable URL-safe `id`,
+the exact schedule `{isoWeekday,hour,minute}`, a valid location IANA `timeZone`, and no persisted
+runtime derivatives (`flag`, offsets, browser/display times, next target or map URL). `name`, `note`
+and coordinates never enter the English overlay. With no such note, leave this file byte-identical.
 
 When the note asks to **feature / unfeature an event(金框)**, route it to **Calendar**: it owns
 `public/data/featured.json` — add or remove that event's `id` only on such an explicit request, and

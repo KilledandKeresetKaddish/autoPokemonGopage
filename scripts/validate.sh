@@ -25,8 +25,9 @@ fi
 H=public/index.html
 # 2) Required structural tokens must still be present.
 req=(
-  'id="view-calendar"' 'id="view-rankings"' 'id="view-mega"' 'id="view-clock"' 'id="view-links"'
+  'id="view-calendar"' 'id="view-rankings"' 'id="view-mega"' 'id="view-clock"' 'id="view-spots"' 'id="view-links"'
   'id="calendar"' 'id="main-tabs"' 'id="rank-subtabs"'
+  'id="spots-summary"' 'id="spots-controls"' 'id="spots-results"'
   'id="event-detail"' 'id="last-updated"' 'id="lang-toggle"'
   'id="long-term"' 'id="pvp-band"' 'id="rotations"'
   'data-ai-region="calendar-notes"' 'data-ai-region="rankings-current"'
@@ -102,7 +103,7 @@ for region in calendar-notes rankings-current rankings-attackers rankings-defend
 done
 
 # 4) Data files the agent writes must be valid JSON.
-for j in public/data/events.json public/data/meta.json public/data/rotations.json public/data/categories.json public/data/mega.json public/data/featured.json public/data/i18n/ui.json public/data/i18n/en.json data/state.json; do
+for j in public/data/events.json public/data/meta.json public/data/rotations.json public/data/categories.json public/data/mega.json public/data/featured.json public/data/locations.json public/data/i18n/ui.json public/data/i18n/en.json data/state.json; do
   if [ -f "$j" ]; then
     jq empty "$j" >/dev/null 2>&1 || { say "FAIL invalid JSON: $j"; fail=1; }
   else
@@ -192,7 +193,16 @@ if [ -f "$F" ] && jq empty "$F" >/dev/null 2>&1; then
   fi
 fi
 
-# 4g) English localization is a text-only overlay over the canonical Chinese
+# 4g) The shared deterministic fixture validates the complete Spot Atlas schema
+#     (including enums and exact duplicate coordinates) for both gates, then
+#     exercises production timezone/UI helpers with explicit display zones.
+if ! command -v node >/dev/null 2>&1; then
+  say "FAIL node is required for Spot Atlas schema/timezone tests"; fail=1
+elif ! node scripts/test-spot-atlas-time.js; then
+  say "FAIL Spot Atlas schema/timezone tests"; fail=1
+fi
+
+# 4h) English localization is a text-only overlay over the canonical Chinese
 #     structure. Enforce exact ID/array parity so dates, bosses and drawer links
 #     can never drift between languages. Also keep the owner UI dictionary
 #     symmetric: every static key must exist in both locales.

@@ -14,6 +14,8 @@ Write scope:
   per AGENTS.md's mega.json rules (verified 简体中文 name, `boostedTypes` keys, `initialCost` tier
   or `null`, form `sprite` + `hub` — both gated by validate.sh). Never touch the derived mechanics.
 - `public/data/categories.json` only when a new event type needs registration
+- `public/data/locations.json` **only** when the current operator note explicitly asks to
+  add, remove, rename or correct a Spot Atlas row; ordinary daily runs leave it untouched
 
 Inputs:
 - `data/raw/events.json` (ScrapedDuck → LeekDuck) as the **structured backbone** for *normalizing*
@@ -78,7 +80,14 @@ Checklist:
    为这些天加**单日段**、`pokemon[]` 与你的事件对齐。每个 `raid-battles` 都要有匹配角标,否则 `preflight.sh`
    会判它 orphan(被角标隐藏 bar 后静默消失)。
 
-10. **Token discipline (AGENTS.md, binding):** edit `events.json` **in place** — never a
+10. **Spot Atlas is operator-maintained data, not a discovery feed.** If and only if the
+    operator note requests a change, edit affected `locations.json` rows surgically: one raw
+    `name` (never `nameZh` / `nameEn` and never translated into i18n), stable URL-safe `id`,
+    operator-supplied coordinates/note, valid location IANA `timeZone`, unchanged three-field
+    schedule, and no runtime-only flag/offset/browser-time/next-target/map fields. Never infer or
+    geocode missing facts. Otherwise do not touch the file.
+
+11. **Token discipline (AGENTS.md, binding):** edit `events.json` **in place** — never a
     full-file rewrite; skip re-deriving from hash-unchanged sources (quiet-day fast path);
     verify names via `scripts/fetch.sh zh <dexId>` / `zh move:<slug>` (one cached TSV line —
     never dump a species JSON); re-verify links only on new/changed events; `jq`/`grep` the
