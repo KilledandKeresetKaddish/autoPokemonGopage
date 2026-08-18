@@ -77,10 +77,35 @@ done
 # (the default). Still bounded by AGENTS.md + validate.sh — out-of-scope asks are noted
 # and skipped, never forced through.
 EXTRA="${1:-${EXTRA_INSTRUCTIONS:-}}"
-# locations.json is admin-curated. Require both a note and a dedicated write-scope
-# opt-in so an unrelated operator note cannot authorize location changes.
+# locations.json is admin-curated. An explicit location-edit operator note is the
+# authorization; unrelated notes and ordinary runs keep the path outside scope.
+operator_requests_location_edit() {
+  local note="$1"
+  local action='(新增|添加|增加|移除|删除|修改|更改|修正|纠正|更新|重命名|改名|(^|[^[:alpha:]])(add|remove|delete|change|update|correct|rename|edit)([^[:alpha:]]|$))'
+  local direct='(spot[[:space:]-]*atlas|locations\.json)'
+  local kind='(道馆|(^|[^[:alpha:]])(gym|showcase)([^[:alpha:]]|$))'
+  local coordinates='(坐标|经纬度|(^|[^[:alpha:]])(coordinates?|latitude|longitude|lat|lng)([^[:alpha:]]|$))'
+  local zone='(时区|(^|[^[:alpha:]])(timezone|time[[:space:]-]+zone)([^[:alpha:]]|$))'
+  printf '%s\n' "$note" | grep -Eiq -- "$action" || return 1
+  printf '%s\n' "$note" | grep -Eiq -- "$direct" && return 0
+  if printf '%s\n' "$note" | grep -Eiq -- "$kind"; then
+    printf '%s\n' "$note" | grep -Eiq -- "($coordinates|$zone)" && return 0
+  fi
+  if printf '%s\n' "$note" | grep -Eiq -- "$coordinates"; then
+    printf '%s\n' "$note" | grep -Eiq -- "$zone" && return 0
+  fi
+  if command -v jq >/dev/null 2>&1 && [ -r public/data/locations.json ]; then
+    jq -e --arg note "$note" '
+      ($note | ascii_downcase) as $n
+      | any(.spots[]?; . as $spot
+          | ($n | contains($spot.id | ascii_downcase))
+            or ($n | contains($spot.name | ascii_downcase)))
+    ' public/data/locations.json >/dev/null 2>&1 && return 0
+  fi
+  return 1
+}
 LOCATION_EDIT_ALLOWED=0
-if [ -n "$EXTRA" ] && [ "${ALLOW_LOCATION_EDIT:-0}" = 1 ]; then
+if [ -n "$EXTRA" ] && operator_requests_location_edit "$EXTRA"; then
   LOCATION_EDIT_ALLOWED=1
 fi
 if [ -n "$EXTRA" ]; then

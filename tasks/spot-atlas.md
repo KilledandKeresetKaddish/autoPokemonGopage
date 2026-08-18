@@ -94,7 +94,15 @@ Lahore｜Jilani Park
 科罗拉多州｜Montrose｜Fox Park
 ```
 
-### 3.2 初始 23 个地点迁移
+### 3.2 稳定事实约束
+
+用户提供的 `id`、coordinates、`name`、`note`、`kind`、`status`、`group`、
+`needsReview` 和 `rating` 是 authoritative facts：不得反向地理编码、改写、翻译、
+取整、合并或按公开地点资料替换。`kind` 仅为 `gym` / `showcase` / `both`；`status`
+仅为 `tested` / `candidate` / `mixed`；`rating` 仅为 `null` / `1` / `2` / `3`；不同
+row 不得使用完全相同的数值 `lat` + `lng` pair（附近点仍保持独立）。
+
+### 3.3 初始 23 个地点迁移
 
 将每条现有数据中的：
 
@@ -212,9 +220,12 @@ const browserTimeZone =
 11. 地点当前当地日期与时间。
 12. 下一次地点当地周二 20:00。
 13. 同一 target instant 对应的浏览器本地日期、星期与时间。
-14. 用户原始 `note`。
-15. `Open Official Map`。
+14. 用户原始 `note`；空字符串不渲染备注区块。
+15. `Open Official Map`，URL 必须为 `https://pokemongo.com/map?is_login_event=1&lat=<LAT>&lng=<LNG>`。
 16. `Copy Coordinates`。
+
+`rating` 为 `1` / `2` / `3` 时分别显示 `⭐` / `⭐⭐` / `⭐⭐⭐`；为 `null` 时不显示
+`null`、`0` 或 `/5`。
 
 示例：浏览器当前位于 `America/Toronto` 时：
 
@@ -230,6 +241,12 @@ const browserTimeZone =
 ```
 
 同一份地点数据在香港、东京、伦敦或其他时区打开时，必须自动显示为相应浏览器时区，无需修改数据。
+
+类型筛选始终提供 All / Gym / Showcase / Gym + Showcase，并精确匹配 `kind`（Gym 不包含
+`both`）。默认排序为每个地点的下一个当地周二 20:00 对应 UTC instant 升序；另提供按
+地点当前 UTC offset 从 UTC+14 到 UTC−12 的 Timezone Order。两者 offset/instant 相同
+时依次按本地化国家名、`spot.name`、`spot.id`。`kind` 与 sort 使用容错的 localStorage
+持久化，失效或旧值回退到 All + Upcoming Tuesday 20:00。
 
 ---
 
@@ -426,12 +443,17 @@ schedule.displayTimeZone
 
 每个 spot 验证：
 
-- `name` 存在；
-- `name` 的类型为 string；
-- `name.trim()` 非空；
-- 不存在 `nameZh` 或 `nameEn`；
-- `timeZone` 继续按有效 IANA timezone 验证；
-- 其他未被本修订变更的 schema 约束保持不变。
+- `id` 为 lowercase URL-safe string 且唯一；
+- `countryCode` 匹配 `^[A-Z]{2}$`；
+- `name` 为 trim 后非空的 string；
+- `lat` / `lng` 为范围内有限数字，且不同 row 不得有完全相同的 numeric pair；
+- `timeZone` 为有效 IANA timezone；
+- `kind` 仅为 `gym` / `showcase` / `both`；
+- `status` 仅为 `tested` / `candidate` / `mixed`；
+- `group` 为 null 或非空 string；
+- `rating` 仅为 null 或整数 `1` / `2` / `3`；
+- `needsReview` 为 boolean，`note` 为 string；
+- 不存在 `nameZh` 或 `nameEn` 及任何 runtime-only field。
 
 ### 10.3 禁止持久化动态字段
 

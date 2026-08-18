@@ -21,13 +21,13 @@ AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
 AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
   EXTRA_INSTRUCTIONS="$(cat note.txt)" ./scripts/run-daily.sh
 
-# ④ Spot Atlas 地点改动还要显式开放本次 locations.json 写权限
-ALLOW_LOCATION_EDIT=1 AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
+# ④ Spot Atlas 地点改动：明确的地点编辑指令本身就是本次授权，无需额外环境变量
+AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
   ./scripts/run-daily.sh '在 Spot Atlas 中按以下资料新增地点……'
 ```
 
 > **指令优先级**:位置参数 `$1` > `EXTRA_INSTRUCTIONS` 环境变量 > 无 → ② 和 ③ 二选一(同时给会忽略 env)。
-> operator note 只对**本次**生效;越界要求(改 `style.css` / `app.js` / `index.html` marker 外的受保护文件)会被记到 `data/state.json` 并跳过,不强改、也不整次回滚。`locations.json` 还要求同时设置 `ALLOW_LOCATION_EDIT=1`;普通 operator note 不会获得地点写权限。
+> operator note 只对**本次**生效;越界要求(改 `style.css` / `app.js` / `index.html` marker 外的受保护文件)会被记到 `data/state.json` 并跳过,不强改、也不整次回滚。只有明确要求新增、删除或修正 Spot Atlas 地点的 note 才开放本次 `locations.json` 写权限;普通日更和无关 note 不开放。
 
 **note.txt 方式的坑(逐条避雷)**
 

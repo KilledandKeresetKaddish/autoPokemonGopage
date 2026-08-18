@@ -1641,10 +1641,10 @@ function refreshWorldClockIfActive() {
 }
 
 // 把"所选时段(以该精选地点的当地时间计)"换算成当前用户的本地时间窗口。用户时区取自
-// 浏览器;无法判断时回退到 UTC。返回 "HH:MM–HH:MM"。
+// 浏览器;无法判断时回退到中国时间(UTC+8)。返回 "HH:MM–HH:MM"。
 function wcUserWindow(spotOffset, start, end) {
   let uo = -new Date().getTimezoneOffset() / 60;   // 用户 UTC 偏移(小时)
-  if (!isFinite(uo)) uo = 0;
+  if (!isFinite(uo)) uo = 8;
   const so = spotOffset / 60;                       // 地点 UTC 偏移(c.offset 是分钟 → 小时)
   const fmt = h => {
     let mins = Math.round((h - so + uo) * 60);
@@ -1763,6 +1763,11 @@ function setupWorldClock() {
 /* ---------- Spot Atlas -------------------------------------------------------
  * locations.json owns stable facts only. Flags, offsets, target instants, map
  * URLs and browser-local display values are derived for each render. */
+const SPOT_KIND_OPTIONS = ['gym','showcase','both'];
+const SPOT_KIND_VALUES = ['', ...SPOT_KIND_OPTIONS];
+const SPOT_SORT_VALUES = ['next','timezone','name','country','rating'];
+const SPOT_KIND_STORAGE_KEY = 'pogo-spot-filter';
+const SPOT_SORT_STORAGE_KEY = 'pogo-spot-sort';
 let spotsCopyFeedback = null;
 function spotCountryName(countryCode) {
   const code = String(countryCode || '').toUpperCase();
@@ -1778,8 +1783,28 @@ function spotStatusLabel(status) {
 }
 function spotCoordinates(spot) { return `${spot.lat},${spot.lng}`; }
 function spotMapUrl(spot) {
-  const params = new URLSearchParams({ lat:String(spot.lat), lng:String(spot.lng), zoom:'16' });
+  const params = new URLSearchParams({ is_login_event:'1', lat:String(spot.lat), lng:String(spot.lng) });
   return `https://pokemongo.com/map?${params}`;
+}
+function spotLoadPreferences(storage) {
+  const preferences = { kind:'', sort:'next' };
+  try {
+    const store = storage || localStorage;
+    const kind = store.getItem(SPOT_KIND_STORAGE_KEY);
+    const sort = store.getItem(SPOT_SORT_STORAGE_KEY);
+    if (SPOT_KIND_VALUES.includes(kind)) preferences.kind = kind;
+    if (SPOT_SORT_VALUES.includes(sort)) preferences.sort = sort;
+  } catch (e) { /* storage may be disabled */ }
+  return preferences;
+}
+function spotSavePreferences(filters, storage) {
+  try {
+    const store = storage || localStorage;
+    const kind = SPOT_KIND_VALUES.includes(filters.kind) ? filters.kind : '';
+    const sort = SPOT_SORT_VALUES.includes(filters.sort) ? filters.sort : 'next';
+    store.setItem(SPOT_KIND_STORAGE_KEY, kind);
+    store.setItem(SPOT_SORT_STORAGE_KEY, sort);
+  } catch (e) { /* storage may be disabled */ }
 }
 function spotSetOptions(select, rows, allLabel) {
   if (!select) return;
@@ -1797,8 +1822,7 @@ function renderSpotFilterOptions(spots) {
   const countries = [...new Set(spots.map(spot => spot.countryCode))]
     .map(code => ({ value:code, label:spotCountryName(code) }))
     .sort((a, b) => a.label.localeCompare(b.label, isEnglish() ? 'en' : 'zh-Hans'));
-  const kinds = [...new Set(spots.map(spot => spot.kind))]
-    .map(kind => ({ value:kind, label:spotKindLabel(kind) }));
+  const kinds = SPOT_KIND_OPTIONS.map(kind => ({ value:kind, label:spotKindLabel(kind) }));
   const statuses = [...new Set(spots.map(spot => spot.status))]
     .map(status => ({ value:status, label:spotStatusLabel(status) }));
   spotSetOptions($('#spots-country'), countries, i18n('spots.allCountries', null, '全部国家/地区'));
@@ -1842,17 +1866,29 @@ function spotMatches(view, filters) {
 }
 function sortSpotViews(views, mode) {
   const locale = isEnglish() ? 'en' : 'zh-Hans';
+  const tie = (a, b) => a.country.localeCompare(b.country, locale)
+    || a.spot.name.localeCompare(b.spot.name, locale)
+    || a.spot.id.localeCompare(b.spot.id, locale);
   return views.sort((a, b) => {
-    if (mode === 'name') return a.spot.name.localeCompare(b.spot.name, locale) || a.spot.id.localeCompare(b.spot.id);
-    if (mode === 'country') return a.country.localeCompare(b.country, locale)
-      || a.spot.name.localeCompare(b.spot.name, locale);
+    if (mode === 'timezone') return b.currentOffset - a.currentOffset || tie(a, b);
+    if (mode === 'name') return a.spot.name.localeCompare(b.spot.name, locale)
+      || a.spot.id.localeCompare(b.spot.id, locale);
+    if (mode === 'country') return tie(a, b);
     if (mode === 'rating') {
       const ar = a.spot.rating == null ? -Infinity : +a.spot.rating;
       const br = b.spot.rating == null ? -Infinity : +b.spot.rating;
-      return br - ar || a.target - b.target || a.spot.name.localeCompare(b.spot.name, locale);
+      return br - ar || a.target - b.target || tie(a, b);
     }
-    return a.target - b.target || a.spot.name.localeCompare(b.spot.name, locale);
+    return a.target - b.target || tie(a, b);
   });
+}
+function spotRatingStars(rating) {
+  return [1,2,3].includes(rating) ? '⭐'.repeat(rating) : '';
+}
+function spotNoteBlock(note) {
+  if (!note) return '';
+  return `<div class="spots-note"><span class="spots-label">${escapeHtml(i18n('spots.note', null, '备注'))}</span>`
+    + `<p>${escapeHtml(note)}</p></div>`;
 }
 function spotTimeBlock(label, value, extraClass) {
   return `<div class="spots-time ${extraClass || ''}"><span class="spots-label">${escapeHtml(label)}</span>`
@@ -1900,22 +1936,22 @@ function renderSpots() {
       && spotsCopyFeedback.key === 'spots.copySuccess' && spotsCopyFeedback.until > Date.now();
     const reviewLabel = spot.needsReview
       ? i18n('spots.needsReview', null, '待复核') : i18n('spots.reviewed', null, '已复核');
-    const rating = spot.rating == null ? i18n('spots.notRated', null, '未评分') : String(spot.rating);
-    const note = spot.note;
+    const rating = spotRatingStars(spot.rating);
+    const ratingFact = rating ? `<div><dt>${escapeHtml(i18n('spots.rating', null, '评分'))}</dt><dd>${rating}</dd></div>` : '';
     return `<article class="spots-card panel" data-spot-id="${escapeHtml(spot.id)}">`
       + `<header class="spots-card-head"><img class="spots-flag" src="https://flagcdn.com/w80/${escapeHtml(spot.countryCode.toLowerCase())}.png" alt="${escapeHtml(view.country)}" loading="lazy">`
       + `<div class="spots-title"><span class="spots-country">${escapeHtml(view.country)}</span><h3>${escapeHtml(spot.name)}</h3></div>`
       + `<div class="spots-badges"><span class="badge">${escapeHtml(spotKindLabel(spot.kind))}</span>`
       + `<span class="badge spots-status-${escapeHtml(spot.status)}">${escapeHtml(spotStatusLabel(spot.status))}</span>`
       + `<span class="badge ${spot.needsReview ? 'spots-review-needed' : 'spots-review-ok'}">${escapeHtml(reviewLabel)}</span></div></header>`
-      + `<dl class="spots-facts"><div><dt>${escapeHtml(i18n('spots.rating', null, '评分'))}</dt><dd>${escapeHtml(rating)}</dd></div>`
+      + `<dl class="spots-facts">${ratingFact}`
       + `<div><dt>${escapeHtml(i18n('spots.coordinates', null, '经纬度'))}</dt><dd><code>${escapeHtml(coords)}</code></dd></div>`
       + `<div><dt>${escapeHtml(i18n('spots.locationZone', null, '地点 timezone'))}</dt><dd><code>${escapeHtml(spot.timeZone)}</code></dd></div>`
       + `<div><dt>${escapeHtml(i18n('spots.currentOffset', null, '当前 UTC offset'))}</dt><dd>${escapeHtml(wcFmtOffset(view.currentOffset))}</dd></div></dl>`
       + `<div class="spots-times">${spotTimeBlock(i18n('spots.localNow', null, '当地现在'), view.localNow)}`
       + `${spotTimeBlock(i18n('spots.nextLocalTarget', null, '下一个当地周二 20:00'), view.localTarget)}`
       + `${spotTimeBlock(i18n('spots.browserTime', null, '我的时间'), view.browserTarget, 'spots-my-time')}</div>`
-      + `<div class="spots-note"><span class="spots-label">${escapeHtml(i18n('spots.note', null, '备注'))}</span><p>${escapeHtml(note)}</p></div>`
+      + spotNoteBlock(spot.note)
       + `<footer class="spots-actions"><a class="btn" href="${escapeHtml(spotMapUrl(spot))}" target="_blank" rel="noopener">${escapeHtml(i18n('spots.openMap', null, '打开官方地图'))}</a>`
       + `<button class="btn spots-copy" type="button" data-copy-spot="${escapeHtml(spot.id)}">${escapeHtml(copied ? i18n('spots.copied', null, '已复制') : i18n('spots.copyCoordinates', null, '复制坐标'))}</button></footer>`
       + `</article>`;
@@ -1952,14 +1988,23 @@ async function copySpotCoordinates(spot) {
 function setupSpots() {
   const controls = $('#spots-controls'), results = $('#spots-results');
   if (!controls || !results) return;
+  renderSpotFilterOptions(state.locations ? state.locations.spots || [] : []);
+  const preferences = spotLoadPreferences();
+  const kind = $('#spots-kind'), sort = $('#spots-sort');
+  if (kind) kind.value = preferences.kind;
+  if (sort) sort.value = preferences.sort;
   controls.addEventListener('submit', event => event.preventDefault());
   controls.addEventListener('input', renderSpots);
-  controls.addEventListener('change', renderSpots);
+  controls.addEventListener('change', () => {
+    spotSavePreferences(spotFilterState());
+    renderSpots();
+  });
   const reset = $('#spots-reset');
   if (reset) reset.addEventListener('click', () => {
     const search = $('#spots-search'); if (search) search.value = '';
     ['#spots-country','#spots-kind','#spots-status','#spots-review'].forEach(sel => { const el = $(sel); if (el) el.value = ''; });
-    const sort = $('#spots-sort'); if (sort) sort.value = 'next';
+    const sortSelect = $('#spots-sort'); if (sortSelect) sortSelect.value = 'next';
+    spotSavePreferences(spotFilterState());
     renderSpots();
   });
   results.addEventListener('click', event => {
@@ -2408,7 +2453,9 @@ async function init() {
 if (typeof module === 'object' && module.exports) {
   module.exports = {
     detectBrowserTimeZone, isValidIanaTimeZone, spotZonedParts, timeZoneOffsetMinutes,
-    zonedWallTimeToInstant, nextLocalScheduleInstant, formatTargetForZone,
+    zonedWallTimeToInstant, nextLocalScheduleInstant, formatTargetForZone, wcInRange,
+    spotMapUrl, spotMatches, sortSpotViews, spotRatingStars, spotNoteBlock,
+    spotLoadPreferences, spotSavePreferences, SPOT_KIND_OPTIONS, SPOT_SORT_VALUES,
   };
 }
 if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded', () => init().catch(error => {

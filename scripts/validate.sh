@@ -193,75 +193,16 @@ if [ -f "$F" ] && jq empty "$F" >/dev/null 2>&1; then
   fi
 fi
 
-# 4g) Spot Atlas stable-data schema. Runtime-only values (flag, offsets,
-#     browser-local times, next targets and map URLs) must never leak into JSON.
-L=public/data/locations.json
-if [ -f "$L" ] && jq empty "$L" >/dev/null 2>&1; then
-  if ! command -v node >/dev/null 2>&1; then
-    say "FAIL node is required for locations.json IANA timezone validation"; fail=1
-  elif ! node <<'JS'
-const fs = require('node:fs');
-const data = JSON.parse(fs.readFileSync('public/data/locations.json', 'utf8'));
-const errors = [];
-const bad = message => errors.push(message);
-const own = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
-const validZone = zone => {
-  try { new Intl.DateTimeFormat('en-US', { timeZone:zone }).format(0); return true; }
-  catch (error) { return false; }
-};
-if (!data || typeof data !== 'object' || Array.isArray(data)) bad('top level must be an object');
-if (JSON.stringify(Object.keys(data || {}).sort()) !== JSON.stringify(['schedule','schemaVersion','spots'])) bad('top-level keys must be exactly schemaVersion/schedule/spots');
-if (data.schemaVersion !== 1) bad('schemaVersion must equal 1');
-const schedule = data.schedule;
-if (!schedule || typeof schedule !== 'object' || Array.isArray(schedule)) bad('schedule must be an object');
-else {
-  const keys = Object.keys(schedule).sort();
-  if (JSON.stringify(keys) !== JSON.stringify(['hour','isoWeekday','minute'])) bad('schedule keys must be exactly isoWeekday/hour/minute');
-  if (!Number.isInteger(schedule.isoWeekday) || schedule.isoWeekday < 1 || schedule.isoWeekday > 7) bad('schedule.isoWeekday must be an integer from 1 to 7');
-  if (!Number.isInteger(schedule.hour) || schedule.hour < 0 || schedule.hour > 23) bad('schedule.hour must be an integer from 0 to 23');
-  if (!Number.isInteger(schedule.minute) || schedule.minute < 0 || schedule.minute > 59) bad('schedule.minute must be an integer from 0 to 59');
-  if (own(schedule, 'displayTimeZone')) bad('schedule.displayTimeZone is forbidden');
-}
-if (!Array.isArray(data.spots) || data.spots.length < 1) bad('spots must be a non-empty array');
-const ids = new Set();
-const spotKeys = ['countryCode','group','id','kind','lat','lng','name','needsReview','note','rating','status','timeZone'];
-const forbidden = ['nameZh','nameEn','displayTimeZone','flag','utcOffset','browserTime','displayTime','chinaTime','nextTuesday','mapUrl'];
-for (const [index, spot] of (Array.isArray(data.spots) ? data.spots.entries() : [])) {
-  const at = `spots[${index}]`;
-  if (!spot || typeof spot !== 'object' || Array.isArray(spot)) { bad(`${at} must be an object`); continue; }
-  if (JSON.stringify(Object.keys(spot).sort()) !== JSON.stringify(spotKeys)) bad(`${at} keys must exactly match the Spot Atlas schema`);
-  if (typeof spot.id !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(spot.id)) bad(`${at}.id must be stable lowercase URL-safe text`);
-  else if (ids.has(spot.id)) bad(`${at}.id duplicates ${spot.id}`); else ids.add(spot.id);
-  if (typeof spot.countryCode !== 'string' || !/^[A-Z]{2}$/.test(spot.countryCode)) bad(`${at}.countryCode must be ISO alpha-2 uppercase`);
-  if (typeof spot.name !== 'string' || !spot.name.trim()) bad(`${at}.name must be a non-empty string`);
-  if (typeof spot.lat !== 'number' || !Number.isFinite(spot.lat) || spot.lat < -90 || spot.lat > 90) bad(`${at}.lat is invalid`);
-  if (typeof spot.lng !== 'number' || !Number.isFinite(spot.lng) || spot.lng < -180 || spot.lng > 180) bad(`${at}.lng is invalid`);
-  if (typeof spot.timeZone !== 'string' || !validZone(spot.timeZone)) bad(`${at}.timeZone is not recognized by Intl`);
-  if (typeof spot.kind !== 'string' || !spot.kind.trim()) bad(`${at}.kind must be a non-empty string`);
-  if (typeof spot.status !== 'string' || !spot.status.trim()) bad(`${at}.status must be a non-empty string`);
-  if (spot.group !== null && (typeof spot.group !== 'string' || !spot.group.trim())) bad(`${at}.group must be null or a non-empty string`);
-  if (spot.rating !== null && (typeof spot.rating !== 'number' || !Number.isFinite(spot.rating) || spot.rating < 0 || spot.rating > 5)) bad(`${at}.rating must be null or a number from 0 to 5`);
-  if (typeof spot.needsReview !== 'boolean') bad(`${at}.needsReview must be boolean`);
-  if (typeof spot.note !== 'string') bad(`${at}.note must be a string`);
-  for (const key of forbidden) if (own(spot, key)) bad(`${at}.${key} is a forbidden persisted field`);
-}
-for (const error of errors) console.error('validate: FAIL locations.json ' + error);
-process.exit(errors.length ? 1 : 0);
-JS
-  then
-    fail=1
-  fi
-fi
-
-# 4h) Deterministic tests import the production helpers with explicit display
-#     zones; they never depend on the validator host's own timezone.
+# 4g) The shared deterministic fixture validates the complete Spot Atlas schema
+#     (including enums and exact duplicate coordinates) for both gates, then
+#     exercises production timezone/UI helpers with explicit display zones.
 if ! command -v node >/dev/null 2>&1; then
-  say "FAIL node is required for Spot Atlas timezone tests"; fail=1
+  say "FAIL node is required for Spot Atlas schema/timezone tests"; fail=1
 elif ! node scripts/test-spot-atlas-time.js; then
-  say "FAIL Spot Atlas timezone tests"; fail=1
+  say "FAIL Spot Atlas schema/timezone tests"; fail=1
 fi
 
-# 4i) English localization is a text-only overlay over the canonical Chinese
+# 4h) English localization is a text-only overlay over the canonical Chinese
 #     structure. Enforce exact ID/array parity so dates, bosses and drawer links
 #     can never drift between languages. Also keep the owner UI dictionary
 #     symmetric: every static key must exist in both locales.

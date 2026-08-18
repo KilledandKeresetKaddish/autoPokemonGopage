@@ -663,9 +663,12 @@ read before you write, as always.
   derivatives and forbidden in every spot row: `flag`, `utcOffset`, `browserTime`, `displayTime`,
   `chinaTime`, `nextTuesday`, `mapUrl`.
 - Keep `id` stable and lowercase URL-safe; `countryCode` is uppercase ISO alpha-2; latitude /
-  longitude are numeric and in range; `group` / `rating` may be null; `needsReview` is boolean;
-  `note` remains the operator's original text. Add/change/remove rows only from explicit operator
-  facts—do not discover, translate, geocode or “clean up” them on your own.
+  longitude are numeric and in range, and two rows may not share the exact same numeric pair.
+  `kind` is exactly `gym` / `showcase` / `both`; `status` is exactly `tested` / `candidate` /
+  `mixed`; `rating` is exactly `null` / `1` / `2` / `3` (integers only); `group` is null or a
+  non-empty string; `needsReview` is boolean; `note` remains the operator's original text.
+  Add/change/remove rows only from explicit operator facts—do not discover, translate, geocode or
+  “clean up” them on your own.
 
 `public/data/meta.json`:
 ```json
