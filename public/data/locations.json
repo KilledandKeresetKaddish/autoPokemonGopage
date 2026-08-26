@@ -15,10 +15,24 @@
       "timeZone": "Asia/Bangkok",
       "kind": "gym",
       "status": "tested",
-      "group": null,
-      "rating": null,
+      "group": "th-naobua",
+      "rating": 1,
       "needsReview": false,
-      "note": "人少、资源也较少"
+      "note": "人少、资源也较少——真的很少,少的showcase要到处找"
+    },
+    {
+      "id": "th-bua-lamphu",
+      "countryCode": "TH",
+      "name": "Bua Lamphu",
+      "lat": 17.2093450939174,
+      "lng": 102.4397206306458,
+      "timeZone": "Asia/Bangkok",
+      "kind": "both",
+      "status": "tested",
+      "group": "th-naobua",
+      "rating": 1,
+      "needsReview": false,
+      "note": "边上Ban Phue的边上,也是很少,但是比Banphue多一点点"
     },
     {
       "id": "bd-chattogram-01",
@@ -27,12 +41,12 @@
       "lat": 22.338525,
       "lng": 91.797252,
       "timeZone": "Asia/Dhaka",
-      "kind": "gym",
-      "status": "candidate",
+      "kind": "both",
+      "status": "tested",
       "group": "bd-chattogram",
-      "rating": null,
-      "needsReview": true,
-      "note": ""
+      "rating": 3,
+      "needsReview": false,
+      "note": "showcase和pokespot都很多,但是偶尔就是会有人"
     },
     {
       "id": "in-mysuru",
@@ -307,12 +321,12 @@
       "lat": 22.3662090301514,
       "lng": 91.7963943481445,
       "timeZone": "Asia/Dhaka",
-      "kind": "gym",
+      "kind": "showcase",
       "status": "tested",
       "group": "bd-chattogram",
-      "rating": null,
+      "rating": 2,
       "needsReview": false,
-      "note": "卧槽吉大港这里"
+      "note": "吉大港①距离大概4-5km,spot密密麻麻,这篇密集处的边界,有时候有的人还是很强的。"
     },
     {
       "id": "bd-chattogram-03",
@@ -324,9 +338,9 @@
       "kind": "gym",
       "status": "tested",
       "group": "bd-chattogram",
-      "rating": null,
+      "rating": 2,
       "needsReview": false,
-      "note": "吉大港x2"
+      "note": "吉大港x3,不过距离上一个有12km.资源瞬间没了但是这里也没人"
     }
   ]
 }
