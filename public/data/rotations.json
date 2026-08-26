@@ -1,6 +1,6 @@
 {
-  "month": "2026-08",
-  "note": "8 月 5★/超级团战按周三轮换，Max 团战按周轮换；另有 8/1 Max 对战日、8/22 超级超级团战日，以及 8/31–9/6 超级进阶与 GO Fest 2026 超级终章每日特别超级团战池。",
+  "month": "2026-09",
+  "note": "9 月 5★/超级团战与 Max 团战按公布档期轮换；当前内容覆盖至 10 月 6 日，并保留 8/31–9/6 超级进阶与 GO Fest 2026 超级终章每日特别超级团战池。",
   "tracks": [
     {
       "key": "5star",
@@ -635,6 +635,68 @@
           ],
           "start": "2026-08-26",
           "end": "2026-09-08"
+        },
+        {
+          "name": "Zacian (Hero of Many Battles)",
+          "cn": "苍响（百战勇者）",
+          "pokemon": [
+            {
+              "id": 888,
+              "name": "苍响",
+              "shiny": true
+            }
+          ],
+          "start": "2026-09-09",
+          "end": "2026-09-15"
+        },
+        {
+          "name": "Zamazenta (Hero of Many Battles)",
+          "cn": "藏玛然特（百战勇者）",
+          "pokemon": [
+            {
+              "id": 889,
+              "name": "藏玛然特",
+              "shiny": true
+            }
+          ],
+          "start": "2026-09-16",
+          "end": "2026-09-22"
+        },
+        {
+          "name": "Xurkitree / Pheromosa / Buzzwole",
+          "cn": "地区究极异兽",
+          "pokemon": [
+            {
+              "id": 796,
+              "name": "电束木",
+              "shiny": true
+            },
+            {
+              "id": 795,
+              "name": "费洛美螂",
+              "shiny": true
+            },
+            {
+              "id": 794,
+              "name": "爆肌蚊",
+              "shiny": true
+            }
+          ],
+          "start": "2026-09-23",
+          "end": "2026-09-29"
+        },
+        {
+          "name": "Xerneas",
+          "cn": "哲尔尼亚斯",
+          "pokemon": [
+            {
+              "id": 716,
+              "name": "哲尔尼亚斯",
+              "shiny": true
+            }
+          ],
+          "start": "2026-09-30",
+          "end": "2026-10-06"
         }
       ]
     },
@@ -1268,6 +1330,96 @@
           ],
           "start": "2026-09-06",
           "end": "2026-09-06"
+        },
+        {
+          "name": "Mega Gyarados",
+          "cn": "超级暴鲤龙",
+          "pokemon": [
+            {
+              "id": 130,
+              "name": "超级暴鲤龙",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10041.png",
+              "hub": "130-Mega"
+            }
+          ],
+          "start": "2026-09-07",
+          "end": "2026-09-08"
+        },
+        {
+          "name": "Mega Beedrill",
+          "cn": "超级大针蜂",
+          "pokemon": [
+            {
+              "id": 15,
+              "name": "超级大针蜂",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png",
+              "hub": "15-Mega"
+            }
+          ],
+          "start": "2026-09-08",
+          "end": "2026-09-15"
+        },
+        {
+          "name": "Mega Houndoom",
+          "cn": "超级黑鲁加",
+          "pokemon": [
+            {
+              "id": 229,
+              "name": "超级黑鲁加",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png",
+              "hub": "229-Mega"
+            }
+          ],
+          "start": "2026-09-11",
+          "end": "2026-09-15"
+        },
+        {
+          "name": "Mega Venusaur",
+          "cn": "超级妙蛙花",
+          "pokemon": [
+            {
+              "id": 3,
+              "name": "超级妙蛙花",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10033.png",
+              "hub": "3-Mega"
+            }
+          ],
+          "start": "2026-09-16",
+          "end": "2026-09-22"
+        },
+        {
+          "name": "Mega Malamar",
+          "cn": "超级乌贼王",
+          "pokemon": [
+            {
+              "id": 687,
+              "name": "超级乌贼王",
+              "shiny": true,
+              "sprite": "https://db.pokemongohub.net/images/official/full/687_mega_with_bg.webp",
+              "hub": "687-Mega"
+            }
+          ],
+          "start": "2026-09-23",
+          "end": "2026-09-29"
+        },
+        {
+          "name": "Mega Victreebel",
+          "cn": "超级大食花",
+          "pokemon": [
+            {
+              "id": 71,
+              "name": "超级大食花",
+              "shiny": true,
+              "sprite": "https://db.pokemongohub.net/images/official/full/071_mega_with_bg.webp",
+              "hub": "71-Mega"
+            }
+          ],
+          "start": "2026-09-30",
+          "end": "2026-10-06"
         }
       ]
     },
@@ -1276,85 +1428,6 @@
       "label": "Max 团战",
       "color": "#bd7f97",
       "segments": [
-        {
-          "name": "Feebas",
-          "cn": "丑丑鱼",
-          "pokemon": [
-            {
-              "id": 349,
-              "name": "丑丑鱼"
-            }
-          ],
-          "start": "2026-07-26",
-          "end": "2026-08-02"
-        },
-        {
-          "name": "Gigantamax Rillaboom Max Battle Day",
-          "cn": "超极巨化 Rillaboom 极巨对战日",
-          "pokemon": [
-            {
-              "id": 812,
-              "name": "超极巨化 Rillaboom",
-              "shiny": true,
-              "sprite": "https://db.pokemongohub.net/images/official/detail/812_gmax.png",
-              "hub": "812-Gigantamax"
-            }
-          ],
-          "start": "2026-08-01",
-          "end": "2026-08-01"
-        },
-        {
-          "name": "Magmar",
-          "cn": "Magmar",
-          "pokemon": [
-            {
-              "id": 126,
-              "name": "Magmar",
-              "shiny": true
-            }
-          ],
-          "start": "2026-08-03",
-          "end": "2026-08-09"
-        },
-        {
-          "name": "Beldum",
-          "cn": "铁哑铃",
-          "pokemon": [
-            {
-              "id": 374,
-              "name": "铁哑铃",
-              "shiny": true
-            }
-          ],
-          "start": "2026-08-10",
-          "end": "2026-08-16"
-        },
-        {
-          "name": "Magikarp",
-          "cn": "Magikarp",
-          "pokemon": [
-            {
-              "id": 129,
-              "name": "Magikarp",
-              "shiny": true
-            }
-          ],
-          "start": "2026-08-17",
-          "end": "2026-08-23"
-        },
-        {
-          "name": "Hitmontop",
-          "cn": "Hitmontop",
-          "pokemon": [
-            {
-              "id": 237,
-              "name": "Hitmontop",
-              "shiny": true
-            }
-          ],
-          "start": "2026-08-24",
-          "end": "2026-08-30"
-        },
         {
           "name": "Eevee",
           "cn": "伊布",
@@ -1367,6 +1440,68 @@
           ],
           "start": "2026-08-31",
           "end": "2026-09-06"
+        },
+        {
+          "name": "Ralts",
+          "cn": "拉鲁拉丝",
+          "pokemon": [
+            {
+              "id": 280,
+              "name": "拉鲁拉丝",
+              "shiny": true
+            }
+          ],
+          "start": "2026-09-07",
+          "end": "2026-09-13"
+        },
+        {
+          "name": "Rhyhorn",
+          "cn": "独角犀牛",
+          "pokemon": [
+            {
+              "id": 111,
+              "name": "独角犀牛",
+              "shiny": true
+            }
+          ],
+          "start": "2026-09-14",
+          "end": "2026-09-20"
+        },
+        {
+          "name": "Dynamax Legendary Birds",
+          "cn": "极巨化三圣鸟",
+          "pokemon": [
+            {
+              "id": 144,
+              "name": "急冻鸟",
+              "shiny": true
+            },
+            {
+              "id": 145,
+              "name": "闪电鸟",
+              "shiny": true
+            },
+            {
+              "id": 146,
+              "name": "火焰鸟",
+              "shiny": true
+            }
+          ],
+          "start": "2026-09-21",
+          "end": "2026-09-27"
+        },
+        {
+          "name": "Sobble",
+          "cn": "泪眼蜥",
+          "pokemon": [
+            {
+              "id": 816,
+              "name": "泪眼蜥",
+              "shiny": true
+            }
+          ],
+          "start": "2026-09-28",
+          "end": "2026-10-04"
         }
       ],
       "tag": "MX"

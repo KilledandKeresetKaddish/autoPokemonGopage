@@ -3047,6 +3047,33 @@
         }
       ]
     },
+    "lego-pokemon-go-2026": {
+      "name": "LEGO Stores × Pokémon GO Stamp Rally (In-Person: US/UK/France/Germany/Poland/Australia)",
+      "heading": "In-Person Event",
+      "summary": "An in-person collaboration at participating LEGO Stores in the United States, United Kingdom, Poland, France, Germany, and Australia, featuring a LEGO-themed stamp rally, Pikachu raids, and Timed Research. Complete the rally to encounter Pikachu with a Special Background.",
+      "bonuses": [
+        ":raid: Pikachu appears more frequently in raids near participating stores",
+        ":pokestop: Complete the GO Stamp Rally to encounter Pikachu with a Special Background",
+        "Visit a store to receive Timed Research, event-themed stickers, and an avatar item"
+      ],
+      "pokemon": [
+        "Pikachu"
+      ],
+      "counters": [],
+      "sections": [
+        {
+          "title": "Activities",
+          "items": [
+            ":raid: Pikachu appears more frequently in raids near participating stores, with a chance to be Shiny or have a Special Background",
+            ":pokestop: Stamp Rally: collect stamps at designated PokéStops and Gyms to encounter Pikachu with a Special Background",
+            ":pokestop: Open the game in-store to receive Timed Research; complete its tasks and claim its rewards by September 30 at 23:59",
+            "A redemption code grants additional Timed Research and free Berry items"
+          ],
+          "body": "",
+          "mons": []
+        }
+      ]
+    },
     "pokemon-30th-anniversary-tour-pokexciting": {
       "name": "Pokémon 30th Anniversary Tour: PokéXciting (In-Person Across Asia)",
       "heading": "In-Person Event",
@@ -3795,6 +3822,45 @@
       "counters": [],
       "sections": []
     },
+    "pokemonspotlighthour2026-08-13": {
+      "name": "Wurmple Spotlight Hour",
+      "heading": "Pokémon Spotlight Hour",
+      "summary": "On August 13 from 18:00–19:00 local time, Wurmple appears frequently in the wild, with a ×2 Evolution XP bonus.",
+      "bonuses": [
+        ":xp: Evolution XP ×2"
+      ],
+      "pokemon": [
+        "Wurmple"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "pokemonspotlighthour2026-08-20": {
+      "name": "Magikarp Spotlight Hour",
+      "heading": "Pokémon Spotlight Hour",
+      "summary": "On August 20 from 18:00–19:00 local time, Magikarp appears frequently in the wild, with a ×2 Catch XP bonus.",
+      "bonuses": [
+        ":xp: Catch XP ×2"
+      ],
+      "pokemon": [
+        "Magikarp"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "pokemonspotlighthour2026-08-27": {
+      "name": "Mankey Spotlight Hour",
+      "heading": "Pokémon Spotlight Hour",
+      "summary": "On August 27 from 18:00–19:00 local time, Mankey appears frequently in the wild, with a ×2 Catch Candy bonus.",
+      "bonuses": [
+        ":candy: Catch Candy ×2"
+      ],
+      "pokemon": [
+        "Mankey"
+      ],
+      "counters": [],
+      "sections": []
+    },
     "summer-quest": {
       "name": "Summer Quest (UK-wide / in-person in Shoreditch, London)",
       "heading": "In-Person and UK Event",
@@ -3958,72 +4024,6 @@
           "mons": []
         }
       ]
-    },
-    "lego-pokemon-go-2026": {
-      "name": "LEGO Stores × Pokémon GO Stamp Rally (In-Person: US/UK/France/Germany/Poland/Australia)",
-      "heading": "In-Person Event",
-      "summary": "An in-person collaboration at participating LEGO Stores in the United States, United Kingdom, Poland, France, Germany, and Australia, featuring a LEGO-themed stamp rally, Pikachu raids, and Timed Research. Complete the rally to encounter Pikachu with a Special Background.",
-      "bonuses": [
-        ":raid: Pikachu appears more frequently in raids near participating stores",
-        ":pokestop: Complete the GO Stamp Rally to encounter Pikachu with a Special Background",
-        "Visit a store to receive Timed Research, event-themed stickers, and an avatar item"
-      ],
-      "pokemon": [
-        "Pikachu"
-      ],
-      "counters": [],
-      "sections": [
-        {
-          "title": "Activities",
-          "items": [
-            ":raid: Pikachu appears more frequently in raids near participating stores, with a chance to be Shiny or have a Special Background",
-            ":pokestop: Stamp Rally: collect stamps at designated PokéStops and Gyms to encounter Pikachu with a Special Background",
-            ":pokestop: Open the game in-store to receive Timed Research; complete its tasks and claim its rewards by September 30 at 23:59",
-            "A redemption code grants additional Timed Research and free Berry items"
-          ],
-          "body": "",
-          "mons": []
-        }
-      ]
-    },
-    "pokemonspotlighthour2026-08-13": {
-      "name": "Wurmple Spotlight Hour",
-      "heading": "Pokémon Spotlight Hour",
-      "summary": "On August 13 from 18:00–19:00 local time, Wurmple appears frequently in the wild, with a ×2 Evolution XP bonus.",
-      "bonuses": [
-        ":xp: Evolution XP ×2"
-      ],
-      "pokemon": [
-        "Wurmple"
-      ],
-      "counters": [],
-      "sections": []
-    },
-    "pokemonspotlighthour2026-08-20": {
-      "name": "Magikarp Spotlight Hour",
-      "heading": "Pokémon Spotlight Hour",
-      "summary": "On August 20 from 18:00–19:00 local time, Magikarp appears frequently in the wild, with a ×2 Catch XP bonus.",
-      "bonuses": [
-        ":xp: Catch XP ×2"
-      ],
-      "pokemon": [
-        "Magikarp"
-      ],
-      "counters": [],
-      "sections": []
-    },
-    "pokemonspotlighthour2026-08-27": {
-      "name": "Mankey Spotlight Hour",
-      "heading": "Pokémon Spotlight Hour",
-      "summary": "On August 27 from 18:00–19:00 local time, Mankey appears frequently in the wild, with a ×2 Catch Candy bonus.",
-      "bonuses": [
-        ":candy: Catch Candy ×2"
-      ],
-      "pokemon": [
-        "Mankey"
-      ],
-      "counters": [],
-      "sections": []
     },
     "pokemon-world-championships-2026-timed-research-twitch-drops": {
       "name": "2026 Pokémon World Championships Twitch Drops Timed Research",
@@ -4455,13 +4455,407 @@
           "mons": []
         }
       ]
+    },
+    "max-mondays-2026-09-07": {
+      "name": "Max Monday: Ralts",
+      "heading": "Max Mondays",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [
+        ":xl-candy: Earn 1 Rare Candy XL from in-person Max Battles"
+      ],
+      "pokemon": [
+        "Ralts"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "mega-beedrill-in-mega-raids-september-2026": {
+      "name": "Mega Beedrill in Mega Raids",
+      "heading": "Raid Battles",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [
+        "Beedrill"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "go-pass-september-2026": {
+      "name": "GO Pass: September",
+      "heading": "GO Pass",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [
+        "Event bonus as announced",
+        "Event bonus as announced",
+        "Event bonus as announced",
+        "Event bonus as announced"
+      ],
+      "pokemon": [
+        "Latios"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "mega-squads-2026": {
+      "name": "Mega Squads",
+      "heading": "Event",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [],
+      "counters": [],
+      "sections": []
+    },
+    "season-24-twilight-trails": {
+      "name": "Twilight Trails",
+      "heading": "Season",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [
+        "Event bonus as announced",
+        "Event bonus as announced",
+        "Event bonus as announced"
+      ],
+      "pokemon": [],
+      "counters": [],
+      "sections": []
+    },
+    "shadow-thundurus-incarnate-forme-in-shadow-raids-september-2026": {
+      "name": "Shadow Thundurus (Incarnate Forme) in Shadow Raids",
+      "heading": "Raid Battles",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [
+        "Shadow Thundurus (Incarnate Forme)"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "zacian-hero-of-many-battles-in-5-star-raid-battles-september-2026": {
+      "name": "Zacian (Hero of Many Battles) in 5-Star Raids",
+      "heading": "Raid Battles",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [
+        "Zacian"
+      ],
+      "counters": [
+        {
+          "name": "Dusk Mane Necrozma",
+          "fast": "",
+          "charged": ""
+        },
+        {
+          "name": "Metagross",
+          "fast": "",
+          "charged": ""
+        },
+        {
+          "name": "Mega Gengar",
+          "fast": "",
+          "charged": ""
+        }
+      ],
+      "sections": []
+    },
+    "raidhour20260909": {
+      "name": "Zacian Raid Hour",
+      "heading": "Raid Hour",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [
+        "Zacian"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "pokemonspotlighthour2026-09-10": {
+      "name": "Weedle / Kakuna / Beedrill Spotlight Hour",
+      "heading": "Pokémon Spotlight Hour",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [
+        ":candy: 2x Transfer Candy"
+      ],
+      "pokemon": [
+        "Weedle",
+        "Kakuna",
+        "Beedrill"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "mega-houndoom-in-mega-raids-september-2026": {
+      "name": "Mega Houndoom in Mega Raids",
+      "heading": "Raid Battles",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [
+        "Mega Houndoom"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "pokemonspotlighthour2026-09-13": {
+      "name": "Houndour / Houndoom Spotlight Hour",
+      "heading": "Pokémon Spotlight Hour",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [
+        ":candy: 2x Transfer Candy"
+      ],
+      "pokemon": [
+        "Houndour",
+        "Mega Houndoom"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "max-mondays-2026-09-14": {
+      "name": "Max Monday: Rhyhorn",
+      "heading": "Max Mondays",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [
+        ":xl-candy: Earn 1 Rare Candy XL from in-person Max Battles"
+      ],
+      "pokemon": [
+        "Rhyhorn"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "mega-venusaur-in-mega-raids-september-2026": {
+      "name": "Mega Venusaur in Mega Raids",
+      "heading": "Raid Battles",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [
+        "Mega Venusaur"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "zamazenta-hero-of-many-battles-in-5-star-raid-battles-september-2026": {
+      "name": "Zamazenta (Hero of Many Battles) in 5-Star Raids",
+      "heading": "Raid Battles",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [
+        "Zamazenta"
+      ],
+      "counters": [
+        {
+          "name": "Mega Mewtwo Y",
+          "fast": "",
+          "charged": ""
+        },
+        {
+          "name": "Mega Rayquaza",
+          "fast": "",
+          "charged": ""
+        },
+        {
+          "name": "Mega Alakazam",
+          "fast": "",
+          "charged": ""
+        }
+      ],
+      "sections": []
+    },
+    "unannounced-september-event-season-24": {
+      "name": "September Mystery Event",
+      "heading": "Event",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [],
+      "counters": [],
+      "sections": []
+    },
+    "raidhour20260916": {
+      "name": "Zamazenta Raid Hour",
+      "heading": "Raid Hour",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [
+        "Zamazenta"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "pokemonspotlighthour2026-09-17": {
+      "name": "Mystery Pokemon Spotlight Hour",
+      "heading": "Pokémon Spotlight Hour",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [
+        ":stardust: 2x Catch Stardust; featured Pokemon TBD"
+      ],
+      "pokemon": [],
+      "counters": [],
+      "sections": []
+    },
+    "max-mondays-2026-09-21": {
+      "name": "Max Monday: Legendary Birds",
+      "heading": "Max Mondays",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [
+        ":xl-candy: Earn 1 Rare Candy XL from in-person Max Battles"
+      ],
+      "pokemon": [
+        "Articuno",
+        "Zapdos",
+        "Moltres"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "mega-malamar-in-mega-raids-september-2026": {
+      "name": "Mega Malamar in Mega Raids",
+      "heading": "Raid Battles",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [
+        "Mega Malamar"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "xurkitree-pheromosa-buzzwole-in-5-star-raid-battles-september-2026": {
+      "name": "Regional Ultra Beasts in 5-Star Raids",
+      "heading": "Raid Battles",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [
+        "Xurkitree",
+        "Pheromosa",
+        "Buzzwole"
+      ],
+      "counters": [
+        {
+          "name": "Primal Groudon",
+          "fast": "",
+          "charged": ""
+        },
+        {
+          "name": "Mega Rayquaza",
+          "fast": "",
+          "charged": ""
+        },
+        {
+          "name": "Mega Garchomp",
+          "fast": "",
+          "charged": ""
+        }
+      ],
+      "sections": []
+    },
+    "raidhour20260923": {
+      "name": "Regional Ultra Beast Raid Hour",
+      "heading": "Raid Hour",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [
+        "Xurkitree",
+        "Pheromosa",
+        "Buzzwole"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "pokemonspotlighthour2026-09-24": {
+      "name": "Rattata Spotlight Hour",
+      "heading": "Pokémon Spotlight Hour",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [
+        ":xp: 2x Evolution XP"
+      ],
+      "pokemon": [
+        "Rattata"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "max-mondays-2026-09-28": {
+      "name": "Max Monday: Sobble",
+      "heading": "Max Mondays",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [
+        ":xl-candy: Earn 1 Rare Candy XL from in-person Max Battles"
+      ],
+      "pokemon": [
+        "Sobble"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "harvest-festival-2026": {
+      "name": "Harvest Festival",
+      "heading": "Event",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [],
+      "counters": [],
+      "sections": []
+    },
+    "mega-victreebel-in-mega-raids-september-2026": {
+      "name": "Mega Victreebel in Mega Raids",
+      "heading": "Raid Battles",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [
+        "Mega Victreebel"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "xerneas-in-5-star-raid-battles-september-2026": {
+      "name": "Xerneas in 5-Star Raids",
+      "heading": "Raid Battles",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [
+        "Xerneas"
+      ],
+      "counters": [
+        {
+          "name": "Dusk Mane Necrozma",
+          "fast": "",
+          "charged": ""
+        },
+        {
+          "name": "Metagross",
+          "fast": "",
+          "charged": ""
+        },
+        {
+          "name": "Mega Gengar",
+          "fast": "",
+          "charged": ""
+        }
+      ],
+      "sections": []
+    },
+    "raidhour20260930": {
+      "name": "Xerneas Raid Hour",
+      "heading": "Raid Hour",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [
+        "Xerneas"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "max-battle-day-october-2026": {
+      "name": "October Max Battle Day",
+      "heading": "Max Battle Day",
+      "summary": "Details follow the announced event schedule; see the canonical calendar for dates and structural facts.",
+      "bonuses": [],
+      "pokemon": [],
+      "counters": [],
+      "sections": []
     }
   },
   "rotations": {
-    "note": "August 5★ and Mega Raids rotate weekly on Wednesdays, while Max Battles rotate weekly. Special rotations also run for the August 1 Max Battle Day, the August 22 Super Mega Raid Day, and the daily Mega Raid pools for Mega Ascension and Pokémon GO Fest 2026: Mega Finale from August 31 through September 6.",
+    "note": "September 5-star, Mega, and Max rotations are published through October 6; special Mega Ascension and GO Fest Mega Finale daily pools are retained.",
     "tracks": {
       "5star": {
-        "label": "5★ Raids",
+        "label": "5-Star Raids",
         "segments": [
           {
             "name": "Articuno / Zapdos / Moltres",
@@ -4473,123 +4867,123 @@
             ]
           },
           {
-            "name": "All-Generation Legendaries",
-            "cn": "All-Generation Legendaries (rotating selection)",
+            "name": "All-Gen Legends",
+            "cn": "All-Gen Legends",
             "pokemon": [
               "Articuno",
               "Zapdos",
               "Moltres",
-              "Kyogre",
-              "Groudon",
-              "Rayquaza",
-              "Necrozma"
-            ]
-          },
-          {
-            "name": "White Kyurem / Zekrom / Dawn Wings Necrozma",
-            "cn": "White Kyurem and more",
-            "pokemon": [
-              "White Kyurem",
-              "Zekrom",
-              "Dawn Wings Necrozma"
-            ]
-          },
-          {
-            "name": "Black Kyurem / Reshiram / Dusk Mane Necrozma",
-            "cn": "Black Kyurem and more",
-            "pokemon": [
-              "Black Kyurem",
-              "Reshiram",
+              "All-Gen Legends",
+              "Primal Groudon",
+              "Mega Rayquaza",
               "Dusk Mane Necrozma"
             ]
           },
           {
-            "name": "Crowned Sword Zacian / Crowned Shield Zamazenta",
-            "cn": "Crowned Sword Zacian / Crowned Shield Zamazenta",
+            "name": "White Kyurem / Zekrom / Dawn Wings Necrozma",
+            "cn": "White Kyurem / Zekrom / Dawn Wings Necrozma",
             "pokemon": [
-              "Crowned Sword Zacian",
-              "Crowned Shield Zamazenta"
+              "White Kyurem / Zekrom / Dawn Wings Necrozma",
+              "White Kyurem / Zekrom / Dawn Wings Necrozma",
+              "Dusk Mane Necrozma"
             ]
           },
           {
-            "name": "Origin Forme Dialga / Origin Forme Palkia",
-            "cn": "Origin Forme Dialga / Origin Forme Palkia",
+            "name": "Black Kyurem / Reshiram / Dusk Mane Necrozma",
+            "cn": "Black Kyurem / Reshiram / Dusk Mane Necrozma",
             "pokemon": [
-              "Origin Forme Dialga",
-              "Origin Forme Palkia"
+              "Black Kyurem / Reshiram / Dusk Mane Necrozma",
+              "Black Kyurem / Reshiram / Dusk Mane Necrozma",
+              "Dusk Mane Necrozma"
+            ]
+          },
+          {
+            "name": "Crowned Zacian / Zamazenta",
+            "cn": "Crowned Zacian / Zamazenta",
+            "pokemon": [
+              "Zacian",
+              "Zamazenta"
+            ]
+          },
+          {
+            "name": "Origin Dialga / Palkia",
+            "cn": "Origin Dialga / Palkia",
+            "pokemon": [
+              "Origin Dialga / Palkia",
+              "Origin Dialga / Palkia"
             ]
           },
           {
             "name": "GO Fest Global Saturday",
-            "cn": "GO Fest Saturday (rotating selection of Legendary Pokémon)",
+            "cn": "GO Fest Global Saturday",
             "pokemon": [
               "Articuno",
               "Zapdos",
               "Moltres",
-              "Raikou",
-              "Entei",
-              "Suicune",
-              "Lugia",
-              "Ho-Oh",
-              "Uxie",
-              "Mesprit",
-              "Azelf",
-              "Dialga",
-              "Palkia",
-              "Giratina",
-              "Origin Forme Giratina",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
               "Xerneas",
-              "Yveltal",
-              "Solgaleo",
-              "Lunala",
-              "Kyogre",
-              "Groudon",
-              "Rayquaza",
-              "Reshiram",
-              "Zekrom",
-              "Kyurem"
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
+              "Primal Groudon",
+              "Mega Rayquaza",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday",
+              "GO Fest Global Saturday"
             ]
           },
           {
             "name": "GO Fest Global Sunday",
-            "cn": "GO Fest Sunday (rotating selection of Legendary Pokémon)",
+            "cn": "GO Fest Global Sunday",
             "pokemon": [
-              "Regirock",
-              "Regice",
-              "Registeel",
-              "Origin Forme Dialga",
-              "Origin Forme Palkia",
-              "Heatran",
-              "Regigigas",
-              "Tornadus",
-              "Thundurus",
-              "Landorus",
-              "Enamorus",
-              "Regieleki",
-              "Regidrago",
-              "Deoxys",
-              "Genesect",
-              "Nihilego",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "Shadow Thundurus (Incarnate Forme)",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
               "Buzzwole",
               "Pheromosa",
               "Xurkitree",
-              "Celesteela",
-              "Kartana",
-              "Guzzlord",
-              "Necrozma",
-              "Stakataka",
-              "Blacephalon",
-              "Tapu Koko",
-              "Tapu Lele",
-              "Tapu Bulu",
-              "Tapu Fini",
-              "Latias",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "Dusk Mane Necrozma",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
               "Latios",
-              "Cresselia",
-              "Darkrai",
-              "Cobalion",
-              "Terrakion",
-              "Virizion",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
+              "GO Fest Global Sunday",
               "Zacian",
               "Zamazenta"
             ]
@@ -4628,16 +5022,16 @@
             "name": "Uxie / Mesprit / Azelf",
             "cn": "Uxie / Mesprit / Azelf",
             "pokemon": [
-              "Uxie",
-              "Mesprit",
-              "Azelf"
+              "Uxie / Mesprit / Azelf",
+              "Uxie / Mesprit / Azelf",
+              "Uxie / Mesprit / Azelf"
             ]
           },
           {
             "name": "Groudon",
             "cn": "Groudon",
             "pokemon": [
-              "Groudon"
+              "Primal Groudon"
             ]
           },
           {
@@ -4651,9 +5045,39 @@
             "name": "Regirock / Regice / Registeel",
             "cn": "Regirock / Regice / Registeel",
             "pokemon": [
-              "Regirock",
-              "Regice",
-              "Registeel"
+              "Regirock / Regice / Registeel",
+              "Regirock / Regice / Registeel",
+              "Regirock / Regice / Registeel"
+            ]
+          },
+          {
+            "name": "Zacian (Hero of Many Battles)",
+            "cn": "Zacian (Hero of Many Battles)",
+            "pokemon": [
+              "Zacian"
+            ]
+          },
+          {
+            "name": "Zamazenta (Hero of Many Battles)",
+            "cn": "Zamazenta (Hero of Many Battles)",
+            "pokemon": [
+              "Zamazenta"
+            ]
+          },
+          {
+            "name": "Xurkitree / Pheromosa / Buzzwole",
+            "cn": "Xurkitree / Pheromosa / Buzzwole",
+            "pokemon": [
+              "Xurkitree",
+              "Pheromosa",
+              "Buzzwole"
+            ]
+          },
+          {
+            "name": "Xerneas",
+            "cn": "Xerneas",
+            "pokemon": [
+              "Xerneas"
             ]
           }
         ]
@@ -4697,10 +5121,10 @@
             ]
           },
           {
-            "name": "Primal Kyogre / Primal Groudon",
-            "cn": "Primal Kyogre / Primal Groudon",
+            "name": "Primal Kyogre / Groudon",
+            "cn": "Primal Kyogre / Groudon",
             "pokemon": [
-              "Primal Kyogre",
+              "Primal Kyogre / Groudon",
               "Primal Groudon"
             ]
           },
@@ -4708,7 +5132,7 @@
             "name": "Mega Mewtwo X",
             "cn": "Mega Mewtwo X",
             "pokemon": [
-              "Mega Mewtwo X"
+              "Mega Mewtwo Y"
             ]
           },
           {
@@ -4769,9 +5193,9 @@
           },
           {
             "name": "Super Mega Starmie Raid Day",
-            "cn": "Starmie Super Mega Raid Day",
+            "cn": "Super Mega Starmie Raid Day",
             "pokemon": [
-              "Mega Starmie"
+              "Starmie"
             ]
           },
           {
@@ -4783,95 +5207,137 @@
           },
           {
             "name": "Mega Ascension: August 31",
-            "cn": "Mega Ascension: August 31 (rotating selection)",
+            "cn": "Mega Ascension: August 31",
             "pokemon": [
               "Mega Victreebel",
-              "Mega Dragonite",
+              "Mega Ascension: August 31",
               "Mega Malamar",
-              "Mega Latias",
-              "Mega Latios"
+              "Mega Ascension: August 31",
+              "Latios"
             ]
           },
           {
             "name": "Mega Ascension: September 1",
-            "cn": "Mega Ascension: September 1 (rotating selection)",
+            "cn": "Mega Ascension: September 1",
             "pokemon": [
-              "Mega Falinks",
-              "Mega Latias",
-              "Mega Latios"
+              "Mega Ascension: September 1",
+              "Mega Ascension: September 1",
+              "Latios"
             ]
           },
           {
             "name": "Mega Ascension: September 2",
-            "cn": "Mega Ascension: September 2 (rotating selection)",
+            "cn": "Mega Ascension: September 2",
             "pokemon": [
-              "Mega Skarmory",
-              "Mega Latias",
-              "Mega Latios"
+              "Mega Ascension: September 2",
+              "Mega Ascension: September 2",
+              "Latios"
             ]
           },
           {
             "name": "Mega Ascension: September 3",
-            "cn": "Mega Ascension: September 3 (rotating selection)",
+            "cn": "Mega Ascension: September 3",
             "pokemon": [
-              "Mega Starmie",
-              "Mega Latias",
-              "Mega Latios"
+              "Starmie",
+              "Mega Ascension: September 3",
+              "Latios"
             ]
           },
           {
             "name": "Mega Ascension: September 4",
-            "cn": "Mega Ascension: September 4 (rotating selection)",
+            "cn": "Mega Ascension: September 4",
             "pokemon": [
-              "Mega Raichu X",
-              "Mega Raichu Y",
-              "Mega Latias",
-              "Mega Latios"
+              "X",
+              "Y",
+              "Mega Ascension: September 4",
+              "Latios"
             ]
           },
           {
             "name": "Pokémon GO Fest 2026: Mega Finale — September 5",
-            "cn": "Pokémon GO Fest 2026: Mega Finale — September 5 (rotating selection)",
+            "cn": "Pokémon GO Fest 2026: Mega Finale — September 5",
             "pokemon": [
-              "Mega Beedrill",
+              "Beedrill",
               "Mega Victreebel",
-              "Mega Pinsir",
-              "Mega Abomasnow",
+              "Pokémon GO Fest 2026: Mega Finale — September 5",
+              "Pokémon GO Fest 2026: Mega Finale — September 5",
               "Mega Alakazam",
-              "Mega Slowbro",
-              "Mega Starmie",
-              "Mega Medicham",
+              "Pokémon GO Fest 2026: Mega Finale — September 5",
+              "Starmie",
+              "Pokémon GO Fest 2026: Mega Finale — September 5",
               "Mega Gengar",
               "Mega Houndoom",
-              "Mega Banette",
+              "Pokémon GO Fest 2026: Mega Finale — September 5",
               "Mega Malamar",
-              "Mega Raichu X",
-              "Mega Ampharos",
-              "Mega Manectric",
-              "Mega Mewtwo X"
+              "X",
+              "Pokémon GO Fest 2026: Mega Finale — September 5",
+              "Pokémon GO Fest 2026: Mega Finale — September 5",
+              "Mega Mewtwo Y"
             ]
           },
           {
             "name": "Pokémon GO Fest 2026: Mega Finale — September 6",
-            "cn": "Pokémon GO Fest 2026: Mega Finale — September 6 (rotating selection)",
+            "cn": "Pokémon GO Fest 2026: Mega Finale — September 6",
             "pokemon": [
-              "Mega Steelix",
-              "Mega Skarmory",
-              "Mega Aggron",
-              "Mega Glalie",
-              "Mega Sharpedo",
-              "Mega Camerupt",
-              "Mega Lopunny",
-              "Mega Falinks",
-              "Mega Gyarados",
-              "Mega Aerodactyl",
-              "Mega Dragonite",
-              "Mega Altaria",
-              "Mega Raichu Y",
-              "Mega Sableye",
-              "Mega Mawile",
-              "Mega Audino",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
+              "Y",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
+              "Pokémon GO Fest 2026: Mega Finale — September 6",
               "Mega Mewtwo Y"
+            ]
+          },
+          {
+            "name": "Mega Gyarados",
+            "cn": "Mega Gyarados",
+            "pokemon": [
+              "Mega Gyarados"
+            ]
+          },
+          {
+            "name": "Mega Beedrill",
+            "cn": "Mega Beedrill",
+            "pokemon": [
+              "Beedrill"
+            ]
+          },
+          {
+            "name": "Mega Houndoom",
+            "cn": "Mega Houndoom",
+            "pokemon": [
+              "Mega Houndoom"
+            ]
+          },
+          {
+            "name": "Mega Venusaur",
+            "cn": "Mega Venusaur",
+            "pokemon": [
+              "Mega Venusaur"
+            ]
+          },
+          {
+            "name": "Mega Malamar",
+            "cn": "Mega Malamar",
+            "pokemon": [
+              "Mega Malamar"
+            ]
+          },
+          {
+            "name": "Mega Victreebel",
+            "cn": "Mega Victreebel",
+            "pokemon": [
+              "Mega Victreebel"
             ]
           }
         ]
@@ -4880,52 +5346,40 @@
         "label": "Max Battles",
         "segments": [
           {
-            "name": "Feebas",
-            "cn": "Feebas",
-            "pokemon": [
-              "Feebas"
-            ]
-          },
-          {
-            "name": "Gigantamax Rillaboom Max Battle Day",
-            "cn": "Gigantamax Rillaboom Max Battle Day",
-            "pokemon": [
-              "Gigantamax Rillaboom"
-            ]
-          },
-          {
-            "name": "Magmar",
-            "cn": "Magmar",
-            "pokemon": [
-              "Magmar"
-            ]
-          },
-          {
-            "name": "Beldum",
-            "cn": "Beldum",
-            "pokemon": [
-              "Beldum"
-            ]
-          },
-          {
-            "name": "Magikarp",
-            "cn": "Magikarp",
-            "pokemon": [
-              "Magikarp"
-            ]
-          },
-          {
-            "name": "Hitmontop",
-            "cn": "Hitmontop",
-            "pokemon": [
-              "Hitmontop"
-            ]
-          },
-          {
             "name": "Eevee",
             "cn": "Eevee",
             "pokemon": [
               "Eevee"
+            ]
+          },
+          {
+            "name": "Ralts",
+            "cn": "Ralts",
+            "pokemon": [
+              "Ralts"
+            ]
+          },
+          {
+            "name": "Rhyhorn",
+            "cn": "Rhyhorn",
+            "pokemon": [
+              "Rhyhorn"
+            ]
+          },
+          {
+            "name": "Dynamax Legendary Birds",
+            "cn": "Dynamax Legendary Birds",
+            "pokemon": [
+              "Articuno",
+              "Zapdos",
+              "Moltres"
+            ]
+          },
+          {
+            "name": "Sobble",
+            "cn": "Sobble",
+            "pokemon": [
+              "Sobble"
             ]
           }
         ]
@@ -4933,11 +5387,11 @@
     }
   },
   "regions": {
-    "calendar-notes": "<div class=\"callout\"><strong>Headline: <span class=\"event-link\" data-event-id=\"pokemon-go-fest-2026-mega-finale\">Pokémon GO Fest 2026: Mega Finale</span></strong><p>September 5 and September 6 use two different daily Mega Raid pools: Mega Mewtwo X headlines the first day, followed by Mega Mewtwo Y on the second. Remote Raids are unlimited, so plan your passes, healing items, and main attackers in advance.</p></div>\n<div class=\"note-grid\">\n  <div class=\"panel\"><div class=\"panel-head\"><h4>8/17–22: This week’s windows</h4></div><ul><li><span class=\"event-link\" data-event-id=\"max-mondays-2026-08-17\">8/17 Max Monday: Magikarp</span> runs from 6:00–21:00, with a featured 18:00–19:00 window; complete an in-person Max Battle to receive one Rare Candy XL.</li><li><span class=\"event-link\" data-event-id=\"water-festival-2026\">8/18–24 Ultra Unlock: Water Festival</span> increases Catch XP and Stardust in stages, with the highest multipliers near the end.</li><li><span class=\"event-link\" data-event-id=\"starmie-super-mega-raid-day-2026\">8/22 Starmie Super Mega Raid Day</span> offers boosted Shiny odds, 5,000 bonus XP per raid, and up to six free Raid Passes.</li></ul></div>\n  <div class=\"panel\"><div class=\"panel-head\"><h4>8/31–9/4: Mega Ascension daily pools</h4></div><ul><li>During <span class=\"event-link\" data-event-id=\"mega-ascension\">Mega Ascension</span>, Mega Latias and Mega Latios may appear throughout.</li><li><span class=\"event-link\" data-event-id=\"raid-battles-20260831\">8/31</span>: Mega Victreebel, Mega Dragonite, and Mega Malamar; <span class=\"event-link\" data-event-id=\"raid-battles-20260901\">9/1</span>: Mega Falinks; <span class=\"event-link\" data-event-id=\"raid-battles-20260902\">9/2</span>: Mega Skarmory.</li><li><span class=\"event-link\" data-event-id=\"raid-battles-20260903\">9/3</span>: Mega Starmie; <span class=\"event-link\" data-event-id=\"raid-battles-20260904\">9/4</span>: Mega Raichu X / Y. Each day has a different pool, so do not leave a target until the next day.</li></ul></div>\n  <div class=\"panel\"><div class=\"panel-head\"><h4>9/5–6: Two separate Finale pools</h4></div><ul><li>The <span class=\"event-link\" data-event-id=\"raid-battles-20260905\">9/5 daily pool</span> has 15 habitat Mega Raid Bosses, plus Mega Mewtwo X at select Gyms; Bug-, Psychic-, Ghost-/Dark-, and Electric-type Mega Evolutions are the day’s main targets.</li><li>The <span class=\"event-link\" data-event-id=\"raid-battles-20260906\">9/6 daily pool</span> changes to 16 different habitat Mega Raid Bosses, plus Mega Mewtwo Y; Steel-, Ice-, Water-, Flying-, Fairy-, and Dark-type targets are concentrated on the second day.</li><li>Both days rotate hourly from 10:00–18:00; prioritize targets by the date on which they appear.</li></ul></div>\n  <div class=\"panel\"><div class=\"panel-head\"><h4>Regional and in-person events</h4></div><ul><li><span class=\"event-link\" data-event-id=\"pokexciting-kuala-lumpur-2026\">9/12–13 Kuala Lumpur KLCC Park in-person event</span> is the first stop of the PokéXciting Asia-Pacific tour, featuring teal-costumed Pikachu and local / cross-region stamp routes.</li><li><span class=\"event-link\" data-event-id=\"dancing-in-the-moonlight-2026\">9/23–27 Dancing in the Moonlight</span> is limited to Japan, South Korea, Taiwan, Indonesia, Singapore, Hong Kong, and Malaysia, with several daily Clefairy outbreak windows.</li></ul></div>\n</div>",
-    "rankings-current": "<div class=\"callout\"><strong>Today’s priority: clear the 8/17 limited windows, then stock up for Mega Finale</strong><p>Dynamax Magikarp is available today from 6:00–21:00, with a featured 18:00–19:00 window; “Choose Your Path: Venom and Vines” ends at 20:00. If you still plan to raid Groudon or Mega Garchomp, finish before the route bonus ends.</p></div>\n<div class=\"note-grid\">\n  <div class=\"panel\"><div class=\"panel-head\"><h4>Current raids: Ice teams offer the best return</h4></div><ul><li>Groudon remains through 8/18, and Water-, Ice-, and Grass-type teams all perform well. Mega Garchomp is double weak to Ice, so prioritize a strong Ice attacker lineup.</li><li>Shadow Giratina (Altered Forme) is available only on weekends. Prepare Dragon-, Ghost-, Dark-, Ice-, and Fairy-type teams in advance, but do not mistake it for an all-day target today.</li><li>Full teams and movesets are in “Current Raid Counters”; this priority panel does not repeat the whole table.</li></ul></div>\n  <div class=\"panel\"><div class=\"panel-head\"><h4>8/18–24: Resource week and Raid Day</h4></div><ul><li>Water Festival raises Catch XP from ×2 to ×4 and Stardust from ×3 to ×5. If your schedule is flexible, save high-volume catching for the later, higher-multiplier stages.</li><li>Starmie Super Mega Raid Day on 8/22 combines a boosted Shiny window, bonus Raid XP, and free passes. Prepare Electric-, Grass-, Bug-, Ghost-, or Dark-type attackers.</li><li>Dynamax Magikarp is easy, so prioritize Electric- or Grass-type Max damage and avoid overinvesting for a single rotation.</li></ul></div>\n  <div class=\"panel\"><div class=\"panel-head\"><h4>Featured: Prepare for Mega Finale</h4></div><ul><li>The daily Mega pools differ from 8/31–9/4. List the forms for which you lack Energy or have not unlocked; Mega Latias and Mega Latios span the lead-up event and can serve as flexible targets.</li><li>September 5 and September 6 use two different pools, headlined by Mega Mewtwo X and Y respectively. Allocate Raid Passes, healing items, and friend-group times by target date.</li><li>For team building, prioritize Ice, Ghost / Dark, Fighting, and Ground, then add Electric and Grass coverage for Water-type targets. These groups cover many bosses in both the current pool and the Finale.</li></ul></div>\n</div>",
+    "calendar-notes": "<div class=\"callout\"><strong>Headline: September rotations are published</strong><p>5-star, Mega, and Max schedules now run through October 6. Twilight Trails starts September 8; Ultra Beasts are regional from September 23-29, so confirm the boss before joining remote groups.</p></div>\n<div class=\"note-grid\">\n  <div class=\"panel\"><div class=\"panel-head\"><h4>This week: Aug 25-31</h4></div><ul><li><span class=\"event-link\" data-event-id=\"raidhour20260826\">Aug 26 Regi trio Raid Hour</span> features concentrated raids from 6-7 p.m.</li><li><span class=\"event-link\" data-event-id=\"pokemon-xp-2026-worlds\">Pokemon XP and Worlds</span> continues through Aug 30; stream-drop research has separate claim deadlines.</li><li><span class=\"event-link\" data-event-id=\"mega-ascension\">Aug 31 Mega Ascension</span> starts daily rotating Mega pools; do not postpone a target to the next day.</li></ul></div>\n  <div class=\"panel\"><div class=\"panel-head\"><h4>Early September</h4></div><ul><li><span class=\"event-link\" data-event-id=\"pokemon-go-fest-2026-mega-finale\">Sep 5-6 Mega Finale</span> uses different pools each day, led by Mega Mewtwo X and Y.</li><li><span class=\"event-link\" data-event-id=\"season-24-twilight-trails\">Sep 8 Twilight Trails</span> and <span class=\"event-link\" data-event-id=\"go-pass-september-2026\">GO Pass: September</span> start together.</li><li><span class=\"event-link\" data-event-id=\"september-communitydayclassic2026\">Sep 12 Community Day Classic</span> is scheduled; the featured Pokemon and full bonuses are TBD.</li></ul></div>\n  <div class=\"panel\"><div class=\"panel-head\"><h4>Raid path through Oct 6</h4></div><ul><li>5-star: Regi trio, Zacian, Zamazenta, regional Ultra Beasts, then Xerneas.</li><li>Mega: Gyarados, Beedrill/Houndoom, Venusaur, Malamar, then Victreebel.</li><li>Max: Eevee, Ralts, Rhyhorn, legendary birds, then Sobble.</li></ul></div>\n  <div class=\"panel\"><div class=\"panel-head\"><h4>Special windows</h4></div><ul><li><span class=\"event-link\" data-event-id=\"super-mega-raid-day-september-2026\">Sep 19 Super Mega Raid Day</span> has no announced featured Pokemon yet.</li><li><span class=\"event-link\" data-event-id=\"dancing-in-the-moonlight-2026\">Sep 23-27 Dancing in the Moonlight</span> is limited to seven Asia-Pacific locations.</li><li><span class=\"event-link\" data-event-id=\"harvest-festival-2026\">Sep 29-Oct 5 Harvest Festival</span> is scheduled; full details are TBD.</li></ul></div>\n</div>",
+    "rankings-current": "<div class=\"callout\"><strong>Priority now: Regi rotation and September preparation</strong><p>Starting August 26, 5-star raids switch to Regirock, Regice, and Registeel, while Mega raids switch to Mega Gyarados. Build a Fighting team for the Regis, then Electric, Grass, Fighting, Bug, or Fairy attackers for Mega Gyarados.</p></div>\n<div class=\"note-grid\">\n  <div class=\"panel\"><div class=\"panel-head\"><h4>This week</h4></div><ul><li>Use the Regi trio Raid Hour on Aug 26 from 6-7 p.m.; all three are weak to Fighting.</li><li>Aug 27 Spotlight Hour gives 2x catch Candy; Worlds streams offer Timed Research Aug 28-30.</li><li>Aug 31 features Dynamax Eevee and starts daily Mega Ascension boss pools.</li></ul></div>\n  <div class=\"panel\"><div class=\"panel-head\"><h4>September teams</h4></div><ul><li>Steel/Poison covers Zacian and Xerneas; Psychic/Flying covers Zamazenta.</li><li>Ground targets Xurkitree; Flying is doubly effective against Pheromosa and Buzzwole.</li><li>Bug is the core Mega Malamar answer; Flying, Fire, and Psychic cover Mega Beedrill, Venusaur, and Victreebel.</li></ul></div>\n  <div class=\"panel\"><div class=\"panel-head\"><h4>Resource priorities</h4></div><ul><li>GO Pass: September features Latios; its trade and hatch milestones suit regular play.</li><li>Mega Finale has unlimited remote raids on Sep 5-6; allocate passes and healing items by the X/Y daily pools.</li><li>See Current Raid Counters for full boss teams; this panel focuses on event priorities.</li></ul></div>\n</div>",
     "rankings-attackers": "<p class=\"muted\">Source: Pokémon GO Hub’s “Max Attackers Tier List (July 2026),” cross-checked against PokéBase’s overall rankings. Entries follow the source page’s A/B Tier tables and use verified official English Pokémon names.</p>\n<h4 class=\"muted\">A Tier</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"861-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/861.png\" alt=\"Gigantamax Grimmsnarl\"><div><strong>Gigantamax Grimmsnarl</strong><div class=\"meta\">Max Move type: Dark</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"849-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/849.png\" alt=\"Gigantamax Toxtricity\"><div><strong>Gigantamax Toxtricity</strong><div class=\"meta\">Max Move type: Electric</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"6-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png\" alt=\"Gigantamax Charizard\"><div><strong>Gigantamax Charizard</strong><div class=\"meta\">Max Move type: Fire</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"3-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png\" alt=\"Gigantamax Venusaur\"><div><strong>Gigantamax Venusaur</strong><div class=\"meta\">Max Move type: Grass</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"143-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png\" alt=\"Gigantamax Snorlax\"><div><strong>Gigantamax Snorlax</strong><div class=\"meta\">Max Move type: Normal</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"569-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/569.png\" alt=\"Gigantamax Garbodor\"><div><strong>Gigantamax Garbodor</strong><div class=\"meta\">Max Move type: Poison</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/890.png\" alt=\"Eternatus\"><div><strong>Eternatus</strong><div class=\"meta\">Max Move type: Dragon</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/65.png\" alt=\"Dynamax Alakazam\"><div><strong>Dynamax Alakazam</strong><div class=\"meta\">Max Move type: Psychic / Fighting</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"9-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png\" alt=\"Gigantamax Blastoise\"><div><strong>Gigantamax Blastoise</strong><div class=\"meta\">Max Move type: Water</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/381.png\" alt=\"Dynamax Latios\"><div><strong>Dynamax Latios</strong><div class=\"meta\">Max Move type: Dragon / Psychic</div></div></div>\n</div>\n<h4 class=\"muted\">B Tier (backup options)</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" data-hub=\"12-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/12.png\" alt=\"Gigantamax Butterfree\"><div><strong>Gigantamax Butterfree</strong><div class=\"meta\">Max Move type: Bug</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" data-hub=\"131-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/131.png\" alt=\"Gigantamax Lapras\"><div><strong>Gigantamax Lapras</strong><div class=\"meta\">Max Move type: Ice</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/555.png\" alt=\"Dynamax Darmanitan\"><div><strong>Dynamax Darmanitan</strong><div class=\"meta\">Max Move type: Fire / Normal</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/818.png\" alt=\"Dynamax Inteleon\"><div><strong>Dynamax Inteleon</strong><div class=\"meta\">Max Move type: Water / Normal</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png\" alt=\"Dynamax Gengar\"><div><strong>Dynamax Gengar</strong><div class=\"meta\">Max Move type: Dark / Ghost</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/196.png\" alt=\"Dynamax Espeon\"><div><strong>Dynamax Espeon</strong><div class=\"meta\">Max Move type: Psychic</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/376.png\" alt=\"Dynamax Metagross\"><div><strong>Dynamax Metagross</strong><div class=\"meta\">Max Move type: Psychic / Steel / Bug</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/635.png\" alt=\"Dynamax Hydreigon\"><div><strong>Dynamax Hydreigon</strong><div class=\"meta\">Max Move type: Dragon / Dark</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/530.png\" alt=\"Dynamax Excadrill\"><div><strong>Dynamax Excadrill</strong><div class=\"meta\">Max Move type: Steel / Ground</div></div></div>\n</div>",
     "rankings-defenders": "<p class=\"muted\">Source: Pokémon GO Hub’s “Max Defenders Tier List (August 2026).” S/A/B tiers and recommended Fast Moves come from the source table, with verified official English Pokémon names.</p>\n<h4 class=\"muted\">S Tier</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-S\">S</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/379.png\" alt=\"Registeel\"><div><strong>Registeel</strong><div class=\"meta\">Recommended Fast Moves: Lock-On / Metal Claw · broadest resistance coverage</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-S\">S</span><img class=\"mon-icon\" data-hub=\"889-Crowned_Shield\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/889.png\" alt=\"Crowned Shield Zamazenta\"><div><strong>Crowned Shield Zamazenta</strong><div class=\"meta\">Recommended Fast Move: Metal Claw · core Steel-type resistance profile</div></div></div>\n</div>\n<h4 class=\"muted\">A Tier</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"888-Crowned_Sword\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/888.png\" alt=\"Crowned Sword Zacian\"><div><strong>Crowned Sword Zacian</strong><div class=\"meta\">Recommended Fast Move: Metal Claw</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/377.png\" alt=\"Regirock\"><div><strong>Regirock</strong><div class=\"meta\">Recommended Fast Move: Lock-On</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/376.png\" alt=\"Metagross\"><div><strong>Metagross</strong><div class=\"meta\">Recommended Fast Moves: Fury Cutter / Shadow Claw</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/378.png\" alt=\"Regice\"><div><strong>Regice</strong><div class=\"meta\">Recommended Fast Move: Lock-On</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/380.png\" alt=\"Latias\"><div><strong>Latias</strong><div class=\"meta\">Recommended Fast Move: Dragon Breath</div></div></div>\n</div>\n<h4 class=\"muted\">B Tier</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/823.png\" alt=\"Corviknight\"><div><strong>Corviknight</strong><div class=\"meta\">Recommended Fast Move: Sand Attack</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/245.png\" alt=\"Suicune\"><div><strong>Suicune</strong><div class=\"meta\">Recommended Fast Move: Water Gun</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/884.png\" alt=\"Duraludon\"><div><strong>Duraludon</strong><div class=\"meta\">Recommended Fast Move: Metal Claw</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/139.png\" alt=\"Omastar\"><div><strong>Omastar</strong><div class=\"meta\">Recommended Fast Moves: Mud Shot / Water Gun</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/381.png\" alt=\"Latios\"><div><strong>Latios</strong><div class=\"meta\">Recommended Fast Move: Dragon Breath</div></div></div>\n</div>",
-    "rankings-raid": "<p class=\"muted\">Current high-priority pool: Groudon in 5★ Raids and Mega Garchomp in Mega Raids; Shadow Giratina (Altered Forme) is available only on weekends; Dynamax Magikarp is the Max rotation for 8/17–23. The upper-right of each card shows released Mega / Primal forms that share a Candy-boost type with the boss, sorted by Attack with a maximum of eight. Only five released forms share Ground with Groudon, so all five are shown.</p>\n<div class=\"raid-wall\">\n  <div class=\"raid-block\">\n    <div class=\"raid-boss\">\n      <img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/383.png\" alt=\"Groudon\">\n      <div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">5★</span><strong>Groudon</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> · Weak to <img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> <img class=\"ico\" src=\"assets/icons/grass.webp\" alt=\"Grass\"> <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"></div></div>\n      <div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png\" data-hub=\"383-Primal\" title=\"Primal Groudon · shares Ground\" alt=\"Primal Groudon\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png\" data-hub=\"445-Mega\" title=\"Mega Garchomp · shares Ground\" alt=\"Mega Garchomp\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10064.png\" data-hub=\"260-Mega\" title=\"Mega Swampert · shares Ground\" alt=\"Mega Swampert\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10087.png\" data-hub=\"323-Mega\" title=\"Mega Camerupt · shares Ground\" alt=\"Mega Camerupt\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10072.png\" data-hub=\"208-Mega\" title=\"Mega Steelix · shares Ground\" alt=\"Mega Steelix\"></div>\n    </div>\n    <div class=\"rank-list mini\">\n      <div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"382-Primal\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png\" alt=\"Primal Kyogre\"><strong>Primal Kyogre</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> Waterfall / Origin Pulse</div></div>\n      <div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"646-White\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png\" alt=\"White Kyurem\"><strong>White Kyurem</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Ice Fang / Ice Burn</div></div>\n      <div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"254-Mega\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png\" alt=\"Mega Sceptile\"><strong>Mega Sceptile</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/bug.png\" alt=\"Bug\"> Fury Cutter / <img class=\"ico\" src=\"assets/icons/grass.webp\" alt=\"Grass\"> Frenzy Plant</div></div>\n    </div>\n  </div>\n  <div class=\"raid-block\">\n    <div class=\"raid-boss\">\n      <img class=\"boss-icon\" data-hub=\"445-Mega\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png\" alt=\"Mega Garchomp\">\n      <div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">Mega</span><strong>Mega Garchomp</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> <img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> · Double weak to <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> · Weak to <img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> <img class=\"ico\" src=\"assets/icons/fairy.webp\" alt=\"Fairy\"></div></div>\n      <div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png\" data-hub=\"384-Mega\" title=\"Mega Rayquaza · shares Dragon\" alt=\"Mega Rayquaza\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png\" data-hub=\"383-Primal\" title=\"Primal Groudon · shares Ground\" alt=\"Primal Groudon\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png\" data-hub=\"445-Mega\" title=\"Mega Garchomp · shares Dragon / Ground\" alt=\"Mega Garchomp\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png\" data-hub=\"381-Mega\" title=\"Mega Latios · shares Dragon\" alt=\"Mega Latios\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png\" data-hub=\"254-Mega\" title=\"Mega Sceptile · shares Dragon\" alt=\"Mega Sceptile\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png\" data-hub=\"373-Mega\" title=\"Mega Salamence · shares Dragon\" alt=\"Mega Salamence\"><img src=\"https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp\" data-hub=\"149-Mega\" title=\"Mega Dragonite · shares Dragon\" alt=\"Mega Dragonite\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10045.png\" data-hub=\"181-Mega\" title=\"Mega Ampharos · shares Dragon\" alt=\"Mega Ampharos\"></div>\n    </div>\n    <div class=\"rank-list mini\">\n      <div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"646-White\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png\" alt=\"White Kyurem\"><strong>White Kyurem</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Ice Fang / Ice Burn</div></div>\n      <div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"384-Mega\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png\" alt=\"Mega Rayquaza\"><strong>Mega Rayquaza</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> Dragon Tail / Breaking Swipe</div></div>\n      <div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/998.png\" alt=\"Baxcalibur\"><strong>Baxcalibur</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Ice Fang / Avalanche</div></div>\n    </div>\n  </div>\n  <div class=\"raid-block\">\n    <div class=\"raid-boss\">\n      <img class=\"boss-icon\" data-hub=\"487-Altered_Shadow\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/487.png\" alt=\"Shadow Giratina (Altered Forme)\">\n      <div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">Weekend Shadow 5★</span><strong>Shadow Giratina (Altered Forme)</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ghost.webp\" alt=\"Ghost\"> <img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> · Weak to <img class=\"ico\" src=\"assets/icons/dark.webp\" alt=\"Dark\"> <img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> <img class=\"ico\" src=\"assets/icons/fairy.webp\" alt=\"Fairy\"> <img class=\"ico\" src=\"assets/icons/ghost.webp\" alt=\"Ghost\"> <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"></div></div>\n      <div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png\" data-hub=\"384-Mega\" title=\"Mega Rayquaza · shares Dragon\" alt=\"Mega Rayquaza\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png\" data-hub=\"94-Mega\" title=\"Mega Gengar · shares Ghost\" alt=\"Mega Gengar\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png\" data-hub=\"445-Mega\" title=\"Mega Garchomp · shares Dragon\" alt=\"Mega Garchomp\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png\" data-hub=\"381-Mega\" title=\"Mega Latios · shares Dragon\" alt=\"Mega Latios\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png\" data-hub=\"254-Mega\" title=\"Mega Sceptile · shares Dragon\" alt=\"Mega Sceptile\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10056.png\" data-hub=\"354-Mega\" title=\"Mega Banette · shares Ghost\" alt=\"Mega Banette\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png\" data-hub=\"373-Mega\" title=\"Mega Salamence · shares Dragon\" alt=\"Mega Salamence\"><img src=\"https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp\" data-hub=\"149-Mega\" title=\"Mega Dragonite · shares Dragon\" alt=\"Mega Dragonite\"></div>\n    </div>\n    <div class=\"rank-list mini\">\n      <div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"384-Mega\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png\" alt=\"Mega Rayquaza\"><strong>Mega Rayquaza</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> Dragon Tail / Breaking Swipe</div></div>\n      <div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"445-Mega\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png\" alt=\"Mega Garchomp\"><strong>Mega Garchomp</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> Dragon Tail / Breaking Swipe</div></div>\n      <div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"94-Mega\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png\" alt=\"Mega Gengar\"><strong>Mega Gengar</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ghost.webp\" alt=\"Ghost\"> Lick / Shadow Ball</div></div>\n    </div>\n  </div>\n  <div class=\"raid-block\">\n    <div class=\"raid-boss\">\n      <img class=\"boss-icon\" data-hub=\"129-Dynamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png\" alt=\"Dynamax Magikarp\">\n      <div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">Max</span><strong>Dynamax Magikarp</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> · Weak to <img class=\"ico\" src=\"assets/icons/electric.webp\" alt=\"Electric\"> <img class=\"ico\" src=\"assets/icons/grass.webp\" alt=\"Grass\"></div></div>\n      <div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png\" data-hub=\"382-Primal\" title=\"Primal Kyogre · shares Water\" alt=\"Primal Kyogre\"><img src=\"https://cdn.leekduck.com/assets/img/pokemon_icons/pm658.fMEGA.icon.png\" data-hub=\"658-Mega\" title=\"Mega Greninja · shares Water\" alt=\"Mega Greninja\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10041.png\" data-hub=\"130-Mega\" title=\"Mega Gyarados · shares Water\" alt=\"Mega Gyarados\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10070.png\" data-hub=\"319-Mega\" title=\"Mega Sharpedo · shares Water\" alt=\"Mega Sharpedo\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10064.png\" data-hub=\"260-Mega\" title=\"Mega Swampert · shares Water\" alt=\"Mega Swampert\"><img src=\"https://db.pokemongohub.net/images/official/full/121_mega_with_bg.webp\" data-hub=\"121-Mega\" title=\"Mega Starmie · shares Water\" alt=\"Mega Starmie\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10036.png\" data-hub=\"9-Mega\" title=\"Mega Blastoise · shares Water\" alt=\"Mega Blastoise\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10071.png\" data-hub=\"80-Mega\" title=\"Mega Slowbro · shares Water\" alt=\"Mega Slowbro\"></div>\n    </div>\n    <div class=\"rank-list mini\">\n      <div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"849-Gigantamax\" src=\"https://db.pokemongohub.net/images/official/detail/849_gmax.png\" alt=\"Gigantamax Toxtricity\"><strong>Gigantamax Toxtricity</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/electric.webp\" alt=\"Electric\"> Spark / Wild Charge</div></div>\n      <div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"3-Gigantamax\" src=\"https://db.pokemongohub.net/images/official/detail/003_gmax.png\" alt=\"Gigantamax Venusaur\"><strong>Gigantamax Venusaur</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/grass.webp\" alt=\"Grass\"> Vine Whip / Frenzy Plant</div></div>\n      <div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"145-Dynamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/145.png\" alt=\"Dynamax Zapdos\"><strong>Dynamax Zapdos</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/electric.webp\" alt=\"Electric\"> Thunder Shock / Thunderbolt</div></div>\n    </div>\n  </div>\n</div>\n<p class=\"muted\">Current regular lower-tier pool: Galarian Mr. Mime, Turtonator, and Kleavor in 3★ Raids; Tirtouga, Archen, Axew, and Poltchageist in 1★ Raids. Lower-tier raids are less difficult, so this edition’s detailed cards prioritize 5★, Mega, weekend Shadow, and featured Max targets.</p>"
+    "rankings-raid": "<p class=\"muted\">Current priority：5★ Regirock、Regice、Registeel；Mega Mega Gyarados。Header-right Mega forms provide catch Candy boosts through shared types; detailed counters come from verified raid guides.</p>\n<div class=\"raid-wall\">\n  <div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/377.png\" alt=\"Regirock\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">5★</span><strong>Regirock</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/rock.webp\" alt=\"Rock\"> · Weak <img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> <img class=\"ico\" src=\"assets/icons/grass.webp\" alt=\"Grass\"> <img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> <img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"> <img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10042.png\" data-hub=\"142-Mega\" title=\"Mega Aerodactyl · sharesRock\" alt=\"Mega Aerodactyl\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png\" data-hub=\"248-Mega\" title=\"Mega Tyranitar · sharesRock\" alt=\"Mega Tyranitar\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10075.png\" data-hub=\"719-Mega\" title=\"Mega Diancie · sharesRock\" alt=\"Mega Diancie\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"448-Mega\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png\" alt=\"Mega Lucario\"><strong>Mega Lucario</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Force Palm / Aura Sphere</div></div><div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"383-Primal\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png\" alt=\"Primal Groudon\"><strong>Primal Groudon</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> Mud Shot / Precipice Blades</div></div></div></div>\n  <div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/378.png\" alt=\"Regice\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">5★</span><strong>Regice</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> · Weak <img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> <img class=\"ico\" src=\"assets/icons/fire.png\" alt=\"Fire\"> <img class=\"ico\" src=\"assets/icons/rock.webp\" alt=\"Rock\"> <img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"></div></div><div class=\"raid-mega\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"448-Mega\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png\" alt=\"Mega Lucario\"><strong>Mega Lucario</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Force Palm / Aura Sphere</div></div><div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"257-Mega\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png\" alt=\"Mega Blaziken\"><strong>Mega Blaziken</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fire.png\" alt=\"Fire\"> Fire Spin / Blast Burn</div></div></div></div>\n  <div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/379.png\" alt=\"Registeel\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">5★</span><strong>Registeel</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"> · Weak <img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> <img class=\"ico\" src=\"assets/icons/fire.png\" alt=\"Fire\"> <img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10073.png\" data-hub=\"376-Mega\" title=\"Mega Metagross · sharesSteel\" alt=\"Mega Metagross\"><img src=\"https://db.pokemongohub.net/images/official/full/227_mega_with_bg.webp\" data-hub=\"227-Mega\" title=\"Mega Skarmory · sharesSteel\" alt=\"Mega Skarmory\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10053.png\" data-hub=\"306-Mega\" title=\"Mega Aggron · sharesSteel\" alt=\"Mega Aggron\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10072.png\" data-hub=\"208-Mega\" title=\"Mega Steelix · sharesSteel\" alt=\"Mega Steelix\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10052.png\" data-hub=\"303-Mega\" title=\"Mega Mawile · sharesSteel\" alt=\"Mega Mawile\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png\" data-hub=\"448-Mega\" title=\"Mega Lucario · sharesSteel\" alt=\"Mega Lucario\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"448-Mega\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png\" alt=\"Mega Lucario\"><strong>Mega Lucario</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Force Palm / Aura Sphere</div></div><div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"383-Primal\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png\" alt=\"Primal Groudon\"><strong>Primal Groudon</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> Mud Shot / Precipice Blades</div></div></div></div>\n  <div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" data-hub=\"130-Mega\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10041.png\" alt=\"Mega Gyarados\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">Mega</span><strong>Mega Gyarados</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> <img class=\"ico\" src=\"assets/icons/dark.webp\" alt=\"Dark\"> · Weak <img class=\"ico\" src=\"assets/icons/bug.png\" alt=\"Bug\"> <img class=\"ico\" src=\"assets/icons/electric.webp\" alt=\"Electric\"> <img class=\"ico\" src=\"assets/icons/fairy.webp\" alt=\"Fairy\"> <img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> <img class=\"ico\" src=\"assets/icons/grass.webp\" alt=\"Grass\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png\" data-hub=\"382-Primal\" title=\"Primal Kyogre · sharesWater\" alt=\"Primal Kyogre\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10041.png\" data-hub=\"130-Mega\" title=\"Mega Gyarados · sharesWater / Dark\" alt=\"Mega Gyarados\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10070.png\" data-hub=\"319-Mega\" title=\"Mega Sharpedo · sharesWater / Dark\" alt=\"Mega Sharpedo\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10064.png\" data-hub=\"260-Mega\" title=\"Mega Swampert · sharesWater\" alt=\"Mega Swampert\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png\" data-hub=\"229-Mega\" title=\"Mega Houndoom · sharesDark\" alt=\"Mega Houndoom\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png\" data-hub=\"248-Mega\" title=\"Mega Tyranitar · sharesDark\" alt=\"Mega Tyranitar\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10071.png\" data-hub=\"80-Mega\" title=\"Mega Slowbro · sharesWater\" alt=\"Mega Slowbro\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10036.png\" data-hub=\"9-Mega\" title=\"Mega Blastoise · sharesWater\" alt=\"Mega Blastoise\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"448-Mega\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png\" alt=\"Mega Lucario\"><strong>Mega Lucario</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Force Palm / Aura Sphere</div></div><div class=\"rank-item\"><img class=\"mon-icon\" data-hub=\"254-Mega\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png\" alt=\"Mega Sceptile\"><strong>Mega Sceptile</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/grass.webp\" alt=\"Grass\"> Bullet Seed / Frenzy Plant</div></div></div></div>\n</div>\n<p class=\"muted\">Current lower-tier and Shadow pools follow live sources; this panel prioritizes the new 5-star and Mega bosses.</p>"
   },
   "categories": {
     "mlb-game-day": "MLB Theme Game",

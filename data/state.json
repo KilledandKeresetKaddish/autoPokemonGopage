@@ -1,122 +1,122 @@
 {
-  "lastUpdated": "2026-08-17T17:34:48Z",
+  "lastUpdated": "2026-08-26T12:33:13Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-08-17T17:10:44Z",
-      "lastChecked": "2026-08-17T17:34:48Z",
+      "lastFetch": "2026-08-26T12:16:07Z",
+      "lastChecked": "2026-08-26T12:33:13Z",
       "status": "ok",
-      "bytes": 44309,
-      "sha256": "e54797116556ddbe",
-      "note": "刷新成功且 hash 变化；已用于本轮日历更新与新增活动核对。"
+      "bytes": 49778,
+      "sha256": "66f3936eccbb7cca",
+      "note": "刷新成功且 hash 变化；新增 9 月与 10 月初已公布活动。"
     },
     "raids": {
-      "lastFetch": "2026-08-17T17:00:26Z",
-      "lastChecked": "2026-08-17T17:34:48Z",
+      "lastFetch": "2026-08-26T12:16:07Z",
+      "lastChecked": "2026-08-26T12:33:13Z",
       "status": "ok",
-      "bytes": 15921,
-      "sha256": "aa6b8a4afb24e36a",
-      "note": "刷新成功且 hash 变化；当前团战与对应排行面板已复核。"
+      "bytes": 11016,
+      "sha256": "a153223d721e38b9",
+      "note": "刷新成功且 hash 变化；实时池仍显示前一轮，未来轮换以已核验月度公告为准。"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-08-17T17:34:48Z",
+      "lastChecked": "2026-08-26T12:33:13Z",
       "status": "skipped",
       "bytes": 29466,
       "sha256": "bf0d68f3851420d0",
-      "note": "本轮与蛋池无关，按相关性跳过刷新并保留既有缓存。"
+      "note": "本轮无需蛋池批量数据，按相关性跳过。"
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-08-17T17:34:48Z",
+      "lastChecked": "2026-08-26T12:33:13Z",
       "status": "skipped",
       "bytes": 70308,
       "sha256": "02025eab72ec1451",
-      "note": "本轮未需调查池批量数据，按相关性跳过刷新并保留既有缓存；十周年调查由活动详情来源确认。"
+      "note": "本轮无需调查池批量数据，按相关性跳过。"
     },
     "gamemaster": {
-      "lastFetch": "2026-08-17T17:07:58Z",
-      "lastChecked": "2026-08-17T17:34:48Z",
+      "lastFetch": "2026-08-26T12:16:37Z",
+      "lastChecked": "2026-08-26T12:33:13Z",
       "status": "ok",
-      "bytes": 927622,
-      "sha256": "587d793b298e5712",
-      "note": "刷新成功且 hash 变化；用于属性、招式与稳定事实核验。"
+      "bytes": 929525,
+      "sha256": "faf222602c84eb99",
+      "note": "刷新成功且 hash 变化；用于稳定事实核验。"
     },
     "tiers-attackers": {
-      "lastFetch": "2026-08-17T17:00:43Z",
-      "lastChecked": "2026-08-17T17:34:48Z",
+      "lastFetch": "2026-08-26T12:16:24Z",
+      "lastChecked": "2026-08-26T12:33:13Z",
       "status": "ok",
       "bytes": 36617,
       "sha256": "5de33f8bdc142453",
-      "note": "刷新成功且 hash 未变化；保留此前已验证的攻手面板。"
+      "note": "刷新成功且 hash 未变化；保留已验证攻手面板。"
     },
     "tiers-defenders": {
-      "lastFetch": "2026-08-17T17:00:49Z",
-      "lastChecked": "2026-08-17T17:34:48Z",
+      "lastFetch": "2026-08-26T12:16:27Z",
+      "lastChecked": "2026-08-26T12:33:13Z",
       "status": "ok",
-      "bytes": 40381,
-      "sha256": "eee81da5bf60c01c",
-      "note": "刷新成功且 hash 未变化；保留此前已验证的防守面板。"
+      "bytes": 41842,
+      "sha256": "b4f1078a778f63f0",
+      "note": "刷新成功且 hash 变化；已复核并保留来源结构一致的面板。"
     },
     "tiers-pokebase": {
-      "lastFetch": "2026-08-17T17:00:53Z",
-      "lastChecked": "2026-08-17T17:34:48Z",
+      "lastFetch": "2026-08-26T12:16:37Z",
+      "lastChecked": "2026-08-26T12:33:13Z",
       "status": "ok",
-      "bytes": 121861,
-      "sha256": "ba0797cf64e24aec",
-      "note": "刷新成功且 hash 变化；已作为排行交叉参考。"
+      "bytes": 218802,
+      "sha256": "137893c402526a22",
+      "note": "刷新成功且 hash 变化；作为排行交叉参考。"
     },
     "events-hub": {
-      "lastFetch": "2026-08-17T17:10:45Z",
-      "lastChecked": "2026-08-17T17:34:48Z",
+      "lastFetch": "2026-08-26T12:16:10Z",
+      "lastChecked": "2026-08-26T12:33:13Z",
       "status": "ok",
-      "bytes": 29909,
-      "sha256": "5275be0bbeb92378",
-      "note": "刷新成功且 hash 变化；用于活动、月度轮换及特别超级团战池复核。"
+      "bytes": 29316,
+      "sha256": "780dc633ccf81d23",
+      "note": "刷新成功且 hash 变化；已打开并解析 9 月月度活动文章。"
     },
     "events-pokebase": {
-      "lastFetch": "2026-08-17T17:00:37Z",
-      "lastChecked": "2026-08-17T17:34:48Z",
+      "lastFetch": "2026-08-26T12:16:19Z",
+      "lastChecked": "2026-08-26T12:33:13Z",
       "status": "ok",
-      "bytes": 30742,
-      "sha256": "baa0c1033984ffec",
+      "bytes": 28792,
+      "sha256": "93a4473ebb11c201",
       "note": "刷新成功且 hash 变化；用于活动交叉核对。"
     },
     "events-official": {
-      "lastFetch": "2026-08-17T17:10:45Z",
-      "lastChecked": "2026-08-17T17:34:48Z",
+      "lastFetch": "2026-08-26T12:16:22Z",
+      "lastChecked": "2026-08-26T12:33:13Z",
       "status": "ok",
-      "bytes": 9779,
-      "sha256": "7e7c7d7f1fbe7129",
-      "note": "刷新成功且 hash 变化；用于官方活动与地区活动核对。"
+      "bytes": 9820,
+      "sha256": "b42fe392f7fb0430",
+      "note": "刷新成功且 hash 变化；确认暮光小径与 9 月 GO Pass 官方页面。"
     }
   },
   "discovery": {
-    "lastChecked": "2026-08-17T17:34:48Z",
+    "lastChecked": "2026-08-26T12:33:13Z",
     "status": "ok",
-    "note": "新活动扫描发现十周年超梦调查及官方线索；经 LeekDuck、Hub 与官方详情确认后纳入。"
+    "note": "新活动扫描与可信来源搜索完成；新增已公布的 9 月活动、团战时刻、聚焦时刻与轮换。未将缺少主角详情的占位档期虚构为完整活动。"
   },
   "contentStatus": {
-    "checkedAt": "2026-08-17T17:34:48Z",
+    "checkedAt": "2026-08-26T12:33:13Z",
     "status": "validated",
-    "note": "日历共 139 条事件，其中长期活动 17 条、高亮 18 条；保留本月与下月，精选 ID 全部有效。轮换为 5★ 16 段、超级 24 段、Max 7 段；中英文事件、轮换及五个富文本区域保持完整同构。"
+    "note": "日历共 167 条事件；轮换更新为 9 月并覆盖至 10 月 6 日，5★ 20 段、超级 30 段、Max 5 段；中英文同构。"
   },
   "validation": {
-    "checkedAt": "2026-08-17T17:35:41Z",
+    "checkedAt": "2026-08-26T12:33:13Z",
     "status": "passed",
-    "note": "最终发布门禁按顺序执行：preflight exit 0（仅两条既有超长 chip 警告）；validate exit 0。"
+    "note": "preflight exit 0（仅既有与一条新增长 chip 警告）；validate exit 0。"
   },
   "notes": {
     "source_health": {
-      "fact": "所有本轮命名来源刷新均成功；events、raids、gamemaster、tiers-pokebase 及三项活动来源 hash 变化，攻手与防守排行来源未变化；eggs、research 按相关性跳过。多项 zh 查询未返回可用简体中文名。",
-      "decision": "无来源中断或回退需求；无可用新译名时复用已核验的规范中文／超级进化 roster 名称，英文保持来源原名。"
+      "fact": "所有本轮命名来源刷新成功；除攻手来源外均有相关 hash 变化。LeekDuck 暮光小径详情一次返回 429，但官方与 Hub 页面可正常读取。",
+      "decision": "使用官方、Hub 与可读的 LeekDuck 内容合并；没有因单一来源限流删除活动。"
     },
     "content_decision": {
-      "fact": "新增十周年完美超梦调查、吉隆坡 KLCC 线下活动、月光下起舞地区活动及 9 月 1—6 日每日超级团战抽屉；补充超级进化启程、超级进化终章与 8 月 31 日抽屉。",
-      "decision": "超级进化启程及 GO Fest 2026 超级进化终章在 8 月 31 日至 9 月 6 日采用逐日全天抽屉与精确匹配的超级轮换段；普通超级暴鲤龙从 9 月 7 日开始，避免与特别活动池冲突。无日期窗口的 Explorer Gadget 分阶段功能发布不作为日历活动。"
+      "fact": "5★、超级与 Max 轮换已公布至 2026-10-06；多项 9 月主题活动只公布日期，尚无主角或完整奖励。",
+      "decision": "完整写入已确认的轮换、GO Pass、赛季与可核实活动；未发明尚未公布的社区日主角、超级超级团战日主角或神秘活动内容。"
     },
     "operator_note": {
-      "fact": "管理员明确要求为超级进化启程与 GO Fest 2026 超级进化终章提供每日超级角标，全面补充活动与地区内容，并精选 GO Fest。",
-      "decision": "已新增对应每日 raid-battles 抽屉和轮换段，补充父活动与经核验的吉隆坡、月光地区活动，并精选 pokemon-go-fest-2026-mega-finale；保留 pokemon-go-fest-2026-global。未请求或尝试任何受保护文件变更。"
+      "fact": "管理员要求更新新活动与未来轮换，指出内容已公布至 10 月 6 日。",
+      "decision": "已更新日历、9 月轮换、中文看点/推荐/当前团战及英文覆盖层；Spot Atlas、精选列表与 Mega 累积 roster 无明确变更请求，保持不变。"
     }
   }
 }

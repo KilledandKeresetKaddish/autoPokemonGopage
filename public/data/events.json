@@ -6038,48 +6038,159 @@
       {
         "title": "野外出现",
         "mons": [
-          { "id": 1, "name": "Bulbasaur" },
-          { "id": 4, "name": "Charmander" },
-          { "id": 7, "name": "Squirtle" },
-          { "id": 20, "name": "Raticate" },
-          { "id": 25, "name": "Pikachu" },
-          { "id": 39, "name": "Jigglypuff" },
-          { "id": 52, "name": "Meowth" },
-          { "id": 54, "name": "Psyduck" },
-          { "id": 79, "name": "Slowpoke" },
-          { "id": 88, "name": "Grimer" },
-          { "id": 133, "name": "Eevee" },
-          { "id": 143, "name": "Snorlax" },
-          { "id": 147, "name": "Dratini" },
-          { "id": 152, "name": "Chikorita" },
-          { "id": 155, "name": "Cyndaquil" },
-          { "id": 158, "name": "Totodile" },
-          { "id": 176, "name": "Togetic" },
-          { "id": 252, "name": "Treecko" },
-          { "id": 255, "name": "Torchic" },
-          { "id": 258, "name": "Mudkip" },
-          { "id": 280, "name": "Ralts" },
-          { "id": 374, "name": "Beldum" },
-          { "id": 427, "name": "Buneary" },
-          { "id": 443, "name": "Gible" }
+          {
+            "id": 1,
+            "name": "Bulbasaur"
+          },
+          {
+            "id": 4,
+            "name": "Charmander"
+          },
+          {
+            "id": 7,
+            "name": "Squirtle"
+          },
+          {
+            "id": 20,
+            "name": "Raticate"
+          },
+          {
+            "id": 25,
+            "name": "Pikachu"
+          },
+          {
+            "id": 39,
+            "name": "Jigglypuff"
+          },
+          {
+            "id": 52,
+            "name": "Meowth"
+          },
+          {
+            "id": 54,
+            "name": "Psyduck"
+          },
+          {
+            "id": 79,
+            "name": "Slowpoke"
+          },
+          {
+            "id": 88,
+            "name": "Grimer"
+          },
+          {
+            "id": 133,
+            "name": "Eevee"
+          },
+          {
+            "id": 143,
+            "name": "Snorlax"
+          },
+          {
+            "id": 147,
+            "name": "Dratini"
+          },
+          {
+            "id": 152,
+            "name": "Chikorita"
+          },
+          {
+            "id": 155,
+            "name": "Cyndaquil"
+          },
+          {
+            "id": 158,
+            "name": "Totodile"
+          },
+          {
+            "id": 176,
+            "name": "Togetic"
+          },
+          {
+            "id": 252,
+            "name": "Treecko"
+          },
+          {
+            "id": 255,
+            "name": "Torchic"
+          },
+          {
+            "id": 258,
+            "name": "Mudkip"
+          },
+          {
+            "id": 280,
+            "name": "Ralts"
+          },
+          {
+            "id": 374,
+            "name": "Beldum"
+          },
+          {
+            "id": 427,
+            "name": "Buneary"
+          },
+          {
+            "id": 443,
+            "name": "Gible"
+          }
         ]
       },
       {
         "title": "诱饵模组出现",
         "mons": [
-          { "id": 94, "name": "Gengar" },
-          { "id": 130, "name": "Gyarados" },
-          { "id": 181, "name": "Ampharos" },
-          { "id": 248, "name": "Tyranitar" },
-          { "id": 282, "name": "Gardevoir" },
-          { "id": 334, "name": "Altaria" },
-          { "id": 445, "name": "Garchomp" },
-          { "id": 722, "name": "Rowlet" },
-          { "id": 725, "name": "Litten" },
-          { "id": 728, "name": "Popplio" },
-          { "id": 810, "name": "Grookey" },
-          { "id": 813, "name": "Scorbunny" },
-          { "id": 816, "name": "Sobble" }
+          {
+            "id": 94,
+            "name": "Gengar"
+          },
+          {
+            "id": 130,
+            "name": "Gyarados"
+          },
+          {
+            "id": 181,
+            "name": "Ampharos"
+          },
+          {
+            "id": 248,
+            "name": "Tyranitar"
+          },
+          {
+            "id": 282,
+            "name": "Gardevoir"
+          },
+          {
+            "id": 334,
+            "name": "Altaria"
+          },
+          {
+            "id": 445,
+            "name": "Garchomp"
+          },
+          {
+            "id": 722,
+            "name": "Rowlet"
+          },
+          {
+            "id": 725,
+            "name": "Litten"
+          },
+          {
+            "id": 728,
+            "name": "Popplio"
+          },
+          {
+            "id": 810,
+            "name": "Grookey"
+          },
+          {
+            "id": 813,
+            "name": "Scorbunny"
+          },
+          {
+            "id": 816,
+            "name": "Sobble"
+          }
         ]
       },
       {
@@ -6095,15 +6206,42 @@
       {
         "title": "其他熏香出现",
         "mons": [
-          { "id": 387, "name": "Turtwig" },
-          { "id": 390, "name": "Chimchar" },
-          { "id": 393, "name": "Piplup" },
-          { "id": 495, "name": "Snivy" },
-          { "id": 498, "name": "Tepig" },
-          { "id": 501, "name": "Oshawott" },
-          { "id": 650, "name": "Chespin" },
-          { "id": 653, "name": "Fennekin" },
-          { "id": 656, "name": "Froakie" }
+          {
+            "id": 387,
+            "name": "Turtwig"
+          },
+          {
+            "id": 390,
+            "name": "Chimchar"
+          },
+          {
+            "id": 393,
+            "name": "Piplup"
+          },
+          {
+            "id": 495,
+            "name": "Snivy"
+          },
+          {
+            "id": 498,
+            "name": "Tepig"
+          },
+          {
+            "id": 501,
+            "name": "Oshawott"
+          },
+          {
+            "id": 650,
+            "name": "Chespin"
+          },
+          {
+            "id": 653,
+            "name": "Fennekin"
+          },
+          {
+            "id": 656,
+            "name": "Froakie"
+          }
         ]
       },
       {
@@ -7044,7 +7182,7 @@
     "name": "超级暴鲤龙现身超级团战",
     "type": "raid-battles",
     "heading": "Raid Battles",
-    "start": "2026-09-07T00:00:00",
+    "start": "2026-09-07T06:00:00",
     "end": "2026-09-08T22:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
     "link": "https://leekduck.com/events/mega-gyarados-in-mega-raids-august-2026/",
@@ -7929,6 +8067,10 @@
       {
         "label": "Hub·秋季日期",
         "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+      },
+      {
+        "label": "Hub·9 月月历",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
       }
     ],
     "bonuses": [
@@ -7954,6 +8096,10 @@
       {
         "label": "Hub·秋季日期",
         "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+      },
+      {
+        "label": "Hub·9 月月历",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
       }
     ],
     "bonuses": [
@@ -7979,6 +8125,10 @@
       {
         "label": "Hub·秋季日期",
         "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+      },
+      {
+        "label": "Hub·9 月月历",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
       }
     ]
   },
@@ -8104,15 +8254,38 @@
     "link": "https://leekduck.com/events/mega-ascension/",
     "summary": "9 月 1 日以超级列阵兵为当日轮换，超级拉帝亚斯与超级拉帝欧斯也可能出现；活动团战替代常规赛季团战。",
     "links": [
-      { "label": "LeekDuck", "url": "https://leekduck.com/events/mega-ascension/" },
-      { "label": "Hub", "url": "https://pokemongohub.net/post/event/mega-ascension/" }
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-ascension/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/mega-ascension/"
+      }
     ],
     "pokemon": [
-      { "id": 870, "name": "超级列阵兵", "sprite": "https://db.pokemongohub.net/images/official/full/870_mega_with_bg.webp", "hub": "870-Mega" },
-      { "id": 380, "name": "超级拉帝亚斯", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10062.png", "hub": "380-Mega" },
-      { "id": 381, "name": "超级拉帝欧斯", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png", "hub": "381-Mega" }
+      {
+        "id": 870,
+        "name": "超级列阵兵",
+        "sprite": "https://db.pokemongohub.net/images/official/full/870_mega_with_bg.webp",
+        "hub": "870-Mega"
+      },
+      {
+        "id": 380,
+        "name": "超级拉帝亚斯",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10062.png",
+        "hub": "380-Mega"
+      },
+      {
+        "id": 381,
+        "name": "超级拉帝欧斯",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png",
+        "hub": "381-Mega"
+      }
     ],
-    "bonuses": [":raid: 活动超级团战捕获的宝可梦有机会带超级进化主题特殊背景"]
+    "bonuses": [
+      ":raid: 活动超级团战捕获的宝可梦有机会带超级进化主题特殊背景"
+    ]
   },
   {
     "id": "raid-battles-20260902",
@@ -8125,15 +8298,38 @@
     "link": "https://leekduck.com/events/mega-ascension/",
     "summary": "9 月 2 日以超级盔甲鸟为当日轮换，超级拉帝亚斯与超级拉帝欧斯也可能出现；活动团战替代常规赛季团战。",
     "links": [
-      { "label": "LeekDuck", "url": "https://leekduck.com/events/mega-ascension/" },
-      { "label": "Hub", "url": "https://pokemongohub.net/post/event/mega-ascension/" }
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-ascension/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/mega-ascension/"
+      }
     ],
     "pokemon": [
-      { "id": 227, "name": "超级盔甲鸟", "sprite": "https://db.pokemongohub.net/images/official/full/227_mega_with_bg.webp", "hub": "227-Mega" },
-      { "id": 380, "name": "超级拉帝亚斯", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10062.png", "hub": "380-Mega" },
-      { "id": 381, "name": "超级拉帝欧斯", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png", "hub": "381-Mega" }
+      {
+        "id": 227,
+        "name": "超级盔甲鸟",
+        "sprite": "https://db.pokemongohub.net/images/official/full/227_mega_with_bg.webp",
+        "hub": "227-Mega"
+      },
+      {
+        "id": 380,
+        "name": "超级拉帝亚斯",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10062.png",
+        "hub": "380-Mega"
+      },
+      {
+        "id": 381,
+        "name": "超级拉帝欧斯",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png",
+        "hub": "381-Mega"
+      }
     ],
-    "bonuses": [":raid: 活动超级团战捕获的宝可梦有机会带超级进化主题特殊背景"]
+    "bonuses": [
+      ":raid: 活动超级团战捕获的宝可梦有机会带超级进化主题特殊背景"
+    ]
   },
   {
     "id": "raid-battles-20260903",
@@ -8146,15 +8342,38 @@
     "link": "https://leekduck.com/events/mega-ascension/",
     "summary": "9 月 3 日以超级 Starmie 为当日轮换，超级拉帝亚斯与超级拉帝欧斯也可能出现；活动团战替代常规赛季团战。",
     "links": [
-      { "label": "LeekDuck", "url": "https://leekduck.com/events/mega-ascension/" },
-      { "label": "Hub", "url": "https://pokemongohub.net/post/event/mega-ascension/" }
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-ascension/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/mega-ascension/"
+      }
     ],
     "pokemon": [
-      { "id": 121, "name": "超级 Starmie", "sprite": "https://db.pokemongohub.net/images/official/full/121_mega_with_bg.webp", "hub": "121-Mega" },
-      { "id": 380, "name": "超级拉帝亚斯", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10062.png", "hub": "380-Mega" },
-      { "id": 381, "name": "超级拉帝欧斯", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png", "hub": "381-Mega" }
+      {
+        "id": 121,
+        "name": "超级 Starmie",
+        "sprite": "https://db.pokemongohub.net/images/official/full/121_mega_with_bg.webp",
+        "hub": "121-Mega"
+      },
+      {
+        "id": 380,
+        "name": "超级拉帝亚斯",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10062.png",
+        "hub": "380-Mega"
+      },
+      {
+        "id": 381,
+        "name": "超级拉帝欧斯",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png",
+        "hub": "381-Mega"
+      }
     ],
-    "bonuses": [":raid: 活动超级团战捕获的宝可梦有机会带超级进化主题特殊背景"]
+    "bonuses": [
+      ":raid: 活动超级团战捕获的宝可梦有机会带超级进化主题特殊背景"
+    ]
   },
   {
     "id": "raid-battles-20260904",
@@ -8167,16 +8386,44 @@
     "link": "https://leekduck.com/events/mega-ascension/",
     "summary": "9 月 4 日以超级雷丘 X 与超级雷丘 Y 为当日轮换，超级拉帝亚斯与超级拉帝欧斯也可能出现；活动团战替代常规赛季团战。",
     "links": [
-      { "label": "LeekDuck", "url": "https://leekduck.com/events/mega-ascension/" },
-      { "label": "Hub", "url": "https://pokemongohub.net/post/event/mega-ascension/" }
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-ascension/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/mega-ascension/"
+      }
     ],
     "pokemon": [
-      { "id": 26, "name": "超级雷丘 X", "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp", "hub": "26-Mega_X" },
-      { "id": 26, "name": "超级雷丘 Y", "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp", "hub": "26-Mega_Y" },
-      { "id": 380, "name": "超级拉帝亚斯", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10062.png", "hub": "380-Mega" },
-      { "id": 381, "name": "超级拉帝欧斯", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png", "hub": "381-Mega" }
+      {
+        "id": 26,
+        "name": "超级雷丘 X",
+        "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
+        "hub": "26-Mega_X"
+      },
+      {
+        "id": 26,
+        "name": "超级雷丘 Y",
+        "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp",
+        "hub": "26-Mega_Y"
+      },
+      {
+        "id": 380,
+        "name": "超级拉帝亚斯",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10062.png",
+        "hub": "380-Mega"
+      },
+      {
+        "id": 381,
+        "name": "超级拉帝欧斯",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png",
+        "hub": "381-Mega"
+      }
     ],
-    "bonuses": [":raid: 活动超级团战捕获的宝可梦有机会带超级进化主题特殊背景"]
+    "bonuses": [
+      ":raid: 活动超级团战捕获的宝可梦有机会带超级进化主题特殊背景"
+    ]
   },
   {
     "id": "raid-battles-20260905",
@@ -8189,33 +8436,124 @@
     "link": "https://leekduck.com/events/pokemon-go-fest-2026-mega-finale/",
     "summary": "9 月 5 日四个栖息地在 10:00–18:00 每小时轮换；本抽屉汇总当天全部 15 种栖息地超级 Boss，并包含只在部分道馆出现的超级超梦 X。",
     "links": [
-      { "label": "LeekDuck", "url": "https://leekduck.com/events/pokemon-go-fest-2026-mega-finale/" },
-      { "label": "Hub", "url": "https://pokemongohub.net/post/event/pokemon-go-fest-2026-mega-finale/" }
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-go-fest-2026-mega-finale/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-fest-2026-mega-finale/"
+      }
     ],
     "pokemon": [
-      { "id": 15, "name": "超级大针蜂", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png", "hub": "15-Mega" },
-      { "id": 71, "name": "超级大食花", "sprite": "https://db.pokemongohub.net/images/official/full/071_mega_with_bg.webp", "hub": "71-Mega" },
-      { "id": 127, "name": "超级凯罗斯", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10040.png", "hub": "127-Mega" },
-      { "id": 460, "name": "超级暴雪王", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10060.png", "hub": "460-Mega" },
-      { "id": 65, "name": "超级胡地", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10037.png", "hub": "65-Mega" },
-      { "id": 80, "name": "超级呆壳兽", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10071.png", "hub": "80-Mega" },
-      { "id": 121, "name": "超级 Starmie", "sprite": "https://db.pokemongohub.net/images/official/full/121_mega_with_bg.webp", "hub": "121-Mega" },
-      { "id": 308, "name": "超级恰雷姆", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10054.png", "hub": "308-Mega" },
-      { "id": 94, "name": "超级耿鬼", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png", "hub": "94-Mega" },
-      { "id": 229, "name": "超级黑鲁加", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png", "hub": "229-Mega" },
-      { "id": 354, "name": "超级诅咒娃娃", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10056.png", "hub": "354-Mega" },
-      { "id": 687, "name": "超级乌贼王", "sprite": "https://db.pokemongohub.net/images/official/full/687_mega_with_bg.webp", "hub": "687-Mega" },
-      { "id": 26, "name": "超级雷丘 X", "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp", "hub": "26-Mega_X" },
-      { "id": 181, "name": "超级电龙", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10045.png", "hub": "181-Mega" },
-      { "id": 310, "name": "超级雷电兽", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10055.png", "hub": "310-Mega" },
-      { "id": 150, "name": "超级超梦 X", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png", "hub": "150-Mega_X" }
+      {
+        "id": 15,
+        "name": "超级大针蜂",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png",
+        "hub": "15-Mega"
+      },
+      {
+        "id": 71,
+        "name": "超级大食花",
+        "sprite": "https://db.pokemongohub.net/images/official/full/071_mega_with_bg.webp",
+        "hub": "71-Mega"
+      },
+      {
+        "id": 127,
+        "name": "超级凯罗斯",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10040.png",
+        "hub": "127-Mega"
+      },
+      {
+        "id": 460,
+        "name": "超级暴雪王",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10060.png",
+        "hub": "460-Mega"
+      },
+      {
+        "id": 65,
+        "name": "超级胡地",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10037.png",
+        "hub": "65-Mega"
+      },
+      {
+        "id": 80,
+        "name": "超级呆壳兽",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10071.png",
+        "hub": "80-Mega"
+      },
+      {
+        "id": 121,
+        "name": "超级 Starmie",
+        "sprite": "https://db.pokemongohub.net/images/official/full/121_mega_with_bg.webp",
+        "hub": "121-Mega"
+      },
+      {
+        "id": 308,
+        "name": "超级恰雷姆",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10054.png",
+        "hub": "308-Mega"
+      },
+      {
+        "id": 94,
+        "name": "超级耿鬼",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png",
+        "hub": "94-Mega"
+      },
+      {
+        "id": 229,
+        "name": "超级黑鲁加",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png",
+        "hub": "229-Mega"
+      },
+      {
+        "id": 354,
+        "name": "超级诅咒娃娃",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10056.png",
+        "hub": "354-Mega"
+      },
+      {
+        "id": 687,
+        "name": "超级乌贼王",
+        "sprite": "https://db.pokemongohub.net/images/official/full/687_mega_with_bg.webp",
+        "hub": "687-Mega"
+      },
+      {
+        "id": 26,
+        "name": "超级雷丘 X",
+        "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
+        "hub": "26-Mega_X"
+      },
+      {
+        "id": 181,
+        "name": "超级电龙",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10045.png",
+        "hub": "181-Mega"
+      },
+      {
+        "id": 310,
+        "name": "超级雷电兽",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10055.png",
+        "hub": "310-Mega"
+      },
+      {
+        "id": 150,
+        "name": "超级超梦 X",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png",
+        "hub": "150-Mega_X"
+      }
     ],
     "bonuses": [
       ":raid: 远程团战不限次数",
       "所有已超级进化宝可梦获得额外 CP 提升",
       ":raid: 捕获的宝可梦有机会带超级进化主题特殊背景"
     ],
-    "sections": [{ "title": "轮换说明", "body": "完整数组是当天四个栖息地团战池的并集；普通道馆随当前栖息地轮换，超级超梦 X 仅在部分道馆出现。" }]
+    "sections": [
+      {
+        "title": "轮换说明",
+        "body": "完整数组是当天四个栖息地团战池的并集；普通道馆随当前栖息地轮换，超级超梦 X 仅在部分道馆出现。"
+      }
+    ]
   },
   {
     "id": "raid-battles-20260906",
@@ -8228,34 +8566,130 @@
     "link": "https://leekduck.com/events/pokemon-go-fest-2026-mega-finale/",
     "summary": "9 月 6 日四个栖息地在 10:00–18:00 每小时轮换；本抽屉汇总当天全部 16 种栖息地超级 Boss，并包含只在部分道馆出现的超级超梦 Y。",
     "links": [
-      { "label": "LeekDuck", "url": "https://leekduck.com/events/pokemon-go-fest-2026-mega-finale/" },
-      { "label": "Hub", "url": "https://pokemongohub.net/post/event/pokemon-go-fest-2026-mega-finale/" }
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-go-fest-2026-mega-finale/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-fest-2026-mega-finale/"
+      }
     ],
     "pokemon": [
-      { "id": 208, "name": "超级大钢蛇", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10072.png", "hub": "208-Mega" },
-      { "id": 227, "name": "超级盔甲鸟", "sprite": "https://db.pokemongohub.net/images/official/full/227_mega_with_bg.webp", "hub": "227-Mega" },
-      { "id": 306, "name": "超级波士可多拉", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10053.png", "hub": "306-Mega" },
-      { "id": 362, "name": "超级冰鬼护", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10074.png", "hub": "362-Mega" },
-      { "id": 319, "name": "超级巨牙鲨", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10070.png", "hub": "319-Mega" },
-      { "id": 323, "name": "超级喷火驼", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10087.png", "hub": "323-Mega" },
-      { "id": 428, "name": "超级长耳兔", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10088.png", "hub": "428-Mega" },
-      { "id": 870, "name": "超级列阵兵", "sprite": "https://db.pokemongohub.net/images/official/full/870_mega_with_bg.webp", "hub": "870-Mega" },
-      { "id": 130, "name": "超级暴鲤龙", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10041.png", "hub": "130-Mega" },
-      { "id": 142, "name": "超级化石翼龙", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10042.png", "hub": "142-Mega" },
-      { "id": 149, "name": "超级快龙", "sprite": "https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp", "hub": "149-Mega" },
-      { "id": 334, "name": "超级七夕青鸟", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10067.png", "hub": "334-Mega" },
-      { "id": 26, "name": "超级雷丘 Y", "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp", "hub": "26-Mega_Y" },
-      { "id": 302, "name": "超级勾魂眼", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10066.png", "hub": "302-Mega" },
-      { "id": 303, "name": "超级大嘴娃", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10052.png", "hub": "303-Mega" },
-      { "id": 531, "name": "超级差不多娃娃", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10069.png", "hub": "531-Mega" },
-      { "id": 150, "name": "超级超梦 Y", "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png", "hub": "150-Mega_Y" }
+      {
+        "id": 208,
+        "name": "超级大钢蛇",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10072.png",
+        "hub": "208-Mega"
+      },
+      {
+        "id": 227,
+        "name": "超级盔甲鸟",
+        "sprite": "https://db.pokemongohub.net/images/official/full/227_mega_with_bg.webp",
+        "hub": "227-Mega"
+      },
+      {
+        "id": 306,
+        "name": "超级波士可多拉",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10053.png",
+        "hub": "306-Mega"
+      },
+      {
+        "id": 362,
+        "name": "超级冰鬼护",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10074.png",
+        "hub": "362-Mega"
+      },
+      {
+        "id": 319,
+        "name": "超级巨牙鲨",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10070.png",
+        "hub": "319-Mega"
+      },
+      {
+        "id": 323,
+        "name": "超级喷火驼",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10087.png",
+        "hub": "323-Mega"
+      },
+      {
+        "id": 428,
+        "name": "超级长耳兔",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10088.png",
+        "hub": "428-Mega"
+      },
+      {
+        "id": 870,
+        "name": "超级列阵兵",
+        "sprite": "https://db.pokemongohub.net/images/official/full/870_mega_with_bg.webp",
+        "hub": "870-Mega"
+      },
+      {
+        "id": 130,
+        "name": "超级暴鲤龙",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10041.png",
+        "hub": "130-Mega"
+      },
+      {
+        "id": 142,
+        "name": "超级化石翼龙",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10042.png",
+        "hub": "142-Mega"
+      },
+      {
+        "id": 149,
+        "name": "超级快龙",
+        "sprite": "https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp",
+        "hub": "149-Mega"
+      },
+      {
+        "id": 334,
+        "name": "超级七夕青鸟",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10067.png",
+        "hub": "334-Mega"
+      },
+      {
+        "id": 26,
+        "name": "超级雷丘 Y",
+        "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp",
+        "hub": "26-Mega_Y"
+      },
+      {
+        "id": 302,
+        "name": "超级勾魂眼",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10066.png",
+        "hub": "302-Mega"
+      },
+      {
+        "id": 303,
+        "name": "超级大嘴娃",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10052.png",
+        "hub": "303-Mega"
+      },
+      {
+        "id": 531,
+        "name": "超级差不多娃娃",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10069.png",
+        "hub": "531-Mega"
+      },
+      {
+        "id": 150,
+        "name": "超级超梦 Y",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png",
+        "hub": "150-Mega_Y"
+      }
     ],
     "bonuses": [
       ":raid: 远程团战不限次数",
       "所有已超级进化宝可梦获得额外 CP 提升",
       ":raid: 捕获的宝可梦有机会带超级进化主题特殊背景"
     ],
-    "sections": [{ "title": "轮换说明", "body": "完整数组是当天四个栖息地团战池的并集；普通道馆随当前栖息地轮换，超级超梦 Y 仅在部分道馆出现。" }]
+    "sections": [
+      {
+        "title": "轮换说明",
+        "body": "完整数组是当天四个栖息地团战池的并集；普通道馆随当前栖息地轮换，超级超梦 Y 仅在部分道馆出现。"
+      }
+    ]
   },
   {
     "id": "10th-anniversary-celebration",
@@ -8268,18 +8702,35 @@
     "link": "https://leekduck.com/events/10th-anniversary-celebration/",
     "summary": "全球训练家可领取免费的单页限时调查；最终奖励为满个体值、带特殊背景且已解锁超级超梦 Y 等级 3 的超梦。",
     "links": [
-      { "label": "LeekDuck", "url": "https://leekduck.com/events/10th-anniversary-celebration/" },
-      { "label": "Hub", "url": "https://pokemongohub.net/post/event/10th-anniversary-celebration-timed-research-guaranteed-hundo-mewtwo/" },
-      { "label": "官方", "url": "https://pokemongo.com/news/10th-anniversary-celebration" }
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/10th-anniversary-celebration/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/10th-anniversary-celebration-timed-research-guaranteed-hundo-mewtwo/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/10th-anniversary-celebration"
+      }
     ],
-    "pokemon": [{ "id": 150, "name": "超梦" }],
+    "pokemon": [
+      {
+        "id": 150,
+        "name": "超梦"
+      }
+    ],
     "bonuses": [
       ":pokeball: 捕捉 10 只宝可梦可获 1 个大师球",
       ":candy: 强化宝可梦 10 次可获 500 点超级超梦 Y 能量",
       "最终超梦带特殊背景并解锁超级等级 3"
     ],
     "sections": [
-      { "title": "限时调查", "body": "调查与奖励须在 9 月 6 日 23 时 59 分前完成并领取；曾参加 7 月 9 日时代广场活动的训练家会收到不同个体与奖励。" }
+      {
+        "title": "限时调查",
+        "body": "调查与奖励须在 9 月 6 日 23 时 59 分前完成并领取；曾参加 7 月 9 日时代广场活动的训练家会收到不同个体与奖励。"
+      }
     ],
     "longTerm": true
   },
@@ -8294,10 +8745,21 @@
     "link": "https://pokemongo.com/news/event-kuala-lumpur-30th-anniversary-2026",
     "summary": "宝可梦 30 周年巡回首站在马来西亚吉隆坡 KLCC 公园免费举行，首次推出青绿色 PokéXciting 皮卡丘，并开放本地与跨地区两条集章路线。",
     "links": [
-      { "label": "官方", "url": "https://pokemongo.com/news/event-kuala-lumpur-30th-anniversary-2026" },
-      { "label": "Hub", "url": "https://pokemongohub.net/post/event/pokexciting-kuala-lumpur-2026/" }
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/event-kuala-lumpur-30th-anniversary-2026"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokexciting-kuala-lumpur-2026/"
+      }
     ],
-    "pokemon": [{ "id": 25, "name": "皮卡丘" }],
+    "pokemon": [
+      {
+        "id": 25,
+        "name": "皮卡丘"
+      }
+    ],
     "bonuses": [
       ":xp: 转动宝可补给站获得经验 ×2",
       ":stardust: 交换所需星尘减半",
@@ -8305,8 +8767,18 @@
       "Nice、Great 与 Excellent 投球的捕捉经验提升"
     ],
     "sections": [
-      { "title": "集章与调查", "items": ["KLCC 公园内有本地五枚印章路线与跨地区印章点", "开放两条免费限时调查与活动主题实地调查", "集齐本地五枚印章可遇带吉隆坡地点背景的青绿色 PokéXciting 皮卡丘"] },
-      { "title": "超极巨化对战", "body": "活动期间出现超极巨化妙蛙花、超极巨化喷火龙与超极巨化水箭龟。" }
+      {
+        "title": "集章与调查",
+        "items": [
+          "KLCC 公园内有本地五枚印章路线与跨地区印章点",
+          "开放两条免费限时调查与活动主题实地调查",
+          "集齐本地五枚印章可遇带吉隆坡地点背景的青绿色 PokéXciting 皮卡丘"
+        ]
+      },
+      {
+        "title": "超极巨化对战",
+        "body": "活动期间出现超极巨化妙蛙花、超极巨化喷火龙与超极巨化水箭龟。"
+      }
     ]
   },
   {
@@ -8320,14 +8792,906 @@
     "link": "https://pokemongo.com/news/dancing-in-the-moonlight-2026",
     "summary": "仅限日本、韩国、台湾、印度尼西亚、新加坡、香港与马来西亚参加；Clefairy 每天会在多个五分钟时段大量出现，并开放两段连续限时调查。",
     "links": [
-      { "label": "官方", "url": "https://pokemongo.com/news/dancing-in-the-moonlight-2026" },
-      { "label": "Hub", "url": "https://pokemongohub.net/post/event/dancing-in-the-moonlight-2026/" }
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/dancing-in-the-moonlight-2026"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/dancing-in-the-moonlight-2026/"
+      }
     ],
-    "pokemon": [{ "id": 35, "name": "Clefairy", "shiny": true }],
-    "bonuses": [":xp: 捕捉经验 ×2"],
+    "pokemon": [
+      {
+        "id": 35,
+        "name": "Clefairy",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":xp: 捕捉经验 ×2"
+    ],
     "sections": [
-      { "title": "五分钟大量出现时段", "items": ["每天 13 时与 19 时：Clefairy 大量出现", "每天 12 时、13 时、19 时与 20 时：月光时刻出现带特殊背景的 Clefairy 等宝可梦"] },
-      { "title": "连续限时调查", "body": "须先完成第一段调查才能进入第二段；第一段于 9 月 29 日到期，第二段须在领取后三天内完成并领取奖励。" }
+      {
+        "title": "五分钟大量出现时段",
+        "items": [
+          "每天 13 时与 19 时：Clefairy 大量出现",
+          "每天 12 时、13 时、19 时与 20 时：月光时刻出现带特殊背景的 Clefairy 等宝可梦"
+        ]
+      },
+      {
+        "title": "连续限时调查",
+        "body": "须先完成第一段调查才能进入第二段；第一段于 9 月 29 日到期，第二段须在领取后三天内完成并领取奖励。"
+      }
+    ]
+  },
+  {
+    "id": "max-mondays-2026-09-07",
+    "name": "Max周一·拉鲁拉丝",
+    "type": "max-mondays",
+    "heading": "Max Mondays",
+    "start": "2026-09-07T06:00:00",
+    "end": "2026-09-07T21:00:00",
+    "link": "https://leekduck.com/events/max-mondays-2026-09-07/",
+    "summary": "当天 6–21 时由指定极巨化宝可梦占领能量点；18–19 时为 Max 周一重点时段。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-mondays-2026-09-07/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 280,
+        "name": "拉鲁拉丝",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":xl-candy: 现场完成 Max 对战可获 1 颗神奇糖果 XL"
+    ]
+  },
+  {
+    "id": "mega-beedrill-in-mega-raids-september-2026",
+    "name": "超级大针蜂现身超级团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-09-08T06:00:00",
+    "end": "2026-09-15T22:00:00",
+    "link": "https://leekduck.com/events/mega-beedrill-in-mega-raids-september-2026/",
+    "summary": "该超级进化 Boss 在公布日期内现身超级团战；击败后可取得对应超级能量。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-beedrill-in-mega-raids-september-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/mega-beedrill-raid-guide/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 15,
+        "name": "超级大针蜂",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png",
+        "hub": "15-Mega"
+      }
+    ]
+  },
+  {
+    "id": "go-pass-september-2026",
+    "name": "GO Pass：9 月",
+    "type": "go-pass",
+    "heading": "GO Pass",
+    "start": "2026-09-08T10:00:00",
+    "end": "2026-10-06T10:00:00",
+    "link": "https://leekduck.com/events/go-pass-september-2026/",
+    "summary": "9 月 GO Pass 以拉帝欧斯为主奖励；免费版自动领取，豪华版提供额外奖励与更快进度。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/go-pass-september-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-go-pass/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/go-pass-september-2026"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 381,
+        "name": "拉帝欧斯",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":candy: 交换宝可梦额外获得 1 颗糖果",
+      ":xl-candy: 31 级以上交换必得 1 颗糖果 XL",
+      ":incense: 每日探险熏香持续时间 ×2",
+      ":xp: 孵蛋经验与星尘增加"
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "mega-squads-2026",
+    "name": "超级小队",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-09-08T10:00:00",
+    "end": "2026-09-14T20:00:00",
+    "link": "https://leekduck.com/events/mega-squads-2026/",
+    "summary": "超级小队活动于 9 月 8–14 日举行；完整玩法与加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-squads-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ]
+  },
+  {
+    "id": "season-24-twilight-trails",
+    "name": "暮光小径赛季",
+    "type": "season",
+    "heading": "Season",
+    "start": "2026-09-08T10:00:00",
+    "end": "2026-12-01T10:00:00",
+    "link": "https://leekduck.com/events/season-24-twilight-trails/",
+    "summary": "暮光小径赛季引入每日探索主题：周一 Max、周二选秀会、周三团战、周四对战与聚焦、周五友谊、周日风景探索。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/season-24-twilight-trails/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/twilight-trails-season/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/seasons--twilight-trails"
+      }
+    ],
+    "bonuses": [
+      ":xl-candy: 现场 Max 对战与现场团战各可获得 1 颗神奇糖果 XL",
+      ":trading: 周五交换所需星尘减少 20%，31 级以上交换保证 2 颗糖果 XL",
+      ":incense: 周日每日探险熏香持续时间 ×2"
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "shadow-thundurus-incarnate-forme-in-shadow-raids-september-2026",
+    "name": "暗影雷电云（化身形态）现身暗影团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-09-09T06:00:00",
+    "end": "2026-10-06T22:00:00",
+    "link": "https://leekduck.com/events/shadow-thundurus-incarnate-forme-in-shadow-raids-september-2026/",
+    "summary": "活动日期范围内的每个周末，暗影雷电云（化身形态）现身 5★暗影团战；平日不开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/shadow-thundurus-incarnate-forme-in-shadow-raids-september-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 642,
+        "name": "暗影雷电云（化身形态）",
+        "shiny": true,
+        "hub": "642-Incarnate_Shadow"
+      }
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "zacian-hero-of-many-battles-in-5-star-raid-battles-september-2026",
+    "name": "苍响（百战勇者）现身 5★团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-09-09T06:00:00",
+    "end": "2026-09-15T22:00:00",
+    "link": "https://leekduck.com/events/zacian-hero-of-many-battles-in-5-star-raid-battles-september-2026/",
+    "summary": "该 Boss 在公布日期内现身 5★团战，并可在对应周三团战时刻集中挑战。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/zacian-hero-of-many-battles-in-5-star-raid-battles-september-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/hero-of-many-battles-zacian-raid-counters-guide/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 888,
+        "name": "苍响",
+        "shiny": true
+      }
+    ],
+    "counters": [
+      {
+        "id": 800,
+        "name": "黄昏之鬃奈克洛兹玛"
+      },
+      {
+        "id": 376,
+        "name": "巨金怪"
+      },
+      {
+        "id": 94,
+        "name": "超级耿鬼"
+      }
+    ]
+  },
+  {
+    "id": "raidhour20260909",
+    "name": "苍响团战时刻",
+    "type": "raid-hour",
+    "heading": "Raid Hour",
+    "start": "2026-09-09T18:00:00",
+    "end": "2026-09-09T19:00:00",
+    "link": "https://leekduck.com/events/raidhour20260909/",
+    "summary": "当地时间 18–19 时，5★团战数量增加；地区限定 Boss 仍按各自地区出现。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/raidhour20260909/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 888,
+        "name": "苍响",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "pokemonspotlighthour2026-09-10",
+    "name": "独角虫 / 铁壳蛹 / 大针蜂聚焦时刻",
+    "type": "pokemon-spotlight-hour",
+    "heading": "Pokémon Spotlight Hour",
+    "start": "2026-09-10T18:00:00",
+    "end": "2026-09-10T19:00:00",
+    "link": "https://leekduck.com/events/pokemonspotlighthour2026-09-10/",
+    "summary": "当地时间 18–19 时举行聚焦时刻，期间主角大量出现并开放当周加成。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemonspotlighthour2026-09-10/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 13,
+        "name": "独角虫",
+        "shiny": true
+      },
+      {
+        "id": 14,
+        "name": "铁壳蛹",
+        "shiny": true
+      },
+      {
+        "id": 15,
+        "name": "大针蜂",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":candy: 传送宝可梦糖果 ×2"
+    ]
+  },
+  {
+    "id": "mega-houndoom-in-mega-raids-september-2026",
+    "name": "超级黑鲁加现身超级团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-09-11T06:00:00",
+    "end": "2026-09-15T22:00:00",
+    "link": "https://leekduck.com/events/mega-houndoom-in-mega-raids-september-2026/",
+    "summary": "该超级进化 Boss 在公布日期内现身超级团战；击败后可取得对应超级能量。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-houndoom-in-mega-raids-september-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/mega-houndoom-raid-guide/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 229,
+        "name": "超级黑鲁加",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png",
+        "hub": "229-Mega"
+      }
+    ]
+  },
+  {
+    "id": "pokemonspotlighthour2026-09-13",
+    "name": "戴鲁比 / 黑鲁加聚焦时刻",
+    "type": "pokemon-spotlight-hour",
+    "heading": "Pokémon Spotlight Hour",
+    "start": "2026-09-13T18:00:00",
+    "end": "2026-09-13T19:00:00",
+    "link": "https://leekduck.com/events/pokemonspotlighthour2026-09-13/",
+    "summary": "当地时间 18–19 时举行聚焦时刻，期间主角大量出现并开放当周加成。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemonspotlighthour2026-09-13/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 228,
+        "name": "戴鲁比",
+        "shiny": true
+      },
+      {
+        "id": 229,
+        "name": "黑鲁加",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":candy: 传送宝可梦糖果 ×2"
+    ]
+  },
+  {
+    "id": "max-mondays-2026-09-14",
+    "name": "Max周一·独角犀牛",
+    "type": "max-mondays",
+    "heading": "Max Mondays",
+    "start": "2026-09-14T06:00:00",
+    "end": "2026-09-14T21:00:00",
+    "link": "https://leekduck.com/events/max-mondays-2026-09-14/",
+    "summary": "当天 6–21 时由指定极巨化宝可梦占领能量点；18–19 时为 Max 周一重点时段。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-mondays-2026-09-14/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 111,
+        "name": "独角犀牛",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":xl-candy: 现场完成 Max 对战可获 1 颗神奇糖果 XL"
+    ]
+  },
+  {
+    "id": "mega-venusaur-in-mega-raids-september-2026",
+    "name": "超级妙蛙花现身超级团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-09-16T06:00:00",
+    "end": "2026-09-22T22:00:00",
+    "link": "https://leekduck.com/events/mega-venusaur-in-mega-raids-september-2026/",
+    "summary": "该超级进化 Boss 在公布日期内现身超级团战；击败后可取得对应超级能量。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-venusaur-in-mega-raids-september-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/mega-venusaur-raid-guide/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 3,
+        "name": "超级妙蛙花",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10033.png",
+        "hub": "3-Mega"
+      }
+    ]
+  },
+  {
+    "id": "zamazenta-hero-of-many-battles-in-5-star-raid-battles-september-2026",
+    "name": "藏玛然特（百战勇者）现身 5★团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-09-16T06:00:00",
+    "end": "2026-09-22T22:00:00",
+    "link": "https://leekduck.com/events/zamazenta-hero-of-many-battles-in-5-star-raid-battles-september-2026/",
+    "summary": "该 Boss 在公布日期内现身 5★团战，并可在对应周三团战时刻集中挑战。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/zamazenta-hero-of-many-battles-in-5-star-raid-battles-september-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/zamazenta-hero-of-many-battles-raid-counters-guide/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 889,
+        "name": "藏玛然特",
+        "shiny": true
+      }
+    ],
+    "counters": [
+      {
+        "id": 150,
+        "name": "超级超梦 Y"
+      },
+      {
+        "id": 384,
+        "name": "超级烈空坐"
+      },
+      {
+        "id": 65,
+        "name": "超级胡地"
+      }
+    ]
+  },
+  {
+    "id": "unannounced-september-event-season-24",
+    "name": "9 月神秘活动",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-09-16T10:00:00",
+    "end": "2026-09-22T20:00:00",
+    "link": "https://leekduck.com/events/unannounced-september-event-season-24/",
+    "summary": "活动档期已公布，但主题、主角与加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/unannounced-september-event-season-24/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ]
+  },
+  {
+    "id": "raidhour20260916",
+    "name": "藏玛然特团战时刻",
+    "type": "raid-hour",
+    "heading": "Raid Hour",
+    "start": "2026-09-16T18:00:00",
+    "end": "2026-09-16T19:00:00",
+    "link": "https://leekduck.com/events/raidhour20260916/",
+    "summary": "当地时间 18–19 时，5★团战数量增加；地区限定 Boss 仍按各自地区出现。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/raidhour20260916/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 889,
+        "name": "藏玛然特",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "pokemonspotlighthour2026-09-17",
+    "name": "神秘宝可梦聚焦时刻",
+    "type": "pokemon-spotlight-hour",
+    "heading": "Pokémon Spotlight Hour",
+    "start": "2026-09-17T18:00:00",
+    "end": "2026-09-17T19:00:00",
+    "link": "https://leekduck.com/events/pokemonspotlighthour2026-09-17/",
+    "summary": "当地时间 18–19 时举行聚焦时刻，期间主角大量出现并开放当周加成。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemonspotlighthour2026-09-17/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ],
+    "pokemon": [],
+    "bonuses": [
+      ":stardust: 捕捉星尘 ×2；主角待公布"
+    ]
+  },
+  {
+    "id": "max-mondays-2026-09-21",
+    "name": "Max周一·三圣鸟",
+    "type": "max-mondays",
+    "heading": "Max Mondays",
+    "start": "2026-09-21T06:00:00",
+    "end": "2026-09-21T21:00:00",
+    "link": "https://leekduck.com/events/max-mondays-2026-09-21/",
+    "summary": "当天 6–21 时由指定极巨化宝可梦占领能量点；18–19 时为 Max 周一重点时段。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-mondays-2026-09-21/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 144,
+        "name": "急冻鸟",
+        "shiny": true
+      },
+      {
+        "id": 145,
+        "name": "闪电鸟",
+        "shiny": true
+      },
+      {
+        "id": 146,
+        "name": "火焰鸟",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":xl-candy: 现场完成 Max 对战可获 1 颗神奇糖果 XL"
+    ]
+  },
+  {
+    "id": "mega-malamar-in-mega-raids-september-2026",
+    "name": "超级乌贼王现身超级团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-09-23T06:00:00",
+    "end": "2026-09-29T22:00:00",
+    "link": "https://leekduck.com/events/mega-malamar-in-mega-raids-september-2026/",
+    "summary": "该超级进化 Boss 在公布日期内现身超级团战；击败后可取得对应超级能量。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-malamar-in-mega-raids-september-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/mega-malamar-raid-guide/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 687,
+        "name": "超级乌贼王",
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/official/full/687_mega_with_bg.webp",
+        "hub": "687-Mega"
+      }
+    ]
+  },
+  {
+    "id": "xurkitree-pheromosa-buzzwole-in-5-star-raid-battles-september-2026",
+    "name": "地区究极异兽现身 5★团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-09-23T06:00:00",
+    "end": "2026-09-29T22:00:00",
+    "link": "https://leekduck.com/events/xurkitree-pheromosa-buzzwole-in-5-star-raid-battles-september-2026/",
+    "summary": "该轮 5★团战按公布日期开放；地区究极异兽分别为亚太电束木、欧非印费洛美螂、美洲与格陵兰爆肌蚊。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/xurkitree-pheromosa-buzzwole-in-5-star-raid-battles-september-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/xurkitree-ultra-beast-raid-guide/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 796,
+        "name": "电束木",
+        "shiny": true
+      },
+      {
+        "id": 795,
+        "name": "费洛美螂",
+        "shiny": true
+      },
+      {
+        "id": 794,
+        "name": "爆肌蚊",
+        "shiny": true
+      }
+    ],
+    "counters": [
+      {
+        "id": 383,
+        "name": "原始固拉多"
+      },
+      {
+        "id": 384,
+        "name": "超级烈空坐"
+      },
+      {
+        "id": 445,
+        "name": "超级烈咬陆鲨"
+      }
+    ]
+  },
+  {
+    "id": "raidhour20260923",
+    "name": "地区究极异兽团战时刻",
+    "type": "raid-hour",
+    "heading": "Raid Hour",
+    "start": "2026-09-23T18:00:00",
+    "end": "2026-09-23T19:00:00",
+    "link": "https://leekduck.com/events/raidhour20260923/",
+    "summary": "当地时间 18–19 时，5★团战数量增加；地区限定 Boss 仍按各自地区出现。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/raidhour20260923/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 796,
+        "name": "电束木",
+        "shiny": true
+      },
+      {
+        "id": 795,
+        "name": "费洛美螂",
+        "shiny": true
+      },
+      {
+        "id": 794,
+        "name": "爆肌蚊",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "pokemonspotlighthour2026-09-24",
+    "name": "小拉达聚焦时刻",
+    "type": "pokemon-spotlight-hour",
+    "heading": "Pokémon Spotlight Hour",
+    "start": "2026-09-24T18:00:00",
+    "end": "2026-09-24T19:00:00",
+    "link": "https://leekduck.com/events/pokemonspotlighthour2026-09-24/",
+    "summary": "当地时间 18–19 时举行聚焦时刻，期间主角大量出现并开放当周加成。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemonspotlighthour2026-09-24/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 19,
+        "name": "小拉达",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":xp: 进化宝可梦经验 ×2"
+    ]
+  },
+  {
+    "id": "max-mondays-2026-09-28",
+    "name": "Max周一·泪眼蜥",
+    "type": "max-mondays",
+    "heading": "Max Mondays",
+    "start": "2026-09-28T06:00:00",
+    "end": "2026-09-28T21:00:00",
+    "link": "https://leekduck.com/events/max-mondays-2026-09-28/",
+    "summary": "当天 6–21 时由指定极巨化宝可梦占领能量点；18–19 时为 Max 周一重点时段。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-mondays-2026-09-28/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 816,
+        "name": "泪眼蜥",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":xl-candy: 现场完成 Max 对战可获 1 颗神奇糖果 XL"
+    ]
+  },
+  {
+    "id": "harvest-festival-2026",
+    "name": "丰收节",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-09-29T10:00:00",
+    "end": "2026-10-05T20:00:00",
+    "link": "https://leekduck.com/events/harvest-festival-2026/",
+    "summary": "丰收节于 9 月 29 日至 10 月 5 日举行；完整主角、调查与加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/harvest-festival-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ]
+  },
+  {
+    "id": "mega-victreebel-in-mega-raids-september-2026",
+    "name": "超级大食花现身超级团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-09-30T06:00:00",
+    "end": "2026-10-06T22:00:00",
+    "link": "https://leekduck.com/events/mega-victreebel-in-mega-raids-september-2026/",
+    "summary": "该超级进化 Boss 在公布日期内现身超级团战；击败后可取得对应超级能量。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-victreebel-in-mega-raids-september-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/mega-victreebel-raid-guide/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 71,
+        "name": "超级大食花",
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/official/full/071_mega_with_bg.webp",
+        "hub": "71-Mega"
+      }
+    ]
+  },
+  {
+    "id": "xerneas-in-5-star-raid-battles-september-2026",
+    "name": "哲尔尼亚斯现身 5★团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-09-30T06:00:00",
+    "end": "2026-10-06T22:00:00",
+    "link": "https://leekduck.com/events/xerneas-in-5-star-raid-battles-september-2026/",
+    "summary": "该 Boss 在公布日期内现身 5★团战，并可在对应周三团战时刻集中挑战。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/xerneas-in-5-star-raid-battles-september-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/xerneas-raid-guide/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 716,
+        "name": "哲尔尼亚斯",
+        "shiny": true
+      }
+    ],
+    "counters": [
+      {
+        "id": 800,
+        "name": "黄昏之鬃奈克洛兹玛"
+      },
+      {
+        "id": 376,
+        "name": "巨金怪"
+      },
+      {
+        "id": 94,
+        "name": "超级耿鬼"
+      }
+    ]
+  },
+  {
+    "id": "raidhour20260930",
+    "name": "哲尔尼亚斯团战时刻",
+    "type": "raid-hour",
+    "heading": "Raid Hour",
+    "start": "2026-09-30T18:00:00",
+    "end": "2026-09-30T19:00:00",
+    "link": "https://leekduck.com/events/raidhour20260930/",
+    "summary": "当地时间 18–19 时，5★团战数量增加；地区限定 Boss 仍按各自地区出现。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/raidhour20260930/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 716,
+        "name": "哲尔尼亚斯",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "max-battle-day-october-2026",
+    "name": "10 月 Max 对战日",
+    "type": "max-battles",
+    "heading": "Max Battle Day",
+    "start": "2026-10-03T14:00:00",
+    "end": "2026-10-03T17:00:00",
+    "link": "https://leekduck.com/events/max-battle-day-october-2026/",
+    "summary": "Max 对战日于 10 月 3 日当地时间 14–17 时举行；主角与加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-battle-day-october-2026/"
+      }
     ]
   }
 ]
