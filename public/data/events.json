@@ -3368,7 +3368,7 @@
           "新千岁机场 · 函馆机场 · 秋田机场 · 仙台机场",
           "羽田机场(第 2、第 3 航站楼)· 成田机场(第 1 航站楼)",
           "限时调查每人仅可在任一参与机场领取一次,领取后 3 天内有效",
-          "第二、三阶段(绿色/蓝色喷射机)机场名单后续公布"
+          "绿色喷射机第二阶段已于 9 月 18 日另行开放；蓝色喷射机第三阶段机场与日期待公布"
         ]
       }
     ],
@@ -6848,24 +6848,24 @@
       {
         "id": 382,
         "name": "原始盖欧卡",
-        "fast": "Waterfall",
-        "charged": "Origin Pulse",
+        "fast": "攀瀑",
+        "charged": "根源波动",
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png",
         "hub": "382-Primal"
       },
       {
         "id": 646,
-        "name": "White Kyurem",
-        "fast": "Ice Fang",
-        "charged": "Ice Burn",
+        "name": "焰白酋雷姆",
+        "fast": "冰冻牙",
+        "charged": "极寒冷焰",
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png",
         "hub": "646-White"
       },
       {
         "id": 254,
         "name": "超级蜥蜴王",
-        "fast": "Fury Cutter",
-        "charged": "Frenzy Plant",
+        "fast": "连斩",
+        "charged": "疯狂植物",
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png",
         "hub": "254-Mega"
       }
@@ -6980,24 +6980,24 @@
       {
         "id": 448,
         "name": "超级路卡利欧",
-        "fast": "Force Palm",
-        "charged": "Aura Sphere",
+        "fast": "发劲",
+        "charged": "波导弹",
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png",
         "hub": "448-Mega"
       },
       {
         "id": 257,
         "name": "超级火焰鸡",
-        "fast": "Counter",
-        "charged": "Aura Sphere",
+        "fast": "双倍奉还",
+        "charged": "波导弹",
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png",
         "hub": "257-Mega"
       },
       {
         "id": 647,
-        "name": "Resolute Keldeo",
-        "fast": "Low Kick",
-        "charged": "Secret Sword",
+        "name": "觉悟的样子凯路迪欧",
+        "fast": "踢倒",
+        "charged": "神秘之剑",
         "sprite": "https://db.pokemongohub.net/images/official/detail/647_f2.png",
         "hub": "647-Resolute"
       }
@@ -7158,8 +7158,8 @@
       {
         "id": 254,
         "name": "超级蜥蜴王",
-        "fast": "Bullet Seed",
-        "charged": "Frenzy Plant",
+        "fast": "种子机关枪",
+        "charged": "疯狂植物",
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png",
         "hub": "254-Mega"
       },
@@ -7214,24 +7214,24 @@
       {
         "id": 448,
         "name": "超级路卡利欧",
-        "fast": "Force Palm",
-        "charged": "Aura Sphere",
+        "fast": "发劲",
+        "charged": "波导弹",
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png",
         "hub": "448-Mega"
       },
       {
         "id": 647,
-        "name": "Resolute Keldeo",
-        "fast": "Low Kick",
-        "charged": "Secret Sword",
+        "name": "觉悟的样子凯路迪欧",
+        "fast": "踢倒",
+        "charged": "神秘之剑",
         "sprite": "https://db.pokemongohub.net/images/official/detail/647_f2.png",
         "hub": "647-Resolute"
       },
       {
         "id": 257,
         "name": "超级火焰鸡",
-        "fast": "Counter",
-        "charged": "Aura Sphere",
+        "fast": "双倍奉还",
+        "charged": "波导弹",
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png",
         "hub": "257-Mega"
       }
@@ -8109,28 +8109,62 @@
   },
   {
     "id": "catch-mastery-september-2026",
-    "name": "9 月捕捉精通",
+    "name": "小木灵捕捉精通",
     "type": "event",
     "heading": "Event",
     "start": "2026-09-26T10:00:00",
     "end": "2026-09-26T20:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/catch-mastery-september-2026/",
-    "summary": "捕捉精通活动确定于 9 月 26 日当地时间 10–20 时举行；主题宝可梦、调查与加成尚未公布。",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-26-catch-mastery-phantump-2026/phantump-catch-mastery.jpg?v2",
+    "link": "https://leekduck.com/events/catch-mastery-phantump-2026/",
+    "summary": "9 月 26 日 10–20 时，小木灵通过田野调查、免费与付费限时调查登场；樱花宝和飘飘球在野外更常出现，三者闪光概率均提升。",
     "links": [
       {
         "label": "LeekDuck",
-        "url": "https://leekduck.com/events/catch-mastery-september-2026/"
+        "url": "https://leekduck.com/events/catch-mastery-phantump-2026/"
       },
       {
-        "label": "Hub·秋季日期",
-        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+        "label": "官方",
+        "url": "https://pokemongo.com/news/catch-mastery-phantump-2026"
       },
       {
-        "label": "Hub·9 月月历",
-        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Phantump_Catch_Mastery"
       }
-    ]
+    ],
+    "bonuses": [
+      ":xp: Nice Throw 或更好的捕捉获得经验 ×2",
+      ":candy: Nice Throw 或更好的捕捉获得更多糖果",
+      "✨ 樱花宝、飘飘球与小木灵闪光概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 708,
+        "name": "小木灵",
+        "shiny": true
+      },
+      {
+        "id": 420,
+        "name": "樱花宝",
+        "shiny": true
+      },
+      {
+        "id": 425,
+        "name": "飘飘球",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "调查与付费内容",
+        "items": [
+          "免费限时调查与田野调查均可遇见小木灵；限时调查另有经验与星尘奖励",
+          "1.99 美元付费限时调查提供更多小木灵遭遇、经验与星尘",
+          "Web Store 同价究极入场券礼盒包含活动入场券与 2 颗神奇糖果",
+          "所有限时调查须在活动结束前完成并领取奖励"
+        ]
+      }
+    ],
+    "highlight": true
   },
   {
     "id": "pokexciting-cross-region-go-stamp-rally",
@@ -8892,7 +8926,7 @@
     "start": "2026-09-08T10:00:00",
     "end": "2026-10-06T10:00:00",
     "link": "https://leekduck.com/events/go-pass-september-2026/",
-    "summary": "9 月 GO Pass 以拉帝欧斯为主奖励；免费版自动领取，豪华版提供额外奖励与更快进度。",
+    "summary": "9 月 GO Pass 以拉帝欧斯为主奖励；免费版自动领取，豪华版提供额外奖励、更快进度与限时孵化器。奖励须在 10 月 8 日 10 时前领取。",
     "links": [
       {
         "label": "LeekDuck",
@@ -8919,6 +8953,16 @@
       ":xl-candy: 31 级以上交换必得 1 颗糖果 XL",
       ":incense: 每日探险熏香持续时间 ×2",
       ":xp: 孵蛋经验与星尘增加"
+    ],
+    "sections": [
+      {
+        "title": "豪华版与限时孵化器",
+        "items": [
+          "豪华版可获得 1 个限时孵化器与 1 个超级孵化器",
+          "限时孵化器在 Rank 20 解锁，可无限使用至 10 月 13 日 10 时",
+          "10 月 3–4 日获取 GO 点数不设每日上限"
+        ]
+      }
     ],
     "longTerm": true
   },
@@ -8967,10 +9011,144 @@
     ],
     "bonuses": [
       ":xl-candy: 现场 Max 对战与现场团战各可获得 1 颗神奇糖果 XL",
-      ":trading: 周五交换所需星尘减少 20%，31 级以上交换保证 2 颗糖果 XL",
+      ":trading: 周五现场交换所需星尘减少 10%，可进行 2 次额外特殊交换，31 级以上交换保证 2 颗糖果 XL",
       ":incense: 周日每日探险熏香持续时间 ×2"
     ],
     "longTerm": true
+  },
+  {
+    "id": "2026_ana_green",
+    "name": "ANA×宝可梦「绿色宝可梦喷射机」(日本机场)",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-09-18T14:00:00",
+    "end": "2027-08-31T20:00:00",
+    "link": "https://pokemongo.com/en/news/2026_ana_green",
+    "summary": "庆祝绿色宝可梦喷射机启航，日本四国、九州与冲绳的参与机场开放线下联动；参与道馆每天各有 1 场妙蛙种子团战并可带绿色喷射机地点背景，到场还可领取一次限时调查。",
+    "links": [
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/en/news/2026_ana_green"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/ana-launches-green-pokemon-jet-for-pokemons-30th-anniversary/"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Pok%C3%A9mon_Jet_Collaboration_Events"
+      }
+    ],
+    "bonuses": [
+      ":raid: 参与机场的道馆每天各有 1 场妙蛙种子团战",
+      ":pokestop: 到场可领取一次限时调查，领取后 3 天内有效",
+      "团战妙蛙种子可带绿色喷射机主题地点背景"
+    ],
+    "pokemon": [
+      {
+        "id": 1,
+        "name": "妙蛙种子",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "第二阶段参与机场",
+        "items": [
+          "四国：高知、松山、高松、德岛机场",
+          "九州：福冈、佐贺、宫崎、熊本、鹿儿岛、长崎、大分机场",
+          "冲绳：石垣、宫古、那霸机场",
+          "本阶段每人仅可领取一次调查；已参加红色喷射机第一阶段者仍可领取"
+        ]
+      }
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "pikachu-autumn-excursion-2026",
+    "name": "皮卡丘秋日郊游 2026(韩国线下)",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-09-18T10:00:00+09:00",
+    "end": "2026-10-11T20:00:00+09:00",
+    "link": "https://pokemongo.com/ko/news/pikachu-autumn-picnic-korea-2026",
+    "summary": "韩国首尔钟路区、中区部分地区及仁川国际机场 Hiker Station 开放线下活动；橙色韩服皮卡丘首次登场，可从当地 1★团战、限时调查与田野调查获得。",
+    "links": [
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/ko/news/pikachu-autumn-picnic-korea-2026"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Pikachu%27s_Autumn_Excursion_2026"
+      }
+    ],
+    "bonuses": [
+      ":lure: 活动区域内诱饵模组持续 2 小时",
+      ":raid: 指定 15 座道馆每天各有 1 场橙色韩服皮卡丘 1★团战，不可使用远程团战券",
+      "✨ 橙色韩服皮卡丘闪光概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 25,
+        "name": "橙色韩服皮卡丘",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "调查与奖励",
+        "items": [
+          "活动区域可领取免费限时调查，奖励含 2026 经验、1 张高级战斗入场券、贴纸与橙色韩服皮卡丘",
+          "活动区域补给站提供限定田野调查，可遇橙色韩服皮卡丘及其他主题宝可梦",
+          "调查与奖励须在 10 月 11 日 20 时前完成和领取"
+        ]
+      }
+    ],
+    "longTerm": true,
+    "highlight": true
+  },
+  {
+    "id": "pikachu-korean-outing-2026",
+    "name": "皮卡丘韩国郊游 2026(韩国全境)",
+    "type": "event",
+    "heading": "Regional Event",
+    "start": "2026-09-24T10:00:00+09:00",
+    "end": "2026-09-26T20:00:00+09:00",
+    "link": "https://pokemongo.com/ko/news/pikachu-autumn-picnic-korea-2026",
+    "summary": "韩国全境短期联动开放橙色韩服皮卡丘 1★团战与免费限时调查；调查须在 10 月 11 日 20 时前完成。",
+    "links": [
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/ko/news/pikachu-autumn-picnic-korea-2026"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Pikachu%27s_Autumn_Excursion_2026"
+      }
+    ],
+    "bonuses": [
+      ":candy: 传送宝可梦糖果 ×2",
+      ":stardust: 团战获得星尘 ×2",
+      "✨ 橙色韩服皮卡丘闪光概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 25,
+        "name": "橙色韩服皮卡丘",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "免费限时调查",
+        "items": [
+          "奖励含 4500 经验、1 张高级战斗入场券、5500 星尘与橙色韩服皮卡丘遭遇",
+          "限时调查须在 10 月 11 日 20 时前完成和领取"
+        ]
+      }
+    ],
+    "highlight": true
   },
   {
     "id": "shadow-thundurus-incarnate-forme-in-shadow-raids-september-2026",
