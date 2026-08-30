@@ -7821,6 +7821,50 @@
     "highlight": false
   },
   {
+    "id": "pokemon-world-championships-2026-san-francisco",
+    "name": "2026 世界锦标赛：旧金山线下活动",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-08-28T17:00:00Z",
+    "end": "2026-08-31T03:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-28-pokemon-world-championships-2026-san-francisco/2026-worlds-san-francisco.png",
+    "link": "https://leekduck.com/events/pokemon-world-championships-2026-san-francisco/",
+    "summary": "旧金山限定线下活动覆盖集章、地标主题团战与城市寻宝调查；特殊团战每天每处可完成一次，捕获时保证带地点背景。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-world-championships-2026-san-francisco/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-2026-world-championships-event-guide/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 25,
+        "name": "皮卡丘",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":pokestop: 集章最多获得 6 次穿 Cosmog 太空服皮卡丘遭遇并附地点背景",
+      ":raid: 七处特殊团战地点的捕获保证带地点背景",
+      "分支限时调查可选择 300 点对应的超级进化能量"
+    ],
+    "sections": [
+      {
+        "title": "线下内容",
+        "items": [
+          "1★地标团战：Fuecoco、Zigzagoon",
+          "3★地标团战：Dewgong、Kingler、Alolan Exeggutor、Duraludon",
+          "5★地标团战：Rayquaza",
+          "城市寻宝限时调查提供世界锦标赛 2026 皮卡丘、星尘、经验与红色 2026 Worlds T 恤"
+        ]
+      }
+    ]
+  },
+  {
     "id": "pokemon-world-championships-2026-timed-research-twitch-drops",
     "name": "2026 世界锦标赛 Twitch 掉宝限时调查",
     "type": "research",
@@ -8108,7 +8152,7 @@
     "highlight": true
   },
   {
-    "id": "catch-mastery-september-2026",
+    "id": "catch-mastery-phantump-2026",
     "name": "小木灵捕捉精通",
     "type": "event",
     "heading": "Event",
@@ -8121,6 +8165,10 @@
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/catch-mastery-phantump-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/catch-mastery-phantump/"
       },
       {
         "label": "官方",
@@ -9871,5 +9919,147 @@
         "url": "https://leekduck.com/events/max-battle-day-october-2026/"
       }
     ]
+  },
+  {
+    "id": "october-communityday2026",
+    "name": "10 月社区日",
+    "type": "community-day",
+    "heading": "Community Day",
+    "start": "2026-10-10T14:00:00",
+    "end": "2026-10-10T17:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/cd-default.jpg",
+    "link": "https://leekduck.com/events/october-communityday2026/",
+    "summary": "10 月社区日确定于 10 月 10 日当地时间 14–17 时举行；主角、限定招式与完整加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/october-communityday2026/"
+      },
+      {
+        "label": "Hub·秋季日期",
+        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+      }
+    ],
+    "bonuses": [
+      "✨ 社区日闪光概率提升；主角待公布"
+    ],
+    "highlight": true
+  },
+  {
+    "id": "hatch-day-october-2026",
+    "name": "10 月孵化日",
+    "type": "event",
+    "heading": "Hatch Day",
+    "start": "2026-10-17T11:00:00",
+    "end": "2026-10-17T17:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/hatch-day-october-2026/",
+    "summary": "孵化日确定于 10 月 17 日当地时间 11–17 时举行；主角、蛋池与完整加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/hatch-day-october-2026/"
+      },
+      {
+        "label": "Hub·秋季日期",
+        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+      }
+    ]
+  },
+  {
+    "id": "max-battle-day-october-24-2026",
+    "name": "Max 对战日·10/24",
+    "type": "max-battles",
+    "heading": "Max Battle Day",
+    "start": "2026-10-24T14:00:00",
+    "end": "2026-10-24T17:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/max-battle-day-october-24-2026/",
+    "summary": "Max 对战日确定于 10 月 24 日当地时间 14–17 时举行；主角与完整加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-battle-day-october-24-2026/"
+      },
+      {
+        "label": "Hub·秋季日期",
+        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+      }
+    ]
+  },
+  {
+    "id": "super-mega-raid-day-october-2026",
+    "name": "10 月 31 日超级超级团战日",
+    "type": "raid-day",
+    "heading": "Raid Day",
+    "start": "2026-10-31T14:00:00",
+    "end": "2026-10-31T17:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/super-mega-raid-day-october-2026/",
+    "summary": "超级超级团战日确定于 10 月 31 日当地时间 14–17 时举行；主角、团战奖励与完整加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/super-mega-raid-day-october-2026/"
+      },
+      {
+        "label": "Hub·秋季日期",
+        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+      }
+    ],
+    "bonuses": [
+      "✨ 团战日闪光概率提升；主角待公布"
+    ],
+    "highlight": true
+  },
+  {
+    "id": "november-communityday2026",
+    "name": "11 月社区日",
+    "type": "community-day",
+    "heading": "Community Day",
+    "start": "2026-11-21T14:00:00",
+    "end": "2026-11-21T17:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/cd-default.jpg",
+    "link": "https://leekduck.com/events/november-communityday2026/",
+    "summary": "11 月社区日确定于 11 月 21 日当地时间 14–17 时举行；主角、限定招式与完整加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/november-communityday2026/"
+      },
+      {
+        "label": "Hub·秋季日期",
+        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+      }
+    ],
+    "bonuses": [
+      "✨ 社区日闪光概率提升；主角待公布"
+    ],
+    "highlight": true
+  },
+  {
+    "id": "super-mega-raid-day-november-2026",
+    "name": "11 月超级超级团战日",
+    "type": "raid-day",
+    "heading": "Raid Day",
+    "start": "2026-11-28T14:00:00",
+    "end": "2026-11-28T17:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/super-mega-raid-day-november-2026/",
+    "summary": "超级超级团战日确定于 11 月 28 日当地时间 14–17 时举行；主角、团战奖励与完整加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/super-mega-raid-day-november-2026/"
+      },
+      {
+        "label": "Hub·秋季日期",
+        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+      }
+    ],
+    "bonuses": [
+      "✨ 团战日闪光概率提升；主角待公布"
+    ],
+    "highlight": true
   }
 ]
