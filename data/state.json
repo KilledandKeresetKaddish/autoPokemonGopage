@@ -1,122 +1,126 @@
 {
-  "lastUpdated": "2026-08-30T07:14:39Z",
+  "lastUpdated": "2026-09-02T12:33:51Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-08-30T07:05:36Z",
-      "lastChecked": "2026-08-30T07:14:39Z",
+      "lastFetch": "2026-09-02T11:59:19Z",
+      "lastChecked": "2026-09-02T12:33:51Z",
       "status": "ok",
-      "bytes": 45673,
-      "sha256": "96bc4bf881f3dabf",
-      "note": "刷新成功且 hash 变化；新增旧金山世界锦标赛线下活动，并同步新公布的秋季日期。"
+      "bytes": 63886,
+      "sha256": "039475f5c3cd2a62",
+      "note": "刷新成功且 hash 变化；确认圆陆鲨社区日经典回顾、超级小队、Armored Mewtwo、超级 Staraptor 团战日与暮光小径对战轮换。"
     },
     "raids": {
-      "lastFetch": "2026-08-30T07:05:18Z",
-      "lastChecked": "2026-08-30T07:14:39Z",
+      "lastFetch": "2026-09-02T11:59:19Z",
+      "lastChecked": "2026-09-02T12:33:51Z",
       "status": "ok",
-      "bytes": 13042,
-      "sha256": "05ad01724405022b",
-      "note": "刷新成功且 hash 变化；当前高优先团战池仍为三圣柱与超级暴鲤龙，结构化面板保持已核验内容。"
+      "bytes": 16564,
+      "sha256": "27bfe4c8d87e51e2",
+      "note": "刷新成功且 hash 变化；当前高优先池转为超级拉帝亚斯、超级拉帝欧斯、超级盔甲鸟、暗影骑拉帝纳与极巨化伊布。"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-08-30T07:14:39Z",
+      "lastChecked": "2026-09-02T12:33:51Z",
       "status": "skipped",
       "bytes": 29466,
       "sha256": "bf0d68f3851420d0",
-      "note": "本轮无蛋池专项详情需求，按相关性跳过。"
+      "note": "本轮新活动详情页已给出所需蛋池摘要，无需批量刷新。"
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-08-30T07:14:39Z",
+      "lastChecked": "2026-09-02T12:33:51Z",
       "status": "skipped",
       "bytes": 70308,
       "sha256": "02025eab72ec1451",
-      "note": "新活动详情已由活动页与官方页面确认，无需批量调查池。"
+      "note": "本轮新活动详情页已给出所需调查摘要，无需批量刷新。"
     },
     "gamemaster": {
-      "lastFetch": "2026-08-26T12:16:37Z",
-      "lastChecked": "2026-08-30T07:14:39Z",
-      "status": "skipped",
-      "bytes": 929525,
-      "sha256": "faf222602c84eb99",
-      "note": "缓存仍在 7 天有效期内；稳定事实与既有排行命名保持已核验版本。"
+      "lastFetch": "2026-09-02T11:59:46Z",
+      "lastChecked": "2026-09-02T12:33:51Z",
+      "status": "ok",
+      "bytes": 930381,
+      "sha256": "b7db691e661e09a9",
+      "note": "超过 7 天阈值后刷新且 hash 变化；用于复核当前 Boss 属性、弱点与招式属性。"
     },
     "tiers-attackers": {
-      "lastFetch": "2026-08-28T12:33:21Z",
-      "lastChecked": "2026-08-30T07:14:39Z",
-      "status": "skipped",
-      "bytes": 36574,
-      "sha256": "a0b1237f18752ebc",
-      "note": "缓存仍在 3 天有效期内且无排行专项变化，保留已核验面板。"
+      "lastFetch": "2026-09-02T11:59:34Z",
+      "lastChecked": "2026-09-02T12:33:51Z",
+      "status": "ok",
+      "bytes": 36494,
+      "sha256": "721fcf73216e3568",
+      "note": "超过 3 天阈值后刷新且 hash 变化；A/B Tier 表内容与既有结构化面板一致，保留已核验排行。"
     },
     "tiers-defenders": {
-      "lastFetch": "2026-08-28T12:33:22Z",
-      "lastChecked": "2026-08-30T07:14:39Z",
-      "status": "skipped",
+      "lastFetch": "2026-09-02T11:59:37Z",
+      "lastChecked": "2026-09-02T12:33:51Z",
+      "status": "ok",
       "bytes": 39883,
       "sha256": "823270604f7a498b",
-      "note": "缓存仍在 3 天有效期内且无排行专项变化，保留已核验面板。"
+      "note": "超过 3 天阈值后刷新，hash 未变化；保留已核验面板。"
     },
     "tiers-pokebase": {
-      "lastFetch": "2026-08-30T07:05:36Z",
-      "lastChecked": "2026-08-30T07:14:39Z",
+      "lastFetch": "2026-09-02T11:59:46Z",
+      "lastChecked": "2026-09-02T12:33:51Z",
       "status": "ok",
       "bytes": 218802,
       "sha256": "137893c402526a22",
-      "note": "按 3 天阈值刷新，hash 未变化；无需重推排行。"
+      "note": "超过 3 天阈值后刷新，hash 未变化；无需重推排行。"
     },
     "events-hub": {
-      "lastFetch": "2026-08-30T07:05:36Z",
-      "lastChecked": "2026-08-30T07:14:39Z",
+      "lastFetch": "2026-09-02T11:59:23Z",
+      "lastChecked": "2026-09-02T12:33:51Z",
       "status": "ok",
-      "bytes": 29362,
-      "sha256": "4b835d8d4c502eea",
-      "note": "刷新成功且 hash 变化；月度索引可用，9 月档期由已核验月度文章复核。"
+      "bytes": 28705,
+      "sha256": "5df218885da53d73",
+      "note": "刷新成功且 hash 变化；9 月月度文章、超级小队、超级 Staraptor 与暮光小径对战指南可用。"
     },
     "events-pokebase": {
-      "lastFetch": "2026-08-30T07:05:29Z",
-      "lastChecked": "2026-08-30T07:14:39Z",
+      "lastFetch": "2026-09-02T11:59:30Z",
+      "lastChecked": "2026-09-02T12:33:51Z",
       "status": "ok",
-      "bytes": 28298,
-      "sha256": "e91ed7fecec4cfdb",
-      "note": "刷新成功且 hash 变化；列出旧金山世界锦标赛活动，用于交叉覆盖。"
+      "bytes": 29642,
+      "sha256": "68597b39778ed128",
+      "note": "刷新成功且 hash 变化；用于交叉检查 9 月活动覆盖。"
     },
     "events-official": {
-      "lastFetch": "2026-08-30T07:05:36Z",
-      "lastChecked": "2026-08-30T07:14:39Z",
+      "lastFetch": "2026-09-02T11:59:32Z",
+      "lastChecked": "2026-09-02T12:33:51Z",
       "status": "ok",
       "bytes": 5756,
       "sha256": "cc3a558512e79981",
-      "note": "刷新成功且 hash 未变化；小木灵捕捉精通详情由已核验官方页面补足。"
+      "note": "刷新成功，hash 未变化；新活动官方详情通过已发现的真实详情页逐一核验。"
     }
   },
   "discovery": {
-    "lastChecked": "2026-08-30T07:14:39Z",
+    "lastChecked": "2026-09-02T12:33:51Z",
     "status": "ok",
-    "note": "已运行新活动扫描并打开候选详情；新增旧金山世界锦标赛线下活动，修正小木灵活动为源 slug，并补齐 10–11 月已公布日期。"
+    "note": "已运行新活动扫描并打开全部本期候选；以源 slug 替换两条旧占位，新增 Armored Mewtwo 与 8 段暮光小径对战轮换，并核验 Hub、官方及 Wiki 详情链接。"
   },
   "contentStatus": {
-    "checkedAt": "2026-08-30T07:14:39Z",
+    "checkedAt": "2026-09-02T12:33:51Z",
     "status": "validated",
-    "note": "日历共 177 条事件；新增 6 条秋季档期活动与 1 条旧金山线下活动，并修正小木灵活动源 ID，9 月轮换保持已核验版本，中英文事件与嵌套数组同构。"
+    "note": "日历共 186 条事件；同步圆陆鲨社区日经典回顾、超级小队、Armored Mewtwo、超级 Staraptor 团战日及暮光小径 9–10 月对战档期，中英文事件与嵌套数组同构。"
   },
   "validation": {
-    "checkedAt": "2026-08-30T07:14:39Z",
+    "checkedAt": "2026-09-02T12:33:51Z",
     "status": "passed",
     "note": "preflight exit 0（仅 3 条既有超长 chip 警告）；validate exit 0。"
   },
   "notes": {
     "source_health": {
-      "fact": "活动、团战、Hub 与 PokéBase 活动缓存 hash 变化；官方与 PokéBase 排行 hash 未变化，其余排行/主数据仍在有效期内。",
-      "decision": "仅增量更新受影响活动；轮换及结构化排行面板保持已核验版本。"
+      "fact": "活动、团战、Hub、PokéBase 活动、攻手榜与主数据 hash 变化；官方、坦克榜与 PokéBase 排行 hash 未变化。",
+      "decision": "按变化增量更新新活动、当前团战面板与书签内容；9 月周常轮换和未变化的结构化排行保持已核验版本。"
     },
     "content_decision": {
-      "fact": "确认旧金山世界锦标赛线下活动、小木灵捕捉精通详情，以及 10–11 月社区日、孵化日、Max 对战日与超级超级团战日档期。",
-      "decision": "新增已确认活动与真实来源链接；主角或完整加成尚未公布的日期活动仅记录档期，不猜测内容。"
+      "fact": "确认圆陆鲨社区日经典回顾、超级小队完整玩法、Armored Mewtwo 限时回归、超级 Staraptor 首秀及暮光小径对战赛程。",
+      "decision": "移除对应旧占位 ID，使用源 slug 写入真实活动；追加 Mega Staraptor 累计名册，并为超级大针蜂、超级黑鲁加补记官方公布的超级最高资格。"
     },
     "operator_note": {
       "fact": "管理员要求进行已经公布的新活动更新。",
-      "decision": "已完成本轮新活动扫描、详情核验与中英文同步；Spot Atlas、featured.json 与 mega.json 无显式变更请求或可安全追加事实，保持不变。"
+      "decision": "已完成新活动扫描、详情核验、当前推荐与中英文同步；Spot Atlas 与 featured.json 无显式变更请求，保持不变。"
+    },
+    "source_gap": {
+      "fact": "PokeAPI 当前未提供 Staraptor、Maschiff、Mabosstiff、Flamigo 等条目的简体中文名。",
+      "decision": "依规则保留来源英文/罗马字写法，不凭记忆翻译；Mega Staraptor 首次消耗尚无可信确认，initialCost 保持 null。"
     }
   }
 }

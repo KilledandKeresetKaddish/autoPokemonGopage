@@ -63,7 +63,8 @@
     "initialCost": 100,
     "release": "2020-08-27",
     "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png",
-    "hub": "15-Mega"
+    "hub": "15-Mega",
+    "superMax": true
   },
   {
     "id": 18,
@@ -327,7 +328,8 @@
     "initialCost": 100,
     "release": "2020-10-01",
     "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png",
-    "hub": "229-Mega"
+    "hub": "229-Mega",
+    "superMax": true
   },
   {
     "id": 248,
@@ -797,5 +799,19 @@
     "release": "2026-09-05",
     "sprite": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm658.fMEGA.icon.png",
     "hub": "658-Mega"
+  },
+  {
+    "id": 398,
+    "name": "超级 Staraptor",
+    "en": "Mega Staraptor",
+    "boostedTypes": [
+      "fighting",
+      "flying"
+    ],
+    "initialCost": null,
+    "superMax": true,
+    "release": "2026-09-19",
+    "sprite": "https://db.pokemongohub.net/images/official/full/398_mega_with_bg.webp",
+    "hub": "398-Mega"
   }
 ]

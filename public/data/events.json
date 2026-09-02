@@ -8094,60 +8094,192 @@
     "highlight": true
   },
   {
+    "id": "armored-mewtwo-in-5-star-raid-battles-september-2026",
+    "name": "Armored Mewtwo 限时 5★团战",
+    "type": "event",
+    "heading": "Raid Battles",
+    "start": "2026-09-05T10:00:00",
+    "end": "2026-09-06T18:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/armored-mewtwo-mega-finale-2026.png",
+    "link": "https://leekduck.com/events/armored-mewtwo-in-5-star-raid-battles-september-2026/",
+    "summary": "Armored Mewtwo 自 2020 年后首次回归，在 9 月 5–6 日 10–18 时的超级终章期间现身 5★团战；本次无法遇见闪光形态。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/armored-mewtwo-in-5-star-raid-battles-september-2026/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/en/news/megafinale-2026-armored-mewtwo"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Pok%C3%A9mon_GO_Fest_2026%3A_Mega_Finale"
+      }
+    ],
+    "bonuses": [
+      "限时回归 5★团战；本次无法遇见闪光 Armored Mewtwo"
+    ],
+    "pokemon": [
+      {
+        "id": 150,
+        "name": "Armored Mewtwo",
+        "shiny": false,
+        "sprite": "https://db.pokemongohub.net/images/official/full/150_f4.webp",
+        "hub": "150-Armored"
+      }
+    ],
+    "counters": [
+      {
+        "id": 248,
+        "name": "超级班基拉斯",
+        "fast": "咬住",
+        "charged": "狂舞挥打"
+      },
+      {
+        "id": 94,
+        "name": "超级耿鬼",
+        "fast": "舔舌",
+        "charged": "暗影球"
+      },
+      {
+        "id": 635,
+        "name": "三首恶龙",
+        "fast": "咬住",
+        "charged": "狂舞挥打"
+      }
+    ]
+  },
+  {
     "id": "september-communitydayclassic2026",
-    "name": "9 月社区日经典回顾",
+    "name": "圆陆鲨社区日经典回顾",
     "type": "community-day",
     "heading": "Community Day",
     "start": "2026-09-12T14:00:00",
     "end": "2026-09-12T17:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/cd-default.jpg",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-12-september-communitydayclassic2026/gible-community-day-classic.jpg",
     "link": "https://leekduck.com/events/september-communitydayclassic2026/",
-    "summary": "9 月社区日经典回顾确定于 9 月 12 日当地时间 14–17 时举行；主角、限定招式与完整加成尚未公布。",
+    "summary": "9 月 12 日 14–17 时圆陆鲨大量出现并提升闪光概率；活动开始至 21 时进化尖牙陆鲨，可让烈咬陆鲨学会限定招式大地之力。",
     "links": [
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/september-communitydayclassic2026/"
       },
       {
-        "label": "Hub·秋季日期",
-        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
-      },
-      {
-        "label": "Hub·9 月月历",
-        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/gible-community-day-classic-september-2026/"
       }
     ],
     "bonuses": [
-      "✨ 社区日闪光概率提升；主角待公布"
+      "✨ 圆陆鲨闪光概率提升",
+      ":xp: 捕捉宝可梦经验 ×3",
+      ":incense: 熏香持续 3 小时（不含每日探险熏香）",
+      ":lure: 诱饵模组持续 1 小时；14–21 时普通诱饵高概率吸引圆陆鲨"
+    ],
+    "pokemon": [
+      {
+        "id": 443,
+        "name": "圆陆鲨",
+        "shiny": true
+      },
+      {
+        "id": 444,
+        "name": "尖牙陆鲨",
+        "shiny": true
+      },
+      {
+        "id": 445,
+        "name": "烈咬陆鲨",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "限定招式与挑战",
+        "items": [
+          "活动开始至 21 时进化尖牙陆鲨，可让烈咬陆鲨学会大地之力",
+          ":xp: 进化主题收藏挑战奖励经验、星尘与烈咬陆鲨超级能量",
+          ":pokestop: 田野调查可遇见圆陆鲨，少数带特殊背景"
+        ]
+      },
+      {
+        "title": "付费内容",
+        "body": "1.99 美元特别调查提供 3 次带特殊背景的圆陆鲨遭遇及额外圆陆鲨等奖励。"
+      }
     ],
     "highlight": true
   },
   {
-    "id": "super-mega-raid-day-september-2026",
-    "name": "9 月超级超级团战日",
+    "id": "staraptor-super-mega-raid-day-2026",
+    "name": "超级 Staraptor 超级超级团战日",
     "type": "raid-day",
     "heading": "Raid Day",
     "start": "2026-09-19T14:00:00",
     "end": "2026-09-19T17:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/super-mega-raid-day-september-2026/",
-    "summary": "9 月超级超级团战日确定于 9 月 19 日当地时间 14–17 时举行；主角、团战奖励与完整加成尚未公布。",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-19-staraptor-super-mega-raid-day-2026/staraptor-super-mega-raid-day-2026.jpg",
+    "link": "https://leekduck.com/events/staraptor-super-mega-raid-day-2026/",
+    "summary": "超级 Staraptor 于 9 月 19 日 14–17 时在超级超级团战首次登场；团战捕获后已解锁超级等级 1，并提高闪光 Staraptor 的出现概率。",
     "links": [
       {
         "label": "LeekDuck",
-        "url": "https://leekduck.com/events/super-mega-raid-day-september-2026/"
+        "url": "https://leekduck.com/events/staraptor-super-mega-raid-day-2026/"
       },
       {
-        "label": "Hub·秋季日期",
-        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/super-mega-staraptor-raid-day/"
       },
       {
-        "label": "Hub·9 月月历",
-        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+        "label": "官方",
+        "url": "https://pokemongo.com/news/staraptor-super-mega-raid-day-2026"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Staraptor_Super_Mega_Raid_Day"
       }
     ],
     "bonuses": [
-      "✨ 团战日闪光概率提升；主角待公布"
+      ":raid: 转动道馆转盘最多可获得 6 张免费团战入场券",
+      ":raid: 远程团战上限在指定全球时段提高至 20 场",
+      "超级超级团战捕获的 Staraptor 已解锁超级等级 1",
+      "✨ 超级超级团战中的闪光 Staraptor 概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 398,
+        "name": "超级 Staraptor",
+        "shiny": true,
+        "sprite": "https://db.pokemongohub.net/images/official/full/398_mega_with_bg.webp",
+        "hub": "398-Mega"
+      }
+    ],
+    "counters": [
+      {
+        "id": 150,
+        "name": "超级超梦 Y"
+      },
+      {
+        "id": 384,
+        "name": "超级烈空坐"
+      },
+      {
+        "id": 150,
+        "name": "超级超梦 X"
+      }
+    ],
+    "sections": [
+      {
+        "title": "超级最高与附加招式",
+        "body": "超级 Staraptor 可提升至超级最高等级；超级进化时可使用飞行属性附加特殊招式 Brave Bird+。"
+      },
+      {
+        "title": "限时调查与付费内容",
+        "items": [
+          "免费限时调查奖励高级战斗入场券与沙奈朵遭遇",
+          "4.99 美元活动票将免费团战券上限提高至 14 张，并提高团战神奇糖果 XL 概率",
+          ":xp: 付费票每场超级超级团战额外获得 5000 经验",
+          ":stardust: 付费票每场超级超级团战额外获得 5000 星尘"
+        ]
+      }
     ],
     "highlight": true
   },
@@ -9015,24 +9147,98 @@
     "longTerm": true
   },
   {
-    "id": "mega-squads-2026",
+    "id": "mega-squads",
     "name": "超级小队",
     "type": "event",
     "heading": "Event",
     "start": "2026-09-08T10:00:00",
     "end": "2026-09-14T20:00:00",
-    "link": "https://leekduck.com/events/mega-squads-2026/",
-    "summary": "超级小队活动于 9 月 8–14 日举行；完整玩法与加成尚未公布。",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-08-mega-squads/mega-squads.jpg",
+    "link": "https://leekduck.com/events/mega-squads/",
+    "summary": "Maschiff 与 Mabosstiff 首次进入 Pokémon GO，闪光 Flamigo 首次开放；超级大针蜂和超级黑鲁加可升至超级最高等级，活动另含免费 GO Pass、分段野外出现与 5 公里蛋。",
     "links": [
       {
         "label": "LeekDuck",
-        "url": "https://leekduck.com/events/mega-squads-2026/"
+        "url": "https://leekduck.com/events/mega-squads/"
       },
       {
         "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+        "url": "https://pokemongohub.net/post/event/pokemon-go-mega-squads-event-guide/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/en/news/mega-squads-2026"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Mega_Squads"
       }
-    ]
+    ],
+    "bonuses": [
+      ":stardust: 孵蛋星尘 ×2",
+      "捕捉独角虫、波波、戴鲁比、利牙鱼及其进化形时有机会获得超级能量",
+      "✨ 9 月 8 日 10 时至 11 日 10 时，闪光波波概率提升",
+      "✨ 9 月 11 日 10 时至 14 日 20 时，闪光利牙鱼概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 942,
+        "name": "Maschiff"
+      },
+      {
+        "id": 943,
+        "name": "Mabosstiff"
+      },
+      {
+        "id": 973,
+        "name": "Flamigo",
+        "shiny": true
+      },
+      {
+        "id": 16,
+        "name": "波波",
+        "shiny": true
+      },
+      {
+        "id": 318,
+        "name": "利牙鱼",
+        "shiny": true
+      },
+      {
+        "id": 15,
+        "name": "超级大针蜂",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png",
+        "hub": "15-Mega"
+      },
+      {
+        "id": 229,
+        "name": "超级黑鲁加",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png",
+        "hub": "229-Mega"
+      }
+    ],
+    "sections": [
+      {
+        "title": "野外与蛋池",
+        "items": [
+          "全程野外：独角虫、Flamigo",
+          "9 月 8–11 日野外：波波、稚山雀等",
+          "9 月 11–14 日野外：戴鲁比、利牙鱼等",
+          "5 公里蛋可孵出 Emolga、Fletchling、稚山雀、Flamigo、Sandile、Pancham、Maschiff"
+        ]
+      },
+      {
+        "title": "超级最高等级",
+        "body": "超级大针蜂与超级黑鲁加首次可升至超级最高等级；超级进化时分别可使用 Fell Stinger+ 与 Dark Pulse+。"
+      },
+      {
+        "title": "GO Pass：超级小队",
+        "body": "免费 GO Pass 自动发放，进度奖励含活动遭遇与超级大针蜂、超级黑鲁加能量；豪华版另有更多遭遇、能量与孵蛋距离减半。奖励须在 9 月 16 日 20 时前领取。"
+      }
+    ],
+    "highlight": true
   },
   {
     "id": "season-24-twilight-trails",
@@ -10061,5 +10267,199 @@
       "✨ 团战日闪光概率提升；主角待公布"
     ],
     "highlight": true
+  },
+  {
+    "id": "gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-1",
+    "name": "超级联赛(超级版) / 高级联赛(超级版) / 大师联赛(超级版)",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-09-08T20:00:00Z",
+    "end": "2026-09-15T20:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/go-battle-league-season-28-twilight-trails.png",
+    "link": "https://leekduck.com/events/gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-1/",
+    "summary": "GO 对战联盟暮光小径赛季开幕周，三个超级进化版联赛同时开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-1/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-twilight-trails-schedule-cups-events/"
+      }
+    ],
+    "pvp": true,
+    "bonuses": [
+      ":stardust: 对战胜利奖励星尘 ×4（不含整组结算奖励）"
+    ]
+  },
+  {
+    "id": "gbl-twilight-trails_great-league_ultra-league-mega-edition_willpower-cup-great-league-edition",
+    "name": "超级联赛 / 高级联赛(超级版) / 意志杯",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-09-15T20:00:00Z",
+    "end": "2026-09-22T20:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/gobattle-greatleague-key.jpg",
+    "link": "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_willpower-cup-great-league-edition/",
+    "summary": "超级联赛、高级联赛(超级版)与意志杯(超级联赛规则)开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_willpower-cup-great-league-edition/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-twilight-trails-schedule-cups-events/"
+      }
+    ],
+    "pvp": true
+  },
+  {
+    "id": "gbl-twilight-trails_ultra-league_master-league-mega-edition_retro-cup-great-league-edition",
+    "name": "高级联赛 / 大师联赛(超级版) / 复古杯",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-09-22T20:00:00Z",
+    "end": "2026-09-29T20:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/go-battle-league-ultra-league-machamp-swampert.jpg",
+    "link": "https://leekduck.com/events/gbl-twilight-trails_ultra-league_master-league-mega-edition_retro-cup-great-league-edition/",
+    "summary": "高级联赛、大师联赛(超级版)与复古杯(超级联赛规则)开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-twilight-trails_ultra-league_master-league-mega-edition_retro-cup-great-league-edition/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-twilight-trails-schedule-cups-events/"
+      }
+    ],
+    "pvp": true,
+    "bonuses": [
+      ":stardust: 对战胜利奖励星尘 ×4（不含整组结算奖励）"
+    ]
+  },
+  {
+    "id": "gbl-twilight-trails_master-league_mega-color-cup-great-league-edition",
+    "name": "大师联赛 / 超级多彩杯",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-09-29T20:00:00Z",
+    "end": "2026-10-06T20:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/gobattleleague-master-key.jpg",
+    "link": "https://leekduck.com/events/gbl-twilight-trails_master-league_mega-color-cup-great-league-edition/",
+    "summary": "大师联赛与超级多彩杯(超级联赛规则)开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-twilight-trails_master-league_mega-color-cup-great-league-edition/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-twilight-trails-schedule-cups-events/"
+      }
+    ],
+    "pvp": true,
+    "bonuses": [
+      ":stardust: 对战胜利奖励星尘 ×4（不含整组结算奖励）"
+    ]
+  },
+  {
+    "id": "gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-2",
+    "name": "超级联赛(超级版) / 高级联赛(超级版) / 大师联赛(超级版)",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-10-06T20:00:00Z",
+    "end": "2026-10-13T20:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/go-battle-league-season-28-twilight-trails.png",
+    "link": "https://leekduck.com/events/gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-2/",
+    "summary": "三个超级进化版联赛再次同时开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-2/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-twilight-trails-schedule-cups-events/"
+      }
+    ],
+    "pvp": true,
+    "bonuses": [
+      ":stardust: 对战胜利奖励星尘 ×4（不含整组结算奖励）"
+    ]
+  },
+  {
+    "id": "gbl-twilight-trails_great-league_ultra-league-mega-edition_little-cup",
+    "name": "超级联赛 / 高级联赛(超级版) / 小小杯",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-10-13T20:00:00Z",
+    "end": "2026-10-20T20:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/gobattle-greatleague-key.jpg",
+    "link": "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_little-cup/",
+    "summary": "超级联赛、高级联赛(超级版)与小小杯开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_little-cup/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-twilight-trails-schedule-cups-events/"
+      }
+    ],
+    "pvp": true
+  },
+  {
+    "id": "gbl-twilight-trails_ultra-league_master-league-mega-edition_fantasy-cup-great-league-edition",
+    "name": "高级联赛 / 大师联赛(超级版) / 梦幻杯",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-10-20T20:00:00Z",
+    "end": "2026-10-27T20:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/go-battle-league-ultra-league-machamp-swampert.jpg",
+    "link": "https://leekduck.com/events/gbl-twilight-trails_ultra-league_master-league-mega-edition_fantasy-cup-great-league-edition/",
+    "summary": "高级联赛、大师联赛(超级版)与梦幻杯(超级联赛规则)开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-twilight-trails_ultra-league_master-league-mega-edition_fantasy-cup-great-league-edition/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-twilight-trails-schedule-cups-events/"
+      }
+    ],
+    "pvp": true,
+    "bonuses": [
+      ":stardust: 对战胜利奖励星尘 ×4（不含整组结算奖励）"
+    ]
+  },
+  {
+    "id": "gbl-twilight-trails_master-league_mega-halloween-cup-great-league-edition",
+    "name": "大师联赛 / 超级万圣杯",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-10-27T21:00:00Z",
+    "end": "2026-11-03T21:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/gobattleleague-master-key.jpg",
+    "link": "https://leekduck.com/events/gbl-twilight-trails_master-league_mega-halloween-cup-great-league-edition/",
+    "summary": "大师联赛与超级万圣杯(超级联赛规则)开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-twilight-trails_master-league_mega-halloween-cup-great-league-edition/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-twilight-trails-schedule-cups-events/"
+      }
+    ],
+    "pvp": true,
+    "bonuses": [
+      ":stardust: 对战胜利奖励星尘 ×4（不含整组结算奖励）"
+    ]
   }
 ]
