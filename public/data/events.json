@@ -3603,28 +3603,6 @@
     ]
   },
   {
-    "id": "gbl-forever-forward_master-league_evolution-cup-great-league-edition",
-    "name": "大师联赛 · 进化杯(超级联赛规则)",
-    "type": "go-battle-league",
-    "heading": "GO Battle League",
-    "start": "2026-08-11T20:00:00Z",
-    "end": "2026-08-18T20:00:00Z",
-    "image": "https://cdn.leekduck.com/assets/img/events/gobattleleague-master-key.jpg",
-    "link": "https://leekduck.com/events/gbl-forever-forward_master-league_evolution-cup-great-league-edition/",
-    "summary": "GO 对战联盟:大师联赛与进化杯(超级联赛规则,CP 上限 1500)开放。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/gbl-forever-forward_master-league_evolution-cup-great-league-edition/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/pvp/go-battle-league-forever-forward/"
-      }
-    ],
-    "longTerm": true
-  },
-  {
     "id": "august-communityday2026",
     "name": "狡小狐 社区日",
     "type": "community-day",
@@ -3785,28 +3763,6 @@
     "highlight": true
   },
   {
-    "id": "gbl-forever-forward_great-league_scroll-cup-great-league-edition",
-    "name": "超级联赛 · 卷轴杯",
-    "type": "go-battle-league",
-    "heading": "GO Battle League",
-    "start": "2026-08-18T20:00:00Z",
-    "end": "2026-08-25T20:00:00Z",
-    "image": "https://cdn.leekduck.com/assets/img/events/gobattle-greatleague-key.jpg",
-    "link": "https://leekduck.com/events/gbl-forever-forward_great-league_scroll-cup-great-league-edition/",
-    "summary": "GO 对战联盟:超级联赛与卷轴杯(CP 上限 1500)开放。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/gbl-forever-forward_great-league_scroll-cup-great-league-edition/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/pvp/go-battle-league-forever-forward/"
-      }
-    ],
-    "longTerm": true
-  },
-  {
     "id": "starmie-super-mega-raid-day-2026",
     "name": "Starmie 超级超级团战日",
     "type": "raid-day",
@@ -3947,28 +3903,6 @@
       }
     ],
     "highlight": false
-  },
-  {
-    "id": "gbl-forever-forward_great-league_ultra-league_master-league-split-3",
-    "name": "超级 / 高级 / 大师联赛",
-    "type": "go-battle-league",
-    "heading": "GO Battle League",
-    "start": "2026-08-25T20:00:00Z",
-    "end": "2026-09-01T20:00:00Z",
-    "image": "https://cdn.leekduck.com/assets/img/events/go-battle-league-season-27-forever-forward.jpg",
-    "link": "https://leekduck.com/events/gbl-forever-forward_great-league_ultra-league_master-league-split-3/",
-    "summary": "GO 对战联盟:超级联赛、高级联赛与大师联赛同时开放。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/gbl-forever-forward_great-league_ultra-league_master-league-split-3/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/pvp/go-battle-league-forever-forward/"
-      }
-    ],
-    "longTerm": true
   },
   {
     "id": "gbl-forever-forward_great-league_ultra-league_master-league-mega-edition",
@@ -7773,54 +7707,6 @@
     "highlight": false
   },
   {
-    "id": "202607backtomcd",
-    "name": "日本麦当劳合作活动",
-    "type": "research",
-    "heading": "日本地区合作",
-    "start": "2026-07-20T00:00:00",
-    "end": "2026-09-01T23:59:00",
-    "link": "https://pokemongo.com/ja/news/202607backtomcd",
-    "summary": "日本地区限定：7 月 20 日至 9 月 1 日，日本麦当劳门店化为补给站并提供五期特别田野调查；My McDonald's Rewards 另发限时调查兑换码。",
-    "links": [
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/ja/news/202607backtomcd"
-      },
-      {
-        "label": "Pokémon GO Wiki",
-        "url": "https://pokemongo.fandom.com/wiki/McDonald's_collaboration_in_Japan_2026"
-      }
-    ],
-    "bonuses": [
-      ":pokestop: 日本全境麦当劳门店限时化为补给站",
-      "五期特别田野调查轮换不同的宝可梦邂逅",
-      "My McDonald's Rewards 提供限时调查兑换码"
-    ],
-    "sections": [
-      {
-        "title": "田野调查轮换",
-        "items": [
-          "第 1 期：7 月 20 日 10 时至 7 月 27 日 9 时 59 分",
-          "第 2 期：7 月 27 日 10 时至 8 月 3 日 9 时 59 分",
-          "第 3 期：8 月 3 日 10 时至 8 月 10 日 9 时 59 分",
-          "第 4 期：8 月 10 日 10 时至 8 月 17 日 9 时 59 分",
-          "第 5 期：8 月 17 日 10 时至 9 月 1 日 20 时",
-          "每期完成特别田野调查可遇见不同的伙伴宝可梦，部分有机会为闪光。"
-        ]
-      },
-      {
-        "title": "My McDonald's Rewards 限时调查",
-        "items": [
-          "兑换码领取期限：8 月 31 日 23 时 59 分",
-          "兑换码登记期限：9 月 1 日 19 时 59 分",
-          "限时调查完成期限：9 月 1 日 23 时 59 分"
-        ]
-      }
-    ],
-    "longTerm": true,
-    "highlight": false
-  },
-  {
     "id": "pokemon-world-championships-2026-san-francisco",
     "name": "2026 世界锦标赛：旧金山线下活动",
     "type": "event",
@@ -9706,22 +9592,73 @@
     ]
   },
   {
-    "id": "unannounced-september-event-season-24",
-    "name": "9 月神秘活动",
+    "id": "pokemon-horizons-the-series-celebration-event-2026",
+    "name": "Pokémon Horizons：系列庆祝活动",
     "type": "event",
     "heading": "Event",
     "start": "2026-09-16T10:00:00",
     "end": "2026-09-22T20:00:00",
-    "link": "https://leekduck.com/events/unannounced-september-event-season-24/",
-    "summary": "活动档期已公布，但主题、主角与加成尚未公布。",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-16-pokemon-horizons-the-series-celebration-event-2026/pokemon-horizons-celebration-event-2026.jpg",
+    "link": "https://leekduck.com/events/pokemon-horizons-the-series-celebration-event-2026/",
+    "summary": "9 月 16 日至 22 日，Pokémon Horizons 系列庆祝活动回归；戴着弗里德护目镜的 Charmander 及其进化形首次登场，可通过野外、田野调查、普通诱饵与 GO Pass 获得。",
     "links": [
       {
         "label": "LeekDuck",
-        "url": "https://leekduck.com/events/unannounced-september-event-season-24/"
+        "url": "https://leekduck.com/events/pokemon-horizons-the-series-celebration-event-2026/"
       },
       {
         "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+        "url": "https://pokemongohub.net/post/event/pokemon-horizons-the-series-celebration-event-september-2026/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/pokemon-horizons-celebration-event-2026"
+      }
+    ],
+    "bonuses": [
+      ":pokestop: 宝可站邂逅 Kecleon 的概率提高",
+      ":candy: GO Pass 1 级起捕捉糖果 ×2；豪华版 ×3",
+      ":lure: GO Pass 10 级起普通诱饵持续 1 小时，可能吸引主角宝可梦",
+      ":stardust: GO Pass 20 级起捕捉 Hatenna 与 Wattrel 获得额外星尘"
+    ],
+    "pokemon": [
+      {
+        "id": 4,
+        "name": "Charmander wearing Friede's goggles",
+        "shiny": true
+      },
+      {
+        "id": 5,
+        "name": "Charmeleon wearing Friede's goggles",
+        "shiny": true
+      },
+      {
+        "id": 6,
+        "name": "Charizard wearing Friede's goggles",
+        "shiny": true
+      },
+      {
+        "id": 25,
+        "name": "Captain's Cap Pikachu",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "野外与团战",
+        "items": [
+          "全程野外：戴着弗里德护目镜的 Charmander；幸运时有 Captain's Cap Pikachu。",
+          "05 时至 17 时：Fidough、Wattrel；幸运时有 Chansey。17 时至翌日 05 时：Eevee、Hatenna；幸运时有 Rockruff。",
+          "1★团战：Captain's Cap Pikachu；3★团战：戴着弗里德护目镜的 Charizard、Meowscarada、Skeledirge、Quaquaval。"
+        ]
+      },
+      {
+        "title": "活动内容",
+        "items": [
+          "活动主题田野调查、快照惊喜遭遇与每天更换类别的宝可站展示台同步开放。",
+          "免费 GO Pass 自动发放；豪华版售价 4.99 美元，豪华版加 6 级售价 6.99 美元。",
+          "GO Pass 奖励须在 9 月 24 日 20 时前领取。"
+        ]
       }
     ]
   },
