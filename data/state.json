@@ -1,126 +1,126 @@
 {
-  "lastUpdated": "2026-09-03T06:57:22Z",
+  "lastUpdated": "2026-09-06T00:51:43Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-09-03T06:29:33Z",
-      "lastChecked": "2026-09-03T06:57:22Z",
+      "lastFetch": "2026-09-06T00:38:46Z",
+      "lastChecked": "2026-09-06T00:51:43Z",
       "status": "ok",
-      "bytes": 64044,
-      "sha256": "e3f3e51640b6dd04",
-      "note": "刷新成功且 hash 变化；据此同步 9 月活动，并以来源 slug 维护日历。"
+      "bytes": 62910,
+      "sha256": "72804ead58c151e4",
+      "note": "刷新成功且 hash 变化；扫描结果显示本月与下月无遗漏的新 feed 活动，并补全 feed 中后续暮光小径对战档期。"
     },
     "raids": {
-      "lastFetch": "2026-09-03T06:29:17Z",
-      "lastChecked": "2026-09-03T06:57:22Z",
+      "lastFetch": "2026-09-06T00:39:52Z",
+      "lastChecked": "2026-09-06T00:51:43Z",
       "status": "ok",
-      "bytes": 9968,
-      "sha256": "0da46f7fb55d6038",
-      "note": "刷新成功且 hash 变化；用于更新当前团战与日历关联。"
+      "bytes": 11273,
+      "sha256": "cad434737a268ea4",
+      "note": "刷新成功且 hash 变化；当前缓存对应 GO Fest 超级终章第 1 天，今日第 2 天轮换按已核验活动日历与角标保留。"
     },
     "eggs": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-09-03T06:57:22Z",
+      "lastChecked": "2026-09-06T00:51:43Z",
       "status": "skipped",
       "bytes": 29466,
       "sha256": "bf0d68f3851420d0",
-      "note": "本轮与蛋池无关，未刷新。"
+      "note": "本轮已公布活动补漏无需蛋池资料，未刷新。"
     },
     "research": {
       "lastFetch": "2026-06-23T07:04:25Z",
-      "lastChecked": "2026-09-03T06:57:22Z",
+      "lastChecked": "2026-09-06T00:51:43Z",
       "status": "skipped",
       "bytes": 70308,
       "sha256": "02025eab72ec1451",
-      "note": "本轮与田野调查无关，未刷新。"
+      "note": "本轮已公布活动补漏无需田野调查池，未刷新。"
     },
     "gamemaster": {
-      "lastFetch": "2026-09-02T11:59:46Z",
-      "lastChecked": "2026-09-03T06:57:22Z",
-      "status": "skipped",
+      "lastFetch": "2026-09-06T00:44:58Z",
+      "lastChecked": "2026-09-06T00:51:43Z",
+      "status": "ok",
       "bytes": 930381,
       "sha256": "b7db691e661e09a9",
-      "note": "仍在新鲜期且 hash 未变化；沿用已核验的属性与招式资料。"
+      "note": "按 7 天窗口刷新，hash 未变化；稳定属性与招式资料继续有效。"
     },
     "tiers-attackers": {
-      "lastFetch": "2026-09-02T11:59:34Z",
-      "lastChecked": "2026-09-03T06:57:22Z",
+      "lastFetch": "2026-09-05T16:13:52Z",
+      "lastChecked": "2026-09-06T00:51:43Z",
       "status": "skipped",
       "bytes": 36494,
       "sha256": "721fcf73216e3568",
-      "note": "仍在新鲜期且 hash 未变化；保留已核验攻手榜。"
+      "note": "仍在 3 天新鲜期且 hash 与上次记录一致；保留已核验攻手榜。"
     },
     "tiers-defenders": {
-      "lastFetch": "2026-09-02T11:59:37Z",
-      "lastChecked": "2026-09-03T06:57:22Z",
+      "lastFetch": "2026-09-05T16:13:53Z",
+      "lastChecked": "2026-09-06T00:51:43Z",
       "status": "skipped",
       "bytes": 39883,
       "sha256": "823270604f7a498b",
-      "note": "仍在新鲜期且 hash 未变化；保留已核验防守榜。"
+      "note": "仍在 3 天新鲜期且 hash 与上次记录一致；保留已核验防守榜。"
     },
     "tiers-pokebase": {
-      "lastFetch": "2026-09-02T11:59:46Z",
-      "lastChecked": "2026-09-03T06:57:22Z",
+      "lastFetch": "2026-09-05T16:13:58Z",
+      "lastChecked": "2026-09-06T00:51:43Z",
       "status": "skipped",
-      "bytes": 218802,
-      "sha256": "137893c402526a22",
-      "note": "仍在新鲜期且 hash 未变化；无需重推排行。"
+      "bytes": 218881,
+      "sha256": "1c421d29634b5e72",
+      "note": "仍在 3 天新鲜期；相对上次状态记录 hash 已变化，但本轮未重推结构化榜单。"
     },
     "events-hub": {
-      "lastFetch": "2026-09-03T06:29:33Z",
-      "lastChecked": "2026-09-03T06:57:22Z",
+      "lastFetch": "2026-09-06T00:38:48Z",
+      "lastChecked": "2026-09-06T00:51:43Z",
       "status": "ok",
-      "bytes": 28802,
-      "sha256": "ee6c9daa2654cc30",
-      "note": "刷新成功且 hash 变化；9 月月度文章用于交叉核对轮换与活动。"
+      "bytes": 28753,
+      "sha256": "72c38edb475ed1cc",
+      "note": "刷新成功且 hash 变化；9 月总览、聚焦与团战时刻页、暮光小径对战赛程均可解析。"
     },
     "events-pokebase": {
-      "lastFetch": "2026-09-03T06:29:24Z",
-      "lastChecked": "2026-09-03T06:57:22Z",
+      "lastFetch": "2026-09-06T00:40:00Z",
+      "lastChecked": "2026-09-06T00:51:43Z",
       "status": "ok",
-      "bytes": 30243,
-      "sha256": "3e02d5c2ea85f5a1",
-      "note": "刷新成功且 hash 变化；用于交叉检查 9 月活动覆盖。"
+      "bytes": 30585,
+      "sha256": "0f40ce69867b166b",
+      "note": "刷新成功且 hash 变化；作为活动覆盖交叉检查，未发现需新增的独立活动。"
     },
     "events-official": {
-      "lastFetch": "2026-09-03T06:29:33Z",
-      "lastChecked": "2026-09-03T06:57:22Z",
+      "lastFetch": "2026-09-06T00:38:50Z",
+      "lastChecked": "2026-09-06T00:51:43Z",
       "status": "ok",
-      "bytes": 9837,
-      "sha256": "e40f41b303b8a987",
-      "note": "刷新成功且 hash 变化；用于核验已公布活动。"
+      "bytes": 5756,
+      "sha256": "cc3a558512e79981",
+      "note": "刷新成功，hash 相对上次状态记录变化；索引内容较精简，已与 LeekDuck 和 Hub 合并核对。"
     }
   },
   "discovery": {
-    "lastChecked": "2026-09-03T06:57:22Z",
+    "lastChecked": "2026-09-06T00:51:43Z",
     "status": "ok",
-    "note": "新活动扫描仅发现 pokemon-horizons-the-series-celebration-event-2026；已核验 LeekDuck、Hub 与官方链接。Fandom 候选详情返回 403，未采用。"
+    "note": "new 扫描确认当前月至下月无缺失 feed 活动；另核验小拉达聚焦时刻、9 月活动总览、当期团战页及暮光小径完整对战赛程。"
   },
   "contentStatus": {
-    "checkedAt": "2026-09-03T06:57:22Z",
+    "checkedAt": "2026-09-06T00:51:43Z",
     "status": "validated",
-    "note": "日历共 182 条事件；以宝可梦地平线：系列庆典替换 mystery 占位，按管理员要求移除 4 条已过期长期活动，并保留 6 条指定精选活动。"
+    "note": "日历共 186 条事件；补全小拉达聚焦时刻的 XXS 遭遇加成与说明，新增 4 条已公布的 11 月暮光小径对战档期，并更新中英文当前推荐。"
   },
   "validation": {
-    "checkedAt": "2026-09-03T06:57:22Z",
+    "checkedAt": "2026-09-06T00:51:43Z",
     "status": "passed",
     "note": "preflight exit 0（3 条既有超长 chip 警告）；validate exit 0。"
   },
   "notes": {
     "source_health": {
-      "fact": "events、raids、Hub、PokéBase 活动与官方活动缓存均已刷新且 hash 变化；主数据和三份排行榜仍在新鲜期且 hash 未变化。",
-      "decision": "按变化增量同步活动与当前团战；未变化的结构化排行榜保持已核验版本。"
+      "fact": "events、raids、Hub、PokéBase 活动缓存及官方索引相对上次状态记录均有变化；gamemaster 刷新后内容不变，Hub 两份 Max 榜内容不变。",
+      "decision": "增量补全活动与当前推荐；未变化的结构化攻手、防守榜保持已核验版本。"
     },
     "operator_note": {
-      "fact": "管理员要求移除四条已过期长期活动，并精选六条当前活动。",
-      "decision": "日历已移除指定条目，featured.json 已保留六个有效活动 ID；Spot Atlas 未改动。"
+      "fact": "管理员要求更新已公布新活动，以小拉达聚焦时刻为例，并进行完整查缺补漏。",
+      "decision": "补入 XXS 小拉达概率提升与进化经验 ×2 的细节，补齐 feed 已公布但日历缺少的 4 条暮光小径赛季尾段对战档期；Spot Atlas 与精选列表未改。"
     },
     "rotation_note": {
-      "fact": "已解析 Hub 的 9 月团战段落；Mega Houndoom 端点与最终日历相差一天。",
-      "decision": "保留与最终日历匹配的 Mega Houndoom 日期范围，以维持日历角标与抽屉契约。"
+      "fact": "Hub 9 月月度总览与现有 rotations.json 的 5★、超级及 Max 档期一致，今日超级终章第 2 天的 17 种超级 Boss 已与全天 raid-battles 抽屉逐项匹配。",
+      "decision": "rotations.json 无需修改；保留已通过 preflight 的角标与抽屉契约。"
     },
     "source_gap": {
-      "fact": "宝可梦地平线：系列庆典的 Fandom 候选详情请求返回 403。",
-      "decision": "未写入该 Fandom 链接；仅采用已验证的 LeekDuck、Hub 与官方链接。"
+      "fact": "当前 raids 缓存页面标注为 9 月 5 日超级终章第 1 天，而运行日期为 9 月 6 日。",
+      "decision": "当前推荐改按已核验的超级终章第 2 天事件页与既有日历/角标数据；不将第 1 天实时池误写为今日池。"
     }
   }
 }

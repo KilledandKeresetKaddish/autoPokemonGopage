@@ -9878,7 +9878,7 @@
     "start": "2026-09-24T18:00:00",
     "end": "2026-09-24T19:00:00",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-09-24/",
-    "summary": "当地时间 18–19 时举行聚焦时刻，期间主角大量出现并开放当周加成。",
+    "summary": "当地时间 18–19 时，小拉达在野外大量出现，并提高遇见 XXS 小拉达的概率；当周加成为进化宝可梦经验 ×2。",
     "links": [
       {
         "label": "LeekDuck",
@@ -9897,7 +9897,8 @@
       }
     ],
     "bonuses": [
-      ":xp: 进化宝可梦经验 ×2"
+      ":xp: 进化宝可梦经验 ×2",
+      ":spawn: 遇见 XXS 小拉达的概率提高"
     ]
   },
   {
@@ -10388,6 +10389,103 @@
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/gbl-twilight-trails_master-league_mega-halloween-cup-great-league-edition/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-twilight-trails-schedule-cups-events/"
+      }
+    ],
+    "pvp": true,
+    "bonuses": [
+      ":stardust: 对战胜利奖励星尘 ×4（不含整组结算奖励）"
+    ]
+  },
+  {
+    "id": "gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-3",
+    "name": "超级联赛(超级版) / 高级联赛(超级版) / 大师联赛(超级版)",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-11-03T21:00:00Z",
+    "end": "2026-11-10T21:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/go-battle-league-season-28-twilight-trails.png",
+    "link": "https://leekduck.com/events/gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-3/",
+    "summary": "三个超级进化版联赛第三次同时开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-3/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-twilight-trails-schedule-cups-events/"
+      }
+    ],
+    "pvp": true,
+    "bonuses": [
+      ":stardust: 对战胜利奖励星尘 ×4（不含整组结算奖励）"
+    ]
+  },
+  {
+    "id": "gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup",
+    "name": "超级联赛 / 高级联赛(超级版) / 2026 GO LAIC 杯",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-11-10T21:00:00Z",
+    "end": "2026-11-17T21:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/gobattle-greatleague-key.jpg",
+    "link": "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup/",
+    "summary": "超级联赛、高级联赛(超级版)与 2026 GO LAIC 杯开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-twilight-trails-schedule-cups-events/"
+      }
+    ],
+    "pvp": true
+  },
+  {
+    "id": "gbl-twilight-trails_ultra-league_master-league-mega-edition_2026-go-laic-cup",
+    "name": "高级联赛 / 大师联赛(超级版) / 2026 GO LAIC 杯",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-11-18T21:00:00Z",
+    "end": "2026-11-25T21:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/go-battle-league-ultra-league-machamp-swampert.jpg",
+    "link": "https://leekduck.com/events/gbl-twilight-trails_ultra-league_master-league-mega-edition_2026-go-laic-cup/",
+    "summary": "高级联赛、大师联赛(超级版)与 2026 GO LAIC 杯开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-twilight-trails_ultra-league_master-league-mega-edition_2026-go-laic-cup/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/pvp/go-battle-league-twilight-trails-schedule-cups-events/"
+      }
+    ],
+    "pvp": true,
+    "bonuses": [
+      ":stardust: 对战胜利奖励星尘 ×4（不含整组结算奖励）"
+    ]
+  },
+  {
+    "id": "gbl-twilight-trails_master-league_mega-catch-cup-great-league-edition",
+    "name": "大师联赛 / 超级捕捉杯",
+    "type": "go-battle-league",
+    "heading": "GO Battle League",
+    "start": "2026-11-24T21:00:00Z",
+    "end": "2026-12-01T21:00:00Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/gobattleleague-master-key.jpg",
+    "link": "https://leekduck.com/events/gbl-twilight-trails_master-league_mega-catch-cup-great-league-edition/",
+    "summary": "大师联赛与超级捕捉杯(超级联赛规则)开放；捕捉杯仅限暮光小径赛季期间捕获且符合资格的宝可梦。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/gbl-twilight-trails_master-league_mega-catch-cup-great-league-edition/"
       },
       {
         "label": "Hub",
