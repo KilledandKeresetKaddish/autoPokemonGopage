@@ -1,9 +1,10 @@
-# Sub-agent 30 — Ranking Curator
+# Brief 30 — Ranking Curator
+
+This is the current agent's next responsibility. Its governing rules were already
+embedded once; do not reload them unless a specific passage was lost to compaction.
+Never delegate or spawn work through Bash, an API, an extension, or another agent/CLI.
 
 Goal: refresh the human-readable rankings and current recommendations.
-
-Read first: `AGENTS.md` (rules · schemas · validation gate) — isolated sub-agents do
-not inherit the coordinator's context.
 
 Write scope:
 - Only the Simplified-Chinese contents between these markers in `public/index.html`.
@@ -21,9 +22,8 @@ Inputs:
   `data/raw/tiers-pokebase.txt`.
 - `data/raw/raids.json`, `data/raw/gamemaster.json`.
 - Finalized `public/data/events.json` and `public/data/rotations.json` produced by
-  the Calendar and Rotation workstreams for this run, or an explicit coordinator
-  handoff containing those exact finalized results. Do not start from previous/stale
-  files while those sibling workstreams are still in progress.
+  your preceding Calendar and Rotation responsibilities in this run. Do not use
+  previous/stale content instead of those exact finalized results.
 
 Checklist:
 1. Preserve every marker, wrapper, `.rank-panel`, and `id="…"` attribute outside the
@@ -68,6 +68,6 @@ Checklist:
    the entries you need — never read `tiers-pokebase.txt` (~120KB) or gamemaster (~900KB,
    single line) wholesale.
 
-Output to the coordinator: edited marker names, source sections parsed, and any panels
-kept from last good content. All visible prose in your five wrappers is 简体中文;
-do not write `public/data/i18n/en.json` yourself.
+Before continuing: retain edited marker names, source sections parsed, and any panels
+kept from last good content. All visible prose in the five wrappers is 简体中文; do
+not write `public/data/i18n/en.json` until the next responsibility.

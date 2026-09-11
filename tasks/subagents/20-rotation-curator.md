@@ -1,19 +1,19 @@
-# Sub-agent 20 — Rotation Curator
+# Brief 20 — Rotation Curator
+
+This is the current agent's next responsibility. Its governing rules were already
+embedded once; do not reload them unless a specific passage was lost to compaction.
+Never delegate or spawn work through Bash, an API, an extension, or another agent/CLI.
 
 Goal: produce the current month's weekly boss rotation.
-
-Read first: `AGENTS.md` (rules · schemas · validation gate) — isolated sub-agents do
-not inherit the coordinator's context.
 
 Write scope:
 - `public/data/rotations.json`
 
 Inputs:
-- The **finalized `public/data/events.json` from this run's Calendar workstream** (or an
-  explicit coordinator handoff of it) — your single-day segments copy its `raid-battles`
-  events' `pokemon[]`, so never start from a previous/stale calendar while Calendar is
-  still writing. If your sources show a boss the calendar lacks, report it to the
-  coordinator (who re-dispatches Calendar) instead of diverging.
+- The **finalized `public/data/events.json` from your preceding Calendar responsibility** —
+  your single-day segments copy its `raid-battles` events' `pokemon[]`. If your sources
+  show a boss the calendar lacks, return to the Calendar checklist yourself and fix it
+  before continuing instead of diverging.
 - `data/raw/events-hub.txt` to **find** the monthly article: it is only the `/post/event/`
   index — the rotation schedule's body is NOT in it. Locate the current month's roundup URL
   there (or via `scripts/discover.sh "raid bosses <month> <year>"`) and open it with
@@ -57,6 +57,6 @@ Checklist:
     segments in place. Verify names via `scripts/fetch.sh zh`; `jq` gamemaster for dex/属性
     entries — never read the ~900KB single-line file wholesale.
 
-Output to the coordinator: changed file, parsed source sections, any uncertainties or
-kept-last-good segments. Keep canonical display names 简体中文; English Curator (40)
-translates the finalized text after this phase, so do not edit `public/data/i18n/en.json`.
+Before continuing: retain the changed file, parsed source sections, uncertainties, and
+kept-last-good segments. Keep canonical display names 简体中文; you translate the
+finalized text later in responsibility 40, so do not edit `public/data/i18n/en.json` yet.

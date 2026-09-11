@@ -1,11 +1,11 @@
 # AGENTS.md — pogo-agent daily operator guide
 
-This repository is a **self-contained Pokémon GO dashboard**. A coding-agent CLI
+This repository is a **self-contained Pokémon GO dashboard**. One non-interactive Pi
 runs **once per day** (via `scripts/run-daily.sh` from cron) with this directory as
 its working directory. Each run you refresh the site's content from trustworthy
 sources and write it into the files listed under **"What you may edit"**. The wrapper
 then runs `scripts/validate.sh` and either publishes your changes (git commit) or
-**rolls them back**.
+saves a pending draft before rolling the working tree back.
 
 You are the **brain**. The deterministic scripts only download bytes — *you* decide
 what to fetch, whether it's even needed today, and how to interpret it. Third-party
@@ -19,12 +19,13 @@ shared set of IDs/dates/links/sprites and publish atomically. Spot Atlas is sepa
 `locations.json` keeps one operator-supplied `name` and `note` verbatim (Chinese, English or mixed)
 for both locales and never duplicates them into the English overlay.
 
-**Headless orchestration safety.** Daily phases are run-to-completion and must execute
-foreground/sequentially. Never launch async/background subagents, never treat a launch
-receipt/result path as completion, and never return while a child is active. If async
-work was accidentally started, call `subagent_wait({all:true})` and verify every
-terminal status before doing anything else. This applies to every isolated phase
-because each reads this file; phase agents must not create nested background writers.
+**Single-Pi execution.** All six responsibility briefs belong to you, the one current
+Pi, and must be completed in their numbered order. Never delegate or spawn work through
+a tool, Bash command, API, extension, or another coding-agent CLI; there are no child
+agents or parallel workstreams in a daily run. The wrapper has embedded this complete
+file, `tasks/daily-update.md`, and all six briefs exactly once. Do not re-read them just
+to load them again; only after genuine context compaction may you re-read the specific
+passage that was actually lost.
 
 **You have full network access — use it, never refuse.** You reach the internet **only**
 through `scripts/fetch.sh` and `scripts/discover.sh` (plain Bash commands). You do **not** have
@@ -501,11 +502,11 @@ read before you write, as always.
    `scripts/fetch.sh zh …` or the exact English source spelling. English visible content
    must contain no CJK fallback. On a quiet day with unchanged canonical content, leave
    the already-verified overlay unchanged.
-9. Set `public/data/meta.json` `lastUpdated` to now (ISO 8601); record per-source fetch
-   times/notes in `data/state.json` (a fixed object keyed by source — **not** a growing log).
-   (In the sub-agent orchestration, curators do **not** write `data/state.json` themselves —
-   report gaps/notes in your output to the coordinator for State+Validator (90), its sole
-   writer; a single-agent run writes it directly.)
+9. In the final State + Validator responsibility, set `public/data/meta.json`
+   `lastUpdated` to now (ISO 8601) and record per-source fetch times/notes in
+   `data/state.json` (a fixed object keyed by source — **not** a growing log). Earlier
+   responsibilities collect gaps/notes but do not write state; you write it once here
+   after the canonical and English content are finalized.
 10. **Self-check before validating:** one row per real event (no duplicate `id`s), `links[]`
    aggregated (≥2 sources per event where possible), no event ended >3 months ago, long events
    flagged, rotations parsed not invented, `highlight` only on Community Day / Raid Day /

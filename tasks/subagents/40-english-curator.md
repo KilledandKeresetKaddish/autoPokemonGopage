@@ -1,11 +1,12 @@
-# Sub-agent 40 — English Curator
+# Brief 40 — English Curator
+
+This is the current agent's next responsibility. Its governing rules were already
+embedded once; do not reload them unless a specific passage was lost to compaction.
+Never delegate or spawn work through Bash, an API, an extension, or another agent/CLI.
+Finish this responsibility before moving to the validator.
 
 Goal: keep the English edition in lockstep with the finalized Simplified-Chinese
 canonical content from this same daily run.
-
-Read first: `AGENTS.md` (bilingual contract · schemas · validation gate). This is a
-**foreground-only** headless phase: never launch async/background work and never
-return before your write is complete.
 
 Write scope:
 - `public/data/i18n/en.json` only
@@ -92,8 +93,8 @@ Checklist:
    unchanged, leave the already-verified English text untouched. When only a few
    IDs changed, edit only those entries and any affected current/highlight regions;
    do not retranscribe the full 200KB overlay.
-8. Run `jq empty public/data/i18n/en.json`, then `scripts/validate.sh`. Report exact
-   parity/safety failures to the coordinator; fix only this file.
+8. Run `jq empty public/data/i18n/en.json`, then `scripts/validate.sh`. Keep exact
+   parity/safety failures for the final fix loop; fix only this file here.
 
-Output to the coordinator: changed event IDs/rotation tracks/region names, terminology
-checks performed, and exact validation result.
+Before continuing: retain changed event IDs/rotation tracks/region names, terminology
+checks performed, and the exact validation result.

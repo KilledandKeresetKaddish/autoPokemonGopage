@@ -1,34 +1,21 @@
-# 每日更新任务 (daily coordinator)
+# 每日更新任务 (single-Pi sequence)
 
-You are the **coordinator** for this Pokémon GO dashboard. Your working directory is
-this repository. **Read `AGENTS.md` first and follow it exactly** — it defines what
-you may edit, the hard rules, the data sources, schemas, and validation gate.
+You are the one current Pi responsible for this complete Pokémon GO dashboard update.
+The wrapper has already embedded `AGENTS.md`, this task, and all six briefs exactly
+once. Those rules are in context now: do not re-read the files merely to reload them;
+after genuine context compaction, re-read only a specifically lost passage.
 
-This run is intentionally split into focused sub-agent workstreams. If your coding
-agent supports sub-agents — e.g. Pi via a sub-agent extension (`pi-subagents` /
-`pi-sub-agent`), which runs each brief in an isolated `--no-session` subprocess
-(optionally worktree-isolated) — delegate each brief below as a bounded read-only or
-write scope. **This is a headless run-to-completion workflow: never launch async /
-background subagents.** Every phase must use foreground execution (`async:false`, or
-the foreground default), return a terminal result, and report its changed paths before
-the next phase starts. Never mistake a launch acknowledgement or result-file path for
-completion. If async work is launched despite this rule, call
-`subagent_wait({all:true})`, inspect every terminal status, and do not return while any
-current-session child remains. An unacknowledged grouped-result warning is a run
-failure, not permission to continue.
+Complete every brief yourself in numbered order. Never delegate or spawn work through
+Pi tools, Bash, an API, an extension, or another coding-agent CLI. Do not split the run
+into child agents, background jobs, parallel writers, or separate sessions.
 
 **All phases run sequentially**: Rotations copies its single-day segments' `pokemon[]`
 from Calendar's finalized `raid-battles` events (and `preflight.sh` hard-FAILs any
-角标↔抽屉 divergence), so Calendar must finish before Rotations starts — disjoint
-*write* scopes do not make that read-coupled contract race-free. The English text
-layer likewise runs only after finalized Chinese content; “bilingual in parallel”
-means both editions are maintained in the same daily run, not two fact pipelines
-racing each other. Isolated sub-agents do **not** inherit this prompt, so each brief
-restates that it must read `AGENTS.md` first. If your agent has no sub-agent support,
-execute the same phases yourself in order; the briefs are still the checklist of
-responsibilities.
+角标↔抽屉 divergence), so Calendar must finish before Rotations starts. The English
+text layer likewise runs only after finalized Chinese content; both editions are
+maintained by you in the same fact pipeline.
 
-## Sub-agent briefs
+## Sequential responsibility briefs
 
 - `tasks/subagents/00-source-scout.md` — inspect `data/state.json`, run
   `scripts/fetch.sh list`, decide what is stale, fetch only needed sources, and
@@ -45,27 +32,28 @@ responsibilities.
 - `tasks/subagents/40-english-curator.md` — own `public/data/i18n/en.json`, the
   text-only English overlay for finalized events, rotations, categories and all five
   rich regions. It never duplicates dates, IDs, links, sprites or flags.
-- `tasks/subagents/90-state-validator.md` — own `public/data/meta.json` and
-  `data/state.json`, then run validation after all content owners finish.
+- `tasks/subagents/90-state-validator.md` — finish `public/data/meta.json` and
+  `data/state.json`, then run validation after the preceding responsibilities.
 
-## Coordinator sequence
+## Required sequence
 
-1. Read `AGENTS.md`, `data/state.json`, and every sub-agent brief above.
-2. Run the Source Scout phase first. Do **not** blindly refetch everything; refresh
-   by age / relevance using only `scripts/fetch.sh`. Have the Scout report **which
-   sources' hashes changed** vs `data/state.json`, and pass that delta to every curator:
+1. The governing rules and briefs are already embedded. Read `data/state.json`, then
+   perform every responsibility below yourself without delegation.
+2. Run the Source Scout responsibility first. Do **not** blindly refetch everything; refresh
+   by age / relevance using only `scripts/fetch.sh`. Determine **which sources' hashes
+   changed** vs `data/state.json`, and carry that delta into every later responsibility:
    unchanged sources need no re-derivation, and if nothing event-bearing changed, take
    AGENTS.md's **quiet-day fast path** (date-driven maintenance only) instead of
-   dispatching full rebuilds.
+   doing full rebuilds.
 3. After the raw sources are available, run **Calendar first**, to completion: it
    writes `public/data/events.json` (plus `featured.json` / `mega.json` /
    `categories.json` when their duties apply). It writes `locations.json` only when the
    operator note explicitly requests a Spot Atlas row change; ordinary runs leave it untouched.
-4. Then run **Rotations** with Calendar's finalized `public/data/events.json` as an
-   explicit input (its single-day segments must copy those events' `pokemon[]`; if
-   its sources reveal a boss the calendar missed, report back — you re-dispatch
-   Calendar, then Rotations again). Then run **Rankings** with both finalized files
-   (or pass those exact results explicitly). Rankings must not build
+4. Then do **Rotations** from Calendar's finalized `public/data/events.json`
+   (its single-day segments must copy those events' `pokemon[]`; if its sources reveal
+   a boss the calendar missed, return to the Calendar responsibility yourself, fix it,
+   then redo the affected Rotation work). Then do **Rankings** with both finalized
+   files. Rankings must not build
    `calendar-notes` or `rankings-current` from previous/stale calendar or rotation
    files. Rankings writes only inside the five allowed AI markers in
    `public/index.html`.
@@ -74,19 +62,19 @@ responsibilities.
    `public/data/i18n/en.json`. It must finish with exact event/track/segment/array
    parity and all five non-empty English region strings; it never writes structural
    facts. If Chinese content is unchanged, keep its verified English entries as-is.
-6. Run the State + Validator phase last: it sets `public/data/meta.json.lastUpdated`,
-   records fixed per-source notes in `data/state.json` (it is the **sole writer** of
-   `data/state.json`), self-checks, and runs `scripts/preflight.sh` **then**
-   `scripts/validate.sh` (`run-daily.sh` enforces both before publish — either non-zero
-   rolls the run back). **You (the coordinator) own the fix loop:** if **either** gate
-   fails, read the reported failures, re-dispatch the responsible owner to fix its own
-   scope, then re-run the gates. Owner map: events/featured/mega/categories/explicit locations changes → Calendar ·
-   rotations → Rotations · Chinese AI regions → Rankings · English overlay/regions →
-   English Curator · meta/state → State + Validator.
+6. Run the State + Validator responsibility last: it sets
+   `public/data/meta.json.lastUpdated`, records fixed per-source notes in
+   `data/state.json` (write state only here), self-checks, and runs
+   `scripts/preflight.sh` **then** `scripts/validate.sh` (`run-daily.sh` enforces both
+   before publish — either non-zero blocks it). If **either** gate fails, read the
+   report, return to the responsible checklist yourself, fix that scope, then re-run
+   the gates. Scope map: events/featured/mega/categories/explicit locations changes →
+   Calendar · rotations → Rotations · Chinese AI regions → Rankings · English
+   overlay/regions → English Curator · meta/state → State + Validator.
    **Cap the loop at 3 rounds**; if a failure class has no owner or survives 3 rounds
    (e.g. a protected-file hash mismatch you cannot legitimately fix), stop, record the
-   exact failure in `data/state.json` for a developer, and let `run-daily.sh` roll the
-   run back rather than forcing it. `preflight.sh` flags render-contract breakage
+   exact failure in `data/state.json` for a developer, and let `run-daily.sh` preserve
+   the draft and roll the working tree back rather than forcing it. `preflight.sh` flags render-contract breakage
    (orphan raids, 角标↔抽屉 mismatch, mega form-id) that `validate.sh`'s structural
    checks can't see. State + Validator reports; it never reaches into another owner's
    scope.
@@ -98,10 +86,16 @@ Canonical files and the five `index.html` marker regions use 简体中文;
 `public/data/i18n/en.json` uses English only. Both editions must describe the same
 facts and ship atomically.
 
-If an **OPERATOR NOTE** block is appended at the very end of this prompt, treat it as a
-one-off extra requirement for this run only: fold it into whichever workstream(s) it
-affects, still bound by every AGENTS.md hard rule — skip and note anything out of scope
-(e.g. a protected-file change) rather than forcing it through.
+If an **OPERATOR NOTE** block is appended near the end of this prompt, treat it as a
+one-off extra requirement for this run only: fold it into whichever responsibility or
+responsibilities it affects, still bound by every AGENTS.md hard rule — skip and note
+anything out of scope (e.g. a protected-file change) rather than forcing it through.
+
+If a **RECOVERED DRAFT** block follows it, inspect that possibly incomplete draft and
+then still execute this entire sequence. In particular, do Source Scout, freshness,
+discovery, and date maintenance; use the block's committed base state as the last
+successful source baseline instead of trusting draft hashes, correct stale draft work,
+and reuse still-valid work rather than blindly redoing it.
 
 When the note asks you to **add or fix a link, enrich or verify an event, fill in missing details,
 or force a recheck**, that is a fetch job, not a memory job: run `scripts/discover.sh "<english
@@ -115,7 +109,7 @@ not Calendar-as-chips. Day-badges come **only** from `rotations.json`; an `event
 chip can never become a 角标. Follow AGENTS.md《渲染契约》: one banner event + an all-day `raid-battles`
 per Boss (Calendar) **and** matching single-day `5star`/`mega` segments (Rotations) whose `pokemon[]`
 equal those events. `scripts/preflight.sh` rejects orphan raids and 角标↔抽屉 mismatch, so such a note
-must reach **both** workstreams — dispatched **in order** (Calendar first, then Rotations reading its
+must reach **both** responsibilities **in order** (Calendar first, then Rotations reading its
 finalized events).
 
 When the note asks to **add / remove / rename / correct a Spot Atlas location**, route it to

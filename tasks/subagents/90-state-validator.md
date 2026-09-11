@@ -1,9 +1,10 @@
-# Sub-agent 90 — State + Validator
+# Brief 90 — State + Validator
+
+This is the current agent's final responsibility. Its governing rules were already
+embedded once; do not reload them unless a specific passage was lost to compaction.
+Never delegate or spawn work through Bash, an API, an extension, or another agent/CLI.
 
 Goal: finish bookkeeping and prove the daily update is safe to publish.
-
-Read first: `AGENTS.md` (rules · schemas · validation gate) — isolated sub-agents do
-not inherit the coordinator's context.
 
 Write scope:
 - `public/data/meta.json`
@@ -15,8 +16,8 @@ Inputs:
 
 Checklist:
 1. Set `public/data/meta.json.lastUpdated` to the current UTC ISO 8601 timestamp.
-2. You are the **sole writer** of `data/state.json` (Source Scout reports its notes to
-   you; it does not write the file). Keep it a fixed object keyed by source: last
+2. Write `data/state.json` only now, using the Source Scout notes you retained; the
+   earlier responsibility did not write the file. Keep it a fixed object keyed by source: last
    fetch/check times, **the 16-hex sha256 of each cache** (as printed by `fetch.sh list` —
    next run's skip/fast-path decisions depend on these, so they are mandatory), and concise
    notes about source problems — fold in Source Scout's notes here. Do not append a growing
@@ -45,10 +46,10 @@ Checklist:
      event, Mega/5★ segments use BASE dex ids — `preflight.sh` checks these.
 4. Run `scripts/preflight.sh` **then** `scripts/validate.sh`; report each exact result. Both must exit 0
    to publish (`run-daily.sh` enforces this and rolls back on either failure).
-5. You only report — you never edit another owner's scope. If validation fails, hand
-   the specific failures (and which owner must fix what) to the coordinator, which
-   re-dispatches the fix and asks you to re-run validation; repeat until it passes. If a
-   source is broken, keep last good content and record the limitation.
+5. If validation fails, identify the responsible scope, return to that earlier
+   checklist yourself, fix it, then repeat this final responsibility until it passes
+   (subject to the three-round cap in `daily-update.md`). If a source is broken, keep
+   last good content and record the limitation.
 
-Output to the coordinator: exact validation command/result and changed bookkeeping
-files.
+Finish with the exact validation command/result and changed bookkeeping files in your
+run summary.
