@@ -41,6 +41,7 @@ SH
 set -uo pipefail
 argc=$#
 [ "$argc" -gt 0 ] || exit 90
+printf 'started\n' >> logs/pi-started
 : > logs/mock-argv
 for ((i=1; i<argc; i++)); do printf '%s\n' "${!i}" >> logs/mock-argv; done
 printf '%s' "${!argc}" > logs/mock-prompt
@@ -131,6 +132,36 @@ HTML
   printf '%s\n' "$f"
 }
 
+# Build the existing pending.tar format from selected worktree paths, then return
+# the fixture to its clean baseline so run-daily exercises restoration itself.
+craft_snapshot() {
+  local f="$1" note="$2"
+  shift 2
+  local base stage index patch_hash note_hash
+  base=$(git -C "$f" rev-parse HEAD)
+  stage="$f/logs/craft"
+  index="$stage/index"
+  rm -rf "$stage"
+  mkdir -p "$stage" "$f/logs/resume"
+  GIT_INDEX_FILE="$index" git -C "$f" read-tree "$base"
+  GIT_INDEX_FILE="$index" git -C "$f" add -A -- "$@"
+  GIT_INDEX_FILE="$index" git -C "$f" diff --cached --binary --full-index --no-renames "$base" -- > "$stage/changes.patch"
+  patch_hash=$(sha256sum "$stage/changes.patch" | awk '{print $1}')
+  note_hash=$(printf '%s' "$note" | sha256sum | awk '{print $1}')
+  cat > "$stage/meta" <<EOF
+version=1
+base_head=$base
+note_hash=$note_hash
+created_at=2026-09-11T00:00:00Z
+patch_sha256=$patch_hash
+EOF
+  tar -cf "$f/logs/resume/pending.tar" -C "$stage" meta changes.patch
+  rm -rf "$stage"
+  git -C "$f" reset --hard -q "$base"
+  git -C "$f" clean -fdq
+  assert_clean "$f"
+}
+
 run_daily() {
   local f="$1" mode="$2" note="$3" out="$4"
   shift 4
@@ -201,6 +232,95 @@ assert_eq "$RUN_RC" 0
 grep -q 'corrupt archive' "$f/fresh.out" || fail "corrupt snapshot reason missing"
 assert_absent "$f/logs/resume/pending.tar"
 
+# A crafted draft may contain an allowed path absent from HEAD plus an index shell
+# violation. Rejection must remove the new path and restore every tracked path before
+# a fresh Pi run starts.
+f=$(make_fixture rejected-cleanup)
+sed -i 's/<body>/<body class="forbidden">/' "$f/public/index.html"
+printf 'allowed-new\n' > "$f/public/data/featured.json"
+craft_snapshot "$f" same public/index.html public/data/featured.json
+rm -f "$f/logs/pi-started"
+run_daily "$f" fresh same "$f/restore.out"
+assert_eq "$RUN_RC" 0
+assert_clean "$f"
+assert_absent "$f/logs/resume/pending.tar"
+assert_file "$f/logs/pi-started"
+grep -q 'public/index.html protection mismatch' "$f/restore.out" || fail "restored protection violation was not rejected"
+
+# If that cleanup command fails, pending.tar remains the recovery source and Pi must
+# not start against a partially cleaned tree.
+f=$(make_fixture cleanup-failure)
+sed -i 's/<body>/<body class="forbidden">/' "$f/public/index.html"
+printf 'allowed-new\n' > "$f/public/data/featured.json"
+craft_snapshot "$f" same public/index.html public/data/featured.json
+old_snapshot=$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')
+mkdir -p "$f/logs/fail-bin"
+cat > "$f/logs/fail-bin/git" <<'SH'
+#!/usr/bin/env bash
+if [ "${MOCK_FAIL_RESTORE_CHECKOUT:-0}" = 1 ] && [ "${1:-}" = checkout ]; then exit 73; fi
+exec /usr/bin/git "$@"
+SH
+chmod +x "$f/logs/fail-bin/git"
+rm -f "$f/logs/pi-started"
+run_daily "$f" fresh same "$f/restore.out" PATH="$f/bin:$f/logs/fail-bin:$PATH" MOCK_FAIL_RESTORE_CHECKOUT=1
+[ "$RUN_RC" -ne 0 ] || fail "cleanup command failure returned success"
+assert_absent "$f/logs/pi-started"
+assert_file "$f/logs/resume/pending.tar"
+assert_eq "$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')" "$old_snapshot" "cleanup failure deleted/replaced pending snapshot"
+grep -q 'rejected draft cleanup failed; pending snapshot retained' "$f/restore.out" || fail "cleanup hard failure not reported"
+
+# A post-apply checker execution failure restores the baseline if possible, retains
+# the legal snapshot, and hard-stops before Pi.
+f=$(make_fixture restore-checker-failure)
+printf 'legal-draft\n' > "$f/public/data/events.json"
+craft_snapshot "$f" same public/data/events.json
+old_snapshot=$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')
+mkdir -p "$f/logs/fail-bin"
+printf '#!/usr/bin/env bash\nexit 74\n' > "$f/logs/fail-bin/python3"
+chmod +x "$f/logs/fail-bin/python3"
+rm -f "$f/logs/pi-started"
+run_daily "$f" fresh same "$f/restore.out" PATH="$f/bin:$f/logs/fail-bin:$PATH"
+[ "$RUN_RC" -ne 0 ] || fail "checker execution failure returned success"
+assert_absent "$f/logs/pi-started"
+assert_clean "$f"
+assert_eq "$(cat "$f/public/data/events.json")" base-events
+assert_eq "$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')" "$old_snapshot" "checker failure did not retain legal snapshot"
+grep -q 'post-apply index protection check failed' "$f/restore.out" || fail "checker failure not reported"
+
+# Failure to execute the patch-path checker is also operational: retain the pending
+# snapshot and stop before applying it or invoking Pi.
+f=$(make_fixture path-checker-failure)
+printf 'legal-draft\n' > "$f/public/data/events.json"
+craft_snapshot "$f" same public/data/events.json
+old_snapshot=$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')
+mkdir -p "$f/logs/fail-bin"
+cat > "$f/logs/fail-bin/git" <<'SH'
+#!/usr/bin/env bash
+if [ "${MOCK_FAIL_PATH_CHECK:-0}" = 1 ] && [ "${1:-}" = apply ] && [ "${2:-}" = --numstat ]; then exit 76; fi
+exec /usr/bin/git "$@"
+SH
+chmod +x "$f/logs/fail-bin/git"
+rm -f "$f/logs/pi-started"
+run_daily "$f" fresh same "$f/restore.out" PATH="$f/bin:$f/logs/fail-bin:$PATH" MOCK_FAIL_PATH_CHECK=1
+[ "$RUN_RC" -ne 0 ] || fail "path-checker execution failure returned success"
+assert_absent "$f/logs/pi-started"
+assert_clean "$f"
+assert_eq "$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')" "$old_snapshot" "path-checker failure discarded pending snapshot"
+grep -q 'cannot verify pending snapshot paths' "$f/restore.out" || fail "path-checker error misclassified"
+
+# A confirmed disallowed patch path remains an invalid snapshot, not an operational
+# checker failure: reject it and continue fresh.
+f=$(make_fixture disallowed-path)
+printf 'forbidden-draft\n' > "$f/fixture.txt"
+craft_snapshot "$f" same fixture.txt
+rm -f "$f/logs/pi-started"
+run_daily "$f" fresh same "$f/restore.out"
+assert_eq "$RUN_RC" 0
+assert_clean "$f"
+assert_absent "$f/logs/resume/pending.tar"
+assert_file "$f/logs/pi-started"
+grep -q 'invalid or disallowed patch' "$f/restore.out" || fail "disallowed path was not rejected"
+
 # A snapshot I/O failure must leave the current tree untouched and must not delete
 # the previous complete snapshot before its replacement exists.
 f=$(make_fixture save-failure)
@@ -219,6 +339,29 @@ assert_eq "$(cat "$f/public/data/featured.json")" allowed-new-two
 assert_absent "$f/public/data/mega.json"
 assert_eq "$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')" "$old_snapshot" "previous snapshot changed before atomic replacement"
 grep -q 'current working tree is preserved' "$f/fail.out" || fail "save-failure preservation not reported"
+
+# An operational index checker failure while replacing a restored snapshot is a save
+# error, not a confirmed scope violation: keep both the current tree and old snapshot.
+f=$(make_fixture save-checker-failure)
+run_daily "$f" fail-initial same "$f/first.out"
+old_snapshot=$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')
+mkdir -p "$f/logs/fail-bin"
+cat > "$f/logs/fail-bin/python3" <<'SH'
+#!/usr/bin/env bash
+count_file=logs/python-count
+count=0
+[ ! -f "$count_file" ] || count=$(cat "$count_file")
+count=$((count + 1))
+printf '%s\n' "$count" > "$count_file"
+[ "$count" -eq 1 ] && exec /usr/bin/python3 "$@"
+exit 75
+SH
+chmod +x "$f/logs/fail-bin/python3"
+run_daily "$f" fail-again same "$f/fail.out" PATH="$f/bin:$f/logs/fail-bin:$PATH"
+[ "$RUN_RC" -ne 0 ] || fail "save-side checker failure returned success"
+assert_eq "$(cat "$f/public/data/events.json")" draft-two
+assert_eq "$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')" "$old_snapshot" "save-side checker failure replaced old snapshot"
+grep -q 'cannot verify public/index.html scope' "$f/fail.out" || fail "save-side checker error misclassified"
 
 # Changes outside the protected index regions are ineligible and use the old rollback.
 f=$(make_fixture protected-index)

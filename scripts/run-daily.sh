@@ -366,15 +366,37 @@ POGO_DAILY_RUN=1 scripts/validate.sh; vl=$?
 rollback_daily_tree() {
   # Reset index + worktree so staged, unstaged, deleted, and untracked daily files
   # all return to the committed baseline; ignored raw/log caches survive.
-  git reset -q "$BASE_HEAD" -- public data 2>/dev/null || true
-  git checkout -- public data 2>/dev/null || true
-  git clean -fdq public data 2>/dev/null || true
+  local status_file="logs/.daily-rollback-$$"
+  if ! git reset -q "$BASE_HEAD" -- public data; then
+    echo "!!! rollback failed while resetting the index"
+    return 1
+  fi
+  if ! git checkout -- public data; then
+    echo "!!! rollback failed while restoring tracked content"
+    return 1
+  fi
+  if ! git clean -fdq public data; then
+    echo "!!! rollback failed while removing untracked content"
+    return 1
+  fi
+  if ! git status --porcelain --untracked-files=all -- public data > "$status_file"; then
+    echo "!!! rollback result could not be verified"
+    rm -f "$status_file"
+    return 1
+  fi
+  if [ -s "$status_file" ]; then
+    echo "!!! rollback left content changes in the working tree"
+    cat "$status_file"
+    rm -f "$status_file"
+    return 1
+  fi
+  rm -f "$status_file"
 }
 
 save_failed_draft_and_rollback() {
   if [ "$SNAPSHOT_SCOPE_TRUSTED" != 1 ]; then
     echo "!!! baseline/write scope is untrusted; using the existing rollback path without a snapshot"
-    rollback_daily_tree
+    rollback_daily_tree || return 1
     return 0
   fi
 
@@ -382,14 +404,17 @@ save_failed_draft_and_rollback() {
   snapshot_rc=$?
   case "$snapshot_rc" in
     0)
-      rollback_daily_tree
+      if ! rollback_daily_tree; then
+        echo "!!! draft was saved, but working-tree rollback failed; stopping with the snapshot retained"
+        return 1
+      fi
       echo "===== draft saved; working tree rolled back $(date -u +%FT%TZ) ====="
       return 0
       ;;
     2)
       # Disallowed paths/protected index regions are not eligible draft content.
       echo "!!! draft is outside the trusted daily scope; using the existing rollback path"
-      rollback_daily_tree
+      rollback_daily_tree || return 1
       return 0
       ;;
     *)

@@ -37,11 +37,14 @@ maintained by you in the same fact pipeline.
 
 ## Required sequence
 
-1. The governing rules and briefs are already embedded. Read `data/state.json`, then
-   perform every responsibility below yourself without delegation.
+1. The governing rules and briefs are already embedded. Determine the last-successful
+   source state, then perform every responsibility below yourself without delegation.
+   On a normal run it is the current committed `data/state.json`. With a
+   `RECOVERED DRAFT`, the workspace copy is unfinished: read the committed base state
+   named in that block (for example via `git show`) for source hash/time comparisons.
 2. Run the Source Scout responsibility first. Do **not** blindly refetch everything; refresh
    by age / relevance using only `scripts/fetch.sh`. Determine **which sources' hashes
-   changed** vs `data/state.json`, and carry that delta into every later responsibility:
+   changed** vs that last-successful baseline, and carry the delta into every later responsibility:
    unchanged sources need no re-derivation, and if nothing event-bearing changed, take
    AGENTS.md's **quiet-day fast path** (date-driven maintenance only) instead of
    doing full rebuilds.
@@ -76,8 +79,9 @@ maintained by you in the same fact pipeline.
    exact failure in `data/state.json` for a developer, and let `run-daily.sh` preserve
    the draft and roll the working tree back rather than forcing it. `preflight.sh` flags render-contract breakage
    (orphan raids, 角标↔抽屉 mismatch, mega form-id) that `validate.sh`'s structural
-   checks can't see. State + Validator reports; it never reaches into another owner's
-   scope.
+   checks can't see. The same Pi returns to the corresponding responsibility checklist,
+   fixes it, then reruns preflight and validate, for at most three rounds. Never delegate,
+   start another agent, or modify protected files to bypass a gate.
 7. If a source is unreachable or unparsable, keep the last good content, record the
    issue in `data/state.json`, and still pass validation. Never ship empty rankings.
 
@@ -93,9 +97,10 @@ anything out of scope (e.g. a protected-file change) rather than forcing it thro
 
 If a **RECOVERED DRAFT** block follows it, inspect that possibly incomplete draft and
 then still execute this entire sequence. In particular, do Source Scout, freshness,
-discovery, and date maintenance; use the block's committed base state as the last
-successful source baseline instead of trusting draft hashes, correct stale draft work,
-and reuse still-valid work rather than blindly redoing it.
+discovery, and date maintenance. The block's committed base state is the
+last-successful source baseline; workspace `data/state.json` is unfinished draft output
+and its hashes/timestamps can never justify a quiet day. Correct stale draft work and
+reuse still-valid work rather than blindly redoing it.
 
 When the note asks you to **add or fix a link, enrich or verify an event, fill in missing details,
 or force a recheck**, that is a fetch job, not a memory job: run `scripts/discover.sh "<english

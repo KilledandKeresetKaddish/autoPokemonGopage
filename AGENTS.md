@@ -27,6 +27,13 @@ file, `tasks/daily-update.md`, and all six briefs exactly once. Do not re-read t
 to load them again; only after genuine context compaction may you re-read the specific
 passage that was actually lost.
 
+**Recovered-draft source baseline.** On a normal run, the current committed
+`data/state.json` is the last-successful source baseline. If a `RECOVERED DRAFT` block
+is present, the workspace copy is unfinished draft output: use the block's committed
+base state (`git show <base-head>:data/state.json`) for Source Scout hash/timestamp
+comparisons. Never declare a quiet day from draft state; still run freshness,
+discovery, and date maintenance, then correct or reuse draft content as sources warrant.
+
 **You have full network access — use it, never refuse.** You reach the internet **only**
 through `scripts/fetch.sh` and `scripts/discover.sh` (plain Bash commands). You do **not** have
 a model-hosted browser or `web_search` tool — so don't wait for one, and **never tell the
@@ -237,10 +244,11 @@ admin/operator request.
 ---
 
 ## Data sources — fetch via `scripts/fetch.sh <name>`
-Start by running `scripts/fetch.sh list` and reading `data/state.json` to see what is
-already cached and how old it is. **Decide what to refresh by age — do not blindly
-refetch everything.** `list` prints each cache's sha256 (16 hex) — compare it with the
-`sha256` recorded per source in `data/state.json`: **an unchanged hash means every
+Start by running `scripts/fetch.sh list` and reading the applicable last-successful
+state baseline described above (normally the committed workspace `data/state.json`;
+for a recovered draft, the `RECOVERED DRAFT` base state). **Decide what to refresh by
+age — do not blindly refetch everything.** `list` prints each cache's sha256 (16 hex) —
+compare it with the `sha256` recorded per source in that baseline: **an unchanged hash means every
 conclusion you drew from that source last run still stands** — do not re-parse,
 re-verify, or re-derive content from it. Then read *what changed* in `data/raw/`
 (grep/jq the big files — see *Token discipline* below).
@@ -364,8 +372,11 @@ read before you write, as always.
 ---
 
 ## Daily procedure
-1. `scripts/fetch.sh list` + read `data/state.json` → decide what is stale, and note which
-   caches' sha256 match last run's recorded hashes (those sources need **no** re-derivation).
+1. `scripts/fetch.sh list` + read the last-successful state baseline → decide what is
+   stale, and note which caches' sha256 match the last successful run (those sources
+   need **no** re-derivation). Normally that baseline is the current committed
+   `data/state.json`; after recovery, use the committed base state named in the
+   `RECOVERED DRAFT` block, never the unfinished workspace copy.
 2. Fetch only what's needed, e.g.
    `scripts/fetch.sh events raids events-hub events-pokebase tiers-attackers`.
 3. Read what changed in the raw files (grep/jq the big ones — *Token discipline*); adapt to

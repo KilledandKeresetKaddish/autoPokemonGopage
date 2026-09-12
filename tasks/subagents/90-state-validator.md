@@ -47,9 +47,10 @@ Checklist:
 4. Run `scripts/preflight.sh` **then** `scripts/validate.sh`; report each exact result. Both must exit 0
    to publish (`run-daily.sh` enforces this and rolls back on either failure).
 5. If validation fails, identify the responsible scope, return to that earlier
-   checklist yourself, fix it, then repeat this final responsibility until it passes
-   (subject to the three-round cap in `daily-update.md`). If a source is broken, keep
-   last good content and record the limitation.
+   checklist yourself, fix it, then rerun preflight and validate (at most three rounds,
+   per `daily-update.md`). Never delegate, start another agent, or modify protected
+   files to bypass a gate. If a source is broken, keep last good content and record
+   the limitation.
 
 Finish with the exact validation command/result and changed bookkeeping files in your
 run summary.

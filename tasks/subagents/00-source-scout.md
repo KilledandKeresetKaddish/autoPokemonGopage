@@ -6,7 +6,10 @@ delegate or spawn work through Bash, an API, an extension, or another agent/CLI.
 
 Goal: make the raw source cache ready for your later content responsibilities without over-fetching.
 
-1. Apply the already-embedded `AGENTS.md` source rules and read `data/state.json`.
+1. Apply the already-embedded `AGENTS.md` source rules and select the source-state
+   baseline. Normally use the current committed `data/state.json`. If a
+   `RECOVERED DRAFT` block is present, use its committed base state (via `git show`);
+   the workspace `data/state.json` is unfinished draft output and cannot prove freshness.
 2. Run `scripts/fetch.sh list`.
 3. Decide which named sources are stale or relevant today:
    - `events`, `raids`, `events-hub`, `events-pokebase`, `events-official`: ~1 day.
@@ -16,9 +19,9 @@ Goal: make the raw source cache ready for your later content responsibilities wi
 4. Fetch only needed sources with `scripts/fetch.sh <name> ...`.
 5. Inspect refreshed `data/raw/*` enough to carry these facts into your later responsibilities:
    - **which sources actually CHANGED** — compare each cache's sha256 from `fetch.sh list`
-     with the hash recorded in `data/state.json`; unchanged sources need no re-derivation
-     downstream (this drives AGENTS.md's quiet-day fast path — say explicitly when
-     everything event-bearing is unchanged);
+     with the hash recorded in the selected last-successful baseline; unchanged sources
+     need no re-derivation downstream. In a recovery run, never use draft hashes/timestamps
+     to announce the quiet-day fast path; freshness, discovery, and date maintenance still run;
    - empty / flaky / changed formats (hand grep/jq extraction recipes for the big files,
      not file dumps — gamemaster is a ~900KB single line);
    - the **URL of the current month's Hub rotation/roundup article** — `events-hub.txt` is only
