@@ -243,7 +243,7 @@ restore_snapshot() {
   parse_allowed "$@"
   [ -f "$file" ] || return 3
 
-  local dir stage entries version base note created expected_patch actual_patch records paths_rc scope_rc
+  local dir stage entries version base note created expected_patch actual_patch records paths_rc scope_rc apply_check_rc
   dir=$(dirname "$file")
   stage=$(mktemp -d "$dir/.restore.XXXXXX") || return 1
   trap 'rm -rf "$stage"' RETURN
@@ -278,9 +278,11 @@ restore_snapshot() {
     *) echo "resume: cannot verify pending snapshot paths; keeping the snapshot and stopping" >&2; return 1 ;;
   esac
   build_baseline_path_sets "$base" "$stage/baseline-paths" || return 1
-  if ! git apply --check --binary --allow-empty "$stage/changes.patch"; then
-    invalidate "$file" "patch no longer applies cleanly"
-    return $?
+  git apply --check --binary --allow-empty "$stage/changes.patch"
+  apply_check_rc=$?
+  if [ "$apply_check_rc" -ne 0 ]; then
+    echo "resume: patch applicability pre-check failed (git apply rc=$apply_check_rc); pending snapshot retained" >&2
+    return 1
   fi
   if ! git apply --binary --allow-empty "$stage/changes.patch"; then
     echo "resume: patch apply failed after its pre-check; restoring baseline and keeping the snapshot" >&2

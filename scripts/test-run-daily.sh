@@ -308,6 +308,31 @@ assert_clean "$f"
 assert_eq "$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')" "$old_snapshot" "path-checker failure discarded pending snapshot"
 grep -q 'cannot verify pending snapshot paths' "$f/restore.out" || fail "path-checker error misclassified"
 
+# An applicability pre-check command failure is ambiguous: retain the legal snapshot,
+# leave the still-clean tree alone, and stop before Pi.
+f=$(make_fixture apply-check-failure)
+printf 'legal-draft\n' > "$f/public/data/events.json"
+craft_snapshot "$f" same public/data/events.json
+old_snapshot=$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')
+mkdir -p "$f/logs/fail-bin"
+cat > "$f/logs/fail-bin/git" <<'SH'
+#!/usr/bin/env bash
+if [ "${MOCK_FAIL_APPLY_CHECK:-0}" = 1 ] && [ "${1:-}" = apply ] && [ "${2:-}" = --check ]; then
+  echo 'mock git apply --check failure' >&2
+  exit 77
+fi
+exec /usr/bin/git "$@"
+SH
+chmod +x "$f/logs/fail-bin/git"
+rm -f "$f/logs/pi-started"
+run_daily "$f" fresh same "$f/restore.out" PATH="$f/bin:$f/logs/fail-bin:$PATH" MOCK_FAIL_APPLY_CHECK=1
+[ "$RUN_RC" -ne 0 ] || fail "apply pre-check failure returned success"
+assert_absent "$f/logs/pi-started"
+assert_clean "$f"
+assert_eq "$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')" "$old_snapshot" "apply pre-check failure discarded pending snapshot"
+grep -q 'mock git apply --check failure' "$f/restore.out" || fail "original apply pre-check error missing"
+grep -q 'patch applicability pre-check failed' "$f/restore.out" || fail "apply pre-check hard failure not reported"
+
 # A confirmed disallowed patch path remains an invalid snapshot, not an operational
 # checker failure: reject it and continue fresh.
 f=$(make_fixture disallowed-path)
