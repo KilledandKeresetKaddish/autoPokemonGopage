@@ -1,9 +1,10 @@
-# Sub-agent 10 — Calendar Curator
+# Brief 10 — Calendar Curator
+
+This is the current agent's next responsibility. Its governing rules were already
+embedded once; do not reload them unless a specific passage was lost to compaction.
+Never delegate or spawn work through Bash, an API, an extension, or another agent/CLI.
 
 Goal: produce the normalized calendar dataset.
-
-Read first: `AGENTS.md` (rules · schemas · validation gate) — isolated sub-agents do
-not inherit the coordinator's context.
 
 Write scope:
 - `public/data/events.json`
@@ -93,7 +94,7 @@ Checklist:
     never dump a species JSON); re-verify links only on new/changed events; `jq`/`grep` the
     big caches (gamemaster is a ~900KB single line — never read it wholesale).
 
-Output to the coordinator: changed files, event count, long-term count, highlighted
-count, known source gaps kept from last good content. Keep canonical visible text
-简体中文; English Curator (40) updates the text-only English overlay after all facts are
-finalized, so do not edit `public/data/i18n/en.json`.
+Before continuing: retain changed files, event count, long-term count, highlighted
+count, and known source gaps kept from last good content. Keep canonical visible text
+简体中文; you update the text-only English overlay later in responsibility 40 after all
+facts are finalized, so do not edit `public/data/i18n/en.json` yet.
