@@ -8,6 +8,7 @@
 #   scripts/discover.sh "<keywords>"   SEARCH — find the URL for an event you can
 #                                      name (LeekDuck feed + GO Hub + 官方 news +
 #                                      Pokémon GO Wiki/Fandom search).
+#   scripts/discover.sh new --cached   DETECT from prepared <24h caches, no network.
 #   scripts/discover.sh new            DETECT — list events that appear in the
 #                                      freshly-fetched feeds but are NOT yet in
 #                                      public/data/events.json, cross-checked
@@ -16,7 +17,7 @@
 # Both reach the network mostly through the SAME path as fetch.sh (Cloudflare/JS
 # pages solved by Jina; the Fandom search hits its MediaWiki JSON API directly) and
 # only ever touch the project's trusted, allowlisted sources. Everything
-# printed is a LEAD, not truth: open each with `scripts/fetch.sh url <URL>`, read
+# printed is a LEAD, not truth: open each with `scripts/fetch.sh url --max-age 86400 <URL>`, read
 # it, confirm it's the right event/Pokémon, THEN edit. Never invent a URL.
 #
 # Output: tab-separated  TAG <tab> TITLE <tab> URL [<tab> …]  — saved under
@@ -41,82 +42,119 @@ if [ "${1:-}" = "new" ]; then
   CAL="$ROOT/public/data/events.json"
   FEED="$RAW/events.json"
 
-  # Fresh pull: events (the structured backbone) is required; hub/official are
-  # best-effort and only used to corroborate a candidate across sources.
-  "$FETCH" events >/dev/null 2>&1 || true
-  "$FETCH" events-hub events-official >/dev/null 2>&1 || true
-  [ -s "$FEED" ] || { echo "discover new: 无法获取 events feed($FEED 为空)" >&2; exit 1; }
-
-  KNOWN="$(jq -c '[.[].id]' "$CAL" 2>/dev/null || echo '[]')"
+  # Standalone mode still refreshes; daily Scout prepares these once, then uses
+  # --cached. Never silently report an incomplete/invalid scan as "no new events".
+  case "${2:-}" in
+    "")
+      "$FETCH" events events-hub events-official >/dev/null || {
+        echo "discover new: INCOMPLETE — source refresh failed; inspect last-good caches" >&2; exit 1;
+      } ;;
+    --cached) ;;
+    *) echo "usage: discover.sh new [--cached]" >&2; exit 2 ;;
+  esac
+  [ "$#" -le 2 ] || { echo "usage: discover.sh new [--cached]" >&2; exit 2; }
   HUB="$RAW/events-hub.txt"; OFF="$RAW/events-official.txt"
+  for f in "$FEED" "$HUB" "$OFF"; do
+    stamp="$(date -u -r "$f" +%s 2>/dev/null || echo 0)"
+    age=$(( $(date -u +%s) - stamp ))
+    if [ ! -s "$f" ] || [ "$age" -lt 0 ] || [ "$age" -ge 86400 ]; then
+      echo "discover new: INCOMPLETE — missing/empty/stale input: $f (requires <24h)" >&2; exit 1
+    fi
+  done
+  if ! jq -e 'type == "array" and all(.[]; (.eventID | type == "string" and length > 0)
+      and (.name | type == "string" and length > 0) and (.link | test("^https?://"))
+      and (.start | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}"))
+      and ((.end // .start) | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}")))' "$FEED" >/dev/null ||
+     ! jq -e 'type == "array" and all(.[]; .id | type == "string")' "$CAL" >/dev/null; then
+    echo "discover new: INCOMPLETE — unparseable feed/calendar shape" >&2; exit 1
+  fi
+  incomplete() { echo "discover new: INCOMPLETE — $*" >&2; exit 1; }
+  # Basic source/link checks only, not proof the page's semantics are reliable.
+  # Each index must link its own source; challenge/errors still need inspection.
+  for f in "$HUB" "$OFF"; do
+    domain='pokemongohub\.net'
+    [ "$f" != "$OFF" ] || domain='pokemongo\.com'
+    grep -E "https://(www\.)?$domain/" "$f" >/dev/null ||
+      incomplete "unreadable index/source link: $f"
+    grep -Ei 'Just a moment\.\.\.|Attention Required!|Cloudflare Ray ID' "$f" >/dev/null
+    rc=$?
+    [ "$rc" = 1 ] || incomplete "index challenge/read check: $f (grep rc=$rc)"
+  done
+  KNOWN="$(jq -c '[.[].id]' "$CAL")" || incomplete "calendar ID extraction"
+  work="$(mktemp -d "$DISC/.new.XXXXXX")" || incomplete "temporary result directory"
+  trap 'rm -rf "$work"' EXIT
 
   # Distinctive tokens of a name/slug: lowercase a-z0-9 words ≥4 chars, minus
   # Pokémon-GO boilerplate and pure numbers. Corroboration/coverage decisions
   # require ALL of these to match — a single generic token ("raid", "2026")
   # must never count as cross-source evidence.
   STOP='^(raid|raids|battle|battles|hour|hours|event|events|pokemon|community|week|weekend|league|research|spotlight|special|super|mega|shadow|primal|with|into|from|this|that|january|february|march|april|june|july|august|september|october|november|december)$'
-  toks() { printf '%s' "$1" | tr 'A-Z' 'a-z' | tr -cs 'a-z0-9' '\n' | awk 'length>=4' | grep -vE '^[0-9]+$' | grep -vE "$STOP" || true; }
+  toks() { printf '%s' "$1" | tr 'A-Z' 'a-z' | tr -cs 'a-z0-9' '\n' | awk -v stop="$STOP" 'length>=4 && !/^[0-9]+$/ && $0 !~ stop'; }
   # Upper bound = end of next month (the calendar's retention window: current +
   # next month). Beyond that an event is genuinely future, not a missed one.
   UPPER="$(date -u -d "$(date -u +%Y-%m-01) +2 months" +%F 2>/dev/null || echo 9999-12-31)"
 
-  {
-    # (1) feed events still current/upcoming, inside the retention window, and not
-    #     already on the calendar
-    jq -r --arg today "$TODAY" --arg upper "$UPPER" --argjson known "$KNOWN" '
-      .[]
-      | (.eventID) as $eid
-      | ((.end // .start) | tostring)[0:10] as $endd
-      | ((.start) | tostring)[0:10] as $startd
-      | select($endd >= $today and $startd < $upper)
-      | select(($known | index($eid)) == null)
-      | "\($eid)\t\(.name)\t\(.link)\t\($startd)→\($endd)"
-    ' "$FEED" 2>/dev/null \
-    | while IFS=$'\t' read -r eid name link dates; do
-        [ -n "$eid" ] || continue
-        # 多方校对: only claim Hub/官方 corroboration when EVERY distinctive token
-        # of the name appears there (any-token matching made "+Hub+官方" near-
-        # universal noise); no distinctive tokens → no corroboration claimed.
-        hub=0; off=0
-        dt="$(toks "$name")"
-        if [ -n "$dt" ]; then
-          hub=1; off=1
-          while IFS= read -r t; do
-            { [ -s "$HUB" ] && grep -qiF "$t" "$HUB"; } || hub=0
-            { [ -s "$OFF" ] && grep -qiF "$t" "$OFF"; } || off=0
-          done <<< "$dt"
-        fi
-        corr="LeekDuck"; [ "$hub" = 1 ] && corr="$corr+Hub"; [ "$off" = 1 ] && corr="$corr+官方"
-        printf 'NEW\t%s\t%s\t%s\t佐证:%s\n' "$name" "$link" "$dates" "$corr"
-      done
+  # Materialize/check each extraction before rendering any results. A later
+  # successful command must never hide an earlier failure in a grouped pipeline.
+  jq -r --arg today "$TODAY" --arg upper "$UPPER" --argjson known "$KNOWN" '
+    .[]
+    | (.eventID) as $eid
+    | ((.end // .start) | tostring)[0:10] as $endd
+    | ((.start) | tostring)[0:10] as $startd
+    | select($endd >= $today and $startd < $upper)
+    | select(($known | index($eid)) == null)
+    | "\($eid)\t\(.name)\t\(.link)\t\($startd)→\($endd)"
+  ' "$FEED" > "$work/feed" || incomplete "feed candidate extraction"
+  CALTEXT="$(jq -r '.[] | "\(.id) \(.name) \(.link)"' "$CAL" | tr 'A-Z' 'a-z')" ||
+    incomplete "calendar text extraction"
+  grep -oE 'https://(www\.)?pokemongo\.com/(news|post)/[a-zA-Z0-9/_-]+' "$OFF" > "$work/official"
+  rc=$?
+  [ "$rc" -le 1 ] || incomplete "official URL extraction (grep rc=$rc)"
+  awk '!s[$0]++' "$work/official" > "$work/unique" || incomplete "official URL deduplication"
 
-    # (2) official-only leads: pokemongo.com news/post links whose slug does NOT
-    #     overlap the existing calendar (so likely something LeekDuck hasn't carried).
-    if [ -s "$OFF" ]; then
-      CALTEXT="$(jq -r '.[] | "\(.id) \(.name) \(.link)"' "$CAL" 2>/dev/null | tr 'A-Z' 'a-z')"
-      grep -oE 'https://(www\.)?pokemongo\.com/(news|post)/[a-zA-Z0-9/_-]+' "$OFF" 2>/dev/null \
-        | awk '!s[$0]++' \
-        | while read -r url; do
-            # Suppress a lead only when ALL distinctive slug tokens already
-            # appear in the calendar (any-token matching let "2026"/"july"
-            # suppress virtually every lead). Generic-only slugs stay visible.
-            slug="${url##*/}"; covered=0
-            dt="$(toks "$slug")"
-            if [ -n "$dt" ]; then
-              covered=1
-              while IFS= read -r t; do
-                printf '%s' "$CALTEXT" | grep -qF "$t" || { covered=0; break; }
-              done <<< "$dt"
-            fi
-            [ "$covered" = 0 ] && printf 'OFFICIAL-LEAD\t-\t%s\n' "$url"
-          done
+  : > "$work/candidates" || incomplete "candidate result write"
+  while IFS=$'\t' read -r eid name link dates; do
+    [ -n "$eid" ] || continue
+    # Corroboration requires EVERY distinctive token, not generic raid/year words.
+    hub=0; off=0
+    dt="$(toks "$name")" || incomplete "feed name token extraction"
+    if [ -n "$dt" ]; then
+      hub=1; off=1
+      while IFS= read -r t; do
+        grep -iF "$t" "$HUB" >/dev/null; rc=$?
+        [ "$rc" -le 1 ] || incomplete "Hub corroboration read (grep rc=$rc)"
+        [ "$rc" = 0 ] || hub=0
+        grep -iF "$t" "$OFF" >/dev/null; rc=$?
+        [ "$rc" -le 1 ] || incomplete "official corroboration read (grep rc=$rc)"
+        [ "$rc" = 0 ] || off=0
+      done <<< "$dt"
     fi
-  } | tee "$OUT"
+    corr="LeekDuck"; [ "$hub" = 1 ] && corr="$corr+Hub"; [ "$off" = 1 ] && corr="$corr+官方"
+    printf 'NEW\t%s\t%s\t%s\t佐证:%s\n' "$name" "$link" "$dates" "$corr" >> "$work/candidates" ||
+      incomplete "feed candidate result write"
+  done < "$work/feed" || incomplete "feed candidate read"
+
+  while IFS= read -r url; do
+    # Suppress only if ALL distinctive slug tokens occur in the calendar.
+    # Generic-only slugs remain leads. Empty grep results are a valid empty scan.
+    slug="${url##*/}"; covered=0
+    dt="$(toks "$slug")" || incomplete "official slug token extraction"
+    if [ -n "$dt" ]; then
+      covered=1
+      while IFS= read -r t; do
+        [[ "$CALTEXT" == *"$t"* ]] || { covered=0; break; }
+      done <<< "$dt"
+    fi
+    if [ "$covered" = 0 ]; then
+      printf 'OFFICIAL-LEAD\t-\t%s\n' "$url" >> "$work/candidates" || incomplete "official candidate result write"
+    fi
+  done < "$work/unique" || incomplete "official candidate read"
+  tee "$OUT" < "$work/candidates" || incomplete "result write/output (any partial candidates are incomplete)"
 
   echo >&2
   if [ -s "$OUT" ]; then
     echo "discover new: 候选已存 -> ${OUT#$ROOT/}" >&2
-    echo "discover new: 逐条 scripts/fetch.sh url <URL> 打开核实(同一活动/日期)后再加入 events.json;拿不准把 gap 上报 State+Validator 记入 data/state.json(单代理运行可直接记),勿编。" >&2
+    echo "discover new: 逐条 scripts/fetch.sh url --max-age 86400 <URL> 打开核实(同一活动/日期)后再加入 events.json;拿不准把 gap 上报 State+Validator 记入 data/state.json,勿编。" >&2
   else
     echo "discover new: 本周期 feed 相对当前日历无新增活动。" >&2
   fi
@@ -125,7 +163,7 @@ fi
 
 # ============================ SEARCH MODE (default) ========================
 QUERY="${*:-}"
-[ -n "${QUERY// /}" ] || { echo "usage: scripts/discover.sh \"<keywords>\"   |   scripts/discover.sh new" >&2; exit 1; }
+[ -n "${QUERY// /}" ] || { echo "usage: scripts/discover.sh \"<keywords>\"   |   scripts/discover.sh new [--cached]" >&2; exit 1; }
 
 ENC="$(jq -nr --arg q "$QUERY" '$q|@uri')"
 OUT="$DISC/discover-$(date -u +%Y%m%dT%H%M%SZ).txt"
@@ -203,7 +241,7 @@ OUT="$DISC/discover-$(date -u +%Y%m%dT%H%M%SZ).txt"
 echo >&2
 if [ -s "$OUT" ]; then
   echo "discover: $(wc -l <"$OUT") candidate(s) -> ${OUT#$ROOT/}" >&2
-  echo "discover: NEXT — open each with  scripts/fetch.sh url <URL>  and confirm it's the same event/Pokémon before using. Never guess a URL." >&2
+  echo "discover: NEXT — open each with  scripts/fetch.sh url --max-age 86400 <URL>  and confirm it's the same event/Pokémon before using. Never guess a URL." >&2
 else
-  echo "discover: no candidates for \"$QUERY\". Try English Pokémon/event names, or browse the source index via fetch.sh url. Do NOT invent a URL — report the gap for data/state.json (State+Validator is its sole writer in sub-agent runs)." >&2
+  echo "discover: no candidates for \"$QUERY\". Try English Pokémon/event names, or browse the source index via fetch.sh url. Do NOT invent a URL — report the gap for data/state.json (State+Validator is its sole writer)." >&2
 fi

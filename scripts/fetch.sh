@@ -9,6 +9,10 @@
 #   scripts/fetch.sh list                  # show what's cached and how old
 #   scripts/fetch.sh events raids ...       # fetch specific sources
 #   scripts/fetch.sh all                    # fetch everything
+#   scripts/fetch.sh url [--force|--max-age SECONDS|--cached|--info] <URL...>
+# Default url/--force downloads; --cached never downloads; --info prints metadata.
+# --max-age reuses a verified body only within that age. Failures return nonzero
+# without printing stale content; --cached is an explicit last-good read.
 #
 # Several sources (Hub tier/event pages, pokébase, the official site) sit behind
 # a Cloudflare "managed challenge" or heavy JS — a plain curl only gets the
@@ -57,8 +61,8 @@ ALLOW_HOSTS=(leekduck.com pokemongohub.net db.pokemongohub.net pokebase.app poke
 
 list_status() {
   # sha256 (16 hex) lets the agent compare against the hashes recorded in
-  # data/state.json: an unchanged source means last run's conclusions still
-  # stand — no re-parsing/re-verifying needed (AGENTS.md "Token discipline").
+  # committed data/state.json: identical bytes can reuse previous interpretation,
+  # but detail-page checks and date-driven maintenance remain independent.
   for k in "${ALL[@]}"; do
     f="$RAW/$k.$(ext_of "$k")"
     if [ -f "$f" ]; then
@@ -170,6 +174,9 @@ fetch_url() {
   # report status + type + size. 2xx + content-type image/* = the image exists.
   case "${url%%\?*}" in
     *.png|*.webp|*.jpg|*.jpeg|*.gif)
+      if [ "$URL_MODE" = cached ] || [ "$URL_MODE" = info ]; then
+        echo "Image has no body cache; use url for HEAD: $url" >&2; return 2
+      fi
       if curl -fsSIL -A "$UA" --max-time 45 "$url" | tr -d '\r' \
            | grep -iE '^(HTTP/|content-type:|content-length:)'; then
         return 0
@@ -177,23 +184,81 @@ fetch_url() {
         echo "FAIL url <- $url  (image HEAD failed — image likely absent)" >&2; return 1
       fi ;;
   esac
-  local tmp; tmp="$(mktemp)"
+  local key meta body hash stamp age tmp old_body
+  key="$(printf '%s' "$url" | sha256sum | cut -d' ' -f1)"
+  mkdir -p "$RAW/details"
+  meta="$RAW/details/$key.json"
+  body=""; age=-1
+  # Metadata is the atomic pointer to an immutable, content-addressed plain body.
+  # Reject damaged/mismatched records instead of treating file existence as freshness.
+  if jq -e --arg u "$url" '.url == $u and (.sha256 | test("^[a-f0-9]{64}$"))
+      and (.lastFetch | type == "string")' "$meta" >/dev/null 2>&1; then
+    hash="$(jq -r .sha256 "$meta")"
+    body="$RAW/details/$key.$hash.txt"
+    stamp="$(date -u -d "$(jq -r .lastFetch "$meta")" +%s 2>/dev/null || echo 0)"
+    age=$(( $(date -u +%s) - stamp ))
+    if [ "$stamp" -le 0 ] || [ "$age" -lt 0 ] || [ ! -s "$body" ] ||
+       [ "$(sha256sum "$body" 2>/dev/null | cut -d' ' -f1)" != "$hash" ]; then
+      body=""; age=-1
+    fi
+  fi
+  if [ "$URL_MODE" = info ] || [ "$URL_MODE" = cached ]; then
+    [ -n "$body" ] || { echo "MISS/INVALID detail cache: $url" >&2; return 1; }
+    if [ "$URL_MODE" = info ]; then
+      jq --arg path "$body" --argjson age "$age" '. + {path:$path, ageSeconds:$age, stale:($age >= 86400)}' "$meta"
+    else
+      echo "CACHED last-successful body (${age}s), not a refresh: $url" >&2
+      [ "$age" -lt 86400 ] || echo "STALE explicit last-good read (${age}s): $url" >&2
+      cat "$body"
+    fi
+    return $?
+  fi
+  if [ "$URL_MODE" = age ] && [ -n "$body" ] && [ "$age" -lt "$URL_MAX_AGE" ]; then
+    cat "$body"; return $?
+  fi
+  old_body="$body"
+  tmp="$(mktemp "$RAW/details/.fetch.XXXXXX")" || return 1
+  local fetched=0
   case "$host" in
     raw.githubusercontent.com|*.githubusercontent.com|pokeapi.co|*.pokeapi.co)
-      fetch_plain "$url" "$tmp" || { rm -f "$tmp"; echo "FAIL url <- $url" >&2; return 1; } ;;
-    *)  # human-facing site domains (leekduck/hub/pokebase/official/pvpoke) → solver
-      fetch_tier "$url" "$tmp" || { rm -f "$tmp"; echo "FAIL url <- $url" >&2; return 1; } ;;
+      fetch_plain "$url" "$tmp" && fetched=1 ;;
+    *) fetch_tier "$url" "$tmp" && fetched=1 ;;
   esac
-  cat "$tmp"; rm -f "$tmp"
+  if [ "$fetched" != 1 ] || [ ! -s "$tmp" ]; then
+    rm -f "$tmp"
+    echo "FAIL url <- $url (refresh failed; last good cache unchanged; no fresh body)" >&2
+    return 1
+  fi
+  hash="$(sha256sum "$tmp" | cut -d' ' -f1)"
+  body="$RAW/details/$key.$hash.txt"
+  if ! jq -n --arg url "$url" --arg time "$(date -u +%FT%TZ)" --arg hash "$hash" \
+      '{url:$url,lastFetch:$time,sha256:$hash}' > "$tmp.meta" ||
+     ! mv "$tmp" "$body" || ! mv "$tmp.meta" "$meta"; then
+    rm -f "$tmp" "$tmp.meta"
+    echo "FAIL detail cache write: $url" >&2; return 1
+  fi
+  [ -z "$old_body" ] || [ "$old_body" = "$body" ] || rm -f "$old_body"
+  cat "$body"
 }
 
 [ $# -eq 0 ] && { echo "usage: fetch.sh <list|all|zh <key...>|url <URL...>|${ALL[*]}>"; exit 1; }
 case "$1" in
   list)      list_status; exit 0 ;;
-  -h|--help) echo "sources: ${ALL[*]}"; echo "names:   fetch.sh zh <dexId|species-slug|move:<move-slug>>...  (cached 简体中文 lookup)"; echo "ad-hoc:  fetch.sh url <URL...>  (hosts: ${ALLOW_HOSTS[*]})"; exit 0 ;;
+  -h|--help) echo "sources: ${ALL[*]}"; echo "names:   fetch.sh zh <dexId|species-slug|move:<move-slug>>...  (cached 简体中文 lookup)"; echo "ad-hoc:  fetch.sh url [--force|--max-age SECONDS|--cached|--info] <URL...>  (hosts: ${ALLOW_HOSTS[*]})"; exit 0 ;;
   zh)        shift; [ $# -eq 0 ] && { echo "usage: fetch.sh zh <dexId|species-slug|move:<move-slug>>..." >&2; exit 1; }
              rc=0; for k in "$@"; do zh_lookup "$k" || rc=1; done; exit $rc ;;
-  url)       shift; [ $# -eq 0 ] && { echo "usage: fetch.sh url <URL...>" >&2; exit 1; }
+  url)       shift
+             URL_MODE=force; URL_MAX_AGE=86400
+             case "${1:-}" in
+               --force) shift ;;
+               --cached|--info) URL_MODE="${1#--}"; shift ;;
+               --max-age)
+                 URL_MODE=age; shift
+                 [[ "${1:-}" =~ ^[0-9]{1,9}$ ]] || { echo "--max-age requires seconds (0..999999999)" >&2; exit 2; }
+                 URL_MAX_AGE=$((10#$1)); shift ;;
+               --*) echo "unknown url option: $1" >&2; exit 2 ;;
+             esac
+             [ $# -eq 0 ] && { echo "usage: fetch.sh url <URL...>" >&2; exit 1; }
              rc=0; for u in "$@"; do fetch_url "$u" || rc=1; done; exit $rc ;;
   all)       set -- "${ALL[@]}" ;;
 esac

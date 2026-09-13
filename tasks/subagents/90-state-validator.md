@@ -1,56 +1,36 @@
 # Brief 90 — State + Validator
 
-This is the current agent's final responsibility. Its governing rules were already
-embedded once; do not reload them unless a specific passage was lost to compaction.
-Never delegate or spawn work through Bash, an API, an extension, or another agent/CLI.
+Goal/output: public/data/meta.json and data/state.json, then both existing gates.
+Inputs: finalized 10–40 outputs and Scout's source/detail/date notes. Shared schemas,
+source rules and checks are already embedded in AGENTS.md; bounded repairs in daily-update.
 
-Goal: finish bookkeeping and prove the daily update is safe to publish.
+1. Set meta.lastUpdated to current UTC ISO 8601. Write state only now, not in earlier
+   responsibilities. Keep the existing fixed per-source object (fetch/check times,
+   16-hex cache hashes from fetch.sh list, concise status/gap notes), not a growing log.
+   Advance processed source hashes only for inputs actually handled successfully; on
+   failure retain the previous processed hash and distinguish observed material/time
+   in the note. Raw freshness is not processing completion.
+2. Maintain the small `details` mapping under AGENTS.md “Reuse and detail review”:
+   original URL → full processed body hash, checkedAt and pending. Advance only after
+   all affected canonical and English content is handled; keep old records on failures.
+   Remove unreferenced records. In recovery compare to committed base state, never
+   workspace draft or raw metadata. Update state.lastUpdated for date comparisons.
+3. Self-check the shared content/schema/render contracts:
+   - one real event/ID, exact source slugs, current+next-month/local coverage and 90-day
+     history/retention; correct long-term/PvP/shiny flags and aggregated relevant links;
+   - complete parsed rotation pools, base dex/form art/hub parity with raid drawers;
+   - source-supported targeted Mega changes within existing legal values/mechanics;
+   - Chinese species/moves from `fetch.sh zh` (NOT gamemaster), or the shared verified
+     proper-name fallback; stable types/moves from gamemaster, new forms from live sources;
+   - current recommendations and Boss/Max panels respect dates despite identical hashes;
+     unchanged static panels remain, no empty/unsafe regions or leaked pipeline details;
+   - exact English ID/key/array/region parity, no CJK, no dangling event references;
+   - featured IDs all retained/admin-authorized; Spot Atlas byte-identical unless explicitly
+     requested, then one raw name, operator facts and valid zones per schema;
+   - public shell/protected files untouched and required wrappers/IDs preserved.
+4. Run `scripts/preflight.sh` then `scripts/validate.sh`, report each exact exit/result.
+   Repair via the owner scope in daily-update (maximum three rounds), including dependent
+   English updates. Never weaken gates or claim unreadable sources were verified.
 
-Write scope:
-- `public/data/meta.json`
-- `data/state.json`
-
-Inputs:
-- Final outputs from Calendar, Rotations, Rankings, and English Curator.
-- Source Scout fetch / source-health notes.
-
-Checklist:
-1. Set `public/data/meta.json.lastUpdated` to the current UTC ISO 8601 timestamp.
-2. Write `data/state.json` only now, using the Source Scout notes you retained; the
-   earlier responsibility did not write the file. Keep it a fixed object keyed by source: last
-   fetch/check times, **the 16-hex sha256 of each cache** (as printed by `fetch.sh list` —
-   next run's skip/fast-path decisions depend on these, so they are mandatory), and concise
-   notes about source problems — fold in Source Scout's notes here. Do not append a growing
-   chronological log.
-3. Self-check before validation:
-   - no duplicate event ids;
-   - no event ended before the retention window;
-   - current + next month retained;
-   - long-running events are flagged;
-   - source links are aggregated where available;
-   - rotations are parsed / corroborated, not invented;
-   - every 简体中文 Pokémon name & move is verified against `gamemaster` (no hallucinated / garbled names);
-   - Chinese ranking panels are not empty and each keeps its required
-     `[data-ai-region="…"]` wrapper;
-   - `public/data/i18n/en.json` has exact canonical event IDs, category/track keys,
-     segment + nested-array lengths, five non-empty safe English regions, and no CJK
-     fallback; `public/data/i18n/ui.json` remains checksum-protected and untouched;
-   - `featured.json` is an array of ids that all still exist in `events.json` (Calendar pruned
-     it — validate.sh hard-rejects stale featured ids);
-   - `locations.json` has unique stable ids, one trim-non-empty raw `name` per spot, valid IANA
-     zones, only `isoWeekday/hour/minute` in its schedule, and no persisted runtime fields; unless
-     an explicit operator note requested a Spot Atlas change, Calendar left it byte-identical;
-   - no internal pipeline details (`data/raw/*` paths, script names) in user-visible text;
-   - render contract holds (AGENTS.md《渲染契约》): every `raid-battles` event has a matching
-     `rotations.json` 角标 segment (or is `longTerm`), single-day segment `pokemon[]` match their drawer
-     event, Mega/5★ segments use BASE dex ids — `preflight.sh` checks these.
-4. Run `scripts/preflight.sh` **then** `scripts/validate.sh`; report each exact result. Both must exit 0
-   to publish (`run-daily.sh` enforces this and rolls back on either failure).
-5. If validation fails, identify the responsible scope, return to that earlier
-   checklist yourself, fix it, then rerun preflight and validate (at most three rounds,
-   per `daily-update.md`). Never delegate, start another agent, or modify protected
-   files to bypass a gate. If a source is broken, keep last good content and record
-   the limitation.
-
-Finish with the exact validation command/result and changed bookkeeping files in your
-run summary.
+Finish with changed bookkeeping files, exact gate results and remaining gaps. Only the
+existing wrapper can publish the validated content or preserve/roll back the failed draft.

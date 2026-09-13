@@ -153,8 +153,8 @@ if [ -f "$C" ] && jq empty "$C" >/dev/null 2>&1; then
   [ "${bad:-0}" = 0 ] || { say "FAIL categories.json: $bad entry(ies) off-palette or bad kind (palettes: purple green greenlt rust orange red teal teallt blue indigo mauve gold brown; kind: bar|chip)"; fail=1; }
 fi
 
-# 4e) mega.json — the Mega-Evolution roster the agent appends to. Its ONE job is
-#     to add a Pokémon row; the level/energy/re-mega mechanics tables live in the
+# 4e) mega.json — source-backed additions and targeted completions/corrections.
+#     Identity and supported values stay constrained; mechanics tables live in the
 #     protected app.js. Enforce the row shape so a bad entry fails the gate rather
 #     than rendering broken (initialCost must be a known tier or null for TBD).
 M=public/data/mega.json

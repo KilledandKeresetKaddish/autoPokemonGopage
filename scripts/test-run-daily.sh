@@ -206,6 +206,15 @@ assert_eq "$(git -C "$f" show HEAD:public/data/rotations.json)" staged-and-unsta
 ! git -C "$f" cat-file -e HEAD:public/data/mega.json 2>/dev/null || fail "deleted file was not preserved"
 ! git -C "$f" cat-file -e HEAD:data/state.json 2>/dev/null || fail "staged deletion was not preserved"
 check_pi_prompt "$f"
+python3 - "$f/logs/mock-prompt" <<'PYTEST'
+import sys
+text = open(sys.argv[1]).read()
+assert text.index('===== OPERATOR NOTE') < text.index('===== RECOVERED DRAFT')
+assert 'ignored-env-note' not in text
+assert 'scripts/discover.sh new --cached' in text
+assert 'committed processed-detail records' in text
+assert 'tools, shell commands, APIs, extensions, or another coding-agent CLI' in text
+PYTEST
 
 # Note mismatch, HEAD mismatch, and corruption all discard eligibility and start fresh.
 f=$(make_fixture note-mismatch)
@@ -429,5 +438,37 @@ run_daily "$f" modify-success '' "$f/publish.out" MOCK_PUBLISH_AFTER_COMMIT_RC=1
 assert_eq "$(git -C "$f" show HEAD:public/data/events.json)" publish-draft
 assert_clean "$f"
 grep -q 'refusing to roll back a possibly successful commit' "$f/publish.out" || fail "published commit rollback guard missing"
+
+# Real eight documents are still embedded in full exactly once (not only sentinel
+# fixture rules). This tests transport/priority/argv, not model rule compliance.
+f=$(make_fixture actual-prompt)
+cp "$ROOT/AGENTS.md" "$f/AGENTS.md"
+cp "$ROOT/tasks/daily-update.md" "$f/tasks/daily-update.md"
+cp "$ROOT/tasks/subagents/"*.md "$f/tasks/subagents/"
+git -C "$f" add AGENTS.md tasks
+git -C "$f" commit -qm actual-rules
+run_daily "$f" noop '' "$f/actual.out" PI_VERBOSE=1 EXTRA_INSTRUCTIONS='exact env note — verify' \
+  PI_PROVIDER='myproxy exact' PI_MODEL='gptauth/gpt-5.6-sol' TIER_METHOD=jina
+assert_eq "$RUN_RC" 0
+assert_eq "$(grep -Fxc -- '--mode' "$f/logs/mock-argv")" 1
+assert_eq "$(grep -Fxc -- 'json' "$f/logs/mock-argv")" 1
+! grep -Fxq -- '-p' "$f/logs/mock-argv" || fail 'verbose mode kept -p'
+assert_eq "$(grep -Fxc -- 'myproxy exact' "$f/logs/mock-argv")" 1
+assert_eq "$(grep -Fxc -- 'gptauth/gpt-5.6-sol' "$f/logs/mock-argv")" 1
+python3 - "$f" <<'PYTEST'
+import pathlib, sys
+root = pathlib.Path(sys.argv[1])
+text = (root / 'logs/mock-prompt').read_text()
+files = ['AGENTS.md', 'tasks/daily-update.md'] + sorted(str(p.relative_to(root)) for p in (root / 'tasks/subagents').glob('*.md'))
+assert len(files) == 8
+for file in files:
+    start, end = f'===== begin {file} =====', f'===== end {file} ====='
+    assert text.count(start) == text.count(end) == 1
+    body = text.split(start, 1)[1].split(end, 1)[0].strip()
+    assert body == (root / file).read_text().strip()
+assert text.count('exact env note — verify') == 1
+assert text.index('===== OPERATOR NOTE') > text.index('===== end tasks/subagents/90-state-validator.md')
+assert '===== RECOVERED DRAFT' not in text
+PYTEST
 
 echo "test-run-daily: PASS"

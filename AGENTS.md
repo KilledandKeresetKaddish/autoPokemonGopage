@@ -9,7 +9,8 @@ saves a pending draft before rolling the working tree back.
 
 You are the **brain**. The deterministic scripts only download bytes — *you* decide
 what to fetch, whether it's even needed today, and how to interpret it. Third-party
-formats change: never assume fixed field positions; **re-read and adapt every run.**
+formats change: inspect new/changed bytes and adapt their extraction; never assume fixed field
+positions. Already-processed identical bytes may reuse their interpretation (see “Reuse and detail review”).
 
 The dashboard is bilingual. Canonical content (`events.json`, `rotations.json`,
 `categories.json`, `mega.json` and the five `index.html` AI wrappers) must be
@@ -42,19 +43,24 @@ operator you "have no internet / network / search access."** That is false: thos
 you can't already confirm from the cache in `data/raw/*` — a link, a date, a bonus, a spawn, a
 shiny, a counter, a Pokémon/move name — **go get it yourself, before you edit or reply**, in this
 order:
-1. **Find the URL** — `scripts/discover.sh "<english keywords>"` returns candidate URLs on the
+1. **Find the URL if not already known/verified** — `scripts/discover.sh "<english keywords>"` returns candidate URLs on the
    trusted sources. (This is the step `fetch.sh` can't do: `fetch.sh` only downloads URLs you
    already know; `discover.sh` *finds* them.)
-2. **Open & read it** — `scripts/fetch.sh url <URL>` (or the relevant named bulk source).
+2. **Open & read it** — use the URL-cache modes under “Reuse and detail review”
+   (or the relevant named bulk source); later responsibilities reuse this successful read.
 3. **Then edit**, using only what you actually read. **Never guess or hand-build a URL, and never
    leave a placeholder that blames missing access** — discover, fetch, verify, or omit.
 
-**Never write a Pokémon name or move from memory.** Every 简体中文 Pokémon name and move you
-emit — events `pokemon[]`/`counters[]`, rotation segment names, ranking panels — must be
-confirmed against `data/raw/gamemaster.json` (dex → species / move) or an allowlisted
-`pokeapi.co` lookup *before* you write it. If you cannot verify it, omit it or keep the
-source's English/romanized form — a hallucinated or garbled name is worse than none, and
-`validate.sh` only checks **structure**, so it cannot catch a wrong name.
+## Name verification (shared by all responsibilities)
+
+Never write a Pokémon species/move name from memory. `gamemaster.json` verifies dex,
+English identifiers, types and moves as stable facts; it is **not a 简体中文 name source**.
+Use `scripts/fetch.sh zh <dexId>` for species and `scripts/fetch.sh zh move:<slug>` for
+moves, using the returned zh-Hans verbatim. If lookup fails or returns `NO-ZH-NAME`,
+omit the name or retain the verified source English/romanized proper name. This is an
+explicit exception to canonical Chinese-only prose, not permission to leave English
+headlines or invent translations. English proper names use the real source or lookup,
+never literal translation. All Chinese-only rules/checklists below inherit this exception.
 
 **How to verify in practice.** `gamemaster.json` contains English species names; it does
 **not** contain 简体中文. To produce a verified 简体中文 name: (1) identify the national-dex id
@@ -139,7 +145,13 @@ admin/operator request.
   whose events have been removed from `events.json`.
 - `data/state.json` — your own bookkeeping (last-fetch times, source hashes, notes).
 - `public/data/mega.json` — the cumulative **超级进化 / 原始回归 roster** shown in the 「超级进化」view.
-  Your **one and only job** here: when the game announces a NEW Mega/Primal, **append one row**.
+  On a newly announced Mega/Primal, add one unique row. Existing rows may be surgically
+  completed or corrected from actually verified sources: e.g. `initialCost:null` → a
+  confirmed supported value, or `superMax` after official announcement. Keep identity
+  (`en`, base dex, variant) stable; do not create duplicates, delete old records without
+  evidence, or rewrite unrelated rows. New values must obey the existing schema and
+  supported mechanics: an unsupported case is a developer note, never grounds to relax
+  a gate. Daily may not change `app.js` mechanics tables or calculate mechanics numbers.
   Every cost/time number the view shows (per-level energy costs, generic bonuses, instant level-up
   prices, the 升级规划器 comparisons) is DERIVED from the single field `initialCost` via mechanics
   tables baked into `app.js`; the only other mechanics-relevant field is the optional `superMax`
@@ -248,10 +260,11 @@ Start by running `scripts/fetch.sh list` and reading the applicable last-success
 state baseline described above (normally the committed workspace `data/state.json`;
 for a recovered draft, the `RECOVERED DRAFT` base state). **Decide what to refresh by
 age — do not blindly refetch everything.** `list` prints each cache's sha256 (16 hex) —
-compare it with the `sha256` recorded per source in that baseline: **an unchanged hash means every
-conclusion you drew from that source last run still stands** — do not re-parse,
-re-verify, or re-derive content from it. Then read *what changed* in `data/raw/`
-(grep/jq the big files — see *Token discipline* below).
+compare the final prepared caches against the `sha256` recorded per source in that baseline.
+Identical **successfully processed** bytes may reuse their interpretation, but list hashes
+say nothing about a detail page or the current date. Apply “Reuse and detail review” below,
+then read changed sections (grep/jq, not big-file dumps). Raw caches and draft state are
+source materials/unfinished output, never evidence of successful processing.
 
 | source | what | refresh when | output |
 |---|---|---|---|
@@ -269,7 +282,8 @@ re-verify, or re-derive content from it. Then read *what changed* in `data/raw/`
 > The Hub tier/event pages, pokébase, and the official site sit behind a Cloudflare
 > challenge or heavy JS, so `fetch.sh` pulls them through a solver (Jina Reader by
 > default) — the saved `.txt` is the rendered page content (markdown or HTML). Parse
-> whatever form it's in; **never assume fixed positions — re-read every run.**
+> new/changed bytes in their actual format; reuse verified extraction only for identical
+> successfully processed bytes. If parsing fails, retain last good content and report the gap.
 >
 > **Source priority — multi-source, never LeekDuck-only.** Treat **Hub + 官网 (pokemongo.com) +
 > LeekDuck** as **co-equal primary** sources for deciding *what exists this period*; pokébase /
@@ -315,18 +329,97 @@ deliberate; paying for it wastefully is not. Four rules:
    handful of events changed: a full re-emit of ~170KB re-pays every byte as output tokens AND
    risks transcription drift in the untouched 90%. Add / update / delete just the affected rows
    (same for `rotations.json` and the ranking regions).
-4. **Verify links once.** A `links[].url` you verified in a previous run — it is already in
-   `events.json` and its event is unchanged in the sources — is **trusted**: do not re-open it.
-   Re-verify only newly added links and links on events whose source entry changed.
+4. **Reuse already-verified URLs and terminology.** A trusted unchanged link needs no
+   rediscovery. Its **body** can still need rechecking by the policy below. Use cached
+   paths and bounded extraction; later responsibilities reuse this run's successful read.
 
-**Quiet-day fast path.** If `events`, `events-hub`, `events-official`, `events-pokebase` and
-`raids` all re-fetch to an **unchanged hash**, skip rebuilding calendar/rotation content
-entirely: do only date-driven maintenance (prune events ended >90d and their `featured.json`
-ids, flags that flip with the calendar), update `meta.json` + `data/state.json`, and leave the
-ranking regions **and their English overlay regions** as-is when the `tiers-*` caches
-are also unchanged. If retention/date-driven maintenance changes any canonical ID or
-visible Chinese region, update only the matching English overlay entry/region. Then
-still run `preflight.sh` + `validate.sh` as usual.
+### Reuse and detail review
+
+**Prepare → discover → compare.** Source Scout checks cache times with `fetch.sh list`,
+refreshes stale/relevant named sources by the table above, then runs
+`scripts/discover.sh new --cached`. That mode makes no requests and requires parseable
+`events`/Hub/official inputs younger than 24h (mtime of the last successful download).
+Missing, stale or unusable inputs yield **INCOMPLETE/nonzero**, never “no new events”.
+Keep accessible sources useful and note incomplete coverage; a failure is not a quiet-day
+proof. Independent `discover.sh new` retains its default refresh. Compare hashes against
+committed state **after** the final discovery inputs are settled; do not implicitly
+refresh those feeds afterward. Cache time proves only material freshness, not completion.
+
+**URL body cache** (allowlist and TIER_METHOD unchanged; image URLs still use HEAD):
+- `fetch.sh url <URL...>` or `url --force <URL...>`: always download, print body.
+- `fetch.sh url --max-age 86400 <URL...>`: reuse a valid body younger than 24h;
+  otherwise refresh. Query strings remain distinct; no title-based keys/normalization.
+- `fetch.sh url --info <URL...>`: no network/body dump; JSON contains original URL,
+  last successful `lastFetch`, full `sha256`, plain-text `path`, age and stale flag.
+  Use that path with grep/sed/jq to read only needed sections.
+- `fetch.sh url --cached <URL...>`: explicit no-network last-good body read; warns
+  when ≥24h old. It never certifies freshness. Cached/info modes reject images.
+- Success stores an immutable body and atomically replaces its metadata pointer under
+  `data/raw/details/`, keyed by SHA-256 of the exact URL. Failed/empty downloads return
+  nonzero, print no stale body and do not advance successful time or overwrite last good
+  content. A solver's HTTP-200 error/shell can still need human rejection: unreadable or
+  irrelevant material is not a successfully verified source and must not advance state.
+
+**Detail triggers independent of list hashes.** Check all referenced detail URLs for:
+1. New events or changed source entries (inspect only changed lists to identify affected IDs).
+2. Active events and events starting within the next **7 calendar days**, inclusive.
+3. Unended events with pending/TBD research, rewards, bonuses or other incomplete facts,
+   even when farther away. Identify these explicitly; a prose marker is only a hint.
+4. Operator-note verify/enrich/fix-link/force-recheck requests: **force refresh bypasses
+   ordinary TTL**, even for past/far-future events. Discover missing URLs, not known ones.
+5. The current month's rotation article: check its **body** every 24h, not its Hub index hash.
+
+Ordinary candidates use 24h URL reuse; new/changed event content is inspected even if
+its body is still fresh. Force each requested URL once, then reuse that successful
+result across every referencing event and Calendar → Rotations → Rankings → English.
+Group shared URLs before downloading; a changed shared page requires checking **all**
+referencing events. Far-future, complete, unchanged events need no daily link sweep;
+review when they enter the window. Ended events keep history/retention without daily
+search/refetch (explicit corrections remain possible). Coverage still includes current
+month through next month and region/country/in-person events from every primary.
+
+**Read-only candidate aid:** `node scripts/daily-candidates.js --base-ref HEAD` emits
+URL reasons/actions and date checks without network/writes. On recovery pass the block's
+committed base ref, not draft state. Add repeatable `--changed <event-id>` for affected
+source entries, `--pending <event-id>` for known incomplete facts, `--force <event-id>`
+for operator rechecks, and `--monthly-url <verified-URL>`. `--now <ISO>` is for fixed-time
+checks. Scout supplies these IDs/URLs from actual source/note interpretation; this is
+candidate screening, not an authoritative completeness check or a content writer.
+Re-run after a successful refresh to see `cachedHash` vs `processedHash`; a changed body
+must enter downstream review even when every list hash is identical. Do not treat a
+`reuse` action as “already processed”. Missing records are not completion evidence.
+
+**Small processed-detail map:** State + Validator alone maintains
+`data/state.json.details[originalURL] = {sha256, checkedAt, pending}` (full body hash,
+UTC time it was actually interpreted into finalized canonical + English content, boolean
+for known incomplete facts). Advance only after all affected retained content was handled
+successfully; preserve the old record on failure. A fresh cache from a failed run can be
+reused, but compare it with this **committed** map, not its own metadata or a draft map.
+Prune records no longer referenced by retained events, current rotation/tier/raid regions
+or the current monthly source. No unbounded log; raw cache entries are not task markers.
+
+### Quiet-day and date advancement
+
+Quiet-day skips **unchanged derivation**, not the sequence or date maintenance. Every
+run compares finalized candidates with the last successful committed content/time:
+- Month rollover: check `rotations.month`, obtain the confirmed new monthly body, and
+  update only confirmed month content; do not relabel old bosses or invent missing dates.
+- Compare active events, live Boss/Max sets (including scheduled rotation changes), and
+  the current/next-7-day recommendation window. Retire ended recommendations and include
+  just-started events even if source hashes are unchanged. The candidate aid flags these
+  differences; also inspect time-of-day boundaries and actual recommendation text.
+- Only affected `rankings-raid`, `rankings-current`, `calendar-notes` and corresponding
+  English regions change. Static attacker/defender panels whose inputs are unchanged stay.
+- Prune events ended >90 days ago, stale featured IDs, English entries and dangling
+  `data-event-id` references in both locales. Retain last-month history until this cutoff.
+- If source/detail/date content and the operator note trigger no change, leave calendar,
+  rotations and English bytes unchanged. State/meta still update in responsibility 90.
+
+Use the existing date-prefix convention (preflight/retention) with the run's UTC date
+for screening; honor source event-local timestamps in content. The helper is day-granular:
+UTC date and an event's local day/time can differ, so it cannot certify global live status
+or catch intraday boundaries. Inspect those against verified source times; do not invent
+IANA zones/offsets or change event time semantics. No global timezone scheduler is implied.
 
 ### Looking things up (ad-hoc, allowlisted)
 The named sources above are the backbone. When you need a **specific detail page** the bulk feeds
@@ -357,42 +450,43 @@ It matches LeekDuck via the cached `events` feed, searches Pokémon GO Hub (its 
 directly** — so a region-/local-only event with only a Fandom page is still discoverable. It prints
 `SOURCE <tab> TITLE <tab> URL` candidates (also saved under
 `data/raw/discovery/`). **Candidates are leads, not facts:** open each promising one with
-`scripts/fetch.sh url <URL>`, confirm it is the *exact* same event/Pokémon (right boss, right
+`scripts/fetch.sh url --max-age 86400 <URL>`, confirm it is the *exact* same event/Pokémon (right boss, right
 month), and only then add it to `links[]`. If nothing fits, record the gap in `data/state.json` —
 never invent a link.
 
 **Catch events nobody told you about — `scripts/discover.sh new`.** To find activities that turned
 up in the feeds this cycle but aren't on the calendar yet (an official "surprise" event, a new raid
-day…), run `scripts/discover.sh new`. It re-fetches the feeds and lists feed events **within the
+day…), run `scripts/discover.sh new --cached` after preparing the feeds (standalone `new`
+refreshes by default). It lists feed events **within the
 current + next-month window** that are missing from `public/data/events.json`, each tagged with
 cross-source corroboration (`佐证:LeekDuck[+Hub][+官方]`), plus any official news links not tied to a
-known event. These are leads: open each with `scripts/fetch.sh url <URL>`, confirm it, then add it —
+known event. These are leads: open with `scripts/fetch.sh url --max-age 86400 <URL>` (or reuse
+Scout’s successful read), confirm it, then add it —
 read before you write, as always.
 
 ---
 
-## Daily procedure
-1. `scripts/fetch.sh list` + read the last-successful state baseline → decide what is
-   stale, and note which caches' sha256 match the last successful run (those sources
-   need **no** re-derivation). Normally that baseline is the current committed
-   `data/state.json`; after recovery, use the committed base state named in the
-   `RECOVERED DRAFT` block, never the unfinished workspace copy.
-2. Fetch only what's needed, e.g.
-   `scripts/fetch.sh events raids events-hub events-pokebase tiers-attackers`.
-3. Read what changed in the raw files (grep/jq the big ones — *Token discipline*); adapt to
-   their **current** structure. If nothing event-bearing changed, take the quiet-day fast path.
-4. **Calendar** → update `public/data/events.json` **in place** (schema below; surgical row
+## Content requirements
+
+The order/dependencies/fix loop are in the already-embedded `daily-update.md`; briefs
+specify each responsibility's inputs and outputs. Apply the shared rules here without
+re-reading files. Detail/date triggers above bound the work, not the calendar's coverage.
+
+### Calendar
+update `public/data/events.json` **in place** (schema below; surgical row
    edits — never a full-file rewrite). Backbone = `events`
    (ScrapedDuck); then **merge across sources**:
    - **Dedup by event identity.** The same real-world event shows up in 2–4 sources
      (LeekDuck / Hub / pokébase / official). Decide which entries are the *same* event and
      emit **one** row — never two rows for one event.
-   - **简体中文 titles.** The event `name` (the calendar title) must be 简体中文 — never leave a
+   - **简体中文 titles.** Machine/source `heading` may remain English; visible canonical
+     prose uses Chinese with the shared verified proper-name fallback. The event `name` (the calendar title) must be 简体中文 — never leave a
      source's English headline. Build it from the event's own verified 简体中文 `pokemon[]` name +
      its category, so it tracks whatever the source serves each run.
-   - **Aggregate links — actively, for EVERY event** (every `type`, and every week through the end of
-     next month — not just raids, and not just near-term events). Do **not** just keep the LeekDuck
-     link. For each event, find its match in `events-hub` / `events-pokebase` / `events-official` (by
+   - **Aggregate links — cover EVERY event** (every `type`, and every week through the end of
+     next month — not just raids, and not just near-term events). This is a coverage
+     requirement, not a daily re-search of already-verified events; use the shared review
+     triggers. Do **not** just keep the LeekDuck link. For each event needing link work, find its match in `events-hub` / `events-pokebase` / `events-official` (by
      name + date) and add each **real** URL to `links[]` with a label (`LeekDuck` / `Hub` / `Pokébase`
      / `官方`). If a source clearly covers the event but the bulk feed didn't surface the URL, fetch it
      on demand (`scripts/fetch.sh url …`) and grab the real link. When no per-event article exists, a
@@ -401,9 +495,8 @@ read before you write, as always.
      a link you haven't seen. Confirm each link is about THIS exact event/Pokémon — not a same-category
      article for a different subject; omit rather than attach a wrong one.** Most events should end up
      with ≥2 source links; do **not** settle for LeekDuck-only unless you actually checked the other
-     sources and nothing fits. Keep `link` = the primary one. (Verification effort goes to **new or
-     changed** events — links already verified in a previous run on unchanged events are trusted;
-     see *Token discipline* rule 4.)
+     sources and nothing fits. Keep `link` = the primary one. (Reuse known URLs; perform body rechecks under “Reuse and detail review”,
+     including active/near/pending/operator-triggered events even when lists are unchanged.)
    - **Populate Pokémon, bonuses & a summary.** Fill `pokemon[]` (dex id + 简体中文 name + `shiny`),
      `bonuses[]`, and a **concise 简体中文 `summary`** (1–2 sentences) for every event from the articles —
      so the calendar isn't empty and the detail drawer is actually useful (not just a title + date).
@@ -429,7 +522,8 @@ read before you write, as always.
      them like any other event, and make the **location explicit** in the 简体中文 `name` / `summary`
      (e.g. "城市狩猎:大阪") so users see it's a 线下/local event. Never drop an event just because it
      is location-specific.
-   - **Flag shiny-boost events.** Set `highlight:true` on 社区日, 团战日, and any event with
+   - **Flag shiny-boost events.** Standard raid encounters/Raid Hours at base raid shiny
+     rates are not boosted. Set `highlight:true` on 社区日, 团战日, and any event with
      **boosted shiny odds** → ✨ on the calendar. Also set `pokemon[].shiny:true` for the
      shiny-available mons and add a `bonuses[]` line like "✨ 闪光概率提升" so the detail drawer shows it.
      Note: `highlight` only adds the ✨ indicator; the **gold border** is controlled separately by
@@ -451,18 +545,20 @@ read before you write, as always.
      `june-communityday2026`, `raidhour20260617`, `road-of-legends-2026`. Only when no source slug
      exists, compose `<type>-<startYYYYMMDD>` (e.g. `spotlight-hour-20260701`). Never use sequential
      counters or random values.
-5. **Rotations** → update `public/data/rotations.json` (schema below; edit segments in place —
-   if the monthly article and `raids.json` are hash-unchanged and the month is current, keep the
-   file as-is): the **current month's**
+### Rotations
+update `public/data/rotations.json` (schema below; edit segments in place —
+   if the processed monthly body, `raids.json` and finalized Calendar inputs are unchanged
+   and the month is current, keep the file as-is): the **current month's**
    5★ / Mega / Max weekly boss rotation, parsed from the Hub monthly article and corroborated
    with `data/raw/raids.json`. **The monthly article's body is NOT in `events-hub.txt`** (that
    file is only the `/post/event/` index): find the article's URL in the index (or via
    `scripts/discover.sh "raid bosses <month> <year>"`) and open it with `scripts/fetch.sh url <URL>`
-   before parsing. Dex id per boss for the sprite; dates `YYYY-MM-DD`.
+   using the shared cache policy (reuse Scout's successful read) before parsing. Dex id per boss for the sprite; dates `YYYY-MM-DD`.
    **Parse the bosses — never invent them.**
-6. **Rankings** → refresh the regions in `index.html` — but only those whose inputs changed:
-   if the `tiers-*` caches are hash-unchanged since last run and the live boss set didn't
-   change, keep the corresponding structured panels as-is (they were verified when written):
+### Rankings
+refresh the regions in `index.html` — but only those whose inputs changed:
+   keep static tier panels when their processed sources are unchanged; evaluate live raid
+   and editorial regions independently under “Quiet-day and date advancement”:
    - `rankings-attackers` / `rankings-defenders` → parse the tier tables from
      `data/raw/tiers-*.txt` (S/A/B…, Pokémon, recommended moves); cross-check with
      `tiers-pokebase`. Surface the attackers page's **per-type 属性榜** (best pick per type).
@@ -498,46 +594,14 @@ read before you write, as always.
      windows, and a directional "练哪类攻手". Full counter tables belong in 当前团战 Counter — point
      there, don't duplicate them (see *Free-form synthesis* below).
    - `calendar-notes` (**free-form**) → a short 本月看点 (see *Free-form synthesis*).
-7. **Spot Atlas (operator-note only)** → leave `public/data/locations.json` byte-for-byte
-   unchanged on ordinary daily runs. When an explicit operator note requests a location change,
-   update only the affected row(s): retain a stable URL-safe `id`; keep exactly one untranslated
-   `name`; copy coordinates/timezone/note from the operator rather than inventing or geocoding;
-   validate the supplied IANA `timeZone`; and never persist flags, offsets, next-target times,
-   browser times or map URLs. Locale switching must not create an English/Chinese name variant.
-8. **English text layer** → after Calendar, Rotations and Chinese Rankings are fully
-   finalized, update `public/data/i18n/en.json` surgically. Facts are interpreted once:
-   translate text only, keep exact canonical event IDs, custom-category/track keys and
-   nested-array lengths/order, and translate all five wrapper inner-HTML regions while
-   preserving classes, URLs, `data-event-id`, sprites and numeric facts. Remove overlay
-   rows for pruned events. Verify official English Pokémon/move names from column 2 of
-   `scripts/fetch.sh zh …` or the exact English source spelling. English visible content
-   must contain no CJK fallback. On a quiet day with unchanged canonical content, leave
-   the already-verified overlay unchanged.
-9. In the final State + Validator responsibility, set `public/data/meta.json`
-   `lastUpdated` to now (ISO 8601) and record per-source fetch times/notes in
-   `data/state.json` (a fixed object keyed by source — **not** a growing log). Earlier
-   responsibilities collect gaps/notes but do not write state; you write it once here
-   after the canonical and English content are finalized.
-10. **Self-check before validating:** one row per real event (no duplicate `id`s), `links[]`
-   aggregated (≥2 sources per event where possible), no event ended >3 months ago, long events
-   flagged, rotations parsed not invented, `highlight` only on Community Day / Raid Day /
-   boosted-shiny events (standard raid encounters at base shiny rate do NOT qualify),
-   `featured.json` pruned of stale IDs (events no longer in `events.json`),
-   **every 简体中文 name/move verified against `gamemaster` or PokeAPI (no hallucinated or
-   garbled names)**, all `links[].url` actually confirmed to exist and point to THIS event
-   (not a same-category article for a different Pokémon), every Chinese AI marker retains
-   its `data-ai-region` wrapper, and English overlay IDs/arrays/regions exactly mirror the
-   finalized canonical content with verified English names and no Chinese leakage. If an operator
-   requested a Spot Atlas edit, also verify unique ids, non-empty single `name`, valid IANA zones,
-   unchanged schedule shape, and absence of every runtime-only field listed below.
-11. Run `scripts/validate.sh`. Fix what it reports until it passes. (It hard-rejects duplicate
-   ids, >250 **or <5** events, events ended >90 days ago, empty `id`/`name`/`start`/`type`,
-   `end` earlier than `start`, dangerous HTML in either language's rich regions, **any empty AI region**
-   (all five per language must have content — never blank one to "start clean"), bilingual
-   ID/shape drift or CJK text in the English overlay, missing `public/data/*.json` /
-   `data/state.json` files, a `featured.json` that isn't an array of ids all present in
-   `events.json`, more than one `<script>` tag, protected-file changes, and rotation segments
-   without `start`/`pokemon[]` — so prune, dedup, and check.)
+### Shared final checks
+
+Apply the public schemas, render contract and inert-HTML rules below. Spot Atlas remains
+operator-only (see its schema); English mirrors finalized canonical content in responsibility
+40. State/meta and gates belong to responsibility 90, with the bounded fix loop in
+`daily-update.md`. Never ship empty regions or replace failed source content with blanks.
+Never leak raw paths, scripts, fetch mechanics or bookkeeping into visible summaries,
+bonuses, sections or AI HTML; source-health notes belong in state, not the dashboard.
 
 ---
 
@@ -748,7 +812,9 @@ read before you write, as always.
 
 ## Free-form synthesis (your creative space)
 `calendar-notes` (本月看点) and `rankings-current` (本期推荐) are **free-form inert-HTML
-canvases** — compose them freshly each run with judgment. The other regions
+canvases** — use editorial judgment when their source/date/note inputs change; otherwise
+retain verified content under the quiet-day policy. These are raw HTML, not Markdown;
+backticks are not formatting and would appear literally. The other regions
 (`rankings-attackers/defenders/raid`) stay structured: parse the sources, don't free-style.
 Inside each marker, preserve its existing `<div data-ai-region="…">` and write Chinese
 content inside that wrapper; English Curator copies the finalized meaning/structure into
@@ -818,58 +884,3 @@ dark.webp steel.webp fairy.webp normal.webp`;`一般` = `normal.webp`。counter 
 `gamemaster` 的 move→type 求得。Keep it readable on mobile.
 
 ---
-
-## Common data-analysis mistakes to avoid
-
-These mistakes have been observed in past runs. **Check for each one** during step 9 (self-check).
-
-1. **Wrong link attribution.** Don't attach a generic category guide URL (e.g. a "Spotlight & Raid
-   Hours" schedule page) as the Hub link for a Community Day event. Confirm each `links[].url`
-   actually covers **this specific event/Pokémon** — open the page (via `fetch.sh url`) and verify
-   before attaching. If the page is about a different subject, omit rather than attach.
-
-2. **Stale `highlight:true`.** The `highlight` flag means **boosted shiny odds** (社区日 ~1/25,
-   团战日 special rate). Standard raid encounters (传说 ~1/20) have the **base** raid shiny rate —
-   they are NOT "boosted". Do not mark regular Raid Hours as `highlight:true`. Only set it for
-   Community Day, Raid Day, and events that explicitly announce boosted shiny odds. Note:
-   `highlight` now only shows the ✨ icon; the gold border is separately controlled by
-   `featured.json` — do not confuse the two.
-
-3. **Inconsistent Mega form IDs.** Apply the Mega base-id rule uniformly across `rotations.json`.
-   **Whenever you switch a segment's `id` to the base dex, you MUST also add the `"sprite"` form-image
-   override** — otherwise the day-icon regresses from Mega art to the base sprite. The id-match only
-   affects segments with a live matching `raid-battles` event (past segments render fine either way),
-   but keep them uniform to avoid confusion.
-
-4. **Single-source events.** After writing events.json, scan for events with only 1 link. For each,
-   actively search the other sources (Hub via `events-hub`, pokébase via `events-pokebase`, official
-   via `events-official`). Major events (Community Day, Fest, anniversaries) almost always have
-   coverage in all 4 sources — a single-source major event signals a missed merge opportunity.
-
-5. **Language leakage.** In canonical files and the five `index.html` wrappers, every
-   `name`, `pokemon[].name`, `counters[].name`, `cn`, visible ranking phrase and sprite
-   `alt` must be 简体中文 (an English machine `heading` remains acceptable). Conversely,
-   every visible string in `i18n/en.json` must be English—validation rejects CJK there.
-   Verify official proper names in both directions; never copy one locale as fallback.
-
-6. **Fabricating URLs.** Never construct a URL from a pattern (e.g., guessing a Hub article slug from
-   an event name). Only emit URLs you have actually seen in a source page or feed. If you cannot find
-   a matching article, it's better to have 1 link than a broken link.
-
-7. **LeekDuck-only tunnel vision.** A LeekDuck 404 / omission is **not** proof an event doesn't exist.
-   LeekDuck skips many **region- or country-limited** events that Hub's monthly
-   roundup, the 官网 news, or `pokemongo.fandom.com` still cover. Before skipping any event as
-   "nonexistent", sweep the **searchable / bulk-readable** sources — the LeekDuck feed, the `events-hub`
-   / `events-official` / `events-pokebase` bulk files, and `scripts/discover.sh` (which searches LeekDuck
-   + Hub + 官网 + Fandom) — opening each lead with `scripts/fetch.sh url`; only drop it if every one comes
-   up empty. (Serebii has no search/bulk feed — corroboration via a known URL only, never a sweep target.) **Region /
-   local / in-person events are in scope, not noise** — never discard one merely because LeekDuck lacks
-   it. (Recording a genuinely-unconfirmable event as a gap in `data/state.json` is still correct — just
-   don't reach that conclusion from LeekDuck alone, and never paper over the gap with a fabricated link.)
-
-8. **Internal pipeline details leaking into user-visible text.** Never mention `data/raw/*`
-   paths, script names, fetch mechanics, or run bookkeeping in any AI region, `summary`,
-   `bonuses`, or `sections` — users see a dashboard, not the pipeline ("上游数据源暂未更新"
-   is fine; "`data/raw/raids.json` 仍是旧的" is not). Such notes belong in `data/state.json`.
-   Also remember the free-form regions are raw HTML: markdown backticks are **not** rendered,
-   they ship to users verbatim.

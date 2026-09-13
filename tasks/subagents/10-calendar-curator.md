@@ -1,100 +1,49 @@
 # Brief 10 — Calendar Curator
 
-This is the current agent's next responsibility. Its governing rules were already
-embedded once; do not reload them unless a specific passage was lost to compaction.
-Never delegate or spawn work through Bash, an API, an extension, or another agent/CLI.
+Goal: finalize the normalized calendar before Rotations. Apply the already-embedded
+AGENTS.md “Content requirements → Calendar”, “渲染契约”, “Schemas”, “Name verification”
+and “Reuse and detail review”; do not reload the common rules.
 
-Goal: produce the normalized calendar dataset.
+Write scope: events.json; featured.json for explicit feature requests and stale-ID pruning;
+categories.json only for new types; mega.json for source-backed additions or targeted
+completion/correction; locations.json only for explicit operator edits. All paths under
+public/data/. Do not write English or bookkeeping yet.
 
-Write scope:
-- `public/data/events.json`
-- `public/data/featured.json` — admin-curated gold-border ids. Add/remove an id **only** on an
-  explicit admin / operator-note request; every run, prune ids whose events are no longer in
-  `events.json` (validate.sh hard-rejects stale featured ids).
-- `public/data/mega.json` — append-only: when a NEW Mega/Primal is announced, add one roster row
-  per AGENTS.md's mega.json rules (verified 简体中文 name, `boostedTypes` keys, `initialCost` tier
-  or `null`, form `sprite` + `hub` — both gated by validate.sh). Never touch the derived mechanics.
-- `public/data/categories.json` only when a new event type needs registration
-- `public/data/locations.json` **only** when the current operator note explicitly asks to
-  add, remove, rename or correct a Spot Atlas row; ordinary daily runs leave it untouched
+Inputs: Scout's final named caches, verified URL body paths/hash deltas, candidate IDs,
+source gaps and operator note. LeekDuck is the structured backbone, not an existence
+veto; retain Hub/official co-equal primary coverage and corroborating sources.
 
-Inputs:
-- `data/raw/events.json` (ScrapedDuck → LeekDuck) as the **structured backbone** for *normalizing*
-  events — clean JSON, easy to parse — **but not the sole arbiter of what exists this period.**
-- `data/raw/events-hub.txt` and `data/raw/events-official.txt` are **co-equal primary** sources for
-  *what's happening* (not mere corroboration); `data/raw/events-pokebase.txt` corroborates in bulk, the
-  Pokémon GO Wiki (Fandom) is **searchable** via `scripts/discover.sh`, and `serebii.net` is consulted
-  only via a known URL. Pull links, summaries, bonuses, Pokémon, and details from all of them, and treat
-  an event found on Hub / 官网 / Fandom as real even if LeekDuck omits it.
-- Ad-hoc detail pages via `scripts/fetch.sh url <allowlisted URL>` (use `scripts/discover.sh` to find
-  them) whenever a specific event/detail isn't in the bulk feeds — **including events LeekDuck lacks.**
-  Real fetched URLs only — never guess one.
+1. Process new/changed entries **and independent detail candidates**, including active,
+   next-7-day, pending and operator-triggered events even if list hashes are identical.
+   Reuse Scout's successfully refreshed bodies. A changed shared URL requires inspecting
+   every affected event; fresh cached bytes absent from committed processed state still
+   need interpretation. Far-future complete or ended events need no blanket daily sweep.
+2. Keep current through next month, confirmed farther dates and ~90-day history, including
+   regional/country/local events with explicit location text. Deduplicate real-world
+   identity using the exact source slug. When a real event replaces a pending placeholder,
+   remove that placeholder rather than publishing both.
+3. Apply the Calendar content checklist: verified aggregated links, concise Chinese
+   title/summary/bonuses/Pokémon, useful event-specific sections, concise raid counters,
+   weekly Mega raid drawers, long-term/PvP flags, genuine shiny boosts and new palettes.
+   Source-verified English/romanized proper-name fallback is allowed only under “Name
+   verification”: species via `fetch.sh zh <dexId>`, moves via `zh move:<slug>`; never
+   Chinese from gamemaster. Forms require live existence evidence, not cache absence.
+4. Follow the render contract: Calendar supplies banner and all-day raid-battles drawers
+   for daily rotations; the next responsibility supplies badges. Keep base dex/form
+   sprite/hub consistency and complete Pokémon pools, not representative subsets.
+5. **Mega roster:** add unique newly announced forms; also allow verified updates to
+   existing unknown/wrong fields (null initialCost → confirmed supported cost, officially
+   announced superMax, etc.). Preserve identity, avoid duplicates/unrelated rewrites or
+   unsupported deletions. No derived mechanics/table edits; unsupported new mechanics
+   become developer notes, never relaxed schema/gates. Follow AGENTS.md mega schema,
+   including confirmed form art, candy-boost type exceptions and legal values.
+6. Apply explicit featured/Spot Atlas requests within their shared schemas. Otherwise
+   locations stays byte-identical; never geocode, translate, infer zones or persist runtime
+   derivatives. Feature IDs are administrator choices, not inferred from shiny boosts.
+7. Perform date/retention maintenance even on quiet days. Prune expired IDs and featured
+   references, retain history until cutoff, and hand affected English/rich-region references
+   forward. Edit only changed rows; preserve last-good content on source failure.
 
-Checklist:
-1. Keep at least the current month through end of next month (confirmed farther-future
-   announcements may stay); backward, keep past events until ~90 days after they end and prune
-   before validate.sh's hard >90d cutoff — do **not** prune at the month boundary: the calendar
-   has a ‹ 上月 button, and blanking last month loses real history.
-   **Include local / in-person AND region- / country-limited events**
-   (Safari Zone, City Safari, GO Tour 线下场, 区域线下活动 …) — never skip an event for
-   being location-specific, and **never drop one just because LeekDuck 404s / omits it**: a "doesn't
-   exist" verdict requires an empty **searchable** sweep — `scripts/discover.sh` (LeekDuck + Hub + 官网 +
-   Fandom) plus the pokébase bulk file — not LeekDuck alone. (Serebii isn't searchable: known-URL
-   corroboration only.) Make the location explicit in `name` / `summary`.
-2. Deduplicate by real-world event identity. Emit one stable deterministic `id` per
-   event; never accumulate duplicates. When a real event is confirmed, delete the old
-   placeholder ("待公布 / waiting for announcement") row it replaces — be smart, never
-   leave both.
-3. Aggregate real source URLs into `links[]` (`LeekDuck`, `Hub`, `Pokébase`, `官方`) for **every
-   event — every type, every week through the end of next month**, not just raids. Keep `link` as the
-   primary URL. If the bulk feed didn't surface a per-event URL, fetch it on demand. When no per-event
-   article exists, a source's **generic category guide** is acceptable **only if it genuinely covers
-   this event**. Never guess a URL you have not seen. **Confirm each link is about THIS exact
-   event/Pokémon — not a same-category article for a different subject; omit rather than attach a wrong
-   link.** Don't settle for LeekDuck-only unless you checked the other sources and nothing fits.
-4. Fill concise 简体中文 `summary`, useful `bonuses[]`, `pokemon[]`, and event-specific
-   `sections[]`. For raid / mega / raid-day items, add a **concise** justified `counters[]` (top
-   picks — keep the calendar drawer light; the exhaustive counters + Mega pairings live in the
-   ranking 当前团战 Counter tab). **Emit the weekly Mega raid as its own `raid-battles` event too**
-   (Mega form sprite, same boss dex id as its rotation segment) so the Mega day-icon's drawer carries
-   counters + links, not just a name. **Verify every 简体中文 Pokémon name and move against
-   `data/raw/gamemaster.json` (dex → species / move) or an allowlisted `pokeapi.co` lookup before
-   writing it — never from memory; if you can't verify it, omit it or keep the source's
-   English/romanized form rather than inventing one.** But **don't use gamemaster to decide whether a
-   Mega/form *exists*** — it lags new content (Legends Z-A …). If a source features one (e.g. "<X>
-   Super Mega Raid Day"), render the Mega and trust the live source, not gamemaster's absence.
-5. Set `longTerm:true` for season / GO Pass and spans longer than ~2 weeks so they render in
-   the 长期活动 band. Set `pvp:true` for GO Battle League / 杯赛 / 对战周末 / 对战日 (PvP events)
-   so they render in the **PVP活动 band** (`go-battle-league` auto-classifies; PVP wins over
-   长期活动; `pvp:false` opts out; `display:"pvp"` mirrors `pvp:true`).
-6. Set `highlight:true` for 社区日, 团战日, and boosted-shiny events. Also mark shiny
-   Pokémon and include a shiny bonus line.
-7. Register only genuinely new `type` values in `public/data/categories.json` using
-   approved palette keys and `kind` values from `AGENTS.md`.
-8. All user-facing strings must be 简体中文 — including each event `name` (title): never leave a
-   source's English headline; build it from the event's verified 简体中文 `pokemon[]` name + category.
-   JSON must remain valid.
-9. **日期角标不归你管 —— 归 rotation-curator(`rotations.json`)。** `events.json` 的事件只会渲染成
-   bar 或 chip,**变不成日期数字旁的角标**。要给某些天加 5★/超级 Boss 角标(含 传奇之路 / GO Fest 前置周
-   这类多日每日轮换),按 AGENTS.md《渲染契约》:主活动出 1 条横幅事件;当天每个 Boss 出**全天 `raid-battles`**
-   事件(**别用 `raid-hour` chip 模拟每日 Boss** —— 那既出不了角标、超长名还挤乱周列),并让 rotation-curator
-   为这些天加**单日段**、`pokemon[]` 与你的事件对齐。每个 `raid-battles` 都要有匹配角标,否则 `preflight.sh`
-   会判它 orphan(被角标隐藏 bar 后静默消失)。
-
-10. **Spot Atlas is operator-maintained data, not a discovery feed.** If and only if the
-    operator note requests a change, edit affected `locations.json` rows surgically: one raw
-    `name` (never `nameZh` / `nameEn` and never translated into i18n), stable URL-safe `id`,
-    operator-supplied coordinates/note, valid location IANA `timeZone`, unchanged three-field
-    schedule, and no runtime-only flag/offset/browser-time/next-target/map fields. Never infer or
-    geocode missing facts. Otherwise do not touch the file.
-
-11. **Token discipline (AGENTS.md, binding):** edit `events.json` **in place** — never a
-    full-file rewrite; skip re-deriving from hash-unchanged sources (quiet-day fast path);
-    verify names via `scripts/fetch.sh zh <dexId>` / `zh move:<slug>` (one cached TSV line —
-    never dump a species JSON); re-verify links only on new/changed events; `jq`/`grep` the
-    big caches (gamemaster is a ~900KB single line — never read it wholesale).
-
-Before continuing: retain changed files, event count, long-term count, highlighted
-count, and known source gaps kept from last good content. Keep canonical visible text
-简体中文; you update the text-only English overlay later in responsibility 40 after all
-facts are finalized, so do not edit `public/data/i18n/en.json` yet.
+Before continuing: retain changed IDs/files, counts (events/long-term/highlight), all
+handled detail URLs/hashes and remaining pending facts/gaps for 90. A detail record may
+advance only after its affected canonical AND English content is successfully finalized.
