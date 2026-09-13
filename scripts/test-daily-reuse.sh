@@ -48,6 +48,33 @@ cat > "$T/bin/mv" <<'SH'
 if [ "${FAIL_META_REPLACE:-0}" = 1 ] && [[ "${@: -1}" == */details/*.json ]]; then exit 73; fi
 exec /bin/mv "$@"
 SH
+# Match exact extraction filters/options so faults cannot hit front-door validation.
+export REAL_JQ="$(command -v jq)" REAL_GREP="$(command -v grep)" REAL_TEE="$(command -v tee)"
+cat > "$T/bin/jq" <<'SH'
+#!/usr/bin/env bash
+for arg in "$@"; do
+  if { [ "${DISCOVERY_FAULT:-}" = feed ] && [[ "$arg" == *'select($endd >= $today'* ]]; } ||
+     { [ "${DISCOVERY_FAULT:-}" = calendar ] && [ "$arg" = '.[] | "\(.id) \(.name) \(.link)"' ]; }; then
+    echo "mock jq failure at $DISCOVERY_FAULT extraction" >&2; exit 77
+  fi
+done
+exec "$REAL_JQ" "$@"
+SH
+cat > "$T/bin/grep" <<'SH'
+#!/usr/bin/env bash
+if [ "${DISCOVERY_FAULT:-}" = official ] && [ "${1:-}" = -oE ] &&
+   [ "${2:-}" = 'https://(www\.)?pokemongo\.com/(news|post)/[a-zA-Z0-9/_-]+' ]; then
+  echo 'mock grep read error at official extraction' >&2; exit 2
+fi
+exec "$REAL_GREP" "$@"
+SH
+cat > "$T/bin/tee" <<'SH'
+#!/usr/bin/env bash
+if [ "${DISCOVERY_FAULT:-}" = output ]; then
+  echo 'mock tee result write failure' >&2; exit 74
+fi
+exec "$REAL_TEE" "$@"
+SH
 chmod +x "$T/bin/"*
 fail() { echo "test-daily-reuse: FAIL: $*" >&2; exit 1; }
 eq() { [ "$1" = "$2" ] || fail "expected [$2], got [$1]"; }
@@ -97,6 +124,55 @@ touch "$T/fail"
 reject scripts/discover.sh new
 grep -q INCOMPLETE "$T/rejected.err" || fail 'refresh failure not incomplete'
 rm "$T/fail"
+# Each index must contain its OWN source domain, not just the other primary.
+before=$(count)
+cp -p data/raw/events-hub.txt "$T/hub-good"
+cp -p data/raw/events-official.txt "$T/official-good"
+for wrong in hub official; do
+  if [ "$wrong" = hub ]; then
+    cp -p "$T/official-good" data/raw/events-hub.txt
+  else
+    cp -p "$T/hub-good" data/raw/events-official.txt
+  fi
+  reject scripts/discover.sh new --cached
+  grep -q 'INCOMPLETE.*index/source link' "$T/rejected.err" || fail 'wrong-domain index accepted/misclassified'
+  ! grep -q '无新增活动' "$T/rejected.err" || fail 'wrong-domain false empty scan'
+  cp -p "$T/hub-good" data/raw/events-hub.txt
+  cp -p "$T/official-good" data/raw/events-official.txt
+done
+# Preconditions are valid and feed has a candidate. Each injected command must
+# actually run and its original diagnostic + specific failing step must survive.
+for fault in feed calendar official output; do
+  reject env DISCOVERY_FAULT="$fault" scripts/discover.sh new --cached
+  case "$fault" in
+    feed) step='feed candidate extraction'; diagnostic='mock jq failure at feed extraction' ;;
+    calendar) step='calendar text extraction'; diagnostic='mock jq failure at calendar extraction' ;;
+    official) step='official URL extraction'; diagnostic='mock grep read error at official extraction' ;;
+    output) step='result write/output'; diagnostic='mock tee result write failure' ;;
+  esac
+  grep -Fq "INCOMPLETE — $step" "$T/rejected.err" || fail "missing failure step: $fault"
+  grep -Fq "$diagnostic" "$T/rejected.err" || fail "fault did not hit its extraction: $fault"
+  ! grep -q '无新增活动' "$T/rejected.err" || fail "fault reported as empty: $fault"
+  [ ! -s "$T/rejected.out" ] || fail "unexpected partial result: $fault"
+done
+# Normal feed + official candidates survive completely, with official dedup.
+printf '[News](https://pokemongo.com/news/unique-festival/)\nhttps://pokemongo.com/news/unique-festival/\n' > data/raw/events-official.txt
+touch -d '2026-09-10T12:00:00Z' data/raw/events-official.txt
+scripts/discover.sh new --cached > "$T/scan" 2> "$T/scan.err"
+eq "$(wc -l < "$T/scan")" 2
+grep -q $'^NEW\tFixture Festival\t' "$T/scan" || fail 'feed candidate lost'
+grep -Fxq $'OFFICIAL-LEAD\t-\thttps://pokemongo.com/news/unique-festival/' "$T/scan" || fail 'official candidate lost'
+cmp "$T/scan" "data/raw/discovery/new-20260910T120000Z.txt"
+# jq filtering all known feed rows is valid; matching official slugs are covered.
+jq '[.[] | {id:.eventID,name,link}]' "$T/good-feed" > public/data/events.json
+printf 'https://pokemongo.com/news/fixture\n' > data/raw/events-official.txt
+touch -d '2026-09-10T12:00:00Z' data/raw/events-official.txt
+scripts/discover.sh new --cached > "$T/scan" 2> "$T/scan.err"
+[ ! -s "$T/scan" ] || fail 'known events should be filtered out'
+grep -q '无新增活动' "$T/scan.err" || fail 'filtered empty scan failed'
+printf '[]\n' > public/data/events.json
+cp -p "$T/official-good" data/raw/events-official.txt
+eq "$(count)" "$before" # every cached success/failure above stayed offline
 # Legitimate complete empty scan is different from malformed inputs.
 echo '[]' > data/raw/events.json; touch -d '2026-09-10T12:00:00Z' data/raw/events.json
 scripts/discover.sh new --cached > "$T/scan" 2> "$T/scan.err"
