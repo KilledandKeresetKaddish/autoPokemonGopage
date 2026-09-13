@@ -1,73 +1,36 @@
 # Brief 30 — Ranking Curator
 
-This is the current agent's next responsibility. Its governing rules were already
-embedded once; do not reload them unless a specific passage was lost to compaction.
-Never delegate or spawn work through Bash, an API, an extension, or another agent/CLI.
+Goal/output: only inner HTML of the five Chinese AI wrappers in public/index.html:
+calendar-notes, rankings-current, rankings-attackers, rankings-defenders, rankings-raid.
+Preserve all markers/wrappers, rank-panel structure and IDs. Shared contracts are in
+already-embedded AGENTS.md “Content requirements → Rankings”, “Free-form synthesis”,
+“Ranking HTML pattern”, “Name verification” and “Quiet-day and date advancement”.
 
-Goal: refresh the human-readable rankings and current recommendations.
+Inputs: finalized Calendar/Rotations from THIS run; Scout's tier/raid/gamemaster caches,
+verified detail paths, date changes and gaps. Do not use stale/draft calendar inputs.
 
-Write scope:
-- Only the Simplified-Chinese contents between these markers in `public/index.html`.
-  Preserve the one `[data-ai-region="<marker-name>"]` wrapper inside every pair;
-  replace only that wrapper's inner HTML. English Curator (40) translates the
-  finalized wrappers afterward:
-  - `AI:START calendar-notes` / `AI:END calendar-notes`
-  - `AI:START rankings-current` / `AI:END rankings-current`
-  - `AI:START rankings-attackers` / `AI:END rankings-attackers`
-  - `AI:START rankings-defenders` / `AI:END rankings-defenders`
-  - `AI:START rankings-raid` / `AI:END rankings-raid`
+1. Check active events, Boss/Max transitions and the recommendation window by source
+   dates, not just hashes. Inspect intraday boundaries too: day-prefix candidate hints
+   cannot resolve event-local live times worldwide. Retire ended recommendations and
+   surface just-started ones using verified times, without inventing timezones.
+2. Keep unchanged static attacker/defender panels even when dates/bosses change. For
+   changed tier sources, parse S/A/B/C tables and attackers' per-type picks, cross-check
+   pokébase and render the specified rank-list rows; never decide tiers from memory.
+3. Update rankings-raid when its live boss set or relevant counter/source facts change,
+   including active Max/Dynamax. Follow the shared detailed layout: tier-descending
+   raid-wall cards, large boss headers, type/weakness icons, flat fuller counter rows
+   with move-type icons, and per-boss same-type Mega grids (attack-descending, cap 8;
+   do not pad/drop genuine eligible forms merely to hit 6). Verify form existence live.
+4. Name checks are `fetch.sh zh <dexId>` / `zh move:<slug>`; gamemaster supplies stable
+   dex/English/type/move facts, never Chinese names. Use the shared explicit fallback.
+   Reuse already-verified body/name caches, including those from preceding responsibilities.
+5. Compose calendar-notes (monthly highlights with valid clickable event IDs) and
+   rankings-current (live priorities/bonuses/shiny windows/directional training advice)
+   only when affected source/date/note inputs change. No duplicate counter dumps in
+   editorial regions. Prune dangling event references after retention changes.
+6. Inert HTML and approved classes only. On parse/fetch failure, preserve the affected
+   last-good panel and report the limitation, never empty it. Keep pipeline diagnostics
+   out of visible text. Unaffected regions remain byte-identical.
 
-Inputs:
-- `data/raw/tiers-attackers.txt`, `data/raw/tiers-defenders.txt`,
-  `data/raw/tiers-pokebase.txt`.
-- `data/raw/raids.json`, `data/raw/gamemaster.json`.
-- Finalized `public/data/events.json` and `public/data/rotations.json` produced by
-  your preceding Calendar and Rotation responsibilities in this run. Do not use
-  previous/stale content instead of those exact finalized results.
-
-Checklist:
-1. Preserve every marker, wrapper, `.rank-panel`, and `id="…"` attribute outside the
-   marker contents.
-2. Use only inert HTML and the whitelisted classes from `AGENTS.md`; no scripts,
-   styles, external CSS, or unapproved classes.
-3. Parse tiers from the source pages, including per-type 属性榜 from attackers. Do not
-   decide rankings yourself.
-4. Build `.rank-list` / `.rank-item` rows with `.tier tier-S|tier-A|tier-B|tier-C`,
-   sprites, names, and recommended moves. **Verify every Pokémon name and move against
-   `data/raw/gamemaster.json` (the dex id is embedded in the source artwork URL → confirm
-   the species) — never write a Chinese name or move from memory; drop anything you can't
-   verify rather than guessing.**
-5. Build `rankings-raid` (**当前团战 Counter**) from what's live now — current raid bosses **and any
-   active Max/Dynamax battle**. This tab is the **detailed** reference (calendar drawers stay concise):
-   - **Sort bosses by tier, highest first** (传说/5★ → 超级/Mega → 3★ → 1★ → 暗影 → Max).
-   - Render **each boss as a header with a large sprite** (`.raid-block` > `.raid-boss` with a
-     `.boss-icon` + 简体中文 name + `.meta`), then a **fuller** counter list in a **`.rank-list.mini`**
-     below, so the boss reads bigger than its counters.
-   - **属性用图标,不用文字:** boss `.meta` 的 属性 / 弱点 用 `<img class="ico" src="assets/icons/<type>.<ext>">`,
-     并在每个 counter 的招式文字前加该招式的 **move 属性** 图标(move→type 取自 `gamemaster`)。扩展名不统一,
-     按 `AGENTS.md` *Ranking HTML pattern* 的「属性→图标文件」表(`一般` = `normal.webp`,与其他属性一样用图标)。
-   - **Mega Booster = 内联在每个 boss 右侧,不再是底部独立列表。** 机制:**激活**某超级进化时,捕捉与其
-     **共享属性**的宝可梦 +1 糖(含 XL 机会),与「进化获得糖果」无关。在 boss 头右侧空白处放一个
-     **`.raid-mega`** 4-列网格 —— **6–8 个**同属性超级 sprite,按超级攻击力高→低排序、上限 8、
-     **不写 `.lbl` 文字标**(CSS 已隐藏它)——展示能 farm 该 boss 糖果的同属性 超级
-     (`title="超级X · 共享<属性>"`)。
-     pairing 按本轮 live bosses 现算,绝不硬编码。**按 Mega 与 boss *共享* 的属性标注**(共享属性才给糖),
-     绝不把 boss 自身属性套到 Mega 上;每个 属性 / 弱点 都对 `gamemaster` 核对。
-6. Build both free-form regions from **this run's** finalized `events.json` +
-   `rotations.json` only (never previous/stale files): `rankings-current` (本期推荐) is
-   **editorial / priority** — which live events to do, bonuses, shiny windows, a directional
-   "练哪类攻手" — **not** full counter tables (those live in 当前团战 Counter); `calendar-notes`
-   is a concise 本月看点 in 简体中文.
-7. Never ship empty ranking panels. If tier or raid parsing fails, keep only the
-   affected structured panel from last good content and report the problem to State +
-   Validator.
-8. **Token discipline (AGENTS.md, binding):** if the `tiers-*` caches are hash-unchanged
-   since last run AND the live boss set didn't change, keep the corresponding structured
-   panels as-is (verified when written) — rewrite only regions whose inputs changed.
-   Verify names via `scripts/fetch.sh zh`; `grep`/`jq` the tier files and gamemaster for
-   the entries you need — never read `tiers-pokebase.txt` (~120KB) or gamemaster (~900KB,
-   single line) wholesale.
-
-Before continuing: retain edited marker names, source sections parsed, and any panels
-kept from last good content. All visible prose in the five wrappers is 简体中文; do
-not write `public/data/i18n/en.json` until the next responsibility.
+Before continuing: retain edited region names, parsed source sections, handled URL
+hashes, date changes, pending facts and panels kept from last good content. English runs next.

@@ -147,6 +147,46 @@ them through a solver, chosen with `TIER_METHOD`:
   `FLARESOLVERR_URL` if not on localhost.
 - `direct` — plain curl (only if the page isn't protected).
 
+## Daily source reuse (no change to invocation/provider settings)
+
+- Scout prepares required named sources once, then `scripts/discover.sh new --cached`
+  scans without network and rejects missing/unparseable/≥24h inputs as incomplete.
+  Standalone `scripts/discover.sh new` still refreshes. Final hashes are compared only
+  after discovery inputs are settled.
+- `scripts/fetch.sh url <URL...>` remains a fresh download with body output. Explicit
+  `--max-age 86400` reuses a fresh URL body; `--force` bypasses age; `--cached` reads last
+  good without network (stale warning); `--info` returns path/time/hash without body.
+  Exact-URL SHA-256 keys preserve query differences. Atomic metadata points to complete
+  plain-text bodies under ignored `data/raw/details/`. Failure prints no stale body,
+  returns nonzero and retains the last successful body/time. Images still use HEAD.
+- Detail review is independent of list hashes: new/changed events, active/next-7-day
+  events, unended pending facts and operator rechecks. Ordinary review uses 24h TTL;
+  operator requests force once, then all six responsibilities reuse that result. Shared
+  URLs are fetched once and all referencing events checked. Monthly rotation BODY hashes
+  are tracked separately from the Hub index. Stable distant/history links are not reopened
+  daily; current-through-next-month and regional/in-person coverage remains required.
+- `node scripts/daily-candidates.js --base-ref HEAD` supplies read-only URL/date hints;
+  repeat `--changed ID`, `--pending ID`, `--force ID`, `--monthly-url URL` as applicable.
+  It always reads committed state via Git, never draft state. `state.details` records
+  only successfully handled body hashes after canonical/English finalization, and prunes
+  unreferenced records. Fresh failed-run caches are reusable materials, not completion.
+- Quiet days still check month rollover, active events, Boss/Max changes, recommendations
+  and 90-day retention/featured/English references. Only affected rich regions change;
+  unchanged static tier panels stay. The helper uses existing UTC-date/date-prefix
+  screening, not new event timezone facts; Pi must inspect local-time/intraday boundaries.
+- Mega roster maintenance permits source-backed **targeted completions/corrections** of
+  existing rows (null cost → supported confirmed cost, official superMax), as well as new
+  unique forms. No duplicate identities, unrelated rewrites or daily mechanics-table edits;
+  unsupported mechanics remain developer work. No roster values changed in this update.
+- Chinese species/moves come only from `fetch.sh zh <dexId>` / `zh move:<slug>` zh-Hans;
+  gamemaster is for stable dex/English/type/move facts, never Chinese names. On missing
+  Chinese, omit or retain verified English/romanized proper names. New form existence
+  still needs a live source, not absence from gamemaster.
+
+Rule consolidation preserves all eight full prompt inputs. AGENTS owns shared permissions,
+sources, schemas/rendering and reuse policy; daily-update owns order/recovery/three-round
+repairs; briefs reference embedded sections and retain their concrete input/output checks.
+
 ## VPS deploy (≈10 min)
 
 ```bash
@@ -320,6 +360,7 @@ Run the complete local gates without publishing:
 
 ```bash
 bash scripts/test-run-daily.sh       # temporary repos + mock Pi; no model/publish target
+bash scripts/test-daily-reuse.sh     # mock curl + fixed candidate/date/recovery fixtures
 node scripts/test-spot-atlas-time.js
 scripts/preflight.sh
 scripts/validate.sh

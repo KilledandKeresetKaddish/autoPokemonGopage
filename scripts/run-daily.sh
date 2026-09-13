@@ -182,10 +182,12 @@ if [ "$RESUME_RESTORED" = 1 ]; then
 A pending snapshot from a failed run has been applied. It is a possibly incomplete
 draft, not proof that any phase finished. Inspect its changes first, then continue the
 entire daily task in the required order. Source Scout, freshness checks,
-\`scripts/discover.sh new\`, and date-driven maintenance still must run. Use the
+\`scripts/discover.sh new --cached\` after preparing sources, detail review, and
+date-driven maintenance still must run. Use the
 committed state at base HEAD \`$BASE_HEAD\` (for example,
 \`git show $BASE_HEAD:data/state.json\`) as the last successfully processed source
-baseline; do not let hashes/timestamps in the draft state create a false quiet day.
+baseline; neither raw caches nor hashes/timestamps in draft state prove successful
+processing or create a quiet day. Compare URL bodies to committed processed-detail records.
 Correct the draft when sources changed, reuse content that is still valid, and do not
 unconditionally redo sound work.
 

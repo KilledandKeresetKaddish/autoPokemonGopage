@@ -8,6 +8,7 @@
 #   scripts/discover.sh "<keywords>"   SEARCH — find the URL for an event you can
 #                                      name (LeekDuck feed + GO Hub + 官方 news +
 #                                      Pokémon GO Wiki/Fandom search).
+#   scripts/discover.sh new --cached   DETECT from prepared <24h caches, no network.
 #   scripts/discover.sh new            DETECT — list events that appear in the
 #                                      freshly-fetched feeds but are NOT yet in
 #                                      public/data/events.json, cross-checked
@@ -16,7 +17,7 @@
 # Both reach the network mostly through the SAME path as fetch.sh (Cloudflare/JS
 # pages solved by Jina; the Fandom search hits its MediaWiki JSON API directly) and
 # only ever touch the project's trusted, allowlisted sources. Everything
-# printed is a LEAD, not truth: open each with `scripts/fetch.sh url <URL>`, read
+# printed is a LEAD, not truth: open each with `scripts/fetch.sh url --max-age 86400 <URL>`, read
 # it, confirm it's the right event/Pokémon, THEN edit. Never invent a URL.
 #
 # Output: tab-separated  TAG <tab> TITLE <tab> URL [<tab> …]  — saved under
@@ -41,14 +42,41 @@ if [ "${1:-}" = "new" ]; then
   CAL="$ROOT/public/data/events.json"
   FEED="$RAW/events.json"
 
-  # Fresh pull: events (the structured backbone) is required; hub/official are
-  # best-effort and only used to corroborate a candidate across sources.
-  "$FETCH" events >/dev/null 2>&1 || true
-  "$FETCH" events-hub events-official >/dev/null 2>&1 || true
-  [ -s "$FEED" ] || { echo "discover new: 无法获取 events feed($FEED 为空)" >&2; exit 1; }
-
-  KNOWN="$(jq -c '[.[].id]' "$CAL" 2>/dev/null || echo '[]')"
+  # Standalone mode still refreshes; daily Scout prepares these once, then uses
+  # --cached. Never silently report an incomplete/invalid scan as "no new events".
+  case "${2:-}" in
+    "")
+      "$FETCH" events events-hub events-official >/dev/null || {
+        echo "discover new: INCOMPLETE — source refresh failed; inspect last-good caches" >&2; exit 1;
+      } ;;
+    --cached) ;;
+    *) echo "usage: discover.sh new [--cached]" >&2; exit 2 ;;
+  esac
+  [ "$#" -le 2 ] || { echo "usage: discover.sh new [--cached]" >&2; exit 2; }
   HUB="$RAW/events-hub.txt"; OFF="$RAW/events-official.txt"
+  for f in "$FEED" "$HUB" "$OFF"; do
+    stamp="$(date -u -r "$f" +%s 2>/dev/null || echo 0)"
+    age=$(( $(date -u +%s) - stamp ))
+    if [ ! -s "$f" ] || [ "$age" -lt 0 ] || [ "$age" -ge 86400 ]; then
+      echo "discover new: INCOMPLETE — missing/empty/stale input: $f (requires <24h)" >&2; exit 1
+    fi
+  done
+  if ! jq -e 'type == "array" and all(.[]; (.eventID | type == "string" and length > 0)
+      and (.name | type == "string" and length > 0) and (.link | test("^https?://"))
+      and (.start | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}"))
+      and ((.end // .start) | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}")))' "$FEED" >/dev/null 2>&1 ||
+     ! jq -e 'type == "array" and all(.[]; .id | type == "string")' "$CAL" >/dev/null 2>&1; then
+    echo "discover new: INCOMPLETE — unparseable feed/calendar shape" >&2; exit 1
+  fi
+  # These rendered indexes must expose readable site URLs. A challenge/shell or
+  # changed link format needs human inspection, not a successful empty scan.
+  for f in "$HUB" "$OFF"; do
+    if ! grep -Eq 'https://(www\.)?(pokemongohub\.net|pokemongo\.com)/' "$f" ||
+       grep -Eqi 'Just a moment\.\.\.|Attention Required!|Cloudflare Ray ID' "$f"; then
+      echo "discover new: INCOMPLETE — unreadable index/link format: $f" >&2; exit 1
+    fi
+  done
+  KNOWN="$(jq -c '[.[].id]' "$CAL")"
 
   # Distinctive tokens of a name/slug: lowercase a-z0-9 words ≥4 chars, minus
   # Pokémon-GO boilerplate and pure numbers. Corroboration/coverage decisions
@@ -108,15 +136,17 @@ if [ "${1:-}" = "new" ]; then
                 printf '%s' "$CALTEXT" | grep -qF "$t" || { covered=0; break; }
               done <<< "$dt"
             fi
-            [ "$covered" = 0 ] && printf 'OFFICIAL-LEAD\t-\t%s\n' "$url"
-          done
+            if [ "$covered" = 0 ]; then printf 'OFFICIAL-LEAD\t-\t%s\n' "$url"; fi
+          done || true
     fi
   } | tee "$OUT"
+  scan_rc=$?
+  [ "$scan_rc" = 0 ] || { echo "discover new: INCOMPLETE — extraction failed" >&2; exit 1; }
 
   echo >&2
   if [ -s "$OUT" ]; then
     echo "discover new: 候选已存 -> ${OUT#$ROOT/}" >&2
-    echo "discover new: 逐条 scripts/fetch.sh url <URL> 打开核实(同一活动/日期)后再加入 events.json;拿不准把 gap 上报 State+Validator 记入 data/state.json(单代理运行可直接记),勿编。" >&2
+    echo "discover new: 逐条 scripts/fetch.sh url --max-age 86400 <URL> 打开核实(同一活动/日期)后再加入 events.json;拿不准把 gap 上报 State+Validator 记入 data/state.json,勿编。" >&2
   else
     echo "discover new: 本周期 feed 相对当前日历无新增活动。" >&2
   fi
@@ -125,7 +155,7 @@ fi
 
 # ============================ SEARCH MODE (default) ========================
 QUERY="${*:-}"
-[ -n "${QUERY// /}" ] || { echo "usage: scripts/discover.sh \"<keywords>\"   |   scripts/discover.sh new" >&2; exit 1; }
+[ -n "${QUERY// /}" ] || { echo "usage: scripts/discover.sh \"<keywords>\"   |   scripts/discover.sh new [--cached]" >&2; exit 1; }
 
 ENC="$(jq -nr --arg q "$QUERY" '$q|@uri')"
 OUT="$DISC/discover-$(date -u +%Y%m%dT%H%M%SZ).txt"
@@ -203,7 +233,7 @@ OUT="$DISC/discover-$(date -u +%Y%m%dT%H%M%SZ).txt"
 echo >&2
 if [ -s "$OUT" ]; then
   echo "discover: $(wc -l <"$OUT") candidate(s) -> ${OUT#$ROOT/}" >&2
-  echo "discover: NEXT — open each with  scripts/fetch.sh url <URL>  and confirm it's the same event/Pokémon before using. Never guess a URL." >&2
+  echo "discover: NEXT — open each with  scripts/fetch.sh url --max-age 86400 <URL>  and confirm it's the same event/Pokémon before using. Never guess a URL." >&2
 else
-  echo "discover: no candidates for \"$QUERY\". Try English Pokémon/event names, or browse the source index via fetch.sh url. Do NOT invent a URL — report the gap for data/state.json (State+Validator is its sole writer in sub-agent runs)." >&2
+  echo "discover: no candidates for \"$QUERY\". Try English Pokémon/event names, or browse the source index via fetch.sh url. Do NOT invent a URL — report the gap for data/state.json (State+Validator is its sole writer)." >&2
 fi
