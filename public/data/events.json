@@ -5717,66 +5717,6 @@
     "highlight": false
   },
   {
-    "id": "sparks-caretaking-quest",
-    "name": "队长 Spark 主题周:照料之旅(GO 通行证)",
-    "type": "event",
-    "heading": "Event",
-    "start": "2026-06-02T10:00:00",
-    "end": "2026-06-08T20:00:00",
-    "link": "https://pokemongohub.net/post/event/sparks-caretaking-quest/",
-    "summary": "与队长 Spark 一起孵蛋探索的主题周,为 GO Fest 2026 芝加哥站预热:7km 蛋、孵化加成与 GO 通行证奖励,Rank 30 可遇 Spark 主题特殊背景的电击怪。",
-    "links": [
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/sparks-caretaking-quest/"
-      },
-      {
-        "label": "Wiki",
-        "url": "https://pokemongo.fandom.com/wiki/Spark's_Caretaking_Quest"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 239,
-        "name": "电击怪"
-      }
-    ],
-    "bonuses": [
-      ":incubator: GO 通行证 Rank 10 起孵化距离 1/2",
-      ":candy: Rank 20 起孵化糖果 ×1.5"
-    ]
-  },
-  {
-    "id": "candelas-quest-for-victory",
-    "name": "队长 Candela 主题周:胜利之旅(GO 通行证)",
-    "type": "event",
-    "heading": "Event",
-    "start": "2026-06-09T10:00:00",
-    "end": "2026-06-15T20:00:00",
-    "link": "https://pokemongohub.net/post/event/candelas-quest-for-victory/",
-    "summary": "与队长 Candela 一起专注团战与对战的主题周,为 GO Fest 2026 哥本哈根站预热:GO 通行证奖励,Rank 30 可遇 Candela 主题饰品的小火马。",
-    "links": [
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/candelas-quest-for-victory/"
-      },
-      {
-        "label": "Wiki",
-        "url": "https://pokemongo.fandom.com/wiki/Candela's_Quest_for_Victory"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 77,
-        "name": "小火马"
-      }
-    ],
-    "bonuses": [
-      ":raid: GO 通行证 Rank 10 起好友团战攻击加成提升",
-      ":stardust: Rank 20 起团战星尘 ×1.5"
-    ]
-  },
-  {
     "id": "national-trust-x-pokemon-go-events-2026",
     "name": "National Trust×宝可梦 GO(英格兰/威尔士/北爱尔兰线下)",
     "type": "event",
@@ -6227,15 +6167,20 @@
     "longTerm": true
   },
   {
-    "id": "wild-area-2026-sendai",
-    "name": "GO 荒野地区 2026：日本仙台（线下）",
-    "type": "event",
-    "heading": "In-Person Event",
-    "start": "2026-11-06T00:00:00",
-    "end": "2026-11-08T23:59:59",
-    "link": "https://pokemongo.com/news/save-the-date-go-wild-area-2026",
-    "summary": "官方确认 2026 年 GO 荒野地区线下活动将于 11 月 6–8 日在日本仙台举行，玩法覆盖城市范围；门票、每日时段与活动内容将在下一赛季公布。",
+    "id": "pokemon-go-wild-area-2026-sendai-japan",
+    "name": "GO 荒野地区 2026：日本仙台·东北（线下）",
+    "type": "wild-area",
+    "heading": "Wild Area",
+    "start": "2026-11-06T01:00:00.000Z",
+    "end": "2026-11-08T09:00:00.000Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-sendai-japan/key-art.jpg",
+    "link": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/",
+    "summary": "2026 年 GO 荒野地区线下活动于 11 月 6–8 日在日本仙台·东北举行；当前已确认活动日期和每日时段，详细玩法将在后续公布。",
     "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      },
       {
         "label": "官方",
         "url": "https://pokemongo.com/news/save-the-date-go-wild-area-2026"
@@ -6247,15 +6192,20 @@
     ]
   },
   {
-    "id": "wild-area-2026-mexico-city",
+    "id": "pokemon-go-wild-area-2026-mexico-city",
     "name": "GO 荒野地区 2026：墨西哥城（线下）",
-    "type": "event",
-    "heading": "In-Person Event",
-    "start": "2026-11-06T00:00:00",
-    "end": "2026-11-08T23:59:59",
-    "link": "https://pokemongo.com/news/save-the-date-go-wild-area-2026",
-    "summary": "官方确认 2026 年 GO 荒野地区线下活动将于 11 月 6–8 日在墨西哥墨西哥城举行，玩法覆盖城市范围；门票、每日时段与活动内容将在下一赛季公布。",
+    "type": "wild-area",
+    "heading": "Wild Area",
+    "start": "2026-11-06T16:00:00.000Z",
+    "end": "2026-11-09T00:00:00.000Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-mexico-city/key-art.jpg",
+    "link": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/",
+    "summary": "2026 年 GO 荒野地区线下活动于 11 月 6–8 日在墨西哥城举行；当前已确认活动日期和每日时段，详细玩法将在后续公布。",
     "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+      },
       {
         "label": "官方",
         "url": "https://pokemongo.com/news/save-the-date-go-wild-area-2026"
@@ -6267,15 +6217,20 @@
     ]
   },
   {
-    "id": "wild-area-2026-global",
+    "id": "pokemon-go-wild-area-2026-global",
     "name": "GO 荒野地区 2026：全球",
-    "type": "event",
-    "heading": "Global Event",
-    "start": "2026-11-14T00:00:00",
-    "end": "2026-11-15T23:59:59",
-    "link": "https://pokemongo.com/news/save-the-date-go-wild-area-2026",
-    "summary": "GO 荒野地区全球活动确定于 11 月 14–15 日举行，世界各地均可参与；每日时段、门票和具体玩法将在下一赛季公布。",
+    "type": "wild-area",
+    "heading": "Wild Area",
+    "start": "2026-11-14T10:00:00.000",
+    "end": "2026-11-15T18:00:00.000",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-14-pokemon-go-wild-area-2026-global/key-art.jpg",
+    "link": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/",
+    "summary": "GO 荒野地区全球活动于 11 月 14–15 日每天当地时间 10–18 时举行；门票和详细玩法将在后续公布。",
     "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/"
+      },
       {
         "label": "官方",
         "url": "https://pokemongo.com/news/save-the-date-go-wild-area-2026"
@@ -8982,6 +8937,26 @@
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png",
         "hub": "15-Mega"
       }
+    ],
+    "counters": [
+      {
+        "id": 806,
+        "name": "Blacephalon",
+        "fast": "Incinerate",
+        "charged": "Mind Blown"
+      },
+      {
+        "id": 384,
+        "name": "Rayquaza",
+        "fast": "Air Slash",
+        "charged": "Dragon Ascent"
+      },
+      {
+        "id": 150,
+        "name": "Mewtwo",
+        "fast": "Psycho Cut",
+        "charged": "Psystrike"
+      }
     ]
   },
   {
@@ -9306,7 +9281,7 @@
       },
       {
         "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+        "url": "https://pokemongohub.net/post/guide/shadow-thundurus-incarnate-raid-counters-guide/"
       }
     ],
     "pokemon": [
@@ -9315,6 +9290,28 @@
         "name": "暗影雷电云（化身形态）",
         "shiny": true,
         "hub": "642-Incarnate_Shadow"
+      }
+    ],
+    "counters": [
+      {
+        "id": 646,
+        "name": "White Kyurem",
+        "fast": "Ice Fang",
+        "charged": "Ice Burn"
+      },
+      {
+        "id": 150,
+        "name": "Mega Mewtwo Y",
+        "fast": "Psycho Cut",
+        "charged": "Future Sight+",
+        "hub": "150-Mega_Y"
+      },
+      {
+        "id": 464,
+        "name": "Shadow Rhyperior",
+        "fast": "Smack Down",
+        "charged": "Rock Wrecker",
+        "hub": "464-Shadow"
       }
     ],
     "longTerm": true
@@ -9454,6 +9451,28 @@
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png",
         "hub": "229-Mega"
       }
+    ],
+    "counters": [
+      {
+        "id": 647,
+        "name": "Resolute Keldeo",
+        "fast": "Low Kick",
+        "charged": "Secret Sword"
+      },
+      {
+        "id": 257,
+        "name": "Shadow Blaziken",
+        "fast": "Counter",
+        "charged": "Aura Sphere",
+        "hub": "257-Shadow"
+      },
+      {
+        "id": 382,
+        "name": "Shadow Kyogre",
+        "fast": "Waterfall",
+        "charged": "Origin Pulse",
+        "hub": "382-Shadow"
+      }
     ]
   },
   {
@@ -9499,7 +9518,7 @@
     "start": "2026-09-14T06:00:00",
     "end": "2026-09-14T21:00:00",
     "link": "https://leekduck.com/events/max-mondays-2026-09-14/",
-    "summary": "当天 6–21 时由指定极巨化宝可梦占领能量点；18–19 时为 Max 周一重点时段。",
+    "summary": "极巨化独角犀牛首次登场，当天 6–21 时占领能量点，18–19 时为重点时段；这是可单人完成的 1 阶极巨对战。",
     "links": [
       {
         "label": "LeekDuck",
@@ -9507,7 +9526,7 @@
       },
       {
         "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+        "url": "https://pokemongohub.net/post/news/dynamax-rhyhorn-max-monday-event-guide/"
       }
     ],
     "pokemon": [
@@ -9519,6 +9538,12 @@
     ],
     "bonuses": [
       ":xl-candy: 现场完成 Max 对战可获 1 颗神奇糖果 XL"
+    ],
+    "sections": [
+      {
+        "title": "对战提示",
+        "body": "独角犀牛为地面／岩石属性，弱水、草、地面、格斗、冰和钢；Hub 指南推荐超极巨化 Inteleon 主攻、雷吉艾斯承伤。"
+      }
     ]
   },
   {
@@ -9691,13 +9716,13 @@
   },
   {
     "id": "pokemonspotlighthour2026-09-17",
-    "name": "神秘宝可梦聚焦时刻",
+    "name": "Charmander 聚焦",
     "type": "pokemon-spotlight-hour",
     "heading": "Pokémon Spotlight Hour",
     "start": "2026-09-17T18:00:00",
     "end": "2026-09-17T19:00:00",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-09-17/",
-    "summary": "当地时间 18–19 时举行聚焦时刻，期间主角大量出现并开放当周加成。",
+    "summary": "当地时间 18–19 时，戴弗里德护目镜的 Charmander 大量出现，并开放捕捉星尘双倍加成。",
     "links": [
       {
         "label": "LeekDuck",
@@ -9708,9 +9733,16 @@
         "url": "https://pokemongohub.net/post/guide/september-2026-events/"
       }
     ],
-    "pokemon": [],
+    "pokemon": [
+      {
+        "id": 4,
+        "name": "戴弗里德护目镜的 Charmander",
+        "shiny": true,
+        "sprite": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm4.fGOGGLES_2026.icon.png"
+      }
+    ],
     "bonuses": [
-      ":stardust: 捕捉星尘 ×2；主角待公布"
+      ":stardust: 捕捉星尘 ×2"
     ]
   },
   {
@@ -9933,13 +9965,13 @@
   },
   {
     "id": "harvest-festival-2026",
-    "name": "丰收节",
+    "name": "丰收节：Applin 采摘",
     "type": "event",
     "heading": "Event",
     "start": "2026-09-29T10:00:00",
     "end": "2026-10-05T20:00:00",
     "link": "https://leekduck.com/events/harvest-festival-2026/",
-    "summary": "丰收节于 9 月 29 日至 10 月 5 日举行；完整主角、调查与加成尚未公布。",
+    "summary": "丰收节带来 Applin 闪光首次登场和 Smoliv 闪光概率提升；青苔诱饵模组只会吸引苹果，并开放分支限时调查、田野调查和丰收节 GO Pass。",
     "links": [
       {
         "label": "LeekDuck",
@@ -9947,9 +9979,248 @@
       },
       {
         "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/september-2026-events/"
+        "url": "https://pokemongohub.net/post/event/harvest-festival-2026-applin-picking/"
       }
-    ]
+    ],
+    "pokemon": [
+      {
+        "id": 840,
+        "name": "Applin",
+        "shiny": true
+      },
+      {
+        "id": 928,
+        "name": "Smoliv",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      "✨ Smoliv 闪光概率提升",
+      "Applin 闪光形态首次登场",
+      ":lure: 青苔诱饵模组在活动期间只吸引苹果",
+      "GO Pass Rank 1 起，捕获 Applin 时更容易携带苹果",
+      "GO Pass Rank 10 起，青苔诱饵模组持续 1 小时",
+      ":stardust: GO Pass Rank 20 起，击败 GO 火箭队可获更多星尘"
+    ],
+    "sections": [
+      {
+        "title": "苹果与调查",
+        "items": [
+          "点击青苔诱饵模组吸引的苹果，可获 Tart Apple、Sweet Apple、Syrupy Apple 或主题宝可梦遭遇",
+          "分支限时调查可选择一种苹果作为奖励路线，须在 10 月 5 日 20 时前完成和领取",
+          "活动田野调查奖励主题宝可梦遭遇"
+        ]
+      },
+      {
+        "title": "GO Pass",
+        "items": [
+          "免费丰收节 GO Pass 于 9 月 29 日 10 时自动发放，可取得苹果、青苔诱饵模组、超级火箭雷达等",
+          "已解锁奖励须在 10 月 7 日 20 时前领取；Deluxe 售价 4.99 美元，Deluxe + 6 Ranks 售价 6.99 美元"
+        ]
+      }
+    ],
+    "highlight": true
+  },
+  {
+    "id": "patterns-of-the-wild-2026",
+    "name": "野性纹样（仅限印度尼西亚）",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-10-02T10:00:00.000",
+    "end": "2026-10-02T20:00:00.000",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-10-02-patterns-of-the-wild-2026/patterns-of-the-wild-2026.jpg",
+    "link": "https://leekduck.com/events/patterns-of-the-wild-2026/",
+    "summary": "仅限印度尼西亚：穿蜡染衬衫的皮卡丘可在野外、限时调查与快照惊喜中出现，并有机会带特别背景；活动主题野生宝可梦的闪光概率提升。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/patterns-of-the-wild-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/patterns-of-the-wild-event-indonesia-exclusive-event/"
+      }
+    ],
+    "bonuses": [
+      ":incense: 熏香持续 2 小时",
+      ":incense: 使用熏香时更容易遇见穿蜡染衬衫的皮卡丘及其他主题宝可梦",
+      "✨ 主题野生宝可梦闪光概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 10,
+        "name": "Caterpie",
+        "shiny": true
+      },
+      {
+        "id": 25,
+        "name": "穿蜡染衬衫的皮卡丘",
+        "shiny": true
+      },
+      {
+        "id": 43,
+        "name": "Oddish",
+        "shiny": true
+      },
+      {
+        "id": 44,
+        "name": "Gloom",
+        "shiny": true
+      },
+      {
+        "id": 69,
+        "name": "Bellsprout",
+        "shiny": true
+      },
+      {
+        "id": 165,
+        "name": "Ledyba",
+        "shiny": true
+      },
+      {
+        "id": 166,
+        "name": "Ledian",
+        "shiny": true
+      },
+      {
+        "id": 187,
+        "name": "Hoppip",
+        "shiny": true
+      },
+      {
+        "id": 188,
+        "name": "Skiploom",
+        "shiny": true
+      },
+      {
+        "id": 191,
+        "name": "Sunkern",
+        "shiny": true
+      },
+      {
+        "id": 265,
+        "name": "Wurmple",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "限时调查",
+        "items": [
+          "调查开放期为 9 月 28 日 6 时至 10 月 7 日 23 时 59 分",
+          "奖励包括带特别背景的蜡染衬衫皮卡丘、Oddish、Ledyba、Hoppip、1000 经验与 1000 星尘；遭遇均可为闪光"
+        ]
+      },
+      {
+        "title": "快照与收集挑战",
+        "items": [
+          "活动期间拍摄自己拥有的宝可梦，可触发蜡染衬衫皮卡丘惊喜遭遇",
+          "完成主题收集挑战可获经验、星尘与蜡染衬衫皮卡丘贴纸"
+        ]
+      }
+    ],
+    "highlight": true
+  },
+  {
+    "id": "harvest-festival-taken-over-2026",
+    "name": "丰收节：GO 火箭队占领",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-10-02T00:00:00.000",
+    "end": "2026-10-05T20:00:00.000",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-10-02-harvest-festival-taken-over-2026/harvest-festival-taken-over-2026.jpg",
+    "link": "https://leekduck.com/events/harvest-festival-taken-over-2026/",
+    "summary": "GO 火箭队占领丰收节：通过丰收节 GO Pass 取得超级火箭雷达，挑战坂木并救出暗影捷克罗姆；同时开放新暗影阵容和 Shroodle 闪光孵化。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/harvest-festival-taken-over-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/harvest-festival-taken-over-shadow-zekrom-debut/"
+      }
+    ],
+    "bonuses": [
+      "✨ Slugma 闪光概率提升",
+      ":rocket: GO 火箭队在补给站与热气球中出现得更频繁",
+      "可用特殊招式学习器让暗影宝可梦忘记迁怒",
+      "从 1★与 3★暗影团战捕获的宝可梦，攻击、防御与 HP 个体值范围更广"
+    ],
+    "pokemon": [
+      {
+        "id": 644,
+        "name": "暗影捷克罗姆",
+        "shiny": false,
+        "hub": "644-Shadow"
+      },
+      {
+        "id": 767,
+        "name": "暗影 Wimpod",
+        "shiny": false
+      },
+      {
+        "id": 753,
+        "name": "暗影 Fomantis",
+        "shiny": false
+      },
+      {
+        "id": 769,
+        "name": "暗影 Sandygast",
+        "shiny": false
+      },
+      {
+        "id": 109,
+        "name": "Koffing",
+        "shiny": true
+      },
+      {
+        "id": 218,
+        "name": "Slugma",
+        "shiny": true
+      },
+      {
+        "id": 322,
+        "name": "Numel",
+        "shiny": true
+      },
+      {
+        "id": 126,
+        "name": "Magmar",
+        "shiny": true
+      },
+      {
+        "id": 944,
+        "name": "Shroodle",
+        "shiny": true
+      },
+      {
+        "id": 945,
+        "name": "Grafaiai",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "坂木与 GO Pass",
+        "items": [
+          "通过丰收节 GO Pass 取得超级火箭雷达后，只能在补给站找到坂木并救出暗影捷克罗姆",
+          "GO Pass 已解锁奖励可领取至 10 月 7 日 20 时；暗影与净化宝可梦无法进行合体"
+        ]
+      },
+      {
+        "title": "首次登场",
+        "items": [
+          "暗影 Wimpod、暗影 Fomantis 与暗影 Sandygast 加入 GO 火箭队阵容",
+          "Shroodle 闪光形态首次从 12 公里蛋孵出，并可进化为闪光 Grafaiai"
+        ]
+      },
+      {
+        "title": "田野调查",
+        "body": "活动主题田野调查奖励一般招式学习器、特殊招式学习器与神秘零件；任务及数量尚未公布。"
+      }
+    ],
+    "highlight": true
   },
   {
     "id": "mega-victreebel-in-mega-raids-september-2026",
@@ -10049,20 +10320,63 @@
     ]
   },
   {
-    "id": "max-battle-day-october-2026",
-    "name": "10 月 Max 对战日",
+    "id": "gigantamax-cinderace-max-battle-day-2026",
+    "name": "Cinderace 超极巨战日",
     "type": "max-battles",
-    "heading": "Max Battle Day",
-    "start": "2026-10-03T14:00:00",
-    "end": "2026-10-03T17:00:00",
-    "link": "https://leekduck.com/events/max-battle-day-october-2026/",
-    "summary": "Max 对战日于 10 月 3 日当地时间 14–17 时举行；主角与加成尚未公布。",
+    "heading": "Max Battles",
+    "start": "2026-10-03T14:00:00.000",
+    "end": "2026-10-03T17:00:00.000",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-10-03-gigantamax-cinderace-max-battle-day-2026/gigantamax-cinderace-max-battle-day.jpg",
+    "link": "https://leekduck.com/events/gigantamax-cinderace-max-battle-day-2026/",
+    "summary": "六星极巨对战由超极巨化 Cinderace 占据全部能量点，其闪光形态首次登场；活动还提高极巨粒子获取、能量点数量与特殊交换次数。",
     "links": [
       {
         "label": "LeekDuck",
-        "url": "https://leekduck.com/events/max-battle-day-october-2026/"
+        "url": "https://leekduck.com/events/gigantamax-cinderace-max-battle-day-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/gigantamax-cinderace-max-battle-day/"
+      },
+      {
+        "label": "Hub·对战指南",
+        "url": "https://pokemongohub.net/post/guide/gmax-cinderace/"
       }
-    ]
+    ],
+    "bonuses": [
+      "极巨粒子每日收集上限提高至 1600",
+      ":spawn: 所有能量点均出现超极巨化 Cinderace，并增加数量、提高刷新频率",
+      "从能量点取得的极巨粒子 ×8",
+      ":trading: 当天最多进行 3 次特殊交换",
+      ":raid: 指定 PDT 时段内远程团战每日上限由 10 提高至 20"
+    ],
+    "pokemon": [
+      {
+        "id": 815,
+        "name": "超极巨化 Cinderace",
+        "shiny": true,
+        "sprite": "https://cdn.leekduck.com/assets/img/pokemon_icons/poke_capture_0815_000_mf_g_00000000_f_n.png",
+        "hub": "815-Gigantamax"
+      }
+    ],
+    "sections": [
+      {
+        "title": "全天探索加成",
+        "items": [
+          "10 月 3 日 0–17 时，探索获得极巨粒子 ×2",
+          "10 月 3 日 0–17 时，通过探索领取极巨粒子的距离缩短为 1/4"
+        ]
+      },
+      {
+        "title": "付费限时调查",
+        "body": "票价 4.99 美元；奖励包括 1 个极巨菇菇、25000 经验与 6400 极巨粒子，并在活动期间提供极巨对战经验 ×2。"
+      },
+      {
+        "title": "组队提示",
+        "body": "超极巨化 Cinderace 为纯火属性，弱水、地面和岩石；请提前强化对应的极巨或超极巨攻手并与队友分工。"
+      }
+    ],
+    "highlight": false
   },
   {
     "id": "october-communityday2026",
