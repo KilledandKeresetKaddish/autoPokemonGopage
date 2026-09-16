@@ -451,58 +451,6 @@
     ]
   },
   {
-    "id": "raidhour20260617",
-    "name": "奈克洛兹玛团战时刻",
-    "type": "raid-hour",
-    "heading": "Raid Hour",
-    "start": "2026-06-17T18:00:00",
-    "end": "2026-06-17T19:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
-    "link": "https://leekduck.com/events/raidhour20260617/",
-    "summary": "奈克洛兹玛团战时刻 18:00–19:00 各道馆密集出现 5★ 奈克洛兹玛,适合集中开团。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/raidhour20260617/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/spotlight-raid-hours/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 800,
-        "name": "奈克洛兹玛",
-        "shiny": true
-      }
-    ],
-    "bonuses": [
-      "✨ 可遇闪光"
-    ],
-    "counters": [
-      {
-        "id": 491,
-        "name": "达克莱伊",
-        "fast": "大声咆哮",
-        "charged": "暗影球"
-      },
-      {
-        "id": 635,
-        "name": "三首恶龙",
-        "fast": "咬住",
-        "charged": "暗影球"
-      },
-      {
-        "id": 609,
-        "name": "水晶灯火灵",
-        "fast": "祸不单行",
-        "charged": "暗影球"
-      }
-    ],
-    "highlight": false
-  },
-  {
     "id": "pokemonspotlighthour2026-06-18",
     "name": "小山猪聚焦时刻",
     "type": "pokemon-spotlight-hour",
@@ -4151,52 +4099,6 @@
       {
         "id": 766,
         "name": "投掷猴"
-      }
-    ],
-    "highlight": false
-  },
-  {
-    "id": "mlb-game-20260617",
-    "name": "MLB 主题赛:酿酒人",
-    "type": "mlb-game-day",
-    "heading": "MLB Theme Game",
-    "start": "2026-06-17T00:00:00",
-    "end": "2026-06-17T23:59:59",
-    "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
-    "link": "https://pokemongo.com/post/mlb-2026",
-    "summary": "密尔沃基酿酒人 主场「宝可梦 GO 主题赛」:American Family Field(坐标 43.0280,-87.9712)球场内可遇带场地背景的皮卡丘团战、限时调查与球队头像道具。",
-    "links": [
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/post/mlb-2026"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/the-pokemon-go-and-major-league-baseball-collaboration-returns-for-2026-season/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 25,
-        "name": "皮卡丘",
-        "shiny": true
-      }
-    ],
-    "sections": [
-      {
-        "title": "地点",
-        "items": [
-          "American Family Field · 坐标 43.0280,-87.9712"
-        ]
-      },
-      {
-        "title": "球场内容",
-        "items": [
-          ":raid: 球场道馆:皮卡丘团战(有机会带场地背景)",
-          ":lure: 诱饵 1 小时:凯西 / 腕力 / 卡拉卡拉(幸运:卡比兽 / 投掷猴)",
-          ":pokestop: 进场限时调查 + 实地调查",
-          ":pokestop: 转动补给站获主场球队帽子头像"
-        ]
       }
     ],
     "highlight": false
@@ -9573,6 +9475,26 @@
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10033.png",
         "hub": "3-Mega"
       }
+    ],
+    "counters": [
+      {
+        "id": 150,
+        "name": "超级超梦 Y",
+        "fast": "Psycho Cut",
+        "charged": "Future Sight+"
+      },
+      {
+        "id": 384,
+        "name": "超级烈空坐",
+        "fast": "Air Slash",
+        "charged": "Dragon Ascent"
+      },
+      {
+        "id": 806,
+        "name": "砰头小丑",
+        "fast": "Incinerate",
+        "charged": "Mind Blown"
+      }
     ]
   },
   {
@@ -9931,6 +9853,48 @@
     "bonuses": [
       ":xp: 进化宝可梦经验 ×2",
       ":spawn: 遇见 XXS 小拉达的概率提高"
+    ]
+  },
+  {
+    "id": "choose-your-path-twilight-trails-2026",
+    "name": "选择你的道路：暮光小径",
+    "type": "choose-your-path",
+    "heading": "Choose Your Path",
+    "start": "2026-09-23T10:00:00",
+    "end": "2026-09-28T20:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/choose-your-path-twilight-trails-2026.jpg",
+    "link": "https://leekduck.com/events/choose-your-path-twilight-trails-2026/",
+    "summary": "9 月 23 日 10 时至 28 日 20 时开放限时调查，可选择探索、捕捉或对战道路；所选道路会决定整周任务、奖励与加成。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/choose-your-path-twilight-trails-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/twilight-trails-choose-your-path-timed-research/"
+      },
+      {
+        "label": "Pokémon GO Wiki",
+        "url": "https://pokemongo.fandom.com/wiki/Choose_Your_Path_Timed_Research"
+      },
+      {
+        "label": "官方·玩法说明",
+        "url": "https://pokemongo.com/news/choose-your-path-forever-forward-2026"
+      }
+    ],
+    "bonuses": [
+      "从探索、捕捉、对战三条道路中选择其一",
+      "任务、奖励与加成依所选道路而异；具体内容待公布"
+    ],
+    "sections": [
+      {
+        "title": "限时调查",
+        "items": [
+          "不同训练家可能收到不同版本的调查。",
+          "须在 9 月 28 日 20 时前完成任务并领取奖励。"
+        ]
+      }
     ]
   },
   {
@@ -10380,26 +10344,57 @@
   },
   {
     "id": "october-communityday2026",
-    "name": "10 月社区日",
+    "name": "Zorua 社区日",
     "type": "community-day",
     "heading": "Community Day",
     "start": "2026-10-10T14:00:00",
     "end": "2026-10-10T17:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/cd-default.jpg",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-10-10-october-communityday2026/zorua-october-cd-2026.png",
     "link": "https://leekduck.com/events/october-communityday2026/",
-    "summary": "10 月社区日确定于 10 月 10 日当地时间 14–17 时举行；主角、限定招式与完整加成尚未公布。",
+    "summary": "10 月 10 日 14–17 时，Zorua 大量出现且闪光概率提升；活动期间及结束后 4 小时内进化可让 Zoroark 学会快速招式 Sucker Punch。",
     "links": [
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/october-communityday2026/"
       },
       {
-        "label": "Hub·秋季日期",
-        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/zorua-community-day-october-2026/"
       }
     ],
     "bonuses": [
-      "✨ 社区日闪光概率提升；主角待公布"
+      ":xp: 捕捉经验 ×3",
+      ":candy: 捕捉糖果 ×2",
+      ":xl-candy: 31 级及以上训练家获得糖果 XL 的概率 ×2",
+      ":incense: 薰香持续 3 小时",
+      ":lure: 普通诱饵持续 1 小时，14–21 时高概率吸引 Zorua",
+      ":trading: 14–21 时特殊交换次数 +1（当天最多 2 次），交换所需星尘减半",
+      "✨ Zorua 闪光概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 570,
+        "name": "Zorua",
+        "shiny": true
+      },
+      {
+        "id": 571,
+        "name": "Zoroark",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "限定招式",
+        "body": "活动期间及结束后 4 小时内将 Zorua 进化为 Zoroark，可学会恶属性快速招式 Sucker Punch。"
+      },
+      {
+        "title": "调查与付费内容",
+        "items": [
+          "主题田野调查可获得星尘、究极球与 Zorua 遭遇；幸运时遭遇带特别背卡的 Zorua。",
+          "1.99 美元活动限定特殊调查包含 3 次带特别背卡的 Zorua 遭遇、额外遭遇、1 张高级对战入场券与 1 颗神奇糖果 XL。"
+        ]
+      }
     ],
     "highlight": true
   },
