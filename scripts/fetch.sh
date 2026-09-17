@@ -104,24 +104,40 @@ fetch_tier() {
 # responses before they can become a last-good cache body.
 DETAIL_BODY_REASON=""
 check_detail_body() {
-  local file="$1" prefix lower
+  local file="$1" prefix lower line check_rc=0
+  local html_title_re error_line_re jina_warning_re ray_line_re
   DETAIL_BODY_REASON=""
   if [ ! -s "$file" ]; then
     DETAIL_BODY_REASON="empty response"
     return 1
   fi
+  LC_ALL=C grep -q '[^[:space:]]' "$file" || check_rc=$?
+  case "$check_rc" in
+    0) ;;
+    1) DETAIL_BODY_REASON="blank response"; return 1 ;;
+    *) DETAIL_BODY_REASON="response whitespace inspection failed"; return 2 ;;
+  esac
   if ! prefix="$(LC_ALL=C head -c 16384 "$file")"; then
-    DETAIL_BODY_REASON="response inspection failed"
+    DETAIL_BODY_REASON="response prefix inspection failed"
     return 2
   fi
   lower="${prefix,,}"
-  case "$lower" in
-    *'just a moment...'*|*'attention required!'*|*'cloudflare ray id'*|\
-    *'target url returned error 403'*|*'403 forbidden'*|*'access denied'*|\
-    *'title: internal server error'*|*'<title>internal server error</title>'*)
+  html_title_re='<title[^>]*>[[:space:]]*(just a moment(\.\.\.)?|attention required!?([[:blank:]]*\|[[:blank:]]*cloudflare)?|403[[:blank:]]+forbidden|access[[:blank:]]+denied|internal[[:blank:]]+server[[:blank:]]+error)[[:space:]]*</title>'
+  if [[ "$lower" =~ $html_title_re ]]; then
+    DETAIL_BODY_REASON="challenge or explicit error response"
+    return 1
+  fi
+  error_line_re='^[[:blank:]]*(title:[[:blank:]]*)?(just a moment(\.\.\.)?|attention required!?([[:blank:]]*\|[[:blank:]]*cloudflare)?|403[[:blank:]]+forbidden|access[[:blank:]]+denied|internal[[:blank:]]+server[[:blank:]]+error)[[:blank:]]*$'
+  jina_warning_re='^[[:blank:]]*(warning:[[:blank:]]*)?target[[:blank:]]+url[[:blank:]]+returned[[:blank:]]+error[[:blank:]]+(401|403|429|5[0-9][0-9])([[:blank:]]*:[[:blank:]].*)?[[:blank:]]*$'
+  ray_line_re='^[[:blank:]]*cloudflare[[:blank:]]+ray[[:blank:]]+id([[:blank:]]*:[[:blank:]]*[[:alnum:]-]+)?[[:blank:]]*$'
+  while IFS= read -r line || [ -n "$line" ]; do
+    line="${line%$'\r'}"
+    if [[ "$line" =~ $error_line_re ]] || [[ "$line" =~ $jina_warning_re ]] ||
+       [[ "$line" =~ $ray_line_re ]]; then
       DETAIL_BODY_REASON="challenge or explicit error response"
-      return 1 ;;
-  esac
+      return 1
+    fi
+  done <<< "$lower"
   # FlareSolverr/Jina-style JSON failures are safe to identify structurally;
   # ordinary articles mentioning an error or a status code are not.
   if [[ "$lower" =~ ^[[:space:]]*\{ ]] &&
@@ -130,6 +146,7 @@ check_detail_body() {
     DETAIL_BODY_REASON="structured solver error response"
     return 1
   fi
+  return 0
 }
 
 fandom_wiki_title() {
@@ -257,7 +274,7 @@ fetch_url() {
         echo "FAIL url <- $url  (image HEAD failed — image likely absent)" >&2; return 1
       fi ;;
   esac
-  local key meta body hash stamp age tmp old_body invalid_body cache_reason path title
+  local key meta body hash stamp age tmp old_body invalid_body cache_reason path title check_rc
   key="$(printf '%s' "$url" | sha256sum | cut -d' ' -f1)"
   mkdir -p "$RAW/details"
   meta="$RAW/details/$key.json"
@@ -273,9 +290,13 @@ fetch_url() {
     if [ "$stamp" -le 0 ] || [ "$age" -lt 0 ] || [ ! -s "$body" ] ||
        [ "$(sha256sum "$body" 2>/dev/null | cut -d' ' -f1)" != "$hash" ]; then
       body=""; age=-1
-    elif ! check_detail_body "$body"; then
-      invalid_body="$body"; cache_reason="$DETAIL_BODY_REASON"
-      body=""; age=-1
+    else
+      check_rc=0; check_detail_body "$body" || check_rc=$?
+      case "$check_rc" in
+        0) ;;
+        1) invalid_body="$body"; cache_reason="$DETAIL_BODY_REASON"; body=""; age=-1 ;;
+        *) echo "FAIL detail cache inspection: $url ($DETAIL_BODY_REASON; cache unchanged; no body)" >&2; return 1 ;;
+      esac
     fi
   fi
   if [ "$URL_MODE" = info ] || [ "$URL_MODE" = cached ]; then
@@ -317,11 +338,18 @@ fetch_url() {
     echo "FAIL url <- $url (refresh failed${DETAIL_FETCH_REASON:+: $DETAIL_FETCH_REASON}; last good cache unchanged; no fresh body)" >&2
     return 1
   fi
-  if ! check_detail_body "$tmp"; then
-    rm -f "$tmp"
-    echo "FAIL url <- $url (rejected detail body: $DETAIL_BODY_REASON; last good cache unchanged; no fresh body)" >&2
-    return 1
-  fi
+  check_rc=0; check_detail_body "$tmp" || check_rc=$?
+  case "$check_rc" in
+    0) ;;
+    1)
+      rm -f "$tmp"
+      echo "FAIL url <- $url (rejected detail body: $DETAIL_BODY_REASON; last good cache unchanged; no fresh body)" >&2
+      return 1 ;;
+    *)
+      rm -f "$tmp"
+      echo "FAIL url <- $url (detail body inspection failed: $DETAIL_BODY_REASON; last good cache unchanged; no fresh body)" >&2
+      return 1 ;;
+  esac
   hash="$(sha256sum "$tmp" | cut -d' ' -f1)"
   body="$RAW/details/$key.$hash.txt"
   if ! jq -n --arg url "$url" --arg time "$(date -u +%FT%TZ)" --arg hash "$hash" \

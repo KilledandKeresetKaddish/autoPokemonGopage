@@ -47,6 +47,7 @@ case "$url" in
       valid) cp "$FIXTURE/fandom-valid.json" "$out" ;;
       api-error) cp "$FIXTURE/fandom-api-error.json" "$out" ;;
       empty) cp "$FIXTURE/fandom-empty.json" "$out" ;;
+      whitespace) cp "$FIXTURE/fandom-whitespace.json" "$out" ;;
       challenge) cp "$FIXTURE/fandom-challenge.json" "$out" ;;
       *) echo "unexpected FANDOM_MODE $FANDOM_MODE" >&2; exit 99 ;;
     esac ;;
@@ -61,8 +62,12 @@ exec /bin/mv "$@"
 SH
 cat > "$T/bin/head" <<'SH'
 #!/usr/bin/env bash
-if [ "${FAIL_DETAIL_CHECK:-0}" = 1 ] && [ "${1:-}" = -c ] && [ "${2:-}" = 16384 ]; then
-  echo 'mock detail inspection failure' >&2; exit 79
+target="${@: -1}"
+if [ "${1:-}" = -c ] && [ "${2:-}" = 16384 ]; then
+  case "${FAIL_DETAIL_CHECK:-}" in
+    cached) [[ "$target" == */details/*.txt ]] && { echo 'mock cached-body inspection failure' >&2; exit 79; } ;;
+    fresh) [[ "$target" == */details/.fetch.* ]] && { echo 'mock fresh-body inspection failure' >&2; exit 79; } ;;
+  esac
 fi
 exec /usr/bin/head "$@"
 SH
@@ -119,6 +124,7 @@ jq -n --rawfile text "$T/fandom-article" \
   '{parse:{title:"October 2026 Community Day: Zorua\u0027s Return",text:$text}}' > "$T/fandom-valid.json"
 printf '%s\n' '{"error":{"code":"missingtitle","info":"The page you specified does not exist."}}' > "$T/fandom-api-error.json"
 printf '%s\n' '{"parse":{"title":"Empty page","text":""}}' > "$T/fandom-empty.json"
+printf '%s\n' '{"parse":{"title":"Blank page","text":"  \n\t\n"}}' > "$T/fandom-whitespace.json"
 printf '%s\n' '{"parse":{"title":"Blocked page","text":"<title>Just a moment...</title>"}}' > "$T/fandom-challenge.json"
 : > "$T/requests"
 cd "$T"
@@ -230,13 +236,16 @@ scripts/fetch.sh url --max-age 86400 "$u" > "$T/result"; cmp "$T/body" "$T/resul
 eq "$(count)" "$((before + 1))"
 # Explicit challenge/error markers never become a first cache generation.
 bad_bodies=(
-  'Just a moment...'
-  '<title>Attention Required!</title>'
-  '<html>Cloudflare Ray ID: fixture</html>'
+  '<!doctype html><html><head><title>Just a moment...</title></head><body>Checking your browser</body></html>'
+  '<html><head><title>Attention Required! | Cloudflare</title></head><body>Blocked</body></html>'
   'Title: Internal Server Error
-Warning: Target URL returned error 403: Forbidden'
+URL Source: https://example.invalid/
+Warning: Target URL returned error 403: Forbidden
+Markdown Content:
+Access denied by origin.'
   '403 Forbidden'
   'Access Denied'
+  'Cloudflare Ray ID: 8abcdef012345678'
   '{"status":"error","message":"solver unavailable"}'
 )
 for i in "${!bad_bodies[@]}"; do
@@ -249,12 +258,28 @@ for i in "${!bad_bodies[@]}"; do
   eq "$(count)" "$((before_bad + 1))"
   no_detail_cache "$bad_url"
 done
-# Normal prose can mention status/error terms without being rejected.
-normal_terms='This article explains an error report where status 403 appeared in old logs.'
+# Normal prose can quote the same errors without being rejected.
+normal_terms='Title: Pokemon GO login troubleshooting
+Players may see "Access Denied" or "403 Forbidden" when logging in. Here are the steps to resolve it.'
 printf '%s\n' "$normal_terms" > "$T/body"
 normal_url='https://leekduck.com/events/ordinary-error-terms/'
 scripts/fetch.sh url "$normal_url" > "$T/result"
 cmp <(printf '%s\n' "$normal_terms") "$T/result"
+# Whitespace-only downloads are invalid and never create a cache generation.
+blank_url='https://leekduck.com/events/blank-response/'
+printf ' \n\t\n' > "$T/body"
+before_blank=$(count)
+reject scripts/fetch.sh url "$blank_url"
+[ ! -s "$T/rejected.out" ] || fail 'blank response leaked to stdout'
+grep -q 'blank response' "$T/rejected.err" || fail 'blank response reason missing'
+eq "$(count)" "$((before_blank + 1))"
+no_detail_cache "$blank_url"
+# A long whitespace prefix is fine when real content follows beyond the sample.
+dd if=/dev/zero bs=17000 count=1 2>/dev/null | tr '\0' ' ' > "$T/body"
+printf '\nreal article after whitespace prefix\n' >> "$T/body"
+long_prefix_url='https://leekduck.com/events/long-whitespace-prefix/'
+scripts/fetch.sh url "$long_prefix_url" > "$T/result"
+cmp "$T/body" "$T/result"
 # A failed forced refresh must retain a legitimate old body and its metadata.
 printf '%s\n' 'Target URL returned error 403: Forbidden' > "$T/body"
 cp "$meta" "$T/pre-challenge-meta"; cp "$body_path" "$T/pre-challenge-body"
@@ -263,11 +288,32 @@ reject scripts/fetch.sh url --force "$u"
 [ ! -s "$T/rejected.out" ] || fail 'forced challenge leaked to stdout'
 eq "$(count)" "$((before_challenge + 1))"
 cmp "$meta" "$T/pre-challenge-meta"; cmp "$body_path" "$T/pre-challenge-body"
-# An inspection failure is fail-closed and also preserves the previous cache.
+# A cached-body inspection failure is not cache invalidation: every mode fails
+# before network access and preserves the previous body and metadata, even when
+# the would-be refreshed response is valid.
+printf 'would-be valid refresh body\n' > "$T/body"
 before_check_failure=$(count)
-reject env FAIL_DETAIL_CHECK=1 scripts/fetch.sh url --force "$u"
-[ ! -s "$T/rejected.out" ] || fail 'inspection failure leaked to stdout'
-eq "$(count)" "$((before_check_failure + 1))"
+for mode in force cached info age; do
+  case "$mode" in
+    force) args=(--force) ;;
+    cached) args=(--cached) ;;
+    info) args=(--info) ;;
+    age) args=(--max-age 86400) ;;
+  esac
+  reject env FAIL_DETAIL_CHECK=cached scripts/fetch.sh url "${args[@]}" "$u"
+  [ ! -s "$T/rejected.out" ] || fail "cached inspection failure leaked to stdout: $mode"
+  grep -q 'prefix inspection failed' "$T/rejected.err" || fail "cached inspection failure reason missing: $mode"
+done
+eq "$(count)" "$before_check_failure"
+cmp "$meta" "$T/pre-challenge-meta"; cmp "$body_path" "$T/pre-challenge-body"
+# A fresh-body inspection failure occurs after one request but still preserves
+# the old cache generation.
+printf 'fresh valid article body\n' > "$T/body"
+before_fresh_check=$(count)
+reject env FAIL_DETAIL_CHECK=fresh scripts/fetch.sh url --force "$u"
+[ ! -s "$T/rejected.out" ] || fail 'fresh inspection failure leaked to stdout'
+grep -q 'detail body inspection failed.*prefix inspection failed' "$T/rejected.err" || fail 'fresh inspection failure reason missing'
+eq "$(count)" "$((before_fresh_check + 1))"
 cmp "$meta" "$T/pre-challenge-meta"; cmp "$body_path" "$T/pre-challenge-body"
 printf 'detail version one\n' > "$T/body"
 # A manually seeded, fresh challenge cache is invalid for cached/info reuse and
@@ -299,6 +345,25 @@ printf 'recovered article body\n' > "$T/body"
 scripts/fetch.sh url --max-age 86400 "$old_challenge_url" > "$T/result"
 cmp "$T/body" "$T/result"
 jq -e --arg h "$old_challenge_hash" '.sha256 != $h' "data/raw/details/$old_challenge_key.json" > /dev/null
+# A fresh, hash-valid whitespace cache is also a miss. Cached mode stays offline;
+# max-age refreshes it and only then replaces the invalid generation.
+old_blank_url='https://leekduck.com/events/old-blank/'
+old_blank_key="$(detail_key "$old_blank_url")"
+printf ' \n\t\n' > "$T/old-blank-body"
+old_blank_hash="$(sha256sum "$T/old-blank-body" | cut -d' ' -f1)"
+old_blank_body="data/raw/details/$old_blank_key.$old_blank_hash.txt"
+cp "$T/old-blank-body" "$old_blank_body"
+jq -n --arg u "$old_blank_url" --arg h "$old_blank_hash" \
+  '{url:$u,lastFetch:"2026-09-10T12:00:00Z",sha256:$h}' > "data/raw/details/$old_blank_key.json"
+before_old_blank=$(count)
+reject scripts/fetch.sh url --cached "$old_blank_url"
+[ ! -s "$T/rejected.out" ] || fail 'cached blank body leaked to stdout'
+eq "$(count)" "$before_old_blank"
+printf 'article replacing blank cache\n' > "$T/body"
+scripts/fetch.sh url --max-age 86400 "$old_blank_url" > "$T/result"
+cmp "$T/body" "$T/result"
+eq "$(count)" "$((before_old_blank + 1))"
+[ ! -e "$old_blank_body" ] || fail 'old blank generation not cleaned after valid refresh'
 # Fandom wiki pages use the verified parse API, but cache the caller's wiki URL.
 fandom_url='https://pokemongo.fandom.com/wiki/October_2026_Community_Day%3A_Zorua%27s_Return?from=search'
 fandom_key="$(detail_key "$fandom_url")"
@@ -313,7 +378,7 @@ jq -e --arg u "$fandom_url" '.url == $u and (.url | contains("api.php") | not)' 
 before_fandom_hit=$(count)
 scripts/fetch.sh url --max-age 86400 "$fandom_url" > "$T/result"
 eq "$(count)" "$before_fandom_hit"
-for fandom_mode in api-error empty challenge; do
+for fandom_mode in api-error empty whitespace challenge; do
   fandom_bad_url="https://pokemongo.fandom.com/wiki/Fandom_${fandom_mode}"
   before_fandom_bad=$(count)
   reject env FANDOM_MODE="$fandom_mode" scripts/fetch.sh url "$fandom_bad_url"
