@@ -100,6 +100,79 @@ fetch_tier() {
   esac
 }
 
+# Detail pages are free-form prose, so reject only unambiguous gateway/challenge
+# responses before they can become a last-good cache body.
+DETAIL_BODY_REASON=""
+check_detail_body() {
+  local file="$1" prefix lower
+  DETAIL_BODY_REASON=""
+  if [ ! -s "$file" ]; then
+    DETAIL_BODY_REASON="empty response"
+    return 1
+  fi
+  if ! prefix="$(LC_ALL=C head -c 16384 "$file")"; then
+    DETAIL_BODY_REASON="response inspection failed"
+    return 2
+  fi
+  lower="${prefix,,}"
+  case "$lower" in
+    *'just a moment...'*|*'attention required!'*|*'cloudflare ray id'*|\
+    *'target url returned error 403'*|*'403 forbidden'*|*'access denied'*|\
+    *'title: internal server error'*|*'<title>internal server error</title>'*)
+      DETAIL_BODY_REASON="challenge or explicit error response"
+      return 1 ;;
+  esac
+  # FlareSolverr/Jina-style JSON failures are safe to identify structurally;
+  # ordinary articles mentioning an error or a status code are not.
+  if [[ "$lower" =~ ^[[:space:]]*\{ ]] &&
+     { [[ "$lower" =~ \"status\"[[:space:]]*:[[:space:]]*\"(error|failed|failure)\" ]] ||
+       [[ "$lower" =~ \"success\"[[:space:]]*:[[:space:]]*false ]]; }; then
+    DETAIL_BODY_REASON="structured solver error response"
+    return 1
+  fi
+}
+
+fandom_wiki_title() {
+  local path="$1" title
+  [[ "$path" == /wiki/* ]] || return 1
+  title="${path#/wiki/}"
+  [ -n "$title" ] && [[ "$title" != *\\* ]] &&
+    [[ "${title,,}" != *%00* ]] &&
+    [[ "$title" =~ ^([^%]|%[0-9A-Fa-f]{2})*$ ]] || return 1
+  title="$(printf '%b' "${title//%/\\x}")" || return 1
+  title="${title//_/ }"
+  [ -n "$title" ] || return 1
+  printf '%s' "$title"
+}
+
+DETAIL_FETCH_REASON=""
+fetch_fandom_wiki() {
+  local title="$1" tmp="$2" api="$2.api"
+  if ! curl -fsSL -A "$UA" --compressed --max-time 90 --get \
+      'https://pokemongo.fandom.com/api.php' \
+      --data-urlencode 'action=parse' \
+      --data-urlencode "page=$title" \
+      --data-urlencode 'prop=text' \
+      --data-urlencode 'format=json' \
+      --data-urlencode 'formatversion=2' \
+      -o "$api"; then
+    rm -f "$api"
+    DETAIL_FETCH_REASON="Fandom API request failed"
+    return 1
+  fi
+  if ! jq -er '
+      select(.error? == null)
+      | .parse | select(type == "object")
+      | select((.title | type) == "string" and (.title | length) > 0)
+      | .text | select(type == "string" and length > 0)
+    ' "$api" > "$tmp" 2>/dev/null; then
+    rm -f "$api" "$tmp"
+    DETAIL_FETCH_REASON="Fandom API returned no article body"
+    return 1
+  fi
+  rm -f "$api"
+}
+
 fetch_one() {
   local name="$1" url="${URLS[$1]:-}"
   if [ -z "$url" ]; then echo "unknown source: $name" >&2; return 2; fi
@@ -184,13 +257,13 @@ fetch_url() {
         echo "FAIL url <- $url  (image HEAD failed — image likely absent)" >&2; return 1
       fi ;;
   esac
-  local key meta body hash stamp age tmp old_body
+  local key meta body hash stamp age tmp old_body invalid_body cache_reason path title
   key="$(printf '%s' "$url" | sha256sum | cut -d' ' -f1)"
   mkdir -p "$RAW/details"
   meta="$RAW/details/$key.json"
-  body=""; age=-1
+  body=""; age=-1; invalid_body=""; cache_reason=""
   # Metadata is the atomic pointer to an immutable, content-addressed plain body.
-  # Reject damaged/mismatched records instead of treating file existence as freshness.
+  # A matching hash is necessary but not enough: old challenge pages must not hit.
   if jq -e --arg u "$url" '.url == $u and (.sha256 | test("^[a-f0-9]{64}$"))
       and (.lastFetch | type == "string")' "$meta" >/dev/null 2>&1; then
     hash="$(jq -r .sha256 "$meta")"
@@ -200,10 +273,13 @@ fetch_url() {
     if [ "$stamp" -le 0 ] || [ "$age" -lt 0 ] || [ ! -s "$body" ] ||
        [ "$(sha256sum "$body" 2>/dev/null | cut -d' ' -f1)" != "$hash" ]; then
       body=""; age=-1
+    elif ! check_detail_body "$body"; then
+      invalid_body="$body"; cache_reason="$DETAIL_BODY_REASON"
+      body=""; age=-1
     fi
   fi
   if [ "$URL_MODE" = info ] || [ "$URL_MODE" = cached ]; then
-    [ -n "$body" ] || { echo "MISS/INVALID detail cache: $url" >&2; return 1; }
+    [ -n "$body" ] || { echo "MISS/INVALID detail cache: $url${cache_reason:+ ($cache_reason)}" >&2; return 1; }
     if [ "$URL_MODE" = info ]; then
       jq --arg path "$body" --argjson age "$age" '. + {path:$path, ageSeconds:$age, stale:($age >= 86400)}' "$meta"
     else
@@ -219,14 +295,31 @@ fetch_url() {
   old_body="$body"
   tmp="$(mktemp "$RAW/details/.fetch.XXXXXX")" || return 1
   local fetched=0
+  DETAIL_FETCH_REASON=""
+  if [[ "$rest" == */* ]]; then
+    path="/${rest#*/}"; path="${path%%\?*}"; path="${path%%\#*}"
+  else
+    path=""
+  fi
   case "$host" in
     raw.githubusercontent.com|*.githubusercontent.com|pokeapi.co|*.pokeapi.co)
       fetch_plain "$url" "$tmp" && fetched=1 ;;
+    pokemongo.fandom.com)
+      if [[ "$path" == /wiki/* ]] && title="$(fandom_wiki_title "$path")"; then
+        fetch_fandom_wiki "$title" "$tmp" && fetched=1
+      else
+        DETAIL_FETCH_REASON="invalid Fandom wiki title"
+      fi ;;
     *) fetch_tier "$url" "$tmp" && fetched=1 ;;
   esac
-  if [ "$fetched" != 1 ] || [ ! -s "$tmp" ]; then
+  if [ "$fetched" != 1 ]; then
     rm -f "$tmp"
-    echo "FAIL url <- $url (refresh failed; last good cache unchanged; no fresh body)" >&2
+    echo "FAIL url <- $url (refresh failed${DETAIL_FETCH_REASON:+: $DETAIL_FETCH_REASON}; last good cache unchanged; no fresh body)" >&2
+    return 1
+  fi
+  if ! check_detail_body "$tmp"; then
+    rm -f "$tmp"
+    echo "FAIL url <- $url (rejected detail body: $DETAIL_BODY_REASON; last good cache unchanged; no fresh body)" >&2
     return 1
   fi
   hash="$(sha256sum "$tmp" | cut -d' ' -f1)"
@@ -238,6 +331,7 @@ fetch_url() {
     echo "FAIL detail cache write: $url" >&2; return 1
   fi
   [ -z "$old_body" ] || [ "$old_body" = "$body" ] || rm -f "$old_body"
+  [ -z "$invalid_body" ] || [ "$invalid_body" = "$body" ] || rm -f "$invalid_body"
   cat "$body"
 }
 

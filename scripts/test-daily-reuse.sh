@@ -25,6 +25,9 @@ while [ "$#" -gt 0 ]; do
   case "$1" in
     -o) out="$2"; shift 2 ;;
     -A|-H|--max-time|-X|-d) shift 2 ;;
+    --data-urlencode)
+      case "$2" in page=*) printf '%s\n' "${2#page=}" >> "$FIXTURE/fandom-pages" ;; esac
+      shift 2 ;;
     -*I*) head=1; shift ;;
     https://*) url="$1"; shift ;;
     *) shift ;;
@@ -39,6 +42,14 @@ case "$url" in
   https://r.jina.ai/https://pokemongo.com/) printf '[Home](https://pokemongo.com/)\n' > "$out" ;;
   https://r.jina.ai/https://leekduck.com/events/*|https://r.jina.ai/https://pokemongohub.net/post/monthly/)
     cp "$FIXTURE/body" "$out" ;;
+  https://pokemongo.fandom.com/api.php)
+    case "${FANDOM_MODE:-valid}" in
+      valid) cp "$FIXTURE/fandom-valid.json" "$out" ;;
+      api-error) cp "$FIXTURE/fandom-api-error.json" "$out" ;;
+      empty) cp "$FIXTURE/fandom-empty.json" "$out" ;;
+      challenge) cp "$FIXTURE/fandom-challenge.json" "$out" ;;
+      *) echo "unexpected FANDOM_MODE $FANDOM_MODE" >&2; exit 99 ;;
+    esac ;;
   *) echo "unexpected mock URL $url" >&2; exit 99 ;;
 esac
 touch -d '2026-09-10T12:00:00Z' "$out"
@@ -47,6 +58,13 @@ cat > "$T/bin/mv" <<'SH'
 #!/usr/bin/env bash
 if [ "${FAIL_META_REPLACE:-0}" = 1 ] && [[ "${@: -1}" == */details/*.json ]]; then exit 73; fi
 exec /bin/mv "$@"
+SH
+cat > "$T/bin/head" <<'SH'
+#!/usr/bin/env bash
+if [ "${FAIL_DETAIL_CHECK:-0}" = 1 ] && [ "${1:-}" = -c ] && [ "${2:-}" = 16384 ]; then
+  echo 'mock detail inspection failure' >&2; exit 79
+fi
+exec /usr/bin/head "$@"
 SH
 # Match exact extraction filters/options so faults cannot hit front-door validation.
 export REAL_JQ="$(command -v jq)" REAL_GREP="$(command -v grep)" REAL_TEE="$(command -v tee)"
@@ -79,6 +97,13 @@ chmod +x "$T/bin/"*
 fail() { echo "test-daily-reuse: FAIL: $*" >&2; exit 1; }
 eq() { [ "$1" = "$2" ] || fail "expected [$2], got [$1]"; }
 count() { wc -l < "$T/requests"; }
+detail_key() { printf '%s' "$1" | sha256sum | cut -d' ' -f1; }
+no_detail_cache() {
+  local key
+  key="$(detail_key "$1")"
+  [ ! -e "data/raw/details/$key.json" ] || fail "unexpected detail metadata: $1"
+  if compgen -G "data/raw/details/$key.*.txt" > /dev/null; then fail "unexpected detail body: $1"; fi
+}
 reject() {
   if "$@" > "$T/rejected.out" 2> "$T/rejected.err"; then fail "unexpected success: $*"; fi
 }
@@ -87,6 +112,14 @@ cat > "$T/feed" <<'JSON'
 JSON
 printf '[]\n' > "$T/public/data/events.json"
 printf 'detail version one\n' > "$T/body"
+cat > "$T/fandom-article" <<'HTML'
+<section><p>October 10, 2026: Zorua appears during Community Day.</p><table><tr><td>Bonus</td><td>3× Catch Stardust</td></tr></table><a href="/wiki/Zorua">Zorua</a></section>
+HTML
+jq -n --rawfile text "$T/fandom-article" \
+  '{parse:{title:"October 2026 Community Day: Zorua\u0027s Return",text:$text}}' > "$T/fandom-valid.json"
+printf '%s\n' '{"error":{"code":"missingtitle","info":"The page you specified does not exist."}}' > "$T/fandom-api-error.json"
+printf '%s\n' '{"parse":{"title":"Empty page","text":""}}' > "$T/fandom-empty.json"
+printf '%s\n' '{"parse":{"title":"Blocked page","text":"<title>Just a moment...</title>"}}' > "$T/fandom-challenge.json"
 : > "$T/requests"
 cd "$T"
 
@@ -187,20 +220,115 @@ eq "$(count)" "$((before + 1))"
 scripts/fetch.sh url --info "$u" > "$T/info"
 jq -e --arg u "$u" '.url == $u and .ageSeconds == 0 and .stale == false and (.sha256|length)==64' "$T/info" > /dev/null
 body_path=$(jq -r .path "$T/info")
+key="$(detail_key "$u")"
+meta="data/raw/details/$key.json"
 cmp "$T/body" "$body_path"
 # No body leakage in metadata; cached/plain output keeps exact bytes.
 ! grep -q 'detail version' "$T/info" || fail 'info dumped body'
 scripts/fetch.sh url --cached "$u" > "$T/result"; cmp "$T/body" "$T/result"
 scripts/fetch.sh url --max-age 86400 "$u" > "$T/result"; cmp "$T/body" "$T/result"
 eq "$(count)" "$((before + 1))"
+# Explicit challenge/error markers never become a first cache generation.
+bad_bodies=(
+  'Just a moment...'
+  '<title>Attention Required!</title>'
+  '<html>Cloudflare Ray ID: fixture</html>'
+  'Title: Internal Server Error
+Warning: Target URL returned error 403: Forbidden'
+  '403 Forbidden'
+  'Access Denied'
+  '{"status":"error","message":"solver unavailable"}'
+)
+for i in "${!bad_bodies[@]}"; do
+  bad_url="https://leekduck.com/events/blocked/?case=$i"
+  printf '%s\n' "${bad_bodies[$i]}" > "$T/body"
+  before_bad=$(count)
+  reject scripts/fetch.sh url "$bad_url"
+  [ ! -s "$T/rejected.out" ] || fail 'rejected response leaked to stdout'
+  grep -q 'rejected detail body' "$T/rejected.err" || fail 'missing rejected-body diagnostic'
+  eq "$(count)" "$((before_bad + 1))"
+  no_detail_cache "$bad_url"
+done
+# Normal prose can mention status/error terms without being rejected.
+normal_terms='This article explains an error report where status 403 appeared in old logs.'
+printf '%s\n' "$normal_terms" > "$T/body"
+normal_url='https://leekduck.com/events/ordinary-error-terms/'
+scripts/fetch.sh url "$normal_url" > "$T/result"
+cmp <(printf '%s\n' "$normal_terms") "$T/result"
+# A failed forced refresh must retain a legitimate old body and its metadata.
+printf '%s\n' 'Target URL returned error 403: Forbidden' > "$T/body"
+cp "$meta" "$T/pre-challenge-meta"; cp "$body_path" "$T/pre-challenge-body"
+before_challenge=$(count)
+reject scripts/fetch.sh url --force "$u"
+[ ! -s "$T/rejected.out" ] || fail 'forced challenge leaked to stdout'
+eq "$(count)" "$((before_challenge + 1))"
+cmp "$meta" "$T/pre-challenge-meta"; cmp "$body_path" "$T/pre-challenge-body"
+# An inspection failure is fail-closed and also preserves the previous cache.
+before_check_failure=$(count)
+reject env FAIL_DETAIL_CHECK=1 scripts/fetch.sh url --force "$u"
+[ ! -s "$T/rejected.out" ] || fail 'inspection failure leaked to stdout'
+eq "$(count)" "$((before_check_failure + 1))"
+cmp "$meta" "$T/pre-challenge-meta"; cmp "$body_path" "$T/pre-challenge-body"
+printf 'detail version one\n' > "$T/body"
+# A manually seeded, fresh challenge cache is invalid for cached/info reuse and
+# makes --max-age refresh instead of returning its body.
+old_challenge_url='https://leekduck.com/events/old-challenge/'
+old_challenge_key="$(detail_key "$old_challenge_url")"
+printf 'Just a moment...\n' > "$T/old-challenge-body"
+old_challenge_hash="$(sha256sum "$T/old-challenge-body" | cut -d' ' -f1)"
+old_challenge_body="data/raw/details/$old_challenge_key.$old_challenge_hash.txt"
+mkdir -p data/raw/details
+cp "$T/old-challenge-body" "$old_challenge_body"
+jq -n --arg u "$old_challenge_url" --arg h "$old_challenge_hash" \
+  '{url:$u,lastFetch:"2026-09-10T12:00:00Z",sha256:$h}' > "data/raw/details/$old_challenge_key.json"
+cp "data/raw/details/$old_challenge_key.json" "$T/old-challenge-meta"
+before_old=$(count)
+reject scripts/fetch.sh url --cached "$old_challenge_url"
+[ ! -s "$T/rejected.out" ] || fail 'cached challenge leaked to stdout'
+eq "$(count)" "$before_old"
+reject scripts/fetch.sh url --info "$old_challenge_url"
+eq "$(count)" "$before_old"
+touch "$T/fail"
+reject scripts/fetch.sh url --max-age 86400 "$old_challenge_url"
+[ ! -s "$T/rejected.out" ] || fail 'failed challenge refresh leaked to stdout'
+eq "$(count)" "$((before_old + 1))"
+cmp "data/raw/details/$old_challenge_key.json" "$T/old-challenge-meta"
+cmp "$old_challenge_body" "$T/old-challenge-body"
+rm "$T/fail"
+printf 'recovered article body\n' > "$T/body"
+scripts/fetch.sh url --max-age 86400 "$old_challenge_url" > "$T/result"
+cmp "$T/body" "$T/result"
+jq -e --arg h "$old_challenge_hash" '.sha256 != $h' "data/raw/details/$old_challenge_key.json" > /dev/null
+# Fandom wiki pages use the verified parse API, but cache the caller's wiki URL.
+fandom_url='https://pokemongo.fandom.com/wiki/October_2026_Community_Day%3A_Zorua%27s_Return?from=search'
+fandom_key="$(detail_key "$fandom_url")"
+before_fandom=$(count)
+env FANDOM_MODE=valid scripts/fetch.sh url "$fandom_url" > "$T/result"
+grep -Fq '<table>' "$T/result" || fail 'Fandom parse body lost table'
+grep -Fq 'href="/wiki/Zorua"' "$T/result" || fail 'Fandom parse body lost link'
+eq "$(count)" "$((before_fandom + 1))"
+grep -Fxq "October 2026 Community Day: Zorua's Return" "$T/fandom-pages" || fail 'Fandom title was not decoded for API encoding'
+fandom_meta="data/raw/details/$fandom_key.json"
+jq -e --arg u "$fandom_url" '.url == $u and (.url | contains("api.php") | not)' "$fandom_meta" > /dev/null
+before_fandom_hit=$(count)
+scripts/fetch.sh url --max-age 86400 "$fandom_url" > "$T/result"
+eq "$(count)" "$before_fandom_hit"
+for fandom_mode in api-error empty challenge; do
+  fandom_bad_url="https://pokemongo.fandom.com/wiki/Fandom_${fandom_mode}"
+  before_fandom_bad=$(count)
+  reject env FANDOM_MODE="$fandom_mode" scripts/fetch.sh url "$fandom_bad_url"
+  [ ! -s "$T/rejected.out" ] || fail "Fandom $fandom_mode leaked to stdout"
+  eq "$(count)" "$((before_fandom_bad + 1))"
+  no_detail_cache "$fandom_bad_url"
+done
+printf 'detail version one\n' > "$T/body"
+before_refresh=$(count)
 scripts/fetch.sh url --force "$u" > /dev/null
-eq "$(count)" "$((before + 2))"
+eq "$(count)" "$((before_refresh + 1))"
 scripts/fetch.sh url "$u" > /dev/null
-eq "$(count)" "$((before + 3))" # legacy call always fresh
+eq "$(count)" "$((before_refresh + 2))" # legacy call always fresh
 scripts/fetch.sh url --max-age 86400 'https://leekduck.com/events/fixture/?a=2' > /dev/null
-eq "$(count)" "$((before + 4))" # distinct query key
-key=$(printf '%s' "$u" | sha256sum | cut -d' ' -f1)
-meta="data/raw/details/$key.json"
+eq "$(count)" "$((before_refresh + 3))" # distinct query key
 jq '.lastFetch="2026-09-09T12:00:00Z"' "$meta" > "$T/old"; mv "$T/old" "$meta"
 scripts/fetch.sh url --cached "$u" > "$T/result" 2> "$T/warning"
 grep -q STALE "$T/warning" || fail 'stale cached read not labeled'
