@@ -1,6 +1,6 @@
 {
   "month": "2026-09",
-  "note": "9 月 5★/超级团战与 Max 团战按公布档期轮换；当前内容覆盖至 10 月 6 日，并保留 8/31–9/6 超级进阶与 GO Fest 2026 超级终章每日特别超级团战池。",
+  "note": "9 月 5★/超级团战与 Max 团战按公布档期轮换；当前内容覆盖至 11 月 3 日，并保留 8/31–9/6 超级进阶与 GO Fest 2026 超级终章每日特别超级团战池。",
   "tracks": [
     {
       "key": "5star",
@@ -697,6 +697,60 @@
           ],
           "start": "2026-09-30",
           "end": "2026-10-06"
+        },
+        {
+          "name": "Yveltal",
+          "cn": "Yveltal",
+          "pokemon": [
+            {
+              "id": 717,
+              "name": "Yveltal",
+              "shiny": true
+            }
+          ],
+          "start": "2026-10-07",
+          "end": "2026-10-13"
+        },
+        {
+          "name": "Dialga",
+          "cn": "Dialga",
+          "pokemon": [
+            {
+              "id": 483,
+              "name": "Dialga",
+              "shiny": true
+            }
+          ],
+          "start": "2026-10-14",
+          "end": "2026-10-20"
+        },
+        {
+          "name": "Palkia",
+          "cn": "Palkia",
+          "pokemon": [
+            {
+              "id": 484,
+              "name": "Palkia",
+              "shiny": true
+            }
+          ],
+          "start": "2026-10-21",
+          "end": "2026-10-27"
+        },
+        {
+          "name": "Giratina (Origin Forme)",
+          "cn": "Giratina（起源形态）",
+          "pokemon": [
+            {
+              "id": 487,
+              "name": "Giratina（起源形态）",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10007.png",
+              "hub": "487-Origin"
+            }
+          ],
+          "start": "2026-10-28",
+          "end": "2026-11-03"
         }
       ]
     },
@@ -1420,6 +1474,73 @@
           ],
           "start": "2026-09-30",
           "end": "2026-10-06"
+        },
+        {
+          "name": "Mega Blastoise",
+          "cn": "超级 Blastoise",
+          "pokemon": [
+            {
+              "id": 9,
+              "name": "超级 Blastoise",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10036.png",
+              "hub": "9-Mega"
+            }
+          ],
+          "start": "2026-10-07",
+          "end": "2026-10-13"
+        },
+        {
+          "name": "Mega Dragonite",
+          "cn": "超级 Dragonite",
+          "pokemon": [
+            {
+              "id": 149,
+              "name": "超级 Dragonite",
+              "shiny": true,
+              "sprite": "https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp",
+              "hub": "149-Mega"
+            }
+          ],
+          "start": "2026-10-14",
+          "end": "2026-10-20"
+        },
+        {
+          "name": "Mega Charizard X / Y",
+          "cn": "超级 Charizard X / Y",
+          "pokemon": [
+            {
+              "id": 6,
+              "name": "超级 Charizard X",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10034.png",
+              "hub": "6-Mega_X"
+            },
+            {
+              "id": 6,
+              "name": "超级 Charizard Y",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png",
+              "hub": "6-Mega_Y"
+            }
+          ],
+          "start": "2026-10-21",
+          "end": "2026-10-27"
+        },
+        {
+          "name": "Mega Sableye",
+          "cn": "超级 Sableye",
+          "pokemon": [
+            {
+              "id": 302,
+              "name": "超级 Sableye",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10066.png",
+              "hub": "302-Mega"
+            }
+          ],
+          "start": "2026-10-28",
+          "end": "2026-11-03"
         }
       ]
     },
@@ -1502,6 +1623,58 @@
           ],
           "start": "2026-09-28",
           "end": "2026-10-04"
+        },
+        {
+          "name": "Sizzlipede",
+          "cn": "Sizzlipede",
+          "pokemon": [
+            {
+              "id": 850,
+              "name": "Sizzlipede",
+              "shiny": true
+            }
+          ],
+          "start": "2026-10-05",
+          "end": "2026-10-11"
+        },
+        {
+          "name": "Rookidee",
+          "cn": "Rookidee",
+          "pokemon": [
+            {
+              "id": 821,
+              "name": "Rookidee",
+              "shiny": true
+            }
+          ],
+          "start": "2026-10-12",
+          "end": "2026-10-18"
+        },
+        {
+          "name": "Sneasel",
+          "cn": "Sneasel",
+          "pokemon": [
+            {
+              "id": 215,
+              "name": "Sneasel",
+              "shiny": true
+            }
+          ],
+          "start": "2026-10-19",
+          "end": "2026-10-25"
+        },
+        {
+          "name": "Sableye",
+          "cn": "Sableye",
+          "pokemon": [
+            {
+              "id": 302,
+              "name": "Sableye",
+              "shiny": true
+            }
+          ],
+          "start": "2026-10-26",
+          "end": "2026-11-01"
         }
       ],
       "tag": "MX"
