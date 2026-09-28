@@ -426,402 +426,6 @@
     ]
   },
   {
-    "id": "flying-taxi-2026",
-    "name": "飞行计程车:怒鹦哥登场",
-    "type": "event",
-    "heading": "Event",
-    "start": "2026-06-23T10:00:00",
-    "end": "2026-06-29T20:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-06-23-flying-taxi-2026/flying-taxi-2026.jpg",
-    "link": "https://leekduck.com/events/flying-taxi-2026/",
-    "summary": "「飞行计程车」活动:怒鹦哥(Squawkabilly)首次登场,共四种羽色形态;飞行系宝可梦野外增加,并配套 GO 通行证:飞行计程车 进度轨与限时实地调查。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/flying-taxi-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/flying-taxi-event-2026/"
-      }
-    ],
-    "bonuses": [
-      ":spawn: 飞行系宝可梦野外增加出现",
-      ":candy: GO 通行证 Rank 10 起:捕捉糖果 ×2",
-      ":stardust: GO 通行证 Rank 20 起:击败火箭队获得更多星尘"
-    ],
-    "pokemon": [
-      {
-        "name": "怒鹦哥",
-        "id": 931,
-        "shiny": false
-      },
-      {
-        "name": "咕咕",
-        "id": 163,
-        "shiny": true
-      },
-      {
-        "name": "稚山雀",
-        "id": 821,
-        "shiny": true
-      },
-      {
-        "name": "蓝鸦",
-        "id": 822,
-        "shiny": true
-      },
-      {
-        "name": "勇士雄鹰",
-        "id": 628,
-        "shiny": true,
-        "hub": "628-Hisuian"
-      },
-      {
-        "name": "下石鸟",
-        "id": 962,
-        "shiny": true
-      },
-      {
-        "name": "青绵鸟",
-        "id": 333,
-        "shiny": true
-      },
-      {
-        "name": "姆克儿",
-        "id": 396,
-        "shiny": true
-      },
-      {
-        "name": "秃鹰丫头",
-        "id": 629,
-        "shiny": true
-      }
-    ],
-    "sections": [
-      {
-        "title": "怒鹦哥四种羽色形态",
-        "items": [
-          "黄色羽毛:全球出现",
-          "白色羽毛:全球出现(野外亦有机会)",
-          "绿色羽毛:东半球出现",
-          "蓝色羽毛:西半球出现",
-          "形态依你所在地区而定"
-        ]
-      },
-      {
-        "title": "团战与野外",
-        "items": [
-          ":raid: 1★ 团战:青绵鸟、姆克儿、秃鹰丫头",
-          ":raid: 3★ 团战:洗翠勇士雄鹰、蓝鸦、下石鸟",
-          ":spawn: 野外:咕咕、稚山雀,偶遇白色羽毛怒鹦哥"
-        ]
-      },
-      {
-        "title": "GO 通行证:飞行计程车",
-        "items": [
-          "6/23 10:00 自动获得免费 GO 通行证,可升级领取奖励",
-          "6/27 00:00 - 6/29 19:59,GO 点数无每日上限",
-          "奖励含:比比鸟、咕咕、秃鹰丫头、稚山雀 等遭遇 · 超级火箭队雷达 ×1 · 神秘零件与暗影碎片",
-          ":stardust: 奖励须于 7/1 19:59 前领取,逾期失效"
-        ]
-      },
-      {
-        "title": "付费内容",
-        "items": [
-          "GO 通行证 Deluxe:4.99 美元(升级奖励 + 更快进度)",
-          "GO 通行证 Deluxe + 6 段:6.99 美元(直达 Rank 7)",
-          "网页商店购买另赠:究极球 ×10、极巨复活 ×5、高级战斗通行证 ×1、极巨药水 ×5"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "flying-taxi-taken-over-2026",
-    "name": "飞行计程车:被接管",
-    "type": "event",
-    "heading": "Event",
-    "start": "2026-06-25T00:00:00",
-    "end": "2026-06-29T20:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-06-25-flying-taxi-taken-over-2026/flying-taxi-taken-over-2026.jpg",
-    "link": "https://leekduck.com/events/flying-taxi-taken-over-2026/",
-    "summary": "「飞行计程车:被接管」活动:火箭队接管城市,营救暗影莱希拉姆与多只新暗影宝可梦;火箭队更频繁出现,并有限时实地调查。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/flying-taxi-taken-over-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/flying-taxi-taken-over/"
-      }
-    ],
-    "bonuses": [
-      ":rocket: 火箭队更频繁现身于补给站与气球(约每 2 小时)",
-      ":rocket: 1★/3★ 暗影团战捕捉的宝可梦个体值范围更广",
-      "可用充能 TM 帮暗影宝可梦遗忘「迁怒」"
-    ],
-    "pokemon": [
-      {
-        "name": "莱希拉姆",
-        "id": 643,
-        "shiny": true
-      },
-      {
-        "name": "小海狮",
-        "id": 86,
-        "shiny": true
-      },
-      {
-        "name": "咕咕",
-        "id": 163,
-        "shiny": true
-      },
-      {
-        "name": "嗡蝠",
-        "id": 714,
-        "shiny": true
-      },
-      {
-        "name": "稚山雀",
-        "id": 821,
-        "shiny": true
-      }
-    ],
-    "sections": [
-      {
-        "title": "营救暗影莱希拉姆",
-        "body": "推进 GO 通行证:飞行计程车 获得超级火箭队雷达,追查只能在补给站现身的坂木。可从 GO 通行证领取奖励至 7/1 19:59。暗影/净化宝可梦无法参与融合。"
-      },
-      {
-        "title": "新暗影宝可梦",
-        "items": [
-          ":rocket: 小海狮、咕咕、嗡蝠、稚山雀(击败火箭队小兵营救)",
-          "首领 Sierra / Cliff / Arlo 使用全新暗影阵容"
-        ]
-      },
-      {
-        "title": "实地调查任务",
-        "items": [
-          "完成主题任务可获:快速 TM ×1、充能 TM ×1、神秘零件 ×1"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "arraia-festa-junina-2026",
-    "name": "宝可梦 GO 六月节 Arraiá(巴西限定)",
-    "type": "event",
-    "heading": "Event",
-    "summary": "巴西限定的六月节(Festa Junina)庆典。全巴西可遇带六月节特殊背景的水之品种帕底亚肯泰罗;戴牛仔帽的卡比兽闪光概率提升。雨季水属性宝可梦增多,地图上散落苹果。",
-    "start": "2026-06-23T10:00:00",
-    "end": "2026-06-29T22:00:00",
-    "image": "https://lh3.googleusercontent.com/F9kHJR-J_ABzjk444-aXY4BCkIpFEDGnxlmoOih6_-MEeFVUZwVkcO_3VwygEXlXgzNBYF55t6wC13r1_TPT510HuyUc0sjgq9YttRtKuiM=s0-e365",
-    "link": "https://pokemongo.com/pt_BR/news/festa-junina-2026",
-    "links": [
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/pt_BR/news/festa-junina-2026"
-      },
-      {
-        "label": "Fandom",
-        "url": "https://pokemongo.fandom.com/wiki/Arrai%C3%A1"
-      }
-    ],
-    "bonuses": [
-      ":lure: 苔藓诱饵期间更易遇到苹果",
-      ":lure: 活动期间使用的诱饵持续 1 小时",
-      ":candy: 与伙伴互动获得双倍爱心",
-      "✨ 戴牛仔帽的卡比兽闪光概率提升"
-    ],
-    "pokemon": [
-      {
-        "id": 128,
-        "name": "帕底亚肯泰罗(水之品种)",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10252.png",
-        "hub": "128-Paldea_Aqua"
-      },
-      {
-        "id": 143,
-        "name": "卡比兽",
-        "shiny": true
-      },
-      {
-        "id": 912,
-        "name": "润水鸭"
-      },
-      {
-        "id": 318,
-        "name": "利牙鱼"
-      }
-    ],
-    "sections": [
-      {
-        "title": "团队挑战 / 调查奖励",
-        "items": [
-          "完成活动主题团队挑战可遇到带特殊背景的水之品种帕底亚肯泰罗。",
-          "实地调查:带特殊背景的水之品种帕底亚肯泰罗、戴牛仔帽的卡比兽(闪光概率提升)。",
-          "免费限时调查奖励:树果、3 个贴纸、1 个稀有糖果,以及润水鸭、利牙鱼、水之品种帕底亚肯泰罗的遭遇(均有机会闪光)。"
-        ]
-      },
-      {
-        "title": "限定城市加成",
-        "body": "巴西多座城市的特定地点享受 3 小时诱饵、双倍伙伴协助捕捉、50% 交换折扣、主题实地调查与限时调查。下午与夜晚地图上会出现节日烟花装饰。"
-      }
-    ],
-    "longTerm": false,
-    "highlight": true
-  },
-  {
-    "id": "pokemonspotlighthour2026-06-25",
-    "name": "长翅鸥聚焦时刻",
-    "type": "pokemon-spotlight-hour",
-    "heading": "Pokémon Spotlight Hour",
-    "start": "2026-06-25T18:00:00",
-    "end": "2026-06-25T19:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
-    "link": "https://leekduck.com/events/pokemonspotlighthour2026-06-25/",
-    "summary": "聚焦时刻 18:00–19:00 长翅鸥 大量出现,并有 捕捉星尘 ×2 加成。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/pokemonspotlighthour2026-06-25/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/spotlight-raid-hours/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 278,
-        "name": "长翅鸥"
-      }
-    ],
-    "bonuses": [
-      ":stardust: 捕捉星尘 ×2"
-    ]
-  },
-  {
-    "id": "skarmory-super-mega-raid-day-2026",
-    "name": "盔甲鸟 超级团战日",
-    "type": "raid-day",
-    "heading": "Raid Day",
-    "start": "2026-06-27T14:00:00",
-    "end": "2026-06-27T17:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-06-27-skarmory-super-mega-raid-day-2026/skarmory-super-mega-raid-day-2026.jpg",
-    "link": "https://leekduck.com/events/skarmory-super-mega-raid-day-2026/",
-    "summary": "盔甲鸟超级团战日:全天密集出现超级盔甲鸟(钢/飞),闪光概率提升。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/skarmory-super-mega-raid-day-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/super-mega-skarmory-raid-day-2026-shiny-odds-counters-bonuses/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 227,
-        "name": "超级盔甲鸟",
-        "shiny": true,
-        "sprite": "https://db.pokemongohub.net/images/official/full/227_mega_with_bg.webp",
-        "hub": "227-Mega"
-      }
-    ],
-    "bonuses": [
-      "✨ 闪光概率提升",
-      ":raid: 转道馆拍照盘最多领 5 张免费团战入场券(合计 6 张)",
-      ":raid: 远程团战入场券上限提至 20(6/26 17:00 起)"
-    ],
-    "counters": [
-      {
-        "id": 6,
-        "name": "超级喷火龙 Y",
-        "fast": "火焰旋涡",
-        "charged": "爆炸烈焰",
-        "hub": "6-Mega_Y"
-      },
-      {
-        "id": 642,
-        "name": "暗影雷电云",
-        "fast": "伏特替换",
-        "charged": "狂野雷电风暴",
-        "hub": "642-Therian_Shadow"
-      },
-      {
-        "id": 485,
-        "name": "暗影席多蓝恩",
-        "fast": "火焰旋涡",
-        "charged": "熔岩风暴",
-        "hub": "485-Shadow"
-      },
-      {
-        "id": 466,
-        "name": "暗影电击魔兽",
-        "fast": "电击",
-        "charged": "疯狂伏特",
-        "hub": "466-Shadow"
-      }
-    ],
-    "sections": [
-      {
-        "title": "限时调查与攻略",
-        "items": [
-          "活动期间提供限时调查，完成可获高级战斗通行证与哭哭羊遭遇",
-          ":raid: 超级盔甲鸟弱电系与火系，优先上机这两类攻手"
-        ]
-      }
-    ],
-    "highlight": true
-  },
-  {
-    "id": "max-mondays-2026-06-29",
-    "name": "Max 周一:极巨化豆豆鸽",
-    "type": "max-mondays",
-    "heading": "Max Mondays",
-    "start": "2026-06-29T06:00:00",
-    "end": "2026-06-29T21:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
-    "link": "https://leekduck.com/events/max-mondays-2026-06-29/",
-    "summary": "Max 周一:Max 团战登场极巨化豆豆鸽,击败可获得其极巨态与 Max 粒子。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/max-mondays-2026-06-29/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/june-2026-pokemon-go-events/"
-      },
-      {
-        "label": "Hub Max指南",
-        "url": "https://pokemongohub.net/post/guide/pokemon-go-max-battles-guide-best-strategies-moves-and-top-pokemon-2026/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 519,
-        "name": "豆豆鸽"
-      }
-    ],
-    "bonuses": [
-      ":raid: Max 团战登场",
-      ":stardust: 可获得 Max 粒子"
-    ],
-    "sections": [
-      {
-        "title": "Hub 月历核对",
-        "items": [
-          "Hub「June 2026 Max Battles」列出 6 月 29 日–7 月 5 日的 Max 团战主角为豆豆鸽。",
-          "本页按该周 Max 周一时段显示为极巨化豆豆鸽 6:00–21:00(当地时间),18:00–19:00 电力点更集中。"
-        ]
-      }
-    ]
-  },
-  {
     "id": "choose-your-path-charged-embers-2026",
     "name": "选择你的道路:炽热余烬",
     "type": "choose-your-path",
@@ -5947,10 +5551,10 @@
   },
   {
     "id": "city-safari-2026-sep",
-    "name": "城市狩猎 City Safari 2026(6城线下:波士顿/慕尼黑/马赛/里斯本/布里斯班/里约)",
+    "name": "城市狩猎 City Safari 2026（5 城线下；波士顿延期）",
     "type": "event",
     "heading": "City Safari",
-    "summary": "线下购票活动,9 月 26–27 日在六座城市同步举办:美国波士顿、德国慕尼黑、法国马赛、葡萄牙里斯本、澳大利亚布里斯班、巴西里约热内卢。持票训练家在所在城市全城探索,可独家遇见泥驴仔,并享闪光提升、4 小时诱饵、特殊交换与「伊布探险队」特殊调查等加成。",
+    "summary": "线下购票活动于 9 月 26–27 日在慕尼黑、马赛、里斯本、布里斯班与里约热内卢举行；波士顿场因严重风暴预报延期，新日期与持票方案待公布。其余五城持票训练家可全城探索并享活动加成。",
     "start": "2026-09-26T10:00:00",
     "end": "2026-09-27T18:00:00",
     "image": "https://pokemongohub.net/wp-content/uploads/2023/07/city-safari.jpg",
@@ -5979,6 +5583,10 @@
       {
         "label": "Hub·里约",
         "url": "https://pokemongohub.net/post/event/pokemon-go-city-safari-2026-rio-de-janeiro-brazil/"
+      },
+      {
+        "label": "官方·波士顿延期",
+        "url": "https://pokemongo.com/news/city-safari-boston-update"
       }
     ],
     "bonuses": [
@@ -5997,8 +5605,8 @@
       {
         "title": "举办城市与时间",
         "items": [
-          "时间:9 月 26 日(周六)、27 日(周日)10:00–18:00(各地当地时间)。",
-          "波士顿(美国)· 慕尼黑(德国)· 马赛(法国)· 里斯本(葡萄牙)· 布里斯班(澳大利亚)· 里约热内卢(巴西)。"
+          "时间：9 月 26 日（周六）、27 日（周日）10:00–18:00（慕尼黑、马赛、里斯本、布里斯班与里约当地时间）。",
+          "波士顿场已延期；官方尚未公布新日期。其余举办城市：慕尼黑（德国）· 马赛（法国）· 里斯本（葡萄牙）· 布里斯班（澳大利亚）· 里约热内卢（巴西）。"
         ]
       },
       {
@@ -10233,25 +9841,60 @@
     "highlight": true
   },
   {
-    "id": "hatch-day-october-2026",
-    "name": "10 月孵化日",
+    "id": "sandile-hatch-day-2026",
+    "name": "Sandile 孵化日",
     "type": "event",
     "heading": "Hatch Day",
     "start": "2026-10-17T11:00:00",
     "end": "2026-10-17T17:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/hatch-day-october-2026/",
-    "summary": "孵化日确定于 10 月 17 日当地时间 11–17 时举行；主角、蛋池与完整加成尚未公布。",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-10-17-sandile-hatch-day-2026/sandile-hatch-day-2026.jpg",
+    "link": "https://leekduck.com/events/sandile-hatch-day-2026/",
+    "summary": "活动期间从新获得的 2 km 蛋中更常孵出 Sandile，并提升闪光 Sandile 的孵化概率；免费限时调查奖励孵化器与经验。",
     "links": [
       {
         "label": "LeekDuck",
-        "url": "https://leekduck.com/events/hatch-day-october-2026/"
+        "url": "https://leekduck.com/events/sandile-hatch-day-2026/"
       },
       {
-        "label": "Hub·秋季日期",
-        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/sandile-hatch-day/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/sandile-hatch-day-2026"
+      },
+      {
+        "label": "Fandom",
+        "url": "https://pokemongo.fandom.com/wiki/Sandile_Hatch_Day"
       }
-    ]
+    ],
+    "pokemon": [
+      {
+        "id": 551,
+        "name": "Sandile",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":candy: 孵蛋糖果 ×2",
+      ":incubator: 孵蛋距离减半",
+      ":pokestop: 转动补给站更易获得 2 km 蛋",
+      "✨ 孵出闪光 Sandile 的概率提升"
+    ],
+    "sections": [
+      {
+        "title": "免费限时调查",
+        "items": [
+          "孵化 1 颗蛋可获 5000 经验",
+          "阶段奖励为 1 个孵化器；须在活动结束前领取"
+        ]
+      },
+      {
+        "title": "付费限时调查",
+        "body": "1.99 美元票券提供活动期间 1/4 孵蛋距离，并可获得超级孵化器、5000 经验与 5000 星尘；该加成不与其他活动或 GO Pass 的孵蛋距离加成叠加。"
+      }
+    ],
+    "highlight": true
   },
   {
     "id": "max-battle-day-october-24-2026",
@@ -11129,6 +10772,213 @@
       }
     ],
     "longTerm": true
+  },
+  {
+    "id": "pokemon-tcg-30th-celebration",
+    "name": "宝可梦卡牌 30 周年庆典（美国指定门店）",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-09-27T10:00:00",
+    "end": "2026-10-20T22:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-27-pokemon-tcg-30th-celebration/pokemon-tcg-30th-celebration.jpg",
+    "link": "https://leekduck.com/events/pokemon-tcg-30th-celebration/",
+    "summary": "美国 Target、Best Buy 与 GameStop 指定门店活动：现场可挑战超级 Gengar 团战并领取三页限时调查；调查领取截止 10 月 20 日，完成与领奖截止 11 月 20 日。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-tcg-30th-celebration/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-pokemon-tcg-30th-celebration-event-for-us-players/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/tcg-30th-celebration-event"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 94,
+        "name": "Gengar",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png",
+        "hub": "94-Mega"
+      }
+    ],
+    "bonuses": [
+      "✨ 指定门店超级团战中的 Gengar 可为闪光",
+      "完成三页限时调查可获主题宝可梦遭遇、精灵球、孵化器、Gastly 糖果与幸运蛋"
+    ],
+    "counters": [
+      {
+        "id": 150,
+        "name": "暗影 Mewtwo",
+        "fast": "Psycho Cut",
+        "charged": "Psystrike",
+        "hub": "150-Shadow"
+      },
+      {
+        "id": 800,
+        "name": "Necrozma（拂晓之翼）",
+        "fast": "Psycho Cut",
+        "charged": "Moongeist Beam",
+        "hub": "800-Dawn_Wings"
+      },
+      {
+        "id": 248,
+        "name": "暗影 Tyranitar",
+        "fast": "Bite",
+        "charged": "Brutal Swing",
+        "hub": "248-Shadow"
+      }
+    ],
+    "sections": [
+      {
+        "title": "门店限时调查",
+        "body": "在美国参与活动的 Target、Best Buy 或 GameStop 门店打开游戏即可领取。奖励包括 Gastly、Haunter 与 Gengar 遭遇、树果、精灵球、孵化器、50 个 Gastly 糖果和 2 个幸运蛋。"
+      },
+      {
+        "title": "礼品卡头像物品",
+        "body": "9 月 27 日至 10 月 31 日兑换从上述零售商购买的宝可梦 GO 礼品卡，可获得 Gengar 针织帽头像物品；每个账号限一次。"
+      }
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "pokemon-x-adidas-2026",
+    "name": "adidas × 宝可梦限时调查（指定门店）",
+    "type": "research",
+    "heading": "Research",
+    "start": "2026-09-25T10:00:00",
+    "end": "2027-01-15T20:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/pokemon-x-adidas-2026.jpg",
+    "link": "https://leekduck.com/events/pokemon-x-adidas-2026/",
+    "summary": "前往全球参与活动的 adidas 或零售门店并打开游戏，可领取三页限时调查；领取截止 2027 年 1 月 15 日，完成与领奖截止 2 月 13 日。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-x-adidas-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/avatar-items-from-the-adidas-x-pokemon-collection-are-coming-to-pokemon-go/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/pokemon-x-adidas-2026"
+      },
+      {
+        "label": "Fandom",
+        "url": "https://pokemongo.fandom.com/wiki/Adidas_Timed_Research"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 448,
+        "name": "Lucario",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      "完成调查可获 adidas 帽子与夹克头像物品",
+      ":xp: 奖励包含经验、星尘、Lucario 糖果与 Lucario 超级能量",
+      "✨ 最终 Lucario 遭遇有机会为闪光"
+    ],
+    "sections": [
+      {
+        "title": "参与方式",
+        "body": "仅可在参与活动的 adidas 或零售门店领取；打开游戏并与赞助补给站或道馆互动。调查共三页，需孵蛋、捕捉、探索、投球并转动补给站或道馆。"
+      }
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "halloween-2026-part-2",
+    "name": "万圣节 2026 第二部分",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-11-01T10:00:00",
+    "end": "2026-11-05T20:00:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/halloween-2026-part-2/",
+    "summary": "万圣节 2026 第二部分已确认于 11 月 1–5 日当地时间举行；具体加成、宝可梦与调查内容尚待公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/halloween-2026-part-2/"
+      },
+      {
+        "label": "Hub·10月月历",
+        "url": "https://pokemongohub.net/post/event/october-2026-events/"
+      }
+    ]
+  },
+  {
+    "id": "pokemon-go-tour-alola-kaohsiung-2027",
+    "name": "宝可梦 GO Tour：阿罗拉·高雄 2027（线下）",
+    "type": "pokemon-go-tour",
+    "heading": "Pokémon GO Tour",
+    "start": "2027-02-19T00:00:00+08:00",
+    "end": "2027-02-21T23:59:59+08:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/pokemon-go-tour-alola-kaohsiung-2027/",
+    "summary": "已公布的 2027 年阿罗拉主题 GO Tour 线下场之一，将于 2 月 19–21 日在台湾高雄举行；票务、宝可梦与玩法细节尚待公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-go-tour-alola-kaohsiung-2027/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/go-tour-2027-alola-dates/"
+      }
+    ],
+    "longTerm": false
+  },
+  {
+    "id": "pokemon-go-tour-alola-los-angeles-2027",
+    "name": "宝可梦 GO Tour：阿罗拉·洛杉矶 2027（线下）",
+    "type": "pokemon-go-tour",
+    "heading": "Pokémon GO Tour",
+    "start": "2027-02-19T00:00:00-08:00",
+    "end": "2027-02-21T23:59:59-08:00",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/pokemon-go-tour-alola-los-angeles-2027/",
+    "summary": "已公布的 2027 年阿罗拉主题 GO Tour 线下场之一，将于 2 月 19–21 日在美国洛杉矶举行；票务、宝可梦与玩法细节尚待公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-go-tour-alola-los-angeles-2027/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/go-tour-2027-alola-dates/"
+      }
+    ],
+    "longTerm": false
+  },
+  {
+    "id": "pokemon-go-tour-alola-global-2027",
+    "name": "宝可梦 GO Tour：阿罗拉·全球 2027",
+    "type": "pokemon-go-tour",
+    "heading": "Pokémon GO Tour",
+    "start": "2027-02-27T00:00:00",
+    "end": "2027-02-28T23:59:59",
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/pokemon-go-tour-alola-global-2027/",
+    "summary": "阿罗拉主题 GO Tour 全球活动已公布于 2027 年 2 月 27–28 日举行；宝可梦、奖励与玩法细节尚待公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-go-tour-alola-global-2027/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/go-tour-2027-alola-dates/"
+      }
+    ],
+    "longTerm": false
   },
   {
     "id": "gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-1",
