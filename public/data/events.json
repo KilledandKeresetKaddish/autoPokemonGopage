@@ -426,61 +426,6 @@
     ]
   },
   {
-    "id": "choose-your-path-charged-embers-2026",
-    "name": "选择你的道路:炽热余烬",
-    "type": "choose-your-path",
-    "heading": "Choose Your Path",
-    "start": "2026-06-30T10:00:00",
-    "end": "2026-07-03T20:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/choose-your-path-evergreen.jpg",
-    "link": "https://leekduck.com/events/choose-your-path-charged-embers-2026/",
-    "summary": "「选择你的道路:炽热余烬」限时调查,二选一路线主题偏火/电系。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/choose-your-path-charged-embers-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/june-2026-pokemon-go-events/"
-      }
-    ],
-    "bonuses": [
-      "限时调查双线选择",
-      ":candy: 完成后可领取对应奖励"
-    ]
-  },
-  {
-    "id": "pokemonspotlighthour2026-07-02",
-    "name": "波波聚焦时刻",
-    "type": "pokemon-spotlight-hour",
-    "heading": "Pokémon Spotlight Hour",
-    "start": "2026-07-02T18:00:00",
-    "end": "2026-07-02T19:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
-    "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-02/",
-    "summary": "聚焦时刻 18:00–19:00 波波 大量出现,并有 进化经验 ×2 加成。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/pokemonspotlighthour2026-07-02/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/spotlight-raid-hours/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 16,
-        "name": "波波"
-      }
-    ],
-    "bonuses": [
-      ":xp: 进化经验 ×2"
-    ]
-  },
-  {
     "id": "10th-anniversary-party",
     "name": "十周年庆典",
     "type": "event",
@@ -597,49 +542,6 @@
       }
     ],
     "highlight": false
-  },
-  {
-    "id": "july-communityday2026",
-    "name": "泪眼蜥 社区日",
-    "type": "community-day",
-    "heading": "Community Day",
-    "start": "2026-07-04T14:00:00",
-    "end": "2026-07-04T17:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/cd-default.jpg",
-    "link": "https://leekduck.com/events/july-communityday2026/",
-    "summary": "7 月社区日主角为泪眼蜥(水系),野外大量出现并提升闪光概率,进化可习得限定招式。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/july-communityday2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/sobble-community-day-july-2026/"
-      },
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/news/communityday-july-2026-sobble"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 816,
-        "name": "泪眼蜥",
-        "shiny": true
-      }
-    ],
-    "bonuses": [
-      "✨ 闪光概率提升",
-      ":incubator: 孵化距离 1/4",
-      ":incense: 3 小时熏香",
-      ":lure: 1 小时诱饵*",
-      ":candy: 捕捉糖果 ×2",
-      ":xl-candy: 糖果 XL 概率 ×2",
-      ":trading: 当日可多进行 1 次特殊交换(上限 2 次)*",
-      ":stardust: 交换所需星尘减少 50%*"
-    ],
-    "highlight": true
   },
   {
     "id": "road-of-legends-2026",
@@ -3510,52 +3412,6 @@
     "highlight": false
   },
   {
-    "id": "mlb-game-20260702",
-    "name": "MLB 主题赛:守护者",
-    "type": "mlb-game-day",
-    "heading": "MLB Theme Game",
-    "start": "2026-07-02T00:00:00",
-    "end": "2026-07-02T23:59:59",
-    "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
-    "link": "https://pokemongo.com/post/mlb-2026",
-    "summary": "克利夫兰守护者 主场「宝可梦 GO 主题赛」:Progressive Field(坐标 41.4962,-81.6852)球场内可遇带场地背景的皮卡丘团战、限时调查与球队头像道具。",
-    "links": [
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/post/mlb-2026"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/the-pokemon-go-and-major-league-baseball-collaboration-returns-for-2026-season/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 25,
-        "name": "皮卡丘",
-        "shiny": true
-      }
-    ],
-    "sections": [
-      {
-        "title": "地点",
-        "items": [
-          "Progressive Field · 坐标 41.4962,-81.6852"
-        ]
-      },
-      {
-        "title": "球场内容",
-        "items": [
-          ":raid: 球场道馆:皮卡丘团战(有机会带场地背景)",
-          ":lure: 诱饵 1 小时:凯西 / 腕力 / 卡拉卡拉(幸运:卡比兽 / 投掷猴)",
-          ":pokestop: 进场限时调查 + 实地调查",
-          ":pokestop: 转动补给站获主场球队帽子头像"
-        ]
-      }
-    ],
-    "highlight": false
-  },
-  {
     "id": "mlb-game-20260708",
     "name": "MLB 主题赛:白袜",
     "type": "mlb-game-day",
@@ -3991,170 +3847,6 @@
           ":pokestop: 转动补给站获主场球队帽子头像"
         ]
       }
-    ],
-    "highlight": false
-  },
-  {
-    "id": "articuno-zapdos-moltres-in-5-star-raid-battles-july-2026",
-    "name": "急冻鸟・闪电鸟・火焰鸟 现身 5★ 团战",
-    "type": "raid-battles",
-    "heading": "Raid Battles",
-    "start": "2026-07-01T06:00:00",
-    "end": "2026-07-05T22:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/articuno-zapdos-moltres-in-5-star-raid-battles-july-2026/",
-    "summary": "7/1–7/5 关都三神鸟急冻鸟(冰/飞)、闪电鸟(电/飞)、火焰鸟(火/飞)现身 5★ 团战,均可遇闪光。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/articuno-zapdos-moltres-in-5-star-raid-battles-july-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
-      },
-      {
-        "label": "Hub 急冻鸟指南",
-        "url": "https://pokemongohub.net/post/guide/articuno-raid-boss/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 144,
-        "name": "急冻鸟",
-        "shiny": true
-      },
-      {
-        "id": 145,
-        "name": "闪电鸟",
-        "shiny": true
-      },
-      {
-        "id": 146,
-        "name": "火焰鸟",
-        "shiny": true
-      }
-    ],
-    "counters": [
-      {
-        "id": 464,
-        "name": "超甲狂犀",
-        "fast": "掷泥",
-        "charged": "尖石攻击"
-      },
-      {
-        "id": 248,
-        "name": "班基拉斯",
-        "fast": "咬住",
-        "charged": "尖石攻击"
-      },
-      {
-        "id": 409,
-        "name": "战槌龙",
-        "fast": "击落",
-        "charged": "岩崩"
-      }
-    ],
-    "bonuses": [
-      "✨ 三神鸟均可遇闪光"
-    ],
-    "highlight": false
-  },
-  {
-    "id": "raidhour20260701",
-    "name": "关都三神鸟 团战时刻",
-    "type": "raid-hour",
-    "heading": "Raid Hour",
-    "start": "2026-07-01T18:00:00",
-    "end": "2026-07-01T19:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
-    "link": "https://leekduck.com/events/raidhour20260701/",
-    "summary": "7/1 18:00–19:00 团战时刻,各处道馆集中刷出关都三神鸟急冻鸟、闪电鸟、火焰鸟的 5★ 团战。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/raidhour20260701/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 144,
-        "name": "急冻鸟",
-        "shiny": true
-      },
-      {
-        "id": 145,
-        "name": "闪电鸟",
-        "shiny": true
-      },
-      {
-        "id": 146,
-        "name": "火焰鸟",
-        "shiny": true
-      }
-    ],
-    "bonuses": [
-      ":raid: 18:00–19:00 团战集中刷新"
-    ],
-    "highlight": false
-  },
-  {
-    "id": "mega-lucario-in-mega-raids-july-2026",
-    "name": "超级路卡利欧 现身超级团战",
-    "type": "raid-battles",
-    "heading": "Raid Battles",
-    "start": "2026-07-01T06:00:00",
-    "end": "2026-07-05T22:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
-    "link": "https://leekduck.com/events/mega-lucario-in-mega-raids-july-2026/",
-    "summary": "7/1–7/5 超级路卡利欧(格斗/钢)现身超级团战,击败可获得超级能量,其原型可遇闪光。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/mega-lucario-in-mega-raids-july-2026/"
-      },
-      {
-        "label": "Hub 超级路卡利欧指南",
-        "url": "https://pokemongohub.net/post/guide/mega-lucario-raid-guide/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 448,
-        "name": "超级路卡利欧",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png",
-        "hub": "448-Mega",
-        "shiny": true
-      }
-    ],
-    "counters": [
-      {
-        "id": 6,
-        "name": "喷火龙",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png",
-        "hub": "6-Mega_Y",
-        "fast": "火焰旋涡",
-        "charged": "爆炸烈焰"
-      },
-      {
-        "id": 609,
-        "name": "水晶灯火灵",
-        "fast": "火焰旋涡",
-        "charged": "过热"
-      },
-      {
-        "id": 643,
-        "name": "莱希拉姆",
-        "fast": "火焰牙",
-        "charged": "过热"
-      }
-    ],
-    "bonuses": [
-      "✨ 路卡利欧可遇闪光"
     ],
     "highlight": false
   },
@@ -9655,6 +9347,27 @@
         "sprite": "https://db.pokemongohub.net/images/official/full/071_mega_with_bg.webp",
         "hub": "71-Mega"
       }
+    ],
+    "counters": [
+      {
+        "id": 150,
+        "name": "Shadow Mewtwo",
+        "fast": "Confusion",
+        "charged": "Psystrike",
+        "hub": "150-Shadow"
+      },
+      {
+        "id": 384,
+        "name": "Rayquaza",
+        "fast": "Air Slash",
+        "charged": "Dragon Ascent"
+      },
+      {
+        "id": 150,
+        "name": "Mewtwo",
+        "fast": "Confusion",
+        "charged": "Psystrike"
+      }
     ]
   },
   {
@@ -9897,25 +9610,75 @@
     "highlight": true
   },
   {
-    "id": "max-battle-day-october-24-2026",
-    "name": "Max 对战日·10/24",
+    "id": "dynamax-uxie-mesprit-azelf-max-battle-day-2026",
+    "name": "极巨化 Uxie / Mesprit / Azelf Max 对战日",
     "type": "max-battles",
     "heading": "Max Battle Day",
-    "start": "2026-10-24T14:00:00",
-    "end": "2026-10-24T17:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/max-battle-day-october-24-2026/",
-    "summary": "Max 对战日确定于 10 月 24 日当地时间 14–17 时举行；主角与完整加成尚未公布。",
+    "start": "2026-10-24T14:00:00.000",
+    "end": "2026-10-24T17:00:00.000",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-10-24-dynamax-uxie-mesprit-azelf-max-battle-day-2026/dynamax-uxie-mesprit-azelf-max-battle-day.jpg",
+    "link": "https://leekduck.com/events/dynamax-uxie-mesprit-azelf-max-battle-day-2026/",
+    "summary": "极巨化 Uxie、Mesprit 与 Azelf 首次登场于 5★ Max 对战，并分别限于亚太、欧洲/中东/非洲/印度及美洲/格陵兰地区。",
     "links": [
       {
         "label": "LeekDuck",
-        "url": "https://leekduck.com/events/max-battle-day-october-24-2026/"
+        "url": "https://leekduck.com/events/dynamax-uxie-mesprit-azelf-max-battle-day-2026/"
       },
       {
-        "label": "Hub·秋季日期",
-        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/dynamax-uxie-mesprit-and-azelf-max-battle-day/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/dynamax-uxie-mesprit-azelf-max-battle-day-2026"
+      },
+      {
+        "label": "Fandom",
+        "url": "https://pokemongo.fandom.com/wiki/Dynamax_Uxie%2C_Mesprit%2C_and_Azelf_Max_Battle_Day"
       }
-    ]
+    ],
+    "bonuses": [
+      "Max 粒子收集上限提高至 1600",
+      "能量点均举办极巨对战，并更频繁刷新且增加数量",
+      "从能量点取得 Max 粒子 ×8",
+      ":trading: 当天最多可进行 3 次特殊交换",
+      "10 月 24 日 0–17 时探索取得 Max 粒子 ×2，领取所需探索距离为 1/4"
+    ],
+    "pokemon": [
+      {
+        "id": 480,
+        "name": "Uxie",
+        "shiny": true,
+        "hub": "480-Dynamax"
+      },
+      {
+        "id": 481,
+        "name": "Mesprit",
+        "shiny": true,
+        "hub": "481-Dynamax"
+      },
+      {
+        "id": 482,
+        "name": "Azelf",
+        "shiny": true,
+        "hub": "482-Dynamax"
+      }
+    ],
+    "sections": [
+      {
+        "title": "地区分布",
+        "items": [
+          "Uxie：亚太地区",
+          "Mesprit：欧洲、中东、非洲与印度",
+          "Azelf：美洲与格陵兰"
+        ]
+      },
+      {
+        "title": "付费限时调查",
+        "body": "4.99 美元票券提供 1 个 Max 蘑菇、25000 经验与 6400 Max 粒子，并使 Max 对战经验 ×2；调查仅在活动的 14–17 时有效。"
+      }
+    ],
+    "highlight": false
   },
   {
     "id": "super-mega-raid-day-october-2026",
@@ -10062,15 +9825,279 @@
     ]
   },
   {
+    "id": "minior-showers-orionids-2026",
+    "name": "Minior 流星雨：猎户座流星群",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-10-19T17:00:00.000",
+    "end": "2026-10-24T23:59:00.000",
+    "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+    "link": "https://leekduck.com/events/minior-showers-orionids-2026/",
+    "summary": "Minior 随猎户座流星群首次在野外登场；每天 17–21 时遭遇概率进一步提升。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/minior-showers-orionids-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/minior-showers/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/minior-meteor-showers-2026"
+      },
+      {
+        "label": "Fandom",
+        "url": "https://pokemongo.fandom.com/wiki/Minior_Shower"
+      }
+    ],
+    "bonuses": [
+      ":stardust: 捕捉 Minior 获得更多星尘",
+      "每天 17–21 时 Minior 野外遭遇概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 774,
+        "name": "Minior",
+        "shiny": false
+      }
+    ],
+    "sections": [
+      {
+        "title": "形态变化",
+        "body": "Minior 以流星形态开始战斗，HP 低于 50% 时露出核心；初期仅在 GO 火箭队、队长训练与 GO 对战联盟中触发。"
+      }
+    ]
+  },
+  {
+    "id": "pokemon-night-out-2026-twitch-drops",
+    "name": "Pokémon Night Out Twitch 掉宝",
+    "type": "twitch-drops",
+    "heading": "Twitch Drops",
+    "start": "2026-10-25T02:30:00.000Z",
+    "end": "2026-10-25T06:59:00.000Z",
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-10-24-pokemon-night-out-2026-twitch-drops/pokemon-night-out.jpg",
+    "link": "https://leekduck.com/events/pokemon-night-out-2026-twitch-drops/",
+    "summary": "全球训练家观看 Pokémon Night Out 官方 Twitch 直播满 30 分钟，可领取独家限时调查兑换码。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-night-out-2026-twitch-drops/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/pokemon-night-out-twitch-drop-timed-research/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/pokemon-night-out-twitch-drops2026"
+      }
+    ],
+    "bonuses": [
+      "观看官方 Twitch 直播满 30 分钟可领取限时调查兑换码"
+    ],
+    "sections": [
+      {
+        "title": "奖励与领取",
+        "items": [
+          "完成限时调查可获得 Pokémon Night Out 棒球衫换装道具",
+          "需绑定 Pokémon Trainer Central 与 Twitch，掉宝每位训练家限领一次",
+          "调查任务、兑换码及调查截止时间尚未公布"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "minior-showers-leonids-2026",
+    "name": "Minior 流星雨：狮子座流星群",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-11-14T17:00:00.000",
+    "end": "2026-11-19T23:59:00.000",
+    "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+    "link": "https://leekduck.com/events/minior-showers-leonids-2026/",
+    "summary": "Minior 在狮子座流星群期间现身野外，并将有一种核心颜色首次登场；每天 17–21 时遭遇概率提升。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/minior-showers-leonids-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/minior-showers/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/minior-meteor-showers-2026"
+      }
+    ],
+    "bonuses": [
+      ":stardust: 捕捉 Minior 获得更多星尘",
+      "每天 17–21 时 Minior 野外遭遇概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 774,
+        "name": "Minior",
+        "shiny": false
+      }
+    ]
+  },
+  {
+    "id": "minior-showers-geminids-2026",
+    "name": "Minior 流星雨：双子座流星群",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-12-11T17:00:00.000",
+    "end": "2026-12-16T23:59:00.000",
+    "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+    "link": "https://leekduck.com/events/minior-showers-geminids-2026/",
+    "summary": "Minior 在双子座流星群期间现身野外；南北半球将分别迎来一种核心颜色首次登场，每天 17–21 时遭遇概率提升。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/minior-showers-geminids-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/minior-showers/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/minior-meteor-showers-2026"
+      }
+    ],
+    "bonuses": [
+      ":stardust: 捕捉 Minior 获得更多星尘",
+      "每天 17–21 时 Minior 野外遭遇概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 774,
+        "name": "Minior",
+        "shiny": false
+      }
+    ]
+  },
+  {
+    "id": "minior-showers-eta-aquariids-2027",
+    "name": "Minior 流星雨：宝瓶座 η 流星群",
+    "type": "event",
+    "heading": "Event",
+    "start": "2027-05-03T17:00:00.000",
+    "end": "2027-05-08T23:59:00.000",
+    "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+    "link": "https://leekduck.com/events/minior-showers-eta-aquariids-2027/",
+    "summary": "Minior 在宝瓶座 η 流星群期间现身野外，并将有一种核心颜色首次登场；每天 17–21 时遭遇概率提升。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/minior-showers-eta-aquariids-2027/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/minior-showers/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/minior-meteor-showers-2026"
+      }
+    ],
+    "bonuses": [
+      ":stardust: 捕捉 Minior 获得更多星尘",
+      "每天 17–21 时 Minior 野外遭遇概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 774,
+        "name": "Minior",
+        "shiny": false
+      }
+    ]
+  },
+  {
+    "id": "minior-showers-southern-delta-aquariids-2027",
+    "name": "Minior 流星雨：南宝瓶座 δ 流星群",
+    "type": "event",
+    "heading": "Event",
+    "start": "2027-07-28T17:00:00.000",
+    "end": "2027-08-02T23:59:00.000",
+    "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+    "link": "https://leekduck.com/events/minior-showers-southern-delta-aquariids-2027/",
+    "summary": "Minior 在南宝瓶座 δ 流星群期间现身野外，并将有一种核心颜色首次登场；每天 17–21 时遭遇概率提升。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/minior-showers-southern-delta-aquariids-2027/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/minior-showers/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/minior-meteor-showers-2026"
+      }
+    ],
+    "bonuses": [
+      ":stardust: 捕捉 Minior 获得更多星尘",
+      "每天 17–21 时 Minior 野外遭遇概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 774,
+        "name": "Minior",
+        "shiny": false
+      }
+    ]
+  },
+  {
+    "id": "minior-showers-perseids-2027",
+    "name": "Minior 流星雨：英仙座流星群",
+    "type": "event",
+    "heading": "Event",
+    "start": "2027-08-10T17:00:00.000",
+    "end": "2027-08-15T23:59:00.000",
+    "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+    "link": "https://leekduck.com/events/minior-showers-perseids-2027/",
+    "summary": "Minior 在英仙座流星群期间现身野外，并将有一种核心颜色首次登场；每天 17–21 时遭遇概率提升。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/minior-showers-perseids-2027/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/guide/minior-showers/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/minior-meteor-showers-2026"
+      }
+    ],
+    "bonuses": [
+      ":stardust: 捕捉 Minior 获得更多星尘",
+      "每天 17–21 时 Minior 野外遭遇概率提升"
+    ],
+    "pokemon": [
+      {
+        "id": 774,
+        "name": "Minior",
+        "shiny": false
+      }
+    ]
+  },
+  {
     "id": "max-mondays-2026-10-05",
-    "name": "Max周一·Sizzlipede",
+    "name": "Max周一·烧火蚣",
     "type": "max-mondays",
     "heading": "Max Mondays",
     "start": "2026-10-05T06:00:00",
     "end": "2026-10-05T21:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
     "link": "https://leekduck.com/events/max-mondays-2026-10-05/",
-    "summary": "当天 6–21 时由极巨化 Sizzlipede 占领能量点；18–19 时为 Max 周一重点时段。",
+    "summary": "当天 6–21 时由极巨化 烧火蚣 占领能量点；18–19 时为 Max 周一重点时段。",
     "links": [
       {
         "label": "LeekDuck",
@@ -10084,7 +10111,7 @@
     "pokemon": [
       {
         "id": 850,
-        "name": "Sizzlipede",
+        "name": "烧火蚣",
         "shiny": true
       }
     ],
@@ -10138,7 +10165,7 @@
   },
   {
     "id": "yveltal-in-5-star-raid-battles-october-2026",
-    "name": "Yveltal 现身 5★团战",
+    "name": "伊裴尔塔尔现身 5★团战",
     "type": "raid-battles",
     "heading": "Raid Battles",
     "start": "2026-10-07T06:00:00",
@@ -10159,14 +10186,14 @@
     "pokemon": [
       {
         "id": 717,
-        "name": "Yveltal",
+        "name": "伊裴尔塔尔",
         "shiny": true
       }
     ]
   },
   {
     "id": "mega-blastoise-in-mega-raids-october-2026",
-    "name": "超级 Blastoise 现身超级团战",
+    "name": "超级水箭龟现身超级团战",
     "type": "raid-battles",
     "heading": "Raid Battles",
     "start": "2026-10-07T06:00:00",
@@ -10187,7 +10214,7 @@
     "pokemon": [
       {
         "id": 9,
-        "name": "超级 Blastoise",
+        "name": "超级水箭龟",
         "shiny": true,
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10036.png",
         "hub": "9-Mega"
@@ -10196,7 +10223,7 @@
   },
   {
     "id": "raidhour20261007",
-    "name": "Yveltal 团战时刻",
+    "name": "伊裴尔塔尔团战时刻",
     "type": "raid-hour",
     "heading": "Raid Hour",
     "start": "2026-10-07T18:00:00",
@@ -10217,21 +10244,21 @@
     "pokemon": [
       {
         "id": 717,
-        "name": "Yveltal",
+        "name": "伊裴尔塔尔",
         "shiny": true
       }
     ]
   },
   {
     "id": "pokemonspotlighthour2026-10-08",
-    "name": "Elgyem 聚焦时刻",
+    "name": "小灰怪聚焦时刻",
     "type": "pokemon-spotlight-hour",
     "heading": "Pokémon Spotlight Hour",
     "start": "2026-10-08T18:00:00",
     "end": "2026-10-08T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-10-08/",
-    "summary": "当地时间 18–19 时，Elgyem 在野外大量出现；当周加成为捕捉糖果 ×2。",
+    "summary": "当地时间 18–19 时，小灰怪 在野外大量出现；当周加成为捕捉糖果 ×2。",
     "links": [
       {
         "label": "LeekDuck",
@@ -10245,7 +10272,7 @@
     "pokemon": [
       {
         "id": 605,
-        "name": "Elgyem",
+        "name": "小灰怪",
         "shiny": true
       }
     ],
@@ -10255,14 +10282,14 @@
   },
   {
     "id": "max-mondays-2026-10-12",
-    "name": "Max周一·Rookidee",
+    "name": "Max周一·稚山雀",
     "type": "max-mondays",
     "heading": "Max Mondays",
     "start": "2026-10-12T06:00:00",
     "end": "2026-10-12T21:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
     "link": "https://leekduck.com/events/max-mondays-2026-10-12/",
-    "summary": "当天 6–21 时由极巨化 Rookidee 占领能量点；18–19 时为 Max 周一重点时段。",
+    "summary": "当天 6–21 时由极巨化 稚山雀 占领能量点；18–19 时为 Max 周一重点时段。",
     "links": [
       {
         "label": "LeekDuck",
@@ -10276,7 +10303,7 @@
     "pokemon": [
       {
         "id": 821,
-        "name": "Rookidee",
+        "name": "稚山雀",
         "shiny": true
       }
     ],
@@ -10307,7 +10334,7 @@
   },
   {
     "id": "dialga-in-5-star-raid-battles-october-2026",
-    "name": "Dialga 现身 5★团战",
+    "name": "帝牙卢卡现身 5★团战",
     "type": "raid-battles",
     "heading": "Raid Battles",
     "start": "2026-10-14T06:00:00",
@@ -10328,14 +10355,14 @@
     "pokemon": [
       {
         "id": 483,
-        "name": "Dialga",
+        "name": "帝牙卢卡",
         "shiny": true
       }
     ]
   },
   {
     "id": "mega-dragonite-in-mega-raids-october-2026",
-    "name": "超级 Dragonite 现身超级团战",
+    "name": "超级快龙现身超级团战",
     "type": "raid-battles",
     "heading": "Raid Battles",
     "start": "2026-10-14T06:00:00",
@@ -10356,7 +10383,7 @@
     "pokemon": [
       {
         "id": 149,
-        "name": "超级 Dragonite",
+        "name": "超级快龙",
         "shiny": true,
         "sprite": "https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp",
         "hub": "149-Mega"
@@ -10393,14 +10420,14 @@
   },
   {
     "id": "pokemonspotlighthour2026-10-15",
-    "name": "Stufful 聚焦时刻",
+    "name": "童偶熊聚焦时刻",
     "type": "pokemon-spotlight-hour",
     "heading": "Pokémon Spotlight Hour",
     "start": "2026-10-15T18:00:00",
     "end": "2026-10-15T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-10-15/",
-    "summary": "当地时间 18–19 时，Stufful 在野外大量出现；当周加成为传送糖果 ×2。",
+    "summary": "当地时间 18–19 时，童偶熊 在野外大量出现；当周加成为传送糖果 ×2。",
     "links": [
       {
         "label": "LeekDuck",
@@ -10414,7 +10441,7 @@
     "pokemon": [
       {
         "id": 759,
-        "name": "Stufful",
+        "name": "童偶熊",
         "shiny": true
       }
     ],
@@ -10424,14 +10451,14 @@
   },
   {
     "id": "max-mondays-2026-10-19",
-    "name": "Max周一·Sneasel",
+    "name": "Max周一·狃拉",
     "type": "max-mondays",
     "heading": "Max Mondays",
     "start": "2026-10-19T06:00:00",
     "end": "2026-10-19T21:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
     "link": "https://leekduck.com/events/max-mondays-2026-10-19/",
-    "summary": "当天 6–21 时由极巨化 Sneasel 占领能量点；18–19 时为 Max 周一重点时段。",
+    "summary": "当天 6–21 时由极巨化 狃拉 占领能量点；18–19 时为 Max 周一重点时段。",
     "links": [
       {
         "label": "LeekDuck",
@@ -10445,7 +10472,7 @@
     "pokemon": [
       {
         "id": 215,
-        "name": "Sneasel",
+        "name": "狃拉",
         "shiny": true
       }
     ],
@@ -10455,7 +10482,7 @@
   },
   {
     "id": "palkia-in-5-star-raid-battles-october-2026",
-    "name": "Palkia 现身 5★团战",
+    "name": "帕路奇亚现身 5★团战",
     "type": "raid-battles",
     "heading": "Raid Battles",
     "start": "2026-10-21T06:00:00",
@@ -10476,7 +10503,7 @@
     "pokemon": [
       {
         "id": 484,
-        "name": "Palkia",
+        "name": "帕路奇亚",
         "shiny": true
       }
     ]
@@ -10541,14 +10568,14 @@
   },
   {
     "id": "pokemonspotlighthour2026-10-22",
-    "name": "Morelull 聚焦时刻",
+    "name": "睡睡菇聚焦时刻",
     "type": "pokemon-spotlight-hour",
     "heading": "Pokémon Spotlight Hour",
     "start": "2026-10-22T18:00:00",
     "end": "2026-10-22T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-10-22/",
-    "summary": "当地时间 18–19 时，Morelull 在野外大量出现；当周加成为捕捉星尘 ×2。",
+    "summary": "当地时间 18–19 时，睡睡菇 在野外大量出现；当周加成为捕捉星尘 ×2。",
     "links": [
       {
         "label": "LeekDuck",
@@ -10562,7 +10589,7 @@
     "pokemon": [
       {
         "id": 755,
-        "name": "Morelull",
+        "name": "睡睡菇",
         "shiny": true
       }
     ],
@@ -10572,14 +10599,14 @@
   },
   {
     "id": "max-mondays-2026-10-26",
-    "name": "Max周一·Sableye",
+    "name": "Max周一·勾魂眼",
     "type": "max-mondays",
     "heading": "Max Mondays",
     "start": "2026-10-26T06:00:00",
     "end": "2026-10-26T21:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
     "link": "https://leekduck.com/events/max-mondays-2026-10-26/",
-    "summary": "当天 6–21 时由极巨化 Sableye 占领能量点；18–19 时为 Max 周一重点时段。",
+    "summary": "当天 6–21 时由极巨化 勾魂眼 占领能量点；18–19 时为 Max 周一重点时段。",
     "links": [
       {
         "label": "LeekDuck",
@@ -10593,7 +10620,7 @@
     "pokemon": [
       {
         "id": 302,
-        "name": "Sableye",
+        "name": "勾魂眼",
         "shiny": true
       }
     ],
@@ -10654,7 +10681,7 @@
   },
   {
     "id": "mega-sableye-in-mega-raids-october-2026",
-    "name": "超级 Sableye 现身超级团战",
+    "name": "超级勾魂眼现身超级团战",
     "type": "raid-battles",
     "heading": "Raid Battles",
     "start": "2026-10-28T06:00:00",
@@ -10675,7 +10702,7 @@
     "pokemon": [
       {
         "id": 302,
-        "name": "超级 Sableye",
+        "name": "超级勾魂眼",
         "shiny": true,
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10066.png",
         "hub": "302-Mega"
@@ -10714,14 +10741,14 @@
   },
   {
     "id": "pokemonspotlighthour2026-10-29",
-    "name": "Gastly 聚焦时刻",
+    "name": "鬼斯聚焦时刻",
     "type": "pokemon-spotlight-hour",
     "heading": "Pokémon Spotlight Hour",
     "start": "2026-10-29T18:00:00",
     "end": "2026-10-29T19:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
     "link": "https://leekduck.com/events/pokemonspotlighthour2026-10-29/",
-    "summary": "当地时间 18–19 时，Gastly 在野外大量出现；当周加成为进化经验 ×2。",
+    "summary": "当地时间 18–19 时，鬼斯 在野外大量出现；当周加成为进化经验 ×2。",
     "links": [
       {
         "label": "LeekDuck",
@@ -10735,7 +10762,7 @@
     "pokemon": [
       {
         "id": 92,
-        "name": "Gastly",
+        "name": "鬼斯",
         "shiny": true
       }
     ],
@@ -10745,14 +10772,14 @@
   },
   {
     "id": "shadow-landorus-incarnate-forme-in-shadow-raids-october-2026",
-    "name": "暗影 Landorus（化身形态）现身暗影团战",
+    "name": "暗影土地云（化身形态）现身暗影团战",
     "type": "raid-battles",
     "heading": "Raid Battles",
     "start": "2026-10-07T06:00:00",
     "end": "2026-11-03T22:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/raids-shadow.jpg",
     "link": "https://leekduck.com/events/shadow-landorus-incarnate-forme-in-shadow-raids-october-2026/",
-    "summary": "活动日期范围内的每个周末，暗影 Landorus（化身形态）现身 5★暗影团战；平日不开放。",
+    "summary": "活动日期范围内的每个周末，暗影 土地云（化身形态）现身 5★暗影团战；平日不开放。",
     "links": [
       {
         "label": "LeekDuck",
@@ -10766,7 +10793,7 @@
     "pokemon": [
       {
         "id": 645,
-        "name": "暗影 Landorus（化身形态）",
+        "name": "暗影土地云（化身形态）",
         "shiny": true,
         "hub": "645-Incarnate_Shadow"
       }

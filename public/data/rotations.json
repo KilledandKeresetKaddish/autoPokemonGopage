@@ -700,11 +700,11 @@
         },
         {
           "name": "Yveltal",
-          "cn": "Yveltal",
+          "cn": "伊裴尔塔尔",
           "pokemon": [
             {
               "id": 717,
-              "name": "Yveltal",
+              "name": "伊裴尔塔尔",
               "shiny": true
             }
           ],
@@ -713,11 +713,11 @@
         },
         {
           "name": "Dialga",
-          "cn": "Dialga",
+          "cn": "帝牙卢卡",
           "pokemon": [
             {
               "id": 483,
-              "name": "Dialga",
+              "name": "帝牙卢卡",
               "shiny": true
             }
           ],
@@ -726,11 +726,11 @@
         },
         {
           "name": "Palkia",
-          "cn": "Palkia",
+          "cn": "帕路奇亚",
           "pokemon": [
             {
               "id": 484,
-              "name": "Palkia",
+              "name": "帕路奇亚",
               "shiny": true
             }
           ],
@@ -739,11 +739,11 @@
         },
         {
           "name": "Giratina (Origin Forme)",
-          "cn": "Giratina（起源形态）",
+          "cn": "骑拉帝纳（起源形态）",
           "pokemon": [
             {
               "id": 487,
-              "name": "Giratina（起源形态）",
+              "name": "骑拉帝纳",
               "shiny": true,
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10007.png",
               "hub": "487-Origin"
@@ -1477,11 +1477,11 @@
         },
         {
           "name": "Mega Blastoise",
-          "cn": "超级 Blastoise",
+          "cn": "超级水箭龟",
           "pokemon": [
             {
               "id": 9,
-              "name": "超级 Blastoise",
+              "name": "超级水箭龟",
               "shiny": true,
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10036.png",
               "hub": "9-Mega"
@@ -1492,11 +1492,11 @@
         },
         {
           "name": "Mega Dragonite",
-          "cn": "超级 Dragonite",
+          "cn": "超级快龙",
           "pokemon": [
             {
               "id": 149,
-              "name": "超级 Dragonite",
+              "name": "超级快龙",
               "shiny": true,
               "sprite": "https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp",
               "hub": "149-Mega"
@@ -1507,18 +1507,18 @@
         },
         {
           "name": "Mega Charizard X / Y",
-          "cn": "超级 Charizard X / Y",
+          "cn": "超级喷火龙 X / Y",
           "pokemon": [
             {
               "id": 6,
-              "name": "超级 Charizard X",
+              "name": "超级喷火龙 X",
               "shiny": true,
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10034.png",
               "hub": "6-Mega_X"
             },
             {
               "id": 6,
-              "name": "超级 Charizard Y",
+              "name": "超级喷火龙 Y",
               "shiny": true,
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png",
               "hub": "6-Mega_Y"
@@ -1529,11 +1529,11 @@
         },
         {
           "name": "Mega Sableye",
-          "cn": "超级 Sableye",
+          "cn": "超级勾魂眼",
           "pokemon": [
             {
               "id": 302,
-              "name": "超级 Sableye",
+              "name": "超级勾魂眼",
               "shiny": true,
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10066.png",
               "hub": "302-Mega"
@@ -1626,11 +1626,11 @@
         },
         {
           "name": "Sizzlipede",
-          "cn": "Sizzlipede",
+          "cn": "烧火蚣",
           "pokemon": [
             {
               "id": 850,
-              "name": "Sizzlipede",
+              "name": "烧火蚣",
               "shiny": true
             }
           ],
@@ -1639,11 +1639,11 @@
         },
         {
           "name": "Rookidee",
-          "cn": "Rookidee",
+          "cn": "稚山雀",
           "pokemon": [
             {
               "id": 821,
-              "name": "Rookidee",
+              "name": "稚山雀",
               "shiny": true
             }
           ],
@@ -1652,11 +1652,11 @@
         },
         {
           "name": "Sneasel",
-          "cn": "Sneasel",
+          "cn": "狃拉",
           "pokemon": [
             {
               "id": 215,
-              "name": "Sneasel",
+              "name": "狃拉",
               "shiny": true
             }
           ],
@@ -1665,11 +1665,11 @@
         },
         {
           "name": "Sableye",
-          "cn": "Sableye",
+          "cn": "勾魂眼",
           "pokemon": [
             {
               "id": 302,
-              "name": "Sableye",
+              "name": "勾魂眼",
               "shiny": true
             }
           ],
