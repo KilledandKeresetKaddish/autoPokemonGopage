@@ -1,1537 +1,5 @@
 [
   {
-    "id": "season-23-forever-forward",
-    "name": "赛季:勇往直前(Forever Forward)",
-    "type": "season",
-    "heading": "Season",
-    "start": "2026-06-02T10:00:00",
-    "end": "2026-09-08T10:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-06-02-season-23-forever-forward/season-23-forever-forward.jpg",
-    "link": "https://leekduck.com/events/season-23-forever-forward/",
-    "summary": "当前赛季「勇往直前」(2026/6/2–9/8):每日发现轮换加成、GO 通行证进度轨、研究突破与赛季蛋种;赛季以 GO Fest 2026 全球场及超级超梦登场开场。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/season-23-forever-forward/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/forever-forward/"
-      },
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/en/seasons"
-      }
-    ],
-    "longTerm": true,
-    "bonuses": [
-      ":candy: 周一 Max 周一:Max 团战奖励 1 个稀有糖果 XL,能量点更频繁刷新",
-      ":stardust: 周四 GBL & 聚焦时刻:每日对战上限 5→10 组(共 50 场),胜场星尘最高 ×4",
-      ":trading: 周五 友谊星期五:额外 2 次特殊交换,交换星尘 -20%,幸运交换概率提升",
-      ":spawn: 周日 风景星期日:野外与路线刷新更多宝可梦,熏香在路线上更高效"
-    ],
-    "sections": [
-      {
-        "title": "每日发现(Daily Discoveries · 当地 00:00–23:59)",
-        "items": [
-          ":candy: 周一 Max 周一 — Max 团战奖励稀有糖果 XL;周一额外能量点、更频繁刷新;Dynamax Boss 轮换",
-          ":pokestop: 周二 展柜星期二 — 最多参加 5 个补给站展柜,更多补给站开放展柜",
-          ":raid: 周三 团战时刻 — 5★/超级 Boss 每周三开盘轮换;团战时刻 18:00–19:00;现场团战奖励稀有糖果 XL",
-          ":xp: 周四 GBL & 聚焦时刻 — 聚焦时刻 18:00–19:00 回归;对战上限 5→10 组(50 场);胜场星尘最高 ×4",
-          ":trading: 周五 友谊星期五 — 额外 2 次特殊交换;交换星尘 -20%;幸运概率提升;31 级以上交换必得 2 个糖果 XL(仅限当面)",
-          ":incense: 周日 风景星期日 — 野外/路线刷新更多宝可梦,熏香在路线更高效;搭档糖果距离缩短;路线上每日最多遇 Mateo 3 次",
-          "注:全球 GO Fest、GO Wild Area、GO Tour 当周暂停每日发现。"
-        ]
-      },
-      {
-        "title": "GO 通行证:勇往直前 · 主要里程碑奖励",
-        "items": [
-          ":candy: Rank 1(Tier 1):交换宝可梦额外 +1 糖果",
-          ":pokestop: Rank 25(Tier 2):提升礼物开启/接收/存储上限",
-          ":incense: Rank 50(Tier 3):每日探险熏香持续时间 ×2",
-          ":stardust: Rank 75(Tier 4):孵蛋星尘提升 + 孵蛋 XP 提升"
-        ]
-      },
-      {
-        "title": "研究突破(完成实地调查解锁,以下其一)",
-        "mons": [
-          {
-            "id": 149,
-            "name": "快龙",
-            "shiny": true
-          },
-          {
-            "id": 610,
-            "name": "牙牙",
-            "shiny": true
-          },
-          {
-            "id": 679,
-            "name": "独剑鞘",
-            "shiny": true
-          },
-          {
-            "id": 782,
-            "name": "心鳞宝",
-            "shiny": true
-          },
-          {
-            "id": 876,
-            "name": "爱管侍",
-            "shiny": true
-          },
-          {
-            "id": 950,
-            "name": "毛崖蟹",
-            "shiny": true
-          }
-        ]
-      },
-      {
-        "title": "蛋种 · 2 km",
-        "mons": [
-          {
-            "id": 102,
-            "name": "蛋蛋",
-            "shiny": true
-          },
-          {
-            "id": 172,
-            "name": "皮丘",
-            "shiny": true
-          },
-          {
-            "id": 173,
-            "name": "皮宝宝",
-            "shiny": true
-          },
-          {
-            "id": 175,
-            "name": "波克比",
-            "shiny": true
-          },
-          {
-            "id": 341,
-            "name": "龙虾小兵",
-            "shiny": true
-          },
-          {
-            "id": 360,
-            "name": "小果然",
-            "shiny": true
-          },
-          {
-            "id": 636,
-            "name": "燃烧虫",
-            "shiny": true
-          }
-        ]
-      },
-      {
-        "title": "蛋种 · 5 km",
-        "mons": [
-          {
-            "id": 447,
-            "name": "利欧路",
-            "shiny": true
-          },
-          {
-            "id": 458,
-            "name": "小球飞鱼",
-            "shiny": true
-          },
-          {
-            "id": 872,
-            "name": "雪吞虫",
-            "shiny": true
-          },
-          {
-            "id": 876,
-            "name": "爱管侍",
-            "shiny": true
-          },
-          {
-            "id": 955,
-            "name": "飘飘雏",
-            "shiny": true
-          },
-          {
-            "id": 636,
-            "name": "燃烧虫",
-            "shiny": true
-          }
-        ]
-      },
-      {
-        "title": "蛋种 · 5 km(探险同步)",
-        "mons": [
-          {
-            "id": 406,
-            "name": "含羞苞",
-            "shiny": true
-          },
-          {
-            "id": 433,
-            "name": "铃铛响",
-            "shiny": true
-          },
-          {
-            "id": 302,
-            "name": "勾魂眼",
-            "shiny": true
-          },
-          {
-            "id": 236,
-            "name": "无畏小子",
-            "shiny": true
-          },
-          {
-            "id": 440,
-            "name": "小福蛋",
-            "shiny": true
-          }
-        ]
-      },
-      {
-        "title": "蛋种 · 7 km(地区限定形态)",
-        "mons": [
-          {
-            "id": 52,
-            "name": "伽勒尔喵喵",
-            "shiny": true,
-            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10161.png",
-            "hub": "52-Galarian"
-          },
-          {
-            "id": 222,
-            "name": "伽勒尔太阳珊瑚",
-            "shiny": true,
-            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10173.png",
-            "hub": "222-Galarian"
-          },
-          {
-            "id": 263,
-            "name": "伽勒尔蛇纹熊",
-            "shiny": true,
-            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10174.png",
-            "hub": "263-Galarian"
-          },
-          {
-            "id": 554,
-            "name": "伽勒尔火红不倒翁",
-            "shiny": true,
-            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10176.png",
-            "hub": "554-Galarian"
-          },
-          {
-            "id": 618,
-            "name": "伽勒尔泥巴鱼",
-            "shiny": true,
-            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10180.png",
-            "hub": "618-Galarian"
-          },
-          {
-            "id": 74,
-            "name": "阿罗拉小拳石",
-            "shiny": true,
-            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10109.png",
-            "hub": "74-Alolan"
-          },
-          {
-            "id": 50,
-            "name": "阿罗拉地鼠",
-            "shiny": true,
-            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10105.png",
-            "hub": "50-Alolan"
-          }
-        ]
-      },
-      {
-        "title": "蛋种 · 7 km(Mateo 礼物交换)",
-        "mons": [
-          {
-            "id": 222,
-            "name": "伽勒尔太阳珊瑚",
-            "shiny": true,
-            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10173.png",
-            "hub": "222-Galarian"
-          },
-          {
-            "id": 79,
-            "name": "伽勒尔呆呆兽",
-            "shiny": true,
-            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10164.png",
-            "hub": "79-Galarian"
-          },
-          {
-            "id": 215,
-            "name": "洗翠狃拉",
-            "shiny": true,
-            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10235.png",
-            "hub": "215-Hisuian"
-          },
-          {
-            "id": 58,
-            "name": "洗翠卡蒂狗",
-            "shiny": true,
-            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10229.png",
-            "hub": "58-Hisuian"
-          },
-          {
-            "id": 550,
-            "name": "白条纹野蛮鲈鱼",
-            "shiny": true,
-            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10247.png",
-            "hub": "550-White_Striped"
-          }
-        ]
-      },
-      {
-        "title": "蛋种 · 10 km",
-        "mons": [
-          {
-            "id": 303,
-            "name": "大嘴娃",
-            "shiny": true
-          },
-          {
-            "id": 359,
-            "name": "阿勃梭鲁",
-            "shiny": true
-          },
-          {
-            "id": 679,
-            "name": "独剑鞘",
-            "shiny": true
-          },
-          {
-            "id": 935,
-            "name": "炭小侍",
-            "shiny": true
-          },
-          {
-            "id": 957,
-            "name": "小锻匠",
-            "shiny": true
-          },
-          {
-            "id": 996,
-            "name": "凉脊龙",
-            "shiny": true
-          },
-          {
-            "id": 636,
-            "name": "燃烧虫",
-            "shiny": true
-          }
-        ]
-      },
-      {
-        "title": "蛋种 · 10 km(探险同步)",
-        "mons": [
-          {
-            "id": 621,
-            "name": "赤面龙",
-            "shiny": true
-          },
-          {
-            "id": 848,
-            "name": "电音婴",
-            "shiny": true
-          },
-          {
-            "id": 371,
-            "name": "宝贝龙",
-            "shiny": true
-          },
-          {
-            "id": 780,
-            "name": "老翁龙",
-            "shiny": true
-          },
-          {
-            "id": 443,
-            "name": "圆陆鲨",
-            "shiny": true
-          }
-        ]
-      },
-      {
-        "title": "蛋种 · 12 km(火箭队头目)",
-        "mons": [
-          {
-            "id": 551,
-            "name": "黑眼鳄",
-            "shiny": true
-          },
-          {
-            "id": 629,
-            "name": "秃鹰丫头",
-            "shiny": true
-          },
-          {
-            "id": 944,
-            "name": "滋汁鼹",
-            "shiny": true
-          },
-          {
-            "id": 674,
-            "name": "顽皮熊猫",
-            "shiny": true
-          },
-          {
-            "id": 757,
-            "name": "夜盗火蜥",
-            "shiny": true
-          },
-          {
-            "id": 965,
-            "name": "噗隆隆",
-            "shiny": true
-          }
-        ]
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 149,
-        "name": "快龙",
-        "shiny": true
-      },
-      {
-        "id": 610,
-        "name": "牙牙",
-        "shiny": true
-      },
-      {
-        "id": 679,
-        "name": "独剑鞘",
-        "shiny": true
-      },
-      {
-        "id": 782,
-        "name": "心鳞宝",
-        "shiny": true
-      },
-      {
-        "id": 876,
-        "name": "爱管侍",
-        "shiny": true
-      },
-      {
-        "id": 950,
-        "name": "毛崖蟹",
-        "shiny": true
-      }
-    ]
-  },
-  {
-    "id": "10th-anniversary-party",
-    "name": "十周年庆典",
-    "type": "event",
-    "heading": "Event",
-    "start": "2026-07-04T10:00:00",
-    "end": "2026-07-06T20:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-04-10th-anniversary-party/10th-anniversary-party-2026.jpg",
-    "link": "https://leekduck.com/events/10th-anniversary-party/",
-    "summary": "Pokémon GO 十周年庆典:捕捉 XP ×4、捕捉星尘 ×4,活动主题野生宝可梦闪光概率提升;金币袋或黄金诱饵可遇十周年硬币索财灵。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/10th-anniversary-party/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/pokemon-go-10th-anniversary-party-event/"
-      }
-    ],
-    "bonuses": [
-      ":xp: 捕捉 XP ×4",
-      ":stardust: 捕捉星尘 ×4",
-      "✨ 活动主题野生宝可梦闪光概率提升",
-      ":spawn: 金币袋期间有机会遇见闪光索财灵",
-      ":spawn: 十周年硬币索财灵可能带特殊背景(至 7/31 23:59)"
-    ],
-    "pokemon": [
-      {
-        "id": 999,
-        "name": "索财灵",
-        "shiny": true
-      },
-      {
-        "id": 25,
-        "name": "皮卡丘",
-        "shiny": true
-      },
-      {
-        "id": 133,
-        "name": "伊布",
-        "shiny": true
-      },
-      {
-        "id": 265,
-        "name": "刺尾虫",
-        "shiny": true
-      }
-    ],
-    "sections": [
-      {
-        "title": "特殊出现与闪光重点",
-        "items": [
-          "野外:蛋糕帽皮卡丘、伊布、派对帽刺尾虫等活动主题宝可梦,这些野生主题宝可梦闪光概率提升。",
-          "金币袋或黄金诱饵模块:可遇见十周年纪念硬币索财灵;使用金币袋期间有机会遇见闪光索财灵。",
-          "索财灵的十周年纪念硬币相关加成持续到 7/31 23:59(当地时间)。"
-        ]
-      },
-      {
-        "title": "付费限时调查",
-        "items": [
-          "票价 US$1.99(或当地等值价格);奖励包含超级孵化器 ×1、高级对战入场券 ×1,以及带特殊背景的十周年纪念硬币索财灵遭遇。",
-          "任务与奖励须在 7/6 20:00 前完成并领取。"
-        ]
-      },
-      {
-        "title": "特色招式",
-        "items": [
-          "活动期间进化妙蛙草可获得会疯狂植物的妙蛙花。",
-          "活动期间进化火恐龙可获得会爆炸烈焰的喷火龙。",
-          "活动期间进化卡咪龟可获得会加农水炮的水箭龟。"
-        ]
-      },
-      {
-        "title": "其他内容",
-        "items": [
-          "活动主题 Field Research 可奖励活动主题宝可梦遭遇。",
-          "Web Store 将上架 US$1.99 活动礼包;游戏内商店有新换装道具,补给站、礼物与商店可获得活动贴纸。"
-        ]
-      }
-    ],
-    "highlight": true
-  },
-  {
-    "id": "pokemon-go-10th-anniversary-celebration-twitch-drops",
-    "name": "十周年庆典 Twitch 掉宝",
-    "type": "twitch-drops",
-    "heading": "Twitch Drops",
-    "start": "2026-07-09T22:30:00Z",
-    "end": "2026-07-10T01:30:00Z",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-09-pokemon-go-10th-anniversary-celebration-twitch-drops/rewards.jpg",
-    "link": "https://leekduck.com/events/pokemon-go-10th-anniversary-celebration-twitch-drops/",
-    "summary": "观看 Pokémon GO 十周年庆典 Twitch 直播连续 30 分钟可领取掉宝兑换码;直播时间为 7/9 22:30Z–7/10 01:30Z。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/pokemon-go-10th-anniversary-celebration-twitch-drops/"
-      }
-    ],
-    "bonuses": [
-      ":pokeball: 精灵球 ×10、超级球 ×10、高级球 ×10",
-      "伤药 ×10、厉害伤药 ×10、全满药 ×10",
-      "活力碎片 ×10、活力块 ×10",
-      ":rare-candy: 神奇糖果 ×10、神奇糖果XL ×10、幸运蛋 ×10"
-    ],
-    "sections": [
-      {
-        "title": "领取方式",
-        "items": [
-          "关注 Twitch.tv/PokemonGO,并将 Pokémon Trainer Club 账号连接到 Twitch。",
-          "7/9 18时30分–21时30分 EDT 连续观看至少 30 分钟;最小化直播可能暂停 Twitch 掉宝进度。",
-          "在 Twitch 聊天弹窗或 Drops Inventory 领取掉宝,复制兑换码后前往 Offer Redemption 页面兑换。",
-          "兑换码限时有效,每位训练家每个 Twitch Drop 只能领取一次。"
-        ]
-      }
-    ],
-    "highlight": false
-  },
-  {
-    "id": "road-of-legends-2026",
-    "name": "传奇之路",
-    "type": "event",
-    "heading": "Event",
-    "start": "2026-07-06T00:01:00",
-    "end": "2026-07-10T23:59:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-06-road-of-legends-2026/road-of-legends-2026.jpg",
-    "link": "https://leekduck.com/events/road-of-legends-2026/",
-    "summary": "GO Fest 2026:全球前的团战准备活动。7/6–7/10 每天有重点 5★团战与超级/原始团战时刻,并开放特殊背景、冒险效果招式与 GO 通行证:传奇之路。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/road-of-legends-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/"
-      },
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/news/road-of-legends-2026"
-      }
-    ],
-    "bonuses": [
-      ":raid: 7/6–7/12 远程团战入场券无上限",
-      ":xl-candy: 31 级以上交换宝可梦必得糖果 XL",
-      ":pokeball: 团战后纪念球捕获效率提升",
-      ":raid: 派对之力在团战中充能更快",
-      ":raid: 传奇之路期间每天最多 2 张免费团战入场券(官方公告)",
-      ":pokestop: 转动补给站与开启礼物可获得活动贴纸"
-    ],
-    "sections": [
-      {
-        "title": "每日团战时刻总览",
-        "items": [
-          "7/6:5★团战时刻 18:00–20:00;超级暴飞龙在超级团战登场。",
-          "7/7 18:00–19:00 白酋雷姆、捷克罗姆、拂晓之翼奈克洛兹玛;19:00–20:00 超级班基拉斯。",
-          "7/8 18:00–19:00 黑酋雷姆、莱希拉姆、黄昏之鬃奈克洛兹玛;19:00–20:00 超级沙奈朵。",
-          "7/9 18:00–19:00 剑之王苍响、盾之王藏玛然特;19:00–20:00 超级耿鬼。",
-          "7/10 18:00–19:00 起源帝牙卢卡、起源帕路奇亚;19:00–20:00 原始盖欧卡、原始固拉多。"
-        ]
-      },
-      {
-        "title": "特殊背景与冒险效果",
-        "items": [
-          "7/6–7/12 从 5★、原始回归与超级团战捕获的部分宝可梦可能带特殊背景。",
-          "团战捕获的酋雷姆可能会冰封世界;起源帕路奇亚可能会亚空裂斩;起源帝牙卢卡可能会时光咆哮。",
-          "传奇之路开始至 GO Fest 全球结束期间,可用厉害特殊招式学习器让起源帕路奇亚学会亚空裂斩、起源帝牙卢卡学会时光咆哮。"
-        ]
-      },
-      {
-        "title": "蛋池重点(7/6 起)",
-        "body": "7/6 起开放传奇之路特别蛋池;燃烧虫可从 2/5/10 km 蛋孵化,且可能为闪光。"
-      },
-      {
-        "title": "2 km 蛋",
-        "mons": [
-          {
-            "id": 13,
-            "name": "独角虫",
-            "shiny": true
-          },
-          {
-            "id": 16,
-            "name": "波波",
-            "shiny": true
-          },
-          {
-            "id": 63,
-            "name": "凯西",
-            "shiny": true
-          },
-          {
-            "id": 92,
-            "name": "鬼斯",
-            "shiny": true
-          },
-          {
-            "id": 127,
-            "name": "凯罗斯",
-            "shiny": true
-          },
-          {
-            "id": 142,
-            "name": "化石翼龙",
-            "shiny": true
-          },
-          {
-            "id": 179,
-            "name": "咩利羊",
-            "shiny": true
-          },
-          {
-            "id": 246,
-            "name": "幼基拉斯",
-            "shiny": true
-          },
-          {
-            "id": 252,
-            "name": "木守宫",
-            "shiny": true
-          },
-          {
-            "id": 255,
-            "name": "火稚鸡",
-            "shiny": true
-          },
-          {
-            "id": 258,
-            "name": "水跃鱼",
-            "shiny": true
-          },
-          {
-            "id": 280,
-            "name": "拉鲁拉丝",
-            "shiny": true
-          },
-          {
-            "id": 371,
-            "name": "宝贝龙",
-            "shiny": true
-          },
-          {
-            "id": 374,
-            "name": "铁哑铃",
-            "shiny": true
-          },
-          {
-            "id": 443,
-            "name": "圆陆鲨",
-            "shiny": true
-          },
-          {
-            "id": 447,
-            "name": "利欧路",
-            "shiny": true
-          },
-          {
-            "id": 459,
-            "name": "雪笠怪",
-            "shiny": true
-          },
-          {
-            "id": 531,
-            "name": "差不多娃娃",
-            "shiny": true
-          },
-          {
-            "id": 636,
-            "name": "燃烧虫",
-            "shiny": true
-          }
-        ]
-      },
-      {
-        "title": "5 km 蛋",
-        "mons": [
-          {
-            "id": 1,
-            "name": "妙蛙种子",
-            "shiny": true
-          },
-          {
-            "id": 4,
-            "name": "小火龙",
-            "shiny": true
-          },
-          {
-            "id": 7,
-            "name": "杰尼龟",
-            "shiny": true
-          },
-          {
-            "id": 214,
-            "name": "赫拉克罗斯",
-            "shiny": true
-          },
-          {
-            "id": 439,
-            "name": "魔尼尼",
-            "shiny": true
-          },
-          {
-            "id": 636,
-            "name": "燃烧虫",
-            "shiny": true
-          }
-        ]
-      },
-      {
-        "title": "10 km 蛋",
-        "mons": [
-          {
-            "id": 357,
-            "name": "热带龙",
-            "shiny": true
-          },
-          {
-            "id": 610,
-            "name": "牙牙",
-            "shiny": true
-          },
-          {
-            "id": 626,
-            "name": "爆炸头水牛"
-          },
-          {
-            "id": 636,
-            "name": "燃烧虫",
-            "shiny": true
-          },
-          {
-            "id": 704,
-            "name": "黏黏宝",
-            "shiny": true
-          },
-          {
-            "id": 782,
-            "name": "心鳞宝",
-            "shiny": true
-          },
-          {
-            "id": 848,
-            "name": "毒电婴",
-            "shiny": true
-          },
-          {
-            "id": 996,
-            "name": "凉脊龙",
-            "shiny": true
-          }
-        ]
-      },
-      {
-        "title": "GO 通行证:传奇之路",
-        "items": [
-          "开放时间:7/6 00:01–7/12 23:59(当地时间)。完成通行证任务可获得戴队伍帽皮卡丘遭遇、传说团战宝可梦糖果、Link Charge、孵化器、熏香与 Rank 100 幸运饰物等。",
-          "豪华版包含队长姿势、Rank 100 金色王冠、带特殊背景的超梦遭遇、糖果 XL、孵蛋星尘 ×2、孵蛋糖果 ×2、完成 5★及以上团战额外 XP/糖果/糖果 XL、孵化距离 1/2 等。",
-          "7/6 00:01–7/12 23:59 期间每日发现暂停。"
-        ]
-      },
-      {
-        "title": "GO Fest 全球衔接",
-        "items": [
-          "GO Fest 2026:全球期间超级超梦 X 与超级超梦 Y 会在超级超级团战登场;捕获的超梦至少解锁 1 个 Mega 等级,可免首次能量进化,并更容易有高攻击、防御与 HP。",
-          "7/13 10:00 起皮卡丘还有后续惊喜,官方表示将稍后公布。"
-        ]
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 636,
-        "name": "燃烧虫",
-        "shiny": true
-      },
-      {
-        "id": 483,
-        "name": "帝牙卢卡",
-        "shiny": true
-      },
-      {
-        "id": 484,
-        "name": "帕路奇亚",
-        "shiny": true
-      },
-      {
-        "id": 646,
-        "name": "酋雷姆",
-        "shiny": true
-      },
-      {
-        "id": 150,
-        "name": "超梦",
-        "shiny": true
-      }
-    ],
-    "highlight": false
-  },
-  {
-    "id": "road-of-legends-raids-20260706",
-    "name": "传奇之路团战:超级暴飞龙与全世代传说",
-    "type": "raid-battles",
-    "heading": "传奇之路 · 每日团战",
-    "start": "2026-07-06T00:01:00",
-    "end": "2026-07-06T23:59:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-06-road-of-legends-2026/road-of-legends-2026.jpg",
-    "link": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/",
-    "summary": "7/6 全天 5★团战登场众多传说与究极异兽;团战时刻 18:00–20:00 刷新更密集,超级暴飞龙为当日超级团战重点。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/road-of-legends-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/"
-      },
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/news/road-of-legends-2026"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 373,
-        "name": "暴飞龙",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png",
-        "hub": "373-Mega",
-        "shiny": true
-      },
-      {
-        "id": 144,
-        "name": "急冻鸟",
-        "shiny": true
-      },
-      {
-        "id": 145,
-        "name": "闪电鸟",
-        "shiny": true
-      },
-      {
-        "id": 146,
-        "name": "火焰鸟",
-        "shiny": true
-      },
-      {
-        "id": 382,
-        "name": "盖欧卡",
-        "shiny": true
-      },
-      {
-        "id": 383,
-        "name": "固拉多",
-        "shiny": true
-      },
-      {
-        "id": 384,
-        "name": "烈空坐",
-        "shiny": true
-      },
-      {
-        "id": 800,
-        "name": "奈克洛兹玛",
-        "shiny": true
-      }
-    ],
-    "bonuses": [
-      "5★团战时刻 18:00–19:00(7/6 为 18:00–20:00)",
-      "超级/原始团战时刻 19:00–20:00",
-      "✨ 列表中标 * 的宝可梦可遇闪光",
-      ":raid: 可能获得特殊背景(7/6–7/12)"
-    ],
-    "sections": [
-      {
-        "title": "当日阵容",
-        "items": [
-          "5★重点:急冻鸟、闪电鸟、火焰鸟、雷公、炎帝、水君、洛奇亚、凤王、三圣柱、拉帝亚斯、拉帝欧斯、盖欧卡、固拉多、烈空坐、代欧奇希斯四形态、湖之众神、帝牙卢卡/帕路奇亚(含起源)、席多蓝恩、雷吉奇卡斯、骑拉帝纳两形态、克雷色利亚、达克莱伊、圣剑士、云神三组两形态、莱希拉姆、捷克罗姆、酋雷姆、盖诺赛克特多卡带、卡璞家族、索尔迦雷欧、露奈雅拉、究极异兽、奈克洛兹玛、苍响/藏玛然特、雷吉艾勒奇、雷吉铎拉戈、眷恋云两形态。",
-          "超级团战重点:超级暴飞龙。"
-        ]
-      },
-      {
-        "title": "当日阵容(全部团战 Boss)",
-        "mons": [
-          {
-            "id": 373,
-            "name": "超级暴飞龙",
-            "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png",
-            "hub": "373-Mega"
-          },
-          {
-            "id": 144,
-            "name": "急冻鸟"
-          },
-          {
-            "id": 145,
-            "name": "闪电鸟"
-          },
-          {
-            "id": 146,
-            "name": "火焰鸟"
-          },
-          {
-            "id": 243,
-            "name": "雷公"
-          },
-          {
-            "id": 244,
-            "name": "炎帝"
-          },
-          {
-            "id": 245,
-            "name": "水君"
-          },
-          {
-            "id": 249,
-            "name": "洛奇亚"
-          },
-          {
-            "id": 250,
-            "name": "凤王"
-          },
-          {
-            "id": 377,
-            "name": "雷吉洛克"
-          },
-          {
-            "id": 378,
-            "name": "雷吉艾斯"
-          },
-          {
-            "id": 379,
-            "name": "雷吉斯奇鲁"
-          },
-          {
-            "id": 380,
-            "name": "拉帝亚斯"
-          },
-          {
-            "id": 381,
-            "name": "拉帝欧斯"
-          },
-          {
-            "id": 382,
-            "name": "盖欧卡"
-          },
-          {
-            "id": 383,
-            "name": "固拉多"
-          },
-          {
-            "id": 384,
-            "name": "烈空坐"
-          },
-          {
-            "id": 386,
-            "name": "代欧奇希斯"
-          },
-          {
-            "id": 480,
-            "name": "由克希"
-          },
-          {
-            "id": 481,
-            "name": "艾姆利多"
-          },
-          {
-            "id": 482,
-            "name": "亚克诺姆"
-          },
-          {
-            "id": 483,
-            "name": "帝牙卢卡"
-          },
-          {
-            "id": 484,
-            "name": "帕路奇亚"
-          },
-          {
-            "id": 485,
-            "name": "席多蓝恩"
-          },
-          {
-            "id": 486,
-            "name": "雷吉奇卡斯"
-          },
-          {
-            "id": 487,
-            "name": "骑拉帝纳"
-          },
-          {
-            "id": 488,
-            "name": "克雷色利亚"
-          },
-          {
-            "id": 491,
-            "name": "达克莱伊"
-          },
-          {
-            "id": 638,
-            "name": "勾帕路翁"
-          },
-          {
-            "id": 639,
-            "name": "代拉基翁"
-          },
-          {
-            "id": 640,
-            "name": "毕力吉翁"
-          },
-          {
-            "id": 641,
-            "name": "龙卷云"
-          },
-          {
-            "id": 642,
-            "name": "雷电云"
-          },
-          {
-            "id": 643,
-            "name": "莱希拉姆"
-          },
-          {
-            "id": 644,
-            "name": "捷克罗姆"
-          },
-          {
-            "id": 645,
-            "name": "土地云"
-          },
-          {
-            "id": 646,
-            "name": "酋雷姆"
-          },
-          {
-            "id": 649,
-            "name": "盖诺赛克特"
-          },
-          {
-            "id": 716,
-            "name": "哲尔尼亚斯"
-          },
-          {
-            "id": 717,
-            "name": "伊裴尔塔尔"
-          },
-          {
-            "id": 785,
-            "name": "卡璞・鸣鸣"
-          },
-          {
-            "id": 786,
-            "name": "卡璞・蝶蝶"
-          },
-          {
-            "id": 787,
-            "name": "卡璞・哞哞"
-          },
-          {
-            "id": 788,
-            "name": "卡璞・鳍鳍"
-          },
-          {
-            "id": 791,
-            "name": "索尔迦雷欧"
-          },
-          {
-            "id": 792,
-            "name": "露奈雅拉"
-          },
-          {
-            "id": 793,
-            "name": "虚吾伊德"
-          },
-          {
-            "id": 794,
-            "name": "爆肌蚊"
-          },
-          {
-            "id": 795,
-            "name": "费洛美螂"
-          },
-          {
-            "id": 796,
-            "name": "电束木"
-          },
-          {
-            "id": 797,
-            "name": "铁火辉夜"
-          },
-          {
-            "id": 798,
-            "name": "纸御剑"
-          },
-          {
-            "id": 799,
-            "name": "恶食大王"
-          },
-          {
-            "id": 800,
-            "name": "奈克洛兹玛"
-          },
-          {
-            "id": 805,
-            "name": "垒磊石"
-          },
-          {
-            "id": 806,
-            "name": "砰头小丑"
-          },
-          {
-            "id": 888,
-            "name": "苍响"
-          },
-          {
-            "id": 889,
-            "name": "藏玛然特"
-          },
-          {
-            "id": 894,
-            "name": "雷吉艾勒奇"
-          },
-          {
-            "id": 895,
-            "name": "雷吉铎拉戈"
-          },
-          {
-            "id": 905,
-            "name": "眷恋云"
-          }
-        ]
-      }
-    ],
-    "highlight": false,
-    "counters": [
-      {
-        "id": 445,
-        "name": "烈咬陆鲨",
-        "fast": "龙息",
-        "charged": "逆鳞"
-      },
-      {
-        "id": 491,
-        "name": "达克莱伊",
-        "fast": "大声咆哮",
-        "charged": "暗影球"
-      },
-      {
-        "id": 376,
-        "name": "巨金怪",
-        "fast": "子弹拳",
-        "charged": "彗星拳"
-      }
-    ]
-  },
-  {
-    "id": "road-of-legends-raids-20260707",
-    "name": "传奇之路团战:白酋雷姆与超级班基拉斯",
-    "type": "raid-battles",
-    "heading": "传奇之路 · 每日团战",
-    "start": "2026-07-07T00:01:00",
-    "end": "2026-07-07T23:59:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-06-road-of-legends-2026/road-of-legends-2026.jpg",
-    "link": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/",
-    "summary": "7/7 全天 5★团战:白酋雷姆、捷克罗姆、拂晓之翼奈克洛兹玛等;团战时刻 18:00–19:00,19:00–20:00 超级团战为超级班基拉斯。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/road-of-legends-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/"
-      },
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/news/road-of-legends-2026"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 646,
-        "name": "酋雷姆",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png",
-        "hub": "646-White",
-        "shiny": true
-      },
-      {
-        "id": 644,
-        "name": "捷克罗姆",
-        "shiny": true
-      },
-      {
-        "id": 800,
-        "name": "奈克洛兹玛",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10156.png",
-        "hub": "800-Dawn_Wings",
-        "shiny": true
-      },
-      {
-        "id": 248,
-        "name": "班基拉斯",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png",
-        "hub": "248-Mega",
-        "shiny": true
-      }
-    ],
-    "bonuses": [
-      "5★团战时刻 18:00–19:00(7/6 为 18:00–20:00)",
-      "超级/原始团战时刻 19:00–20:00",
-      "✨ 列表中标 * 的宝可梦可遇闪光",
-      ":raid: 可能获得特殊背景(7/6–7/12)"
-    ],
-    "sections": [
-      {
-        "title": "当日阵容",
-        "items": [
-          "5★团战时刻:白酋雷姆、捷克罗姆、拂晓之翼奈克洛兹玛。",
-          "超级团战时刻:超级班基拉斯。"
-        ]
-      }
-    ],
-    "highlight": false,
-    "counters": [
-      {
-        "id": 376,
-        "name": "巨金怪",
-        "fast": "子弹拳",
-        "charged": "彗星拳"
-      },
-      {
-        "id": 448,
-        "name": "路卡利欧",
-        "fast": "双倍奉还",
-        "charged": "波导弹"
-      },
-      {
-        "id": 639,
-        "name": "代拉基翁",
-        "fast": "双倍奉还",
-        "charged": "近身战"
-      }
-    ]
-  },
-  {
-    "id": "road-of-legends-raids-20260708",
-    "name": "传奇之路团战:黑酋雷姆与超级沙奈朵",
-    "type": "raid-battles",
-    "heading": "传奇之路 · 每日团战",
-    "start": "2026-07-08T00:01:00",
-    "end": "2026-07-08T23:59:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-06-road-of-legends-2026/road-of-legends-2026.jpg",
-    "link": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/",
-    "summary": "7/8 全天 5★团战:黑酋雷姆、莱希拉姆、黄昏之鬃奈克洛兹玛等;团战时刻 18:00–19:00,19:00–20:00 超级团战为超级沙奈朵。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/road-of-legends-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/"
-      },
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/news/road-of-legends-2026"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 646,
-        "name": "酋雷姆",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10022.png",
-        "hub": "646-Black",
-        "shiny": true
-      },
-      {
-        "id": 643,
-        "name": "莱希拉姆",
-        "shiny": true
-      },
-      {
-        "id": 800,
-        "name": "奈克洛兹玛",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10155.png",
-        "hub": "800-Dusk_Mane",
-        "shiny": true
-      },
-      {
-        "id": 282,
-        "name": "沙奈朵",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10051.png",
-        "hub": "282-Mega",
-        "shiny": true
-      }
-    ],
-    "bonuses": [
-      "5★团战时刻 18:00–19:00(7/6 为 18:00–20:00)",
-      "超级/原始团战时刻 19:00–20:00",
-      "✨ 列表中标 * 的宝可梦可遇闪光",
-      ":raid: 可能获得特殊背景(7/6–7/12)"
-    ],
-    "sections": [
-      {
-        "title": "当日阵容",
-        "items": [
-          "5★团战时刻:黑酋雷姆、莱希拉姆、黄昏之鬃奈克洛兹玛。",
-          "超级团战时刻:超级沙奈朵。"
-        ]
-      }
-    ],
-    "highlight": false,
-    "counters": [
-      {
-        "id": 376,
-        "name": "巨金怪",
-        "fast": "子弹拳",
-        "charged": "彗星拳"
-      },
-      {
-        "id": 491,
-        "name": "达克莱伊",
-        "fast": "大声咆哮",
-        "charged": "暗影球"
-      },
-      {
-        "id": 248,
-        "name": "班基拉斯",
-        "fast": "咬住",
-        "charged": "咬碎"
-      }
-    ]
-  },
-  {
-    "id": "road-of-legends-raids-20260709",
-    "name": "传奇之路团战:王者苍响/藏玛然特与超级耿鬼",
-    "type": "raid-battles",
-    "heading": "传奇之路 · 每日团战",
-    "start": "2026-07-09T00:01:00",
-    "end": "2026-07-09T23:59:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-06-road-of-legends-2026/road-of-legends-2026.jpg",
-    "link": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/",
-    "summary": "7/9 全天 5★团战:剑之王苍响、盾之王藏玛然特;团战时刻 18:00–19:00,19:00–20:00 超级团战为超级耿鬼。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/road-of-legends-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/"
-      },
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/news/road-of-legends-2026"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 888,
-        "name": "苍响",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10188.png",
-        "hub": "888-Crowned_Sword",
-        "shiny": true
-      },
-      {
-        "id": 889,
-        "name": "藏玛然特",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10189.png",
-        "hub": "889-Crowned_Shield",
-        "shiny": true
-      },
-      {
-        "id": 94,
-        "name": "耿鬼",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png",
-        "hub": "94-Mega",
-        "shiny": true
-      }
-    ],
-    "bonuses": [
-      "5★团战时刻 18:00–19:00(7/6 为 18:00–20:00)",
-      "超级/原始团战时刻 19:00–20:00",
-      "✨ 列表中标 * 的宝可梦可遇闪光",
-      ":raid: 可能获得特殊背景(7/6–7/12)"
-    ],
-    "sections": [
-      {
-        "title": "当日阵容",
-        "items": [
-          "5★团战时刻:剑之王苍响、盾之王藏玛然特。",
-          "超级团战时刻:超级耿鬼。"
-        ]
-      }
-    ],
-    "highlight": false,
-    "counters": [
-      {
-        "id": 383,
-        "name": "固拉多",
-        "fast": "泥巴射击",
-        "charged": "断崖之剑"
-      },
-      {
-        "id": 257,
-        "name": "火焰鸡",
-        "fast": "火焰旋涡",
-        "charged": "爆炸烈焰"
-      },
-      {
-        "id": 491,
-        "name": "达克莱伊",
-        "fast": "大声咆哮",
-        "charged": "暗影球"
-      }
-    ]
-  },
-  {
-    "id": "road-of-legends-raids-20260710",
-    "name": "传奇之路团战:起源双龙与原始双神",
-    "type": "raid-battles",
-    "heading": "传奇之路 · 每日团战",
-    "start": "2026-07-10T00:01:00",
-    "end": "2026-07-10T23:59:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-06-road-of-legends-2026/road-of-legends-2026.jpg",
-    "link": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/",
-    "summary": "7/10 全天团战:起源帝牙卢卡、起源帕路奇亚;团战时刻 18:00–19:00,19:00–20:00 原始团战为原始盖欧卡、原始固拉多。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/road-of-legends-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/go-fest-2026-road-of-legends/"
-      },
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/news/road-of-legends-2026"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 483,
-        "name": "帝牙卢卡",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10245.png",
-        "hub": "483-Origin",
-        "shiny": true
-      },
-      {
-        "id": 484,
-        "name": "帕路奇亚",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10246.png",
-        "hub": "484-Origin",
-        "shiny": true
-      },
-      {
-        "id": 382,
-        "name": "盖欧卡",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png",
-        "hub": "382-Primal",
-        "shiny": true
-      },
-      {
-        "id": 383,
-        "name": "固拉多",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png",
-        "hub": "383-Primal",
-        "shiny": true
-      }
-    ],
-    "bonuses": [
-      "5★团战时刻 18:00–19:00(7/6 为 18:00–20:00)",
-      "超级/原始团战时刻 19:00–20:00",
-      "✨ 列表中标 * 的宝可梦可遇闪光",
-      ":raid: 可能获得特殊背景(7/6–7/12)"
-    ],
-    "sections": [
-      {
-        "title": "当日阵容",
-        "items": [
-          "5★团战时刻:起源帝牙卢卡、起源帕路奇亚。",
-          "原始团战时刻:原始盖欧卡、原始固拉多。"
-        ]
-      }
-    ],
-    "highlight": false,
-    "counters": [
-      {
-        "id": 383,
-        "name": "固拉多",
-        "fast": "泥巴射击",
-        "charged": "断崖之剑"
-      },
-      {
-        "id": 445,
-        "name": "烈咬陆鲨",
-        "fast": "龙息",
-        "charged": "逆鳞"
-      },
-      {
-        "id": 644,
-        "name": "捷克罗姆",
-        "fast": "充电光束",
-        "charged": "疯狂伏特"
-      }
-    ]
-  },
-  {
     "id": "pokemon-go-fest-2026-global",
     "name": "Pokémon GO Fest 2026:全球",
     "type": "pokemon-go-fest",
@@ -1647,74 +115,6 @@
     ]
   },
   {
-    "id": "mega-mewtwo-x-in-mega-raids-gofest-2026",
-    "name": "超级超梦 X 超级团战",
-    "type": "raid-battles",
-    "heading": "Mega Raid",
-    "start": "2026-07-11T10:00:00",
-    "end": "2026-07-11T19:00:00",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png",
-    "link": "https://leekduck.com/events/pokemon-go-fest-2026-global/",
-    "summary": "GO Fest 2026 全球周六超级超梦 X 首次登场于超级超级团战。超能力/格斗属性,弱点为飞行、幽灵、妖精。击败后可获得超级超梦 X 能量。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/pokemon-go-fest-2026-global/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/pokemon-go-fest-2026-global/"
-      },
-      {
-        "label": "官方 GO Fest",
-        "url": "https://pokemongo.com/en/gofest"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 150,
-        "name": "超梦",
-        "shiny": true,
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png",
-        "hub": "150-Mega_X"
-      }
-    ],
-    "bonuses": [
-      ":raid: 超级超级团战首次登场",
-      "✨ 捕获后可遇闪光超梦",
-      ":candy: 击败可获得超级超梦 X 能量"
-    ],
-    "counters": [
-      {
-        "id": 487,
-        "name": "骑拉帝纳",
-        "fast": "暗影爪",
-        "charged": "暗影之力",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10187.png",
-        "hub": "487-Origin"
-      },
-      {
-        "id": 609,
-        "name": "水晶灯火灵",
-        "fast": "祸不单行",
-        "charged": "暗影球"
-      },
-      {
-        "id": 384,
-        "name": "烈空坐",
-        "fast": "空气斩",
-        "charged": "飓风"
-      },
-      {
-        "id": 94,
-        "name": "耿鬼",
-        "fast": "暗影爪",
-        "charged": "暗影球"
-      }
-    ],
-    "highlight": false
-  },
-  {
     "id": "mega-mewtwo-y-in-mega-raids-gofest-2026",
     "name": "超级超梦 Y 超级团战",
     "type": "raid-battles",
@@ -1779,197 +179,6 @@
       }
     ],
     "highlight": false
-  },
-  {
-    "id": "gofest-2026-global-5star-raids-20260711",
-    "name": "GO Fest 全球周六 5★团战",
-    "type": "raid-battles",
-    "heading": "GO Fest · 5★ Raids",
-    "start": "2026-07-11T10:00:00",
-    "end": "2026-07-11T19:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-11-pokemon-go-fest-2026-global/pokemon-go-fest-2026-global.jpg?v2",
-    "link": "https://leekduck.com/events/pokemon-go-fest-2026-global/",
-    "summary": "GO Fest 2026:全球周六(7/11)5★团战 Boss 随每小时栖息地轮换。风暴火峰(冰/电/火)、星潮(超能力/幽灵/水)、龙翔峰(飞行/岩石/龙)各有不同传说登场,部分究极异兽按地区限定。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/pokemon-go-fest-2026-global/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/pokemon-go-fest-2026-global/"
-      },
-      {
-        "label": "官方 GO Fest",
-        "url": "https://pokemongo.com/en/gofest"
-      }
-    ],
-    "bonuses": [
-      "5★团战 Boss 随每小时栖息地轮换",
-      "✨ 活动时段闪光遇见概率提升",
-      ":raid: 每天最多 9 张免费团战入场券",
-      ":raid: 捕获部分 Boss 可能带特殊背景(7/6–7/12)"
-    ],
-    "sections": [
-      {
-        "title": "周六栖息地 5★",
-        "items": [
-          "10:00–13:00 风暴火峰(冰/电/火):急冻鸟、闪电鸟、火焰鸟、雷公、炎帝、水君、洛奇亚、凤王。",
-          "13:00–16:00 星潮(超能力/幽灵/水):由克希、艾姆利多、亚克诺姆、帝牙卢卡、帕路奇亚、别种/起源骑拉帝纳、哲尔尼亚斯、伊裴尔塔尔、索尔迦雷欧、露奈雅拉。",
-          "16:00–19:00 龙翔峰(飞行/岩石/龙):盖欧卡、固拉多、烈空坐、莱希拉姆、捷克罗姆、酋雷姆。"
-        ]
-      }
-    ],
-    "highlight": true,
-    "pokemon": [
-      {
-        "id": 144,
-        "name": "急冻鸟",
-        "shiny": true
-      },
-      {
-        "id": 145,
-        "name": "闪电鸟",
-        "shiny": true
-      },
-      {
-        "id": 146,
-        "name": "火焰鸟",
-        "shiny": true
-      },
-      {
-        "id": 243,
-        "name": "雷公",
-        "shiny": true
-      },
-      {
-        "id": 244,
-        "name": "炎帝",
-        "shiny": true
-      },
-      {
-        "id": 245,
-        "name": "水君",
-        "shiny": true
-      },
-      {
-        "id": 249,
-        "name": "洛奇亚",
-        "shiny": true
-      },
-      {
-        "id": 250,
-        "name": "凤王",
-        "shiny": true
-      },
-      {
-        "id": 480,
-        "name": "由克希",
-        "shiny": true
-      },
-      {
-        "id": 481,
-        "name": "艾姆利多",
-        "shiny": true
-      },
-      {
-        "id": 482,
-        "name": "亚克诺姆",
-        "shiny": true
-      },
-      {
-        "id": 483,
-        "name": "帝牙卢卡",
-        "shiny": true
-      },
-      {
-        "id": 484,
-        "name": "帕路奇亚",
-        "shiny": true
-      },
-      {
-        "id": 487,
-        "name": "骑拉帝纳",
-        "shiny": true
-      },
-      {
-        "id": 487,
-        "name": "起源骑拉帝纳",
-        "shiny": true,
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10007.png",
-        "hub": "487-Origin"
-      },
-      {
-        "id": 716,
-        "name": "哲尔尼亚斯",
-        "shiny": true
-      },
-      {
-        "id": 717,
-        "name": "伊裴尔塔尔",
-        "shiny": true
-      },
-      {
-        "id": 791,
-        "name": "索尔迦雷欧",
-        "shiny": true
-      },
-      {
-        "id": 792,
-        "name": "露奈雅拉",
-        "shiny": true
-      },
-      {
-        "id": 382,
-        "name": "盖欧卡",
-        "shiny": true
-      },
-      {
-        "id": 383,
-        "name": "固拉多",
-        "shiny": true
-      },
-      {
-        "id": 384,
-        "name": "烈空坐",
-        "shiny": true
-      },
-      {
-        "id": 643,
-        "name": "莱希拉姆",
-        "shiny": true
-      },
-      {
-        "id": 644,
-        "name": "捷克罗姆",
-        "shiny": true
-      },
-      {
-        "id": 646,
-        "name": "酋雷姆",
-        "shiny": true
-      }
-    ],
-    "counters": [
-      {
-        "id": 248,
-        "name": "班基拉斯",
-        "fast": "咬住",
-        "charged": "原始之力"
-      },
-      {
-        "id": 376,
-        "name": "巨金怪",
-        "fast": "子弹拳",
-        "charged": "彗星拳"
-      },
-      {
-        "id": 445,
-        "name": "烈咬陆鲨",
-        "fast": "龙息",
-        "charged": "逆鳞"
-      }
-    ]
   },
   {
     "id": "gofest-2026-global-5star-raids-20260712",
@@ -3161,28 +1370,6 @@
     "highlight": false
   },
   {
-    "id": "gbl-forever-forward_great-league_ultra-league_master-league-mega-edition",
-    "name": "超级 / 高级 / 大师联赛(超级版)",
-    "type": "go-battle-league",
-    "heading": "GO Battle League",
-    "start": "2026-09-01T20:00:00Z",
-    "end": "2026-09-08T20:00:00Z",
-    "image": "https://cdn.leekduck.com/assets/img/events/go-battle-league-season-27-forever-forward.jpg",
-    "link": "https://leekduck.com/events/gbl-forever-forward_great-league_ultra-league_master-league-mega-edition/",
-    "summary": "GO 对战联盟:超级联赛、高级联赛与大师联赛(超级进化版)同时开放,赛季收官周。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/gbl-forever-forward_great-league_ultra-league_master-league-mega-edition/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/pvp/go-battle-league-forever-forward/"
-      }
-    ],
-    "longTerm": true
-  },
-  {
     "id": "pokemon-fossil-museum-chicago-2026",
     "name": "宝可梦化石博物馆:芝加哥(线下)",
     "type": "event",
@@ -3289,170 +1476,6 @@
         "id": 698,
         "name": "冰雪龙",
         "shiny": true
-      }
-    ],
-    "highlight": false
-  },
-  {
-    "id": "mlb-2026",
-    "name": "宝可梦 GO × MLB 美国职棒联动(线下)",
-    "type": "event",
-    "heading": "In-Person Event",
-    "start": "2026-04-22T13:00:00",
-    "end": "2026-09-30T20:00:00",
-    "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
-    "link": "https://pokemongo.com/post/mlb-2026",
-    "summary": "线下联动:2026 赛季 MLB 全部球场设官方路线与球队主题补给站/道馆。各球队主场举办「宝可梦 GO 主题赛」当天,球场内可遇皮卡丘团战(有机会带球场背景)、限时调查、诱饵奖励与球队头像道具。",
-    "links": [
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/post/mlb-2026"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/the-pokemon-go-and-major-league-baseball-collaboration-returns-for-2026-season/"
-      }
-    ],
-    "longTerm": true,
-    "bonuses": [
-      ":raid: 主题赛当天球场道馆出现皮卡丘团战(有机会带场地背景)",
-      ":lure: 诱饵模组持续 1 小时,吸引凯西 / 腕力 / 卡拉卡拉(幸运可遇卡比兽 / 投掷猴)",
-      ":pokestop: 进入球场可领主题限时调查（2026/9/30 20 时前完成）",
-      ":pokestop: 主题赛当天转动补给站获得主场球队帽子头像道具(4/22–9/30)"
-    ],
-    "sections": [
-      {
-        "title": "主题赛日程（13 站已定档）",
-        "items": [
-          "06/17 · 密尔沃基酿酒人(American Family Field · 坐标 43.0280,-87.9712)",
-          "07/02 · 克利夫兰守护者(Progressive Field · 坐标 41.4962,-81.6852)",
-          "07/08 · 芝加哥白袜(Guaranteed Rate Field · 坐标 41.8300,-87.6338)",
-          "08/04 · 巴尔的摩金莺(Oriole Park · 坐标 39.2839,-76.6217)",
-          "08/07 · 迈阿密马林鱼(LoanDepot Park · 坐标 25.7781,-80.2197)",
-          "08/11 · 亚利桑那响尾蛇(Chase Field · 坐标 33.4453,-112.0667)",
-          "08/22 · 德州游骑兵(Globe Life Field · 坐标 32.7473,-97.0847)",
-          "08/25 · 纽约大都会(Citi Field)",
-          "08/27 · 旧金山巨人(Oracle Park · 世界锦标赛之夜)",
-          "08/30 · 华盛顿国民(Nationals Park · 坐标 38.8730,-77.0074)",
-          "09/13 · 坦帕湾光芒(Tropicana Field · 坐标 27.7683,-82.6534)",
-          "09/22 · 西雅图水手(T-Mobile Park · 坐标 47.5914,-122.3325)",
-          "09/25 · 波士顿红袜(Fenway Park · 坐标 42.3467,-71.0972)"
-        ]
-      },
-      {
-        "title": "诱饵 / 团战可遇宝可梦",
-        "mons": [
-          {
-            "id": 25,
-            "name": "皮卡丘",
-            "shiny": true
-          },
-          {
-            "id": 63,
-            "name": "凯西",
-            "shiny": true
-          },
-          {
-            "id": 66,
-            "name": "腕力",
-            "shiny": true
-          },
-          {
-            "id": 104,
-            "name": "卡拉卡拉",
-            "shiny": true
-          },
-          {
-            "id": 143,
-            "name": "卡比兽",
-            "shiny": true
-          },
-          {
-            "id": 766,
-            "name": "投掷猴"
-          }
-        ]
-      },
-      {
-        "title": "日程提示",
-        "body": "旧金山巨人 8 月 27 日场次同时是世界锦标赛之夜；官方说明所有日期仍可能调整、取消或新增。"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 25,
-        "name": "皮卡丘",
-        "shiny": true
-      },
-      {
-        "id": 63,
-        "name": "凯西",
-        "shiny": true
-      },
-      {
-        "id": 66,
-        "name": "腕力",
-        "shiny": true
-      },
-      {
-        "id": 104,
-        "name": "卡拉卡拉",
-        "shiny": true
-      },
-      {
-        "id": 143,
-        "name": "卡比兽",
-        "shiny": true
-      },
-      {
-        "id": 766,
-        "name": "投掷猴"
-      }
-    ],
-    "highlight": false
-  },
-  {
-    "id": "mlb-game-20260708",
-    "name": "MLB 主题赛:白袜",
-    "type": "mlb-game-day",
-    "heading": "MLB Theme Game",
-    "start": "2026-07-08T00:00:00",
-    "end": "2026-07-08T23:59:59",
-    "image": "https://pokemongohub.net/wp-content/uploads/2026/04/mlb2.jpg",
-    "link": "https://pokemongo.com/post/mlb-2026",
-    "summary": "芝加哥白袜 主场「宝可梦 GO 主题赛」:Guaranteed Rate Field(坐标 41.8300,-87.6338)球场内可遇带场地背景的皮卡丘团战、限时调查与球队头像道具。",
-    "links": [
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/post/mlb-2026"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/the-pokemon-go-and-major-league-baseball-collaboration-returns-for-2026-season/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 25,
-        "name": "皮卡丘",
-        "shiny": true
-      }
-    ],
-    "sections": [
-      {
-        "title": "地点",
-        "items": [
-          "Guaranteed Rate Field · 坐标 41.8300,-87.6338"
-        ]
-      },
-      {
-        "title": "球场内容",
-        "items": [
-          ":raid: 球场道馆:皮卡丘团战(有机会带场地背景)",
-          ":lure: 诱饵 1 小时:凯西 / 腕力 / 卡拉卡拉(幸运:卡比兽 / 投掷猴)",
-          ":pokestop: 进场限时调查 + 实地调查",
-          ":pokestop: 转动补给站获主场球队帽子头像"
-        ]
       }
     ],
     "highlight": false
@@ -3847,38 +1870,6 @@
           ":pokestop: 转动补给站获主场球队帽子头像"
         ]
       }
-    ],
-    "highlight": false
-  },
-  {
-    "id": "max-mondays-2026-07-06",
-    "name": "Max 周一:极巨化吉利蛋",
-    "type": "max-mondays",
-    "heading": "Max Mondays",
-    "start": "2026-07-06T06:00:00",
-    "end": "2026-07-06T21:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
-    "link": "https://leekduck.com/events/max-mondays-2026-07-06/",
-    "summary": "Max 周一:Max 团战登场极巨化吉利蛋,击败可获得其极巨态与 Max 粒子。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/max-mondays-2026-07-06/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 113,
-        "name": "吉利蛋"
-      }
-    ],
-    "bonuses": [
-      ":raid: Max 团战登场",
-      ":stardust: 可获得 Max 粒子"
     ],
     "highlight": false
   },
@@ -4717,130 +2708,6 @@
     "highlight": false
   },
   {
-    "id": "national-trust-x-pokemon-go-events-2026",
-    "name": "National Trust×宝可梦 GO(英格兰/威尔士/北爱尔兰线下)",
-    "type": "event",
-    "heading": "In-Person Event",
-    "start": "2026-07-18T00:00:00",
-    "end": "2026-09-06T23:59:00",
-    "link": "https://pokemongohub.net/post/event/national-trust-x-pokemon-go-events/",
-    "summary": "英格兰、威尔士及北爱尔兰参与 National Trust 景点的长期线下活动:140 处地点新增补给站、道馆和路线,其中 27 处提供地区限定 1★团战及地点背景。",
-    "bonuses": [
-      ":pokestop: 140 处参与地点新增补给站、道馆与官方路线",
-      ":raid: 27 处指定景点提供地区限定 1★团战与地点背景",
-      "参与景点按月开放全国性与本地限时调查"
-    ],
-    "links": [
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/national-trust-x-pokemon-go-events/"
-      },
-      {
-        "label": "Pokémon GO Wiki",
-        "url": "https://pokemongo.fandom.com/wiki/National_Trust_collaboration"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 187,
-        "name": "Hoppip"
-      },
-      {
-        "id": 540,
-        "name": "Sewaddle"
-      },
-      {
-        "id": 204,
-        "name": "Pineco"
-      },
-      {
-        "id": 273,
-        "name": "Seedot"
-      },
-      {
-        "id": 252,
-        "name": "Treecko"
-      },
-      {
-        "id": 253,
-        "name": "Grovyle"
-      },
-      {
-        "id": 254,
-        "name": "Sceptile"
-      }
-    ],
-    "sections": [
-      {
-        "title": "地区 1★团战",
-        "items": [
-          "英格兰南部海岸：Hoppip；中部及伦敦：Sewaddle。",
-          "北部：Pineco；西南部及威尔士：Seedot。",
-          "27 处指定景点的首只活动宝可梦可带该景点地点背景。"
-        ]
-      },
-      {
-        "title": "限时调查",
-        "items": [
-          "参与景点在 7 月、8 月、9 月分别开放任务与奖励。",
-          "地点调查奖励 Treecko、Grovyle 与 Sceptile,并可带该景点地点背景。",
-          "无法前往景点的英格兰、威尔士及北爱尔兰训练家也可参加全国性调查。"
-        ]
-      }
-    ],
-    "longTerm": true,
-    "highlight": false
-  },
-  {
-    "id": "lego-pokemon-go-2026",
-    "name": "乐高门店×宝可梦 GO 集章活动(美/英/法/德/波/澳线下)",
-    "type": "event",
-    "heading": "In-Person Event",
-    "start": "2026-08-03T10:00:00",
-    "end": "2026-09-30T23:59:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-03-lego-pokemon-go-2026/lego-stores-pokemon-go.jpg",
-    "link": "https://leekduck.com/events/lego-pokemon-go-2026/",
-    "summary": "线下联动:美国、英国、波兰、法国、德国与澳大利亚的参与乐高门店内,可参加乐高主题集章活动、皮卡丘团战与限时调查,集章可遇见带特殊背景的皮卡丘。",
-    "bonuses": [
-      ":raid: 参与门店附近的团战中皮卡丘更常出现",
-      ":pokestop: 完成 GO 集章活动可遇见带特殊背景的皮卡丘",
-      "到店可领取限时调查、主题贴纸与头像道具"
-    ],
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/lego-pokemon-go-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/lego-stores-x-pokemon-go-stamp-rally-raids-and-more/"
-      },
-      {
-        "label": "Pokémon GO Wiki",
-        "url": "https://pokemongo.fandom.com/wiki/LEGO_Stores_collaboration"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 25,
-        "name": "皮卡丘",
-        "shiny": true
-      }
-    ],
-    "sections": [
-      {
-        "title": "玩法一览",
-        "items": [
-          ":raid: 参与门店附近团战中皮卡丘更常出现,运气好可遇闪光或特殊背景个体",
-          ":pokestop: 集章活动:在指定补给站/道馆收集印章,可遇带特殊背景的皮卡丘",
-          ":pokestop: 到店打开游戏可领限时调查；任务与奖励须在 9/30 23 时 59 分前完成和领取",
-          "兑换码可领取额外限时调查与免费树果道具"
-        ]
-      }
-    ],
-    "longTerm": true
-  },
-  {
     "id": "pokemon-30th-anniversary-tour-pokexciting",
     "name": "宝可梦 30 周年巡回 PokéXciting(亚洲多城线下)",
     "type": "event",
@@ -5126,6 +2993,60 @@
     "longTerm": true
   },
   {
+    "id": "pokexciting-singapore-2026",
+    "name": "PokéXciting：新加坡 2026（线下）",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-11-07T10:00:00+08:00",
+    "end": "2026-11-08T20:00:00+08:00",
+    "link": "https://pokemongohub.net/post/event/pokexciting-singapore-2026/",
+    "summary": "11 月 7–8 日在新加坡樟宜机场与星耀樟宜举行免费线下活动；蓝色装扮 PokéXciting! Pikachu 首次登场，并开放城市集章、调查与超极巨化对战。",
+    "links": [
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokexciting-singapore-2026/"
+      },
+      {
+        "label": "Hub·巡回总览",
+        "url": "https://pokemongohub.net/post/event/pokexciting-pokemon-30th-anniversary-tour/"
+      },
+      {
+        "label": "官方·跨地区集章",
+        "url": "https://pokemongo.com/news/event-apac-stamp-rally-2026"
+      }
+    ],
+    "bonuses": [
+      ":xp: 转动宝可补给站经验 ×2",
+      ":trading: 交换所需星尘减半，额外 2 次特殊交换",
+      ":lure: 诱饵模组持续 1 小时",
+      ":candy: Nice／Great／Excellent 投掷捕捉糖果增加"
+    ],
+    "pokemon": [
+      {
+        "id": 25,
+        "name": "PokéXciting! Pikachu"
+      }
+    ],
+    "sections": [
+      {
+        "title": "新加坡集章",
+        "items": [
+          "樟宜机场第三航站楼的跨地区印章奖励带新加坡地点背卡的蓝色 PokéXciting! Pikachu",
+          "樟宜机场与星耀樟宜另设 5 枚本地印章路线，集齐后同样可遇见地点背卡 Pikachu",
+          "本地印章路线在主活动结束后继续开放 1 个月"
+        ]
+      },
+      {
+        "title": "调查与对战",
+        "items": [
+          "2 条免费限时调查与主题田野调查",
+          "超极巨化 Venusaur、Charizard 与 Blastoise 对战",
+          "活动期间开放主题野外、诱饵与薰香遭遇"
+        ]
+      }
+    ]
+  },
+  {
     "id": "pokemon-run-30-event",
     "name": "Pokémon RUN 30 路跑活动(亚洲多地线下)",
     "type": "event",
@@ -5175,7 +3096,7 @@
     "end": "2026-11-08T09:00:00.000Z",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-sendai-japan/key-art.jpg",
     "link": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/",
-    "summary": "2026 年 GO 荒野地区线下活动于 11 月 6–8 日在日本仙台·东北举行；当前已确认活动日期和每日时段，详细玩法将在后续公布。",
+    "summary": "11 月 6–8 日在日本仙台·东北举行的售票线下活动，主打钢与龙属性；极巨化 Dialga、极巨化 Palkia、超极巨化 Duraludon、现代夹克 Machamp 及洗翠 Sliggoo／Goodra 登场。",
     "links": [
       {
         "label": "LeekDuck",
@@ -5188,8 +3109,77 @@
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/news/pokemon-go-wild-area-2026-event-dates-announced/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/wild-area-2026-sendai/"
+      },
+      {
+        "label": "Hub·新公告",
+        "url": "https://pokemongohub.net/post/news/gigantamax-duraludon-debuts-at-pokemon-go-wild-area/"
       }
-    ]
+    ],
+    "bonuses": [
+      "✨ 持票训练家闪光概率提升",
+      ":incubator: 孵蛋距离缩短至 1/4",
+      ":raid: 每日从道馆最多领取 10 张免费团战入场券",
+      ":lure: 诱饵模组持续 2 小时",
+      ":incense: 薰香持续 2 小时（不含每日探险薰香）",
+      ":candy: 孵蛋糖果 ×3",
+      ":trading: 每日最多 6 次特殊交换"
+    ],
+    "pokemon": [
+      {
+        "id": 483,
+        "name": "Dialga",
+        "shiny": true
+      },
+      {
+        "id": 484,
+        "name": "Palkia",
+        "shiny": true
+      },
+      {
+        "id": 884,
+        "name": "Gigantamax Duraludon",
+        "shiny": true,
+        "hub": "884-Gigantamax"
+      },
+      {
+        "id": 68,
+        "name": "Machamp",
+        "shiny": true
+      },
+      {
+        "id": 705,
+        "name": "Hisuian Sliggoo",
+        "shiny": true,
+        "hub": "705-Hisuian",
+        "sprite": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm705.fHISUIAN.icon.png"
+      },
+      {
+        "id": 706,
+        "name": "Hisuian Goodra",
+        "shiny": true,
+        "hub": "706-Hisuian",
+        "sprite": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm706.fHISUIAN.icon.png"
+      }
+    ],
+    "sections": [
+      {
+        "title": "Max 对战与团战",
+        "items": [
+          "极巨化 Dialga 与极巨化 Palkia 首次登场，均可能闪光",
+          "超极巨化 Duraludon 在 6★ Max 对战首次登场，均可能闪光",
+          "现代夹克 Machamp 出现在 3★团战，可学会 Karate Chop"
+        ]
+      },
+      {
+        "title": "售票线下内容",
+        "body": "活动游戏内容仅限持票者在所选日期和活动城市内体验；钢／龙主题限时调查、地点背卡、GO Safari Ball 与强大宝可梦构成主要玩法。"
+      }
+    ],
+    "highlight": true
   },
   {
     "id": "pokemon-go-wild-area-2026-mexico-city",
@@ -5200,7 +3190,7 @@
     "end": "2026-11-09T00:00:00.000Z",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-mexico-city/key-art.jpg",
     "link": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/",
-    "summary": "2026 年 GO 荒野地区线下活动于 11 月 6–8 日在墨西哥城举行；当前已确认活动日期和每日时段，详细玩法将在后续公布。",
+    "summary": "11 月 6–8 日在墨西哥城举行的售票线下活动，主打钢与龙属性；极巨化 Dialga、极巨化 Palkia、超极巨化 Duraludon、现代夹克 Machamp 及洗翠 Sliggoo／Goodra 登场。",
     "links": [
       {
         "label": "LeekDuck",
@@ -5213,8 +3203,77 @@
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/news/pokemon-go-wild-area-2026-event-dates-announced/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/wild-area-2026-mexico-city/"
+      },
+      {
+        "label": "Hub·新公告",
+        "url": "https://pokemongohub.net/post/news/gigantamax-duraludon-debuts-at-pokemon-go-wild-area/"
       }
-    ]
+    ],
+    "bonuses": [
+      "✨ 持票训练家闪光概率提升",
+      ":incubator: 孵蛋距离缩短至 1/4",
+      ":raid: 每日从道馆最多领取 10 张免费团战入场券",
+      ":lure: 诱饵模组持续 2 小时",
+      ":incense: 薰香持续 2 小时（不含每日探险薰香）",
+      ":candy: 孵蛋糖果 ×3",
+      ":trading: 每日最多 6 次特殊交换"
+    ],
+    "pokemon": [
+      {
+        "id": 483,
+        "name": "Dialga",
+        "shiny": true
+      },
+      {
+        "id": 484,
+        "name": "Palkia",
+        "shiny": true
+      },
+      {
+        "id": 884,
+        "name": "Gigantamax Duraludon",
+        "shiny": true,
+        "hub": "884-Gigantamax"
+      },
+      {
+        "id": 68,
+        "name": "Machamp",
+        "shiny": true
+      },
+      {
+        "id": 705,
+        "name": "Hisuian Sliggoo",
+        "shiny": true,
+        "hub": "705-Hisuian",
+        "sprite": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm705.fHISUIAN.icon.png"
+      },
+      {
+        "id": 706,
+        "name": "Hisuian Goodra",
+        "shiny": true,
+        "hub": "706-Hisuian",
+        "sprite": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm706.fHISUIAN.icon.png"
+      }
+    ],
+    "sections": [
+      {
+        "title": "Max 对战与团战",
+        "items": [
+          "极巨化 Dialga 与极巨化 Palkia 首次登场，均可能闪光",
+          "超极巨化 Duraludon 在 6★ Max 对战首次登场，均可能闪光",
+          "现代夹克 Machamp 出现在 3★团战，可学会 Karate Chop"
+        ]
+      },
+      {
+        "title": "售票线下内容",
+        "body": "活动游戏内容仅限持票者在所选日期和活动城市内体验；钢／龙主题限时调查、地点背卡、GO Safari Ball 与强大宝可梦构成主要玩法。"
+      }
+    ],
+    "highlight": true
   },
   {
     "id": "pokemon-go-wild-area-2026-global",
@@ -5225,7 +3284,7 @@
     "end": "2026-11-15T18:00:00.000",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-14-pokemon-go-wild-area-2026-global/key-art.jpg",
     "link": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/",
-    "summary": "GO 荒野地区全球活动于 11 月 14–15 日每天当地时间 10–18 时举行；门票和详细玩法将在后续公布。",
+    "summary": "11 月 14–15 日每天 10–18 时开放全球钢与龙主题活动；极巨化 Dialga／Palkia 分日登场，超极巨化 Duraludon 两日均在 6★ Max 对战出现，现代夹克 Machamp 进入 3★团战。",
     "links": [
       {
         "label": "LeekDuck",
@@ -5238,8 +3297,71 @@
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/news/pokemon-go-wild-area-2026-event-dates-announced/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/wild-area-2026-global/"
+      },
+      {
+        "label": "Hub·新公告",
+        "url": "https://pokemongohub.net/post/news/gigantamax-duraludon-debuts-at-pokemon-go-wild-area/"
       }
-    ]
+    ],
+    "bonuses": [
+      ":pokestop: 转动补给站或道馆照片圆盘有机会获得 GO Safari Ball",
+      ":raid: 每日从道馆最多领取 3 张免费团战入场券（持票者 6 张）",
+      ":spawn: 每日 3 次 GO Snapshot 惊喜（持票者 6 次）",
+      "✨ 持票者闪光概率提升",
+      ":candy: 持票者捕捉糖果 ×2",
+      ":incense: 持票者薰香持续时间 ×2",
+      ":lure: 持票者诱饵模组持续 2 小时",
+      ":trading: 持票者每日最多 6 次特殊交换，交换星尘减半"
+    ],
+    "pokemon": [
+      {
+        "id": 483,
+        "name": "Dialga",
+        "shiny": true
+      },
+      {
+        "id": 484,
+        "name": "Palkia",
+        "shiny": true
+      },
+      {
+        "id": 884,
+        "name": "Gigantamax Duraludon",
+        "shiny": true,
+        "hub": "884-Gigantamax"
+      },
+      {
+        "id": 68,
+        "name": "Machamp",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "分日 Max 对战",
+        "items": [
+          "11 月 14 日：极巨化 Dialga",
+          "11 月 15 日：极巨化 Palkia",
+          "两日：超极巨化 Duraludon 6★ Max 对战"
+        ]
+      },
+      {
+        "title": "团战与限定招式",
+        "items": [
+          "现代夹克 Machamp：3★团战，可学会 Karate Chop",
+          "White Kyurem 与 Black Kyurem 团战奖励融合能量，捕获的 Kyurem 可能学会 Glaciate"
+        ]
+      },
+      {
+        "title": "可选门票",
+        "body": "11.99 美元门票提供钢／龙分支特殊调查、超级背景超极巨化 Duraludon 遭遇、更高闪光概率及额外薰香遭遇与加成。"
+      }
+    ],
+    "highlight": true
   },
   {
     "id": "city-safari-2026-sep",
@@ -6129,131 +4251,6 @@
         "hub": "257-Mega"
       }
     ]
-  },
-  {
-    "id": "go-pass-august-2026",
-    "name": "GO 通行证：8 月",
-    "type": "go-pass",
-    "heading": "GO Pass",
-    "start": "2026-08-04T10:00:00",
-    "end": "2026-09-08T10:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-04-go-pass-august-2026/go-pass-august-2026.jpg",
-    "link": "https://leekduck.com/events/go-pass-august-2026/",
-    "summary": "8 月 GO 通行证于 8 月 4 日 10 时自动发放，可累积 GO 点数至 9 月 8 日 10 时；Rank 100 奖励包含拉帝亚斯遭遇，豪华版最终奖励包含幸运饰品。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/go-pass-august-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/go-pass-august-2026-latias-bonuses-and-lucky-trinket-returns/"
-      }
-    ],
-    "bonuses": [
-      ":candy: Rank 1：交换宝可梦额外获得 1 颗糖果",
-      ":xl-candy: Rank 1：31 级以上训练家交换时必得 1 颗糖果 XL",
-      "Rank 25：每天最多开启 40 份礼物、从补给站和道馆获得 125 份礼物，并可多携带 10 份",
-      ":incense: Rank 50：每日探险熏香持续时间 ×2",
-      ":xp: Rank 75：孵蛋获得的经验与星尘增加",
-      "9 月 5–6 日不设每日 GO 点数获取上限"
-    ],
-    "pokemon": [
-      {
-        "id": 380,
-        "name": "拉帝亚斯",
-        "shiny": true
-      }
-    ],
-    "sections": [
-      {
-        "title": "领取与截止时间",
-        "items": [
-          "8 月 4 日 10 时自动获得；9 月 8 日 10 时停止累积 GO 点数。",
-          "已解锁奖励须在 9 月 10 日 10 时前领取。",
-          "豪华版幸运饰品须在 9 月 13 日 23 时 59 分前使用。"
-        ]
-      },
-      {
-        "title": "豪华版",
-        "items": [
-          "GO 通行证豪华版 7.99 美元；豪华版 + 10 Rank 为 9.99 美元。",
-          "豪华版可同时领取免费与付费路线奖励，并提供幸运饰品及更多宝可梦遭遇。"
-        ]
-      }
-    ],
-    "longTerm": true
-  },
-  {
-    "id": "shadow-giratina-altered-in-shadow-raids-august-2026",
-    "name": "暗影骑拉帝纳（别种形态）现身暗影团战",
-    "type": "raid-battles",
-    "heading": "Raid Battles",
-    "start": "2026-08-05T06:00:00",
-    "end": "2026-09-08T22:00:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/shadow-giratina-altered-in-shadow-raids-august-2026/",
-    "summary": "暗影骑拉帝纳（别种形态）首次登场，并于 8 月 5 日至 9 月 8 日之间的每个周末出现在 5★暗影团战；平日不开放该 Boss。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/shadow-giratina-altered-in-shadow-raids-august-2026/"
-      },
-      {
-        "label": "Hub·8 月月历",
-        "url": "https://pokemongohub.net/post/event/pokemon-go-august-2026-events/"
-      },
-      {
-        "label": "Hub·骑拉帝纳指南",
-        "url": "https://pokemongohub.net/post/guide/giratina-altered-raid/"
-      }
-    ],
-    "bonuses": [
-      "暗影骑拉帝纳（别种形态）首次在暗影团战登场",
-      "✨ 有机会遇见闪光暗影骑拉帝纳（标准暗影团战概率）",
-      ":raid: 仅活动日期范围内的周末开放"
-    ],
-    "pokemon": [
-      {
-        "id": 487,
-        "name": "暗影骑拉帝纳（别种形态）",
-        "shiny": true,
-        "hub": "487-Altered_Shadow"
-      }
-    ],
-    "counters": [
-      {
-        "id": 384,
-        "name": "超级烈空坐",
-        "fast": "Dragon Tail",
-        "charged": "Breaking Swipe",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png",
-        "hub": "384-Mega"
-      },
-      {
-        "id": 445,
-        "name": "超级烈咬陆鲨",
-        "fast": "Dragon Tail",
-        "charged": "Breaking Swipe",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png",
-        "hub": "445-Mega"
-      },
-      {
-        "id": 94,
-        "name": "超级耿鬼",
-        "fast": "Lick",
-        "charged": "Shadow Ball",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png",
-        "hub": "94-Mega"
-      }
-    ],
-    "sections": [
-      {
-        "title": "开放规则",
-        "body": "该 Boss 只在活动日期范围内的周六、周日出现；8 月 5 日与 9 月 8 日是轮换边界，并不代表平日开放。"
-      }
-    ],
-    "longTerm": true
   },
   {
     "id": "pokemon-xp-2026-worlds",
@@ -7751,49 +5748,6 @@
     ]
   },
   {
-    "id": "10th-anniversary-celebration",
-    "name": "十周年庆典：满个体值超梦限时调查",
-    "type": "event",
-    "heading": "Timed Research",
-    "start": "2026-08-12T16:00:00",
-    "end": "2026-09-06T23:59:00",
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-08-12-10th-anniversary-celebration/10th-anniversary-celebration-2026.jpg",
-    "link": "https://leekduck.com/events/10th-anniversary-celebration/",
-    "summary": "全球训练家可领取免费的单页限时调查；最终奖励为满个体值、带特殊背景且已解锁超级超梦 Y 等级 3 的超梦。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/10th-anniversary-celebration/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/10th-anniversary-celebration-timed-research-guaranteed-hundo-mewtwo/"
-      },
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/news/10th-anniversary-celebration"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 150,
-        "name": "超梦"
-      }
-    ],
-    "bonuses": [
-      ":pokeball: 捕捉 10 只宝可梦可获 1 个大师球",
-      ":candy: 强化宝可梦 10 次可获 500 点超级超梦 Y 能量",
-      "最终超梦带特殊背景并解锁超级等级 3"
-    ],
-    "sections": [
-      {
-        "title": "限时调查",
-        "body": "调查与奖励须在 9 月 6 日 23 时 59 分前完成并领取；曾参加 7 月 9 日时代广场活动的训练家会收到不同个体与奖励。"
-      }
-    ],
-    "longTerm": true
-  },
-  {
     "id": "pokexciting-kuala-lumpur-2026",
     "name": "PokéXciting：吉隆坡 KLCC 公园线下活动",
     "type": "event",
@@ -7962,54 +5916,6 @@
         "charged": "Psystrike"
       }
     ]
-  },
-  {
-    "id": "go-pass-september-2026",
-    "name": "GO Pass：9 月",
-    "type": "go-pass",
-    "heading": "GO Pass",
-    "start": "2026-09-08T10:00:00",
-    "end": "2026-10-06T10:00:00",
-    "link": "https://leekduck.com/events/go-pass-september-2026/",
-    "summary": "9 月 GO Pass 以拉帝欧斯为主奖励；免费版自动领取，豪华版提供额外奖励、更快进度与限时孵化器。奖励须在 10 月 8 日 10 时前领取。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/go-pass-september-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/september-2026-go-pass/"
-      },
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/news/go-pass-september-2026"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 381,
-        "name": "拉帝欧斯",
-        "shiny": true
-      }
-    ],
-    "bonuses": [
-      ":candy: 交换宝可梦额外获得 1 颗糖果",
-      ":xl-candy: 31 级以上交换必得 1 颗糖果 XL",
-      ":incense: 每日探险熏香持续时间 ×2",
-      ":xp: 孵蛋经验与星尘增加"
-    ],
-    "sections": [
-      {
-        "title": "豪华版与限时孵化器",
-        "items": [
-          "豪华版可获得 1 个限时孵化器与 1 个超级孵化器",
-          "限时孵化器在 Rank 20 解锁，可无限使用至 10 月 13 日 10 时",
-          "10 月 3–4 日获取 GO 点数不设每日上限"
-        ]
-      }
-    ],
-    "longTerm": true
   },
   {
     "id": "mega-squads",
@@ -8268,57 +6174,6 @@
       }
     ],
     "highlight": true
-  },
-  {
-    "id": "shadow-thundurus-incarnate-forme-in-shadow-raids-september-2026",
-    "name": "暗影雷电云（化身形态）现身暗影团战",
-    "type": "raid-battles",
-    "heading": "Raid Battles",
-    "start": "2026-09-09T06:00:00",
-    "end": "2026-10-06T22:00:00",
-    "link": "https://leekduck.com/events/shadow-thundurus-incarnate-forme-in-shadow-raids-september-2026/",
-    "summary": "活动日期范围内的每个周末，暗影雷电云（化身形态）现身 5★暗影团战；平日不开放。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/shadow-thundurus-incarnate-forme-in-shadow-raids-september-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/shadow-thundurus-incarnate-raid-counters-guide/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 642,
-        "name": "暗影雷电云（化身形态）",
-        "shiny": true,
-        "hub": "642-Incarnate_Shadow"
-      }
-    ],
-    "counters": [
-      {
-        "id": 646,
-        "name": "White Kyurem",
-        "fast": "Ice Fang",
-        "charged": "Ice Burn"
-      },
-      {
-        "id": 150,
-        "name": "Mega Mewtwo Y",
-        "fast": "Psycho Cut",
-        "charged": "Future Sight+",
-        "hub": "150-Mega_Y"
-      },
-      {
-        "id": 464,
-        "name": "Shadow Rhyperior",
-        "fast": "Smack Down",
-        "charged": "Rock Wrecker",
-        "hub": "464-Shadow"
-      }
-    ],
-    "longTerm": true
   },
   {
     "id": "zacian-hero-of-many-battles-in-5-star-raid-battles-september-2026",
@@ -9506,7 +7361,7 @@
     "end": "2026-10-10T17:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-10-10-october-communityday2026/zorua-october-cd-2026.png",
     "link": "https://leekduck.com/events/october-communityday2026/",
-    "summary": "10 月 10 日 14–17 时，Zorua 大量出现且闪光概率提升；活动期间及结束后 4 小时内进化可让 Zoroark 学会快速招式 Sucker Punch。",
+    "summary": "10 月 10 日 14–17 时，Zorua 大量出现且闪光概率提升；活动期间及结束后 4 小时内进化可让 Zoroark 学会快速招式 Sucker Punch。普通诱饵会持续到 21 时高概率吸引 Zorua。",
     "links": [
       {
         "label": "LeekDuck",
@@ -10181,6 +8036,10 @@
       {
         "label": "Hub·10月月历",
         "url": "https://pokemongohub.net/post/event/october-2026-events/"
+      },
+      {
+        "label": "Hub·团战指南",
+        "url": "https://pokemongohub.net/post/guide/yveltal-raid-guide/"
       }
     ],
     "pokemon": [
@@ -10188,6 +8047,26 @@
         "id": 717,
         "name": "伊裴尔塔尔",
         "shiny": true
+      }
+    ],
+    "counters": [
+      {
+        "id": 26,
+        "name": "Mega Raichu Y",
+        "fast": "Thunder Shock",
+        "charged": "Zap Cannon+"
+      },
+      {
+        "id": 642,
+        "name": "Shadow Thundurus (Therian Forme)",
+        "fast": "Volt Switch",
+        "charged": "Wildbolt Storm"
+      },
+      {
+        "id": 282,
+        "name": "Mega Gardevoir",
+        "fast": "Charm",
+        "charged": "Dazzling Gleam"
       }
     ]
   },
@@ -10209,6 +8088,10 @@
       {
         "label": "Hub·10月月历",
         "url": "https://pokemongohub.net/post/event/october-2026-events/"
+      },
+      {
+        "label": "Hub·团战指南",
+        "url": "https://pokemongohub.net/post/guide/mega-blastoise-raid-guide/"
       }
     ],
     "pokemon": [
@@ -10218,6 +8101,26 @@
         "shiny": true,
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10036.png",
         "hub": "9-Mega"
+      }
+    ],
+    "counters": [
+      {
+        "id": 26,
+        "name": "Mega Raichu Y",
+        "fast": "Thunder Shock",
+        "charged": "Zap Cannon+"
+      },
+      {
+        "id": 652,
+        "name": "Mega Chesnaught",
+        "fast": "Vine Whip",
+        "charged": "Seed Bomb+"
+      },
+      {
+        "id": 254,
+        "name": "Mega Sceptile",
+        "fast": "Fury Cutter",
+        "charged": "Frenzy Plant"
       }
     ]
   },
@@ -10634,10 +8537,10 @@
     "type": "event",
     "heading": "Event",
     "start": "2026-10-27T10:00:00",
-    "end": "2026-10-31T20:00:00",
+    "end": "2026-11-01T10:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
     "link": "https://leekduck.com/events/halloween-2026-part-1/",
-    "summary": "万圣节 2026 第一部分已公布活动日期；具体加成、宝可梦与调查内容尚待公布。",
+    "summary": "10 月 27 日 10 时至 11 月 1 日 10 时，Pikachu、Zubat 与 Sinistea 的万圣节装扮首次登场；野外、1★团战、田野调查与“不给糖就捣蛋”惊喜同步开放。",
     "links": [
       {
         "label": "LeekDuck",
@@ -10646,6 +8549,46 @@
       {
         "label": "Hub·10月月历",
         "url": "https://pokemongohub.net/post/event/october-2026-events/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/halloween-2026-part-one/"
+      }
+    ],
+    "bonuses": [
+      ":candy: 万圣节 GO Pass 达 Rank 10 后捕捉糖果 ×2（豪华版 ×3）",
+      ":stardust: 万圣节 GO Pass 达 Rank 20 后捕捉星尘 ×2（豪华版 ×3）"
+    ],
+    "pokemon": [
+      {
+        "id": 25,
+        "name": "Pikachu"
+      },
+      {
+        "id": 41,
+        "name": "Zubat"
+      },
+      {
+        "id": 854,
+        "name": "Sinistea"
+      }
+    ],
+    "sections": [
+      {
+        "title": "装扮首次登场",
+        "items": [
+          "戴帽子与斗篷的 Pikachu：1★团战",
+          "戴礼帽的 Zubat：野外遭遇",
+          "戴蝴蝶结的 Sinistea：1★团战"
+        ]
+      },
+      {
+        "title": "万圣节 GO Pass",
+        "body": "免费 GO Pass 于 10 月 27 日自动发放，可推进至 11 月 5 日 20 时；奖励须在 11 月 7 日 20 时前领取。豪华版提供更多遭遇与道具。"
+      },
+      {
+        "title": "不给糖就捣蛋",
+        "body": "点击野外的神秘惊喜，有机会获得活动主题宝可梦遭遇、Pikachu／Zubat／Sinistea 糖果或神奇糖果。"
       }
     ]
   },
@@ -10788,6 +8731,10 @@
       {
         "label": "Hub·10月月历",
         "url": "https://pokemongohub.net/post/event/october-2026-events/"
+      },
+      {
+        "label": "Hub·团战指南",
+        "url": "https://pokemongohub.net/post/guide/shadow-landorus-incarnate-raid-counters-guide/"
       }
     ],
     "pokemon": [
@@ -10798,7 +8745,27 @@
         "hub": "645-Incarnate_Shadow"
       }
     ],
-    "longTerm": true
+    "longTerm": true,
+    "counters": [
+      {
+        "id": 150,
+        "name": "Mega Mewtwo Y",
+        "fast": "Psycho Cut",
+        "charged": "Ice Beam"
+      },
+      {
+        "id": 473,
+        "name": "Shadow Mamoswine",
+        "fast": "Powder Snow",
+        "charged": "Avalanche"
+      },
+      {
+        "id": 460,
+        "name": "Mega Abomasnow",
+        "fast": "Powder Snow",
+        "charged": "Weather Ball"
+      }
+    ]
   },
   {
     "id": "pokemon-tcg-30th-celebration",
@@ -10929,7 +8896,7 @@
     "end": "2026-11-05T20:00:00",
     "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
     "link": "https://leekduck.com/events/halloween-2026-part-2/",
-    "summary": "万圣节 2026 第二部分已确认于 11 月 1–5 日当地时间举行；具体加成、宝可梦与调查内容尚待公布。",
+    "summary": "11 月 1 日 10 时至 11 月 5 日 20 时，Greavard 与 Houndstone 的闪光形态首次登场；超级勾魂眼也从本活动起可升至超级最高等级。",
     "links": [
       {
         "label": "LeekDuck",
@@ -10938,8 +8905,47 @@
       {
         "label": "Hub·10月月历",
         "url": "https://pokemongohub.net/post/event/october-2026-events/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-halloween-2026-part-two/"
       }
-    ]
+    ],
+    "bonuses": [
+      ":candy: 万圣节 GO Pass 达 Rank 10 后捕捉糖果 ×2（豪华版 ×3）",
+      ":stardust: 万圣节 GO Pass 达 Rank 20 后捕捉星尘 ×2（豪华版 ×3）",
+      "✨ Greavard 与 Houndstone 闪光形态首次登场"
+    ],
+    "pokemon": [
+      {
+        "id": 971,
+        "name": "Greavard",
+        "shiny": true
+      },
+      {
+        "id": 972,
+        "name": "Houndstone",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "闪光首次登场",
+        "items": [
+          "Greavard：野外、GO Pass 与田野调查",
+          "Houndstone：使用 50 颗 Greavard 糖果进化"
+        ]
+      },
+      {
+        "title": "超级勾魂眼",
+        "body": "从活动开始，超级勾魂眼可升至超级最高等级；超级进化时可额外使用幽灵属性特殊招式 Night Shade+。"
+      },
+      {
+        "title": "万圣节 GO Pass",
+        "body": "免费 GO Pass 可推进至 11 月 5 日 20 时，奖励须在 11 月 7 日 20 时前领取；豪华版提供更多遭遇与道具。"
+      }
+    ],
+    "highlight": true
   },
   {
     "id": "pokemon-go-tour-alola-kaohsiung-2027",

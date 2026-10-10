@@ -407,7 +407,8 @@
     "initialCost": 100,
     "release": "2023-06-29",
     "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10066.png",
-    "hub": "302-Mega"
+    "hub": "302-Mega",
+    "superMax": true
   },
   {
     "id": 303,
