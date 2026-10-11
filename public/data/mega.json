@@ -458,7 +458,8 @@
     "initialCost": 100,
     "release": "2021-03-16",
     "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10055.png",
-    "hub": "310-Mega"
+    "hub": "310-Mega",
+    "superMax": true
   },
   {
     "id": 319,
