@@ -1,5 +1,14 @@
 # 实现交接
 
+## 任务 3/5：事件时间契约与纯提醒边界（仅本地开发）
+
+- `docs/event-timing.md` 是字段/语义契约：保留原 `id`、日历 `start/end` 日期与双语结构，每条 `events.json` 必须有 `timing:{scope,mode,startPrecision,endPrecision[,timeZone]}`。`scope` 和 `mode` 分离；区域 local 的 IANA 由确切单一场地支持，未知不猜。`date`/`unknown` 不制造提醒时刻；两端独立可空。全局 local 精确开始取 `Pacific/Kiritimati`（UTC+14），结束取固定 UTC−12（非 UTC−11/Etc/GMT-12）；absolute 用显式 `Z/±HH:mm`，区域 local 用活动当天 IANA（DST gap 前移 / fold 取较早）。边界半开 `[openAt,closeAt)`；无精确截止不自动删除。历史数据 90 天留存依据日历结束日期而非提醒 closeAt；`end:null` 不以 start 伪造截止。
+- **任务 4 可直接复用的函数**：`public/app.js` 导出 `parseEventTime(value) -> {parts,date,hasTime,hasOffset,instant}|{error}`，`validateEventTiming(event[, {allowLegacy:true}]) -> string[]`（旧兼容只供显式调用，发布门禁始终 strict），`resolveEventTiming(event, now, viewerTimeZone) -> {openAt:Date|null, closeAt:Date|null, viewerWindow:{start:{instant:Date,date,time,...}|null,end:{...}|null},viewerTimeZone,status:'upcoming'|'active'|'expired'|'unknown'|'error',reason:string|null}`。`now`、浏览器 viewer IANA 必须显式给入任务 4 的提醒计算；不要从已格式化的 `viewerWindow` 反推提醒边界，也不要用 `parseDay()` 的日历日期算瞬间。缺少范围/模式即使墙钟已知仍 `unknown`、不提醒；已知 absolute 可以在范围未知时给出时刻，但不能声称全球可参加。`openAt` 与 `closeAt` 比较时刻，`closeAt` 当刻直接 expired。无个人状态存储或提醒 UI，本轮未实现任务 4。
+- `scripts/daily-candidates.js` 重用此纯函数筛当前/近七天；不完整 timing 的前后最多允许 UTC+14 / UTC−12 的**保守候选提示**，`dateChecksAreHints:true`、`uncertainTimingIds` 显式标记非证实状态。待确认范围/模式/任一边界即使远于七天也作为 `pending-timing` 详情候选；强制、历史保留与 committed-source 基线不变。`scripts/check-event-timing.js` 在 preflight 和 validate 均强制运行，拒绝日历溢出、非法 offset/组合、倒置精确边界和缺少 timing；事件跨 DST 的折叠/缺口复用 Spot Atlas 算法。无新生产调度/模型变更。
+- 迁移（2026-10-12 快照）：保留 **182** 条，证实双端精确 **22** 条；开始精确而结束未公告 **1** 条，日期已核实但具体时分待确认 **4** 条，其他范围/时间未核实 **155** 条。单独清理 >90 天的旧 `max-mondays-2026-07-13` 及对应英文 overlay；一项 GBL 10/27 开始原为 21:00Z，经来源核实改成 20:00Z；野外活动城市 UTC 原值换算为举办地墙钟+IANA，GO Tour 日期占位变成纯日期。当前证据的 URL/短依据在 `data/state.json.timingEvidence`，全部 **160** 条仍需部分或全部核验的 ID 见 `docs/event-timing-review.md`；仅正文实际读取才标已证实，未把本次 fetch 材料误写为 `state.details` processed，原 `sources` 和 `details` 基线未变。`public/data/i18n/en.json` 仅因该过期 ID 移除一项，无结构时间复制。
+- 离线测试：`node scripts/test-event-timing.js`（14 valid / 18 invalid、Node TZ、两个门禁入口模拟）PASS，`node scripts/test-spot-atlas-time.js` PASS，`bash scripts/test-daily-reuse.sh`、`bash scripts/test-run-daily.sh` PASS；`scripts/preflight.sh` PASS（既有 5 条超长 chip 警告）；`scripts/validate.sh` PASS。均未调用 Pi/真实日更/生产发布。已更新 `scripts/protected.sha256`。
+- 未验证：真实 Pi CLI、目标环境 cron/Caddy/VPS 和生产内容来源未来更新；未对所有旧活动逐条重抓，`docs/event-timing-review.md` 是待核实列表；第三方未来更正需下一轮 fetch 再更新。个人状态清理、提醒 UI 属任务 4。
+
 ## 任务 2/5：有界 daily runner、客观记录、精简常驻提示
 
 ### 范围 / 接口

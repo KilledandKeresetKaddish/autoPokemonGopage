@@ -17,6 +17,7 @@ make_fixture() {
   local f="$TMP_ROOT/$name"
   mkdir -p "$f/scripts" "$f/tasks/subagents" "$f/tasks/reference" "$f/public/data/i18n" "$f/data" "$f/bin"
   cp "$ROOT/tasks/reference/daily-schemas.md" "$f/tasks/reference/"
+  cp "$ROOT/public/app.js" "$f/public/app.js" # daily-worklist shares event timing with browser
   cp "$ROOT/scripts/run-daily.sh" "$ROOT/scripts/resume-snapshot.sh" "$ROOT/scripts/daily-agent.sh" \
     "$ROOT/scripts/daily-agent-run.py" "$ROOT/scripts/daily-worklist.js" \
     "$ROOT/scripts/daily-run-record.js" "$ROOT/scripts/daily-candidates.js" "$f/scripts/"

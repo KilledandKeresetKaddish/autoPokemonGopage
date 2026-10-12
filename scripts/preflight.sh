@@ -24,6 +24,7 @@ cd "$ROOT"
 
 command -v node >/dev/null 2>&1 || { echo "preflight: FAIL node is required for Spot Atlas schema/timezone checks"; exit 1; }
 node scripts/test-spot-atlas-time.js || { echo "preflight: FAIL Spot Atlas schema/timezone checks"; exit 1; }
+node scripts/check-event-timing.js || { echo "preflight: FAIL event timing contract"; exit 1; }
 command -v python3 >/dev/null 2>&1 || { echo "preflight: WARN python3 not found — calendar render checks skipped"; exit 0; }
 
 python3 - <<'PY'

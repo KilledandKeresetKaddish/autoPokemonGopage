@@ -12,6 +12,7 @@
   "summary": "一句话简体中文说明(显示在详情抽屉)。",
   "start": "2026-06-01T10:00:00",
   "end": "2026-06-01T13:00:00",
+  "timing": { "scope": "global", "mode": "local", "startPrecision": "exact", "endPrecision": "exact" },
   "image": "https://cdn.leekduck.com/....png",
   "link": "https://leekduck.com/events/....",
   "links": [
@@ -26,7 +27,7 @@
   "highlight": false
 }
 ```
-- `start`/`end` ISO 8601; `end` may equal `start`. `summary`/`bonuses`/`pokemon`/`links`/`longTerm`/`highlight` optional.
+- `start`/`end`: existing calendar dates, strictly valid ISO `YYYY-MM-DD` or complete ISO date-time. `end` may be missing; equal/reversed boundaries cannot both claim `exact`. **`timing` is required on every event** (including new ones); its `scope` (`global`/`regional`/`unknown`), `mode` (`local`/`absolute`/`unknown`), independent `startPrecision`/`endPrecision` (`exact`/`date`/`unknown`) and venue-only IANA `timeZone` semantics are authoritative for time/reminders, not the old strings alone. See `docs/event-timing.md` before editing; unconfirmed times must remain unknown. `summary`/`bonuses`/`pokemon`/`links`/`longTerm`/`highlight` optional.
 - `summary`: a **concise 简体中文** description (1–2 sentences), shown as a paragraph in the detail drawer
   so the panel isn't just a title + date.
 - **Sprites & forms:** `pokemon[]` / `counters[]` / rotation segments take `id` (national-dex →

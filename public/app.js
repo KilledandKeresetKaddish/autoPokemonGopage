@@ -1573,6 +1573,117 @@ function formatTargetForZone(targetInstant, displayZone, locale) {
     text:`${dateText} ${weekday} ${time}`,
   };
 }
+/* ---------- Event timing (separate from parseDay's calendar grid) ---------
+ * No current-offset arithmetic. The last global zone is fixed UTC−12, NOT
+ * Etc/GMT-12 (which means UTC+12). Task 4 consumes these pure values. */
+function parseEventTime(value) {
+  if (typeof value !== 'string') return { error:'missing/invalid date-time string' };
+  const m = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,3}))?(Z|[+-]\d{2}:\d{2})?)?$/.exec(value);
+  if (!m) return { error:'expected YYYY-MM-DD or complete ISO date-time with optional offset' };
+  const year = +m[1], month = +m[2], day = +m[3], hour = +(m[4] || 0), minute = +(m[5] || 0);
+  const second = +(m[6] || 0), millisecond = +(m[7] || '0').padEnd(3, '0');
+  if (year < 1000 || month < 1 || month > 12 || day < 1 || day > 31 || hour > 23 || minute > 59 || second > 59)
+    return { error:'invalid calendar date or clock time' };
+  const stamp = new Date(0);
+  stamp.setUTCFullYear(year, month - 1, day);
+  stamp.setUTCHours(hour, minute, second, millisecond);
+  if (stamp.getUTCFullYear() !== year || stamp.getUTCMonth() + 1 !== month || stamp.getUTCDate() !== day)
+    return { error:'invalid calendar date (no overflow normalization)' };
+  const offset = m[8] || null;
+  let offsetMinutes = 0;
+  if (offset && offset !== 'Z') {
+    const h = +offset.slice(1, 3), min = +offset.slice(4, 6);
+    if (h > 14 || min > 59 || (h === 14 && min !== 0)) return { error:'invalid numeric UTC offset' };
+    offsetMinutes = (offset[0] === '-' ? -1 : 1) * (h * 60 + min);
+  }
+  return { parts:{ year, month, day, hour, minute, second, millisecond }, date:value.slice(0, 10),
+    hasTime:!!m[4], hasOffset:!!offset, offset,
+    instant:offset ? new Date(stamp.getTime() - offsetMinutes * 60000) : null };
+}
+function validateEventTiming(event, options) {
+  const errors = [];
+  if (!event || typeof event !== 'object') return ['event must be an object'];
+  const t = event.timing;
+  // Read-only migration compatibility; neither daily gate enables allowLegacy.
+  if (!t) return options && options.allowLegacy ? [] : ['timing is required'];
+  if (typeof t !== 'object' || Array.isArray(t) || Object.keys(t).some(k =>
+    !['scope','mode','startPrecision','endPrecision','timeZone'].includes(k))) return ['invalid timing fields'];
+  if (!['global','regional','unknown'].includes(t.scope)) errors.push('invalid timing.scope');
+  if (!['local','absolute','unknown'].includes(t.mode)) errors.push('invalid timing.mode');
+  for (const field of ['startPrecision','endPrecision']) {
+    if (!['exact','date','unknown'].includes(t[field])) errors.push(`invalid timing.${field}`);
+  }
+  if (t.mode === 'local' && t.scope === 'regional') {
+    if (!isValidIanaTimeZone(t.timeZone)) errors.push('regional local requires a single-venue IANA timeZone');
+  } else if (Object.prototype.hasOwnProperty.call(t, 'timeZone')) errors.push('timeZone only valid for regional local');
+  const start = parseEventTime(event.start), end = event.end == null ? null : parseEventTime(event.end);
+  if (start.error) errors.push(`start: ${start.error}`);
+  if (end && end.error) errors.push(`end: ${end.error}`);
+  if (!end && t.endPrecision !== 'unknown') errors.push('missing end requires unknown endPrecision');
+  for (const [name, boundary] of [['start',start],['end',end]]) {
+    if (!boundary || boundary.error || t[`${name}Precision`] !== 'exact') continue;
+    if (!boundary.hasTime) errors.push(`${name} exact needs a clock time`);
+    if (t.mode === 'absolute' && !boundary.hasOffset) errors.push(`${name} absolute exact needs Z/numeric offset`);
+    if (t.mode === 'local' && boundary.hasOffset) errors.push(`${name} local exact needs offset-free wall time`);
+  }
+  if (!start.error && end && !end.error) {
+    if (t.mode === 'local' && end.date < start.date) errors.push('end wall date precedes start');
+    if (t.mode !== 'unknown' && t.startPrecision === 'exact' && t.endPrecision === 'exact') {
+      const a = t.mode === 'absolute' ? start.instant?.getTime() : spotWallStamp(start.parts) + start.parts.millisecond;
+      const b = t.mode === 'absolute' ? end.instant?.getTime() : spotWallStamp(end.parts) + end.parts.millisecond;
+      if (Number.isFinite(a) && Number.isFinite(b) && b <= a) errors.push('end must follow start (half-open interval)');
+    } else if (t.startPrecision === 'date' && t.endPrecision === 'date' && end.date < start.date)
+      errors.push('end date precedes start date');
+  }
+  return errors;
+}
+function resolveEventTiming(event, now, viewerTimeZone) {
+  const errors = validateEventTiming(event);
+  const timeZone = viewerTimeZone == null ? (typeof document === 'undefined' ? 'UTC' : detectBrowserTimeZone().timeZone) : viewerTimeZone;
+  if (!isValidIanaTimeZone(timeZone)) errors.push(`invalid viewer IANA time zone: ${timeZone}`);
+  const result = { openAt:null, closeAt:null, viewerWindow:{start:null,end:null}, viewerTimeZone:timeZone,
+    status:'unknown', reason:null };
+  if (errors.length) { result.status='error'; result.reason=errors.join('; '); return result; }
+  const current = now instanceof Date ? new Date(now.getTime()) : new Date(now);
+  if (!Number.isFinite(current.getTime())) { result.status='error'; result.reason='invalid now instant'; return result; }
+  const t = event.timing;
+  function fromWall(wall, zone) {
+    return new Date(zonedWallTimeToInstant(wall, zone).getTime() + wall.millisecond);
+  }
+  function boundary(name) {
+    if (t[`${name}Precision`] !== 'exact') return null;
+    const b = parseEventTime(event[name]);
+    if (t.mode === 'absolute') return b.instant;
+    if (t.mode !== 'local' || t.scope === 'unknown') return null; // known clock, no safe instant
+    if (t.scope === 'regional') return fromWall(b.parts, t.timeZone);
+    return name === 'start' ? fromWall(b.parts, 'Pacific/Kiritimati')
+      : new Date(spotWallStamp(b.parts) + b.parts.millisecond + 12 * 3600000); // fixed UTC−12
+  }
+  function display(name, reminderInstant) {
+    if (!reminderInstant) return null;
+    const instant = t.mode === 'local' && t.scope === 'global'
+      ? fromWall(parseEventTime(event[name]).parts, timeZone) : reminderInstant;
+    return { instant, ...formatTargetForZone(instant, timeZone, 'en') };
+  }
+  try {
+    result.openAt = boundary('start'); result.closeAt = boundary('end');
+    result.viewerWindow.start = display('start', result.openAt);
+    result.viewerWindow.end = display('end', result.closeAt);
+  } catch (error) {
+    result.openAt=null; result.closeAt=null; result.viewerWindow={start:null,end:null};
+    result.status='error'; result.reason=`time-zone conversion failed: ${error.message}`; return result;
+  }
+  if (result.openAt && result.closeAt && result.closeAt <= result.openAt) {
+    result.status='error'; result.reason='resolved end must follow start'; return result;
+  }
+  const ms = current.getTime();
+  if (result.closeAt && ms >= result.closeAt.getTime()) result.status='expired';
+  else if (result.openAt && ms < result.openAt.getTime()) result.status='upcoming';
+  else if (result.openAt) result.status='active';
+  else result.reason='start instant unavailable; scope, time mechanism or precision unresolved';
+  if (!result.closeAt && result.status !== 'unknown') result.reason='exact end unavailable; no automatic expiry';
+  return result;
+}
 // Half-open [start, end) on a 24h clock, hour granularity: 「结束」exclusive
 // (end may be 24 = 当日结束). Wraps past midnight when start > end; start === end → empty.
 function wcInRange(h, start, end) {
@@ -2459,6 +2570,7 @@ if (typeof module === 'object' && module.exports) {
   module.exports = {
     detectBrowserTimeZone, isValidIanaTimeZone, spotZonedParts, timeZoneOffsetMinutes,
     zonedWallTimeToInstant, nextLocalScheduleInstant, formatTargetForZone, wcInRange,
+    parseEventTime, validateEventTiming, resolveEventTiming,
     spotCountryFlag, spotCoordinates, spotMapUrl, spotMatches, sortSpotViews, spotRatingStars, spotNoteBlock,
     spotLoadPreferences, spotSavePreferences, SPOT_KIND_OPTIONS, SPOT_SORT_VALUES,
   };

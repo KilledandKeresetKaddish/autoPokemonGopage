@@ -20,7 +20,11 @@ veto; retain Hub/official co-equal primary coverage and corroborating sources.
 2. Keep current through next month, confirmed farther dates and ~90-day history, including
    regional/country/local events with explicit location text. Deduplicate real-world
    identity using the exact source slug. When a real event replaces a pending placeholder,
-   remove that placeholder rather than publishing both.
+   remove that placeholder rather than publishing both. For each new/edited event include
+   full `timing`; see `docs/event-timing.md`. Check scope, wall/absolute mode, each boundary
+   precision, and (regional local only) single-venue IANA zone against the detail. Missing
+   source facts stay unknown/date-only; never infer exact from clock-looking legacy fields.
+   Keep source URL and short timing basis for 90's bounded `state.timingEvidence` map.
 3. Apply the Calendar content checklist: verified aggregated links, concise Chinese
    title/summary/bonuses/Pokémon, useful event-specific sections, concise raid counters,
    weekly Mega raid drawers, long-term/PvP flags, genuine shiny boosts and new palettes.
@@ -39,9 +43,10 @@ veto; retain Hub/official co-equal primary coverage and corroborating sources.
 6. Apply explicit featured/Spot Atlas requests within their shared schemas. Otherwise
    locations stays byte-identical; never geocode, translate, infer zones or persist runtime
    derivatives. Feature IDs are administrator choices, not inferred from shiny boosts.
-7. Perform date/retention maintenance even on quiet days. Prune expired IDs and featured
-   references, retain history until cutoff, and hand affected English/rich-region references
-   forward. Edit only changed rows; preserve last-good content on source failure.
+7. Perform date/retention maintenance even on quiet days. Prune *canonical history* using
+   confirmed calendar-end dates when >90 days old; a null end must not be treated as start
+   expiry. This is separate from reminder closeAt (`null` must never auto-expire). Prune
+   featured references and hand affected English/rich-region references forward. Edit only changed rows; preserve last-good content on source failure.
 
 Before continuing: retain changed IDs/files, counts (events/long-term/highlight), all
 handled detail URLs/hashes and remaining pending facts/gaps for 90. A detail record may

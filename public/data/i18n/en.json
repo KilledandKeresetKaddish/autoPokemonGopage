@@ -882,20 +882,6 @@
         }
       ]
     },
-    "max-mondays-2026-07-13": {
-      "name": "Max Monday: Dynamax Deino",
-      "heading": "Max Mondays",
-      "summary": "Max Monday features Dynamax Deino in Max Battles; defeat it to obtain its Dynamax form and Max Particles.",
-      "bonuses": [
-        ":raid: Featured in Max Battles",
-        ":stardust: Max Particles available"
-      ],
-      "pokemon": [
-        "Deino"
-      ],
-      "counters": [],
-      "sections": []
-    },
     "articuno-zapdos-moltres-in-5-star-raid-battles-july-13-2026": {
       "name": "Articuno, Zapdos, and Moltres in 5★ Raids (7/13)",
       "heading": "Raid Battles",

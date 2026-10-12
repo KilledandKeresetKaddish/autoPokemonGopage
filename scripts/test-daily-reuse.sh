@@ -7,6 +7,7 @@ T=$(mktemp -d "$ROOT/.pi-tmp/daily-reuse.XXXXXX")
 trap 'rm -rf "$T"' EXIT
 mkdir -p "$T/scripts" "$T/bin" "$T/data/raw" "$T/public/data"
 cp "$ROOT/scripts/fetch.sh" "$ROOT/scripts/discover.sh" "$ROOT/scripts/discovery-report.js" "$ROOT/scripts/daily-candidates.js" "$T/scripts/"
+cp "$ROOT/public/app.js" "$T/public/app.js" # shared browser/Node event timing contract
 export FIXTURE="$T" TIER_METHOD=jina PATH="$T/bin:$PATH"
 cat > "$T/bin/date" <<'SH'
 #!/usr/bin/env bash

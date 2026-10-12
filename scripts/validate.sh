@@ -123,11 +123,14 @@ if [ -f "$E" ] && jq empty "$E" >/dev/null 2>&1; then
   # semantic floors — catch a gutted/partial rewrite that is still structurally
   # valid. Non-emptiness only: cannot be satisfied by fabricating content.
   [ "$n" -ge 5 ] || { say "FAIL events.json too small ($n entries < 5 — gutted/partial run?)"; fail=1; }
-  badf=$(jq '[.[] | select(((.id // "")=="") or ((.name // "")=="") or ((.start // "")=="") or ((.type // "")=="") or ((.end != null) and (.end < .start)))] | length' "$E")
-  [ "$badf" = 0 ] || { say "FAIL events.json has $badf event(s) with empty id/name/start/type or end<start"; fail=1; }
+  badf=$(jq '[.[] | select(((.id // "")=="") or ((.name // "")=="") or ((.start // "")=="") or ((.type // "")==""))] | length' "$E")
+  [ "$badf" = 0 ] || { say "FAIL events.json has $badf event(s) with empty id/name/start/type"; fail=1; }
+  # Exact offset instants and wall clocks cannot be compared as raw strings.
+  # Same production JS semantics are enforced independently by preflight.
+  node scripts/check-event-timing.js "$E" || { say "FAIL events.json timing contract"; fail=1; }
   cut=$(date -u -d '90 days ago' +%F 2>/dev/null || date -u -v-90d +%F 2>/dev/null || true)
   if [ -n "$cut" ]; then
-    stale=$(jq --arg c "$cut" '[.[] | select(((.end // .start) | tostring | .[0:10]) < $c)] | length' "$E")
+    stale=$(jq --arg c "$cut" '[.[] | select(.end != null and ((.end | tostring | .[0:10]) < $c))] | length' "$E")
     [ "$stale" = 0 ] || { say "FAIL events.json has $stale stale event(s) ended >90d ago (prune old events)"; fail=1; }
   else
     say "WARN could not compute stale-event cutoff (no GNU/BSD date) — skipping age check"

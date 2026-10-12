@@ -399,9 +399,16 @@ Run the complete local gates without publishing:
 bash scripts/test-run-daily.sh       # temporary repos + mock Pi; no model/publish target
 bash scripts/test-daily-reuse.sh     # mock curl + fixed candidate/date/recovery fixtures
 node scripts/test-spot-atlas-time.js
+node scripts/test-event-timing.js    # shared browser/Node event timing contract + CLI gate fixtures
 scripts/preflight.sh
 scripts/validate.sh
 ```
 
-The timezone test imports the production helpers from `public/app.js` and supplies fixed display
-zones, so results are deterministic regardless of the machine running the test.
+The timezone and event-timing tests import the production helpers from `public/app.js` and
+supply fixed instants/display zones, so results do not depend on the host timezone. Calendar
+`events.json` now requires a `timing` object on **every** event; `start/end` remain calendar dates,
+not authoritative reminder instants. Global-local reminders begin in UTC+14 and end in fixed
+UTC−12; regional-local boundaries use the venue's event-day IANA zone. Date-only/TBD and
+unknown ends yield null reminder bounds. See `docs/event-timing.md` and the migration review
+`docs/event-timing-review.md`. `scripts/daily-candidates.js` includes conservative
+`uncertainTimingIds` hints; both preflight and validate run the shared timing gate.

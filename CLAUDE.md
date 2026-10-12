@@ -42,6 +42,7 @@ from `public/`.
 - No framework, no bundler — vanilla JS + CSS.
 - Bilingual model: canonical JSON + the Chinese AI wrappers carry shared facts/default zh-CN text; `i18n/en.json` overlays text only. The header toggle persists `pogo-locale`, updates `<html lang>`, and rerenders every view. `validate.sh` enforces event/rotation/nested-array parity and safe non-CJK English rich HTML.
 - Calendar renders from `events.json`; day-number raid icons render from `rotations.json`. On phones, one bounded per-day raid trigger opens a full-size track chooser so 5★/Mega/Max badges cannot overlap adjacent dates.
+- Event `timing` (`docs/event-timing.md`) is the only reminder-boundary contract; calendar `parseDay()`/legacy `start`/`end` date prefixes continue to drive grid layout. `resolveEventTiming(event, now, viewerTimeZone)` is pure and Node-exported from `public/app.js`; reuse Spot Atlas IANA/DST helpers but do not change Spot Atlas clocks or add reminder UI as part of this contract. The same `validateEventTiming` function powers `scripts/check-event-timing.js` from both preflight and validate. New canonical event rows must include timing; English overlay never duplicates structural facts. See `scripts/test-event-timing.js` for fixed UTC+14/UTC−12, DST, partial and negative fixtures.
 - Spot Atlas (`#view-spots`) loads `locations.json`. `detectBrowserTimeZone()` resolves the viewer's IANA zone with an explicit UTC fallback; `nextLocalScheduleInstant()` converts each location's Tuesday 20:00 wall clock to an instant; `formatTargetForZone()` formats that same instant for a caller-supplied zone. Keep these helpers dependency-free and Node-exported because `scripts/test-spot-atlas-time.js` imports the production implementation. Location `name`, `note` and coordinates never use i18n.
 - `highlight: true` in events.json → ✨ icon (shiny boost indicator only).
 - `featured.json` → gold border on matching events (admin-controlled, independent of highlight).
@@ -63,6 +64,7 @@ Raid blocks: `.raid-wall` `.raid-block` `.raid-boss` `.boss-icon` `.binfo` `.bto
 
 - `scripts/validate.sh` — structural JSON validation + bilingual overlay parity + HTML safety checks + Spot Atlas schema/timezone tests.
 - `scripts/preflight.sh` — semantic checks (orphan raids, rotation/event consistency, chip overflow, Spot Atlas names/IANA zones).
+- `node scripts/test-event-timing.js` — deterministic production-helper fixtures and CLI-gate checks for global/local, regional/DST, offsets and uncertain boundaries.
 - `node scripts/test-spot-atlas-time.js` — deterministic production-helper fixtures for Shanghai/Toronto/London, DST, half-hour offsets, exact-boundary/+1ms behavior and UTC fallback.
 - `bash scripts/test-daily-reuse.sh` — offline fetch/discover/cache fixtures (it invokes `test-daily-candidates.js`); `bash scripts/test-run-daily.sh` covers mock Pi deadlines/signals/process groups, telemetry, scope, and recovery. Daily logs under ignored `logs/runs/<run-id>/` distinguish lastAttempt from lastSuccess; tracked state contains agent content decisions only.
 - `run-daily.sh` runs preflight/validate; either failing rolls back the daily agent's changes.

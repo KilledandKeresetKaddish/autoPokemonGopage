@@ -421,6 +421,17 @@ run compares finalized candidates with the last successful committed content/tim
   the current/next-7-day recommendation window. Retire ended recommendations and include
   just-started events even if source hashes are unchanged. The candidate aid flags these
   differences; also inspect time-of-day boundaries and actual recommendation text.
+  **Event timing contract:** every event has `timing` (see `docs/event-timing.md` and
+  `tasks/reference/daily-schemas.md`). `scope` (`global`/`regional`/`unknown`) is independent
+  of `mode` (`local` wall clock/`absolute` unique instant/`unknown`). Verify each start/end
+  separately as `exact`/`date`/`unknown` from its own source; numeric UTC offsets/old midnight
+  placeholders alone do not establish scope or precision. Regional local needs a confirmed
+  single-venue IANA `timeZone`; do not infer it from a city, longitude or viewer locale.
+  Do not convert date-only/TBD to midnight for reminders. Use `resolveEventTiming(event, now,
+  viewerTimeZone)` for known instant hints, but never equate the UTC date cutoff for 90-day
+  canonical retention with personal reminder expiry. Global local end must allow the last
+  UTC−12 zone (not UTC−11). `daily-candidates.js` reports conservative date hints for
+  incomplete timing and `uncertainTimingIds`; check the source before claiming live status.
 - Only affected `rankings-raid`, `rankings-current`, `calendar-notes` and corresponding
   English regions change. Static attacker/defender panels whose inputs are unchanged stay.
 - Prune events ended >90 days ago, stale featured IDs, English entries and dangling
@@ -483,6 +494,12 @@ re-reading files. Detail/date triggers above bound the work, not the calendar's 
 update `public/data/events.json` **in place** (schema in `tasks/reference/daily-schemas.md`; surgical row
    edits — never a full-file rewrite). Backbone = `events`
    (ScrapedDuck); then **merge across sources**:
+   - **Timing required.** Include complete `timing` in every new/changed row; reconcile the
+     source's event coverage, time mechanism, each boundary and venue timezone independently.
+     Explicitly mark unknowns/date-only; do not promote a legacy clock-looking string to `exact`
+     on its own. Review retained pending timing on active/near/far-future events under the normal
+     URL-body policy and hand the verified URL/basis to State + Validator. Both gates reject
+     missing/invalid timing; never weaken them to publish a guessed instant.
    - **Dedup by event identity.** The same real-world event shows up in 2–4 sources
      (LeekDuck / Hub / pokébase / official). Decide which entries are the *same* event and
      emit **one** row — never two rows for one event.

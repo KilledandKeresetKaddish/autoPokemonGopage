@@ -22,9 +22,16 @@ rules are embedded in AGENTS.md; detailed schemas/HTML in protected
    all affected canonical and English content is handled; keep old records on failures.
    Remove unreferenced records. In recovery compare to committed base state, never
    workspace draft or raw metadata. Update state.lastUpdated for date comparisons.
-3. Self-check the shared content/schema/render contracts:
+3. Keep `timingEvidence` bounded by retained event IDs: only source URLs/body
+   actually read and a short start/end evidence basis. Do not advance `details` merely
+   because a timing page was downloaded; only finalize it after both canonical and
+   English affected content was handled. Self-check the shared content/schema/render contracts:
    - one real event/ID, exact source slugs, current+next-month/local coverage and 90-day
      history/retention; correct long-term/PvP/shiny flags and aggregated relevant links;
+     full per-event timing (scope/mode, independent boundary precision, regional IANA) from
+     sources; date-only and absent end must NOT become a synthetic reminder instant;
+     migration inventory in `docs/event-timing-review.md` is maintainer-owned; for new
+     pending facts record concise gaps in state notes without editing docs;
    - complete parsed rotation pools, base dex/form art/hub parity with raid drawers;
    - source-supported targeted Mega changes within existing legal values/mechanics;
    - Chinese species/moves from `fetch.sh zh` (NOT gamemaster), or the shared verified
@@ -35,7 +42,8 @@ rules are embedded in AGENTS.md; detailed schemas/HTML in protected
    - featured IDs all retained/admin-authorized; Spot Atlas byte-identical unless explicitly
      requested, then one raw name, operator facts and valid zones per schema;
    - public shell/protected files untouched and required wrappers/IDs preserved.
-4. Run `scripts/preflight.sh` then `scripts/validate.sh`, report each exact exit/result
+4. Run `scripts/preflight.sh` then `scripts/validate.sh` (both call the same pure
+   `scripts/check-event-timing.js` implementation), report each exact exit/result
    as your own observation only (the wrapper independently executes and logs its gates).
    Repair via the owner scope in daily-update (maximum three rounds), including dependent
    English updates. Never weaken gates or claim unreadable sources were verified.
