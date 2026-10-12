@@ -1,6 +1,7 @@
 # 每日更新任务 — one Pi, six sequential responsibilities
 
-The wrapper embeds AGENTS.md, this task and the six briefs in full, exactly once.
+The wrapper embeds the core AGENTS.md, this task and the six briefs in full, exactly once.
+Detailed schemas/examples in `tasks/reference/daily-schemas.md` are read on demand.
 References below mean those **already-embedded sections**, not instructions to read the
 files again. Re-read only a specifically lost passage after genuine context compaction.
 

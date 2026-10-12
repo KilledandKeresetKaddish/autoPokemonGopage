@@ -65,17 +65,21 @@ retry_transport() {
       return "$rc"
     fi
     attempt=$((attempt + 1)); RETRY_BUDGET_LEFT=$((RETRY_BUDGET_LEFT - 1))
+    fetch_metric "${*: -1}" retry transport 1
     [ "$FETCH_RETRY_DELAY" = 0 ] || sleep "$FETCH_RETRY_DELAY"
   done
 }
 
 fetch_metric() {
   [ -n "$FETCH_METRICS_FILE" ] || return 0
-  mkdir -p "$(dirname "$FETCH_METRICS_FILE")" 2>/dev/null || return 0
-  jq -nc --arg time "$(date -u +%FT%TZ)" --arg runId "$FETCH_RUN_ID" \
-    --arg url "$1" --arg outcome "$2" --arg mode "$3" --arg network "$4" \
-    '{time:$time,runId:($runId | if length > 0 then . else null end),url:$url,outcome:$outcome,mode:$mode,network:($network == "1"),reused:($outcome == "success" and $network != "1")}' \
-    >> "$FETCH_METRICS_FILE" 2>/dev/null || true
+  if ! mkdir -p "$(dirname "$FETCH_METRICS_FILE")" 2>/dev/null ||
+     ! jq -nc --arg time "$(date -u +%FT%TZ)" --arg runId "$FETCH_RUN_ID" \
+       --arg url "$1" --arg outcome "$2" --arg mode "$3" --arg network "$4" \
+       '{time:$time,runId:($runId | if length > 0 then . else null end),url:$url,outcome:$outcome,mode:$mode,network:($network == "1"),reused:($outcome == "success" and $network != "1")}' \
+       >> "$FETCH_METRICS_FILE" 2>/dev/null; then
+    : > "${FETCH_METRICS_FILE}.error" 2>/dev/null || true
+  fi
+  return 0 # observability never turns a successful source read into a failure
 }
 
 run_record_path() {
@@ -433,20 +437,24 @@ fetch_one() {
   if is_protected "$name"; then fetch_tier "$url" "$tmp" || ok=0; else fetch_plain "$url" "$tmp" || ok=0; fi
   if [ "$ok" != 1 ]; then
     rm -f "$tmp"
+    fetch_metric "$url" failed named 1
     echo "FAIL $name  <- $url (download failed; kept last good)" >&2
     return 1
   fi
   check_named_source "$name" "$tmp" || check_rc=$?
   if [ "$check_rc" != 0 ]; then
     rm -f "$tmp"
+    fetch_metric "$url" failed named 1
     echo "FAIL $name  <- $url ($SOURCE_BODY_REASON; kept last good)" >&2
     return 1
   fi
   if ! mv "$tmp" "$out"; then
     rm -f "$tmp"
+    fetch_metric "$url" failed named 1
     echo "FAIL $name  <- $url (atomic cache replacement failed; kept last good)" >&2
     return 1
   fi
+  fetch_metric "$url" success named 1
   echo "OK   $name  $(wc -c <"$out")b  -> data/raw/$(basename "$out")"
 }
 

@@ -1,5 +1,24 @@
 # 实现交接
 
+## 任务 2/5：有界 daily runner、客观记录、精简常驻提示
+
+### 范围 / 接口
+- 在现有沙箱工作区继续任务 1；宿主路径 `/srv/pi-workspaces/autoPokemonGopage/` 在本容器挂载为 `/workspace`，不是生产路径。没有触碰真实 cron/Caddy、VPS、鉴权、模型配置或启动付费日更。
+- `AGENT_TIMEOUT_SECONDS=7200` 是保护上限而非目标耗时；测试可缩短。`AGENT_TERM_GRACE_SECONDS`、`AGENT_DRAIN_SECONDS`、`AGENT_KILL_WAIT_SECONDS` 控制有限等待。`daily-agent-run.py` 用独立会话/进程组监管一个 CLI，TERM→KILL 后检查 Linux `/proc` 中非僵尸成员；未能确认全停即不触碰树/快照/门禁。`-p` 无输出不触发 idle 终止。进程组身份写进每轮日志，崩溃后下轮提示并拒绝仍活跃或未知的 writer；SIGKILL/掉电不能运行 trap。
+- 每轮唯一 `POGO_RUN_ID`，`logs/runs/<run-id>/` 存各自的事件、summary、可选 Pi JSON、工作清单；`logs/lastAttempt.json` 与 `logs/lastSuccess.json` 独立。门禁、snapshot、publish 结果来自命令退出码；fetch 名源/详情请求、命中、失败、重试及 discover 覆盖来自可选 JSONL，缺失或指标写坏均记 null；真实 token usage 未验证故 null。成功 commit 后不改 tracked state。已从 `data/state.json` 一次性移除旧 agent 自述 `validation`/`contentStatus`，不改变 `sources`/`details` 的 processed 基线；90 brief 禁止下次再写入，客观结果只在忽略的日志中。
+- 任务 1 的 JSON partial、`FETCH_METRICS_FILE`、`POGO_RUN_ID` 接口继续使用；新增 `DISCOVER_METRICS_FILE`。`scripts/daily-worklist.js --base-ref <committed-head> [--discovery <this-run-report>] [--changed ID|--pending ID|--force ID|--monthly-url URL] [--now ISO]` 是可重复的只读提示（来源 hash/时间、ID/URL 理由、日期、gaps），非完成证明；恢复态仍读 committed baseline。八份入口文档各注入一次；完整 schemas/HTML 示例迁移至受校验的 `tasks/reference/daily-schemas.md`，按需读取。mock 同一 operator note 下重构前模拟注入 **92,019 B**、之后实际 mock prompt **75,775 B**（少 16,244 B，17.7%）；八文档本体 90,185→73,021 B。工作清单按需读，不计入固定注入。
+
+### 实测 / 局限
+- `bash scripts/test-run-daily.sh` — PASS：同日两轮、成功/非零、长时间静默、总超时、TERM/INT、抗 TERM 子进程、无法确认 writer、dirty/锁/HEAD/越界、快照保存/恢复失败、记录失败/lastSuccess、单 prompt/参数透传。
+- `bash scripts/test-daily-reuse.sh` — PASS；固定时间的 worklist discovery fixture — PASS；`scripts/preflight.sh` — PASS（原有 5 条 chip 长度警告）。
+- `scripts/validate.sh` — 真实沙箱日期 2026-10-12 因原有 `max-mondays-2026-07-13` 超过 90 天失败；用临时 `date` fixture 将仅此截止日固定为 2026-07-13 后其余门禁 PASS。未修改活动数据；该问题与任务 1 交接一致。
+- 沙箱未安装真实 `pi` 可执行文件，故只能用 mock 验证 `--version`/`--help` 检查、参数与 JSONL 接口；不能声称生产 Pi 的实际 event/token 格式或生产部署成功。独立于进程组的恶意 detached writer 仍须人工确认（沿用 unacknowledged-background 保护）；工作清单不替代来源解释。
+
+### 下一任务依赖
+- 继续读取任务 1 的 `discover --json` 和精确 URL 元数据；Scout 在实际准备缓存/扫描后以本轮报告刷新共享 checklist，输入真实 changed/pending/force ID，不能把 `cachedHash` 当 processed。
+- 如果新任务涉及提醒 UI、时区时间迁移、发布目录切换，必须另行实现；本轮没有触碰这些功能。真实生产上部署前应在目标机器核对 Pi CLI 帮助、调度和权限，不自动运行模型作测试。
+
+
 ## 任务 1/5：来源抓取、活动发现与同轮复用
 
 ### 已完成

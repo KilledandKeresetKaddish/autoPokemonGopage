@@ -95,16 +95,6 @@
     "status": "incomplete",
     "note": "discover new --cached 因 events feed 含 null start/end 仍退出；已直接比较 eventID 并检索 Hub、官方与 Fandom，发现并处理新加坡 PokéXciting 及 10 月 7–9 日新公告。"
   },
-  "contentStatus": {
-    "checkedAt": "2026-10-10T04:24:18Z",
-    "status": "validated",
-    "note": "日历 185 条；新增新加坡线下活动，补全万圣节与 GO 荒野地区详情，删除 10 条已过期长期任务并执行 >90 日留存，更新当前推荐、团战 Counter 与英文。"
-  },
-  "validation": {
-    "checkedAt": "2026-10-10T04:24:18Z",
-    "status": "passed",
-    "note": "preflight exit 0（5 条超长 chip 警告）；validate exit 0。"
-  },
   "notes": {
     "source_health": {
       "fact": "事件、团战、榜单及三类事件索引完成刷新；discover 缓存模式因 nullable 日期格式失败。",

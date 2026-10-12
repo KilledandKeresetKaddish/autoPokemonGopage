@@ -1,7 +1,6 @@
 # Brief 20 — Rotation Curator
 
-Goal/output: current month's public/data/rotations.json only. Apply already-embedded
-AGENTS.md “Content requirements → Rotations”, “渲染契约”, rotations schema and shared
+Goal/output: current month's public/data/rotations.json only. Apply AGENTS.md “Content requirements → Rotations”, “渲染契约”, rotations schema in `tasks/reference/daily-schemas.md` and shared
 name/cache/date policies; do not reload them.
 
 Inputs: Calendar's finalized raid events; Scout's cached monthly Hub article BODY and

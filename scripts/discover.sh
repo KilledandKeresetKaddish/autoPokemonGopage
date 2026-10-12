@@ -19,7 +19,14 @@ FETCH="$ROOT/scripts/fetch.sh"
 REPORTER="$ROOT/scripts/discovery-report.js"
 RAW="$ROOT/data/raw"
 DISC="$RAW/discovery"
+DISCOVER_METRICS_FILE="${DISCOVER_METRICS_FILE:-}"
 mkdir -p "$DISC"
+discover_metric() {
+  [ -n "$DISCOVER_METRICS_FILE" ] || return 0
+  jq -nc --arg kind "$1" --arg source "$2" --arg outcome "$3" --arg network "$4" \
+    '{kind:$kind,source:$source,outcome:$outcome,network:($network == "1"),reused:($outcome == "success" and $network != "1")}' \
+    >> "$DISCOVER_METRICS_FILE" 2>/dev/null || : > "${DISCOVER_METRICS_FILE}.error" 2>/dev/null || true
+}
 UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 
 [ -f "$REPORTER" ] || { echo "discover: FAILED — missing report helper: $REPORTER" >&2; exit 2; }
@@ -54,6 +61,7 @@ retry_discover_transport() {
     [ "$rc" = 0 ] && return 0
     if [ "$attempt" -ge "$DISCOVER_RETRY_LIMIT" ] || [ "$DISCOVER_RETRY_LEFT" -le 0 ]; then return "$rc"; fi
     attempt=$((attempt + 1)); DISCOVER_RETRY_LEFT=$((DISCOVER_RETRY_LEFT - 1))
+    discover_metric retry fandom-search retry 1
     [ "$DISCOVER_RETRY_DELAY" = 0 ] || sleep "$DISCOVER_RETRY_DELAY"
   done
 }
@@ -81,6 +89,9 @@ report_exit() {
 report_summary() {
   local report="$1" prefix="$2" output="$3" status empty
   status="$(jq -r '.status // "failed"' "$report")"
+  if [ -n "$DISCOVER_METRICS_FILE" ]; then
+    jq -c '{kind:"coverage",status,sources:(.sources // null)}' "$report" >> "$DISCOVER_METRICS_FILE" 2>/dev/null || : > "${DISCOVER_METRICS_FILE}.error" 2>/dev/null || true
+  fi
   case "$status" in
     complete)
       empty="$(jq -r '.completeNoNew // .completeNoCandidates // false' "$report")"
@@ -220,13 +231,15 @@ fandom_search_path() {
     stamp="$(date -u -r "$cache" +%s 2>/dev/null || echo 0)"; now="$(date -u +%s)"; age=$((now - stamp))
     if [ "$stamp" -gt 0 ] && [ "$age" -ge 0 ] && [ "$age" -lt 86400 ] &&
        jq -e '.query | type == "object" and (.search | type == "array")' "$cache" >/dev/null 2>&1; then
-      SEARCH_PATH="$cache"; return 0
+      SEARCH_PATH="$cache"; discover_metric request fandom-search success 0; return 0
     fi
   fi
   tmp="$(mktemp "$DISC/search-cache/.fandom.XXXXXX")" || { SEARCH_REASON='cannot create Fandom temporary cache'; return 1; }
   if ! retry_discover_transport curl -fsSL --max-time 40 -A "$UA" -o "$tmp" "$url"; then
+    discover_metric request fandom-search failed 1
     rm -f "$tmp"; SEARCH_REASON='Fandom search request failed'; return 1
   fi
+  discover_metric request fandom-search success 1
   if ! jq -e '.query | type == "object" and (.search | type == "array")' "$tmp" >/dev/null 2>&1; then
     rm -f "$tmp"; SEARCH_REASON='Fandom search returned an error/unparseable response'; return 1
   fi

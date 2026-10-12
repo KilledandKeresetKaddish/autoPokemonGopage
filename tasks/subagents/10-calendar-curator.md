@@ -1,7 +1,6 @@
 # Brief 10 — Calendar Curator
 
-Goal: finalize the normalized calendar before Rotations. Apply the already-embedded
-AGENTS.md “Content requirements → Calendar”, “渲染契约”, “Schemas”, “Name verification”
+Goal: finalize the normalized calendar before Rotations. Apply the AGENTS.md “Content requirements → Calendar”, “渲染契约”, `tasks/reference/daily-schemas.md`, “Name verification”
 and “Reuse and detail review”; do not reload the common rules.
 
 Write scope: events.json; featured.json for explicit feature requests and stale-ID pruning;
@@ -35,7 +34,7 @@ veto; retain Hub/official co-equal primary coverage and corroborating sources.
    existing unknown/wrong fields (null initialCost → confirmed supported cost, officially
    announced superMax, etc.). Preserve identity, avoid duplicates/unrelated rewrites or
    unsupported deletions. No derived mechanics/table edits; unsupported new mechanics
-   become developer notes, never relaxed schema/gates. Follow AGENTS.md mega schema,
+   become developer notes, never relaxed schema/gates. Follow `tasks/reference/daily-schemas.md` mega schema,
    including confirmed form art, candy-boost type exceptions and legal values.
 6. Apply explicit featured/Spot Atlas requests within their shared schemas. Otherwise
    locations stays byte-identical; never geocode, translate, infer zones or persist runtime

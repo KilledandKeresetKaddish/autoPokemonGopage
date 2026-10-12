@@ -3,8 +3,7 @@
 Goal/output: only inner HTML of the five Chinese AI wrappers in public/index.html:
 calendar-notes, rankings-current, rankings-attackers, rankings-defenders, rankings-raid.
 Preserve all markers/wrappers, rank-panel structure and IDs. Shared contracts are in
-already-embedded AGENTS.md “Content requirements → Rankings”, “Free-form synthesis”,
-“Ranking HTML pattern”, “Name verification” and “Quiet-day and date advancement”.
+AGENTS.md “Content requirements → Rankings”, `tasks/reference/daily-schemas.md` “Free-form synthesis” and “Ranking HTML pattern”, “Name verification” and “Quiet-day and date advancement”.
 
 Inputs: finalized Calendar/Rotations from THIS run; Scout's tier/raid/gamemaster caches,
 verified detail paths, date changes and gaps. Do not use stale/draft calendar inputs.
