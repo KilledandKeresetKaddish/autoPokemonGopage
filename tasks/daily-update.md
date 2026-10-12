@@ -12,7 +12,8 @@ sources, schemas, render contracts and shared rules; this task owns order and re
 ## Sequence and dependencies
 
 1. **00 Source Scout:** choose the last-successful committed baseline, prepare sources,
-   run `discover.sh new --cached`, then compare the final inputs with that baseline.
+   run `discover.sh new --cached --json` and consume its candidates/pending-date leads/exceptions/gaps
+   even when its partial exit is nonzero, then compare the final inputs with that baseline.
    Apply AGENTS.md “Reuse and detail review” even when list hashes match; retain URL
    cache paths, changed-entry IDs, pending facts, operator rechecks and date-change hints.
 2. **10 Calendar:** finalize events first, with featured/category maintenance and

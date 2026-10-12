@@ -42,6 +42,8 @@ set -uo pipefail
 argc=$#
 [ "$argc" -gt 0 ] || exit 90
 printf 'started\n' >> logs/pi-started
+[ -n "${POGO_RUN_ID:-}" ] || exit 107
+printf '%s\n' "$POGO_RUN_ID" >> logs/pogo-run-ids
 : > logs/mock-argv
 for ((i=1; i<argc; i++)); do printf '%s\n' "${!i}" >> logs/mock-argv; done
 printf '%s' "${!argc}" > logs/mock-prompt
@@ -206,6 +208,7 @@ assert_eq "$(git -C "$f" show HEAD:public/data/rotations.json)" staged-and-unsta
 ! git -C "$f" cat-file -e HEAD:public/data/mega.json 2>/dev/null || fail "deleted file was not preserved"
 ! git -C "$f" cat-file -e HEAD:data/state.json 2>/dev/null || fail "staged deletion was not preserved"
 check_pi_prompt "$f"
+grep -Eq '^daily-[0-9]{8}T[0-9]{6}Z-[0-9]+$' "$f/logs/pogo-run-ids" || fail "wrapper did not provide a per-run POGO_RUN_ID"
 python3 - "$f/logs/mock-prompt" <<'PYTEST'
 import sys
 text = open(sys.argv[1]).read()

@@ -28,6 +28,12 @@ exec > >(tee -a "$LOG") 2>&1
 
 echo "===== daily run $(date -u +%FT%TZ) ====="
 
+# Shared only by this invocation and inherited by the one agent's shell commands.
+# fetch/discover use it to collapse repeated force/search work; a future run gets
+# a new value, so a transient failure never suppresses tomorrow's retry.
+POGO_RUN_ID="${POGO_RUN_ID:-daily-$(date -u +%Y%m%dT%H%M%SZ)-$$}"
+export POGO_RUN_ID
+
 # Refuse to run over ANY uncommitted maintainer work. Logs, raw caches, local Pi
 # artifacts and note.txt are gitignored; everything else must start at HEAD so an
 # allowed-diff check can attribute every post-agent change to this invocation.

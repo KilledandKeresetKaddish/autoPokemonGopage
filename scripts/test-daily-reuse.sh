@@ -6,7 +6,7 @@ mkdir -p "$ROOT/.pi-tmp"
 T=$(mktemp -d "$ROOT/.pi-tmp/daily-reuse.XXXXXX")
 trap 'rm -rf "$T"' EXIT
 mkdir -p "$T/scripts" "$T/bin" "$T/data/raw" "$T/public/data"
-cp "$ROOT/scripts/fetch.sh" "$ROOT/scripts/discover.sh" "$ROOT/scripts/daily-candidates.js" "$T/scripts/"
+cp "$ROOT/scripts/fetch.sh" "$ROOT/scripts/discover.sh" "$ROOT/scripts/discovery-report.js" "$ROOT/scripts/daily-candidates.js" "$T/scripts/"
 export FIXTURE="$T" TIER_METHOD=jina PATH="$T/bin:$PATH"
 cat > "$T/bin/date" <<'SH'
 #!/usr/bin/env bash
@@ -38,10 +38,12 @@ if [ "$head" = 1 ]; then printf 'HTTP/2 200\r\ncontent-type: image/png\r\nconten
 [ -n "$out" ] || exit 98
 case "$url" in
   */ScrapedDuck/data/events.json) cp "$FIXTURE/feed" "$out" ;;
-  https://r.jina.ai/https://pokemongohub.net/post/event/) printf '[Event](https://pokemongohub.net/post/event/fixture/)\n' > "$out" ;;
-  https://r.jina.ai/https://pokemongo.com/) printf '[Home](https://pokemongo.com/)\n' > "$out" ;;
+  https://r.jina.ai/https://pokemongohub.net/post/event/) cp "$FIXTURE/hub-index" "$out" ;;
+  https://r.jina.ai/https://pokemongo.com/news) cp "$FIXTURE/official-index" "$out" ;;
+  https://r.jina.ai/https://pokemongohub.net/?s=*) cp "$FIXTURE/hub-search" "$out" ;;
   https://r.jina.ai/https://leekduck.com/events/*|https://r.jina.ai/https://pokemongohub.net/post/monthly/)
     cp "$FIXTURE/body" "$out" ;;
+  https://pokemongo.fandom.com/api.php?*) cp "$FIXTURE/fandom-search.json" "$out" ;;
   https://pokemongo.fandom.com/api.php)
     case "${FANDOM_MODE:-valid}" in
       valid) cp "$FIXTURE/fandom-valid.json" "$out" ;;
@@ -58,6 +60,7 @@ SH
 cat > "$T/bin/mv" <<'SH'
 #!/usr/bin/env bash
 if [ "${FAIL_META_REPLACE:-0}" = 1 ] && [[ "${@: -1}" == */details/*.json ]]; then exit 73; fi
+if [ "${FAIL_NAMED_REPLACE:-0}" = 1 ] && [[ "${@: -1}" == */data/raw/events.json ]]; then exit 74; fi
 exec /bin/mv "$@"
 SH
 cat > "$T/bin/head" <<'SH'
@@ -71,26 +74,8 @@ if [ "${1:-}" = -c ] && [ "${2:-}" = 16384 ]; then
 fi
 exec /usr/bin/head "$@"
 SH
-# Match exact extraction filters/options so faults cannot hit front-door validation.
-export REAL_JQ="$(command -v jq)" REAL_GREP="$(command -v grep)" REAL_TEE="$(command -v tee)"
-cat > "$T/bin/jq" <<'SH'
-#!/usr/bin/env bash
-for arg in "$@"; do
-  if { [ "${DISCOVERY_FAULT:-}" = feed ] && [[ "$arg" == *'select($endd >= $today'* ]]; } ||
-     { [ "${DISCOVERY_FAULT:-}" = calendar ] && [ "$arg" = '.[] | "\(.id) \(.name) \(.link)"' ]; }; then
-    echo "mock jq failure at $DISCOVERY_FAULT extraction" >&2; exit 77
-  fi
-done
-exec "$REAL_JQ" "$@"
-SH
-cat > "$T/bin/grep" <<'SH'
-#!/usr/bin/env bash
-if [ "${DISCOVERY_FAULT:-}" = official ] && [ "${1:-}" = -oE ] &&
-   [ "${2:-}" = 'https://(www\.)?pokemongo\.com/(news|post)/[a-zA-Z0-9/_-]+' ]; then
-  echo 'mock grep read error at official extraction' >&2; exit 2
-fi
-exec "$REAL_GREP" "$@"
-SH
+# The output sink remains mockable so a failed report write cannot masquerade as an empty scan.
+export REAL_TEE="$(command -v tee)"
 cat > "$T/bin/tee" <<'SH'
 #!/usr/bin/env bash
 if [ "${DISCOVERY_FAULT:-}" = output ]; then
@@ -115,6 +100,18 @@ reject() {
 cat > "$T/feed" <<'JSON'
 [{"eventID":"fixture","name":"Fixture Festival","start":"2026-09-11T10:00:00","end":"2026-09-11T18:00:00","link":"https://leekduck.com/events/fixture/"}]
 JSON
+cat > "$T/hub-index" <<'TXT'
+[Fixture Hub](/post/event/fixture/)
+TXT
+cat > "$T/official-index" <<'TXT'
+[Fixture Official](/news/fixture/)
+TXT
+cat > "$T/hub-search" <<'TXT'
+[Hub search result](https://pokemongohub.net/post/event/fixture-search/)
+TXT
+cat > "$T/fandom-search.json" <<'JSON'
+{"query":{"search":[{"title":"Fixture Festival Wiki"}]}}
+JSON
 printf '[]\n' > "$T/public/data/events.json"
 printf 'detail version one\n' > "$T/body"
 cat > "$T/fandom-article" <<'HTML'
@@ -129,15 +126,39 @@ printf '%s\n' '{"parse":{"title":"Blocked page","text":"<title>Just a moment...<
 : > "$T/requests"
 cd "$T"
 
-# Prepared daily discovery does no duplicate requests; standalone still fetches.
+# Prepared daily discovery is strictly offline, emits the additive JSON contract,
+# and keeps TSV compatibility. Standalone mode refreshes each primary once.
 scripts/fetch.sh events events-hub events-official > /dev/null
 eq "$(count)" 3
-scripts/discover.sh new --cached > "$T/scan" 2> "$T/scan.err"
+scripts/discover.sh new --cached --json > "$T/new.json" 2> "$T/scan.err"
 eq "$(count)" 3
+jq -e '.status == "complete" and .sources.leekduck.status == "complete" and .sources.hub.status == "complete" and .sources.official.status == "complete" and ([.candidates[].kind] | index("new")) and ([.candidates[] | select(.url == "https://pokemongohub.net/post/event/fixture/")] | length == 1) and ([.candidates[] | select(.url == "https://pokemongo.com/news/fixture/")] | length == 1)' "$T/new.json" > /dev/null
+scripts/discover.sh new --cached > "$T/scan" 2> "$T/scan.err"
 grep -q '^NEW' "$T/scan" || fail 'missing discovered event'
+eq "$(count)" 3
 scripts/discover.sh new > /dev/null 2> "$T/scan.err"
 eq "$(count)" 6
 cp data/raw/events.json "$T/good-feed"
+cp data/raw/events-hub.txt "$T/hub-good"
+cp data/raw/events-official.txt "$T/official-good"
+
+# A date-TBD entry and an identity-less row make the scan partial, but the valid
+# sibling remains a normal candidate: no made-up date and no all-or-nothing drop.
+cat > data/raw/events.json <<'JSON'
+[
+  {"eventID":"fixture","name":"Fixture Festival","start":"2026-09-11T10:00:00","end":"2026-09-11T18:00:00","link":"https://leekduck.com/events/fixture/"},
+  {"eventID":"tbd-dates","name":"Dates To Be Announced","start":null,"end":null,"link":"https://leekduck.com/events/tbd-dates/"},
+  {"name":"No Stable Identity","start":"2026-09-12","end":"2026-09-12","link":"https://leekduck.com/events/no-id/"}
+]
+JSON
+touch -d '2026-09-10T12:00:00Z' data/raw/events.json
+reject scripts/discover.sh new --cached --json
+jq -e '.status == "partial" and ([.candidates[] | select(.kind == "new" and .id == "fixture")] | length == 1) and (.pendingDate | length == 1) and .pendingDate[0].id == "tbd-dates" and (.exceptions | length == 1) and (.exceptions[0].reason | contains("eventID"))' "$T/rejected.out" > /dev/null
+grep -q 'PARTIAL' "$T/rejected.err" || fail 'TBD scan was not partial'
+cp "$T/good-feed" data/raw/events.json; touch -d '2026-09-10T12:00:00Z' data/raw/events.json
+
+# Top-level damage/missing/stale sources are explicit source failures, while
+# independent Hub/official leads still survive in the machine-readable output.
 for broken in missing invalid shape stale; do
   case "$broken" in
     missing) rm data/raw/events.json ;;
@@ -145,78 +166,151 @@ for broken in missing invalid shape stale; do
     shape) echo '{}' > data/raw/events.json ;;
     stale) touch -d '2026-09-09T12:00:00Z' data/raw/events.json ;;
   esac
-  reject scripts/discover.sh new --cached
-  grep -q INCOMPLETE "$T/rejected.err" || fail 'incomplete scan not labeled'
-  ! grep -q '无新增活动' "$T/rejected.err" || fail 'false quiet-day'
+  reject scripts/discover.sh new --cached --json
+  jq -e '.status == "partial" and .sources.leekduck.status == "failed" and ([.candidates[] | select(.kind == "hub-lead" or .kind == "official-lead")] | length >= 1)' "$T/rejected.out" > /dev/null || fail "broken $broken hid usable independent leads"
+  grep -q 'PARTIAL' "$T/rejected.err" || fail "broken $broken was not labeled partial"
+  ! grep -q 'no new candidates' "$T/rejected.err" || fail "broken $broken falsely reported quiet day"
   cp "$T/good-feed" data/raw/events.json; touch -d '2026-09-10T12:00:00Z' data/raw/events.json
 done
-eq "$(count)" 6
-cp data/raw/events-hub.txt "$T/hub"
-echo 'Just a moment...' > data/raw/events-hub.txt
-reject scripts/discover.sh new --cached
-cp "$T/hub" data/raw/events-hub.txt; touch -d '2026-09-10T12:00:00Z' data/raw/events-hub.txt
+
+# A readable homepage/root link is not official-news coverage. It remains an
+# explicit gap rather than becoming an empty complete scan.
+printf '[Home](https://pokemongo.com/)\n' > data/raw/events-official.txt
+touch -d '2026-09-10T12:00:00Z' data/raw/events-official.txt
+reject scripts/discover.sh new --cached --json
+jq -e '.status == "partial" and .sources.official.status == "failed" and (.sources.official.reason | contains("news"))' "$T/rejected.out" > /dev/null
+after_home=$(count)
+eq "$after_home" 6 # --cached made no requests
+cp "$T/official-good" data/raw/events-official.txt
+
+# A challenge body and a broken calendar cannot erase leads from healthy sources.
+printf 'Just a moment...\n' > data/raw/events-hub.txt
+touch -d '2026-09-10T12:00:00Z' data/raw/events-hub.txt
+reject scripts/discover.sh new --cached --json
+jq -e '.status == "partial" and .sources.hub.status == "failed" and ([.candidates[] | select(.kind == "new" or .kind == "official-lead")] | length >= 1)' "$T/rejected.out" > /dev/null
+cp "$T/hub-good" data/raw/events-hub.txt
 cp public/data/events.json "$T/cal"
 echo '{}' > public/data/events.json
-reject scripts/discover.sh new --cached
+reject scripts/discover.sh new --cached --json
+jq -e '.status == "partial" and .sources.calendar.status == "failed" and ([.candidates[]] | length >= 1)' "$T/rejected.out" > /dev/null
 mv "$T/cal" public/data/events.json
+
+# A failed default refresh is partial even if it can retain fresh last-good
+# bodies; failure never turns into a complete/no-new result.
 touch "$T/fail"
-reject scripts/discover.sh new
-grep -q INCOMPLETE "$T/rejected.err" || fail 'refresh failure not incomplete'
+reject scripts/discover.sh new --json
+jq -e '.status == "partial" and ([.sources[] | select(.status == "partial")] | length >= 1)' "$T/rejected.out" > /dev/null
+grep -q 'PARTIAL' "$T/rejected.err" || fail 'refresh failure not partial'
 rm "$T/fail"
-# Each index must contain its OWN source domain, not just the other primary.
+
+# When every source is unavailable, the JSON result says failed (and not no
+# candidates); --cached stays zero-network even for this error path.
+rm -f data/raw/events.json data/raw/events-hub.txt data/raw/events-official.txt
 before=$(count)
-cp -p data/raw/events-hub.txt "$T/hub-good"
-cp -p data/raw/events-official.txt "$T/official-good"
-for wrong in hub official; do
-  if [ "$wrong" = hub ]; then
-    cp -p "$T/official-good" data/raw/events-hub.txt
-  else
-    cp -p "$T/hub-good" data/raw/events-official.txt
-  fi
-  reject scripts/discover.sh new --cached
-  grep -q 'INCOMPLETE.*index/source link' "$T/rejected.err" || fail 'wrong-domain index accepted/misclassified'
-  ! grep -q '无新增活动' "$T/rejected.err" || fail 'wrong-domain false empty scan'
-  cp -p "$T/hub-good" data/raw/events-hub.txt
-  cp -p "$T/official-good" data/raw/events-official.txt
-done
-# Preconditions are valid and feed has a candidate. Each injected command must
-# actually run and its original diagnostic + specific failing step must survive.
-for fault in feed calendar official output; do
-  reject env DISCOVERY_FAULT="$fault" scripts/discover.sh new --cached
-  case "$fault" in
-    feed) step='feed candidate extraction'; diagnostic='mock jq failure at feed extraction' ;;
-    calendar) step='calendar text extraction'; diagnostic='mock jq failure at calendar extraction' ;;
-    official) step='official URL extraction'; diagnostic='mock grep read error at official extraction' ;;
-    output) step='result write/output'; diagnostic='mock tee result write failure' ;;
-  esac
-  grep -Fq "INCOMPLETE — $step" "$T/rejected.err" || fail "missing failure step: $fault"
-  grep -Fq "$diagnostic" "$T/rejected.err" || fail "fault did not hit its extraction: $fault"
-  ! grep -q '无新增活动' "$T/rejected.err" || fail "fault reported as empty: $fault"
-  [ ! -s "$T/rejected.out" ] || fail "unexpected partial result: $fault"
-done
-# Normal feed + official candidates survive completely, with official dedup.
-printf '[News](https://pokemongo.com/news/unique-festival/)\nhttps://pokemongo.com/news/unique-festival/\n' > data/raw/events-official.txt
-touch -d '2026-09-10T12:00:00Z' data/raw/events-official.txt
+reject scripts/discover.sh new --cached --json
+eq "$(count)" "$before"
+jq -e '.status == "failed" and (.completeNoNew == false)' "$T/rejected.out" > /dev/null
+grep -q 'FAILED' "$T/rejected.err" || fail 'all-source failure not labeled failed'
+! grep -q 'no new candidates' "$T/rejected.err" || fail 'all-source failure called quiet'
+scripts/fetch.sh events events-hub events-official > /dev/null
+cp data/raw/events.json "$T/good-feed"; cp data/raw/events-hub.txt "$T/hub-good"; cp data/raw/events-official.txt "$T/official-good"
+
+# Exact retained URLs are the only automatic coverage proof. A same-named later
+# official period remains an independent lead instead of being suppressed by
+# calendar prose/token overlap.
+printf '[]\n' > data/raw/events.json
+touch -d '2026-09-10T12:00:00Z' data/raw/events.json
+printf '[Fixture Hub](https://pokemongohub.net/post/event/fixture/)\n' > data/raw/events-hub.txt
+printf '[Fixture Festival](https://pokemongo.com/news/fixture-festival-2027/)\n' > data/raw/events-official.txt
+touch -d '2026-09-10T12:00:00Z' data/raw/events-hub.txt data/raw/events-official.txt
+cat > public/data/events.json <<'JSON'
+[
+  {"id":"old-fixture","name":"Fixture Festival","link":"https://pokemongo.com/news/fixture-festival-2026/"},
+  {"id":"known-hub","link":"https://pokemongohub.net/post/event/fixture/"}
+]
+JSON
+scripts/discover.sh new --cached --json > "$T/same-name.json" 2> "$T/scan.err"
+jq -e '.status == "complete" and ([.candidates[] | select(.kind == "official-lead" and (.url | contains("2027")))] | length == 1)' "$T/same-name.json" > /dev/null || fail 'same-name later official period was suppressed'
+
+# Complete-empty is reserved for complete coverage with all source URLs already
+# retained; this is distinct from malformed/missing source inputs above.
+cat > public/data/events.json <<'JSON'
+[
+  {"id":"known-hub","link":"https://pokemongohub.net/post/event/fixture/"},
+  {"id":"known-official","link":"https://pokemongo.com/news/fixture-festival-2027/"}
+]
+JSON
 scripts/discover.sh new --cached > "$T/scan" 2> "$T/scan.err"
-eq "$(wc -l < "$T/scan")" 2
-grep -q $'^NEW\tFixture Festival\t' "$T/scan" || fail 'feed candidate lost'
-grep -Fxq $'OFFICIAL-LEAD\t-\thttps://pokemongo.com/news/unique-festival/' "$T/scan" || fail 'official candidate lost'
-cmp "$T/scan" "data/raw/discovery/new-20260910T120000Z.txt"
-# jq filtering all known feed rows is valid; matching official slugs are covered.
-jq '[.[] | {id:.eventID,name,link}]' "$T/good-feed" > public/data/events.json
-printf 'https://pokemongo.com/news/fixture\n' > data/raw/events-official.txt
-touch -d '2026-09-10T12:00:00Z' data/raw/events-official.txt
-scripts/discover.sh new --cached > "$T/scan" 2> "$T/scan.err"
-[ ! -s "$T/scan" ] || fail 'known events should be filtered out'
-grep -q '无新增活动' "$T/scan.err" || fail 'filtered empty scan failed'
+[ ! -s "$T/scan" ] || fail 'complete empty scan emitted leads'
+grep -q 'COMPLETE.*no new candidates' "$T/scan.err" || fail 'complete empty scan was not explicit'
+
+# A report-output failure is a hard failure, never an empty result.
+cp "$T/good-feed" data/raw/events.json; cp "$T/hub-good" data/raw/events-hub.txt; cp "$T/official-good" data/raw/events-official.txt
 printf '[]\n' > public/data/events.json
-cp -p "$T/official-good" data/raw/events-official.txt
-eq "$(count)" "$before" # every cached success/failure above stayed offline
-# Legitimate complete empty scan is different from malformed inputs.
-echo '[]' > data/raw/events.json; touch -d '2026-09-10T12:00:00Z' data/raw/events.json
-scripts/discover.sh new --cached > "$T/scan" 2> "$T/scan.err"
-[ ! -s "$T/scan" ] || fail 'unexpected leads'
-grep -q '无新增活动' "$T/scan.err" || fail 'valid empty scan failed'
+touch -d '2026-09-10T12:00:00Z' data/raw/events.json data/raw/events-hub.txt data/raw/events-official.txt
+reject env DISCOVERY_FAULT=output scripts/discover.sh new --cached
+grep -q 'cannot save TSV report' "$T/rejected.err" || fail 'output write failure not preserved'
+[ ! -s "$T/rejected.out" ] || fail 'failed TSV write emitted partial output'
+
+# Keyword search keeps per-source status, caches the shared official index across
+# different queries, and reuses an exact same-query report inside a run ID.
+rm -rf data/raw/details data/raw/discovery/search-cache data/raw/discovery/run-cache
+: > "$T/requests"
+scripts/discover.sh --json 'fixture festival' > "$T/search-one.json" 2> "$T/search-one.err"
+jq -e '.status == "complete" and (.sources.official.resultCount >= 0) and ([.candidates[].source] | index("fandom"))' "$T/search-one.json" > /dev/null
+scripts/discover.sh --json 'fixture another' > "$T/search-two.json" 2> "$T/search-two.err"
+eq "$(grep -Fc 'https://r.jina.ai/https://pokemongo.com/news' "$T/requests")" 1
+before=$(count)
+DISCOVER_RUN_ID=shared-search scripts/discover.sh --json 'shared fixture' > "$T/shared-one.json" 2> "$T/shared-one.err"
+after_first=$(count)
+DISCOVER_RUN_ID=shared-search scripts/discover.sh --json 'shared fixture' > "$T/shared-two.json" 2> "$T/shared-two.err"
+eq "$(count)" "$after_first"
+[ "$after_first" -ge "$before" ] || fail 'shared search request counter regressed'
+
+# All keyword sources failing is a failed report, not a successful "no candidates".
+rm -f data/raw/events.json
+rm -rf data/raw/details data/raw/discovery/search-cache
+touch "$T/fail"
+before=$(count)
+reject env DISCOVER_RUN_ID=all-search-fails scripts/discover.sh --json 'all sources fail'
+jq -e '.status == "failed" and (.completeNoCandidates == false)' "$T/rejected.out" > /dev/null
+grep -q 'FAILED' "$T/rejected.err" || fail 'all-search failure not labeled failed'
+! grep -q 'no new candidates' "$T/rejected.err" || fail 'all-search failure called no-candidate'
+after_first=$(count)
+reject env DISCOVER_RUN_ID=all-search-fails scripts/discover.sh --json 'all sources fail'
+eq "$(count)" "$after_first" # same-run failed report is reused, not retried six times
+rm "$T/fail"
+scripts/fetch.sh events events-hub events-official > /dev/null
+printf '[]\n' > public/data/events.json
+
+# Named-source replacement validates before atomic cache publication: JSON error
+# objects/challenge pages and a failed rename preserve the previous good body.
+cp data/raw/events.json "$T/named-events-good"
+printf '{"error":"upstream unavailable"}\n' > "$T/feed"
+reject scripts/fetch.sh events
+cmp "$T/named-events-good" data/raw/events.json
+[ ! -s "$T/rejected.out" ] || fail 'named JSON failure printed stale content'
+cp "$T/named-events-good" "$T/feed"
+cp data/raw/events-hub.txt "$T/named-hub-good"
+printf '<title>Just a moment...</title>\n' > "$T/hub-index"
+reject scripts/fetch.sh events-hub
+cmp "$T/named-hub-good" data/raw/events-hub.txt
+cat > "$T/hub-index" <<'TXT'
+[Normal article](https://pokemongohub.net/post/event/normal/)
+This ordinary article quotes 403 Forbidden and Cloudflare while explaining a login error.
+TXT
+scripts/fetch.sh events-hub > /dev/null
+printf '{"error":"news unavailable"}\n' > "$T/official-index"
+cp data/raw/events-official.txt "$T/named-official-good"
+reject scripts/fetch.sh events-official
+cmp "$T/named-official-good" data/raw/events-official.txt
+cp "$T/named-events-good" "$T/feed"
+reject env FAIL_NAMED_REPLACE=1 scripts/fetch.sh events
+cmp "$T/named-events-good" data/raw/events.json
+scripts/fetch.sh events > /dev/null
+cp "$T/hub-good" "$T/hub-index"
+cp "$T/official-good" "$T/official-index"
+scripts/fetch.sh events-hub events-official > /dev/null
 
 u='https://leekduck.com/events/fixture/?a=1'
 before=$(count)
@@ -233,7 +327,29 @@ cmp "$T/body" "$body_path"
 ! grep -q 'detail version' "$T/info" || fail 'info dumped body'
 scripts/fetch.sh url --cached "$u" > "$T/result"; cmp "$T/body" "$T/result"
 scripts/fetch.sh url --max-age 86400 "$u" > "$T/result"; cmp "$T/body" "$T/result"
+scripts/fetch.sh url --max-age 86400 --meta "$u" > "$T/meta"
+jq -e --arg p "$body_path" '.path == $p and .ageSeconds == 0' "$T/meta" > /dev/null
+! grep -q 'detail version' "$T/meta" || fail 'meta mode dumped body'
 eq "$(count)" "$((before + 1))"
+# A run ID makes a force request happen once and exposes optional metrics without
+# changing normal body-output compatibility.
+before=$(count)
+FETCH_RUN_ID=force-once FETCH_METRICS_FILE="$T/metrics.jsonl" scripts/fetch.sh url --force --meta "$u" > "$T/force-meta"
+eq "$(count)" "$((before + 1))"
+FETCH_RUN_ID=force-once FETCH_METRICS_FILE="$T/metrics.jsonl" scripts/fetch.sh url --force --meta "$u" > "$T/force-meta-again"
+eq "$(count)" "$((before + 1))"
+jq -e '.path | type == "string"' "$T/force-meta-again" > /dev/null
+[ "$(wc -l < "$T/metrics.jsonl")" -ge 2 ] || fail 'run metrics hook did not record fetch outcomes'
+jq -s 'any(.[]; .network == true) and any(.[]; .reused == true)' "$T/metrics.jsonl" > /dev/null || fail 'run metrics did not expose network/reuse audit fields'
+# A same-run failure is also reused as a failure; the next run remains free to retry.
+run_fail_url='https://leekduck.com/events/run-failure/'
+touch "$T/fail"
+before=$(count)
+reject env FETCH_RUN_ID=failed-round scripts/fetch.sh url --force "$run_fail_url"
+eq "$(count)" "$((before + 1))"
+reject env FETCH_RUN_ID=failed-round scripts/fetch.sh url --force "$run_fail_url"
+eq "$(count)" "$((before + 1))"
+rm "$T/fail"
 # Explicit challenge/error markers never become a first cache generation.
 bad_bodies=(
   '<!doctype html><html><head><title>Just a moment...</title></head><body>Checking your browser</body></html>'
@@ -247,6 +363,7 @@ Access denied by origin.'
   'Access Denied'
   'Cloudflare Ray ID: 8abcdef012345678'
   '{"status":"error","message":"solver unavailable"}'
+  '{"error":{"code":403},"message":"upstream denied"}'
 )
 for i in "${!bad_bodies[@]}"; do
   bad_url="https://leekduck.com/events/blocked/?case=$i"

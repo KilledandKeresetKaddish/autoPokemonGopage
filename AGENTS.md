@@ -337,28 +337,38 @@ deliberate; paying for it wastefully is not. Four rules:
 
 **Prepare → discover → compare.** Source Scout checks cache times with `fetch.sh list`,
 refreshes stale/relevant named sources by the table above, then runs
-`scripts/discover.sh new --cached`. That mode makes no requests and requires parseable
-`events`/Hub/official inputs younger than 24h (mtime of the last successful download).
-Missing, stale or unusable inputs yield **INCOMPLETE/nonzero**, never “no new events”.
-Keep accessible sources useful and note incomplete coverage; a failure is not a quiet-day
-proof. Independent `discover.sh new` retains its default refresh. Compare hashes against
-committed state **after** the final discovery inputs are settled; do not implicitly
-refresh those feeds afterward. Cache time proves only material freshness, not completion.
+`scripts/discover.sh new --cached --json`. That mode makes **zero** requests and validates
+fresh (<24h), minimally usable `events`/Hub/official caches before reporting. Its version-1
+JSON has `status` (`complete` / `partial` / `failed`), per-source availability/coverage,
+`candidates`, `pendingDate`, `exceptions` and `gaps`; legacy TSV remains for human use.
+Exit **0** means complete coverage, **1** means partial coverage but stdout still contains
+usable leads, and **2** means failed/usage. Capture/read the JSON even on exit 1; never let
+a nonzero shell status discard valid rows. Only `status:"complete"` with `completeNoNew:true`
+means “no new”; missing, stale, malformed or date-TBD source material is never quiet-day
+proof. Date-TBD leads require verification, not invented dates. Hub/official URL leads are
+independent candidates: compare exact URL/event identity/period+date, not fuzzy calendar text.
+Independent `discover.sh new` retains its default refresh. Compare hashes against committed
+state **after** the final discovery inputs are settled; do not implicitly refresh those feeds
+afterward. Cache time proves only material freshness, not completion.
 
 **URL body cache** (allowlist and TIER_METHOD unchanged; image URLs still use HEAD):
-- `fetch.sh url <URL...>` or `url --force <URL...>`: always download, print body.
+- `fetch.sh url <URL...>` or `url --force <URL...>`: download and print the body.
 - `fetch.sh url --max-age 86400 <URL...>`: reuse a valid body younger than 24h;
   otherwise refresh. Query strings remain distinct; no title-based keys/normalization.
-- `fetch.sh url --info <URL...>`: no network/body dump; JSON contains original URL,
-  last successful `lastFetch`, full `sha256`, plain-text `path`, age and stale flag.
-  Use that path with grep/sed/jq to read only needed sections.
-- `fetch.sh url --cached <URL...>`: explicit no-network last-good body read; warns
-  when ≥24h old. It never certifies freshness. Cached/info modes reject images.
+- Add `--meta` to a download/reuse call when only its validated JSON metadata/path is wanted
+  (no long body on stdout); `--info` remains no-network metadata-only inspection.
+- `fetch.sh url --cached <URL...>`: explicit no-network last-good read; warns when ≥24h
+  old. Cached/info modes reject images.
 - Success stores an immutable body and atomically replaces its metadata pointer under
-  `data/raw/details/`, keyed by SHA-256 of the exact URL. Failed/empty downloads return
-  nonzero, print no stale body and do not advance successful time or overwrite last good
-  content. A solver's HTTP-200 error/shell can still need human rejection: unreadable or
-  irrelevant material is not a successfully verified source and must not advance state.
+  `data/raw/details/`, keyed by SHA-256 of the exact URL. Named JSON/text caches likewise
+  validate minimum source shape plus blank/challenge/solver-error bodies before atomic
+  replacement. Failed/empty downloads return nonzero, print no stale body and do not advance
+  successful time/hash or overwrite last good content.
+- The wrapper supplies one `POGO_RUN_ID`; `FETCH_RUN_ID`/`DISCOVER_RUN_ID` may be supplied
+  for standalone work. They reuse a successful exact-URL force/search result or same-run
+  failure only for that run; a later run retries normally. `FETCH_METRICS_FILE` is optional
+  JSONL observability only. Downloaded, minimally accepted, and State+Validator-processed
+  detail bodies remain three separate facts; fetch never advances `state.details`.
 
 **Detail triggers independent of list hashes.** Check all referenced detail URLs for:
 1. New events or changed source entries (inspect only changed lists to identify affected IDs).
@@ -438,31 +448,25 @@ for per-Pokémon movesets / counters / form images; **`serebii.net/pokemongo` + 
 corroboration sources, never the sole basis**). Off-allowlist URLs are refused. Stay
 **primarily on the named sources** — use `url` to enrich / corroborate / chase a detail, not to crawl.
 
-**Don't know the URL? Discover it — don't guess.** The feeds give you every LeekDuck link and the
-Hub *index*, but not a specific Hub **guide/article** slug (e.g. a per-boss raid guide). When you
-need a page whose URL you don't already have, search the trusted sources first:
+**Don't know the URL? Discover it — don't guess.** The feeds give every LeekDuck link and the Hub
+*index*, but not every detail slug. Search trusted sources first:
 ```
-scripts/discover.sh "mega scizor raid guide"
-scripts/discover.sh "10th anniversary party"
+scripts/discover.sh --json "mega scizor raid guide"
+scripts/discover.sh --json "10th anniversary party"
 ```
-It matches LeekDuck via the cached `events` feed, searches Pokémon GO Hub (its on-site search) and the
-官方 news index through the Jina solver, **and queries the Pokémon GO Wiki (Fandom) MediaWiki search API
-directly** — so a region-/local-only event with only a Fandom page is still discoverable. It prints
-`SOURCE <tab> TITLE <tab> URL` candidates (also saved under
-`data/raw/discovery/`). **Candidates are leads, not facts:** open each promising one with
-`scripts/fetch.sh url --max-age 86400 <URL>`, confirm it is the *exact* same event/Pokémon (right boss, right
-month), and only then add it to `links[]`. If nothing fits, record the gap in `data/state.json` —
-never invent a link.
+Search JSON records each LeekDuck/Hub/official/Fandom source as complete, partial or failed.
+A `complete` zero-candidate result differs from partial/failed coverage; inspect usable candidate
+rows plus `gaps` even on exit 1. The shared official news index and exact keyword result are reused
+within the run, rather than force-downloaded per query. **Candidates are leads, not facts:** open
+promising URLs once with `scripts/fetch.sh url --max-age 86400 --meta <URL>`, inspect the path, and
+confirm exact identity/period/date before adding `links[]`. If nothing fits, record a gap — never
+invent a URL.
 
-**Catch events nobody told you about — `scripts/discover.sh new`.** To find activities that turned
-up in the feeds this cycle but aren't on the calendar yet (an official "surprise" event, a new raid
-day…), run `scripts/discover.sh new --cached` after preparing the feeds (standalone `new`
-refreshes by default). It lists feed events **within the
-current + next-month window** that are missing from `public/data/events.json`, each tagged with
-cross-source corroboration (`佐证:LeekDuck[+Hub][+官方]`), plus any official news links not tied to a
-known event. These are leads: open with `scripts/fetch.sh url --max-age 86400 <URL>` (or reuse
-Scout’s successful read), confirm it, then add it —
-read before you write, as always.
+**Catch events nobody told you about — `scripts/discover.sh new`.** After source preparation, run
+`scripts/discover.sh new --cached --json` (standalone `new` refreshes by default). It retains usable
+LeekDuck candidates alongside independent Hub/official URL leads, date-pending leads and malformed-entry
+exceptions. Do not use a similar calendar title as coverage for a later same-named period; only an
+exact retained URL or verified identity/date match closes that lead. Confirm each lead before writing.
 
 ---
 
