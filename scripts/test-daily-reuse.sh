@@ -269,8 +269,50 @@ DISCOVER_RUN_ID=shared-search scripts/discover.sh --json 'shared fixture' > "$T/
 eq "$(count)" "$after_first"
 [ "$after_first" -ge "$before" ] || fail 'shared search request counter regressed'
 
+# Hub text is not coverage: an unstructured readable shell must never be complete-empty.
+node <<'JS'
+const assert = require('node:assert/strict'), fs = require('node:fs');
+const { buildSearchReport } = require('./scripts/discovery-report.js');
+const paths = { leekduck:'empty-feed.json', hub:'hub-shell.txt', official:'official-index.txt', fandom:'empty-fandom.json' };
+fs.writeFileSync(paths.leekduck, '[]'); fs.writeFileSync(paths.fandom, '{"query":{"search":[]}}');
+fs.writeFileSync(paths.hub, 'Title: Pokémon GO Hub\nWelcome. This page requires JavaScript.');
+fs.writeFileSync(paths.official, '[Other news](https://pokemongo.com/news/unrelated/)');
+const input = { query:'unique-event-keyword', sources:Object.fromEntries(Object.entries(paths).map(([name,path])=>[name,{available:true,path}])) };
+const shell = buildSearchReport(input);
+assert.equal(shell.status, 'partial'); assert.equal(shell.sources.hub.status, 'partial');
+assert.equal(shell.sources.hub.availability, 'available'); assert.equal(shell.completeNoCandidates, false);
+fs.writeFileSync(paths.hub, '[Valid result](https://pokemongohub.net/post/event/valid/)');
+assert.equal(buildSearchReport(input).sources.hub.resultCount, 1);
+assert.equal(buildSearchReport(input).status, 'complete');
+fs.writeFileSync(paths.hub, 'No results found.');
+assert.equal(buildSearchReport(input).status, 'partial', 'unstructured zero-results prose is not proof');
+for (const body of ['', '<html><main>Unrecognized search layout</main></html>']) {
+  fs.writeFileSync(paths.hub, body); assert.equal(buildSearchReport(input).sources.hub.status,'partial');
+}
+fs.writeFileSync(paths.leekduck,JSON.stringify([{name:'Unique-event-keyword',link:'https://leekduck.com/events/unique/'}]));
+fs.unlinkSync(paths.hub);
+const damaged=buildSearchReport(input);
+assert.equal(damaged.status,'partial'); assert.equal(damaged.sources.hub.status,'failed');
+assert.equal(damaged.candidates[0].source,'leekduck');
+
+JS
+# Fresh cached shells must be reclassified too; healthy LeekDuck candidates survive stdout/exit 1.
+cp "$T/hub-search" "$T/hub-search-good"
+printf 'Title: Pokémon GO Hub\nWelcome. This page requires JavaScript.\n' > "$T/hub-search"
+# Old-parser complete reports cannot bypass the new classification within the same run.
+mkdir -p data/raw/discovery/run-cache/hub-shell
+old_key=$(printf '%s' 'fixture hub-shell' | sha256sum | cut -d' ' -f1)
+printf '%s\n' '{"version":1,"mode":"search","query":"fixture hub-shell","status":"complete","completeNoCandidates":true,"candidates":[],"sources":{},"gaps":[]}' > "data/raw/discovery/run-cache/hub-shell/search-$old_key.json"
+reject env DISCOVER_RUN_ID=hub-shell scripts/discover.sh --json 'fixture hub-shell'
+jq -e '.status == "partial" and .sources.hub.status == "partial" and ([.candidates[] | select(.source == "leekduck")] | length > 0)' "$T/rejected.out" > /dev/null
+before=$(count)
+reject scripts/discover.sh --json 'fixture hub-shell'
+eq "$(count)" "$before" # cached Hub body, not a second transport
+jq -e '.status == "partial" and .completeNoCandidates == false' "$T/rejected.out" > /dev/null
+cp "$T/hub-search-good" "$T/hub-search"
+
 # A readable official shell is not complete keyword coverage, even when every
-# transport succeeds. A real index with no matching title is complete-empty.
+# transport succeeds. A real news index with no matching title has complete coverage.
 node <<'JS'
 const assert = require('node:assert/strict'), fs = require('node:fs');
 const { buildSearchReport } = require('./scripts/discovery-report.js');
@@ -284,7 +326,8 @@ assert.equal(shell.status, 'partial'); assert.equal(shell.sources.official.statu
 assert.equal(shell.completeNoCandidates, false); assert.match(shell.sources.official.reason, /news/);
 fs.writeFileSync(paths.official, '[Other news](https://pokemongo.com/news/unrelated/)');
 const index = buildSearchReport(input);
-assert.equal(index.status, 'complete'); assert.equal(index.completeNoCandidates, true);
+assert.equal(index.sources.official.status, 'complete'); // no matching news is valid coverage
+assert.equal(index.status, 'partial'); assert.equal(index.completeNoCandidates, false); // Hub zero is unverified
 JS
 
 # All keyword sources failing is a failed report, not a successful "no candidates".
@@ -584,5 +627,6 @@ eq "$(count)" "$((before_retry + 2))"
 jq -es --arg u "$u" 'all(.[]; .url == $u) and any(.[]; .kind == "retry")' "$retry_dir/fetch.jsonl" > /dev/null || fail 'retry metrics did not identify the requested URL'
 node scripts/daily-run-record.js "$retry_dir" failed 1 "$(date -u +%s%3N)"
 jq -e '.network.requests == 2 and .network.retries == 1 and .network.cacheHits == 0' "$retry_dir/summary.json" > /dev/null || fail 'real fetch retries were lost in run metrics'
+bash "$ROOT/scripts/test-fetch-retries.sh"
 node "$ROOT/scripts/test-daily-candidates.js" "$T"
 echo 'test-daily-reuse: PASS'

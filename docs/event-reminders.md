@@ -30,18 +30,21 @@
 - 成功加载 canonical 时更新已有记录的快照，保留未到期笔记和人工完成。明确撤回的边界覆盖旧精确边界；无效时间撤为 `null`。加载失败不当作撤回。
 - 普通校准和 note/completion 写入使用记录中最新成功加载的快照；老标签页不会把它自己的旧 canonical 时间每 30 秒写回，或依旧截止提前删除。显式成功数据加载才重新声明时间权威。
 - canonical 暂缺：最后确认的有限 close 仍能清理数月前已被留存机制删掉的活动；没有可靠 close 则保留待核实。
-- 每次单条修改重新读 key，并在写前核对；合并 note/completion 字段，冲突有限重读。相同活动同时编辑按最后成功写入处理。autosave 带 `token`，删除/重新标星后旧输入不能复活记录；持续冲突保留输入并提示未保存。
+- **所有写路径共享同源 Web Locks 排他锁 `pogo-event-reminders:v1:`**：标星、取消、笔记、完成、到期清理、成功 canonical 快照、v0 迁移和恢复重试都先拿锁。锁内同步执行最新读取、token / 时间判定、字段合并及最终 set/remove，中间不等待另一操作。单标签队列或 get→set 核对本身不是跨标签 CAS。
+- 正确性：同一时刻最多一个协议 writer。若旧笔记先取得锁，则其写入先完成，随后取消/到期删除；若删除先完成，则笔记锁内重新读取不到旧 token，拒绝写入。删除后重标星的新 token 同样拒绝旧输入；同条 note/completion 合并锁内最新记录，不同活动保留独立 key。
+- **兼容限制**：需要安全上下文（HTTPS，测试 localhost）且有 `navigator.locks.request` / AbortSignal。能力缺失、调用拒绝或排队 5 秒超时返回 `reason:"locking", persisted:false`，不修改个人记录、不走无锁回退；UI 明示未写入，草稿留待编辑/失焦重试。关闭持锁标签由浏览器释放锁，无持久租约。上线后旧版本已打开标签必须刷新；此保证针对使用同一协议的页面，不能约束旧代码/开发者工具直接写 localStorage。
+- 获取锁失败时，显式成功加载的 canonical 等待下一次受保护操作重试，在清理/人工修改前应用；成功应用后普通 refresh 不重复声明旧 canonical 权威。存储读取/写入失败仍走原会话 overlay，只在实际落盘后报告 persisted。
 - 拒写/读失败保留会话状态并明确提示未持久化。存储恢复时可重试尚未落盘的删除；另一标签成功写入的新 incarnation 优先。无法写存储时不能承诺磁盘字节已删除，下次打开仍会按已知 close 重试清理。
-- 损坏/不支持版本的 key 原样隔离，不覆盖，不阻塞 TODO 或整站。仅支持已知旧 envelope `pogo-event-reminders={v:0,events:{id:{starredAt,completedAt,note,name?,enName?,time?}}}`：逐条迁移，不覆盖 v1；未知旧格式保留待核实，裸 `closeAt` 不作为时间证据。
+- 损坏/不支持版本的 key 原样隔离，不覆盖，不阻塞 TODO 或整站。仅支持已知旧 envelope `pogo-event-reminders={v:0,events:{id:{starredAt,completedAt,note,name?,enName?,time?}}}`：在同一锁内逐条迁移，不覆盖 v1；删除同时清理已知 v0 中对应条目，防止部分迁移后复活；未知旧格式保留待核实，裸 `closeAt` 不作为时间证据。
 
 ## 前端接口与调度
 
 所有实现仍在受保护的 `public/app.js`；纯函数/存储/调度接口 Node-exported：
 
 - `reminderTimeSnapshot`、`decodeReminder`、`deriveEventReminder`
-- `createEventReminderStore({storage?,now?,viewerTimeZone?,token?})`：`setEvents(events,englishNames)` / `sync` / `refresh` / `get` / `entries` / `view` / `status` / `star` / `remove` / `note` / `complete`。写接口返回 `{ok,persisted,record}` 或 `{ok:false,reason}`；编辑和删除可带预期 token。
-- `createReminderNoteSaver(store,{setTimeout?,clearTimeout?,delay?,onSave?})`：350ms debounce，composition 暂停；失焦、关闭、pagehide 会 flush。到期/跨标签删除取消草稿。
-- `createReminderScheduler({refresh,boundaries,now?,setTimeout?,clearTimeout?,isHidden?})`：单一最近边界 timeout、最长 30 秒校准；跨过渲染期间边界立即补算。后台停调度/动画，visibilitychange/pageshow/focus/storage/数据加载立即补算，不保证关页后执行。
+- `createEventReminderStore({storage?,locks?,now?,viewerTimeZone?,token?})`：`ready` 是初始迁移 Promise；`setEvents(events,englishNames)` / `refresh` / `star` / `remove` / `note` / `complete` 都返回 Promise，调用方须 await。人工写接口 resolve `{ok,persisted,record}` 或 `{ok:false,reason}`；只有 `persisted:true` 表示写/删成功落盘。`sync` / `get` / `entries` / `view` / `status` 保持同步只读；status 新增 `lockingUnavailable`。测试注入同一个锁管理器，不用无锁默认 fixture；编辑和删除带预期 token。
+- `createReminderNoteSaver(store,{setTimeout?,clearTimeout?,delay?,onSave?})`：350ms debounce，composition 暂停；`flush` / `flushAll` 返回 Promise。同一草稿重复 flush 共享 flight，等待中不显示已保存；rejection 保留输入并提示未保存，较新/取消的草稿不受旧回调影响。失焦、关闭抽屉、visibility/pagehide 发起 flush；pagehide/关页仅尽力尝试，**浏览器不保证等待异步保存**。正常输入和失焦及时保存，但最后一瞬关页可能丢失尚未确认的输入。到期/跨标签删除取消草稿。
+- `createReminderScheduler({refresh,boundaries,now?,setTimeout?,clearTimeout?,isHidden?})`：单一最近边界 timeout、最长 30 秒校准；跨过渲染期间边界立即补算。异步 refresh 合并唤醒为一个 flight，pause 不让过时回调重挂计时器；后台停调度/动画，visibilitychange/pageshow/focus/storage/数据加载立即补算，不保证关页后执行。
 
 月历跨周条、chips、长期/PVP 条及明确可映射的 raid badge 只绑定真实 ID；歧义池/不同形态或无 ID fallback 不开放新提醒。隐藏 chips 的 `+N` 是完整列表按钮，也派生隐藏提醒的发光状态。校准只同步节点，不重建月历或编辑器；切语言保留 textarea 节点、输入和状态。桌面 sticky；手机折叠入口吸附，展开面板回到正常流、推下日期，不固定覆盖日期或抽屉关闭按钮。所有正式文案在 `ui.json` 双语 key 中。
 
@@ -50,10 +53,10 @@
 ## 测试
 
 ```bash
-node scripts/test-event-reminders.js
+node scripts/test-event-reminders.js # 包含 test-reminder-concurrency.js
 node scripts/test-event-timing.js
 node scripts/test-spot-atlas-time.js
-bash scripts/test-daily-reuse.sh
+bash scripts/test-daily-reuse.sh # 包含 test-fetch-retries.sh
 bash scripts/test-run-daily.sh
 scripts/preflight.sh
 scripts/validate.sh
@@ -67,4 +70,4 @@ PLAYWRIGHT_MODULE=/workspace/.pi-tmp/browser-tools/node_modules/playwright-core 
   node scripts/test-event-reminders-browser.js
 ```
 
-该脚本本地临时 HTTP、mock canonical/overlay/外链图像、可注入 Date/IANA；1440×1050 / 390×844 实跑持续动画与点击，截图只在 `.pi-tmp/reminder-browser/`。真实 ±1ms 和调度竞争由纯时间 fixtures / fake timers 覆盖，不用冻结的浏览器钟驱动 1ms 无限校准。没有真实模型、发布目标或生产部署。实际结果及历史内容日期门禁说明见 [实现交接](implementation-handoff.md)。
+该脚本还使用同一 context / origin 的多 page + 真实 Web Locks 排队屏障验证笔记/删除竞争、重标星 token、关持锁标签自动释放、5 秒获取超时及能力缺失/拒绝；屏障由测试外部释放，不让持锁者等待另一个同锁写入。该脚本本地临时 HTTP、mock canonical/overlay/外链图像、可注入 Date/IANA；1440×1050 / 390×844 实跑持续动画与点击，截图只在 `.pi-tmp/reminder-browser/`。真实 ±1ms 和调度竞争由纯时间 fixtures / fake timers 覆盖，不用冻结的浏览器钟驱动 1ms 无限校准。没有真实模型、发布目标或生产部署。实际结果及历史内容日期门禁说明见 [实现交接](implementation-handoff.md)。

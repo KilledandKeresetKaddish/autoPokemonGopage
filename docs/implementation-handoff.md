@@ -1,5 +1,16 @@
 # 实现交接
 
+## PR #36 审查修复（2026-10-13 UTC）
+
+- 基线确认：宿主仓库挂载 `/workspace`，remote 为 `KilledandKeresetKaddish/autoPokemonGopage`；PR 仍 OPEN，head `37a4b73` / `feat/daily-timing-personal-reminders`，base `main`。工作树初始干净，无后续修复提交；保留任务 1–4 与集成的五个提交，仅追加本轮修复。
+- **删除/笔记竞争**：先在生产 store 的最后 getItem→setItem 间隙注入另一标签 remove，旧实现双方成功却留下旧 token/笔记。改用同源 Web Locks 排他锁包住所有读取、token/时间判断、合并与写/删（含清理、canonical、迁移、重试）；无无锁回退。删除若后执行则最后清空，若先执行则旧 token 锁内重读失败，新 incarnation 也不被旧 autosave 覆盖。v1 格式/既有个人数据不变；部分 v0 迁移的对应行随删除清理。接口改为 Promise，UI/IME/失焦/关抽屉/语言/storage/scheduler 全部适配，等待/失败不报已保存，旧回调不挂回取消草稿。锁失败的显式 canonical 更新先重试再清理。
+- **Hub 搜索覆盖**：四源 available 的指定空壳 fixture 旧为 complete-empty；现在没有可识别 article entries 的正文（包括无结构 `No results found.`）保守 partial，不伪造网络失败或可信零结果。正常候选保留；其他来源 stdout、schema/exit 0/1/2 和官网防护不变。TTL body 每次由新 parser 判断；同轮 report key 含 parser hash，旧 complete 缓存不能绕过。
+- **共享 retry budget**：两个失败图片 URL 的 mock 旧为 4 次请求/2 retry，新为 3/1。图片 HEAD 与 FlareSolverr 都在父 shell 调 transport，临时文件再交 tr/grep/jq；保留 transport 错误、解析/空文件失败、cleanup、原子缓存与 last-good。等价 solver、多 URL、budget=0、恢复成功、预算耗尽后的首次请求、真实 fetch→daily-run-record summary 与零网络 cache hit 均有离线断言。
+- **实际验收全部 exit 0**：`node scripts/test-event-reminders.js`（含 `test-reminder-concurrency.js`，另独立跑过）、`node scripts/test-event-timing.js`、`node scripts/test-spot-atlas-time.js`、`bash scripts/test-daily-reuse.sh`（含 `test-fetch-retries.sh`，另独立跑过）、`bash scripts/test-run-daily.sh`；修改 JS/Bash 语法、`git diff --check`、全部 **38** protected hashes。runner 环境 getpid 与 `/proc/self/stat` 一致，进程组/writerStopped 检查未改。
+- **浏览器已执行**：`PLAYWRIGHT_MODULE=/workspace/.pi-tmp/browser-tools/node_modules/playwright-core node scripts/test-event-reminders-browser.js`，现有 `/usr/bin/chromium`；同一 context/origin 的真实多 page 与外部释放的锁屏障，让 note/remove 同时处于排队，不是顺序成功调用。验证最终删除、重标星、持锁标签关闭、真实 5 秒排队取消、能力缺失/拒绝、未保存输入恢复；原桌面/390px 极光、IME/语言/expiry/TODO/Atlas 等仍通过，零 page errors。截图/依赖/日志不提交。本次沙箱缺 CJK 字体（仅 DejaVu），截图不能证明中文所有字形可读；文字内容、交互、动画和几何断言已执行，不将字体环境问题混为代码回归。
+- **真实日期门禁**：2026-10-13 UTC `scripts/preflight.sh` / `scripts/validate.sh` PASS（180 活动，既有 5 个 long-chip WARN），没有固定日期/放宽门禁/内容清理。static `app.js?v=24`，保护清单新增两个测试，未减少原 36 项保护；canonical/state、TODO、Spot Atlas、五个 AI bodies 未改。
+- **限制/交付**：需要 HTTPS/localhost 的 Web Locks/AbortSignal；缺失、拒绝或排队超时明确不写入，关闭页面不保证等待异步保存。旧版本已打开标签需刷新为同一协议。未测 Safari/Firefox、真实手机/系统 IME，未跑真实模型/生产 solver、VPS/Caddy/cron/publish。PR 描述保留原文并追加验收；GitHub review thread 不自动 resolved，不声称状态被测试修复。普通 push 同一 PR，不合并、不部署。
+
 ## 任务 5/5：整体验收与 GitHub PR 交付（2026-10-13 UTC）
 
 ### 集成范围与额外修复

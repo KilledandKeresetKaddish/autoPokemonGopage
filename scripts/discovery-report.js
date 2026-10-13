@@ -310,7 +310,13 @@ function buildSearchReport(input) {
     }
   });
   parse('hub', () => {
-    for (const article of articleLinks(readText(sources.hub.path), 'pokemongohub.net')) add('hub', article.title, article.url);
+    const articles = articleLinks(readText(sources.hub.path), 'pokemongohub.net');
+    if (!articles.length) {
+      // No verified zero-result structure yet: readable JS shells are not coverage.
+      sources.hub.status = 'partial';
+      sources.hub.reason = 'search page had no verified article entries or recognized zero-result structure';
+    }
+    for (const article of articles) add('hub', article.title, article.url);
   });
   parse('official', () => {
     const articles = articleLinks(readText(sources.official.path), 'pokemongo.com');

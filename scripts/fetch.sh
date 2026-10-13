@@ -164,13 +164,19 @@ fetch_tier() {
     jina)
       retry_transport "$url" curl -fsSL --max-time 120 "${JINA_PREFIX}${url}" -o "$tmp" ;;
     flaresolverr)
-      # Preserve the solver response check after transport retries: a 200 JSON
-      # shell is not a usable named/detail body.
+      # Transport must run in this shell: a pipeline/substitution loses the shared budget.
+      local response rc=0
+      response="$(mktemp "$RAW/.solver.XXXXXX")" || return 1
       retry_transport "$url" curl -fsS --max-time 150 -X POST "$FLARESOLVERR_URL" \
         -H 'Content-Type: application/json' \
         -d "$(jq -nc --arg u "$url" '{"cmd":"request.get","url":$u,"maxTimeout":120000}')" \
-        | jq -r '.solution.response // empty' > "$tmp"
-      [ -s "$tmp" ] ;;
+        -o "$response" || rc=$?
+      if [ "$rc" = 0 ]; then
+        jq -er '.solution.response // empty' "$response" > "$tmp" || rc=$?
+        if [ "$rc" = 0 ] && [ ! -s "$tmp" ]; then rc=1; fi
+      fi
+      rm -f "$response"
+      return "$rc" ;;
     direct)
       fetch_plain "$url" "$tmp" ;;
     *)
@@ -528,14 +534,20 @@ fetch_url() {
       if [ "$URL_MODE" = cached ] || [ "$URL_MODE" = info ] || [ "${URL_OUTPUT:-body}" = meta ]; then
         echo "Image has no body cache/metadata; use url for HEAD: $url" >&2; return 2
       fi
-      if retry_transport "$url" curl -fsSIL -A "$UA" --max-time 45 "$url" | tr -d '\r' \
-           | grep -iE '^(HTTP/|content-type:|content-length:)'; then
+      local headers head_rc=0
+      headers="$(mktemp "$RAW/.head.XXXXXX")" || { fetch_metric "$url" failed "$URL_MODE" 0; return 1; }
+      retry_transport "$url" curl -fsSIL -A "$UA" --max-time 45 "$url" > "$headers" || head_rc=$?
+      if [ "$head_rc" = 0 ]; then
+        tr -d '\r' < "$headers" | grep -iE '^(HTTP/|content-type:|content-length:)' || head_rc=$?
+      fi
+      rm -f "$headers"
+      if [ "$head_rc" = 0 ]; then
         fetch_metric "$url" success "$URL_MODE" 1
-        return 0
       else
         fetch_metric "$url" failed "$URL_MODE" 1
-        echo "FAIL url <- $url  (image HEAD failed — image likely absent)" >&2; return 1
-      fi ;;
+        echo "FAIL url <- $url  (image HEAD failed — image likely absent)" >&2
+      fi
+      return "$head_rc" ;;
   esac
   local key meta body hash stamp age tmp old_body invalid_body cache_reason path title check_rc run_outcome emit_rc=0
   local body_new=0 body_preexisting=0

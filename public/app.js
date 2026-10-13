@@ -480,7 +480,7 @@ async function loadData() {
     state.locations = null;
     state.locationsError = e && e.message || String(e);
   }
-  if (reminders && eventsLoadedThisTime) reminders.setEvents(state.events, state.en?.events);
+  if (reminders && eventsLoadedThisTime) await reminders.setEvents(state.events, state.en?.events);
   reminderScheduler?.wake();
 }
 
@@ -1766,18 +1766,55 @@ function deriveEventReminder(record, canonical, now, viewerTimeZone) {
     canComplete:flagged && !completed && time.status === 'active', canUndo:completed,
     hasCanonical:!!canonical };
 }
-// Per-event keys avoid cross-event lost updates even with simultaneous tabs.
-// Every mutation rereads that key; an incarnation token prevents a delayed note
-// from recreating a deleted (or deleted-and-restarred) reminder. No shared index.
+// All writers (including migration/cleanup) share one origin-wide Web Lock.
+// The synchronous critical section covers read, token/time checks, merge and write.
+// Per-event keys and incarnation tokens remain compatible; no unlocked fallback.
 function createEventReminderStore(options = {}) {
   const now = options.now || Date.now;
   const zone = options.viewerTimeZone || (() => detectBrowserTimeZone().timeZone);
   const storage = () => typeof options.storage === 'function' ? options.storage() : (options.storage || localStorage);
   const token = options.token || (() => globalThis.crypto?.randomUUID?.() || `${now()}-${Math.random().toString(36).slice(2)}`);
   let records = new Map(), canonical = new Map(), names = new Map(), rawById = new Map();
-  let unavailable = false, legacyIsolated = false;
+  let unavailable = false, legacyIsolated = false, lockingUnavailable = false, pendingSource = null;
   const volatile = new Map(), isolated = new Set();
   const key = id => REMINDER_PREFIX + encodeURIComponent(id);
+  async function locked(operation) {
+    let timer;
+    try {
+      const manager = Object.hasOwn(options, 'locks') ? options.locks : globalThis.navigator?.locks;
+      if (!manager?.request) throw new Error('Web Locks unavailable');
+      const controller = new AbortController();
+      // Only queued acquisition can time out. The granted callback never awaits.
+      timer = setTimeout(() => controller.abort(), 5000);
+      return await manager.request(REMINDER_PREFIX, { mode:'exclusive', signal:controller.signal }, () => {
+        clearTimeout(timer); lockingUnavailable = false;
+        return operation();
+      });
+    } catch (e) {
+      lockingUnavailable = true;
+      return { ok:false, persisted:false, reason:'locking' };
+    } finally { clearTimeout(timer); }
+  }
+  function transact(operation) {
+    return locked(() => {
+      if (pendingSource) {
+        setEvents(pendingSource.events, pendingSource.englishNames);
+        pendingSource = null;
+      }
+      return operation();
+    });
+  }
+  function clearLegacyId(id, s) {
+    const raw = s.getItem(REMINDER_LEGACY_KEY);
+    if (!raw) return;
+    let old;
+    try { old = JSON.parse(raw); } catch { return; }
+    if (old?.v !== 0 || !old.events || typeof old.events !== 'object' || Array.isArray(old.events) || !Object.hasOwn(old.events, id)) return;
+    // A partial/failed v0 migration must not later recreate a successfully deleted row.
+    delete old.events[id];
+    if (Object.keys(old.events).length) s.setItem(REMINDER_LEGACY_KEY, JSON.stringify(old));
+    else s.removeItem(REMINDER_LEGACY_KEY);
+  }
   function accept(id, raw) {
     const r = raw === null ? null : decodeReminder(raw, id);
     if (raw !== null && !r) isolated.add(id); else isolated.delete(id);
@@ -1816,6 +1853,7 @@ function createEventReminderStore(options = {}) {
       const s = storage();
       const latest = s.getItem(key(id));
       if (latest !== raw) { accept(id, latest); return { ok:false, reason:'changed' }; }
+      if (!next) clearLegacyId(id, s);
       if (body !== raw) { if (next) s.setItem(key(id), body); else s.removeItem(key(id)); }
       rawById.set(id, body); volatile.delete(id); unavailable = false;
     } catch (e) { volatile.set(id, { baseRaw:raw, record:next }); unavailable = true; }
@@ -1895,39 +1933,54 @@ function createEventReminderStore(options = {}) {
       if (complete) s.removeItem(REMINDER_LEGACY_KEY); else legacyIsolated = true;
     } catch (e) { legacyIsolated = true; } // unknown versions remain isolated, never touch TODO
   }
-  sync(); migrate(); sync();
+  sync();
+  const ready = locked(() => { migrate(); sync(); });
   return {
-    sync, refresh, setEvents,
+    ready, sync, refresh:() => transact(refresh),
+    setEvents(events, englishNames) {
+      if (Array.isArray(events)) pendingSource = { events, englishNames };
+      return transact(() => {}); // a failed acquisition retains this explicit load for retry
+    },
     get:id => records.get(id) || null,
     entries:() => [...records.entries()],
     view:id => viewFor(id, records.get(id)),
-    status:() => ({ unpersisted:unavailable || volatile.size > 0, isolated:legacyIsolated || isolated.size > 0 }),
-    star:id => mutate(id, null, r => r || (canonical.has(id) ? { v:1, id, token:token(), starredAt:now(),
-      completedAt:null, note:'', names:names.get(id), time:reminderTimeSnapshot(canonical.get(id)) } : undefined)),
-    remove:(id, expectedToken) => mutate(id, expectedToken, r => r ? null : undefined),
-    note:(id, text, expectedToken) => mutate(id, expectedToken, r => r ? { ...r, note:reminderNote(text) } : undefined),
-    complete:(id, done, expectedToken) => mutate(id, expectedToken, (r, view) =>
-      r && (done ? view.canComplete : view.canUndo) ? { ...r, completedAt:done ? now() : null } : undefined),
+    status:() => ({ unpersisted:unavailable || volatile.size > 0, isolated:legacyIsolated || isolated.size > 0, lockingUnavailable }),
+    star:id => transact(() => mutate(id, null, r => r || (canonical.has(id) ? { v:1, id, token:token(), starredAt:now(),
+      completedAt:null, note:'', names:names.get(id), time:reminderTimeSnapshot(canonical.get(id)) } : undefined))),
+    remove:(id, expectedToken) => transact(() => mutate(id, expectedToken, r => r ? null : undefined)),
+    note:(id, text, expectedToken) => transact(() => mutate(id, expectedToken, r => r ? { ...r, note:reminderNote(text) } : undefined)),
+    complete:(id, done, expectedToken) => transact(() => mutate(id, expectedToken, (r, view) =>
+      r && (done ? view.canComplete : view.canUndo) ? { ...r, completedAt:done ? now() : null } : undefined)),
   };
 }
 function createReminderNoteSaver(store, options = {}) {
   const later = options.setTimeout || setTimeout, cancel = options.clearTimeout || clearTimeout;
   const drafts = new Map();
   function flush(id) {
-    const draft = drafts.get(id); if (!draft || draft.composing) return;
-    cancel(draft.timer); drafts.delete(id);
-    const result = store.note(id, draft.note, draft.token);
-    if (result.reason === 'changed') { draft.timer = null; drafts.set(id, draft); }
-    if (options.onSave) options.onSave(id, result);
-    return result;
+    const draft = drafts.get(id); if (!draft || draft.composing) return Promise.resolve();
+    if (draft.flight) return draft.flight;
+    cancel(draft.timer); draft.timer = null;
+    draft.flight = Promise.resolve().then(() => store.note(id, draft.note, draft.token)).catch(() =>
+      ({ ok:false, persisted:false, reason:'locking' })).then(result => {
+      if (drafts.get(id) === draft) {
+        draft.flight = null;
+        if (result.ok || ['missing','expired','unavailable'].includes(result.reason)) drafts.delete(id);
+        else draft.failed = true; // retain input; retry on edit/blur, not a busy loop
+        options.onSave?.(id, result, draft.token);
+      }
+      return result;
+    });
+    return draft.flight;
   }
   return {
     input(id, token, note, composing = false) {
-      const old = drafts.get(id); if (old) cancel(old.timer);
+      const old = drafts.get(id);
+      if (old && old.token === token && old.note === note && old.composing === composing && !old.failed) return;
+      if (old) cancel(old.timer);
       const draft = { token, note, composing, timer:null }; drafts.set(id, draft);
       if (!composing) draft.timer = later(() => flush(id), options.delay ?? 350);
     },
-    flush, flushAll:() => [...drafts.keys()].forEach(flush),
+    flush, flushAll:() => Promise.all([...drafts.keys()].map(flush)),
     pending:id => drafts.get(id),
     cancel(id) { const draft = drafts.get(id); if (draft) cancel(draft.timer); drafts.delete(id); },
     cancelMissing() {
@@ -1939,16 +1992,27 @@ function createReminderNoteSaver(store, options = {}) {
 // now again after wake; no ticking counters or per-event animation timers.
 function createReminderScheduler(options) {
   const now = options.now || Date.now, later = options.setTimeout || setTimeout, cancel = options.clearTimeout || clearTimeout;
-  let timer = null;
-  function pause() { if (timer !== null) cancel(timer); timer = null; }
+  let timer = null, running = null, requested = false, generation = 0;
+  function pause() { generation++; requested = false; if (timer !== null) cancel(timer); timer = null; }
   function wake() {
-    pause();
-    if (options.isHidden?.()) return;
-    const before = now();
-    options.refresh();
-    const current = now(), future = options.boundaries().filter(t => Number.isFinite(t) && t > before);
-    const delay = Math.max(1, Math.min(30000, ...future.map(t => t - current)));
-    timer = later(wake, delay);
+    if (options.isHidden?.()) { pause(); return Promise.resolve(); }
+    if (timer !== null) cancel(timer); timer = null;
+    requested = true;
+    if (running) return running;
+    running = (async () => {
+      do {
+        requested = false;
+        const before = now(), epoch = generation;
+        await options.refresh();
+        if (options.isHidden?.() || epoch !== generation) continue;
+        if (!requested) {
+          const current = now(), future = options.boundaries().filter(t => Number.isFinite(t) && t > before);
+          const delay = Math.max(1, Math.min(30000, ...future.map(t => t - current)));
+          timer = later(() => wake(), delay);
+        }
+      } while (requested);
+    })().catch(error => { console.error('Reminder refresh failed', error); }).finally(() => { running = null; });
+    return running;
   }
   return { wake, pause };
 }
@@ -2411,6 +2475,7 @@ function setupSpots() {
 
 /* ---------- Reminder UI (notes stay plain text and keep their editor node) ---------- */
 let reminders = null, reminderSaver = null, reminderScheduler = null, detailEvent = null, reminderViewerZone = 'UTC';
+const reminderActions = new Set();
 const reminderCards = new Map(), reminderDisplayFormatters = new Map();
 function reminderInstant(instant) {
   const zone = reminderViewerZone, key = state.locale + '/' + zone;
@@ -2450,7 +2515,8 @@ function reminderStatus(id) {
 function reminderNotice() {
   if (!reminders) return '';
   const status = reminders.status();
-  return [status.unpersisted ? i18n('reminder.storageFailed') : '', status.isolated ? i18n('reminder.isolated') : ''].filter(Boolean).join(' ');
+  return [status.lockingUnavailable ? i18n('reminder.lockingFailed') : '', status.unpersisted ? i18n('reminder.storageFailed') : '',
+    status.isolated ? i18n('reminder.isolated') : ''].filter(Boolean).join(' ');
 }
 function bindCalendarReminder(node, ids) {
   node._reminderIds = [...new Set((Array.isArray(ids) ? ids : [ids]).filter(id => typeof id === 'string' && id))];
@@ -2483,18 +2549,24 @@ function flushReminderEditor() {
   }
   reminderSaver?.flushAll();
 }
-function reminderAction(id, action) {
-  if (!reminders) return;
-  reminders.refresh(); reminderSaver.cancelMissing();
-  const r = reminders.get(id);
-  if (action === 'star') {
-    if (r) {
-      const draft = reminderSaver.pending(id);
-      if ((draft?.note || r.note) && !confirm(i18n('reminder.confirmRemove'))) return;
-      reminderSaver.cancel(id); reminders.remove(id, r.token);
-    } else reminders.star(id);
-  } else if (r) reminders.complete(id, r.completedAt === null, r.token);
-  reminderScheduler.wake();
+async function reminderAction(id, action) {
+  if (!reminders || reminderActions.has(id)) return;
+  reminderActions.add(id); syncReminderUi();
+  try {
+    await reminders.refresh(); reminderSaver.cancelMissing();
+    const r = reminders.get(id);
+    if (action === 'star') {
+      if (r) {
+        const draft = reminderSaver.pending(id);
+        if ((draft?.note || r.note) && !confirm(i18n('reminder.confirmRemove'))) return;
+        reminderSaver.cancel(id); await reminders.remove(id, r.token);
+      } else await reminders.star(id);
+    } else if (r) await reminders.complete(id, r.completedAt === null, r.token);
+  } catch (error) { console.error('Reminder action failed', error); }
+  finally {
+    reminderActions.delete(id);
+    await reminderScheduler.wake();
+  }
 }
 function createReminderControls(id) {
   const box = document.createElement('section'); box.className = 'detail-reminder'; box.dataset.id = id;
@@ -2524,10 +2596,10 @@ function syncReminderControls(box) {
   box.querySelector('.reminder-title').textContent = i18n('reminder.personal');
   const star = box.querySelector('.reminder-star'), done = box.querySelector('.reminder-done');
   star.textContent = i18n(r ? 'reminder.unstar' : 'reminder.star');
-  star.disabled = v.expired || (!r && !v.hasCanonical);
+  star.disabled = reminderActions.has(id) || v.expired || (!r && !v.hasCanonical);
   star.setAttribute('aria-pressed', r ? 'true' : 'false');
   done.textContent = i18n(v.completed ? 'reminder.undo' : 'reminder.done');
-  done.disabled = !(v.canComplete || v.canUndo); done.title = status[0];
+  done.disabled = reminderActions.has(id) || !(v.canComplete || v.canUndo); done.title = status[0];
   box.querySelector('.reminder-time').textContent = status.join('\n');
   const label = box.querySelector('.reminder-note-editor'), input = label.querySelector('textarea');
   label.hidden = !r; input.disabled = !r;
@@ -2538,7 +2610,9 @@ function syncReminderControls(box) {
     input.value = r?.note || '';
   box.dataset.token = r?.token || '';
   const saved = box.querySelector('.reminder-save');
-  saved.textContent = r ? i18n(reminderSaver.pending(id) ? 'reminder.saving' : (reminders.status().unpersisted ? 'reminder.sessionOnly' : 'reminder.saved')) : '';
+  const draft = reminderSaver.pending(id);
+  saved.textContent = r ? i18n(draft?.failed ? 'reminder.unsaved' : draft ? 'reminder.saving'
+    : reminders.status().unpersisted ? 'reminder.sessionOnly' : 'reminder.saved') : '';
   box.querySelector('.reminder-warning').textContent = [reminderNotice(),
     box.dataset.saveConflict && r ? i18n('reminder.editConflict') : ''].filter(Boolean).join(' ');
 }
@@ -2555,8 +2629,9 @@ function createReminderCard(id) {
   });
   card.querySelector('.reminder-star').addEventListener('click', e => { e.stopPropagation(); reminderAction(id, 'star'); });
   card.querySelector('.reminder-done').addEventListener('click', e => {
-    e.stopPropagation(); reminderAction(id, 'complete');
-    const group = $('#reminder-completed'); if (group.contains(card) && !group.open) group.querySelector('summary').focus();
+    e.stopPropagation(); reminderAction(id, 'complete').then(() => {
+      const group = $('#reminder-completed'); if (group.contains(card) && !group.open) group.querySelector('summary').focus();
+    });
   });
   return card;
 }
@@ -2587,13 +2662,13 @@ function renderReminderSidebar() {
       card.querySelector('.reminder-time').textContent = reminderStatus(id).join('\n');
       const note = card.querySelector('.reminder-note-preview'); note.textContent = record.note; note.hidden = !record.note;
       const star = card.querySelector('.reminder-star'), done = card.querySelector('.reminder-done');
-      star.textContent = i18n('reminder.unstar');
+      star.textContent = i18n('reminder.unstar'); star.disabled = reminderActions.has(id);
       star.setAttribute('aria-label', i18n('reminder.removeNamed', { name:card.querySelector('.reminder-open').textContent }));
       done.textContent = i18n(view.completed ? 'reminder.undo' : 'reminder.done');
       done.setAttribute('aria-label', i18n(view.completed ? 'reminder.undoNamed' : 'reminder.completeNamed', { name:card.querySelector('.reminder-open').textContent }));
       const time = card.querySelector('.reminder-time'); time.id = 'reminder-status-' + encodeURIComponent(id);
       done.setAttribute('aria-describedby', time.id);
-      done.disabled = !(view.canComplete || view.canUndo); done.title = reminderStatus(id)[0];
+      done.disabled = reminderActions.has(id) || !(view.canComplete || view.canUndo); done.title = reminderStatus(id)[0];
       if (list.children[index] !== card) list.insertBefore(card, list.children[index] || null);
     });
   }
@@ -2601,21 +2676,24 @@ function renderReminderSidebar() {
   $('#reminder-empty').hidden = entries.length > 0;
   $('#reminder-notice').textContent = reminderNotice();
 }
-function refreshReminderUi() {
+async function refreshReminderUi() {
   reminderViewerZone = detectBrowserTimeZone().timeZone;
-  reminders.refresh(); reminderSaver.cancelMissing();
+  await reminders.refresh(); reminderSaver.cancelMissing();
+  syncReminderUi();
+}
+function syncReminderUi() {
   document.querySelectorAll('[data-reminder-event]').forEach(syncCalendarReminder);
   renderReminderSidebar();
   document.querySelectorAll('.detail-reminder').forEach(syncReminderControls);
 }
-function setupReminders() {
+async function setupReminders() {
   reminderViewerZone = detectBrowserTimeZone().timeZone;
   reminders = createEventReminderStore({ viewerTimeZone:() => reminderViewerZone });
-  reminders.setEvents(state.events, state.en?.events);
-  reminderSaver = createReminderNoteSaver(reminders, { onSave:(id, result) => {
+  await reminders.setEvents(state.events, state.en?.events);
+  reminderSaver = createReminderNoteSaver(reminders, { onSave:(id, result, token) => {
     const box = document.querySelector('.detail-reminder');
-    if (box?.dataset.id === id) box.dataset.saveConflict = result.reason === 'changed' ? 'true' : '';
-    if (!document.hidden) refreshReminderUi();
+    if (box?.dataset.id === id && box.dataset.token === token) box.dataset.saveConflict = result.reason === 'changed' ? 'true' : '';
+    if (!document.hidden) reminderScheduler.wake();
   } });
   reminderScheduler = createReminderScheduler({
     refresh:refreshReminderUi, isHidden:() => document.hidden,
@@ -3085,7 +3163,7 @@ async function init() {
   setupEventLinks();
   setupLanguage();
   await loadData();
-  setupReminders();
+  await setupReminders();
   setupTodo();
   setupMega();
   setupWorldClock();

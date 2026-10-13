@@ -261,7 +261,8 @@ search_mode() {
   work="$(mktemp -d "$DISC/.search.XXXXXX")" || { echo 'discover: FAILED — cannot create work directory' >&2; return 2; }
   input="$work/input.json"
   trap 'rm -rf "$work"' RETURN
-  key="$(printf '%s' "$query" | sha256sum | cut -d' ' -f1)"
+  # Do not reuse reports classified by an older parser; exact-URL bodies keep their TTL.
+  key="$(printf '%s\n%s' "$query" "$(sha256sum "$REPORTER" | cut -d' ' -f1)" | sha256sum | cut -d' ' -f1)"
   cached_report="${RUN_CACHE:+$RUN_CACHE/search-$key.json}"
   if [ -n "$cached_report" ] && jq -e --arg q "$query" '.version == 1 and .mode == "search" and .query == $q and (.status == "complete" or .status == "partial" or .status == "failed")' "$cached_report" >/dev/null 2>&1; then
     cp "$cached_report" "$work/report" || return 2
