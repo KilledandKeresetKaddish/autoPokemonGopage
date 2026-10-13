@@ -6,7 +6,7 @@ mkdir -p "$ROOT/.pi-tmp"
 T=$(mktemp -d "$ROOT/.pi-tmp/daily-reuse.XXXXXX")
 trap 'rm -rf "$T"' EXIT
 mkdir -p "$T/scripts" "$T/bin" "$T/data/raw" "$T/public/data"
-cp "$ROOT/scripts/fetch.sh" "$ROOT/scripts/discover.sh" "$ROOT/scripts/discovery-report.js" "$ROOT/scripts/daily-candidates.js" "$T/scripts/"
+cp "$ROOT/scripts/fetch.sh" "$ROOT/scripts/discover.sh" "$ROOT/scripts/discovery-report.js" "$ROOT/scripts/daily-candidates.js" "$ROOT/scripts/daily-run-record.js" "$T/scripts/"
 cp "$ROOT/public/app.js" "$T/public/app.js" # shared browser/Node event timing contract
 export FIXTURE="$T" TIER_METHOD=jina PATH="$T/bin:$PATH"
 cat > "$T/bin/date" <<'SH'
@@ -35,6 +35,7 @@ while [ "$#" -gt 0 ]; do
   esac
 done
 [ ! -e "$FIXTURE/fail" ] || exit 22
+[ ! -e "$FIXTURE/fail-once" ] || { rm "$FIXTURE/fail-once"; exit 22; }
 if [ "$head" = 1 ]; then printf 'HTTP/2 200\r\ncontent-type: image/png\r\ncontent-length: 123\r\n'; exit; fi
 [ -n "$out" ] || exit 98
 case "$url" in
@@ -268,6 +269,24 @@ DISCOVER_RUN_ID=shared-search scripts/discover.sh --json 'shared fixture' > "$T/
 eq "$(count)" "$after_first"
 [ "$after_first" -ge "$before" ] || fail 'shared search request counter regressed'
 
+# A readable official shell is not complete keyword coverage, even when every
+# transport succeeds. A real index with no matching title is complete-empty.
+node <<'JS'
+const assert = require('node:assert/strict'), fs = require('node:fs');
+const { buildSearchReport } = require('./scripts/discovery-report.js');
+const paths = { leekduck:'empty-feed.json', hub:'empty-search.txt', official:'official-shell.txt', fandom:'empty-fandom.json' };
+fs.writeFileSync(paths.leekduck, '[]'); fs.writeFileSync(paths.hub, 'No results found.');
+fs.writeFileSync(paths.official, '[Home](https://pokemongo.com/)');
+fs.writeFileSync(paths.fandom, '{"query":{"search":[]}}');
+const input = { query:'unmatched fixture', sources:Object.fromEntries(Object.entries(paths).map(([name,path])=>[name,{available:true,path}])) };
+const shell = buildSearchReport(input);
+assert.equal(shell.status, 'partial'); assert.equal(shell.sources.official.status, 'partial');
+assert.equal(shell.completeNoCandidates, false); assert.match(shell.sources.official.reason, /news/);
+fs.writeFileSync(paths.official, '[Other news](https://pokemongo.com/news/unrelated/)');
+const index = buildSearchReport(input);
+assert.equal(index.status, 'complete'); assert.equal(index.completeNoCandidates, true);
+JS
+
 # All keyword sources failing is a failed report, not a successful "no candidates".
 rm -f data/raw/events.json
 rm -rf data/raw/details data/raw/discovery/search-cache
@@ -363,6 +382,12 @@ Access denied by origin.'
   '403 Forbidden'
   'Access Denied'
   'Cloudflare Ray ID: 8abcdef012345678'
+  'Title: Not Found
+Warning: Target URL returned error 404: Not Found
+Markdown Content:
+The requested page does not exist.'
+  'Warning: Target URL returned error 410: Gone'
+  'Warning: Target URL returned error 400: Bad Request'
   '{"status":"error","message":"solver unavailable"}'
   '{"error":{"code":403},"message":"upstream denied"}'
 )
@@ -548,5 +573,16 @@ reject scripts/fetch.sh url --cached 'https://raw.githubusercontent.com/PokeAPI/
 reject scripts/fetch.sh url 'https://example.invalid/'
 reject scripts/fetch.sh url --max-age nope "$u"
 eq "$(count)" "$((before + 1))"
+# Feed real retry metrics to the production summary, not a richer mock schema.
+retry_dir="$T/logs/runs/retry"
+mkdir -p "$retry_dir"
+: > "$retry_dir/discover.jsonl"
+touch "$T/fail-once"
+before_retry=$(count)
+FETCH_RETRY_LIMIT=1 FETCH_METRICS_FILE="$retry_dir/fetch.jsonl" scripts/fetch.sh url --force "$u" > "$T/result"
+eq "$(count)" "$((before_retry + 2))"
+jq -es --arg u "$u" 'all(.[]; .url == $u) and any(.[]; .kind == "retry")' "$retry_dir/fetch.jsonl" > /dev/null || fail 'retry metrics did not identify the requested URL'
+node scripts/daily-run-record.js "$retry_dir" failed 1 "$(date -u +%s%3N)"
+jq -e '.network.requests == 2 and .network.retries == 1 and .network.cacheHits == 0' "$retry_dir/summary.json" > /dev/null || fail 'real fetch retries were lost in run metrics'
 node "$ROOT/scripts/test-daily-candidates.js" "$T"
 echo 'test-daily-reuse: PASS'

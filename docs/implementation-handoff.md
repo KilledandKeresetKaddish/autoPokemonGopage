@@ -1,5 +1,27 @@
 # 实现交接
 
+## 任务 5/5：整体验收与 GitHub PR 交付（2026-10-13 UTC）
+
+### 集成范围与额外修复
+- 工作树开始时干净，GitHub 默认分支与远端 HEAD 均为 `main`（`e420502`），无开放 PR。仅纳入其后的任务 1–4 原提交 `634f187` / `252e6a0` / `b582ebe` / `6f86b7e`；从本地 `main` 新建 `feat/daily-timing-personal-reminders`，不改写原提交，不直接推送默认分支。
+- 阅读相对远端 base 的完整改动及关联调用，保留单 agent 六责任顺序、committed-source 基线、失败快照和受保护范围；未新增 release 目录/版本固定/Caddy 配置，未部署 VPS、修改 cron 或运行真实模型日更。来源/runner 测试都在隔离 fixture 仓库中，发布脚本为 mock，不调用生产目标。
+- **来源错误与指标**：官网 keyword 搜索读取到无新闻条目的可读空壳时，改为 partial 而非 complete-empty；Jina 明确 `Target URL returned error` 的全部 4xx/5xx（含 404/410/400）不能成为 last-good；fetch retry 输出真实 `kind:retry` 与请求 URL，不再被 summary 漏计或以临时输出路径冒充 URL。新增离线断言先在修复前失败，再用真实 fetch 指标喂给生产 summary 验证通过。
+- **runner 前置依赖**：缺少 Git/jq/Node/Python 或不支持 Linux/readable `/proc` 时，必须在任何 agent 调用前拒绝。原实现 mock 缺失 Python 的 fixture 仍会启动 CLI，新增回归已复现并修复；恢复提示明确消费 `new --cached --json` 的 partial 报告。README/CLAUDE 列出运行依赖与新日志路径；Python 仅 stdlib，运行脚本/参考资料已纳入保护清单，无新增站点 runtime 包。
+- **真实日期门禁**：按 10/13 UTC 的 90 天线 `2026-07-15` 定向删除两条结束于 7/14 的历史活动及英文条目（任务 4 记录的既有阻塞），同步维护待核实清单；无对应 featured/rich-region/processed-detail 悬挂引用，不修改时间门禁或固定真实验收日期。
+- **形态抽屉衔接**：10/21 超级 Charizard X/Y 轮换包含两形态，原活动只登记 X，新的 form-aware matcher 会回退为空详情。实际读取既有 LeekDuck URL，确认两形态和 shiny；`fetch.sh zh 6` 返回 `NO-ZH-NAME`，继续使用该来源 proper name；确认 Y 的 sprite HEAD 为 200/image。补齐同一 canonical 行的两形态及 English 数组，保留原 ID/时间契约，不把形态核对扩大成推定全球提醒时间。真实 rotation→drawer 映射、纯函数正/负例及桌面/手机浏览器入口均检查通过。
+
+### 本轮实际验收（均 PASS）
+- `bash scripts/test-daily-reuse.sh`（含 daily candidates、error cache、partial 发现、同轮复用及新增真实 retry→summary fixture）。
+- `bash scripts/test-run-daily.sh`（mock CLI，缺失依赖、静默/总时限、TERM/INT、抗 TERM 子进程、停止未知、scope/锁/HEAD/dirty、快照恢复失败、指标及原八文档一次性注入）。
+- `node scripts/test-event-timing.js`（14 valid / 18 invalid、offset/DST/Node TZ/CLI gate）；`node scripts/test-event-reminders.js`（14 timing fixtures ±1ms、UTC+14→UTC−12、完成/撤销/到期、快照撤回、缺失/失败/数月留存、多标签 token/merge、debounce/IME、存储失败及调度）；`node scripts/test-spot-atlas-time.js`（24 个真实点位、25 点扩展及 World Clock）。
+- `PLAYWRIGHT_MODULE=/workspace/.pi-tmp/browser-tools/node_modules/playwright-core node scripts/test-event-reminders-browser.js`：真实 Chromium 1440×1050 / 390×844，本地 HTTP + mock 活动/图片、固定时刻 + CDP IANA；桌面 >6s、手机月历及侧栏各 >3s 动画与几何/点击检查。重新补装沙箱 CJK 字体后读取了实际截图，确认彩虹流光/星芒/外发光与文案可读；reduced-motion、√ 恢复分类/精选、隐藏 +N、长期/PVP/跨周/raid 双形态、刷新/月份/语言/焦点/scroll、前后台、双标签删除中草稿不复活、失败加载/缺失清理/拒写均通过；零 page errors、无 nested buttons。新增已有双账号 TODO fixture（旧勾选/昵称/任务保持）和实际五个 English rich overlays 来回切换断言。截图/原始结果只在忽略的 `.pi-tmp/`。
+- `scripts/preflight.sh` PASS（沿用原有 5 个超长 chip WARN）；`scripts/validate.sh` 在真实 **2026-10-13 UTC** PASS（180 活动，非 date fixture）。Bash/JS/Python 语法、`git diff --check`、全部 36 个 protected hashes PASS。
+- 对照远端 base：TODO 原实现、五个中文 AI bodies、Atlas/featured/Mega/rotations/categories/meta 字节未变；`state.sources` / `state.details` 未推进。个人状态不进入 canonical/state，raw/cache/logs/font/Playwright/截图不提交。
+
+### 尚待人工核实（不是本轮代码门禁阻塞）
+- 180 条保留活动中，22 条双端时间完整、1 条开始已确认但截止未知、4 条日期已确认但时分未确认，153 条仍缺全部时间证据；共 158 条 pending 见 `docs/event-timing-review.md`。未知开始不允许完成；未知截止不自动删除；成功撤回替换快照，加载失败保留最后确认快照，canonical 移除只依可靠旧截止清理。不猜时间或把旧日历字符串视为精确时刻。
+- 未测 Safari/Firefox、真实手机/系统 IME 与存储策略；Chromium 窄视口和 composition fixtures 不等于实机。未运行真实 Pi（CLI event/token 格式仍未验证，usage 保持 null）、生产来源日更、cron/Caddy/VPS。提醒没有关页后后台执行或系统推送承诺；来源漂移/主动 detached writer 沿用 fail-closed 和人工检查策略。合并与部署由用户决定。
+
 ## 任务 4/5：本地标星 / 笔记、月历侧栏与极光爆亮（仅本地开发）
 
 ### 范围与接口

@@ -21,6 +21,10 @@ const events = [
   event('long', 'season', { end:'2026-10-31T17:00:00', longTerm:true }),
   event('pvp', 'go-battle-league', { end:'2026-10-31T17:00:00', pvp:true }),
   event('raid', 'raid-battles', { end:'2026-10-16T17:00:00', pokemon:[{id:150,name:'测试 Boss'}] }),
+  event('raid-forms', 'raid-battles', { start:'2026-10-12T14:00:00',end:'2026-10-16T17:00:00',pokemon:[
+    {id:6,name:'Test form X',hub:'6-Mega_X',sprite:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10034.png'},
+    {id:6,name:'Test form Y',hub:'6-Mega_Y',sprite:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png'},
+  ] }),
   ...Array.from({length:6}, (_,i) => event(`chip-${i}`, 'max-mondays')),
   event('future', 'event', { start:'2026-11-11T14:00:00', end:'2026-11-11T17:00:00' }),
   event('unknown', 'event', { start:'2026-10-11', end:'2026-10-12', timing:{ ...timing,startPrecision:'date',endPrecision:'date' } }),
@@ -29,11 +33,16 @@ const events = [
   event('absolute', 'event', { start:'2026-10-11T00:00:00Z',end:'2026-10-11T03:00:00Z',timing:{ ...timing,mode:'absolute' } }),
 ];
 const originalEvents = JSON.stringify(events);
+const englishRegions = JSON.parse(fs.readFileSync(path.join(root,'public/data/i18n/en.json'),'utf8')).regions;
+const todoFixture = { v:1,day:'2026-10-09',
+  accounts:[{id:'account-a',name:'已有账号 A',cdStart:null,cdView:'dur'}, {id:'account-b',name:'Existing account B',cdStart:null,cdView:'dur'}],
+  tasks:[{id:'task-a',name:'原任务 A'}, {id:'task-b',name:'Existing task B'}],checks:{'account-a|task-a':true,'account-b|task-b':true} };
 let canonical = events, failEvents = false;
 const overlays = Object.fromEntries(events.map(e => [e.id,{name:`Test ${e.id}`,heading:'Test fixture',summary:'',pokemon:e.pokemon.map(p=>p.name),bonuses:[],counters:[],sections:[]}]));
 const rotations = {month:'2026-10',note:'fixture',tracks:[
   {key:'5star',label:'5★',segments:[{start:'2026-10-11',end:'2026-10-16',cn:'Test raid',pokemon:[{id:150,name:'Test Boss'}]}]},
-  {key:'mega',label:'Mega',segments:[{start:'2026-10-11',end:'2026-10-11',cn:'Fallback',pokemon:[{id:6,name:'Fallback',hub:'6-Mega_X'}]}]},
+  {key:'mega',label:'Mega',segments:[{start:'2026-10-11',end:'2026-10-11',cn:'Fallback',pokemon:[{id:6,name:'Fallback',hub:'6-Mega_X'}]},
+    {start:'2026-10-12',end:'2026-10-16',cn:'Test form X / Y',pokemon:events.find(e=>e.id==='raid-forms').pokemon}]},
 ]};
 const open = Date.parse('2026-10-11T00:00:00Z'), close = Date.parse('2026-10-12T05:00:00Z');
 const prefix = 'pogo-event-reminders:v1:';
@@ -62,10 +71,11 @@ const deadline = setTimeout(async () => {
     if (url.pathname === '/data/events.json') return route.fulfill({status:failEvents ? 503 : 200,json:failEvents ? {} : canonical});
     if (url.pathname === '/data/rotations.json') return route.fulfill({json:rotations});
     if (url.pathname === '/data/featured.json') return route.fulfill({json:['red']});
-    if (url.pathname === '/data/i18n/en.json') return route.fulfill({json:{events:overlays,regions:{},categories:{},rotations:{tracks:{}}}});
+    if (url.pathname === '/data/i18n/en.json') return route.fulfill({json:{events:overlays,regions:englishRegions,categories:{},rotations:{tracks:{}}}});
     return route.continue();
   });
-  await context.addInitScript(({start}) => {
+  await context.addInitScript(({start,todo}) => {
+    try { if (localStorage.getItem('pogo-todo') === null) localStorage.setItem('pogo-todo',JSON.stringify(todo)); } catch { /* opaque initial document */ }
     window.__testNow = start;
     const RealDate = Date;
     window.Date = class extends RealDate {
@@ -76,7 +86,7 @@ const deadline = setTimeout(async () => {
     Object.defineProperty(document,'hidden',{get:()=>window.__testHidden});
   // Hold a minute before open, not 1ms, so real timers don't spin against a
   // frozen browser wall clock. The pure scheduler fixtures cover every ±1ms.
-  }, {start:open-60000});
+  }, {start:open-60000,todo:todoFixture});
   const page = await context.newPage(); page.setDefaultTimeout(10000);
   const session = await context.newCDPSession(page);
   await session.send('Emulation.setTimezoneOverride',{timezoneId:'Asia/Hong_Kong'});
@@ -93,6 +103,8 @@ const deadline = setTimeout(async () => {
   await page.goto(origin); await ready(page);
   assert.equal(await page.locator('[data-init-error]').count(),0);
   const todoBefore = await page.evaluate(()=>localStorage.getItem('pogo-todo'));
+  assert.deepEqual(JSON.parse(todoBefore),todoFixture,'existing multi-account TODO must not be reseeded');
+  const zhRegionText = await page.locator('[data-ai-region]').allTextContents();
   await page.locator('.cal-bar[data-reminder-event="green"]').click();
   await page.locator('.detail-reminder .reminder-star').click();
   assert.equal(await page.locator('.detail-reminder .reminder-done').isDisabled(),true);
@@ -128,8 +140,19 @@ const deadline = setTimeout(async () => {
   assert.equal(await page.locator('#detail-body .raid-day-option').count(),6);
   assert.equal(await page.locator('#detail-body .raid-day-option.reminder-active').count(),3);
   await page.locator('#detail-close').click();
-  await page.locator('.raid-ico.mega').click();
+  await page.locator('.raid-ico.mega:not([data-reminder-event])').click();
   assert.equal(await page.locator('.detail-reminder').count(),0,'unmapped raid fallback cannot create reminders');
+  await page.locator('#detail-close').click();
+  // Same base dex, distinct forms: the pooled badge must open the complete
+  // canonical drawer, not a link-less fallback or a partial form match.
+  const formsBadge = page.locator('.raid-ico.mega[data-reminder-event="raid-forms"]');
+  assert.equal(await formsBadge.count(),5);
+  await formsBadge.first().click();
+  assert.equal(await page.locator('.detail-reminder').getAttribute('data-id'),'raid-forms');
+  assert.equal(await page.locator('#detail-body .mon-row img').count(),2);
+  await page.locator('.detail-reminder .reminder-star').click();
+  assert.equal((await view(page,'raid-forms')).flagged,true);
+  assert.equal(await page.locator('.detail-reminder .reminder-done').isDisabled(),true);
   await page.locator('#detail-close').click();
   const cardCount = await page.locator('.reminder-item').count();
   await page.locator('#cal-next').click(); assert.equal(await page.locator('.reminder-item').count(),cardCount);
@@ -160,6 +183,12 @@ const deadline = setTimeout(async () => {
   await input.dispatchEvent('compositionend'); await input.blur();
   assert.equal((await view(page,'green')).note,'中文 composing');
   assert.match(await page.locator('.detail-reminder .reminder-time').innerText(),/Started globally/);
+  assert.equal(await page.locator('[data-ai-region]').count(),5);
+  assert((await page.locator('[data-ai-region]').allTextContents()).every(s=>!/[\u3400-\u9fff]/.test(s)),'all five rich regions use the real English overlay');
+  await page.locator('#lang-toggle').click();
+  assert.deepEqual(await page.locator('[data-ai-region]').allTextContents(),zhRegionText);
+  await page.locator('#lang-toggle').click();
+  assert.equal(await input.inputValue(),'中文 composing','personal notes are not translated');
   await input.focus(); await input.evaluate(n=>n.setSelectionRange(2,4));
   await page.locator('#event-detail').evaluate(n=>n.scrollTop=140);
   const scroll = await page.locator('#event-detail').evaluate(n=>n.scrollTop);
@@ -191,6 +220,11 @@ const deadline = setTimeout(async () => {
   await page.locator('.raid-day-trigger[data-reminder-event="raid"]').first().click();
   assert.equal(await page.locator('.raid-day-option').count(),2); assert.equal(await page.locator('.raid-day-option.reminder-active').count(),1);
   await page.locator('.raid-day-option').last().click(); assert.equal(await page.locator('.detail-reminder').count(),0);
+  await page.locator('#detail-close').click();
+  await page.locator('.raid-day-trigger[data-reminder-event~="raid-forms"]').first().click();
+  await page.locator('.raid-day-option[data-reminder-event="raid-forms"]').click();
+  assert.equal(await page.locator('.detail-reminder').getAttribute('data-id'),'raid-forms');
+  assert.equal(await page.locator('#detail-body .mon-row img').count(),2);
   await page.locator('#detail-close').click();
   await page.evaluate(()=>window.scrollTo(0,0)); await page.locator('#reminder-panel>summary').click();
   const layout = await page.evaluate(()=>({panel:document.querySelector('.reminder-sidebar').getBoundingClientRect().bottom,calendar:document.querySelector('#calendar').getBoundingClientRect().top}));
@@ -269,6 +303,9 @@ const deadline = setTimeout(async () => {
   step = 'existing-views';
   // Existing TODO clicks, Atlas, World Clock and shiny/admin markers still operate.
   await page.locator('#main-tabs [data-view="todo"]').click();
+  assert.equal(await page.locator('.todo-acct input').count(),2);
+  assert.equal(await page.locator('.todo-acct input').nth(1).inputValue(),todoFixture.accounts[1].name);
+  assert.equal(await page.locator('.todo-check').last().isChecked(),true);
   const checkbox=page.locator('.todo-check').first(); await checkbox.check();
   await page.locator('.todo-acct input').first().fill('Fixture account');
   assert.equal(await checkbox.isChecked(),true);

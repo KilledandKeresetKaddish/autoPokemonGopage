@@ -479,6 +479,21 @@ assert_eq "$(git -C "$f" show HEAD:public/data/events.json)" publish-draft
 assert_clean "$f"
 grep -q 'refusing to roll back a possibly successful commit' "$f/publish.out" || fail "published commit rollback guard missing"
 
+# Missing new supervisor/gate dependencies must fail before a paid CLI could run.
+f=$(make_fixture missing-runtime)
+mkdir -p "$f/logs"
+cat > "$f/logs/no-python.env" <<'SH'
+command() {
+  if [ "${1:-}" = -v ] && [ "${2:-}" = python3 ]; then return 1; fi
+  builtin command "$@"
+}
+SH
+run_daily "$f" noop '' "$f/run.out" BASH_ENV="$f/logs/no-python.env"
+[ "$RUN_RC" -ne 0 ] || fail 'missing supervisor dependency still invoked an agent'
+assert_absent "$f/logs/pi-started"
+assert_clean "$f"
+grep -q 'python3 is required' "$f/run.out" || fail 'missing dependency diagnosis'
+
 # Unsupported local CLI cannot invoke an agent or mutate the checkout.
 f=$(make_fixture unsupported-cli)
 run_daily "$f" noop '' "$f/run.out" MOCK_PI_HELP_MISSING=1

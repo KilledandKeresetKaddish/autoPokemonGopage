@@ -57,7 +57,8 @@ fi
 FETCH_METRICS_FILE="${FETCH_METRICS_FILE:-}"
 
 retry_transport() {
-  local attempt=0 rc
+  local url="$1" attempt=0 rc
+  shift
   while :; do
     "$@"; rc=$?
     [ "$rc" = 0 ] && return 0
@@ -65,7 +66,7 @@ retry_transport() {
       return "$rc"
     fi
     attempt=$((attempt + 1)); RETRY_BUDGET_LEFT=$((RETRY_BUDGET_LEFT - 1))
-    fetch_metric "${*: -1}" retry transport 1
+    fetch_metric "$url" retry transport 1
     [ "$FETCH_RETRY_DELAY" = 0 ] || sleep "$FETCH_RETRY_DELAY"
   done
 }
@@ -75,7 +76,7 @@ fetch_metric() {
   if ! mkdir -p "$(dirname "$FETCH_METRICS_FILE")" 2>/dev/null ||
      ! jq -nc --arg time "$(date -u +%FT%TZ)" --arg runId "$FETCH_RUN_ID" \
        --arg url "$1" --arg outcome "$2" --arg mode "$3" --arg network "$4" \
-       '{time:$time,runId:($runId | if length > 0 then . else null end),url:$url,outcome:$outcome,mode:$mode,network:($network == "1"),reused:($outcome == "success" and $network != "1")}' \
+       '{time:$time,kind:(if $outcome == "retry" then "retry" else "request" end),runId:($runId | if length > 0 then . else null end),url:$url,outcome:$outcome,mode:$mode,network:($network == "1"),reused:($outcome == "success" and $network != "1")}' \
        >> "$FETCH_METRICS_FILE" 2>/dev/null; then
     : > "${FETCH_METRICS_FILE}.error" 2>/dev/null || true
   fi
@@ -152,7 +153,7 @@ list_status() {
 # Plain download (ScrapedDuck / PvPoke — clean, no bot protection).
 fetch_plain() {
   local url="$1" tmp="$2"
-  retry_transport curl -fsSL -A "$UA" -H 'Accept-Language: zh-CN,zh;q=0.9,en;q=0.8' \
+  retry_transport "$url" curl -fsSL -A "$UA" -H 'Accept-Language: zh-CN,zh;q=0.9,en;q=0.8' \
        --compressed --max-time 90 "$url" -o "$tmp"
 }
 
@@ -161,11 +162,11 @@ fetch_tier() {
   local url="$1" tmp="$2"
   case "$TIER_METHOD" in
     jina)
-      retry_transport curl -fsSL --max-time 120 "${JINA_PREFIX}${url}" -o "$tmp" ;;
+      retry_transport "$url" curl -fsSL --max-time 120 "${JINA_PREFIX}${url}" -o "$tmp" ;;
     flaresolverr)
       # Preserve the solver response check after transport retries: a 200 JSON
       # shell is not a usable named/detail body.
-      retry_transport curl -fsS --max-time 150 -X POST "$FLARESOLVERR_URL" \
+      retry_transport "$url" curl -fsS --max-time 150 -X POST "$FLARESOLVERR_URL" \
         -H 'Content-Type: application/json' \
         -d "$(jq -nc --arg u "$url" '{"cmd":"request.get","url":$u,"maxTimeout":120000}')" \
         | jq -r '.solution.response // empty' > "$tmp"
@@ -205,7 +206,7 @@ check_detail_body() {
     return 1
   fi
   error_line_re='^[[:blank:]]*(title:[[:blank:]]*)?(just a moment(\.\.\.)?|attention required!?([[:blank:]]*\|[[:blank:]]*cloudflare)?|403[[:blank:]]+forbidden|access[[:blank:]]+denied|internal[[:blank:]]+server[[:blank:]]+error)[[:blank:]]*$'
-  jina_warning_re='^[[:blank:]]*(warning:[[:blank:]]*)?target[[:blank:]]+url[[:blank:]]+returned[[:blank:]]+error[[:blank:]]+(401|403|429|5[0-9][0-9])([[:blank:]]*:[[:blank:]].*)?[[:blank:]]*$'
+  jina_warning_re='^[[:blank:]]*(warning:[[:blank:]]*)?target[[:blank:]]+url[[:blank:]]+returned[[:blank:]]+error[[:blank:]]+[45][0-9][0-9]([[:blank:]]*:[[:blank:]].*)?[[:blank:]]*$'
   ray_line_re='^[[:blank:]]*cloudflare[[:blank:]]+ray[[:blank:]]+id([[:blank:]]*:[[:blank:]]*[[:alnum:]-]+)?[[:blank:]]*$'
   while IFS= read -r line || [ -n "$line" ]; do
     line="${line%$'\r'}"
@@ -246,7 +247,7 @@ fandom_wiki_title() {
 DETAIL_FETCH_REASON=""
 fetch_fandom_wiki() {
   local title="$1" tmp="$2" api="$2.api"
-  if ! retry_transport curl -fsSL -A "$UA" --compressed --max-time 90 --get \
+  if ! retry_transport 'https://pokemongo.fandom.com/api.php' curl -fsSL -A "$UA" --compressed --max-time 90 --get \
       'https://pokemongo.fandom.com/api.php' \
       --data-urlencode 'action=parse' \
       --data-urlencode "page=$title" \
@@ -527,7 +528,7 @@ fetch_url() {
       if [ "$URL_MODE" = cached ] || [ "$URL_MODE" = info ] || [ "${URL_OUTPUT:-body}" = meta ]; then
         echo "Image has no body cache/metadata; use url for HEAD: $url" >&2; return 2
       fi
-      if retry_transport curl -fsSIL -A "$UA" --max-time 45 "$url" | tr -d '\r' \
+      if retry_transport "$url" curl -fsSIL -A "$UA" --max-time 45 "$url" | tr -d '\r' \
            | grep -iE '^(HTTP/|content-type:|content-length:)'; then
         fetch_metric "$url" success "$URL_MODE" 1
         return 0

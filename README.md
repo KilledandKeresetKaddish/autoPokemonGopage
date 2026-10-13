@@ -52,7 +52,7 @@ AGENT_CLI=pi PI_PROVIDER=myproxy PI_MODEL=claude-opus-4-8 TIER_METHOD=jina \
 
 **实时观看 pi 的工具调用(可选)**
 
-加 `PI_VERBOSE=1`:pi 切到 `--mode json`,事件流写进 `logs/pi-events-<UTC日期>.jsonl`(主终端只剩 `preflight / validate / publish` 几行 —— **这是正常的**,洪流进了文件、没崩)。另开一个终端:
+加 `PI_VERBOSE=1`:pi 切到 `--mode json`,事件流写进 `logs/runs/<run-id>/pi-events.jsonl`(主终端只剩 `preflight / validate / publish` 几行 —— **这是正常的**,洪流进了文件、没崩)。另开一个终端:
 ```bash
 tail -F logs/runs/<run-id>/pi-events.jsonl | jq -c 'select(.type|test("tool_execution"))'
 ```
@@ -193,7 +193,7 @@ repairs; briefs reference embedded sections and retain their concrete input/outp
 
 ```bash
 # 1. prerequisites — Caddy already serves :80/:443; just add the agent's tools
-sudo apt update && sudo apt install -y git curl jq util-linux
+sudo apt update && sudo apt install -y git curl jq util-linux nodejs python3
 
 # 2. install ONE coding-agent CLI + API key, set AGENT_CLI. You're using Codex
 #    against an OpenAI-compatible proxy — see the Codex section below for config.
@@ -285,6 +285,13 @@ own scheduler; this repo neither reads nor changes a live crontab. The operator 
 is used only for this invocation; the next scheduled invocation may restore a matching
 snapshot, but the wrapper itself **never launches an extra Pi for repairs/retries**.
 Mock tests never call a real model.
+
+The daily wrapper requires Linux with readable `/proc`, Bash/GNU coreutils, Git,
+`curl`, `jq`, Node.js (with Intl/IANA timezone data), Python 3, and `flock` (util-linux).
+Python uses only its standard library; all runtime helpers, including `scripts/*.py`
+and the on-demand reference, are in `scripts/protected.sha256`. Missing supervisor/
+gate dependencies are rejected before an agent is invoked. Chromium, Playwright and
+CJK fonts are optional sandbox-only test tools, not site/daily runtime dependencies.
 
 `AGENT_TIMEOUT_SECONDS=7200` is a conservative protective ceiling, **not** a target
 runtime. Short test limits can be injected. Quiet `-p` output is not a stall signal;
@@ -400,6 +407,8 @@ bash scripts/test-run-daily.sh       # temporary repos + mock Pi; no model/publi
 bash scripts/test-daily-reuse.sh     # mock curl + fixed candidate/date/recovery fixtures
 node scripts/test-spot-atlas-time.js
 node scripts/test-event-timing.js    # shared browser/Node event timing contract + CLI gate fixtures
+node scripts/test-event-reminders.js # local state, expiry, stale-tab/IME races, pooled raid forms
+# Optional Chromium UI/animation fixtures: see docs/event-reminders.md
 scripts/preflight.sh
 scripts/validate.sh
 ```

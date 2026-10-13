@@ -12,6 +12,17 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 mkdir -p logs
+# Fail before any agent can run without its supervisor or publishing gates.
+for dependency in git jq node python3; do
+  command -v "$dependency" >/dev/null 2>&1 || {
+    echo "$dependency is required for the daily supervisor/gates; aborting"
+    exit 1
+  }
+done
+if [ "$(uname -s)" != Linux ] || [ ! -r /proc/self/stat ]; then
+  echo 'Linux with readable /proc is required to confirm agent termination; aborting'
+  exit 1
+fi
 # One checkout, one writer. Concurrent cron/manual runs can otherwise mix two
 # agents' edits and let one process validate while the other is still writing.
 command -v flock >/dev/null 2>&1 || {
@@ -267,7 +278,7 @@ if [ "$RESUME_RESTORED" = 1 ]; then
 A pending snapshot from a failed run has been applied. It is a possibly incomplete
 draft, not proof that any phase finished. Inspect its changes first, then continue the
 entire daily task in the required order. Source Scout, freshness checks,
-\`scripts/discover.sh new --cached\` after preparing sources, detail review, and
+\`scripts/discover.sh new --cached --json\` after preparing sources (retain partial reports), detail review, and
 date-driven maintenance still must run. Use the
 committed state at base HEAD \`$BASE_HEAD\` (for example,
 \`git show $BASE_HEAD:data/state.json\`) as the last successfully processed source

@@ -313,7 +313,12 @@ function buildSearchReport(input) {
     for (const article of articleLinks(readText(sources.hub.path), 'pokemongohub.net')) add('hub', article.title, article.url);
   });
   parse('official', () => {
-    for (const article of articleLinks(readText(sources.official.path), 'pokemongo.com')) {
+    const articles = articleLinks(readText(sources.official.path), 'pokemongo.com');
+    if (!articles.length) {
+      sources.official.status = 'partial';
+      sources.official.reason = 'news index had no verified news/article entries';
+    }
+    for (const article of articles) {
       const haystack = `${article.title} ${article.url}`.toLowerCase();
       if (tokens.every(token => haystack.includes(token))) add('official', article.title, article.url);
     }

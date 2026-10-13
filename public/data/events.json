@@ -1459,87 +1459,6 @@
     "highlight": false
   },
   {
-    "id": "articuno-zapdos-moltres-in-5-star-raid-battles-july-13-2026",
-    "name": "急冻鸟・闪电鸟・火焰鸟 现身 5★ 团战(7/13)",
-    "type": "raid-battles",
-    "heading": "Raid Battles",
-    "start": "2026-07-13T06:00:00",
-    "end": "2026-07-14T22:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/",
-    "summary": "7/13–7/14，急冻鸟、闪电鸟与火焰鸟再次回到 5★ 团战；三只均有机会以闪光形态出现。",
-    "links": [
-      {
-        "label": "Hub 7月月历",
-        "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
-      },
-      {
-        "label": "Hub 急冻鸟",
-        "url": "https://pokemongohub.net/post/guide/articuno-raid-boss/"
-      },
-      {
-        "label": "Hub 闪电鸟",
-        "url": "https://pokemongohub.net/post/guide/zapdos-raid-boss/"
-      },
-      {
-        "label": "Hub 火焰鸟",
-        "url": "https://pokemongohub.net/post/guide/moltres-raid-boss/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 144,
-        "name": "急冻鸟",
-        "shiny": true
-      },
-      {
-        "id": 145,
-        "name": "闪电鸟",
-        "shiny": true
-      },
-      {
-        "id": 146,
-        "name": "火焰鸟",
-        "shiny": true
-      }
-    ],
-    "bonuses": [
-      ":raid: 7/13–7/14 急冻鸟、闪电鸟与火焰鸟回归 5★ 团战",
-      "✨ 可遇闪光(常规传说团战闪光率,非活动提升)"
-    ],
-    "counters": [
-      {
-        "id": 248,
-        "name": "班基拉斯",
-        "fast": "击落",
-        "charged": "尖石攻击"
-      },
-      {
-        "id": 464,
-        "name": "超甲狂犀",
-        "fast": "击落",
-        "charged": "岩石炮"
-      },
-      {
-        "id": 409,
-        "name": "战槌龙",
-        "fast": "击落",
-        "charged": "岩崩"
-      }
-    ],
-    "sections": [
-      {
-        "title": "克制提示",
-        "items": [
-          "急冻鸟与火焰鸟双弱岩石,优先岩石系攻手。",
-          "闪电鸟弱岩石与冰系;同一队岩石系可兼顾三只。"
-        ]
-      }
-    ],
-    "highlight": false
-  },
-  {
     "id": "max-mondays-2026-07-20",
     "name": "Max 周一:极巨化破破袋",
     "type": "max-mondays",
@@ -1602,63 +1521,6 @@
     "bonuses": [
       ":raid: Max 团战登场",
       ":stardust: 可获得 Max 粒子"
-    ],
-    "highlight": false
-  },
-  {
-    "id": "mega-lucario-in-mega-raids-july-13-2026",
-    "name": "超级路卡利欧 现身超级团战(7/13)",
-    "type": "raid-battles",
-    "heading": "Raid Battles",
-    "start": "2026-07-13T06:00:00",
-    "end": "2026-07-14T22:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
-    "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
-    "link": "https://leekduck.com/events/mega-lucario-in-mega-raids-july-13-2026/",
-    "summary": "7/13–7/14 超级路卡利欧(格斗/钢)再次现身超级团战,击败可获得超级能量,其原型可遇闪光。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/mega-lucario-in-mega-raids-july-13-2026/"
-      },
-      {
-        "label": "Hub 超级路卡利欧指南",
-        "url": "https://pokemongohub.net/post/guide/mega-lucario-raid-guide/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 448,
-        "name": "超级路卡利欧",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png",
-        "hub": "448-Mega",
-        "shiny": true
-      }
-    ],
-    "counters": [
-      {
-        "id": 6,
-        "name": "喷火龙",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png",
-        "hub": "6-Mega_Y",
-        "fast": "火焰旋涡",
-        "charged": "爆炸烈焰"
-      },
-      {
-        "id": 609,
-        "name": "水晶灯火灵",
-        "fast": "火焰旋涡",
-        "charged": "过热"
-      },
-      {
-        "id": 643,
-        "name": "莱希拉姆",
-        "fast": "火焰牙",
-        "charged": "过热"
-      }
-    ],
-    "bonuses": [
-      "✨ 路卡利欧可遇闪光"
     ],
     "highlight": false
   },
@@ -8233,10 +8095,17 @@
     "pokemon": [
       {
         "id": 6,
-        "name": "超级 Charizard X / Y",
+        "name": "超级 Charizard X",
         "shiny": true,
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10034.png",
         "hub": "6-Mega_X"
+      },
+      {
+        "id": 6,
+        "name": "超级 Charizard Y",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png",
+        "hub": "6-Mega_Y"
       }
     ]
   },

@@ -229,6 +229,9 @@ const raid = { ...event, id:'raid', type:'raid-battles', pokemon:[{id:6,hub:'6-M
 assert.equal(findRaidEvent({ day:'2026-10-11', mons:[{id:6,hub:'6-Mega_X'}] }, [raid]).id, 'raid');
 assert.equal(findRaidEvent({ day:'2026-10-15', mons:[{id:6}] }, [raid]), null);
 assert.equal(findRaidEvent({ day:'2026-10-11', mons:[{id:6,hub:'6-Mega_Y'}] }, [raid]), null);
+const forms = [{id:6,hub:'6-Mega_X'}, {id:6,hub:'6-Mega_Y'}];
+assert.equal(findRaidEvent({ day:'2026-10-11', mons:forms }, [raid]), null, 'both forms must be present in a pooled drawer');
+assert.equal(findRaidEvent({ day:'2026-10-11', mons:forms }, [{...raid,pokemon:forms}]).id, 'raid');
 assert.equal(findRaidEvent({ day:'2026-10-11', mons:[{id:6},{id:9}] }, [raid, {...raid,id:'other',pokemon:[{id:9}]}]), null);
 assert.equal(findRaidEvent({ mons:[{id:150}] }, [raid]), null);
 assert.equal(findRaidEvent({ day:'2026-10-11', mons:[{id:6}] }, [raid]), null, 'base sprite must not bind a Mega form');

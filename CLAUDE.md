@@ -39,7 +39,7 @@ from `public/`.
 
 ### Architecture notes
 
-- No framework, no bundler — vanilla JS + CSS.
+- No framework, no bundler — vanilla JS + CSS. Daily execution requires Linux/readable `/proc`, Bash/GNU coreutils, Git, curl, jq, Node.js with Intl/IANA data, Python 3 (stdlib only) and flock. The wrapper checks supervisor/gate prerequisites before invoking an agent; no browser-side runtime package was added.
 - Bilingual model: canonical JSON + the Chinese AI wrappers carry shared facts/default zh-CN text; `i18n/en.json` overlays text only. The header toggle persists `pogo-locale`, updates `<html lang>`, and rerenders every view. `validate.sh` enforces event/rotation/nested-array parity and safe non-CJK English rich HTML.
 - Calendar renders from `events.json`; day-number raid icons render from `rotations.json`. On phones, one bounded per-day raid trigger opens a full-size track chooser so 5★/Mega/Max badges cannot overlap adjacent dates.
 - Event `timing` (`docs/event-timing.md`) is the only reminder-boundary contract; calendar `parseDay()`/legacy `start`/`end` date prefixes continue to drive grid layout. `resolveEventTiming(event, now, viewerTimeZone)` is pure and Node-exported from `public/app.js`; reuse Spot Atlas IANA/DST helpers but do not change Spot Atlas clocks or add reminder UI as part of this contract. The same `validateEventTiming` function powers `scripts/check-event-timing.js` from both preflight and validate. New canonical event rows must include timing; English overlay never duplicates structural facts. See `scripts/test-event-timing.js` for fixed UTC+14/UTC−12, DST, partial and negative fixtures.

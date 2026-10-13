@@ -882,48 +882,6 @@
         }
       ]
     },
-    "articuno-zapdos-moltres-in-5-star-raid-battles-july-13-2026": {
-      "name": "Articuno, Zapdos, and Moltres in 5★ Raids (7/13)",
-      "heading": "Raid Battles",
-      "summary": "From 7/13–7/14, Articuno, Zapdos, and Moltres return to 5★ raids; all three have a chance to appear as Shiny Pokémon.",
-      "bonuses": [
-        ":raid: Articuno, Zapdos, and Moltres return to 5★ raids from 7/13–7/14",
-        "✨ Shiny encounters available (standard Legendary Raid Shiny rate, not event-boosted)"
-      ],
-      "pokemon": [
-        "Articuno",
-        "Zapdos",
-        "Moltres"
-      ],
-      "counters": [
-        {
-          "name": "Tyranitar",
-          "fast": "Smack Down",
-          "charged": "Stone Edge"
-        },
-        {
-          "name": "Rhyperior",
-          "fast": "Smack Down",
-          "charged": "Rock Wrecker"
-        },
-        {
-          "name": "Rampardos",
-          "fast": "Smack Down",
-          "charged": "Rock Slide"
-        }
-      ],
-      "sections": [
-        {
-          "title": "Counter Tips",
-          "items": [
-            "Articuno and Moltres are doubly weak to Rock, so prioritize Rock-type attackers.",
-            "Zapdos is weak to Rock and Ice; the same Rock-type team can cover all three."
-          ],
-          "body": "",
-          "mons": []
-        }
-      ]
-    },
     "max-mondays-2026-07-20": {
       "name": "Max Monday: Dynamax Trubbish",
       "heading": "Max Mondays",
@@ -950,35 +908,6 @@
         "Feebas"
       ],
       "counters": [],
-      "sections": []
-    },
-    "mega-lucario-in-mega-raids-july-13-2026": {
-      "name": "Mega Lucario in Mega Raids (7/13)",
-      "heading": "Raid Battles",
-      "summary": "Mega Lucario (Fighting/Steel) returns to Mega Raids from 7/13–7/14. Defeat it to earn Mega Energy; Lucario can be Shiny.",
-      "bonuses": [
-        "✨ Lucario can be Shiny"
-      ],
-      "pokemon": [
-        "Mega Lucario"
-      ],
-      "counters": [
-        {
-          "name": "Charizard",
-          "fast": "Fire Spin",
-          "charged": "Blast Burn"
-        },
-        {
-          "name": "Chandelure",
-          "fast": "Fire Spin",
-          "charged": "Overheat"
-        },
-        {
-          "name": "Reshiram",
-          "fast": "Fire Fang",
-          "charged": "Overheat"
-        }
-      ],
       "sections": []
     },
     "raidhour20260715": {
@@ -4124,7 +4053,8 @@
       "summary": "This Mega Raid Boss appears during the announced rotation; defeating it awards the corresponding Mega Energy.",
       "bonuses": [],
       "pokemon": [
-        "Mega Charizard X / Y"
+        "Mega Charizard X",
+        "Mega Charizard Y"
       ],
       "counters": [],
       "sections": []
