@@ -1,5 +1,28 @@
 # 实现交接
 
+## 任务 4/5：本地标星 / 笔记、月历侧栏与极光爆亮（仅本地开发）
+
+### 范围与接口
+- 从当前 `main` 的任务 3 基线 `b582ebe` 继续；宿主目录在 pi-box 挂为 `/workspace`，未回退/清场，没有改 canonical 活动内容、英文 overlay、daily state、精选清单或 Spot Atlas 数据。只修改 owner `app.js` / CSS / HTML shell / `ui.json`，保留五个 AI bodies 原样和既有静态架构；没有新 runtime 包、代理、后台服务、账户系统或通知权限。
+- 完整用户状态/存储契约见 `docs/event-reminders.md`。独立 per-ID `pogo-event-reminders:v1:<encoded canonical ID>`，保存标星时间、完成、500 Unicode 字符纯文本 note、最小 timing 快照/指纹及缺失数据时的双语名称。无整表索引，不碰 `pogo-todo`；每条写前重读/核对，随机 incarnation guard 阻止删除后 debounce 复活，不同活动不会互相覆盖。同条最后成功写入；持续冲突保留草稿并明确提示。损坏/未知版本隔离、已知 v0 有界迁移；拒写继续会话并提示未持久化。拒写的删除恢复存储后重试，但不能声称不可写磁盘上的旧字节已清除。
+- 复用任务 3 `resolveEventTiming`，保持其 API/UTC+14/UTC−12/地区 IANA/absolute/部分边界语义。成功 canonical 加载才更新快照；撤回/TBD 替换旧精确值；缺失/失败不当到期。旧标签校准或写 note 不会把旧 canonical 时间覆盖较新标签的成功快照，失败 reload 也不重新声明旧时间。缺失事件依最后确认的 finite close 清理；未知 close 保留待核实。完成/撤销跨周、跨月、刷新、语言保持，多日只做一次，已知 close 直接删除整条，不归档。
+- 同一派生状态同步 bars / chips / 长期 / PVP / 明确映射的 raid badges；raid 匹配确认日期、全池和形态，歧义/无 ID fallback 不开放新标星。隐藏提醒使 `+N` 明显高亮，并可键盘打开完整列表。标星/完成操作只在独立按钮，不嵌套 button 或误触详情。
+- 桌面 sticky 全月份清单；手机折叠入口吸附，展开回正常流推下日期。进行中、未来、未知分组，完成折叠可撤销；UTC−12 截止显示浏览器当地完整日期 + GMT 偏移 + IANA。语言切换保留 textarea 节点/输入；自动保存处理 composition、失焦/关闭/pagehide flush、到期 cancel。笔记以文本显示、不翻译。修复窄屏 header 语言按钮遮挡抽屉 X，留出独立工具栏空间。
+- 极光采用统一 3s 彩虹流动、2s 外发光 / 双星芒，仅 active+flagged+未完成挂类；√/取消/到期恢复原分类和 featured，✨ 保持原义。reduced-motion 仍醒目但静止。单一最近边界 timeout + 最长 30s 校准，visibility/pageshow/focus/storage/load 唤醒；后台暂停，校准不重建月历/编辑器、不抢焦点或滚动。缓存已验证 IANA 与提醒日期 formatter，避免所有副本反复构造 Intl 对象；不缓存当前 UTC offset、不改 Spot Atlas 时间算法。
+- Node-exported `createEventReminderStore` / `deriveEventReminder` / `reminderTimeSnapshot` / `decodeReminder` / `createReminderNoteSaver` / `createReminderScheduler`，可注入 storage、now、viewerTimeZone、token 与 timers。所有 runtime helper 仍在已受保护 `app.js`；两个新增测试也进入 `scripts/protected.sha256`，保护/恢复规则、六责任顺序和发布门禁未放宽。
+
+### 实际测试
+- `node scripts/test-event-reminders.js` — PASS：完整标星→等待→Kiritimati 开始→完成→撤销→UTC−12 清理；复用 14 个任务 3 timing fixtures 的双端 ±1ms；同 ID 更正/撤回、旧标签时间反写保护、缺失/数月未打开、读写失败/损坏/v0、Unicode/IME/取消/到期与 autosave、不同 ID 合并/同条 CAS 竞争/删除再标星、存储恢复清理、最近边界和跨渲染补算。
+- `PLAYWRIGHT_MODULE=/workspace/.pi-tmp/browser-tools/node_modules/playwright-core node scripts/test-event-reminders-browser.js` — PASS，Chromium 1440×1050 / 390×844；桌面 >6s、窄屏月历与侧栏各 >3s 运行动画，实际截图检查了多帧颜色移动/外发光/星芒、字与按钮可读可点，绿/蓝/红三种原分类通用效果；验证 √ 恢复原红色及精选、隐藏 +N、跨周/长期/PVP/raid/手机 chooser/fallback、reload/月/语言、输入/焦点/scroll、CDP IANA 切换、前后台/pageshow、双标签删除中草稿不复活、加载失败与留存、拒写、TODO/Atlas/世界时钟。零 page errors、无 nested buttons。只用临时本地 HTTP / mock 数据与图像；playwright-core、Noto CJK 仅沙箱开发依赖，截图/结果在忽略的 `.pi-tmp/reminder-browser/`，不提交笔记或大日志。
+- `node scripts/test-event-timing.js`、`node scripts/test-spot-atlas-time.js`、`bash scripts/test-daily-reuse.sh`、`bash scripts/test-run-daily.sh` — 全部 PASS（无真实 CLI、模型或发布）。
+- `scripts/preflight.sh` — PASS，沿用原有 5 个超长 chip 警告。`scripts/validate.sh` 在 UTC **2026-10-12** 本任务中真实运行 PASS；最终代码以仅固定 90 天截止为 **2026-07-14** 的临时 `date` fixture（对应任务 3 内容快照 UTC 2026-10-12）复跑全部门禁 PASS，checksum PASS。
+- **真实 UTC 2026-10-13 的门禁既有失败**：测试期间跨日，`validate.sh` 因两条结束于 7/14 的历史行越过 90 天线而 FAIL：`articuno-zapdos-moltres-in-5-star-raid-battles-july-13-2026`、`mega-lucario-in-mega-raids-july-13-2026`。隔离 `git archive HEAD` 的原任务 3 基线同样 FAIL，仅此两行；本任务没有改数据或放松 retention。下一内容维护需正常按 90 责任清理对应 canonical / English / featured / 引用，不能把这个日期问题当本次 UI 回归或生产已通过。
+
+### 下一任务依赖 / 未验证
+- 直接复用上述时间和提醒接口、版本化 key、token guard、plain-text note 与测试；不要新增另一个时间计算器/整表 writer，或把个人记录混入每日内容。若任务 5 涉及交付/发布，应完整带上 owner shell / `app.js?v=23` / `style.css?v=26` / 双语 `ui.json` 和保护清单，先处理真实日期的既有内容留存问题；本轮没有部署。
+- 未实测 Safari/Firefox、真实手机/系统输入法或系统权限策略；IME 为 composition 事件 fixtures，390px 是真实 Chromium 窄视口非手机实机。没有验证真实 Pi 日更、未来内容源更正、生产 cron/Caddy/VPS。关页不承诺后台执行或推送，依当前浏览器钟，下次打开补清理。
+
+
 ## 任务 3/5：事件时间契约与纯提醒边界（仅本地开发）
 
 - `docs/event-timing.md` 是字段/语义契约：保留原 `id`、日历 `start/end` 日期与双语结构，每条 `events.json` 必须有 `timing:{scope,mode,startPrecision,endPrecision[,timeZone]}`。`scope` 和 `mode` 分离；区域 local 的 IANA 由确切单一场地支持，未知不猜。`date`/`unknown` 不制造提醒时刻；两端独立可空。全局 local 精确开始取 `Pacific/Kiritimati`（UTC+14），结束取固定 UTC−12（非 UTC−11/Etc/GMT-12）；absolute 用显式 `Z/±HH:mm`，区域 local 用活动当天 IANA（DST gap 前移 / fold 取较早）。边界半开 `[openAt,closeAt)`；无精确截止不自动删除。历史数据 90 天留存依据日历结束日期而非提醒 closeAt；`end:null` 不以 start 伪造截止。

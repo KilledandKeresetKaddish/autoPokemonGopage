@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title data-i18n="site.documentTitle">Pokémon GO 面板</title>
   <link rel="icon" type="image/x-icon" href="pokemongocalender.ico?v=14" />
-  <link rel="stylesheet" href="style.css?v=25" />
+  <link rel="stylesheet" href="style.css?v=26" />
 </head>
 <body>
   <!-- =====================================================================
@@ -41,6 +41,8 @@
     <!-- Data-driven by app.js from public/data/events.json. Multi-day events
          render as spanning bars; single-day point events render as day chips. -->
     <section id="view-calendar" class="view active">
+      <div class="cal-layout">
+      <div class="cal-main">
       <div class="cal-toolbar">
         <button id="cal-prev" class="btn" aria-label="上个月" data-i18n-aria-label="calendar.prev">‹</button>
         <h2 id="cal-title">—</h2>
@@ -74,6 +76,23 @@
         <p id="rot-note" class="muted"></p>
         <div id="rotations"></div>
       </section>
+
+      </div>
+      <aside class="reminder-sidebar" aria-label="本地活动提醒" data-i18n-aria-label="reminder.title">
+        <details id="reminder-panel" open>
+          <summary><span data-i18n="reminder.title">本地活动提醒</span> <span id="reminder-count" class="badge">0</span></summary>
+          <div class="reminder-panel-body">
+            <p class="reminder-intro" data-i18n="reminder.intro">仅此浏览器保存，不上传、不按账号分组，无系统推送。已知截止时自动删除提醒和笔记。</p>
+            <p id="reminder-notice" class="reminder-warning" role="status"></p>
+            <p id="reminder-empty" class="muted" data-i18n="reminder.empty">在活动详情中点 ☆ 标星，跨月提醒都会留在这里。</p>
+            <section id="reminder-live" hidden><h4></h4><div class="reminder-list"></div></section>
+            <section id="reminder-upcoming" hidden><h4></h4><div class="reminder-list"></div></section>
+            <section id="reminder-unknown" hidden><h4></h4><div class="reminder-list"></div></section>
+            <details id="reminder-completed" hidden><summary></summary><div class="reminder-list"></div></details>
+          </div>
+        </details>
+      </aside>
+      </div>
 
       <!-- Event detail drawer (populated by app.js on click) -->
       <aside id="event-detail" class="drawer" hidden>
@@ -396,6 +415,6 @@
     <div class="muted">by: adonais·anabiosis</div>
   </footer>
 
-  <script src="app.js?v=22" defer></script>
+  <script src="app.js?v=23" defer></script>
 </body>
 </html>
