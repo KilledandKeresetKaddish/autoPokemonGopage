@@ -4,26 +4,45 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
+const { resolveEventTiming, parseEventTime } = require('../public/app.js');
 const hash = text => crypto.createHash('sha256').update(text).digest('hex');
 const day = value => String(value).slice(0, 10); // same date-prefix convention as preflight/retention
 const shiftDay = (date, n) => new Date(Date.parse(`${date}T00:00:00Z`) + n * 86400000).toISOString().slice(0, 10);
 const links = e => [...new Set([e.link, ...(e.links || []).map(l => l.url)].filter(Boolean))];
-const live = (e, date) => day(e.start) <= date && day(e.end || e.start) >= date;
+// Pure timing is authoritative for known instants; unknown/date/legacy windows
+// remain conservative hints. Last possible end on a calendar date is UTC−12
+// next day 12:00Z, independent of the server's TZ. Never use parseDay here.
+const boundaryDay = value => parseEventTime(value).error ? null : day(value);
+function possible(e, now) {
+  const resolved = resolveEventTiming(e, now, 'UTC');
+  if (resolved.status === 'error' && e.timing) return false; // gate will report invalid data
+  const startDay = boundaryDay(e.start);
+  const endDay = e.end == null && e.timing?.endPrecision === 'unknown' ? null : boundaryDay(e.end || e.start);
+  const earliest = startDay ? Date.parse(`${startDay}T00:00:00Z`) - 14 * 3600000 : -Infinity;
+  const latest = endDay ? Date.parse(`${endDay}T00:00:00Z`) + 36 * 3600000 : Infinity;
+  return { start:resolved.openAt?.getTime() ?? earliest, end:resolved.closeAt?.getTime() ?? latest };
+}
+const live = (e, now) => {
+  const bounds = possible(e, now);
+  return bounds && bounds.start <= Date.parse(now) && Date.parse(now) < bounds.end;
+};
+const segmentLive = (seg, now) => day(seg.start) <= day(now) && day(seg.end || seg.start) >= day(now);
+
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 const ids = events => events.map(e => e.id).sort();
-function bosses(events, rotations, date) {
-  const rows = events.filter(e => live(e, date) && /raid|^max-|dynamax|gigantamax/.test(e.type))
+function bosses(events, rotations, now) {
+  const rows = events.filter(e => live(e, now) && /raid|^max-|dynamax|gigantamax/.test(e.type))
     .map(e => [e.id, e.pokemon || []]);
   for (const t of rotations.tracks) for (const s of t.segments) {
-    if (live(s, date)) rows.push([t.key, s.pokemon]);
+    if (segmentLive(s, now)) rows.push([t.key, s.pokemon]);
   }
   return rows.map(row => JSON.stringify(row)).sort();
 }
 
 function candidates({ events, rotations, baseEvents, baseRotations, state, now,
   changed = [], pending = [], force = [], monthlyUrls = [], cache = {} }) {
-  const today = day(now), previous = state.lastUpdated && day(state.lastUpdated);
-  const nearEnd = shiftDay(today, 7), oldIds = new Set(ids(baseEvents));
+  const today = day(now), previous = state.lastUpdated || null;
+  const oldIds = new Set(ids(baseEvents));
   const byUrl = new Map();
   for (const e of events) for (const url of links(e)) {
     if (!byUrl.has(url)) byUrl.set(url, []);
@@ -40,8 +59,12 @@ function candidates({ events, rotations, baseEvents, baseRotations, state, now,
       if (force.includes(e.id)) reasons.add('operator-force');
       if (!oldIds.has(e.id)) reasons.add('new-event');
       if (changed.includes(e.id)) reasons.add('changed-entry');
-      if (day(e.end || e.start) < today) continue;
-      if (day(e.start) <= nearEnd) reasons.add('active-or-next-7-days');
+      const bounds = possible(e, now);
+      if (!bounds || bounds.end <= Date.parse(now)) continue;
+      if (bounds.start < Date.parse(`${shiftDay(today, 8)}T00:00:00Z`)) reasons.add('active-or-next-7-days');
+      if (e.timing && (e.timing.scope === 'unknown' || e.timing.mode === 'unknown' ||
+          e.timing.startPrecision !== 'exact' || e.timing.endPrecision !== 'exact'))
+        reasons.add('pending-timing');
       // Explicit IDs cover pending facts not recognizable in prose. The marker
       // is a conservative hint, never proof an event is complete/incomplete.
       if (pending.includes(e.id) || baseline?.pending || /待公布|待补|待定|TBD|to be announced/i.test(JSON.stringify(e))) {
@@ -58,19 +81,29 @@ function candidates({ events, rotations, baseEvents, baseRotations, state, now,
     const fresh = age >= 0 && age < 86400;
     details.push({ url, eventIds: ids(refs), reasons: [...reasons],
       action: forced ? 'force' : fresh ? 'reuse' : 'refresh',
-      needsProcessing: forced || !fresh || unprocessed || !baseline ||
+      // A pending fact still triggers a body check, not a re-derivation of
+      // identical bytes that were already processed successfully.
+      needsProcessing: forced || unprocessed || !baseline ||
         reasons.has('new-event') || reasons.has('changed-entry'),
       cachedHash: material?.sha256 || null, processedHash: baseline?.sha256 || null });
   }
-  const current = events.filter(e => live(e, today));
-  const upcoming = (es, d) => ids(es.filter(e => day(e.end || e.start) >= d && day(e.start) <= shiftDay(d, 7)));
+  const current = events.filter(e => live(e, now));
+  const upcoming = (es, at) => ids(es.filter(e => { const b = possible(e, at);
+    return b && b.end > Date.parse(at) && b.start < Date.parse(`${shiftDay(day(at), 8)}T00:00:00Z`); }));
   return { baseline: 'committed state only', today, details,
+    dateChecksAreHints: true,
+    uncertainTimingIds: ids(events.filter(e => { const b = possible(e, now);
+      return b && (e.timing?.scope === 'unknown' || e.timing?.mode === 'unknown' ||
+        e.timing?.startPrecision !== 'exact' || e.timing?.endPrecision !== 'exact') &&
+        b.end > Date.parse(now) && b.start < Date.parse(`${shiftDay(today, 8)}T00:00:00Z`); })),
     dateChecks: {
-      monthChanged: rotations.month !== today.slice(0, 7) || !previous || previous.slice(0, 7) !== today.slice(0, 7),
+      monthChanged: rotations.month !== today.slice(0, 7) || !previous || day(previous).slice(0, 7) !== today.slice(0, 7),
       activeEventsChanged: !previous || !same(ids(current), ids(baseEvents.filter(e => live(e, previous)))),
-      bossesChanged: !previous || !same(bosses(events, rotations, today), bosses(baseEvents, baseRotations, previous)),
-      recommendationWindowChanged: !previous || !same(upcoming(events, today), upcoming(baseEvents, previous)),
-      pruneIds: ids(events.filter(e => day(e.end || e.start) < shiftDay(today, -90)))
+      bossesChanged: !previous || !same(bosses(events, rotations, now), bosses(baseEvents, baseRotations, previous)),
+      recommendationWindowChanged: !previous || !same(upcoming(events, now), upcoming(baseEvents, previous)),
+      // Retention uses the calendar end date, not reminder closeAt. With no
+      // recorded end, do not manufacture expiry from start.
+      pruneIds: ids(events.filter(e => e.end != null && day(e.end) < shiftDay(today, -90)))
     } };
 }
 

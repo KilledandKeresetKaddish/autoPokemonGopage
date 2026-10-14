@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 mkdir -p "$ROOT/.pi-tmp"
 TMP_ROOT=$(mktemp -d "$ROOT/.pi-tmp/run-daily-test.XXXXXX")
-trap 'rm -rf "$TMP_ROOT"' EXIT
+trap '[ "${TEST_KEEP:-0}" = 1 ] && echo "test fixtures: $TMP_ROOT" || rm -rf "$TMP_ROOT"' EXIT
 
 fail() { echo "test-run-daily: FAIL: $*" >&2; exit 1; }
 assert_eq() { [ "$1" = "$2" ] || fail "expected [$2], got [$1]${3:+ ($3)}"; }
@@ -15,8 +15,12 @@ assert_clean() { [ -z "$(git -C "$1" status --porcelain --untracked-files=all)" 
 make_fixture() {
   local name="$1"
   local f="$TMP_ROOT/$name"
-  mkdir -p "$f/scripts" "$f/tasks/subagents" "$f/public/data/i18n" "$f/data" "$f/bin"
-  cp "$ROOT/scripts/run-daily.sh" "$ROOT/scripts/resume-snapshot.sh" "$f/scripts/"
+  mkdir -p "$f/scripts" "$f/tasks/subagents" "$f/tasks/reference" "$f/public/data/i18n" "$f/data" "$f/bin"
+  cp "$ROOT/tasks/reference/daily-schemas.md" "$f/tasks/reference/"
+  cp "$ROOT/public/app.js" "$f/public/app.js" # daily-worklist shares event timing with browser
+  cp "$ROOT/scripts/run-daily.sh" "$ROOT/scripts/resume-snapshot.sh" "$ROOT/scripts/daily-agent.sh" \
+    "$ROOT/scripts/daily-agent-run.py" "$ROOT/scripts/daily-worklist.js" \
+    "$ROOT/scripts/daily-run-record.js" "$ROOT/scripts/daily-candidates.js" "$f/scripts/"
 
   cat > "$f/scripts/preflight.sh" <<'SH'
 #!/usr/bin/env bash
@@ -39,9 +43,16 @@ SH
   cat > "$f/bin/pi" <<'SH'
 #!/usr/bin/env bash
 set -uo pipefail
+case "${1:-}" in
+  --version) echo 'mock pi 1.0'; exit 0 ;;
+  --help) [ "${MOCK_PI_HELP_MISSING:-0}" != 1 ] || { echo '-p'; exit 0; }
+    echo '-p --mode --no-extensions --no-skills --no-prompt-templates --no-context-files --no-session --tools --provider --model'; exit 0 ;;
+esac
 argc=$#
 [ "$argc" -gt 0 ] || exit 90
 printf 'started\n' >> logs/pi-started
+[ -n "${POGO_RUN_ID:-}" ] || exit 107
+printf '%s\n' "$POGO_RUN_ID" >> logs/pogo-run-ids
 : > logs/mock-argv
 for ((i=1; i<argc; i++)); do printf '%s\n' "${!i}" >> logs/mock-argv; done
 printf '%s' "${!argc}" > logs/mock-prompt
@@ -81,6 +92,34 @@ case "${MOCK_MODE:-noop}" in
     ;;
   modify-success)
     printf 'publish-draft\n' > public/data/events.json
+    ;;
+  silent-success)
+    printf 'publish-draft\n' > public/data/events.json
+    sleep "${MOCK_SLEEP:-2}"
+    ;;
+  slow-writer)
+    printf 'unfinished\n' > public/data/events.json
+    sleep "${MOCK_SLEEP:-10}"
+    ;;
+  stubborn-writer)
+    printf 'unfinished\n' > public/data/events.json
+    bash -c 'trap "" TERM; while :; do printf "still-writing\\n" >> public/data/events.json; sleep .2; done' &
+    sleep "${MOCK_SLEEP:-10}"
+    ;;
+  metrics)
+    printf 'publish-draft\n' > public/data/events.json
+    printf '{"kind":"request","network":true,"reused":false,"outcome":"success"}\n{"kind":"request","network":false,"reused":true,"outcome":"success"}\n{"kind":"request","network":true,"reused":false,"outcome":"failed"}\n{"kind":"retry","network":true,"outcome":"retry"}\n' > "$FETCH_METRICS_FILE"
+    printf '{"kind":"coverage","status":"partial","sources":{"hub":{"status":"failed"}}}\n' > "$DISCOVER_METRICS_FILE"
+    [ "${MOCK_METRICS_BROKEN:-0}" != 1 ] || : > "${FETCH_METRICS_FILE}.error"
+    ;;
+  out-of-scope)
+    printf 'not-allowed\n' > fixture.txt
+    printf 'allowed\n' > public/data/events.json
+    ;;
+  head-change)
+    printf 'new-head\n' > public/data/events.json
+    git add public/data/events.json
+    git commit -qm agent-changed-head
     ;;
   protected-index)
     sed -i 's/<body>/<body class="forbidden">/' public/index.html
@@ -206,6 +245,7 @@ assert_eq "$(git -C "$f" show HEAD:public/data/rotations.json)" staged-and-unsta
 ! git -C "$f" cat-file -e HEAD:public/data/mega.json 2>/dev/null || fail "deleted file was not preserved"
 ! git -C "$f" cat-file -e HEAD:data/state.json 2>/dev/null || fail "staged deletion was not preserved"
 check_pi_prompt "$f"
+grep -Eq '^daily-[0-9]{8}T[0-9]{6}Z-[A-Za-z0-9]{6}$' "$f/logs/pogo-run-ids" || fail "wrapper did not provide a per-run POGO_RUN_ID"
 python3 - "$f/logs/mock-prompt" <<'PYTEST'
 import sys
 text = open(sys.argv[1]).read()
@@ -387,7 +427,7 @@ count=0
 [ ! -f "$count_file" ] || count=$(cat "$count_file")
 count=$((count + 1))
 printf '%s\n' "$count" > "$count_file"
-[ "$count" -eq 1 ] && exec /usr/bin/python3 "$@"
+[ "$count" -le 2 ] && exec /usr/bin/python3 "$@"
 exit 75
 SH
 chmod +x "$f/logs/fail-bin/python3"
@@ -439,12 +479,160 @@ assert_eq "$(git -C "$f" show HEAD:public/data/events.json)" publish-draft
 assert_clean "$f"
 grep -q 'refusing to roll back a possibly successful commit' "$f/publish.out" || fail "published commit rollback guard missing"
 
-# Real eight documents are still embedded in full exactly once (not only sentinel
+# Missing new supervisor/gate dependencies must fail before a paid CLI could run.
+f=$(make_fixture missing-runtime)
+mkdir -p "$f/logs"
+cat > "$f/logs/no-python.env" <<'SH'
+command() {
+  if [ "${1:-}" = -v ] && [ "${2:-}" = python3 ]; then return 1; fi
+  builtin command "$@"
+}
+SH
+run_daily "$f" noop '' "$f/run.out" BASH_ENV="$f/logs/no-python.env"
+[ "$RUN_RC" -ne 0 ] || fail 'missing supervisor dependency still invoked an agent'
+assert_absent "$f/logs/pi-started"
+assert_clean "$f"
+grep -q 'python3 is required' "$f/run.out" || fail 'missing dependency diagnosis'
+
+# Unsupported local CLI cannot invoke an agent or mutate the checkout.
+f=$(make_fixture unsupported-cli)
+run_daily "$f" noop '' "$f/run.out" MOCK_PI_HELP_MISSING=1
+[ "$RUN_RC" -ne 0 ] || fail 'unverified CLI flags were accepted'
+assert_absent "$f/logs/pi-started"
+assert_clean "$f"
+
+# Scope, HEAD, dirty-tree and flock guards still operate before publish.
+f=$(make_fixture scope)
+run_daily "$f" out-of-scope '' "$f/run.out"
+[ "$RUN_RC" -ne 0 ] || fail 'out-of-scope edit published'
+assert_eq "$(cat "$f/fixture.txt")" fixture
+assert_clean "$f"
+
+f=$(make_fixture history)
+base=$(git -C "$f" rev-parse HEAD)
+run_daily "$f" head-change '' "$f/run.out"
+[ "$RUN_RC" -ne 0 ] || fail 'agent history rewrite published'
+assert_eq "$(git -C "$f" rev-parse HEAD)" "$base"
+assert_clean "$f"
+
+f=$(make_fixture dirty)
+printf 'maintainer work\n' >> "$f/fixture.txt"
+run_daily "$f" noop '' "$f/run.out"
+[ "$RUN_RC" -ne 0 ] || fail 'dirty tree accepted'
+assert_absent "$f/logs/pi-started"
+grep -q 'uncommitted/untracked' "$f/run.out" || fail 'dirty-tree refusal not reported'
+
+f=$(make_fixture locked)
+(cd "$f"; mkdir -p logs; exec 9> logs/.daily-run.lock; flock -n 9; sleep 4) & lock_pid=$!
+sleep .2
+run_daily "$f" noop '' "$f/run.out"
+[ "$RUN_RC" -ne 0 ] || fail 'concurrent checkout run accepted'
+assert_absent "$f/logs/pi-started"
+kill "$lock_pid" 2>/dev/null || true
+wait "$lock_pid" 2>/dev/null || true
+
+# No stdout is not an idle timeout; a bounded total deadline is still enforced.
+f=$(make_fixture quiet-running)
+run_daily "$f" silent-success '' "$f/run.out" AGENT_TIMEOUT_SECONDS=4 MOCK_SLEEP=2
+assert_eq "$RUN_RC" 0 'silent Pi finished within total deadline'
+assert_absent "$f/logs/resume/pending.tar"
+assert_eq "$(find "$f/logs/runs" -name summary.json | wc -l)" 1
+jq -e '.agent.reason == "exit" and .status == "published" and .usage == null' "$f/logs/runs"/*/summary.json >/dev/null || fail 'quiet success metrics missing'
+
+f=$(make_fixture timed-out)
+run_daily "$f" slow-writer '' "$f/run.out" AGENT_TIMEOUT_SECONDS=1 AGENT_TERM_GRACE_SECONDS=1 MOCK_SLEEP=12
+[ "$RUN_RC" -ne 0 ] || fail 'timed out agent published'
+assert_file "$f/logs/resume/pending.tar"
+assert_clean "$f"
+jq -e '.agent.timedOut == true and .agent.writerStopped == true and .gates.snapshot == 0' "$f/logs/runs"/*/summary.json >/dev/null || fail 'timeout not safely snapshotted'
+
+# A TERM-ignoring descendant is sent KILL only inside the isolated group.
+f=$(make_fixture stubborn)
+run_daily "$f" stubborn-writer '' "$f/run.out" AGENT_TIMEOUT_SECONDS=1 AGENT_TERM_GRACE_SECONDS=1 AGENT_KILL_WAIT_SECONDS=2
+[ "$RUN_RC" -ne 0 ] || fail 'stubborn writer published'
+assert_file "$f/logs/resume/pending.tar"
+assert_clean "$f"
+jq -e '.agent.timedOut == true and .agent.writerStopped == true and .gates.snapshot == 0' "$f/logs/runs"/*/summary.json >/dev/null || fail 'descendant not confirmed stopped before rollback'
+
+for sig in TERM INT; do
+  f=$(make_fixture "signal-$sig")
+  (cd "$f"; exec env PATH="$f/bin:$PATH" AGENT_CLI=pi MOCK_MODE=slow-writer MOCK_SLEEP=12 \
+    AGENT_TIMEOUT_SECONDS=30 AGENT_TERM_GRACE_SECONDS=1 ./scripts/run-daily.sh) > "$f/run.out" 2>&1 &
+  wrapper_pid=$!
+  for _ in {1..80}; do [ -f "$f/logs/pi-started" ] && break; sleep .1; done
+  assert_file "$f/logs/pi-started"
+  kill -s "$sig" "$wrapper_pid"
+  set +e; wait "$wrapper_pid"; signal_rc=$?; set -e
+  [ "$signal_rc" -ne 0 ] || fail "$sig published"
+  assert_file "$f/logs/resume/pending.tar"
+  assert_clean "$f"
+  jq -e --arg sig "SIG$sig" '.agent.signal == $sig and .agent.writerStopped == true and .gates.snapshot == 0' "$f/logs/runs"/*/summary.json >/dev/null || fail "$sig did not wait for its group before snapshot"
+done
+
+# Supervisor status absent => do not run gates/snapshot/rollback on a possibly live writer.
+f=$(make_fixture unknown-writer)
+run_daily "$f" fail-initial same "$f/fail.out"
+old_snapshot=$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')
+mkdir -p "$f/logs/fail-bin"
+cat > "$f/logs/fail-bin/python3" <<'SH'
+#!/usr/bin/env bash
+if [[ "${1:-}" == *daily-agent-run.py ]]; then
+  printf 'unknown-writer\n' > public/data/events.json
+  exit 125
+fi
+exec /usr/bin/python3 "$@"
+SH
+chmod +x "$f/logs/fail-bin/python3"
+run_daily "$f" noop same "$f/unknown.out" PATH="$f/bin:$f/logs/fail-bin:$PATH"
+[ "$RUN_RC" -ne 0 ] || fail 'unconfirmed writer published'
+assert_eq "$(cat "$f/public/data/events.json")" unknown-writer
+assert_eq "$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')" "$old_snapshot"
+jq -e '.status == "unconfirmed" and (.gates | length == 0)' "$(grep -rl '"status": "unconfirmed"' "$f/logs/runs" --include=summary.json | head -1)" >/dev/null || fail 'unconfirmed writer ran gates'
+assert_file "$(find "$f/logs/runs" -name active | head -1)"
+run_daily "$f" noop same "$f/refused.out"
+[ "$RUN_RC" -ne 0 ] || fail 'next run accepted dirty unfinished tree'
+! grep -q -- '--- invoking agent' "$f/refused.out" || fail 'next run invoked Pi over dirty tree'
+
+# Same-day attempts remain separate; source facts are measured, not agent prose.
+f=$(make_fixture measured)
+run_daily "$f" metrics '' "$f/ok.out"
+assert_eq "$RUN_RC" 0
+success_id=$(jq -r .runId "$f/logs/lastSuccess.json")
+jq -e '.network.requests == 3 and .network.cacheHits == 1 and .network.failures == 1 and .network.retries == 1 and .network.sourceCoverage.status == "partial" and .usage == null' "$f/logs/runs/$success_id/summary.json" >/dev/null || fail 'metrics not measured from mock logs'
+run_daily "$f" fail-no-edits '' "$f/bad.out"
+[ "$RUN_RC" -ne 0 ] || fail 'failing second run published'
+assert_eq "$(jq -r .runId "$f/logs/lastSuccess.json")" "$success_id"
+[ "$(jq -r .runId "$f/logs/lastAttempt.json")" != "$success_id" ] || fail 'same-day run IDs/logs overwritten'
+assert_eq "$(find "$f/logs/runs" -name summary.json | wc -l)" 2
+
+f=$(make_fixture metric-partial)
+run_daily "$f" metrics '' "$f/metrics.out" MOCK_METRICS_BROKEN=1
+assert_eq "$RUN_RC" 0
+jq -e '.network.requests == null and .network.cacheHits == null and .network.sourceCoverage.status == "partial"' "$f/logs/runs"/*/summary.json >/dev/null || fail 'partial instrumentation was reported as complete'
+
+# Failed metrics persistence after commit must never say lastSuccess advanced.
+f=$(make_fixture metric-io-fail)
+mkdir -p "$f/logs/fail-bin"
+cat > "$f/logs/fail-bin/node" <<'SH'
+#!/usr/bin/env bash
+if [[ "${1:-}" == *daily-run-record.js ]]; then exit 77; fi
+exec /usr/bin/node "$@"
+SH
+chmod +x "$f/logs/fail-bin/node"
+run_daily "$f" modify-success '' "$f/metrics.out" PATH="$f/bin:$f/logs/fail-bin:$PATH"
+[ "$RUN_RC" -ne 0 ] || fail 'metric persistence failed but run reported success'
+assert_absent "$f/logs/lastSuccess.json"
+grep -q 'metrics persistence FAILED' "$f/metrics.out" || fail 'missing post-publish metrics diagnosis'
+assert_eq "$(git -C "$f" show HEAD:public/data/events.json)" publish-draft
+
+# Real eight core documents are still embedded in full exactly once (not only sentinel
 # fixture rules). This tests transport/priority/argv, not model rule compliance.
 f=$(make_fixture actual-prompt)
 cp "$ROOT/AGENTS.md" "$f/AGENTS.md"
 cp "$ROOT/tasks/daily-update.md" "$f/tasks/daily-update.md"
 cp "$ROOT/tasks/subagents/"*.md "$f/tasks/subagents/"
+  mkdir -p "$f/tasks/reference"
+  cp "$ROOT/tasks/reference/daily-schemas.md" "$f/tasks/reference/"
 git -C "$f" add AGENTS.md tasks
 git -C "$f" commit -qm actual-rules
 run_daily "$f" noop '' "$f/actual.out" PI_VERBOSE=1 EXTRA_INSTRUCTIONS='exact env note — verify' \
@@ -467,6 +655,8 @@ for file in files:
     body = text.split(start, 1)[1].split(end, 1)[0].strip()
     assert body == (root / file).read_text().strip()
 assert text.count('exact env note — verify') == 1
+assert '## Schemas' not in text  # protected on-demand reference, not injected
+assert (root / 'tasks/reference/daily-schemas.md').is_file()
 assert text.index('===== OPERATOR NOTE') > text.index('===== end tasks/subagents/90-state-validator.md')
 assert '===== RECOVERED DRAFT' not in text
 PYTEST

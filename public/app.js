@@ -7,7 +7,7 @@
 'use strict';
 
 const state = {
-  events: [], rotations: null, categories: {}, mega: [], locations: null, locationsError: '', meta: null,
+  events: [], eventsLoaded: false, rotations: null, categories: {}, mega: [], locations: null, locationsError: '', meta: null,
   ui: {}, en: null, zhRegions: {}, locale: 'zh-CN', calYear: 0, calMonth: 0,
 };
 const LOCALE_KEY = 'pogo-locale';
@@ -433,6 +433,7 @@ function localizedRotations() {
 
 /* ---------- data ---------- */
 async function loadData() {
+  let eventsLoadedThisTime = false;
   const bust = '?t=' + Date.now();
   try { state.ui = await (await fetch('data/i18n/ui.json' + bust)).json(); }
   catch (e) { state.ui = {}; }
@@ -440,13 +441,17 @@ async function loadData() {
   catch (e) { state.en = null; }
   try {
     const r = await fetch('data/events.json' + bust);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
     const raw = await r.json();
-    state.events = (Array.isArray(raw) ? raw : []).map(ev => {
+    if (!Array.isArray(raw) || raw.some(e => !e || typeof e.id !== 'string' || !e.id)
+      || new Set(raw.map(e => e.id)).size !== raw.length) throw new Error('invalid canonical events');
+    state.events = raw.map(ev => {
       const s = parseDay(ev.start);
       const e = parseDay(ev.end) || s;
       return Object.assign({}, ev, { _s: s, _e: e });
     });
-  } catch (e) { state.events = []; }
+    state.eventsLoaded = true; eventsLoadedThisTime = true;
+  } catch (e) { /* retain the last successful canonical times, not a false withdrawal */ }
   try { state.meta = await (await fetch('data/meta.json' + bust)).json(); }
   catch (e) { state.meta = null; }
   try {
@@ -475,6 +480,8 @@ async function loadData() {
     state.locations = null;
     state.locationsError = e && e.message || String(e);
   }
+  if (reminders && eventsLoadedThisTime) await reminders.setEvents(state.events, state.en?.events);
+  reminderScheduler?.wake();
 }
 
 /* ---------- calendar ---------- */
@@ -500,15 +507,24 @@ function packLanes(items) {
 // A weekly rotation day-icon stands in for a real raid event when one exists in
 // events.json (same boss dex id + overlapping dates). Resolve to that event so the
 // drawer carries its counters / links / summary instead of a bare name + sprite.
-function findRaidEvent(rd) {
-  const ids = new Set((rd && rd.mons || []).map(m => m && m.id).filter(Boolean));
-  if (!ids.size) return null;
-  const rs = parseDay(rd.start), re = parseDay(rd.end) || rs;
-  return state.events.find(ev => {
-    if (ev.type !== 'raid-battles' || !ev._s || !ev._e) return false;
-    if (rs && re && (ev._e < rs || ev._s > re)) return false; // dates don't overlap
-    return (ev.pokemon || []).some(p => p && ids.has(p.id));
-  }) || null;
+function findRaidEvent(rd, events = state.events) {
+  const mons = (rd?.mons || []).filter(m => m?.id);
+  if (!mons.length) return null;
+  const rs = parseDay(rd.day || rd.start), re = parseDay(rd.day || rd.end) || rs;
+  const matches = events.filter(ev => {
+    const start = ev._s || parseDay(ev.start), end = ev._e || parseDay(ev.end) || start;
+    if (ev.type !== 'raid-battles' || !ev.id || !start || !end) return false;
+    if (rs && re && (end < rs || start > re)) return false;
+    return mons.every(m => (ev.pokemon || []).some(p => {
+      if (p.id !== m.id) return false;
+      if (m.hub && p.hub) return m.hub === p.hub;
+      if (m.hub || p.hub) return !!m.sprite && m.sprite === p.sprite;
+      return monSprite(m) === monSprite(p);
+    }));
+  });
+  // Ambiguous pooled badges must not silently bind a personal flag to one boss.
+  if (matches.length === 1) return matches[0];
+  return null;
 }
 let detailReturnFocus = null;
 function raidFallbackEvent(rd) {
@@ -520,6 +536,7 @@ function raidFallbackEvent(rd) {
 function openRaidDay(date, raids, opener) {
   const panel = $('#event-detail'), body = $('#detail-body');
   if (!panel || !body) return;
+  flushReminderEditor(); detailEvent = null;
   detailReturnFocus = opener || null;
   panel.setAttribute('role', 'dialog');
   panel.setAttribute('aria-modal', 'true');
@@ -541,6 +558,7 @@ function openRaidDay(date, raids, opener) {
       + `<span class="raid-day-copy"><strong>${escapeHtml(rd.name || names || meta.label)}</strong>`
       + `<small>${escapeHtml(meta.label)}${names ? ' · ' + escapeHtml(names) : ''}</small></span>`;
     b.setAttribute('aria-label', `${meta.label}: ${rd.name || names}`);
+    bindCalendarReminder(b, findRaidEvent(rd)?.id);
     b.addEventListener('click', () => openDetail(findRaidEvent(rd) || raidFallbackEvent(rd), opener));
     list.appendChild(b);
   });
@@ -657,7 +675,7 @@ function renderCalendar() {
       const moy = date.getDate() === 1 ? `<span class="moy">${escapeHtml(monthMark)}</span>` : '';
       num.innerHTML = `<span class="dn">${date.getDate()}</span>${moy}`;
       // weekly raid icons (one per track; cycles if the segment has >1 boss)
-      const raids = inMonth ? (raidsByDay[idx] || []) : [];
+      const raids = inMonth ? (raidsByDay[idx] || []).map(rd => ({ ...rd, day:ymd(date) })) : [];
       if (raids.length) {
         const rbox = document.createElement('div');
         rbox.className = 'daynum-raids';
@@ -674,6 +692,7 @@ function renderCalendar() {
           b.setAttribute('aria-label', `${meta.label}: ${rd.name || names}`);
           b.innerHTML = mons.map(p => `<img src="${escapeHtml(monSprite(p))}" alt="" loading="lazy" onerror="this.style.display='none'">`).join('')
             + `<span class="tg">${escapeHtml(badge)}</span>`;
+          bindCalendarReminder(b, findRaidEvent(rd)?.id);
           b.addEventListener('click', () => openDetail(findRaidEvent(rd) || raidFallbackEvent(rd), b));
           rbox.appendChild(b);
         });
@@ -688,6 +707,7 @@ function renderCalendar() {
         mobile.innerHTML = (first ? `<img src="${escapeHtml(monSprite(first))}" alt="" loading="lazy">` : '<span>★</span>')
           + `<b>${raids.length}</b>`;
         mobile.setAttribute('aria-label', i18n('calendar.raidDayCount', { date: fmtDateShort(ymd(date)), count: raids.length }, `${fmtDateShort(ymd(date))}: ${raids.length} 个团战角标`));
+        bindCalendarReminder(mobile, raids.map(rd => findRaidEvent(rd)?.id));
         mobile.addEventListener('click', () => openRaidDay(date, raids, mobile));
         num.appendChild(mobile);
       }
@@ -698,7 +718,8 @@ function renderCalendar() {
       cell.appendChild(spacer);
 
       // day chips (point events), with overflow collapse
-      const list = (chipsByDay[idx] || []);
+      const list = (chipsByDay[idx] || []).slice().sort((a, b) =>
+        Number(!!reminders?.view(b.ev.id).active) - Number(!!reminders?.view(a.ev.id).active));
       if (inMonth && list.length) {
         const cw = document.createElement('div');
         cw.className = 'cal-chips';
@@ -711,12 +732,16 @@ function renderCalendar() {
           chip.innerHTML = `<i class="dot"></i>${sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}`
             + (ev.highlight ? '<span class="hl-star">✨</span>' : '')
             + `<span class="cn">${escapeHtml(ev.name)}</span>`;
+          bindCalendarReminder(chip, ev.id);
           chip.addEventListener('click', () => openDetail(ev, chip));
           cw.appendChild(chip);
         });
         if (list.length > 3) {
-          const more = document.createElement('div');
+          const more = document.createElement('button'); more.type = 'button';
           more.className = 'cal-more'; more.textContent = `+${list.length - 3}`;
+          more.setAttribute('aria-label', i18n('reminder.moreEvents', { count:list.length - 3 }));
+          bindCalendarReminder(more, list.slice(3).map(({ ev }) => ev.id));
+          more.addEventListener('click', () => openChipDay(date, list, more));
           cw.appendChild(more);
         }
         cell.appendChild(cw);
@@ -751,6 +776,7 @@ function renderCalendar() {
       bar.innerHTML = (sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
         + (isL && b.ev.highlight ? '<span class="hl-star">✨</span>' : '')
         + `<span class="bn">${escapeHtml(b.ev.name)}</span>`;
+      bindCalendarReminder(bar, b.ev.id);
       bar.addEventListener('click', () => openDetail(b.ev, bar));
       layer.appendChild(bar);
     });
@@ -762,6 +788,7 @@ function renderCalendar() {
   renderLegend(present, raidTracks);
   renderBand('#long-term', i18n('calendar.longTerm', null, '长期活动'), longTerm);
   renderBand('#pvp-band', i18n('calendar.pvp', null, 'PVP活动'), pvp);
+  reminderScheduler?.wake();
 }
 
 // Legend reflects only the categories actually present in the current month.
@@ -812,6 +839,7 @@ function renderBand(boxId, title, list) {
     pill.innerHTML = (sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
       + `<span class="lt-name">${escapeHtml(ev.name)}</span>`
       + `<span class="lt-range">${escapeHtml(fmtDateShort(ev.start))}–${escapeHtml(fmtDateShort(ev.end))}</span>`;
+    bindCalendarReminder(pill, ev.id);
     pill.addEventListener('click', () => openDetail(ev, pill));
     box.appendChild(pill);
   });
@@ -907,8 +935,15 @@ function iconify(s) {
   return escapeHtml(s).replace(/:([a-z0-9_-]{1,24}):/g, (m, n) =>
     `<img class="ico" src="assets/icons/${escapeHtml(ICONS[n] || (n + '.png'))}" alt="" onerror="this.style.display='none'">`);
 }
-function openDetail(ev, opener) {
-  ev = localizedEvent(ev);
+function openDetail(ev, opener, preserve = false) {
+  const panelBefore = $('#event-detail'), scroll = panelBefore.scrollTop;
+  const oldWidget = document.querySelector('.detail-reminder');
+  const keepWidget = oldWidget && oldWidget.dataset.id === ev.id;
+  const focused = document.activeElement, selection = focused?.tagName === 'TEXTAREA'
+    ? [focused.selectionStart, focused.selectionEnd] : null;
+  if (!keepWidget) flushReminderEditor();
+  detailEvent = state.events.find(e => e.id === ev.id) || ev;
+  ev = localizedEvent(detailEvent);
   const active = document.activeElement;
   detailReturnFocus = opener || (active && active !== document.body ? active : detailReturnFocus);
   const panel = $('#event-detail');
@@ -957,6 +992,7 @@ function openDetail(ev, opener) {
     ${ev.image ? `<img class="detail-img" src="${escapeHtml(ev.image)}" alt="">` : ''}
     <h3>${escapeHtml(ev.name)}</h3>
     <p class="muted">${escapeHtml(ev.heading || ev.type || '')} · ${escapeHtml(fmtRange(ev.start, ev.end))}</p>
+    <div class="detail-reminder-mount"></div>
     ${ev.summary ? `<p class="detail-summary">${escapeHtml(ev.summary)}</p>` : ''}
     ${mons ? `<div class="mon-row">${mons}</div>` : ''}
     ${bonuses ? `<h4>${escapeHtml(i18n('drawer.bonuses', null, '加成'))}</h4><ul>${bonuses}</ul>` : ''}
@@ -964,9 +1000,17 @@ function openDetail(ev, opener) {
     ${sections}
     ${links ? `<div class="detail-links">${links}</div>` : ''}
   `;
+  if (reminders && ev.id && (state.events.some(e => e.id === ev.id) || reminders.get(ev.id))) {
+    const widget = keepWidget ? oldWidget : createReminderControls(ev.id);
+    $('#detail-body .detail-reminder-mount').append(widget); syncReminderControls(widget);
+  }
   panel.hidden = false;
   linkifySprites($('#detail-body'));
-  const close = $('#detail-close'); if (close) close.focus();
+  if (preserve) {
+    panel.scrollTop = scroll;
+    if (focused?.isConnected && selection) { focused.focus({ preventScroll:true }); focused.setSelectionRange(...selection); }
+  } else { const close = $('#detail-close'); if (close) close.focus(); }
+  reminderScheduler?.wake();
 }
 
 /* ---------- Mega Evolution reference (view-mega) ------------------------------
@@ -1447,9 +1491,11 @@ function wcFmtOffset(min) {
  * dependency-free, so browser rendering and Node fixtures exercise the same
  * DST/half-hour-aware implementation. */
 const spotPartFormatters = new Map();
+const validIanaTimeZones = new Set();
 function isValidIanaTimeZone(zone) {
   if (typeof zone !== 'string' || !zone.trim()) return false;
-  try { new Intl.DateTimeFormat('en-US', { timeZone:zone }).format(0); return true; }
+  if (validIanaTimeZones.has(zone)) return true;
+  try { new Intl.DateTimeFormat('en-US', { timeZone:zone }).format(0); validIanaTimeZones.add(zone); return true; }
   catch (e) { return false; }
 }
 function detectBrowserTimeZone(resolver) {
@@ -1573,6 +1619,405 @@ function formatTargetForZone(targetInstant, displayZone, locale) {
     text:`${dateText} ${weekday} ${time}`,
   };
 }
+/* ---------- Event timing (separate from parseDay's calendar grid) ---------
+ * No current-offset arithmetic. The last global zone is fixed UTC−12, NOT
+ * Etc/GMT-12 (which means UTC+12). Task 4 consumes these pure values. */
+function parseEventTime(value) {
+  if (typeof value !== 'string') return { error:'missing/invalid date-time string' };
+  const m = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,3}))?(Z|[+-]\d{2}:\d{2})?)?$/.exec(value);
+  if (!m) return { error:'expected YYYY-MM-DD or complete ISO date-time with optional offset' };
+  const year = +m[1], month = +m[2], day = +m[3], hour = +(m[4] || 0), minute = +(m[5] || 0);
+  const second = +(m[6] || 0), millisecond = +(m[7] || '0').padEnd(3, '0');
+  if (year < 1000 || month < 1 || month > 12 || day < 1 || day > 31 || hour > 23 || minute > 59 || second > 59)
+    return { error:'invalid calendar date or clock time' };
+  const stamp = new Date(0);
+  stamp.setUTCFullYear(year, month - 1, day);
+  stamp.setUTCHours(hour, minute, second, millisecond);
+  if (stamp.getUTCFullYear() !== year || stamp.getUTCMonth() + 1 !== month || stamp.getUTCDate() !== day)
+    return { error:'invalid calendar date (no overflow normalization)' };
+  const offset = m[8] || null;
+  let offsetMinutes = 0;
+  if (offset && offset !== 'Z') {
+    const h = +offset.slice(1, 3), min = +offset.slice(4, 6);
+    if (h > 14 || min > 59 || (h === 14 && min !== 0)) return { error:'invalid numeric UTC offset' };
+    offsetMinutes = (offset[0] === '-' ? -1 : 1) * (h * 60 + min);
+  }
+  return { parts:{ year, month, day, hour, minute, second, millisecond }, date:value.slice(0, 10),
+    hasTime:!!m[4], hasOffset:!!offset, offset,
+    instant:offset ? new Date(stamp.getTime() - offsetMinutes * 60000) : null };
+}
+function validateEventTiming(event, options) {
+  const errors = [];
+  if (!event || typeof event !== 'object') return ['event must be an object'];
+  const t = event.timing;
+  // Read-only migration compatibility; neither daily gate enables allowLegacy.
+  if (!t) return options && options.allowLegacy ? [] : ['timing is required'];
+  if (typeof t !== 'object' || Array.isArray(t) || Object.keys(t).some(k =>
+    !['scope','mode','startPrecision','endPrecision','timeZone'].includes(k))) return ['invalid timing fields'];
+  if (!['global','regional','unknown'].includes(t.scope)) errors.push('invalid timing.scope');
+  if (!['local','absolute','unknown'].includes(t.mode)) errors.push('invalid timing.mode');
+  for (const field of ['startPrecision','endPrecision']) {
+    if (!['exact','date','unknown'].includes(t[field])) errors.push(`invalid timing.${field}`);
+  }
+  if (t.mode === 'local' && t.scope === 'regional') {
+    if (!isValidIanaTimeZone(t.timeZone)) errors.push('regional local requires a single-venue IANA timeZone');
+  } else if (Object.prototype.hasOwnProperty.call(t, 'timeZone')) errors.push('timeZone only valid for regional local');
+  const start = parseEventTime(event.start), end = event.end == null ? null : parseEventTime(event.end);
+  if (start.error) errors.push(`start: ${start.error}`);
+  if (end && end.error) errors.push(`end: ${end.error}`);
+  if (!end && t.endPrecision !== 'unknown') errors.push('missing end requires unknown endPrecision');
+  for (const [name, boundary] of [['start',start],['end',end]]) {
+    if (!boundary || boundary.error || t[`${name}Precision`] !== 'exact') continue;
+    if (!boundary.hasTime) errors.push(`${name} exact needs a clock time`);
+    if (t.mode === 'absolute' && !boundary.hasOffset) errors.push(`${name} absolute exact needs Z/numeric offset`);
+    if (t.mode === 'local' && boundary.hasOffset) errors.push(`${name} local exact needs offset-free wall time`);
+  }
+  if (!start.error && end && !end.error) {
+    if (t.mode === 'local' && end.date < start.date) errors.push('end wall date precedes start');
+    if (t.mode !== 'unknown' && t.startPrecision === 'exact' && t.endPrecision === 'exact') {
+      const a = t.mode === 'absolute' ? start.instant?.getTime() : spotWallStamp(start.parts) + start.parts.millisecond;
+      const b = t.mode === 'absolute' ? end.instant?.getTime() : spotWallStamp(end.parts) + end.parts.millisecond;
+      if (Number.isFinite(a) && Number.isFinite(b) && b <= a) errors.push('end must follow start (half-open interval)');
+    } else if (t.startPrecision === 'date' && t.endPrecision === 'date' && end.date < start.date)
+      errors.push('end date precedes start date');
+  }
+  return errors;
+}
+function resolveEventTiming(event, now, viewerTimeZone) {
+  const errors = validateEventTiming(event);
+  const timeZone = viewerTimeZone == null ? (typeof document === 'undefined' ? 'UTC' : detectBrowserTimeZone().timeZone) : viewerTimeZone;
+  if (!isValidIanaTimeZone(timeZone)) errors.push(`invalid viewer IANA time zone: ${timeZone}`);
+  const result = { openAt:null, closeAt:null, viewerWindow:{start:null,end:null}, viewerTimeZone:timeZone,
+    status:'unknown', reason:null };
+  if (errors.length) { result.status='error'; result.reason=errors.join('; '); return result; }
+  const current = now instanceof Date ? new Date(now.getTime()) : new Date(now);
+  if (!Number.isFinite(current.getTime())) { result.status='error'; result.reason='invalid now instant'; return result; }
+  const t = event.timing;
+  function fromWall(wall, zone) {
+    return new Date(zonedWallTimeToInstant(wall, zone).getTime() + wall.millisecond);
+  }
+  function boundary(name) {
+    if (t[`${name}Precision`] !== 'exact') return null;
+    const b = parseEventTime(event[name]);
+    if (t.mode === 'absolute') return b.instant;
+    if (t.mode !== 'local' || t.scope === 'unknown') return null; // known clock, no safe instant
+    if (t.scope === 'regional') return fromWall(b.parts, t.timeZone);
+    return name === 'start' ? fromWall(b.parts, 'Pacific/Kiritimati')
+      : new Date(spotWallStamp(b.parts) + b.parts.millisecond + 12 * 3600000); // fixed UTC−12
+  }
+  function display(name, reminderInstant) {
+    if (!reminderInstant) return null;
+    const instant = t.mode === 'local' && t.scope === 'global'
+      ? fromWall(parseEventTime(event[name]).parts, timeZone) : reminderInstant;
+    return { instant, ...formatTargetForZone(instant, timeZone, 'en') };
+  }
+  try {
+    result.openAt = boundary('start'); result.closeAt = boundary('end');
+    result.viewerWindow.start = display('start', result.openAt);
+    result.viewerWindow.end = display('end', result.closeAt);
+  } catch (error) {
+    result.openAt=null; result.closeAt=null; result.viewerWindow={start:null,end:null};
+    result.status='error'; result.reason=`time-zone conversion failed: ${error.message}`; return result;
+  }
+  if (result.openAt && result.closeAt && result.closeAt <= result.openAt) {
+    result.status='error'; result.reason='resolved end must follow start'; return result;
+  }
+  const ms = current.getTime();
+  if (result.closeAt && ms >= result.closeAt.getTime()) result.status='expired';
+  else if (result.openAt && ms < result.openAt.getTime()) result.status='upcoming';
+  else if (result.openAt) result.status='active';
+  else result.reason='start instant unavailable; scope, time mechanism or precision unresolved';
+  if (!result.closeAt && result.status !== 'unknown') result.reason='exact end unavailable; no automatic expiry';
+  return result;
+}
+/* ---------- Personal event reminders (independent of TODO / daily data) ---------- */
+const REMINDER_PREFIX = 'pogo-event-reminders:v1:';
+const REMINDER_LEGACY_KEY = 'pogo-event-reminders';
+const REMINDER_NOTE_LIMIT = 500;
+function reminderNote(text) { return Array.from(String(text || '')).slice(0, REMINDER_NOTE_LIMIT).join(''); }
+function reminderTimeSnapshot(event) {
+  if (!event || validateEventTiming(event).length) return null;
+  const { scope, mode, startPrecision, endPrecision, timeZone } = event.timing;
+  const time = { start:event.start, end:event.end == null ? null : event.end,
+    timing:{ scope, mode, startPrecision, endPrecision, ...(timeZone ? { timeZone } : {}) } };
+  return { ...time, fingerprint:JSON.stringify(time) };
+}
+function decodeReminder(raw, id) {
+  try {
+    const r = JSON.parse(raw);
+    const stamp = n => Number.isFinite(n) && n >= 0 && n <= 8640000000000000;
+    if (!r || r.v !== 1 || r.id !== id || typeof r.token !== 'string' || !r.token || r.token.length > 120
+      || !stamp(r.starredAt) || (r.completedAt !== null && !stamp(r.completedAt))
+      || typeof r.note !== 'string' || Array.from(r.note).length > REMINDER_NOTE_LIMIT) return null;
+    const time = r.time == null ? null : reminderTimeSnapshot(r.time);
+    if (r.time != null && (!time || time.fingerprint !== r.time.fingerprint)) return null;
+    return { v:1, id, token:r.token, starredAt:r.starredAt, completedAt:r.completedAt, note:r.note,
+      names:{ 'zh-CN':typeof r.names?.['zh-CN'] === 'string' ? r.names['zh-CN'] : '',
+        en:typeof r.names?.en === 'string' ? r.names.en : '' }, time };
+  } catch (e) { return null; }
+}
+function deriveEventReminder(record, canonical, now, viewerTimeZone) {
+  const event = canonical || record?.time;
+  const time = event ? resolveEventTiming(event, now, viewerTimeZone)
+    : { openAt:null, closeAt:null, viewerWindow:{start:null,end:null}, status:'unknown' };
+  const expired = time.status === 'expired';
+  const flagged = !!record && !expired, completed = flagged && record.completedAt !== null;
+  return { ...time, flagged, completed, expired, active:flagged && !completed && time.status === 'active',
+    canComplete:flagged && !completed && time.status === 'active', canUndo:completed,
+    hasCanonical:!!canonical };
+}
+// All writers (including migration/cleanup) share one origin-wide Web Lock.
+// The synchronous critical section covers read, token/time checks, merge and write.
+// Per-event keys and incarnation tokens remain compatible; no unlocked fallback.
+function createEventReminderStore(options = {}) {
+  const now = options.now || Date.now;
+  const zone = options.viewerTimeZone || (() => detectBrowserTimeZone().timeZone);
+  const storage = () => typeof options.storage === 'function' ? options.storage() : (options.storage || localStorage);
+  const token = options.token || (() => globalThis.crypto?.randomUUID?.() || `${now()}-${Math.random().toString(36).slice(2)}`);
+  let records = new Map(), canonical = new Map(), names = new Map(), rawById = new Map();
+  let unavailable = false, legacyIsolated = false, lockingUnavailable = false, pendingSource = null;
+  const volatile = new Map(), isolated = new Set();
+  const key = id => REMINDER_PREFIX + encodeURIComponent(id);
+  async function locked(operation) {
+    let timer;
+    try {
+      const manager = Object.hasOwn(options, 'locks') ? options.locks : globalThis.navigator?.locks;
+      if (!manager?.request) throw new Error('Web Locks unavailable');
+      const controller = new AbortController();
+      // Only queued acquisition can time out. The granted callback never awaits.
+      timer = setTimeout(() => controller.abort(), 5000);
+      return await manager.request(REMINDER_PREFIX, { mode:'exclusive', signal:controller.signal }, () => {
+        clearTimeout(timer); lockingUnavailable = false;
+        return operation();
+      });
+    } catch (e) {
+      lockingUnavailable = true;
+      return { ok:false, persisted:false, reason:'locking' };
+    } finally { clearTimeout(timer); }
+  }
+  function transact(operation) {
+    return locked(() => {
+      if (pendingSource) {
+        setEvents(pendingSource.events, pendingSource.englishNames);
+        pendingSource = null;
+      }
+      return operation();
+    });
+  }
+  function clearLegacyId(id, s) {
+    const raw = s.getItem(REMINDER_LEGACY_KEY);
+    if (!raw) return;
+    let old;
+    try { old = JSON.parse(raw); } catch { return; }
+    if (old?.v !== 0 || !old.events || typeof old.events !== 'object' || Array.isArray(old.events) || !Object.hasOwn(old.events, id)) return;
+    // A partial/failed v0 migration must not later recreate a successfully deleted row.
+    delete old.events[id];
+    if (Object.keys(old.events).length) s.setItem(REMINDER_LEGACY_KEY, JSON.stringify(old));
+    else s.removeItem(REMINDER_LEGACY_KEY);
+  }
+  function accept(id, raw) {
+    const r = raw === null ? null : decodeReminder(raw, id);
+    if (raw !== null && !r) isolated.add(id); else isolated.delete(id);
+    rawById.set(id, raw);
+    const local = volatile.get(id);
+    if (local && local.baseRaw !== raw) volatile.delete(id); // a newer successful tab write wins
+    const current = volatile.has(id) ? volatile.get(id).record : r;
+    if (current) records.set(id, current); else records.delete(id);
+    return current;
+  }
+  function sync() {
+    try {
+      const s = storage(), found = new Map();
+      for (let i = 0; i < s.length; i++) {
+        const k = s.key(i);
+        if (!k?.startsWith(REMINDER_PREFIX)) continue;
+        let id;
+        try { id = decodeURIComponent(k.slice(REMINDER_PREFIX.length)); }
+        catch (e) { isolated.add(k); continue; }
+        if (!id || key(id) !== k) { isolated.add(k); continue; }
+        found.set(id, s.getItem(k));
+      }
+      for (const id of new Set([...records.keys(), ...rawById.keys(), ...found.keys()])) accept(id, found.get(id) ?? null);
+      unavailable = false;
+    } catch (e) { unavailable = true; } // never replace a usable session with a partial read
+    return records;
+  }
+  function fresh(id) {
+    try { const raw = storage().getItem(key(id)); unavailable = false; return accept(id, raw); }
+    catch (e) { unavailable = true; return records.get(id) || null; }
+  }
+  function write(id, next) {
+    const raw = rawById.get(id) ?? null, body = next ? JSON.stringify(next) : null;
+    try {
+      if (isolated.has(id)) throw new Error('isolated record'); // keep unsupported/corrupt bytes untouched
+      const s = storage();
+      const latest = s.getItem(key(id));
+      if (latest !== raw) { accept(id, latest); return { ok:false, reason:'changed' }; }
+      if (!next) clearLegacyId(id, s);
+      if (body !== raw) { if (next) s.setItem(key(id), body); else s.removeItem(key(id)); }
+      rawById.set(id, body); volatile.delete(id); unavailable = false;
+    } catch (e) { volatile.set(id, { baseRaw:raw, record:next }); unavailable = true; }
+    if (next) records.set(id, next); else records.delete(id);
+    return { ok:true, persisted:!volatile.has(id), record:next };
+  }
+  function authoritative(id, record) {
+    const event = canonical.get(id);
+    if (!event || !record) return record;
+    // A successful canonical withdrawal replaces the old snapshot, including null.
+    return { ...record, time:reminderTimeSnapshot(event), names:names.get(id) || record.names };
+  }
+  function viewFor(id, r) {
+    // Flagged records already carry the latest successfully loaded snapshot.
+    // Old tabs must not put their stale canonical times back during calibration.
+    return { ...deriveEventReminder(r, r ? null : canonical.get(id), now(), zone()), hasCanonical:canonical.has(id) };
+  }
+  function mutate(id, expectedToken, change, sourceLoaded = false) {
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const latest = fresh(id), r = sourceLoaded ? authoritative(id, latest) : latest;
+      if (expectedToken && r?.token !== expectedToken) return { ok:false, reason:'missing' };
+      const view = viewFor(id, r);
+      if (view.expired) {
+        if (r && write(id, null).reason === 'changed') continue;
+        return { ok:false, reason:'expired' };
+      }
+      const next = change(r, view);
+      if (next === undefined) return { ok:false, reason:'unavailable' };
+      const result = write(id, next);
+      if (result.reason !== 'changed') return result;
+    }
+    return { ok:false, reason:'changed' };
+  }
+  function refresh() {
+    sync();
+    for (const id of [...records.keys()]) {
+      mutate(id, records.get(id).token, r => r || undefined);
+    }
+    // Retry a session-only deletion if storage recovers, but never delete a
+    // different successful incarnation written by another tab meanwhile.
+    for (const [id, local] of volatile) if (local.record === null) {
+      fresh(id);
+      if (volatile.get(id)?.record === null) write(id, null);
+    }
+    return records;
+  }
+  function setEvents(events, englishNames = {}) {
+    if (!Array.isArray(events)) return; // failed loads are not authoritative withdrawal
+    const valid = events.filter(e => e && typeof e.id === 'string' && e.id);
+    canonical = new Map(valid.map(e => [e.id, e]));
+    names = new Map(valid.map(e => [e.id, { 'zh-CN':e.name || '', en:englishNames[e.id]?.name || '' }]));
+    sync();
+    for (const [id, r] of [...records]) mutate(id, r.token, latest => latest || undefined, true);
+    refresh();
+  }
+  function migrate() {
+    let s, raw;
+    try { s = storage(); raw = s.getItem(REMINDER_LEGACY_KEY); }
+    catch (e) { unavailable = true; return; }
+    if (raw === null) return;
+    try {
+      const old = JSON.parse(raw);
+      if (old?.v !== 0 || !old.events || typeof old.events !== 'object' || Array.isArray(old.events)) {
+        legacyIsolated = true; return;
+      }
+      let complete = true;
+      for (const [id, r] of Object.entries(old.events)) {
+        if (!id || !r || !Number.isFinite(r.starredAt) || typeof r.note !== 'string') { complete = false; continue; }
+        if (s.getItem(key(id)) !== null) continue; // never overwrite a newer version / other tab
+        const row = { v:1, id, token:token(), starredAt:r.starredAt,
+          completedAt:Number.isFinite(r.completedAt) ? r.completedAt : null, note:reminderNote(r.note),
+          names:{ 'zh-CN':r.name || '', en:r.enName || '' }, time:reminderTimeSnapshot(r.time) };
+        if (!decodeReminder(JSON.stringify(row), id)) { complete = false; continue; }
+        accept(id, null);
+        if (!write(id, row).persisted) complete = false;
+      }
+      if (complete) s.removeItem(REMINDER_LEGACY_KEY); else legacyIsolated = true;
+    } catch (e) { legacyIsolated = true; } // unknown versions remain isolated, never touch TODO
+  }
+  sync();
+  const ready = locked(() => { migrate(); sync(); });
+  return {
+    ready, sync, refresh:() => transact(refresh),
+    setEvents(events, englishNames) {
+      if (Array.isArray(events)) pendingSource = { events, englishNames };
+      return transact(() => {}); // a failed acquisition retains this explicit load for retry
+    },
+    get:id => records.get(id) || null,
+    entries:() => [...records.entries()],
+    view:id => viewFor(id, records.get(id)),
+    status:() => ({ unpersisted:unavailable || volatile.size > 0, isolated:legacyIsolated || isolated.size > 0, lockingUnavailable }),
+    star:id => transact(() => mutate(id, null, r => r || (canonical.has(id) ? { v:1, id, token:token(), starredAt:now(),
+      completedAt:null, note:'', names:names.get(id), time:reminderTimeSnapshot(canonical.get(id)) } : undefined))),
+    remove:(id, expectedToken) => transact(() => mutate(id, expectedToken, r => r ? null : undefined)),
+    note:(id, text, expectedToken) => transact(() => mutate(id, expectedToken, r => r ? { ...r, note:reminderNote(text) } : undefined)),
+    complete:(id, done, expectedToken) => transact(() => mutate(id, expectedToken, (r, view) =>
+      r && (r.completedAt !== null) === done ? r
+        : r && (done ? view.canComplete : view.canUndo) ? { ...r, completedAt:done ? now() : null } : undefined)),
+  };
+}
+function createReminderNoteSaver(store, options = {}) {
+  const later = options.setTimeout || setTimeout, cancel = options.clearTimeout || clearTimeout;
+  const drafts = new Map();
+  function flush(id) {
+    const draft = drafts.get(id); if (!draft || draft.composing) return Promise.resolve();
+    if (draft.flight) return draft.flight;
+    cancel(draft.timer); draft.timer = null;
+    draft.flight = Promise.resolve().then(() => store.note(id, draft.note, draft.token)).catch(() =>
+      ({ ok:false, persisted:false, reason:'locking' })).then(result => {
+      if (drafts.get(id) === draft) {
+        draft.flight = null;
+        if (result.ok || ['missing','expired','unavailable'].includes(result.reason)) drafts.delete(id);
+        else draft.failed = true; // retain input; retry on edit/blur, not a busy loop
+        options.onSave?.(id, result, draft.token);
+      }
+      return result;
+    });
+    return draft.flight;
+  }
+  return {
+    input(id, token, note, composing = false) {
+      const old = drafts.get(id);
+      if (old && old.token === token && old.note === note && old.composing === composing && !old.failed) return;
+      if (old) cancel(old.timer);
+      const draft = { token, note, composing, timer:null }; drafts.set(id, draft);
+      if (!composing) draft.timer = later(() => flush(id), options.delay ?? 350);
+    },
+    flush, flushAll:() => Promise.all([...drafts.keys()].map(flush)),
+    pending:id => drafts.get(id),
+    cancel(id) { const draft = drafts.get(id); if (draft) cancel(draft.timer); drafts.delete(id); },
+    cancelMissing() {
+      for (const [id, d] of drafts) if (store.get(id)?.token !== d.token || !store.view(id).flagged) this.cancel(id);
+    },
+  };
+}
+// One boundary timer, capped at 30s to notice clock / IANA changes. Always read
+// now again after wake; no ticking counters or per-event animation timers.
+function createReminderScheduler(options) {
+  const now = options.now || Date.now, later = options.setTimeout || setTimeout, cancel = options.clearTimeout || clearTimeout;
+  let timer = null, running = null, requested = false, generation = 0;
+  function pause() { generation++; requested = false; if (timer !== null) cancel(timer); timer = null; }
+  function wake() {
+    if (options.isHidden?.()) { pause(); return Promise.resolve(); }
+    if (timer !== null) cancel(timer); timer = null;
+    requested = true;
+    if (running) return running;
+    running = (async () => {
+      do {
+        requested = false;
+        const before = now(), epoch = generation;
+        await options.refresh();
+        if (options.isHidden?.() || epoch !== generation) continue;
+        if (!requested) {
+          const current = now(), future = options.boundaries().filter(t => Number.isFinite(t) && t > before);
+          const delay = Math.max(1, Math.min(30000, ...future.map(t => t - current)));
+          timer = later(() => wake(), delay);
+        }
+      } while (requested);
+    })().catch(error => { console.error('Reminder refresh failed', error); }).finally(() => { running = null; });
+    return running;
+  }
+  return { wake, pause };
+}
+
 // Half-open [start, end) on a 24h clock, hour granularity: 「结束」exclusive
 // (end may be 24 = 当日结束). Wraps past midnight when start > end; start === end → empty.
 function wcInRange(h, start, end) {
@@ -2029,6 +2474,292 @@ function setupSpots() {
   }, 30000);
 }
 
+/* ---------- Reminder UI (notes stay plain text and keep their editor node) ---------- */
+let reminders = null, reminderSaver = null, reminderScheduler = null, detailEvent = null, reminderViewerZone = 'UTC';
+const reminderActions = new Set();
+const reminderCards = new Map(), reminderDisplayFormatters = new Map();
+function reminderInstant(instant) {
+  const zone = reminderViewerZone, key = state.locale + '/' + zone;
+  let formatter = reminderDisplayFormatters.get(key);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat(isEnglish() ? 'en-US' : 'zh-CN', {
+      timeZone:zone, year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit',
+      hourCycle:'h23', timeZoneName:'shortOffset',
+    });
+    reminderDisplayFormatters.set(key, formatter);
+  }
+  return formatter.format(instant) + ` (${zone})`;
+}
+function reminderRemaining(ms) {
+  const minutes = Math.max(1, Math.ceil(ms / 60000)), days = Math.floor(minutes / 1440), hours = Math.floor(minutes % 1440 / 60);
+  return [days ? i18n('reminder.days', { count:days }) : '', hours ? i18n('reminder.hours', { count:hours }) : '',
+    minutes % 60 ? i18n('reminder.minutes', { count:minutes % 60 }) : ''].filter(Boolean).join(' ');
+}
+function reminderStatus(id) {
+  const v = reminders.view(id), r = reminders.get(id);
+  const event = r ? r.time : state.events.find(e => e.id === id);
+  const globalLocal = event?.timing?.scope === 'global' && event.timing.mode === 'local';
+  const lines = [];
+  if (v.expired) return [i18n('reminder.expired')];
+  if (v.completed) lines.push(i18n('reminder.completed'));
+  if (v.status === 'active') lines.push(i18n(globalLocal ? 'reminder.globalStarted' : 'reminder.started'));
+  else if (v.openAt) lines.push(i18n('reminder.opens', { time:reminderInstant(v.openAt) }));
+  else lines.push(i18n('reminder.unknownStart'));
+  const localStart = v.viewerWindow.start?.instant;
+  if (globalLocal && localStart && Date.now() < localStart.getTime())
+    lines.push(i18n('reminder.localStarts', { remaining:reminderRemaining(localStart - Date.now()), time:reminderInstant(localStart) }));
+  if (v.closeAt) lines.push(i18n(globalLocal ? 'reminder.globalDeadline' : 'reminder.deadline', { time:reminderInstant(v.closeAt) }));
+  else lines.push(i18n('reminder.unknownEnd'));
+  if (!v.hasCanonical && r) lines.push(i18n('reminder.unavailable'));
+  return lines;
+}
+function reminderNotice() {
+  if (!reminders) return '';
+  const status = reminders.status();
+  return [status.lockingUnavailable ? i18n('reminder.lockingFailed') : '', status.unpersisted ? i18n('reminder.storageFailed') : '',
+    status.isolated ? i18n('reminder.isolated') : ''].filter(Boolean).join(' ');
+}
+function bindCalendarReminder(node, ids) {
+  node._reminderIds = [...new Set((Array.isArray(ids) ? ids : [ids]).filter(id => typeof id === 'string' && id))];
+  if (!node._reminderIds.length) return; // fallback raid drawers have no canonical identity
+  node.dataset.reminderEvent = node._reminderIds.join(' ');
+  node._reminderAria = node.getAttribute('aria-label') || node.title || node.textContent;
+  const mark = document.createElement('span'); mark.className = 'reminder-mark'; mark.setAttribute('aria-hidden', 'true');
+  const sparks = document.createElement('span'); sparks.className = 'reminder-sparks'; sparks.setAttribute('aria-hidden', 'true');
+  sparks.innerHTML = '<i>✦</i><i>✦</i>';
+  node.prepend(mark); node.append(sparks);
+  syncCalendarReminder(node);
+}
+function syncCalendarReminder(node) {
+  if (!reminders || !node._reminderIds) return;
+  const views = node._reminderIds.map(id => reminders.view(id)).filter(v => v.flagged);
+  const active = views.some(v => v.active), completed = views.length > 0 && views.every(v => v.completed);
+  node.classList.toggle('reminder-active', active);
+  node.classList.toggle('reminder-flagged', views.length > 0);
+  node.classList.toggle('reminder-complete', completed);
+  const mark = node.querySelector('.reminder-mark');
+  if (mark) { mark.hidden = !views.length; mark.textContent = completed ? '√' : '★'; }
+  node.setAttribute('aria-label', node._reminderAria + (views.length ? ' · ' + i18n(completed ? 'reminder.completed' : 'reminder.flagged') : ''));
+}
+function flushReminderEditor() {
+  const widget = document.querySelector('.detail-reminder');
+  const input = widget?.querySelector('textarea');
+  if (input && reminderSaver?.pending(widget.dataset.id)) {
+    input.value = reminderNote(input.value);
+    reminderSaver.input(widget.dataset.id, widget.dataset.token, input.value, false);
+  }
+  reminderSaver?.flushAll();
+}
+function reminderButtonCommand(button) {
+  return { action:button.dataset.reminderAction, token:button.dataset.reminderToken,
+    done:button.dataset.reminderDone === 'true' };
+}
+function syncReminderButtonCommands(star, done, record) {
+  star.dataset.reminderAction = record ? 'remove' : 'star';
+  star.dataset.reminderToken = done.dataset.reminderToken = record?.token || '';
+  done.dataset.reminderAction = 'complete';
+  done.dataset.reminderDone = String(record?.completedAt === null);
+}
+async function reminderAction(id, command) {
+  if (!reminders || reminderActions.has(id)) return;
+  // Copy the displayed intent before any await or UI synchronization.
+  const { action, token, done } = command;
+  if (!['star','remove','complete'].includes(action) || (action !== 'star' && !token)) return;
+  reminderActions.add(id); syncReminderUi();
+  try {
+    await reminders.refresh(); reminderSaver.cancelMissing();
+    const r = reminders.get(id);
+    if (action === 'star') return await reminders.star(id); // already starred is a no-op
+    if (r?.token !== token) return { ok:false, reason:'missing' };
+    if (action === 'remove') {
+      const draft = reminderSaver.pending(id);
+      if ((draft?.note || r.note) && !confirm(i18n('reminder.confirmRemove'))) return { ok:false, reason:'canceled' };
+      const result = await reminders.remove(id, token);
+      // Only invalidated drafts are canceled; a rejected deletion keeps its input.
+      reminderSaver.cancelMissing();
+      return result;
+    }
+    return await reminders.complete(id, done, token);
+  } catch (error) { console.error('Reminder action failed', error); }
+  finally {
+    reminderActions.delete(id);
+    await reminderScheduler.wake();
+  }
+}
+function createReminderControls(id) {
+  const box = document.createElement('section'); box.className = 'detail-reminder'; box.dataset.id = id;
+  box.innerHTML = '<h4 class="reminder-title"></h4><div class="reminder-actions">'
+    + '<button type="button" class="btn reminder-star"></button><button type="button" class="btn reminder-done" aria-describedby="detail-reminder-status"></button></div>'
+    + '<p id="detail-reminder-status" class="reminder-time"></p><label class="reminder-note-editor"><span></span><textarea rows="3"></textarea></label>'
+    + '<p class="reminder-save" role="status"></p><p class="reminder-warning" role="status"></p>';
+  const input = box.querySelector('textarea'); input.maxLength = REMINDER_NOTE_LIMIT * 2;
+  let composing = false;
+  const queue = () => {
+    if (!reminders.get(id) || reminders.get(id).token !== box.dataset.token) return;
+    if (!composing) input.value = reminderNote(input.value);
+    reminderSaver.input(id, box.dataset.token, input.value, composing);
+    box.querySelector('.reminder-save').textContent = i18n('reminder.saving');
+  };
+  input.addEventListener('compositionstart', () => { composing = true; queue(); });
+  input.addEventListener('compositionend', () => { composing = false; queue(); });
+  input.addEventListener('input', queue);
+  input.addEventListener('blur', () => { composing = false; queue(); reminderSaver.flush(id); });
+  box.querySelector('.reminder-star').addEventListener('click', e => { e.stopPropagation(); reminderAction(id, reminderButtonCommand(e.currentTarget)); });
+  box.querySelector('.reminder-done').addEventListener('click', e => { e.stopPropagation(); reminderAction(id, reminderButtonCommand(e.currentTarget)); });
+  syncReminderControls(box);
+  return box;
+}
+function syncReminderControls(box) {
+  const id = box.dataset.id, r = reminders.get(id), v = reminders.view(id), status = reminderStatus(id);
+  box.querySelector('.reminder-title').textContent = i18n('reminder.personal');
+  const star = box.querySelector('.reminder-star'), done = box.querySelector('.reminder-done');
+  syncReminderButtonCommands(star, done, r);
+  star.textContent = i18n(r ? 'reminder.unstar' : 'reminder.star');
+  star.disabled = reminderActions.has(id) || v.expired || (!r && !v.hasCanonical);
+  star.setAttribute('aria-pressed', r ? 'true' : 'false');
+  done.textContent = i18n(v.completed ? 'reminder.undo' : 'reminder.done');
+  done.disabled = reminderActions.has(id) || !(v.canComplete || v.canUndo); done.title = status[0];
+  box.querySelector('.reminder-time').textContent = status.join('\n');
+  const label = box.querySelector('.reminder-note-editor'), input = label.querySelector('textarea');
+  label.hidden = !r; input.disabled = !r;
+  label.querySelector('span').textContent = i18n('reminder.noteLabel', { count:REMINDER_NOTE_LIMIT });
+  input.placeholder = i18n('reminder.notePlaceholder');
+  const pending = reminderSaver.pending(id);
+  const draft = v.flagged && pending?.token === r?.token ? pending : null;
+  if (box.dataset.token !== (r?.token || '')) box.dataset.saveConflict = '';
+  if (box.dataset.token !== (r?.token || '') || document.activeElement !== input)
+    input.value = draft ? draft.note : r?.note || '';
+  box.dataset.token = r?.token || '';
+  const saved = box.querySelector('.reminder-save');
+  saved.textContent = r ? i18n(draft?.failed ? 'reminder.unsaved' : draft ? 'reminder.saving'
+    : reminders.status().unpersisted ? 'reminder.sessionOnly' : 'reminder.saved') : '';
+  box.querySelector('.reminder-warning').textContent = [reminderNotice(),
+    box.dataset.saveConflict && r ? i18n('reminder.editConflict') : ''].filter(Boolean).join(' ');
+}
+function createReminderCard(id) {
+  const card = document.createElement('article'); card.className = 'reminder-item'; card.dataset.id = id;
+  card.innerHTML = '<div class="reminder-card-head"><button type="button" class="reminder-open"></button><span class="reminder-mark" aria-hidden="true">★</span></div>'
+    + '<p class="reminder-time"></p><p class="reminder-note-preview"></p><div class="reminder-actions">'
+    + '<button type="button" class="btn reminder-star"></button><button type="button" class="btn reminder-done"></button></div>'
+    + '<span class="reminder-sparks" aria-hidden="true"><i>✦</i><i>✦</i></span>';
+  card.querySelector('.reminder-open').addEventListener('click', () => {
+    const ev = state.events.find(e => e.id === id), r = reminders.get(id);
+    if (ev) openDetail(ev, card.querySelector('.reminder-open'));
+    else if (r) openDetail({ id, name:r.names[state.locale] || r.names['zh-CN'] || id, ...r.time }, card.querySelector('.reminder-open'));
+  });
+  card.querySelector('.reminder-star').addEventListener('click', e => { e.stopPropagation(); reminderAction(id, reminderButtonCommand(e.currentTarget)); });
+  card.querySelector('.reminder-done').addEventListener('click', e => {
+    e.stopPropagation(); reminderAction(id, reminderButtonCommand(e.currentTarget)).then(() => {
+      const group = $('#reminder-completed'); if (group.contains(card) && !group.open) group.querySelector('summary').focus();
+    });
+  });
+  return card;
+}
+function renderReminderSidebar() {
+  if (!reminders) return;
+  const entries = reminders.entries(), buckets = { live:[], upcoming:[], unknown:[], completed:[] };
+  entries.forEach(([id, record]) => {
+    const view = reminders.view(id); if (!view.flagged) return;
+    const group = view.completed ? 'completed' : view.active ? 'live' : view.openAt ? 'upcoming' : 'unknown';
+    buckets[group].push({ id, record, view });
+  });
+  Object.values(buckets).forEach(rows => rows.sort((a, b) => (a.view.openAt?.getTime() ?? Infinity) - (b.view.openAt?.getTime() ?? Infinity) || a.record.starredAt - b.record.starredAt || a.id.localeCompare(b.id)));
+  const ids = new Set(entries.map(([id]) => id));
+  for (const [id, card] of reminderCards) if (!ids.has(id)) { card.remove(); reminderCards.delete(id); }
+  for (const [group, rows] of Object.entries(buckets)) {
+    const section = $(`#reminder-${group}`), list = section.querySelector('.reminder-list');
+    section.hidden = !rows.length;
+    section.querySelector(group === 'completed' ? 'summary' : 'h4').textContent = i18n(`reminder.group.${group}`, { count:rows.length });
+    rows.forEach(({ id, record, view }, index) => {
+      let card = reminderCards.get(id);
+      if (!card) { card = createReminderCard(id); reminderCards.set(id, card); }
+      const ev = state.events.find(e => e.id === id), cat = ev ? catOf(ev) : { color:PALETTE.blue };
+      card.style.setProperty('--c', cat.color);
+      card.classList.toggle('ft', !!ev?._featured);
+      card.classList.toggle('reminder-active', view.active);
+      card.querySelector('.reminder-open').textContent = record.names[state.locale] || (ev ? localizedEvent(ev).name : (record.names['zh-CN'] || id));
+      card.querySelector('.reminder-mark').textContent = view.completed ? '√' : '★';
+      card.querySelector('.reminder-time').textContent = reminderStatus(id).join('\n');
+      const note = card.querySelector('.reminder-note-preview'); note.textContent = record.note; note.hidden = !record.note;
+      const star = card.querySelector('.reminder-star'), done = card.querySelector('.reminder-done');
+      syncReminderButtonCommands(star, done, record);
+      star.textContent = i18n('reminder.unstar'); star.disabled = reminderActions.has(id);
+      star.setAttribute('aria-label', i18n('reminder.removeNamed', { name:card.querySelector('.reminder-open').textContent }));
+      done.textContent = i18n(view.completed ? 'reminder.undo' : 'reminder.done');
+      done.setAttribute('aria-label', i18n(view.completed ? 'reminder.undoNamed' : 'reminder.completeNamed', { name:card.querySelector('.reminder-open').textContent }));
+      const time = card.querySelector('.reminder-time'); time.id = 'reminder-status-' + encodeURIComponent(id);
+      done.setAttribute('aria-describedby', time.id);
+      done.disabled = reminderActions.has(id) || !(view.canComplete || view.canUndo); done.title = reminderStatus(id)[0];
+      if (list.children[index] !== card) list.insertBefore(card, list.children[index] || null);
+    });
+  }
+  $('#reminder-count').textContent = String(entries.length);
+  $('#reminder-empty').hidden = entries.length > 0;
+  $('#reminder-notice').textContent = reminderNotice();
+}
+async function refreshReminderUi() {
+  reminderViewerZone = detectBrowserTimeZone().timeZone;
+  await reminders.refresh(); reminderSaver.cancelMissing();
+  syncReminderUi();
+}
+function syncReminderUi() {
+  document.querySelectorAll('[data-reminder-event]').forEach(syncCalendarReminder);
+  renderReminderSidebar();
+  document.querySelectorAll('.detail-reminder').forEach(syncReminderControls);
+}
+async function setupReminders() {
+  reminderViewerZone = detectBrowserTimeZone().timeZone;
+  reminders = createEventReminderStore({ viewerTimeZone:() => reminderViewerZone });
+  await reminders.setEvents(state.events, state.en?.events);
+  reminderSaver = createReminderNoteSaver(reminders, { onSave:(id, result, token) => {
+    const box = document.querySelector('.detail-reminder');
+    if (box?.dataset.id === id && box.dataset.token === token) box.dataset.saveConflict = result.reason === 'changed' ? 'true' : '';
+    if (!document.hidden) reminderScheduler.wake();
+  } });
+  reminderScheduler = createReminderScheduler({
+    refresh:refreshReminderUi, isHidden:() => document.hidden,
+    boundaries:() => reminders.entries().flatMap(([id]) => {
+      const v = reminders.view(id);
+      return [v.openAt?.getTime(), v.closeAt?.getTime(), v.viewerWindow.start?.instant?.getTime()];
+    }),
+  });
+  const panel = $('#reminder-panel'); if (matchMedia('(max-width:1000px)').matches) panel.open = false;
+  window.addEventListener('storage', e => {
+    if (e.key === null || e.key === REMINDER_LEGACY_KEY || e.key.startsWith(REMINDER_PREFIX)) {
+      reminders.sync(); reminderSaver.cancelMissing(); reminderScheduler.wake();
+    }
+  });
+  document.addEventListener('visibilitychange', () => {
+    document.body.classList.toggle('reminders-paused', document.hidden);
+    if (document.hidden) { flushReminderEditor(); reminderScheduler.pause(); }
+    else reminderScheduler.wake();
+  });
+  window.addEventListener('pagehide', () => {
+    flushReminderEditor(); reminderScheduler.pause(); document.body.classList.add('reminders-paused');
+  });
+  const resume = () => {
+    document.body.classList.toggle('reminders-paused', document.hidden); reminderScheduler.wake();
+  };
+  window.addEventListener('pageshow', resume);
+  window.addEventListener('focus', resume);
+  reminderScheduler.wake();
+}
+function openChipDay(date, list, opener) {
+  flushReminderEditor(); detailEvent = null; detailReturnFocus = opener;
+  const panel = $('#event-detail'), body = $('#detail-body');
+  panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'true');
+  panel.setAttribute('aria-label', i18n('reminder.dayList', { date:fmtDateShort(ymd(date)) }));
+  body.innerHTML = `<h3>${escapeHtml(i18n('reminder.dayList', { date:fmtDateShort(ymd(date)) }))}</h3><div class="raid-day-options"></div>`;
+  const options = body.querySelector('.raid-day-options');
+  list.forEach(({ ev, cat }) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'raid-day-option';
+    b.style.setProperty('--ring', cat.color); b.textContent = localizedEvent(ev).name;
+    bindCalendarReminder(b, ev.id);
+    b.addEventListener('click', () => openDetail(ev, opener)); options.append(b);
+  });
+  panel.hidden = false; options.querySelector('button')?.focus();
+}
+
 /* ---------- language / locale ---------- */
 function captureLocalizedRegions() {
   REGION_NAMES.forEach(name => {
@@ -2085,10 +2816,9 @@ function applyStaticTranslations() {
 }
 function applyLocale() {
   try { localStorage.setItem(LOCALE_KEY, state.locale); } catch (e) {}
-  // A drawer holds a localized snapshot. Closing it avoids stale-language
-  // content; the language toggle already owns focus during a switch.
-  const drawer = $('#event-detail');
-  if (drawer && !drawer.hidden) { drawer.hidden = true; detailReturnFocus = null; }
+  const drawer = $('#event-detail'), opened = drawer && !drawer.hidden;
+  // Keep the actual textarea node (including IME/caret/draft) across languages.
+  if (opened && !detailEvent) { flushReminderEditor(); drawer.hidden = true; detailReturnFocus = null; }
   applyStaticTranslations();
   renderUpdated();
   renderLocalizedRegions();
@@ -2097,6 +2827,8 @@ function applyLocale() {
   renderMega();
   renderWorldClock();
   renderSpots();
+  if (opened && detailEvent) openDetail(detailEvent, detailReturnFocus, true);
+  reminderScheduler?.wake();
   if (todoState) renderTodo();
   linkifySprites(document.body);
 }
@@ -2115,6 +2847,7 @@ function setupTabs() {
     document.querySelectorAll('#main-tabs button').forEach(x => x.classList.toggle('active', x === b));
     const v = b.dataset.view;
     document.querySelectorAll('.view').forEach(s => s.classList.toggle('active', s.id === `view-${v}`));
+    if (v === 'calendar') reminderScheduler?.wake();
     if (v === 'clock') renderWorldClock();
     if (v === 'spots') renderSpots();
     if (v === 'todo') todoRefreshCds();   // refresh the per-account CD timers each time it's opened
@@ -2143,6 +2876,7 @@ function setupDetail() {
   const panel = $('#event-detail');
   const close = () => {
     if (panel.hidden) return;
+    flushReminderEditor(); detailEvent = null;
     panel.hidden = true;
     const back = detailReturnFocus; detailReturnFocus = null;
     if (back && back.isConnected && back.focus) back.focus();
@@ -2159,7 +2893,9 @@ function setupDetail() {
     if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
-  document.addEventListener('mousedown', e => { if (!panel.hidden && !panel.contains(e.target)) close(); });
+  document.addEventListener('mousedown', e => {
+    if (!panel.hidden && !panel.contains(e.target) && !e.target.closest('#lang-toggle')) close();
+  });
 }
 // Generic hook: any element carrying data-event-id opens that event's detail drawer
 // (the same popup the calendar day-icons use). Lets the daily agent make event
@@ -2448,6 +3184,7 @@ async function init() {
   setupEventLinks();
   setupLanguage();
   await loadData();
+  await setupReminders();
   setupTodo();
   setupMega();
   setupWorldClock();
@@ -2459,6 +3196,9 @@ if (typeof module === 'object' && module.exports) {
   module.exports = {
     detectBrowserTimeZone, isValidIanaTimeZone, spotZonedParts, timeZoneOffsetMinutes,
     zonedWallTimeToInstant, nextLocalScheduleInstant, formatTargetForZone, wcInRange,
+    parseEventTime, validateEventTiming, resolveEventTiming,
+    REMINDER_PREFIX, REMINDER_NOTE_LIMIT, reminderNote, reminderTimeSnapshot, decodeReminder, deriveEventReminder,
+    createEventReminderStore, createReminderNoteSaver, createReminderScheduler, findRaidEvent,
     spotCountryFlag, spotCoordinates, spotMapUrl, spotMatches, sortSpotViews, spotRatingStars, spotNoteBlock,
     spotLoadPreferences, spotSavePreferences, SPOT_KIND_OPTIONS, SPOT_SORT_VALUES,
   };

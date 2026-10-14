@@ -1,7 +1,7 @@
 # Brief 40 — English Curator
 
 Goal/output: public/data/i18n/en.json only, after Chinese facts/regions are finalized.
-Apply the already-embedded AGENTS.md English overlay schema, inert-HTML rules and
+Apply the `tasks/reference/daily-schemas.md` English overlay schema, inert-HTML rules and
 “Name verification”; do not reload them. Never edit ui.json or canonical facts here.
 
 Inputs: this run's final events/rotations/categories/mega (its en field already names

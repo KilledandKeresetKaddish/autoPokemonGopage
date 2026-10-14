@@ -864,3 +864,97 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   .raid-ico:hover{transform:none;}
   .raid-ico .tg{opacity:1;}
 }
+
+/* ---------- Local reminders: sticky in-flow panel, shared aurora treatment ---------- */
+.cal-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:1.2rem;align-items:start;}
+.cal-main{min-width:0;}
+.reminder-sidebar{position:sticky;top:12px;min-width:0;z-index:8;}
+#reminder-panel{border:1px solid var(--gold-line);border-radius:12px;background:var(--bg);box-shadow:0 6px 20px rgba(0,0,0,.45);}
+#reminder-panel>summary{cursor:pointer;font-weight:700;color:var(--h1);padding:.65rem .8rem;}
+#reminder-panel>summary::marker{color:var(--gold-bright);}
+#reminder-count{font-size:.68rem;padding:.1rem .5rem;margin-left:.3rem;}
+.reminder-panel-body{padding:0 .8rem .85rem;max-height:calc(100dvh - 90px);overflow:auto;scrollbar-width:thin;}
+.reminder-intro{font-size:.7rem;color:var(--muted);margin:.2rem 0 .6rem;}
+.reminder-warning{font-size:.76rem;color:#ffce82;white-space:pre-line;}
+.reminder-warning:empty{display:none;}
+.reminder-list{display:flex;flex-direction:column;gap:.8rem;padding:.35rem .1rem .7rem;}
+.reminder-item{position:relative;border:1px solid var(--c,var(--gold-line));border-radius:9px;padding:.65rem;
+  background:color-mix(in srgb,var(--c,var(--gold)) 15%,var(--bg));}
+.reminder-item.ft{box-shadow:0 0 0 1px var(--gold-bright),0 0 10px rgba(var(--gold-rgb),.4);}
+.reminder-card-head{display:flex;align-items:start;gap:.4rem;}
+.reminder-open{border:0;background:none;text-align:left;cursor:pointer;color:var(--h1);font:700 .86rem/1.4 var(--sans);padding:0;flex:1;min-width:0;overflow-wrap:anywhere;}
+.reminder-time{white-space:pre-line;font-size:.71rem;line-height:1.55;margin:.4rem 0;color:var(--ink);overflow-wrap:anywhere;}
+.reminder-note-preview{font-size:.8rem;line-height:1.4;white-space:pre-wrap;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:.4rem 0;}
+.reminder-note-preview[hidden]{display:none;}
+.reminder-actions{display:flex;flex-wrap:wrap;gap:.45rem;}
+.reminder-actions .btn{font-size:.74rem;min-height:34px;line-height:1.2;background:rgba(12,11,16,.86);color:var(--aurora-white,var(--h1));}
+.reminder-actions .btn:disabled{opacity:.5;cursor:not-allowed;}
+#reminder-completed>summary{cursor:pointer;font-size:.83rem;color:var(--gold-bright);padding:.5rem 0;}
+.detail-reminder{border:1px solid var(--gold-line);border-radius:9px;padding:.7rem;margin:.65rem 0;}
+/* The header toggle lives above main's stacking context. Reserve separate
+   toolbar space so it never intercepts the drawer's close target on phones. */
+body:has(#event-detail:not([hidden])) .lang-toggle{position:fixed;top:.6rem;right:3.5rem;}
+#event-detail{padding-top:3rem;}
+.detail-reminder h4{margin:0 0 .5rem;}
+.reminder-note-editor{display:flex;flex-direction:column;gap:.35rem;margin-top:.6rem;font-size:.76rem;}
+.reminder-note-editor[hidden]{display:none;}
+.reminder-note-editor textarea{width:100%;resize:vertical;min-height:5rem;border:1px solid var(--gold-line);border-radius:6px;padding:.5rem;
+  background:var(--bg);color:var(--h1);font:400 .9rem/1.5 var(--sans);}
+.reminder-save{font-size:.7rem;color:var(--muted);margin:.35rem 0;}
+:is(.reminder-actions button,.reminder-open,.reminder-note-editor textarea,#reminder-panel summary,.cal-more):focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px;}
+.cal-more{border:1px solid var(--line);background:var(--bg);border-radius:5px;cursor:pointer;text-align:left;min-height:22px;}
+.calendar{overflow:visible;}
+.cal-dow{border-radius:15px 15px 0 0;}
+.cal-barlayer{z-index:1;}
+.reminder-mark{display:inline-block;flex:none;line-height:1;font-size:.85em;color:inherit;}
+.reminder-mark[hidden]{display:none;}
+.reminder-sparks{display:none;pointer-events:none;}
+.reminder-flagged .dot{display:none;}
+:is(.raid-ico,.raid-day-trigger) .reminder-mark{position:absolute;top:-3px;right:-2px;font-size:9px;background:#0c0b10;color:#fff8df;border-radius:3px;padding:1px;z-index:3;}
+/* Keep the category / featured classes underneath. Removing ONLY this class
+   restores their exact original background, border and admin gold treatment. */
+.reminder-active{
+  --aurora-bg:#0c0b10;--aurora-white:#fff8df;
+  position:relative;isolation:isolate;opacity:1!important;overflow:visible;
+  background-image:linear-gradient(105deg,#9863ff,#ff71d9,#665020,#ffcf59,#6fffee,#9863ff)!important;
+  background-color:var(--aurora-bg)!important;
+  background-size:350% 100%!important;border:1px solid #fff8df!important;
+  color:var(--aurora-white)!important;text-shadow:0 1px 3px #0c0b10,0 0 5px #0c0b10;
+  animation:aurora-flow 3s linear infinite,aurora-glow 2s ease-in-out infinite;
+}
+.cal-bar.reminder-active{position:absolute;}
+.reminder-active>:not(.reminder-sparks){position:relative;z-index:1;}
+.reminder-active :is(.bn,.cn,.lt-name,.lt-range,.reminder-open,.reminder-time,.reminder-note-preview){color:var(--aurora-white);opacity:1;}
+.reminder-active .reminder-mark{animation:reminder-star-pop 2s ease-in-out infinite;}
+.reminder-active .reminder-sparks{display:block;position:absolute;inset:0;border-radius:inherit;z-index:0;}
+.reminder-sparks::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(0deg,rgba(12,11,16,.55),rgba(12,11,16,.25));}
+.reminder-sparks i{position:absolute;left:64%;top:0;color:#fff8df;font-style:normal;line-height:1;font-size:1.05rem;
+  filter:drop-shadow(0 0 5px #fff8df);animation:reminder-spark-bloom 2s ease-in-out infinite;}
+.reminder-sparks i+i{left:auto;right:8%;top:auto;bottom:0;animation-delay:1s;}
+.reminder-item .reminder-sparks i{font-size:1.6rem;}
+.reminder-active:is(.raid-ico,.raid-day-trigger)>.reminder-mark,.reminder-active.raid-ico>.tg{position:absolute;}
+.reminder-active:is(.raid-ico,.raid-day-trigger) img{position:relative;}
+.reminder-active.raid-ico.slide img{position:absolute;}
+@keyframes aurora-flow{0%{background-position:0% 50%;}100%{background-position:100% 50%;}}
+@keyframes aurora-glow{0%,100%{box-shadow:0 0 7px #ff71d9,0 0 13px rgba(255,113,217,.45);}50%{box-shadow:0 0 12px #ffcf59,0 0 26px rgba(111,255,238,.65);}}
+@keyframes reminder-star-pop{0%,100%{transform:scale(1);}45%{transform:scale(1.4);}65%{transform:scale(1.05);}}
+@keyframes reminder-spark-bloom{0%,100%{opacity:.15;transform:scale(.5) rotate(0deg);}50%{opacity:1;transform:scale(1.35) rotate(90deg);}}
+.reminders-paused .reminder-active,.reminders-paused .reminder-active *{animation-play-state:paused!important;}
+@media (max-width:1000px){
+  .cal-layout{grid-template-columns:minmax(0,1fr);gap:.8rem;}
+  .reminder-sidebar{grid-row:1;top:6px;}
+  .reminder-sidebar:has(#reminder-panel[open]){position:static;}
+  /* Panel expansion is in normal flow and pushes dates down; never a fixed
+     sheet over the calendar, bottom navigation, or z=60 drawer controls. */
+  .reminder-panel-body{max-height:55dvh;}
+  .reminder-actions .btn{min-height:40px;}
+}
+@media (max-width:560px){
+  .cal-chip{gap:2px;padding:2px;}
+  .cal-chip .spr{width:12px;height:12px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .reminder-active,.reminder-active .reminder-mark,.reminder-active .reminder-sparks i{animation:none!important;}
+  .reminder-active{background-size:100% 100%!important;box-shadow:0 0 12px #ffcf59,0 0 22px rgba(111,255,238,.65);}
+  .reminder-active .reminder-sparks i{opacity:1;transform:none;}
+}

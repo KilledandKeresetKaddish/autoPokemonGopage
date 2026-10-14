@@ -1,247 +1,314 @@
 #!/usr/bin/env bash
 # ---------------------------------------------------------------------------
-# discover.sh — FIND candidate source URLs, and DETECT newly-listed events.
+# discover.sh — find candidate source URLs and detect new feed/index entries.
 #
-# fetch.sh DOWNLOADS things whose URL you already know. discover.sh covers the
-# two gaps the daily agent otherwise can't fill on its own:
+# Default output remains TSV for interactive use. Add --json for a versioned
+# report with per-source availability/coverage, leads, pending dates, exceptions
+# and gaps. Exit 0=complete, 1=partial (usable rows were still emitted),
+# 2=failed/usage. Only complete + completeNoNew is a quiet-day result.
 #
-#   scripts/discover.sh "<keywords>"   SEARCH — find the URL for an event you can
-#                                      name (LeekDuck feed + GO Hub + 官方 news +
-#                                      Pokémon GO Wiki/Fandom search).
-#   scripts/discover.sh new --cached   DETECT from prepared <24h caches, no network.
-#   scripts/discover.sh new            DETECT — list events that appear in the
-#                                      freshly-fetched feeds but are NOT yet in
-#                                      public/data/events.json, cross-checked
-#                                      against Hub / official for corroboration.
-#
-# Both reach the network mostly through the SAME path as fetch.sh (Cloudflare/JS
-# pages solved by Jina; the Fandom search hits its MediaWiki JSON API directly) and
-# only ever touch the project's trusted, allowlisted sources. Everything
-# printed is a LEAD, not truth: open each with `scripts/fetch.sh url --max-age 86400 <URL>`, read
-# it, confirm it's the right event/Pokémon, THEN edit. Never invent a URL.
-#
-# Output: tab-separated  TAG <tab> TITLE <tab> URL [<tab> …]  — saved under
-# data/raw/discovery/ for auditability.
+#   scripts/discover.sh "keywords"            # search trusted sources
+#   scripts/discover.sh --json "keywords"     # machine-readable search report
+#   scripts/discover.sh new --cached --json    # zero-network prepared scan
+#   scripts/discover.sh new                    # independently refreshes sources
 # ---------------------------------------------------------------------------
 set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 FETCH="$ROOT/scripts/fetch.sh"
+REPORTER="$ROOT/scripts/discovery-report.js"
 RAW="$ROOT/data/raw"
 DISC="$RAW/discovery"
+DISCOVER_METRICS_FILE="${DISCOVER_METRICS_FILE:-}"
 mkdir -p "$DISC"
+discover_metric() {
+  [ -n "$DISCOVER_METRICS_FILE" ] || return 0
+  jq -nc --arg kind "$1" --arg source "$2" --arg outcome "$3" --arg network "$4" \
+    '{kind:$kind,source:$source,outcome:$outcome,network:($network == "1"),reused:($outcome == "success" and $network != "1")}' \
+    >> "$DISCOVER_METRICS_FILE" 2>/dev/null || : > "${DISCOVER_METRICS_FILE}.error" 2>/dev/null || true
+}
 UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 
-# ============================ DETECT MODE ==================================
-# `discover.sh new` — what showed up in the feeds this cycle that the calendar
-# doesn't have yet. Pure detection: it re-fetches the feeds (网抓) and diffs them
-# against public/data/events.json; it never guesses an event into existence.
-if [ "${1:-}" = "new" ]; then
-  TODAY="$(date -u +%F)"
-  OUT="$DISC/new-$(date -u +%Y%m%dT%H%M%SZ).txt"
-  CAL="$ROOT/public/data/events.json"
-  FEED="$RAW/events.json"
+[ -f "$REPORTER" ] || { echo "discover: FAILED — missing report helper: $REPORTER" >&2; exit 2; }
 
-  # Standalone mode still refreshes; daily Scout prepares these once, then uses
-  # --cached. Never silently report an incomplete/invalid scan as "no new events".
-  case "${2:-}" in
-    "")
-      "$FETCH" events events-hub events-official >/dev/null || {
-        echo "discover new: INCOMPLETE — source refresh failed; inspect last-good caches" >&2; exit 1;
-      } ;;
-    --cached) ;;
-    *) echo "usage: discover.sh new [--cached]" >&2; exit 2 ;;
+# Optional run-scoped cache collapses repeated keyword searches and fetch.sh
+# force failures without making a transient failure durable across the next run.
+DISCOVER_RUN_ID="${DISCOVER_RUN_ID:-${POGO_RUN_ID:-}}"
+if [ -n "$DISCOVER_RUN_ID" ] && [[ ! "$DISCOVER_RUN_ID" =~ ^[A-Za-z0-9._-]{1,80}$ ]]; then
+  echo "DISCOVER_RUN_ID must use only A-Z, a-z, 0-9, . _ - (max 80 chars)" >&2
+  exit 2
+fi
+RUN_CACHE=""
+if [ -n "$DISCOVER_RUN_ID" ]; then
+  RUN_CACHE="$DISC/run-cache/$DISCOVER_RUN_ID"
+  mkdir -p "$RUN_CACHE"
+  export FETCH_RUN_ID="${FETCH_RUN_ID:-$DISCOVER_RUN_ID}"
+fi
+
+# Optional, bounded retry for the one direct MediaWiki search request. fetch.sh
+# owns retry policy for named/detail fetches.
+DISCOVER_RETRY_LIMIT="${DISCOVER_RETRY_LIMIT:-0}"
+[[ "$DISCOVER_RETRY_LIMIT" =~ ^[0-9]{1,2}$ ]] || { echo "DISCOVER_RETRY_LIMIT must be a small non-negative integer" >&2; exit 2; }
+DISCOVER_RETRY_BUDGET="${DISCOVER_RETRY_BUDGET:-$((10#$DISCOVER_RETRY_LIMIT * 8))}"
+[[ "$DISCOVER_RETRY_BUDGET" =~ ^[0-9]{1,4}$ ]] || { echo "DISCOVER_RETRY_BUDGET must be a non-negative integer" >&2; exit 2; }
+DISCOVER_RETRY_DELAY="${DISCOVER_RETRY_DELAY:-0}"
+[[ "$DISCOVER_RETRY_DELAY" =~ ^[0-9]+([.][0-9]+)?$ ]] || { echo "DISCOVER_RETRY_DELAY must be seconds" >&2; exit 2; }
+DISCOVER_RETRY_LEFT=$((10#$DISCOVER_RETRY_BUDGET))
+retry_discover_transport() {
+  local attempt=0 rc
+  while :; do
+    "$@"; rc=$?
+    [ "$rc" = 0 ] && return 0
+    if [ "$attempt" -ge "$DISCOVER_RETRY_LIMIT" ] || [ "$DISCOVER_RETRY_LEFT" -le 0 ]; then return "$rc"; fi
+    attempt=$((attempt + 1)); DISCOVER_RETRY_LEFT=$((DISCOVER_RETRY_LEFT - 1))
+    discover_metric retry fandom-search retry 1
+    [ "$DISCOVER_RETRY_DELAY" = 0 ] || sleep "$DISCOVER_RETRY_DELAY"
+  done
+}
+
+usage() {
+  echo 'usage: scripts/discover.sh [--json] "<keywords>" | scripts/discover.sh new [--cached] [--json]' >&2
+}
+
+save_atomic() {
+  local input="$1" output="$2" tmp
+  tmp="$(mktemp "$DISC/.write.XXXXXX")" || return 1
+  if cat "$input" > "$tmp" && mv "$tmp" "$output"; then return 0; fi
+  rm -f "$tmp"
+  return 1
+}
+
+report_exit() {
+  case "$(jq -r '.status // "failed"' "$1" 2>/dev/null)" in
+    complete) return 0 ;;
+    partial) return 1 ;;
+    *) return 2 ;;
   esac
-  [ "$#" -le 2 ] || { echo "usage: discover.sh new [--cached]" >&2; exit 2; }
-  HUB="$RAW/events-hub.txt"; OFF="$RAW/events-official.txt"
-  for f in "$FEED" "$HUB" "$OFF"; do
-    stamp="$(date -u -r "$f" +%s 2>/dev/null || echo 0)"
-    age=$(( $(date -u +%s) - stamp ))
-    if [ ! -s "$f" ] || [ "$age" -lt 0 ] || [ "$age" -ge 86400 ]; then
-      echo "discover new: INCOMPLETE — missing/empty/stale input: $f (requires <24h)" >&2; exit 1
-    fi
-  done
-  if ! jq -e 'type == "array" and all(.[]; (.eventID | type == "string" and length > 0)
-      and (.name | type == "string" and length > 0) and (.link | test("^https?://"))
-      and (.start | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}"))
-      and ((.end // .start) | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}")))' "$FEED" >/dev/null ||
-     ! jq -e 'type == "array" and all(.[]; .id | type == "string")' "$CAL" >/dev/null; then
-    echo "discover new: INCOMPLETE — unparseable feed/calendar shape" >&2; exit 1
+}
+
+report_summary() {
+  local report="$1" prefix="$2" output="$3" status empty
+  status="$(jq -r '.status // "failed"' "$report")"
+  if [ -n "$DISCOVER_METRICS_FILE" ]; then
+    jq -c '{kind:"coverage",status,sources:(.sources // null)}' "$report" >> "$DISCOVER_METRICS_FILE" 2>/dev/null || : > "${DISCOVER_METRICS_FILE}.error" 2>/dev/null || true
   fi
-  incomplete() { echo "discover new: INCOMPLETE — $*" >&2; exit 1; }
-  # Basic source/link checks only, not proof the page's semantics are reliable.
-  # Each index must link its own source; challenge/errors still need inspection.
-  for f in "$HUB" "$OFF"; do
-    domain='pokemongohub\.net'
-    [ "$f" != "$OFF" ] || domain='pokemongo\.com'
-    grep -E "https://(www\.)?$domain/" "$f" >/dev/null ||
-      incomplete "unreadable index/source link: $f"
-    grep -Ei 'Just a moment\.\.\.|Attention Required!|Cloudflare Ray ID' "$f" >/dev/null
-    rc=$?
-    [ "$rc" = 1 ] || incomplete "index challenge/read check: $f (grep rc=$rc)"
+  case "$status" in
+    complete)
+      empty="$(jq -r '.completeNoNew // .completeNoCandidates // false' "$report")"
+      if [ "$empty" = true ]; then
+        echo "$prefix: COMPLETE — complete coverage, no new candidates." >&2
+      else
+        echo "$prefix: COMPLETE — candidate report -> ${output#$ROOT/}" >&2
+      fi ;;
+    partial)
+      echo "$prefix: PARTIAL — usable candidates/leads were emitted; inspect sources, pendingDate, exceptions and gaps in ${output#$ROOT/}. Do not call this a quiet day." >&2 ;;
+    *)
+      echo "$prefix: FAILED — no complete coverage; inspect source failures/gaps in ${output#$ROOT/}. This is not a no-candidate result." >&2 ;;
+  esac
+}
+
+RENDER_OUTPUT=""
+render_report() {
+  # render_report REPORT STEM FORMAT WORKDIR; stdout is the requested contract.
+  local report="$1" stem="$2" format="$3" work="$4" json_out="$stem.json" text_out="$stem.txt"
+  save_atomic "$report" "$json_out" || { echo "discover: FAILED — cannot save machine-readable report: $json_out" >&2; return 2; }
+  if [ "$format" = json ]; then
+    cat "$json_out" || return 2
+    RENDER_OUTPUT="$json_out"
+    return 0
+  fi
+  if ! node "$REPORTER" tsv --input "$json_out" > "$work/rows"; then
+    echo "discover: FAILED — cannot render TSV report" >&2
+    return 2
+  fi
+  # tee is intentional: a write failure must not be mistaken for an empty scan.
+  if ! tee "$text_out" < "$work/rows"; then
+    echo "discover: FAILED — cannot save TSV report: $text_out" >&2
+    return 2
+  fi
+  RENDER_OUTPUT="$text_out"
+}
+
+mark_refresh_failures() {
+  local verify="$1" tmp name
+  shift
+  for name in "$@"; do
+    tmp="$(mktemp "$DISC/.verify.XXXXXX")" || return 1
+    if jq --arg n "$name" '(.sources[] | select(.name == $n)).refreshFailed = true' "$verify" > "$tmp" && mv "$tmp" "$verify"; then :; else rm -f "$tmp"; return 1; fi
   done
-  KNOWN="$(jq -c '[.[].id]' "$CAL")" || incomplete "calendar ID extraction"
-  work="$(mktemp -d "$DISC/.new.XXXXXX")" || incomplete "temporary result directory"
-  trap 'rm -rf "$work"' EXIT
+}
 
-  # Distinctive tokens of a name/slug: lowercase a-z0-9 words ≥4 chars, minus
-  # Pokémon-GO boilerplate and pure numbers. Corroboration/coverage decisions
-  # require ALL of these to match — a single generic token ("raid", "2026")
-  # must never count as cross-source evidence.
-  STOP='^(raid|raids|battle|battles|hour|hours|event|events|pokemon|community|week|weekend|league|research|spotlight|special|super|mega|shadow|primal|with|into|from|this|that|january|february|march|april|june|july|august|september|october|november|december)$'
-  toks() { printf '%s' "$1" | tr 'A-Z' 'a-z' | tr -cs 'a-z0-9' '\n' | awk -v stop="$STOP" 'length>=4 && !/^[0-9]+$/ && $0 !~ stop'; }
-  # Upper bound = end of next month (the calendar's retention window: current +
-  # next month). Beyond that an event is genuinely future, not a missed one.
-  UPPER="$(date -u -d "$(date -u +%Y-%m-01) +2 months" +%F 2>/dev/null || echo 9999-12-31)"
+new_mode() {
+  local cached=0 format=tsv arg refresh_failed=() refresh_rc=0 work verify report today upper stamp stem output rc
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      --cached) cached=1 ;;
+      --json) format=json ;;
+      *) usage; return 2 ;;
+    esac
+    shift
+  done
+  work="$(mktemp -d "$DISC/.new.XXXXXX")" || { echo 'discover new: FAILED — cannot create work directory' >&2; return 2; }
+  trap 'rm -rf "$work"' RETURN
+  if [ "$cached" = 0 ]; then
+    # Refresh every required primary independently. A failure cannot stop a
+    # still-usable sibling from producing leads in the final report.
+    for arg in events events-hub events-official; do
+      "$FETCH" "$arg" >/dev/null || { refresh_failed+=("$arg"); refresh_rc=1; }
+    done
+  fi
+  if ! "$FETCH" verify --json --max-age 86400 events events-hub events-official > "$work/verify"; then
+    # verify still emits a complete per-source JSON array on ordinary failures.
+    [ -s "$work/verify" ] || printf '{"sources":[]}' > "$work/verify"
+  fi
+  [ "${#refresh_failed[@]}" = 0 ] || mark_refresh_failures "$work/verify" "${refresh_failed[@]}" || {
+    echo 'discover new: FAILED — cannot record refresh failure status' >&2; return 2;
+  }
+  today="$(date -u +%F)"
+  upper="$(date -u -d "$(date -u +%Y-%m-01) +2 months" +%F 2>/dev/null || echo 9999-12-31)"
+  stamp="$(date -u +%Y%m%dT%H%M%SZ)"
+  if ! node "$REPORTER" new --verify "$work/verify" --feed "$RAW/events.json" --hub "$RAW/events-hub.txt" \
+      --official "$RAW/events-official.txt" --calendar "$ROOT/public/data/events.json" --today "$today" --upper "$upper" \
+      --generated-at "$(date -u +%FT%TZ)" > "$work/report"; then
+    echo 'discover new: FAILED — report extraction failed' >&2
+    return 2
+  fi
+  stem="$DISC/new-$stamp"
+  render_report "$work/report" "$stem" "$format" "$work" || return $?
+  output="$RENDER_OUTPUT"
+  report_summary "$work/report" 'discover new' "$output"
+  report_exit "$work/report"; rc=$?
+  # A default refresh error is represented in the report; do not discard
+  # candidates just because it returns partial/nonzero.
+  [ "$refresh_rc" = 0 ] || [ "$rc" != 0 ] || rc=1
+  return "$rc"
+}
 
-  # Materialize/check each extraction before rendering any results. A later
-  # successful command must never hide an earlier failure in a grouped pipeline.
-  jq -r --arg today "$TODAY" --arg upper "$UPPER" --argjson known "$KNOWN" '
-    .[]
-    | (.eventID) as $eid
-    | ((.end // .start) | tostring)[0:10] as $endd
-    | ((.start) | tostring)[0:10] as $startd
-    | select($endd >= $today and $startd < $upper)
-    | select(($known | index($eid)) == null)
-    | "\($eid)\t\(.name)\t\(.link)\t\($startd)→\($endd)"
-  ' "$FEED" > "$work/feed" || incomplete "feed candidate extraction"
-  CALTEXT="$(jq -r '.[] | "\(.id) \(.name) \(.link)"' "$CAL" | tr 'A-Z' 'a-z')" ||
-    incomplete "calendar text extraction"
-  grep -oE 'https://(www\.)?pokemongo\.com/(news|post)/[a-zA-Z0-9/_-]+' "$OFF" > "$work/official"
-  rc=$?
-  [ "$rc" -le 1 ] || incomplete "official URL extraction (grep rc=$rc)"
-  awk '!s[$0]++' "$work/official" > "$work/unique" || incomplete "official URL deduplication"
-
-  : > "$work/candidates" || incomplete "candidate result write"
-  while IFS=$'\t' read -r eid name link dates; do
-    [ -n "$eid" ] || continue
-    # Corroboration requires EVERY distinctive token, not generic raid/year words.
-    hub=0; off=0
-    dt="$(toks "$name")" || incomplete "feed name token extraction"
-    if [ -n "$dt" ]; then
-      hub=1; off=1
-      while IFS= read -r t; do
-        grep -iF "$t" "$HUB" >/dev/null; rc=$?
-        [ "$rc" -le 1 ] || incomplete "Hub corroboration read (grep rc=$rc)"
-        [ "$rc" = 0 ] || hub=0
-        grep -iF "$t" "$OFF" >/dev/null; rc=$?
-        [ "$rc" -le 1 ] || incomplete "official corroboration read (grep rc=$rc)"
-        [ "$rc" = 0 ] || off=0
-      done <<< "$dt"
-    fi
-    corr="LeekDuck"; [ "$hub" = 1 ] && corr="$corr+Hub"; [ "$off" = 1 ] && corr="$corr+官方"
-    printf 'NEW\t%s\t%s\t%s\t佐证:%s\n' "$name" "$link" "$dates" "$corr" >> "$work/candidates" ||
-      incomplete "feed candidate result write"
-  done < "$work/feed" || incomplete "feed candidate read"
-
-  while IFS= read -r url; do
-    # Suppress only if ALL distinctive slug tokens occur in the calendar.
-    # Generic-only slugs remain leads. Empty grep results are a valid empty scan.
-    slug="${url##*/}"; covered=0
-    dt="$(toks "$slug")" || incomplete "official slug token extraction"
-    if [ -n "$dt" ]; then
-      covered=1
-      while IFS= read -r t; do
-        [[ "$CALTEXT" == *"$t"* ]] || { covered=0; break; }
-      done <<< "$dt"
-    fi
-    if [ "$covered" = 0 ]; then
-      printf 'OFFICIAL-LEAD\t-\t%s\n' "$url" >> "$work/candidates" || incomplete "official candidate result write"
-    fi
-  done < "$work/unique" || incomplete "official candidate read"
-  tee "$OUT" < "$work/candidates" || incomplete "result write/output (any partial candidates are incomplete)"
-
-  echo >&2
-  if [ -s "$OUT" ]; then
-    echo "discover new: 候选已存 -> ${OUT#$ROOT/}" >&2
-    echo "discover new: 逐条 scripts/fetch.sh url --max-age 86400 <URL> 打开核实(同一活动/日期)后再加入 events.json;拿不准把 gap 上报 State+Validator 记入 data/state.json,勿编。" >&2
+source_from_verify() {
+  # source_from_verify ALIAS NAMED_SOURCE WORKDIR; sets SEARCH_* globals.
+  local alias="$1" name="$2" work="$3" verify path
+  SEARCH_PATH=""; SEARCH_REASON=""
+  verify="$work/$alias.verify"
+  if ! "$FETCH" verify --json --max-age 86400 "$name" > "$verify"; then :; fi
+  path="$(jq -r '.sources[0] | select(.valid and .fresh) | .path // empty' "$verify" 2>/dev/null)"
+  if [ -z "$path" ]; then
+    "$FETCH" "$name" >/dev/null || true
+    "$FETCH" verify --json --max-age 86400 "$name" > "$verify" || true
+    path="$(jq -r '.sources[0] | select(.valid and .fresh) | .path // empty' "$verify" 2>/dev/null)"
+  fi
+  if [ -n "$path" ]; then
+    SEARCH_PATH="$path"
   else
-    echo "discover new: 本周期 feed 相对当前日历无新增活动。" >&2
+    SEARCH_REASON="$(jq -r '.sources[0].reason // "source refresh/validation failed"' "$verify" 2>/dev/null || true)"
+    [ -n "$SEARCH_REASON" ] || SEARCH_REASON='source refresh/validation failed'
   fi
-  exit 0
-fi
+}
 
-# ============================ SEARCH MODE (default) ========================
+fetch_detail_path() {
+  # fetch_detail_path URL WORKDIR NAME; returns a verified cache path in SEARCH_PATH.
+  local url="$1" work="$2" name="$3" meta err path
+  meta="$work/$name.meta"; err="$work/$name.err"
+  SEARCH_PATH=""; SEARCH_REASON=""
+  if "$FETCH" url --max-age 86400 --meta "$url" > "$meta" 2> "$err"; then
+    path="$(jq -r 'select(.path | type == "string") | .path' "$meta" 2>/dev/null)"
+    if [ -n "$path" ] && [ -s "$path" ]; then SEARCH_PATH="$path"; return 0; fi
+    SEARCH_REASON='fetch metadata had no readable body path'
+  else
+    SEARCH_REASON="$(tail -n 1 "$err" 2>/dev/null || true)"
+    [ -n "$SEARCH_REASON" ] || SEARCH_REASON='detail fetch failed'
+  fi
+  return 1
+}
+
+fandom_search_path() {
+  local encoded="$1" work="$2" url key cache tmp stamp age now
+  SEARCH_PATH=""; SEARCH_REASON=""
+  url="https://pokemongo.fandom.com/api.php?action=query&list=search&srsearch=${encoded}&srlimit=8&srprop=&format=json"
+  key="$(printf '%s' "$url" | sha256sum | cut -d' ' -f1)"
+  cache="$DISC/search-cache/fandom-$key.json"
+  mkdir -p "$(dirname "$cache")"
+  if [ -s "$cache" ]; then
+    stamp="$(date -u -r "$cache" +%s 2>/dev/null || echo 0)"; now="$(date -u +%s)"; age=$((now - stamp))
+    if [ "$stamp" -gt 0 ] && [ "$age" -ge 0 ] && [ "$age" -lt 86400 ] &&
+       jq -e '.query | type == "object" and (.search | type == "array")' "$cache" >/dev/null 2>&1; then
+      SEARCH_PATH="$cache"; discover_metric request fandom-search success 0; return 0
+    fi
+  fi
+  tmp="$(mktemp "$DISC/search-cache/.fandom.XXXXXX")" || { SEARCH_REASON='cannot create Fandom temporary cache'; return 1; }
+  if ! retry_discover_transport curl -fsSL --max-time 40 -A "$UA" -o "$tmp" "$url"; then
+    discover_metric request fandom-search failed 1
+    rm -f "$tmp"; SEARCH_REASON='Fandom search request failed'; return 1
+  fi
+  discover_metric request fandom-search success 1
+  if ! jq -e '.query | type == "object" and (.search | type == "array")' "$tmp" >/dev/null 2>&1; then
+    rm -f "$tmp"; SEARCH_REASON='Fandom search returned an error/unparseable response'; return 1
+  fi
+  if ! mv "$tmp" "$cache"; then
+    rm -f "$tmp"; SEARCH_REASON='Fandom search cache replacement failed'; return 1
+  fi
+  SEARCH_PATH="$cache"
+}
+
+save_run_search_report() {
+  local report="$1" key="$2" destination
+  [ -n "$RUN_CACHE" ] || return 0
+  destination="$RUN_CACHE/search-$key.json"
+  save_atomic "$report" "$destination"
+}
+
+search_mode() {
+  local format="$1" query="$2" work encoded key cached_report input stamp stem output rc
+  work="$(mktemp -d "$DISC/.search.XXXXXX")" || { echo 'discover: FAILED — cannot create work directory' >&2; return 2; }
+  input="$work/input.json"
+  trap 'rm -rf "$work"' RETURN
+  # Do not reuse reports classified by an older parser; exact-URL bodies keep their TTL.
+  key="$(printf '%s\n%s' "$query" "$(sha256sum "$REPORTER" | cut -d' ' -f1)" | sha256sum | cut -d' ' -f1)"
+  cached_report="${RUN_CACHE:+$RUN_CACHE/search-$key.json}"
+  if [ -n "$cached_report" ] && jq -e --arg q "$query" '.version == 1 and .mode == "search" and .query == $q and (.status == "complete" or .status == "partial" or .status == "failed")' "$cached_report" >/dev/null 2>&1; then
+    cp "$cached_report" "$work/report" || return 2
+  else
+    encoded="$(jq -nr --arg q "$query" '$q|@uri')" || { echo 'discover: FAILED — cannot encode query' >&2; return 2; }
+    source_from_verify leekduck events "$work"; local leek_path="$SEARCH_PATH" leek_reason="$SEARCH_REASON"
+    fetch_detail_path "https://pokemongohub.net/?s=${encoded}" "$work" hub; local hub_path="$SEARCH_PATH" hub_reason="$SEARCH_REASON"
+    # Shared exact URL + fetch.sh --max-age means every keyword in this run
+    # consumes the same validated official index instead of force-downloading it.
+    fetch_detail_path 'https://pokemongo.com/news' "$work" official; local official_path="$SEARCH_PATH" official_reason="$SEARCH_REASON"
+    fandom_search_path "$encoded" "$work"; local fandom_path="$SEARCH_PATH" fandom_reason="$SEARCH_REASON"
+    jq -n --arg query "$query" \
+      --arg leekPath "$leek_path" --arg leekReason "$leek_reason" \
+      --arg hubPath "$hub_path" --arg hubReason "$hub_reason" \
+      --arg officialPath "$official_path" --arg officialReason "$official_reason" \
+      --arg fandomPath "$fandom_path" --arg fandomReason "$fandom_reason" \
+      '{query:$query,sources:{
+        leekduck:{available:($leekPath|length>0),path:$leekPath,reason:$leekReason},
+        hub:{available:($hubPath|length>0),path:$hubPath,reason:$hubReason},
+        official:{available:($officialPath|length>0),path:$officialPath,reason:$officialReason},
+        fandom:{available:($fandomPath|length>0),path:$fandomPath,reason:$fandomReason}
+      }}' > "$input" || return 2
+    if ! node "$REPORTER" search --input "$input" > "$work/report"; then
+      echo 'discover: FAILED — search report extraction failed' >&2
+      return 2
+    fi
+    save_run_search_report "$work/report" "$key" || { echo 'discover: FAILED — cannot save run search report' >&2; return 2; }
+  fi
+  stamp="$(date -u +%Y%m%dT%H%M%SZ)"; stem="$DISC/discover-$stamp"
+  render_report "$work/report" "$stem" "$format" "$work" || return $?
+  output="$RENDER_OUTPUT"
+  report_summary "$work/report" 'discover' "$output"
+  report_exit "$work/report"; rc=$?
+  return "$rc"
+}
+
+FORMAT=tsv
+if [ "${1:-}" = --json ]; then FORMAT=json; shift; fi
+if [ "${1:-}" = new ]; then
+  shift
+  # Keep both option orders usable: discover new --cached --json and the
+  # global discover --json new --cached are equivalent.
+  new_mode "$@"
+  exit $?
+fi
 QUERY="${*:-}"
-[ -n "${QUERY// /}" ] || { echo "usage: scripts/discover.sh \"<keywords>\"   |   scripts/discover.sh new [--cached]" >&2; exit 1; }
-
-ENC="$(jq -nr --arg q "$QUERY" '$q|@uri')"
-OUT="$DISC/discover-$(date -u +%Y%m%dT%H%M%SZ).txt"
-
-{
-  # --- 1) LeekDuck — the ScrapedDuck `events` feed already carries every event's
-  #     canonical link, so there's no search endpoint to hit: score the query
-  #     tokens against the (English) event names in the cached feed. Majority-of-
-  #     tokens matching, best matches first (requiring ALL tokens made the
-  #     documented multi-word queries like "mega scizor raid guide" miss events
-  #     that were sitting right in the feed).
-  EV="$RAW/events.json"
-  [ -s "$EV" ] || "$FETCH" events >/dev/null 2>&1 || true
-  if [ -s "$EV" ]; then
-    jq -r --arg q "$QUERY" '
-      ($q | ascii_downcase | split(" ") | map(select(length > 0))) as $ts
-      | ((($ts | length) + 1) / 2 | floor) as $need
-      | [ .[]
-          | (.name | ascii_downcase) as $n
-          | ([ $ts[] | select(. as $t | $n | contains($t)) ] | length) as $hits
-          | select($hits > 0 and $hits >= $need)
-          | { hits: $hits, line: "leekduck\t\(.name)\t\(.link)" } ]
-      | sort_by(-.hits) | .[0:15][] | .line
-    ' "$EV" 2>/dev/null
-  fi
-
-  # --- 2) Pokémon GO Hub — WordPress site search, rendered through the solver
-  #     (the same Jina path fetch.sh already uses for hub pages). Pull /post/ URLs.
-  HUB="$("$FETCH" url "https://pokemongohub.net/?s=${ENC}" 2>/dev/null || true)"
-  if [ -n "$HUB" ]; then
-    # markdown links first — [Title](https://pokemongohub.net/post/…) — keeps titles
-    printf '%s\n' "$HUB" \
-      | grep -oE '\[[^][]+\]\(https://(www\.)?pokemongohub\.net/post/[^) ]+\)' 2>/dev/null \
-      | awk 'match($0,/\]\(/){t=substr($0,2,RSTART-2); u=substr($0,RSTART+2); sub(/\)$/,"",u); printf "gohub\t%s\t%s\n",t,u}'
-    # bare URLs as a fallback, in case the solver returned HTML rather than markdown
-    printf '%s\n' "$HUB" \
-      | grep -oE 'https://(www\.)?pokemongohub\.net/post/[a-zA-Z0-9/_-]+' 2>/dev/null \
-      | awk '{printf "gohub\t-\t%s\n",$0}'
-  fi
-
-  # --- 3) Official pokemongo.com news — the news index has no usable search, so we
-  #     fetch it and keep ONLY posts whose link text/URL actually contain the query
-  #     tokens. Never dump the whole index: an unfiltered list would hand the agent
-  #     unrelated 官方 URLs as if they were query-specific leads (false matches).
-  OFF="$("$FETCH" url "https://pokemongo.com/news" 2>/dev/null || true)"
-  if [ -n "$OFF" ]; then
-    printf '%s\n' "$OFF" \
-      | grep -oE '\[[^][]+\]\(https://(www\.)?pokemongo\.com/(news|post)/[^) ]+\)' 2>/dev/null \
-      | awk -v q="$QUERY" '
-          BEGIN { n = split(tolower(q), ts, " ") }
-          match($0, /\]\(/) {
-            t = substr($0, 2, RSTART - 2); u = substr($0, RSTART + 2); sub(/\)$/, "", u);
-            hay = tolower(t " " u); ok = (n > 0);
-            for (i = 1; i <= n; i++) if (index(hay, ts[i]) == 0) { ok = 0; break }
-            if (ok) printf "official\t%s\t%s\n", t, u
-          }'
-  fi
-
-  # --- 4) Pokémon GO Wiki (Fandom) — the MediaWiki search API returns clean JSON,
-  #     so curl api.php directly (it isn't Cloudflare-gated; the Jina solver is only
-  #     for rendered article pages). This is the search path the LeekDuck feed / Hub
-  #     can't give for region- or local-only events that surface only on the wiki.
-  #     Host is fixed + allowlisted, query is url-encoded. Hits are LEADS: open each
-  #     /wiki/ page with `scripts/fetch.sh url` and confirm before using.
-  FAN="$(curl -fsSL --max-time 40 -A "$UA" \
-    "https://pokemongo.fandom.com/api.php?action=query&list=search&srsearch=${ENC}&srlimit=8&srprop=&format=json" 2>/dev/null || true)"
-  if [ -n "$FAN" ]; then
-    printf '%s\n' "$FAN" | jq -r '
-      (.query.search // [])[]
-      | "fandom\t\(.title)\thttps://pokemongo.fandom.com/wiki/\(.title | gsub(" "; "_") | @uri)"
-    ' 2>/dev/null || true
-  fi
-} | awk -F'\t' '{k=$3; sub(/\/$/,"",k)} !seen[k]++' | tee "$OUT"
-
-echo >&2
-if [ -s "$OUT" ]; then
-  echo "discover: $(wc -l <"$OUT") candidate(s) -> ${OUT#$ROOT/}" >&2
-  echo "discover: NEXT — open each with  scripts/fetch.sh url --max-age 86400 <URL>  and confirm it's the same event/Pokémon before using. Never guess a URL." >&2
-else
-  echo "discover: no candidates for \"$QUERY\". Try English Pokémon/event names, or browse the source index via fetch.sh url. Do NOT invent a URL — report the gap for data/state.json (State+Validator is its sole writer)." >&2
-fi
+[ -n "${QUERY// /}" ] || { usage; exit 2; }
+search_mode "$FORMAT" "$QUERY"
+exit $?

@@ -95,16 +95,6 @@
     "status": "incomplete",
     "note": "discover new --cached 因 events feed 含 null start/end 仍退出；已直接比较 eventID 并检索 Hub、官方与 Fandom，发现并处理新加坡 PokéXciting 及 10 月 7–9 日新公告。"
   },
-  "contentStatus": {
-    "checkedAt": "2026-10-10T04:24:18Z",
-    "status": "validated",
-    "note": "日历 185 条；新增新加坡线下活动，补全万圣节与 GO 荒野地区详情，删除 10 条已过期长期任务并执行 >90 日留存，更新当前推荐、团战 Counter 与英文。"
-  },
-  "validation": {
-    "checkedAt": "2026-10-10T04:24:18Z",
-    "status": "passed",
-    "note": "preflight exit 0（5 条超长 chip 警告）；validate exit 0。"
-  },
   "notes": {
     "source_health": {
       "fact": "事件、团战、榜单及三类事件索引完成刷新；discover 缓存模式因 nullable 日期格式失败。",
@@ -980,5 +970,115 @@
       "pending": false
     }
   },
-  "note": "Daily sequence completed in one run. New announcements, expired long-term cleanup, retention, current editorial and raid panels, Mega Sableye Super Max support, and both locales were updated. Discovery remains incomplete because the cached-new scanner cannot handle nullable feed dates."
+  "note": "Daily sequence completed in one run. New announcements, expired long-term cleanup, retention, current editorial and raid panels, Mega Sableye Super Max support, and both locales were updated. Discovery remains incomplete because the cached-new scanner cannot handle nullable feed dates.",
+  "timingEvidence": {
+    "dynamax-uxie-mesprit-azelf-max-battle-day-2026": {
+      "url": "https://leekduck.com/events/dynamax-uxie-mesprit-azelf-max-battle-day-2026/",
+      "basis": "10/24 14:00–17:00 local"
+    },
+    "gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-3": {
+      "url": "https://leekduck.com/events/gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-3/",
+      "basis": "11/3–10 13:00 PST"
+    },
+    "gbl-twilight-trails_great-league_ultra-league-mega-edition_little-cup": {
+      "url": "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_little-cup/",
+      "basis": "10/13–20 13:00 PDT"
+    },
+    "gbl-twilight-trails_master-league_mega-halloween-cup-great-league-edition": {
+      "url": "https://leekduck.com/events/gbl-twilight-trails_master-league_mega-halloween-cup-great-league-edition/",
+      "basis": "10/27 13:00 PDT to 11/3 13:00 PST"
+    },
+    "gbl-twilight-trails_ultra-league_master-league-mega-edition_fantasy-cup-great-league-edition": {
+      "url": "https://leekduck.com/events/gbl-twilight-trails_ultra-league_master-league-mega-edition_fantasy-cup-great-league-edition/",
+      "basis": "10/20–27 13:00 PDT"
+    },
+    "go-pass-october-2026": {
+      "url": "https://leekduck.com/events/go-pass-october-2026/",
+      "basis": "10/6 10:00 to 11/3 10:00 local; redemption has a different deadline"
+    },
+    "halloween-2026-part-1": {
+      "url": "https://pokemongo.com/en/news/halloween-part-1-2026",
+      "basis": "10/27 10:00 to 11/1 10:00 local"
+    },
+    "halloween-2026-part-2": {
+      "url": "https://leekduck.com/events/halloween-2026-part-2/",
+      "basis": "11/1 10:00 to 11/5 20:00 local"
+    },
+    "november-communityday2026": {
+      "url": "https://leekduck.com/events/november-communityday2026/",
+      "basis": "11/21 14:00–17:00 local"
+    },
+    "october-communityday2026": {
+      "url": "https://leekduck.com/events/october-communityday2026/",
+      "basis": "10/10 14:00–17:00 local"
+    },
+    "pokemon-go-tour-alola-global-2027": {
+      "url": "https://pokemongo.com/en/news/save-the-date-go-tour-2027",
+      "basis": "2/27–28 dates only; hours TBD"
+    },
+    "pokemon-go-tour-alola-kaohsiung-2027": {
+      "url": "https://pokemongo.com/en/news/save-the-date-go-tour-2027",
+      "basis": "2/19–21 dates only; hours TBD"
+    },
+    "pokemon-go-tour-alola-los-angeles-2027": {
+      "url": "https://pokemongo.com/en/news/save-the-date-go-tour-2027",
+      "basis": "2/19–21 dates only; hours TBD"
+    },
+    "pokemon-go-wild-area-2026-global": {
+      "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/",
+      "basis": "11/14–15 each day 10:00–18:00 local"
+    },
+    "pokemon-go-wild-area-2026-mexico-city": {
+      "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/",
+      "basis": "11/6–8 10:00–18:00 Mexico City time"
+    },
+    "pokemon-go-wild-area-2026-sendai-japan": {
+      "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/",
+      "basis": "11/6–8 10:00–18:00 Sendai time"
+    },
+    "pokemon-night-out-2026-twitch-drops": {
+      "url": "https://leekduck.com/events/pokemon-night-out-2026-twitch-drops/",
+      "basis": "10/24 19:30 PDT start; broadcast end explicitly unannounced"
+    },
+    "pokemonspotlighthour2026-10-15": {
+      "url": "https://leekduck.com/events/pokemonspotlighthour2026-10-15/",
+      "basis": "10/15 18:00–19:00 local"
+    },
+    "pokemonspotlighthour2026-10-22": {
+      "url": "https://leekduck.com/events/pokemonspotlighthour2026-10-22/",
+      "basis": "10/22 18:00–19:00 local"
+    },
+    "pokemonspotlighthour2026-10-29": {
+      "url": "https://leekduck.com/events/pokemonspotlighthour2026-10-29/",
+      "basis": "10/29 18:00–19:00 local"
+    },
+    "pokexciting-singapore-2026": {
+      "url": "https://pokemongohub.net/post/event/pokexciting-singapore-2026/",
+      "basis": "11/7–8 Changi/Jewel dates; GO gameplay opening hours not confirmed"
+    },
+    "raidhour20261014": {
+      "url": "https://leekduck.com/events/raidhour20261014/",
+      "basis": "10/14 18:00–19:00 local"
+    },
+    "raidhour20261021": {
+      "url": "https://leekduck.com/events/raidhour20261021/",
+      "basis": "10/21 18:00–19:00 local"
+    },
+    "raidhour20261028": {
+      "url": "https://leekduck.com/events/raidhour20261028/",
+      "basis": "10/28 18:00–19:00 local"
+    },
+    "sandile-hatch-day-2026": {
+      "url": "https://leekduck.com/events/sandile-hatch-day-2026/",
+      "basis": "10/17 11:00–17:00 local"
+    },
+    "super-mega-raid-day-november-2026": {
+      "url": "https://leekduck.com/events/super-mega-raid-day-november-2026/",
+      "basis": "11/28 14:00–17:00 local"
+    },
+    "super-mega-raid-day-october-2026": {
+      "url": "https://leekduck.com/events/super-mega-raid-day-october-2026/",
+      "basis": "10/31 14:00–17:00 local"
+    }
+  }
 }

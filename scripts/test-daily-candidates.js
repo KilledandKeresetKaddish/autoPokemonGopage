@@ -6,6 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
 const { candidates } = require('./daily-candidates.js');
+const { resolveEventTiming } = require('../public/app.js');
 const crypto = require('node:crypto');
 const hash = text => crypto.createHash('sha256').update(text).digest('hex');
 const url = id => `https://leekduck.com/events/${id}/`;
@@ -27,6 +28,8 @@ assert.deepEqual(report.details.map(d => d.url), [url('active'), url('near')]);
 assert(report.details.every(d => d.action === 'reuse' && !d.needsProcessing));
 assert.deepEqual(report.dateChecks, { monthChanged: false, activeEventsChanged: false,
   bossesChanged: false, recommendationWindowChanged: false, pruneIds: [] });
+assert.equal(report.dateChecksAreHints, true);
+assert.deepEqual(report.uncertainTimingIds, ['active', 'near']); // legacy fixtures stay conservative
 // Identical list input + changed detail bytes must enter downstream interpretation.
 report = run({ cache: { ...cache, [url('active')]: { sha256: 'new', lastFetch: now } } });
 assert(report.details.find(d => d.url === url('active')).needsProcessing);
@@ -66,6 +69,42 @@ report = run({ now: '2026-10-01T00:00:00Z' });
 assert.equal(report.dateChecks.monthChanged, true);
 report = run({ events: [...events, event('too-old', '2026-06-11'), event('boundary', '2026-06-12')] });
 assert.deepEqual(report.dateChecks.pruneIds, ['too-old']);
+// UTC date has advanced, but this global-local event remains open in UTC−12.
+const global = { ...event('global-last-zone', '2026-10-11T14:00:00', '2026-10-11T17:00:00'),
+  timing: { scope:'global', mode:'local', startPrecision:'exact', endPrecision:'exact' } };
+const beforeClose = '2026-10-12T04:59:59Z', atClose = '2026-10-12T05:00:00Z';
+assert.equal(resolveEventTiming(global, beforeClose, 'UTC').status, 'active');
+const evening = candidates({ ...input, events:[global], baseEvents:[global], now:beforeClose,
+  state:{ ...state, lastUpdated:'2026-10-11T23:00:00Z' }, cache:{} });
+assert(evening.details.some(d => d.url === global.link && d.reasons.includes('active-or-next-7-days')));
+assert.equal(evening.dateChecks.activeEventsChanged, false); // same live window across UTC midnight
+const closed = candidates({ ...input, events:[global], baseEvents:[global], now:atClose,
+  state:{ ...state, lastUpdated:beforeClose }, cache:{} });
+assert(!closed.details.some(d => d.url === global.link));
+assert.equal(closed.dateChecks.activeEventsChanged, true);
+// Date-only windows are not fabricated as exact instants, and their pending
+// details remain candidates even beyond the next seven days.
+const dateOnly = { ...event('announced-date', '2027-02-27', '2027-02-28'),
+  timing: { scope:'global', mode:'local', startPrecision:'date', endPrecision:'date' } };
+const pendingDate = candidates({ ...input, events:[dateOnly], baseEvents:[dateOnly], cache:{},
+  now:'2026-10-12T12:00:00Z' });
+assert(pendingDate.details.find(d => d.url === dateOnly.link).reasons.includes('pending-timing'));
+const settledPending = candidates({ ...input, events:[dateOnly], baseEvents:[dateOnly],
+  now:'2026-10-12T12:00:00Z', state:{ lastUpdated:now,
+    details:{ [dateOnly.link]:{ sha256:'same', checkedAt:now, pending:true } } },
+  cache:{ [dateOnly.link]:{ sha256:'same', lastFetch:'2026-10-11T00:00:00Z' } } });
+assert.equal(settledPending.details[0].action, 'refresh');
+assert.equal(settledPending.details[0].needsProcessing, false); // same processed bytes need no re-interpretation
+assert.deepEqual(pendingDate.uncertainTimingIds, []); // far-future, outside recommendation window
+// End absent means no automatic expiry or historical-prune decision.
+const openEnd = { ...event('open-ended', '2026-10-11T14:00:00', null), end:null,
+  timing: { scope:'global', mode:'local', startPrecision:'exact', endPrecision:'unknown' } };
+const openEnded = candidates({ ...input, events:[openEnd], baseEvents:[openEnd], cache:{},
+  state:{ ...state, lastUpdated:'2026-10-19T12:00:00Z' }, now:'2026-10-20T00:00:00Z' });
+assert.equal(openEnded.dateChecks.activeEventsChanged, false);
+assert(openEnded.details.some(d => d.url === openEnd.link && d.reasons.includes('pending-timing')));
+assert(!candidates({ ...input, events:[openEnd], baseEvents:[openEnd], cache:{},
+  now:'2027-03-20T00:00:00Z' }).dateChecks.pruneIds.includes(openEnd.id));
 
 // Exercise the CLI's committed baseline choice in a temporary Git repo with a
 // contradictory draft state and a fresh last-failed-run raw cache.

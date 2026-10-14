@@ -1,6 +1,7 @@
 # 每日更新任务 — one Pi, six sequential responsibilities
 
-The wrapper embeds AGENTS.md, this task and the six briefs in full, exactly once.
+The wrapper embeds the core AGENTS.md, this task and the six briefs in full, exactly once.
+Detailed schemas/examples in `tasks/reference/daily-schemas.md` are read on demand.
 References below mean those **already-embedded sections**, not instructions to read the
 files again. Re-read only a specifically lost passage after genuine context compaction.
 
@@ -12,7 +13,8 @@ sources, schemas, render contracts and shared rules; this task owns order and re
 ## Sequence and dependencies
 
 1. **00 Source Scout:** choose the last-successful committed baseline, prepare sources,
-   run `discover.sh new --cached`, then compare the final inputs with that baseline.
+   run `discover.sh new --cached --json` and consume its candidates/pending-date leads/exceptions/gaps
+   even when its partial exit is nonzero, then compare the final inputs with that baseline.
    Apply AGENTS.md “Reuse and detail review” even when list hashes match; retain URL
    cache paths, changed-entry IDs, pending facts, operator rechecks and date-change hints.
 2. **10 Calendar:** finalize events first, with featured/category maintenance and
