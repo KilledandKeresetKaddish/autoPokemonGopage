@@ -910,19 +910,6 @@
       "counters": [],
       "sections": []
     },
-    "raidhour20260715": {
-      "name": "Kyogre Raid Hour",
-      "heading": "Raid Hour",
-      "summary": "During Raid Hour on 7/15 from 18:00–19:00, 5★ Kyogre (Water) raids will appear more frequently at Gyms.",
-      "bonuses": [
-        ":raid: Increased raid activity from 18:00–19:00"
-      ],
-      "pokemon": [
-        "Kyogre"
-      ],
-      "counters": [],
-      "sections": []
-    },
     "kyogre-in-5-star-raid-battles-july-2026": {
       "name": "Kyogre in 5★ Raids",
       "heading": "Raid Battles",

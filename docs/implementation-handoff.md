@@ -1,5 +1,16 @@
 # 实现交接
 
+## PR #36 第二轮审查修复（2026-10-14 UTC）
+
+- **基线/范围**：干净工作树，现有分支 `feat/daily-timing-personal-reminders` / PR #36 OPEN、base `main`，本地/远端/PR head 同为 `fdc3843`。保留原五个提交及首轮审查提交，只追加修复；首轮全 writer Web Locks、Hub partial、父 shell retry budget 未改。
+- **先红后绿**：未修生产代码时，新增生产控件/action VM 回归分别复现完成/完成→starred、取消/取消→starred、撤销/撤销→completed、标星/标星→absent，以及重建 textarea 显示 `saved note` 而非 `unsaved new draft`。真实同 origin Chromium 按钮也复现完成/完成与取消/取消反转；隔离 `fdc3843` worktree 用同一浏览器测试复现失败草稿 E→F→E。修复后全部通过。每个最终写/删间隙只发起另一操作，外部释放屏障后再等待，不让持锁者 await 同锁 writer。
+- **按钮意图**：详情/侧栏每次同步都登记明确操作方向与 token，点击时任何 await 前复制；refresh 后仅核对 token，不重新 toggle。同向完成/撤销/标星/取消幂等，旧命令不能作用于新 incarnation，锁等待跨截止不能恢复过期行。保留取消确认、同活动防重入、焦点、日历/侧栏派生极光同步；删除失败不先取消适用草稿。
+- **草稿显示**：重建/同步优先显示同 token pending.note（failed / flight 均包括），新控件 blur 不重排旧文本或创建第二 flight；取消/到期/重标星才使旧 token 草稿失效。保留 IME、语言切换、500 Unicode 字符和纯文本安全渲染，旧回调不恢复失效草稿。
+- **真实 UTC 留存**：10/14 cutoff `2026-07-16`，严格 `end` 日期小于 cutoff 才删。唯一删除 `raidhour20260715`（end `2026-07-15T19:00:00`），同步删除 English key 和当前待核实列表行；无 featured / AI dangling ID。剩余 179 行，其中 157 行需核实全部/部分时间、152 行 scope/mode unknown。未更改 meta/state、时段或其余内容，不伪造日更时间。
+- **实际验收全部 exit 0**：`node scripts/test-event-reminders.js`（纳入 concurrency→新增 UI 回归，两者另独立执行）、`node scripts/test-event-timing.js`、`node scripts/test-spot-atlas-time.js`、`bash scripts/test-daily-reuse.sh`、`bash scripts/test-fetch-retries.sh`、`bash scripts/test-run-daily.sh`（仅隔离仓库/mock）、真实当天 preflight/validate（179 events，原有 5 long-chip WARN）。保护清单 38→39，无旧条目减少；app 缓存 v24→v25。JS/Bash 语法、diff whitespace 与全部保护哈希核对，无 runner PID/进程组/writerStopped 或门禁调整。
+- **浏览器实际执行**：现有 `/usr/bin/chromium` + `/workspace/.pi-tmp/browser-tools/node_modules/playwright-core`，1440×1050 / 390×844，同 context/origin 的真实详情与侧栏按钮、Web Locks 外部屏障。四种同向操作、旧完成/取消命令与删除重标星、排队跨截止、failed/flight 中 E→F→E 的实际 textarea/blur、失败取消草稿、旧 token 草稿清理均 PASS；原多帧极光/IME/语言/存储/超时/holder-close/TODO/Atlas/Clock 仍通过，零 page errors。新 fixture 初版曾超时：不再把冻结时钟停在距截止 1ms（精确 ±1ms 留在纯 fixtures）；正常动画检查后仅多 page 逻辑阶段使用 reduced-motion，避免单 CPU 绘制饥饿。扩充套件有 180 秒硬上限，不修改产品锁超时。
+- **未覆盖/交付边界**：已读取本轮桌面/手机截图；沙箱无 CJK 字体，不能证明全部中文字形可读。未测 Safari/Firefox、真实手机/系统 IME；未运行真实模型、生产 solver/日更、publish、VPS/Caddy/cron。旧开着的页面需刷新；异步 pagehide 保存仍不保证落盘。普通 push 原 PR，保留原正文追加本轮验收，不自动 resolve review、不合并、不部署。
+
 ## PR #36 审查修复（2026-10-13 UTC）
 
 - 基线确认：宿主仓库挂载 `/workspace`，remote 为 `KilledandKeresetKaddish/autoPokemonGopage`；PR 仍 OPEN，head `37a4b73` / `feat/daily-timing-personal-reminders`，base `main`。工作树初始干净，无后续修复提交；保留任务 1–4 与集成的五个提交，仅追加本轮修复。

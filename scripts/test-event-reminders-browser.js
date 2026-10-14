@@ -59,7 +59,7 @@ let browser, step = 'init';
 const deadline = setTimeout(async () => {
   console.error('test-event-reminders-browser: timed out at ' + step);
   process.exitCode = 1; if (browser) await browser.close(); server.close();
-}, 90000);
+}, 180000);
 (async () => {
   await new Promise(resolve => server.listen(0,'127.0.0.1',resolve));
   const origin = `http://127.0.0.1:${server.address().port}`;
@@ -102,7 +102,7 @@ const deadline = setTimeout(async () => {
     await p.waitForFunction(()=>reminderActions.size === 0);
     await p.evaluate(async()=>{await reminderSaver.flushAll(); await reminderScheduler.wake();});
   };
-  const flag = async (p,id) => p.evaluate(id=>reminderAction(id,'star'),id);
+  const flag = async (p,id) => p.evaluate(async id=>{await reminders.star(id);await reminderScheduler.wake();},id);
   const view = (p,id) => p.evaluate(id=>({active:reminders.view(id).active,flagged:reminders.view(id).flagged,completed:reminders.view(id).completed,note:reminders.get(id)?.note}),id);
   const activeCopies = (p,id) => p.locator(`[data-reminder-event~="${id}"].reminder-active`).count();
   await page.goto(origin); await ready(page);
@@ -255,11 +255,12 @@ const deadline = setTimeout(async () => {
   await page.evaluate(()=>{window.__testHidden=true;document.dispatchEvent(new Event('visibilitychange'));});
   assert.equal(await page.locator('body.reminders-paused').count(),1);
   assert((await page.locator('.reminder-item.reminder-active').first().evaluate(n=>getComputedStyle(n).animationPlayState)).split(',').every(s=>s.trim()==='paused'));
-  await page.evaluate(time=>window.__testNow=time,close-1);
+  // Do not park a frozen browser clock 1ms from close either: pure fixtures cover ±1ms.
+  await page.evaluate(time=>window.__testNow=time,close-60000);
   await page.evaluate(()=>{window.__testHidden=false;document.dispatchEvent(new Event('visibilitychange'));return reminderScheduler.wake();});
   assert.equal((await view(page,'green')).flagged,true);
   await page.evaluate(()=>window.dispatchEvent(new Event('pagehide')));
-  await tick(page,close-1);
+  await tick(page,close-60000);
   assert.equal(await page.locator('body.reminders-paused').count(),0,'pageshow resumes CSS even without visibilitychange');
   await tick(page,close);
   assert.equal(await page.evaluate(()=>reminders.get('green')),null);
@@ -269,10 +270,13 @@ const deadline = setTimeout(async () => {
   assert.equal(await page.locator('.detail-reminder .reminder-star').isDisabled(),true);
   await page.locator('#detail-close').click();
   step = 'storage-sync';
+  // Visual cycles above are already measured. Keep multi-page logic fixtures
+  // static on the sandbox's single CPU; this does not change their active classes.
+  await page.emulateMedia({reducedMotion:'reduce'});
   // Same-origin storage events: delete while another tab has a pending note, and no whole-table loss.
   await page.setViewportSize({width:1440,height:1050}); await tick(page,open+1);
   await flag(page,'green');
-  const other = await context.newPage(); await other.goto(origin); await ready(other); await tick(other,open+1);
+  const other = await context.newPage(); await other.emulateMedia({reducedMotion:'reduce'}); await other.goto(origin); await ready(other); await tick(other,open+1);
   assert.equal((await view(other,'green')).flagged,true);
   await page.locator('.cal-bar[data-reminder-event="green"]').click();
   await input.fill('draft that must not revive');
@@ -287,7 +291,7 @@ const deadline = setTimeout(async () => {
   await flag(page,'green');
   await other.evaluate(()=>reminderScheduler.wake());
   const raceToken = await page.evaluate(()=>reminders.get('green').token);
-  const holder = await context.newPage(); await holder.goto(origin); await ready(holder);
+  const holder = await context.newPage(); await holder.emulateMedia({reducedMotion:'reduce'}); await holder.goto(origin); await ready(holder);
   const hold = async () => {
     await holder.evaluate(prefix=>{
       window.__held=false;
@@ -355,13 +359,142 @@ const deadline = setTimeout(async () => {
   await other.evaluate(()=>reminders.remove('green',reminders.get('green').token));
   await page.evaluate(()=>reminderScheduler.wake());
   // An unsupported environment is read-only and explicitly warns, not an unsafe fallback.
-  const unsupported = await context.newPage();
+  const unsupported = await context.newPage(); await unsupported.emulateMedia({reducedMotion:'reduce'});
   await unsupported.addInitScript(()=>Object.defineProperty(navigator,'locks',{value:undefined}));
   await unsupported.goto(origin); await ready(unsupported);
   assert.equal((await unsupported.evaluate(()=>reminders.star('green'))).ok,false);
   assert.match(await unsupported.locator('#reminder-notice').innerText(),/Web Locks/);
   assert.equal(await unsupported.evaluate(prefix=>localStorage.getItem(prefix+'green'),prefix),null);
   await unsupported.close();
+  async function uiRegressions() {
+    step='ui-regressions';const a=page, b=other;
+    for (const p of [a,b]) {
+      p.on('dialog',dialog=>dialog.accept());
+      // Keep unrelated focus/storage calibration from consuming the precise action barrier.
+      await p.evaluate(()=>{reminderScheduler.pause();window.__uiWake=reminderScheduler.wake;reminderScheduler.wake=async()=>{};});
+    }
+    const show=(p,id)=>p.evaluate(id=>openDetail(state.events.find(e=>e.id===id)),id);
+    const sync=async()=>{for(const p of [a,b]) await p.evaluate(()=>refreshReminderUi());};
+    async function reset(initial='starred') {
+      await a.evaluate(async initial=>{
+        const r=reminders.get('green');if(r) await reminders.remove('green',r.token);
+        if(initial!=='absent') await reminders.star('green');
+        if(initial==='completed') await reminders.complete('green',true,reminders.get('green').token);
+      },initial);
+      await sync(); await show(a,'green'); await show(b,'green'); await sync();
+      await b.evaluate(()=>document.querySelector('#reminder-completed').open=true);
+      if(initial!=='absent') await b.locator('#detail-close').click();
+    }
+    for(const [name,initial,kind,expected] of [
+      ['complete','starred','done','completed'],['remove','starred','star','absent'],
+      ['undo','completed','done','starred'],['star','absent','star','starred'],
+    ]) {
+      if(process.env.REMINDER_BROWSER_CASE && process.env.REMINDER_BROWSER_CASE!==name) continue;
+      step='ui-'+name;await reset(initial);
+      // Gate A's mutation AFTER its refresh. B clicks the unchanged control while
+      // A's mutation is queued, so B's refresh necessarily observes A's commit.
+      await a.evaluate(prefix=>{
+        const manager=navigator.locks;let calls=0;
+        window.__gateHeld=false;window.__mutationQueued=false;
+        window.__realUiLocks=manager;
+        Object.defineProperty(navigator,'locks',{configurable:true,value:{request:(name,options,callback)=>{
+          if(++calls===2){
+            window.__gate=manager.request(prefix,async()=>{window.__gateHeld=true;await new Promise(resolve=>window.__releaseGate=resolve);});
+            window.__mutationQueued=true;
+          }
+          return manager.request(name,options,callback);
+        }}});
+      },prefix);
+      await a.locator(`.detail-reminder .reminder-${kind}`).click();
+      await a.waitForFunction(()=>window.__gateHeld && window.__mutationQueued);
+      assert.equal(await a.evaluate(prefix=>{const r=JSON.parse(localStorage.getItem(prefix+'green'));return r?r.completedAt===null?'starred':'completed':'absent';},prefix),initial);
+      const selector=initial==='absent'?`.detail-reminder .reminder-${kind}`:`.reminder-item[data-id="green"] .reminder-${kind}`;
+      await b.locator(selector).click(); await b.waitForFunction(()=>reminderActions.has('green'));
+      await a.evaluate(()=>window.__releaseGate());
+      for(const p of [a,b]) await p.waitForFunction(()=>reminderActions.size===0);
+      await a.evaluate(()=>Object.defineProperty(navigator,'locks',{configurable:true,value:window.__realUiLocks}));
+      await sync();
+      for(const p of [a,b]) {
+        assert.equal(await p.evaluate(prefix=>{const r=JSON.parse(localStorage.getItem(prefix+'green'));return r?r.completedAt===null?'starred':'completed':'absent';},prefix),expected,`${name}/${name} cannot reverse intent`);
+        assert.equal((await view(p,'green')).active,expected==='starred');
+        assert.equal((await activeCopies(p,'green'))>0,expected==='starred');
+        assert.equal(await p.locator('.reminder-item[data-id="green"].reminder-active').count(),expected==='starred'?1:0);
+        assert.equal(await p.locator('.detail-reminder .reminder-star').getAttribute('aria-pressed'),String(expected!=='absent'));
+      }
+    }
+    if(!process.env.REMINDER_BROWSER_CASE || process.env.REMINDER_BROWSER_CASE==='token') {
+      for(const kind of ['done','star']) {
+        step='ui-stale-'+kind;await reset();
+        const old=await a.evaluate(()=>reminders.get('green').token);
+        await b.evaluate(prefix=>{window.__replaceHeld=false;window.__replaceGate=navigator.locks.request(prefix,async()=>{window.__replaceHeld=true;await new Promise(resolve=>window.__releaseReplace=resolve);});},prefix);
+        await b.waitForFunction(()=>window.__replaceHeld);
+        await b.evaluate(()=>{window.__removeOld=reminders.remove('green',reminders.get('green').token);window.__starNew=reminders.star('green');});
+        await a.locator(`.detail-reminder .reminder-${kind}`).click();await a.waitForFunction(()=>reminderActions.has('green'));
+        await b.evaluate(()=>window.__releaseReplace());await b.evaluate(()=>Promise.all([window.__removeOld,window.__starNew]));
+        await a.waitForFunction(()=>reminderActions.size===0);await sync();
+        const r=await a.evaluate(()=>reminders.get('green'));
+        assert.notEqual(r.token,old);assert.equal(r.completedAt,null);assert.equal(r.note,'');
+        assert.equal((await view(b,'green')).flagged,true);
+      }
+      step='ui-expiry';await reset();
+      await a.evaluate(time=>{window.__testNow=time;return refreshReminderUi();},close-60000);
+      await b.evaluate(prefix=>{window.__expiryHeld=false;window.__expiryGate=navigator.locks.request(prefix,async()=>{window.__expiryHeld=true;await new Promise(resolve=>window.__releaseExpiry=resolve);});},prefix);
+      await b.waitForFunction(()=>window.__expiryHeld);
+      await a.locator('.detail-reminder .reminder-done').click();await a.waitForFunction(()=>reminderActions.has('green'));
+      await a.evaluate(time=>window.__testNow=time,close);await b.evaluate(()=>window.__releaseExpiry());
+      await a.waitForFunction(()=>reminderActions.size===0);await sync();
+      assert.equal(await a.evaluate(prefix=>localStorage.getItem(prefix+'green'),prefix),null);
+      assert.equal(await a.locator('.detail-reminder .reminder-star').isDisabled(),true);
+      await a.evaluate(time=>window.__testNow=time,open+1);
+    }
+    if(!process.env.REMINDER_BROWSER_CASE || process.env.REMINDER_BROWSER_CASE==='draft') {
+      step='ui-draft';await reset();
+      await a.evaluate(()=>reminders.note('green','saved note',reminders.get('green').token)); await sync();
+      await a.evaluate(()=>{
+        window.__realUiLocks=navigator.locks;
+        Object.defineProperty(navigator,'locks',{configurable:true,value:{request:()=>Promise.reject(Error('lock denied'))}});
+      });
+      const editor=a.locator('.detail-reminder textarea');
+      await editor.fill('unsaved new draft'); await editor.blur(); await a.evaluate(()=>reminderSaver.flushAll());
+      assert.equal(await a.evaluate(prefix=>JSON.parse(localStorage.getItem(prefix+'green')).note,prefix),'saved note');
+      await show(a,'blue'); await show(a,'green'); await a.evaluate(()=>reminderSaver.flushAll());
+      assert.equal(await editor.inputValue(),'unsaved new draft','E→F→E must restore failed draft, not saved note');
+      await a.locator('.detail-reminder .reminder-star').click(); await a.waitForFunction(()=>reminderActions.size===0);
+      assert.equal(await a.evaluate(()=>reminderSaver.pending('green').note),'unsaved new draft','rejected delete keeps draft');
+      await a.evaluate(()=>Object.defineProperty(navigator,'locks',{configurable:true,value:window.__realUiLocks}));
+      await editor.focus(); await editor.blur(); await a.evaluate(async()=>{await reminderSaver.flushAll();await refreshReminderUi();});
+      assert.equal(await a.evaluate(prefix=>JSON.parse(localStorage.getItem(prefix+'green')).note,prefix),'unsaved new draft');
+      assert.match(await a.locator('.reminder-save').innerText(),/Autosaved/);
+      // A real pending flight survives drawer reconstruction; blur must not create a second save.
+      await a.evaluate(async()=>{await reminders.note('green','saved note',reminders.get('green').token);await refreshReminderUi();window.__noteCalls=0;const note=reminders.note;window.__baseNote=note;reminders.note=(...args)=>{window.__noteCalls++;return note(...args);};});
+      await b.evaluate(prefix=>{window.__draftHeld=false;window.__draftGate=navigator.locks.request(prefix,async()=>{window.__draftHeld=true;await new Promise(resolve=>window.__releaseDraft=resolve);});},prefix);
+      await b.waitForFunction(()=>window.__draftHeld);
+      await editor.fill('flight new draft'); await editor.blur(); await a.waitForFunction(()=>!!reminderSaver.pending('green')?.flight);
+      await show(a,'blue'); await show(a,'green');
+      assert.equal(await editor.inputValue(),'flight new draft');
+      await editor.focus(); await editor.blur();
+      assert.equal(await a.evaluate(()=>window.__noteCalls),1,'drawer/blur reuses the single pending flight');
+      assert.doesNotMatch(await a.locator('.reminder-save').innerText(),/Autosaved/);
+      await b.evaluate(()=>window.__releaseDraft());
+      await a.evaluate(async()=>{await reminderSaver.flushAll();await refreshReminderUi();});
+      assert.equal(await a.evaluate(prefix=>JSON.parse(localStorage.getItem(prefix+'green')).note,prefix),'flight new draft');
+      // Cancel/re-star in another page invalidates the failed old-token input.
+      await a.evaluate(()=>Object.defineProperty(navigator,'locks',{configurable:true,value:{request:()=>Promise.reject(Error('lock denied'))}}));
+      await editor.fill('obsolete token draft'); await editor.blur(); await a.evaluate(()=>reminderSaver.flushAll());
+      const oldToken=await a.evaluate(()=>reminders.get('green').token);
+      await b.evaluate(async()=>{await reminders.remove('green',reminders.get('green').token);await reminders.star('green');});
+      await a.evaluate(()=>Object.defineProperty(navigator,'locks',{configurable:true,value:window.__realUiLocks}));
+      await sync(); await show(a,'blue'); await show(a,'green');
+      assert.notEqual(await a.evaluate(()=>reminders.get('green').token),oldToken);
+      assert.equal(await editor.inputValue(),'');assert.equal(await a.evaluate(()=>!!reminderSaver.pending('green')),false);
+      await editor.focus();await editor.blur();await a.evaluate(()=>reminderSaver.flushAll());
+      assert.equal(await a.evaluate(prefix=>JSON.parse(localStorage.getItem(prefix+'green')).note,prefix),'');
+    }
+    await a.evaluate(()=>reminders.remove('green',reminders.get('green')?.token));
+    for(const p of [a,b]) await p.evaluate(()=>{reminderScheduler.wake=window.__uiWake;if(window.__baseNote) reminders.note=window.__baseNote;});
+    await page.locator('#detail-close').click(); await page.evaluate(()=>reminderScheduler.wake());
+  }
+  await uiRegressions();
   await other.evaluate(async()=>{await reminders.note('blue','other-tab note',reminders.get('blue').token);await reminderScheduler.wake();});
   await page.waitForFunction(()=>reminders.get('blue')?.note==='other-tab note');
   assert.equal(await page.locator('.reminder-item[data-id="blue"] .reminder-note-preview').innerText(),'other-tab note');
@@ -410,5 +543,5 @@ const deadline = setTimeout(async () => {
   assert.deepEqual(errors,[]);
   assert.equal(JSON.stringify(events),originalEvents,'UI must not mutate canonical fixture');
   fs.writeFileSync(path.join(artifacts,'result.json'),JSON.stringify({status:'PASS',viewports:['1440x1050','390x844'],cycles:'desktop >6s / mobile calendar+sidebar >6s',pageErrors:errors},null,2)+'\n');
-  console.log('test-event-reminders-browser: PASS (Chromium desktop/390px, aurora cycles+geometry, all calendar entrances, completion/reload/locale/IME/focus, hidden +N, fallback, real same-origin Web Locks contention/holder-close/unsupported, storage sync, expiry/failure/retention, TODO/Atlas/Clock)');
+  console.log('test-event-reminders-browser: PASS (Chromium desktop/390px, aurora cycles+geometry, all calendar entrances, completion/reload/locale/IME/focus, hidden +N, fallback, same-direction UI clicks/stale commands, failed/in-flight drawer drafts, real same-origin Web Locks contention/holder-close/unsupported, storage sync, expiry/failure/retention, TODO/Atlas/Clock)');
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(async()=>{clearTimeout(deadline);if(browser) await browser.close();server.close();});

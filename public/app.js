@@ -1950,7 +1950,8 @@ function createEventReminderStore(options = {}) {
     remove:(id, expectedToken) => transact(() => mutate(id, expectedToken, r => r ? null : undefined)),
     note:(id, text, expectedToken) => transact(() => mutate(id, expectedToken, r => r ? { ...r, note:reminderNote(text) } : undefined)),
     complete:(id, done, expectedToken) => transact(() => mutate(id, expectedToken, (r, view) =>
-      r && (done ? view.canComplete : view.canUndo) ? { ...r, completedAt:done ? now() : null } : undefined)),
+      r && (r.completedAt !== null) === done ? r
+        : r && (done ? view.canComplete : view.canUndo) ? { ...r, completedAt:done ? now() : null } : undefined)),
   };
 }
 function createReminderNoteSaver(store, options = {}) {
@@ -2549,19 +2550,36 @@ function flushReminderEditor() {
   }
   reminderSaver?.flushAll();
 }
-async function reminderAction(id, action) {
+function reminderButtonCommand(button) {
+  return { action:button.dataset.reminderAction, token:button.dataset.reminderToken,
+    done:button.dataset.reminderDone === 'true' };
+}
+function syncReminderButtonCommands(star, done, record) {
+  star.dataset.reminderAction = record ? 'remove' : 'star';
+  star.dataset.reminderToken = done.dataset.reminderToken = record?.token || '';
+  done.dataset.reminderAction = 'complete';
+  done.dataset.reminderDone = String(record?.completedAt === null);
+}
+async function reminderAction(id, command) {
   if (!reminders || reminderActions.has(id)) return;
+  // Copy the displayed intent before any await or UI synchronization.
+  const { action, token, done } = command;
+  if (!['star','remove','complete'].includes(action) || (action !== 'star' && !token)) return;
   reminderActions.add(id); syncReminderUi();
   try {
     await reminders.refresh(); reminderSaver.cancelMissing();
     const r = reminders.get(id);
-    if (action === 'star') {
-      if (r) {
-        const draft = reminderSaver.pending(id);
-        if ((draft?.note || r.note) && !confirm(i18n('reminder.confirmRemove'))) return;
-        reminderSaver.cancel(id); await reminders.remove(id, r.token);
-      } else await reminders.star(id);
-    } else if (r) await reminders.complete(id, r.completedAt === null, r.token);
+    if (action === 'star') return await reminders.star(id); // already starred is a no-op
+    if (r?.token !== token) return { ok:false, reason:'missing' };
+    if (action === 'remove') {
+      const draft = reminderSaver.pending(id);
+      if ((draft?.note || r.note) && !confirm(i18n('reminder.confirmRemove'))) return { ok:false, reason:'canceled' };
+      const result = await reminders.remove(id, token);
+      // Only invalidated drafts are canceled; a rejected deletion keeps its input.
+      reminderSaver.cancelMissing();
+      return result;
+    }
+    return await reminders.complete(id, done, token);
   } catch (error) { console.error('Reminder action failed', error); }
   finally {
     reminderActions.delete(id);
@@ -2586,8 +2604,8 @@ function createReminderControls(id) {
   input.addEventListener('compositionend', () => { composing = false; queue(); });
   input.addEventListener('input', queue);
   input.addEventListener('blur', () => { composing = false; queue(); reminderSaver.flush(id); });
-  box.querySelector('.reminder-star').addEventListener('click', e => { e.stopPropagation(); reminderAction(id, 'star'); });
-  box.querySelector('.reminder-done').addEventListener('click', e => { e.stopPropagation(); reminderAction(id, 'complete'); });
+  box.querySelector('.reminder-star').addEventListener('click', e => { e.stopPropagation(); reminderAction(id, reminderButtonCommand(e.currentTarget)); });
+  box.querySelector('.reminder-done').addEventListener('click', e => { e.stopPropagation(); reminderAction(id, reminderButtonCommand(e.currentTarget)); });
   syncReminderControls(box);
   return box;
 }
@@ -2595,6 +2613,7 @@ function syncReminderControls(box) {
   const id = box.dataset.id, r = reminders.get(id), v = reminders.view(id), status = reminderStatus(id);
   box.querySelector('.reminder-title').textContent = i18n('reminder.personal');
   const star = box.querySelector('.reminder-star'), done = box.querySelector('.reminder-done');
+  syncReminderButtonCommands(star, done, r);
   star.textContent = i18n(r ? 'reminder.unstar' : 'reminder.star');
   star.disabled = reminderActions.has(id) || v.expired || (!r && !v.hasCanonical);
   star.setAttribute('aria-pressed', r ? 'true' : 'false');
@@ -2605,12 +2624,13 @@ function syncReminderControls(box) {
   label.hidden = !r; input.disabled = !r;
   label.querySelector('span').textContent = i18n('reminder.noteLabel', { count:REMINDER_NOTE_LIMIT });
   input.placeholder = i18n('reminder.notePlaceholder');
+  const pending = reminderSaver.pending(id);
+  const draft = v.flagged && pending?.token === r?.token ? pending : null;
   if (box.dataset.token !== (r?.token || '')) box.dataset.saveConflict = '';
-  if (box.dataset.token !== (r?.token || '') || (!reminderSaver.pending(id) && document.activeElement !== input))
-    input.value = r?.note || '';
+  if (box.dataset.token !== (r?.token || '') || document.activeElement !== input)
+    input.value = draft ? draft.note : r?.note || '';
   box.dataset.token = r?.token || '';
   const saved = box.querySelector('.reminder-save');
-  const draft = reminderSaver.pending(id);
   saved.textContent = r ? i18n(draft?.failed ? 'reminder.unsaved' : draft ? 'reminder.saving'
     : reminders.status().unpersisted ? 'reminder.sessionOnly' : 'reminder.saved') : '';
   box.querySelector('.reminder-warning').textContent = [reminderNotice(),
@@ -2627,9 +2647,9 @@ function createReminderCard(id) {
     if (ev) openDetail(ev, card.querySelector('.reminder-open'));
     else if (r) openDetail({ id, name:r.names[state.locale] || r.names['zh-CN'] || id, ...r.time }, card.querySelector('.reminder-open'));
   });
-  card.querySelector('.reminder-star').addEventListener('click', e => { e.stopPropagation(); reminderAction(id, 'star'); });
+  card.querySelector('.reminder-star').addEventListener('click', e => { e.stopPropagation(); reminderAction(id, reminderButtonCommand(e.currentTarget)); });
   card.querySelector('.reminder-done').addEventListener('click', e => {
-    e.stopPropagation(); reminderAction(id, 'complete').then(() => {
+    e.stopPropagation(); reminderAction(id, reminderButtonCommand(e.currentTarget)).then(() => {
       const group = $('#reminder-completed'); if (group.contains(card) && !group.open) group.querySelector('summary').focus();
     });
   });
@@ -2662,6 +2682,7 @@ function renderReminderSidebar() {
       card.querySelector('.reminder-time').textContent = reminderStatus(id).join('\n');
       const note = card.querySelector('.reminder-note-preview'); note.textContent = record.note; note.hidden = !record.note;
       const star = card.querySelector('.reminder-star'), done = card.querySelector('.reminder-done');
+      syncReminderButtonCommands(star, done, record);
       star.textContent = i18n('reminder.unstar'); star.disabled = reminderActions.has(id);
       star.setAttribute('aria-label', i18n('reminder.removeNamed', { name:card.querySelector('.reminder-open').textContent }));
       done.textContent = i18n(view.completed ? 'reminder.undo' : 'reminder.done');

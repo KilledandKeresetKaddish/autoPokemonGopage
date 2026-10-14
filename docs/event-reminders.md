@@ -30,6 +30,8 @@
 - 成功加载 canonical 时更新已有记录的快照，保留未到期笔记和人工完成。明确撤回的边界覆盖旧精确边界；无效时间撤为 `null`。加载失败不当作撤回。
 - 普通校准和 note/completion 写入使用记录中最新成功加载的快照；老标签页不会把它自己的旧 canonical 时间每 30 秒写回，或依旧截止提前删除。显式成功数据加载才重新声明时间权威。
 - canonical 暂缺：最后确认的有限 close 仍能清理数月前已被留存机制删掉的活动；没有可靠 close 则保留待核实。
+- 详情和侧栏按钮在点击时、任何 await 前固定控件当时显示的目标（标星 / 取消 / 完成 / 撤销）及预期 token；刷新仅用于核对，不再根据刷新后的存在性/完成状态 toggle。同向操作幂等；旧 token 命令不操作删除后重标星的新 incarnation；锁内仍复核截止。同活动仍防重复提交，取消仍确认，失败删除保留仍适用的草稿。
+- 编辑器重建/同步优先使用**同 token**的最新 pending 草稿（等待中或失败均如此），E→F→E 不拿旧持久化文本替换它，再借 blur 写回旧值。重复 blur/flush 共用原 flight；删除、到期或新 token 才使旧草稿失效。当前编辑/IME 与语言切换保留节点，旧回调不能恢复被取消的草稿。
 - **所有写路径共享同源 Web Locks 排他锁 `pogo-event-reminders:v1:`**：标星、取消、笔记、完成、到期清理、成功 canonical 快照、v0 迁移和恢复重试都先拿锁。锁内同步执行最新读取、token / 时间判定、字段合并及最终 set/remove，中间不等待另一操作。单标签队列或 get→set 核对本身不是跨标签 CAS。
 - 正确性：同一时刻最多一个协议 writer。若旧笔记先取得锁，则其写入先完成，随后取消/到期删除；若删除先完成，则笔记锁内重新读取不到旧 token，拒绝写入。删除后重标星的新 token 同样拒绝旧输入；同条 note/completion 合并锁内最新记录，不同活动保留独立 key。
 - **兼容限制**：需要安全上下文（HTTPS，测试 localhost）且有 `navigator.locks.request` / AbortSignal。能力缺失、调用拒绝或排队 5 秒超时返回 `reason:"locking", persisted:false`，不修改个人记录、不走无锁回退；UI 明示未写入，草稿留待编辑/失焦重试。关闭持锁标签由浏览器释放锁，无持久租约。上线后旧版本已打开标签必须刷新；此保证针对使用同一协议的页面，不能约束旧代码/开发者工具直接写 localStorage。
@@ -53,7 +55,7 @@
 ## 测试
 
 ```bash
-node scripts/test-event-reminders.js # 包含 test-reminder-concurrency.js
+node scripts/test-event-reminders.js # 包含 test-reminder-concurrency.js / test-reminder-ui.js
 node scripts/test-event-timing.js
 node scripts/test-spot-atlas-time.js
 bash scripts/test-daily-reuse.sh # 包含 test-fetch-retries.sh
@@ -70,4 +72,4 @@ PLAYWRIGHT_MODULE=/workspace/.pi-tmp/browser-tools/node_modules/playwright-core 
   node scripts/test-event-reminders-browser.js
 ```
 
-该脚本还使用同一 context / origin 的多 page + 真实 Web Locks 排队屏障验证笔记/删除竞争、重标星 token、关持锁标签自动释放、5 秒获取超时及能力缺失/拒绝；屏障由测试外部释放，不让持锁者等待另一个同锁写入。该脚本本地临时 HTTP、mock canonical/overlay/外链图像、可注入 Date/IANA；1440×1050 / 390×844 实跑持续动画与点击，截图只在 `.pi-tmp/reminder-browser/`。真实 ±1ms 和调度竞争由纯时间 fixtures / fake timers 覆盖，不用冻结的浏览器钟驱动 1ms 无限校准。没有真实模型、发布目标或生产部署。实际结果及历史内容日期门禁说明见 [实现交接](implementation-handoff.md)。
+该脚本还使用同一 context / origin 的多 page + 真实 Web Locks 排队屏障通过真实详情/侧栏按钮验证完成/完成、取消/取消、撤销/撤销、标星/标星、旧命令/重标星、锁排队跨截止、失败/flight 中 E→F→E 和实际 textarea/blur；并验证笔记/删除竞争、重标星 token、关持锁标签自动释放、5 秒获取超时及能力缺失/拒绝；屏障由测试外部释放，不让持锁者等待另一个同锁写入。该脚本本地临时 HTTP、mock canonical/overlay/外链图像、可注入 Date/IANA；1440×1050 / 390×844 实跑持续动画与点击，截图只在 `.pi-tmp/reminder-browser/`。真实 ±1ms 和调度竞争由纯时间 fixtures / fake timers 覆盖，不用冻结的浏览器钟驱动 1ms 无限校准。正常动画/几何检查结束后，多 page 逻辑阶段启用 reduced-motion 以避免单 CPU 沙箱的无关绘制饥饿，仍断言日历/侧栏派生状态；完整测试有 180 秒硬上限。没有真实模型、发布目标或生产部署。实际结果及历史内容日期门禁说明见 [实现交接](implementation-handoff.md)。

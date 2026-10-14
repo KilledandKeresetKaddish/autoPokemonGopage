@@ -30,7 +30,11 @@ class MemoryStorage {
     if (hook) hook(); // precisely AFTER production's final getItem, before setItem
     this.data.set(k, v);
   }
-  removeItem(k) { if (this.refuse) throw Error('quota'); this.data.delete(k); }
+  removeItem(k) {
+    if (this.refuse) throw Error('quota');
+    const hook=this.beforeWrite; this.beforeWrite=null; if (hook) hook();
+    this.data.delete(k);
+  }
 }
 const event = { id:'race', name:'竞争活动', start:'2026-10-11T00:00:00Z', end:'2026-10-12T00:00:00Z',
   timing:{scope:'global',mode:'absolute',startPrecision:'exact',endPrecision:'exact'} };
@@ -154,6 +158,7 @@ async function run() {
   const rejected=createReminderNoteSaver({note:()=>Promise.reject(Error('denied'))},{setTimeout:()=>1,clearTimeout:()=>{}});
   rejected.input('race','token','unsaved'); assert.equal((await rejected.flush('race')).ok,false);
   assert.equal(rejected.pending('race').note,'unsaved'); assert(rejected.pending('race').failed);
+  await require('./test-reminder-ui.js').run({TestLocks,MemoryStorage});
   console.log('test-reminder-concurrency: PASS (final-read/write deletion, restar tokens, expiry/barrier, note+completion, independent IDs, locks unavailable/recovery)');
 }
 if (require.main === module) run().catch(error => { console.error(error); process.exitCode = 1; });
