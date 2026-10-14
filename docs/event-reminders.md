@@ -48,7 +48,9 @@
 - `createReminderNoteSaver(store,{setTimeout?,clearTimeout?,delay?,onSave?})`：350ms debounce，composition 暂停；`flush` / `flushAll` 返回 Promise。同一草稿重复 flush 共享 flight，等待中不显示已保存；rejection 保留输入并提示未保存，较新/取消的草稿不受旧回调影响。失焦、关闭抽屉、visibility/pagehide 发起 flush；pagehide/关页仅尽力尝试，**浏览器不保证等待异步保存**。正常输入和失焦及时保存，但最后一瞬关页可能丢失尚未确认的输入。到期/跨标签删除取消草稿。
 - `createReminderScheduler({refresh,boundaries,now?,setTimeout?,clearTimeout?,isHidden?})`：单一最近边界 timeout、最长 30 秒校准；跨过渲染期间边界立即补算。异步 refresh 合并唤醒为一个 flight，pause 不让过时回调重挂计时器；后台停调度/动画，visibilitychange/pageshow/focus/storage/数据加载立即补算，不保证关页后执行。
 
-月历跨周条、chips、长期/PVP 条及明确可映射的 raid badge 只绑定真实 ID；歧义池/不同形态或无 ID fallback 不开放新提醒。隐藏 chips 的 `+N` 是完整列表按钮，也派生隐藏提醒的发光状态。校准只同步节点，不重建月历或编辑器；切语言保留 textarea 节点、输入和状态。桌面 sticky；手机折叠入口吸附，展开面板回到正常流、推下日期，不固定覆盖日期或抽屉关闭按钮。所有正式文案在 `ui.json` 双语 key 中。
+月历跨周条、chips、长期/PVP 条及明确可映射的 raid badge 只绑定真实 ID；歧义池/不同形态或无 ID fallback 不开放新提醒。隐藏 chips 的 `+N` 是完整列表按钮，也派生隐藏提醒的发光状态。校准只同步节点，不重建月历或编辑器；切语言保留 textarea 节点、输入和状态。桌面（>1000px）提醒栏是视口右缘的 ⭐ + 数量入口，不占日历列或右边距。支持 hover + fine pointer 时，悬停或键盘焦点进入即覆盖展开；鼠标与焦点均离开后收起，列表在面板内滚动。大屏触屏使用同一个原生 details 入口点击开合。跨 1000px 断点或 hover/fine 能力切换时收起，不保存展开偏好。手机折叠入口吸附，点击展开后仍回到正常流、推下日期；没有手机悬浮抽屉。侧栏仅随日历视图显示，层级低于活动详情。
+
+详情顶部的分类 tag 与 ⭐ / ✔ 同行；语言/关闭按钮仍占独立工具栏空间。图标为真实 button，`aria-pressed` 表示标星/完成状态；不可用动作以 `aria-disabled` 保持可聚焦，并在同步点击守卫中拒绝执行。简短双语动作/原因同时由 aria-label、aria-describedby 和 hover/focus tooltip 提供；不是原生 disabled title。完成可撤销，仍受原有时间门槛约束。未标星时不显示空笔记卡片；标星后下方仅挂载一个编辑器。动作节点由编辑器持有引用，切语言时一并复用，不能通过复制 textarea 解决布局。存储失败、草稿和冲突反馈仍保留。所有正式文案在 `ui.json` 双语 key 中。
 
 极光是统一的 3 秒彩虹流动 + 2 秒外发光 / 双星芒，不按类别改色。仅未完成 active+flagged 挂动画类；reduced-motion 为同样醒目的静态彩色处理，无新增设置页。
 
@@ -72,4 +74,4 @@ PLAYWRIGHT_MODULE=/workspace/.pi-tmp/browser-tools/node_modules/playwright-core 
   node scripts/test-event-reminders-browser.js
 ```
 
-该脚本还使用同一 context / origin 的多 page + 真实 Web Locks 排队屏障通过真实详情/侧栏按钮验证完成/完成、取消/取消、撤销/撤销、标星/标星、旧命令/重标星、锁排队跨截止、失败/flight 中 E→F→E 和实际 textarea/blur；并验证笔记/删除竞争、重标星 token、关持锁标签自动释放、5 秒获取超时及能力缺失/拒绝；屏障由测试外部释放，不让持锁者等待另一个同锁写入。该脚本本地临时 HTTP、mock canonical/overlay/外链图像、可注入 Date/IANA；1440×1050 / 390×844 实跑持续动画与点击，截图只在 `.pi-tmp/reminder-browser/`。真实 ±1ms 和调度竞争由纯时间 fixtures / fake timers 覆盖，不用冻结的浏览器钟驱动 1ms 无限校准。正常动画/几何检查结束后，多 page 逻辑阶段启用 reduced-motion 以避免单 CPU 沙箱的无关绘制饥饿，仍断言日历/侧栏派生状态；完整测试有 180 秒硬上限。没有真实模型、发布目标或生产部署。实际结果及历史内容日期门禁说明见 [实现交接](implementation-handoff.md)。
+该脚本还使用同一 context / origin 的多 page + 真实 Web Locks 排队屏障通过真实详情/侧栏按钮验证完成/完成、取消/取消、撤销/撤销、标星/标星、旧命令/重标星、锁排队跨截止、失败/flight 中 E→F→E 和实际 textarea/blur；并验证笔记/删除竞争、重标星 token、关持锁标签自动释放、5 秒获取超时及能力缺失/拒绝；屏障由测试外部释放，不让持锁者等待另一个同锁写入。该脚本本地临时 HTTP、mock canonical/overlay/外链图像、可注入 Date/IANA；1440×1050 / 1920×1050 / 390×844 实跑持续动画与点击：检查完整主容器宽度、展开前后日历 bounding box 不变、右缘入口/离开/Tab/内部滚动、真实 CDP coarse-touch 点击和跨断点复位，以及详情 tag/双图标几何、不重叠的 hover/focus 说明、未标星编辑器隐藏、手机详情滚动/关闭。Chromium CDP 关闭 touch 模拟后会报告 pointer:none，故真实 fine→coarse 能力切换隔离到单独 page，不影响后续鼠标测试。截图只在 `.pi-tmp/reminder-browser/`，包括 `desktop-{1440,1920}-{collapsed,expanded}.png`、`desktop-detail-icons.png`、`phone-detail-icons.png` 和 `phone-touch-panel.png`。真实 ±1ms 和调度竞争由纯时间 fixtures / fake timers 覆盖，不用冻结的浏览器钟驱动 1ms 无限校准。正常动画/几何检查结束后，多 page 逻辑阶段启用 reduced-motion 以避免单 CPU 沙箱的无关绘制饥饿，仍断言日历/侧栏派生状态；完整测试有 180 秒硬上限。没有真实模型、发布目标或生产部署。实际结果及历史内容日期门禁说明见 [实现交接](implementation-handoff.md)。
