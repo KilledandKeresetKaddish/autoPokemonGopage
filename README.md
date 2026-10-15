@@ -301,6 +301,20 @@ and isolates its CLI/descendants in one process group. On timeout, TERM or INT i
 for a confirmed stop before any gate, draft save, or rollback. The wrapper and the agent
 must not spawn detached writers.
 
+The supervisor reads `/proc/<pid>/stat` as bytes with one shared parser, so unrelated
+process names containing Unicode, non-UTF-8 bytes, spaces, parentheses or newlines do
+not break inspection. Only `ENOENT`/`ESRCH` mean a process disappeared; other read,
+enumeration or required-field parse failures remain **unknown**, not an empty group.
+Inspection retries restart the complete operation (at most three 50ms waits), within
+the existing runtime/termination deadline and interrupt handling. A final unknown
+result never sets `writerStopped: true`: gates, publication, snapshot replacement and
+rollback stay blocked. Exhausted failures log phase, operation, PID (if applicable),
+exception type, errno and retry count, also in the optional `inspectionErrors` result
+field. These diagnostics omit process names, command lines, environment and prompt.
+Run the offline parser,
+error/identity and real Linux `prctl` regressions with
+`python3 scripts/test-daily-agent-run.py` (also included in `bash scripts/test-run-daily.sh`).
+
 Each invocation gets a unique `POGO_RUN_ID` and ignored `logs/runs/<run-id>/` with
 `daily.log`, machine `events.jsonl`, `summary.json`, a read-only advisory `worklist.json`,
 and optional `pi-events.jsonl` (`PI_VERBOSE=1`). `logs/lastAttempt.json` includes failures;
