@@ -16,7 +16,8 @@ class Control {
     return this.nodes.get(selector);
   }
   addEventListener(name, fn) { this.handlers.set(name,fn); }
-  setAttribute() {}
+  setAttribute(name,value) { this[name]=String(value); }
+  getAttribute(name) { return this[name] ?? null; }
   click() { if (!this.disabled) this.handlers.get('click')?.({stopPropagation(){},currentTarget:this}); }
   dispatch(name) { this.handlers.get(name)?.(); }
 }
@@ -37,7 +38,7 @@ function page(options, events) {
   `);
   return {context,run,
     show(id='E') { context.id=id; document.box=run('createReminderControls(id)'); return document.box; },
-    click(selector) { document.box.querySelector(selector).click(); return context.lastAction; },
+    click(selector) { document.box._actions.querySelector(selector).click(); return context.lastAction; },
   };
 }
 async function run({TestLocks,MemoryStorage}) {
@@ -55,6 +56,13 @@ async function run({TestLocks,MemoryStorage}) {
     b.run('reminders.sync()'); a.show(); b.show();
     return {a,b,storage,locks};
   }
+  const unavailable=await pair('absent');
+  const controls=unavailable.a.context.document.box;
+  assert.equal(controls.querySelector('.reminder-note-editor').hidden,true,'no unstarred empty editor');
+  assert.equal(controls._actions.querySelector('.reminder-done').getAttribute('aria-disabled'),'true');
+  controls._actions.querySelector('.reminder-done').click();
+  assert.equal(unavailable.a.context.lastAction,undefined,'focusable unavailable action cannot issue a command');
+  assert.equal(unavailable.storage.getItem(key),null);
   for (const [name,initial,selector,expected] of [
     ['complete','starred','.reminder-done','completed'],['remove','starred','.reminder-star','absent'],
     ['undo','completed','.reminder-done','starred'],['star','absent','.reminder-star','starred'],

@@ -988,7 +988,7 @@ function openDetail(ev, opener, preserve = false) {
     .map((l, i) => `<a class="btn ${i === 0 ? 'btn-primary' : ''}" href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(localizedSourceLabel(l.label) || i18n('source.link', null, '链接'))} ↗</a>`)
     .join('');
   $('#detail-body').innerHTML = `
-    <span class="detail-cat" style="--c:${cat.color}">${escapeHtml(cat.label)}</span>
+    <div class="detail-toolbar"><span class="detail-cat" style="--c:${cat.color}">${escapeHtml(cat.label)}</span></div>
     ${ev.image ? `<img class="detail-img" src="${escapeHtml(ev.image)}" alt="">` : ''}
     <h3>${escapeHtml(ev.name)}</h3>
     <p class="muted">${escapeHtml(ev.heading || ev.type || '')} · ${escapeHtml(fmtRange(ev.start, ev.end))}</p>
@@ -1002,13 +1002,14 @@ function openDetail(ev, opener, preserve = false) {
   `;
   if (reminders && ev.id && (state.events.some(e => e.id === ev.id) || reminders.get(ev.id))) {
     const widget = keepWidget ? oldWidget : createReminderControls(ev.id);
+    $('#detail-body .detail-toolbar').append(widget._actions);
     $('#detail-body .detail-reminder-mount').append(widget); syncReminderControls(widget);
   }
   panel.hidden = false;
   linkifySprites($('#detail-body'));
   if (preserve) {
     panel.scrollTop = scroll;
-    if (focused?.isConnected && selection) { focused.focus({ preventScroll:true }); focused.setSelectionRange(...selection); }
+    if (focused?.isConnected) { focused.focus({ preventScroll:true }); if (selection) focused.setSelectionRange(...selection); }
   } else { const close = $('#detail-close'); if (close) close.focus(); }
   reminderScheduler?.wake();
 }
@@ -2588,9 +2589,13 @@ async function reminderAction(id, command) {
 }
 function createReminderControls(id) {
   const box = document.createElement('section'); box.className = 'detail-reminder'; box.dataset.id = id;
-  box.innerHTML = '<h4 class="reminder-title"></h4><div class="reminder-actions">'
-    + '<button type="button" class="btn reminder-star"></button><button type="button" class="btn reminder-done" aria-describedby="detail-reminder-status"></button></div>'
-    + '<p id="detail-reminder-status" class="reminder-time"></p><label class="reminder-note-editor"><span></span><textarea rows="3"></textarea></label>'
+  // Keep one editor and one action node together by reference, even though the
+  // actions mount beside the category and the editor stays below the event time.
+  box._actions = document.createElement('div'); box._actions.className = 'reminder-actions detail-reminder-actions';
+  box._actions.innerHTML = ['star','done'].map(kind => `<span class="reminder-control">`
+    + `<button type="button" class="btn reminder-${kind}" aria-describedby="reminder-${kind}-tip"><span aria-hidden="true">${kind === 'star' ? '⭐' : '✔'}</span></button>`
+    + `<span class="reminder-tooltip" id="reminder-${kind}-tip" role="tooltip"></span></span>`).join('');
+  box.innerHTML = '<p class="reminder-time"></p><label class="reminder-note-editor"><span></span><textarea rows="3"></textarea></label>'
     + '<p class="reminder-save" role="status"></p><p class="reminder-warning" role="status"></p>';
   const input = box.querySelector('textarea'); input.maxLength = REMINDER_NOTE_LIMIT * 2;
   let composing = false;
@@ -2604,22 +2609,32 @@ function createReminderControls(id) {
   input.addEventListener('compositionend', () => { composing = false; queue(); });
   input.addEventListener('input', queue);
   input.addEventListener('blur', () => { composing = false; queue(); reminderSaver.flush(id); });
-  box.querySelector('.reminder-star').addEventListener('click', e => { e.stopPropagation(); reminderAction(id, reminderButtonCommand(e.currentTarget)); });
-  box.querySelector('.reminder-done').addEventListener('click', e => { e.stopPropagation(); reminderAction(id, reminderButtonCommand(e.currentTarget)); });
+  for (const kind of ['star','done']) box._actions.querySelector(`.reminder-${kind}`).addEventListener('click', e => {
+    e.stopPropagation();
+    if (e.currentTarget.getAttribute('aria-disabled') !== 'true') reminderAction(id, reminderButtonCommand(e.currentTarget));
+  });
   syncReminderControls(box);
   return box;
 }
 function syncReminderControls(box) {
   const id = box.dataset.id, r = reminders.get(id), v = reminders.view(id), status = reminderStatus(id);
-  box.querySelector('.reminder-title').textContent = i18n('reminder.personal');
-  const star = box.querySelector('.reminder-star'), done = box.querySelector('.reminder-done');
+  const star = box._actions.querySelector('.reminder-star'), done = box._actions.querySelector('.reminder-done');
   syncReminderButtonCommands(star, done, r);
-  star.textContent = i18n(r ? 'reminder.unstar' : 'reminder.star');
-  star.disabled = reminderActions.has(id) || v.expired || (!r && !v.hasCanonical);
-  star.setAttribute('aria-pressed', r ? 'true' : 'false');
-  done.textContent = i18n(v.completed ? 'reminder.undo' : 'reminder.done');
-  done.disabled = reminderActions.has(id) || !(v.canComplete || v.canUndo); done.title = status[0];
-  box.querySelector('.reminder-time').textContent = status.join('\n');
+  const blocked = reminderActions.has(id) ? 'busy' : v.expired ? 'expired' : !r && !v.hasCanonical ? 'unavailable' : '';
+  const doneBlocked = blocked || (!r ? 'starFirst' : !(v.canComplete || v.canUndo) ? v.openAt ? 'notStarted' : 'unknownStart' : '');
+  for (const [kind, button, action, reason, pressed] of [
+    ['star', star, r ? 'unstar' : 'star', blocked, !!r],
+    ['done', done, v.completed ? 'undo' : 'complete', doneBlocked, v.completed],
+  ]) {
+    const label = i18n(`reminder.action.${action}`), hint = reason ? i18n(`reminder.reason.${reason}`) : label;
+    button.setAttribute('aria-label', reason ? `${label} · ${hint}` : label);
+    button.setAttribute('aria-pressed', String(pressed));
+    // aria-disabled keeps unavailable actions focusable so their reason is
+    // available to keyboard, touch and assistive tech, not just native titles.
+    button.setAttribute('aria-disabled', String(!!reason));
+    box._actions.querySelector(`#reminder-${kind}-tip`).textContent = hint;
+  }
+  const time = box.querySelector('.reminder-time'); time.textContent = status.join('\n'); time.hidden = !r;
   const label = box.querySelector('.reminder-note-editor'), input = label.querySelector('textarea');
   label.hidden = !r; input.disabled = !r;
   label.querySelector('span').textContent = i18n('reminder.noteLabel', { count:REMINDER_NOTE_LIMIT });
@@ -2630,7 +2645,7 @@ function syncReminderControls(box) {
   if (box.dataset.token !== (r?.token || '') || document.activeElement !== input)
     input.value = draft ? draft.note : r?.note || '';
   box.dataset.token = r?.token || '';
-  const saved = box.querySelector('.reminder-save');
+  const saved = box.querySelector('.reminder-save'); saved.hidden = !r;
   saved.textContent = r ? i18n(draft?.failed ? 'reminder.unsaved' : draft ? 'reminder.saving'
     : reminders.status().unpersisted ? 'reminder.sessionOnly' : 'reminder.saved') : '';
   box.querySelector('.reminder-warning').textContent = [reminderNotice(),
@@ -2694,6 +2709,7 @@ function renderReminderSidebar() {
     });
   }
   $('#reminder-count').textContent = String(entries.length);
+  $('#reminder-panel>summary').setAttribute('aria-label', `${i18n('reminder.title')} (${entries.length})`);
   $('#reminder-empty').hidden = entries.length > 0;
   $('#reminder-notice').textContent = reminderNotice();
 }
@@ -2706,6 +2722,27 @@ function syncReminderUi() {
   document.querySelectorAll('[data-reminder-event]').forEach(syncCalendarReminder);
   renderReminderSidebar();
   document.querySelectorAll('.detail-reminder').forEach(syncReminderControls);
+}
+function setupReminderPanel() {
+  const sidebar = $('.reminder-sidebar'), panel = $('#reminder-panel'), summary = panel.querySelector('summary');
+  const desktop = matchMedia('(min-width:1001px)'), hover = matchMedia('(min-width:1001px) and (hover:hover) and (pointer:fine)');
+  const reset = () => {
+    if (panel.open && sidebar.contains(document.activeElement)) summary.focus({ preventScroll:true });
+    panel.open = false;
+  };
+  desktop.addEventListener('change', reset); hover.addEventListener('change', reset);
+  sidebar.addEventListener('pointerenter', () => { if (hover.matches) panel.open = true; });
+  sidebar.addEventListener('pointerleave', () => {
+    if (hover.matches && !sidebar.contains(document.activeElement)) panel.open = false;
+  });
+  sidebar.addEventListener('focusin', () => { if (hover.matches) panel.open = true; });
+  sidebar.addEventListener('focusout', e => {
+    if (hover.matches && !sidebar.contains(e.relatedTarget) && !sidebar.matches(':hover')) panel.open = false;
+  });
+  summary.addEventListener('click', e => {
+    if (hover.matches) { e.preventDefault(); panel.open = true; }
+  });
+  reset();
 }
 async function setupReminders() {
   reminderViewerZone = detectBrowserTimeZone().timeZone;
@@ -2723,7 +2760,7 @@ async function setupReminders() {
       return [v.openAt?.getTime(), v.closeAt?.getTime(), v.viewerWindow.start?.instant?.getTime()];
     }),
   });
-  const panel = $('#reminder-panel'); if (matchMedia('(max-width:1000px)').matches) panel.open = false;
+  setupReminderPanel();
   window.addEventListener('storage', e => {
     if (e.key === null || e.key === REMINDER_LEGACY_KEY || e.key.startsWith(REMINDER_PREFIX)) {
       reminders.sync(); reminderSaver.cancelMissing(); reminderScheduler.wake();
@@ -2878,8 +2915,18 @@ function setupDetail() {
     if (panel.hidden) return;
     flushReminderEditor(); detailEvent = null;
     panel.hidden = true;
-    const back = detailReturnFocus; detailReturnFocus = null;
-    if (back && back.isConnected && back.focus) back.focus();
+    let back = detailReturnFocus; detailReturnFocus = null;
+    if (back?.matches('.reminder-open')) {
+      const entry = $('#reminder-panel>summary');
+      if (entry.getClientRects().length) {
+        if (back.isConnected && entry.parentElement.contains(back)) {
+          // Focus cannot enter a closed panel (or its completed subgroup).
+          for (let group = back.closest('details'); group; group = group.parentElement.closest('details')) group.open = true;
+        } else back = entry; // Removed/expired records must stay removed.
+      }
+    }
+    if (back?.isConnected && back.focus && back.getClientRects().length) back.focus();
+    else $('#main-tabs button.active')?.focus();
   };
   $('#detail-close').addEventListener('click', close);
   document.addEventListener('keydown', e => {

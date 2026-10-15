@@ -9,13 +9,15 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright-core')
 const root = path.join(__dirname, '..');
 const artifacts = path.join(root, '.pi-tmp/reminder-browser');
 fs.mkdirSync(artifacts, { recursive:true });
+fs.rmSync(path.join(artifacts,'result.json'),{force:true});
 const timing = { scope:'global', mode:'local', startPrecision:'exact', endPrecision:'exact' };
 function event(id, type, options = {}) {
   return { id, name:`测试 ${id}`, type, start:'2026-10-11T14:00:00', end:'2026-10-11T17:00:00', timing,
     pokemon:[], bonuses:[], counters:[], sections:[], links:[], ...options };
 }
 const events = [
-  event('green', 'community-day', { highlight:true }),
+  event('green', 'community-day', { highlight:true, image:'https://raw.githubusercontent.com/PokeAPI/sprites/master/fixture.png',
+    bonuses:Array.from({length:6},(_,i)=>`测试加成 ${i+1}`) }),
   event('blue', 'event', { end:'2026-10-16T17:00:00', longTerm:false }),
   event('red', 'raid-day'),
   event('long', 'season', { end:'2026-10-31T17:00:00', longTerm:true }),
@@ -38,7 +40,7 @@ const todoFixture = { v:1,day:'2026-10-09',
   accounts:[{id:'account-a',name:'已有账号 A',cdStart:null,cdView:'dur'}, {id:'account-b',name:'Existing account B',cdStart:null,cdView:'dur'}],
   tasks:[{id:'task-a',name:'原任务 A'}, {id:'task-b',name:'Existing task B'}],checks:{'account-a|task-a':true,'account-b|task-b':true} };
 let canonical = events, failEvents = false;
-const overlays = Object.fromEntries(events.map(e => [e.id,{name:`Test ${e.id}`,heading:'Test fixture',summary:'',pokemon:e.pokemon.map(p=>p.name),bonuses:[],counters:[],sections:[]}]));
+const overlays = Object.fromEntries(events.map(e => [e.id,{name:`Test ${e.id}`,heading:'Test fixture',summary:'',pokemon:e.pokemon.map(p=>p.name),bonuses:e.bonuses.map((_,i)=>`Test bonus ${i+1}`),counters:[],sections:[]}]));
 const rotations = {month:'2026-10',note:'fixture',tracks:[
   {key:'5star',label:'5★',segments:[{start:'2026-10-11',end:'2026-10-16',cn:'Test raid',pokemon:[{id:150,name:'Test Boss'}]}]},
   {key:'mega',label:'Mega',segments:[{start:'2026-10-11',end:'2026-10-11',cn:'Fallback',pokemon:[{id:6,name:'Fallback',hub:'6-Mega_X'}]},
@@ -59,38 +61,43 @@ let browser, step = 'init';
 const deadline = setTimeout(async () => {
   console.error('test-event-reminders-browser: timed out at ' + step);
   process.exitCode = 1; if (browser) await browser.close(); server.close();
-}, 180000);
+}, 240000);
 (async () => {
   await new Promise(resolve => server.listen(0,'127.0.0.1',resolve));
   const origin = `http://127.0.0.1:${server.address().port}`;
   browser = await chromium.launch({executablePath:process.env.CHROMIUM_PATH || '/usr/bin/chromium',headless:true,args:['--no-sandbox']});
-  const context = await browser.newContext({viewport:{width:1440,height:1050}});
-  await context.route('**/*', async route => {
-    const url = new URL(route.request().url());
-    if (url.origin !== origin) return route.fulfill({contentType:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><circle cx="25" cy="25" r="15" fill="#e8cb8c"/></svg>'});
-    if (url.pathname === '/data/events.json') return route.fulfill({status:failEvents ? 503 : 200,json:failEvents ? {} : canonical});
-    if (url.pathname === '/data/rotations.json') return route.fulfill({json:rotations});
-    if (url.pathname === '/data/featured.json') return route.fulfill({json:['red']});
-    if (url.pathname === '/data/i18n/en.json') return route.fulfill({json:{events:overlays,regions:englishRegions,categories:{},rotations:{tracks:{}}}});
-    return route.continue();
-  });
-  await context.addInitScript(({start,todo}) => {
-    try { if (localStorage.getItem('pogo-todo') === null) localStorage.setItem('pogo-todo',JSON.stringify(todo)); } catch { /* opaque initial document */ }
-    window.__testNow = start;
-    const RealDate = Date;
-    window.Date = class extends RealDate {
-      constructor(...args) { super(...(args.length ? args : [window.__testNow])); }
-      static now() { return window.__testNow; }
-    };
-    window.__testHidden = false;
-    Object.defineProperty(document,'hidden',{get:()=>window.__testHidden});
-  // Hold a minute before open, not 1ms, so real timers don't spin against a
-  // frozen browser wall clock. The pure scheduler fixtures cover every ±1ms.
-  }, {start:open-60000,todo:todoFixture});
+  const errors = [];
+  async function fixtureContext() {
+    const context = await browser.newContext({viewport:{width:1440,height:1050}});
+    context.on('page',p=>p.on('pageerror',error=>errors.push(error.message)));
+    await context.route('**/*', async route => {
+      const url = new URL(route.request().url());
+      if (url.origin !== origin) return route.fulfill({contentType:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><circle cx="25" cy="25" r="15" fill="#e8cb8c"/></svg>'});
+      if (url.pathname === '/data/events.json') return route.fulfill({status:failEvents ? 503 : 200,json:failEvents ? {} : canonical});
+      if (url.pathname === '/data/rotations.json') return route.fulfill({json:rotations});
+      if (url.pathname === '/data/featured.json') return route.fulfill({json:['red']});
+      if (url.pathname === '/data/i18n/en.json') return route.fulfill({json:{events:overlays,regions:englishRegions,categories:{},rotations:{tracks:{}}}});
+      return route.continue();
+    });
+    await context.addInitScript(({start,todo}) => {
+      try { if (localStorage.getItem('pogo-todo') === null) localStorage.setItem('pogo-todo',JSON.stringify(todo)); } catch { /* opaque initial document */ }
+      window.__testNow = start;
+      const RealDate = Date;
+      window.Date = class extends RealDate {
+        constructor(...args) { super(...(args.length ? args : [window.__testNow])); }
+        static now() { return window.__testNow; }
+      };
+      window.__testHidden = false;
+      Object.defineProperty(document,'hidden',{get:()=>window.__testHidden});
+      // Hold a minute before open, not 1ms, so real timers don't spin against a
+      // frozen browser wall clock. The pure scheduler fixtures cover every ±1ms.
+    }, {start:open-60000,todo:todoFixture});
+    return context;
+  }
+  const context = await fixtureContext();
   const page = await context.newPage(); page.setDefaultTimeout(10000);
   const session = await context.newCDPSession(page);
   await session.send('Emulation.setTimezoneOverride',{timezoneId:'Asia/Hong_Kong'});
-  const errors = []; context.on('page',p=>p.on('pageerror',error=>errors.push(error.message)));
   const ready = async p => { await p.waitForSelector('#calendar .cal-week'); await p.waitForFunction(()=>typeof reminders!=='undefined' && !!reminders && !!todoState); };
   const tick = async (p, time, eventName='pageshow') => p.evaluate(({time,eventName}) => {
     window.__testNow = time;
@@ -105,15 +112,241 @@ const deadline = setTimeout(async () => {
   const flag = async (p,id) => p.evaluate(async id=>{await reminders.star(id);await reminderScheduler.wake();},id);
   const view = (p,id) => p.evaluate(id=>({active:reminders.view(id).active,flagged:reminders.view(id).flagged,completed:reminders.view(id).completed,note:reminders.get(id)?.note}),id);
   const activeCopies = (p,id) => p.locator(`[data-reminder-event~="${id}"].reminder-active`).count();
+  const rect = async locator => {
+    const box=await locator.boundingBox(); assert(box,'target must be laid out'); return box;
+  };
+  const overlaps = (a,b) => a.x < b.x+b.width && a.x+a.width > b.x && a.y < b.y+b.height && a.y+a.height > b.y;
+  async function detailGeometry(p) {
+    const tag=await rect(p.locator('#detail-body .detail-cat')), star=await rect(p.locator('.detail-reminder-actions .reminder-star'));
+    const done=await rect(p.locator('.detail-reminder-actions .reminder-done'));
+    assert(Math.abs(tag.y+tag.height/2-star.y-star.height/2)<1,'tag and star share a row');
+    assert(Math.abs(star.y-done.y)<1,'both icons share a row');
+    assert.equal(await p.locator('.detail-reminder-actions .reminder-star').innerText(),'⭐');
+    assert.equal(await p.locator('.detail-reminder-actions .reminder-done').innerText(),'✔');
+    for (const button of [star,done]) {
+      assert(button.width>=44 && button.height>=44,'keep touch targets');
+      for (const other of [tag,await rect(p.locator('#detail-close')),await rect(p.locator('#lang-toggle'))])
+        assert(!overlaps(button,other),'icons cannot overlap category, close or language targets');
+    }
+    const image=p.locator('#detail-body .detail-img');
+    if(await image.count()) assert((await rect(image)).y>=star.y+star.height,'image stays below the compact toolbar');
+    assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+  }
+  async function desktopLayout(width) {
+    step='desktop-layout-'+width;
+    await page.setViewportSize({width,height:1050}); await page.evaluate(()=>window.scrollTo(0,0));
+    await page.locator('#cal-prev').focus(); await page.mouse.move(20,160);
+    const body=page.locator('.reminder-panel-body'), entry=page.locator('#reminder-panel>summary');
+    assert.equal(await body.isVisible(),false,'desktop defaults to the small edge tab');
+    const before=await rect(page.locator('#calendar'));
+    const columns=()=>page.locator('.cal-week').first().locator('.cal-day').evaluateAll(nodes=>nodes.map(n=>n.getBoundingClientRect().toJSON()));
+    const columnsBefore=await columns();
+    assert.equal(await entry.getAttribute('aria-label'),'本地活动提醒 (15)','entry exposes the synchronized count to assistive tech');
+    const available=await page.locator('main').evaluate(n=>{const r=n.getBoundingClientRect(),s=getComputedStyle(n);return {x:r.x+parseFloat(s.paddingLeft),width:r.width-parseFloat(s.paddingLeft)-parseFloat(s.paddingRight)};});
+    assert(Math.abs(before.width-available.width)<1,'calendar must use the entire original container width (no reserved column)');
+    assert(Math.abs(before.x-available.x)<1,'calendar stays at the original container left edge');
+    const tab=await rect(entry); assert(tab.width<110,'no full-width desktop title bar');
+    assert(Math.abs(tab.x+tab.width-width)<1,'tab touches the viewport right edge');
+    // The invisible part of the fixed sidebar must not intercept calendar input.
+    assert.equal(await page.evaluate(({x,y})=>!!document.elementFromPoint(x,y)?.closest('#calendar'),{x:before.x+before.width-45,y:before.y+90}),true);
+    await page.screenshot({path:path.join(artifacts,`desktop-${width}-collapsed.png`)});
+    await entry.hover(); assert.equal(await body.isVisible(),true,'entry hover opens panel');
+    const panel=await rect(body); assert(panel.y+panel.height<=1050,'long list is bounded by viewport');
+    const firstButton=page.locator('#reminder-live .reminder-open').first(), first=await rect(firstButton);
+    await hoverPath(page,{x:first.x+8,y:first.y+first.height/2},'long list: title left edge');
+    await entry.hover();
+    const sidebar=await rect(page.locator('.reminder-sidebar'));
+    await hoverPath(page,{x:sidebar.x+8,y:sidebar.y+8},'long list: transparent upper-left');
+    await hoverPath(page,{x:first.x+8,y:first.y+first.height/2},'long list: upper-left to title');
+    await page.mouse.click(first.x+8,first.y+first.height/2);
+    assert.equal(await page.locator('.detail-reminder').getAttribute('data-id'),await firstButton.evaluate(n=>n.closest('[data-id]').dataset.id),'the activity is actually clickable');
+    await page.locator('#detail-close').click(); await frames(page);
+    await page.locator('#cal-prev').focus(); await page.mouse.move(20,160);
+    await entry.hover(); await hoverPath(page,{x:first.x+8,y:first.y+first.height/2},'long list: return for scrolling');
+    assert.equal(await body.isVisible(),true,'crossing from entry to list must not collapse it');
+    assert.deepEqual(await rect(page.locator('#calendar')),before,'hover expansion must not resize or move the calendar');
+    assert.deepEqual(await columns(),columnsBefore,'all seven columns keep their widths and positions');
+    const scrollBefore=await page.evaluate(()=>scrollY);
+    await page.mouse.wheel(0,440); await page.waitForFunction(()=>document.querySelector('.reminder-panel-body').scrollTop>0);
+    assert.equal(await page.evaluate(()=>scrollY),scrollBefore,'list scroll is internal');
+    assert.equal(await body.isVisible(),true,'scrolling must not close panel');
+    assert.equal(await body.evaluate(n=>n.scrollWidth<=n.clientWidth),true,'no horizontal scrollbar inside panel');
+    await page.screenshot({path:path.join(artifacts,`desktop-${width}-expanded.png`)});
+    await page.mouse.move(20,160); assert.equal(await body.isVisible(),false,'leaving the region closes panel');
+    assert.deepEqual(await rect(page.locator('#calendar')),before,'collapse must not move the calendar either');
+    await page.locator('.cal-main').locator('button,a[href]').last().focus(); await page.keyboard.press('Tab');
+    assert.equal(await entry.evaluate(n=>document.activeElement===n),true,'edge entry is in native tab order');
+    assert.equal(await body.isVisible(),true,'keyboard focus opens panel');
+    await page.keyboard.press('Tab');
+    assert.equal(await body.evaluate(n=>n.contains(document.activeElement)),true,'Tab enters panel actions');
+    await page.mouse.move(20,160); assert.equal(await body.isVisible(),true,'focus keeps the panel open after mouse leaves');
+    await page.locator('#cal-prev').focus(); assert.equal(await body.isVisible(),false,'focus and mouse both leaving closes it');
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'no horizontal overflow');
+  }
+  const frames = p => p.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  async function hoverPath(p, target, label) {
+    await p.evaluate(()=>{
+      window.__hoverPath=[];
+      window.__trackHover=()=>window.__hoverPath.push(document.querySelector('#reminder-panel').open);
+      document.addEventListener('pointermove',window.__trackHover);
+    });
+    await p.mouse.move(target.x,target.y,{steps:24}); await frames(p);
+    const samples=await p.evaluate(()=>{
+      document.removeEventListener('pointermove',window.__trackHover);return window.__hoverPath;
+    });
+    assert.equal(samples.length,24,label+': observe every real pointer step');
+    assert(samples.every(Boolean),label+': panel stays open throughout the diagonal path');
+    assert.equal(await p.locator('#reminder-panel').evaluate(n=>n.open),true,label+': stays open at destination');
+  }
+  async function shortListHoverRegressions() {
+    for(const ids of [['green'],['green','blue','red']]) {
+      step='short-list-hover-'+ids.length;
+      const isolated=await fixtureContext(), p=await isolated.newPage(); p.setDefaultTimeout(10000);
+      await p.emulateMedia({reducedMotion:'reduce'});
+      await p.goto(origin); await ready(p); await tick(p,open+60000);
+      for(const id of ids) await flag(p,id);
+      assert.equal(await p.locator('.reminder-item').count(),ids.length,'fresh context has only the intended reminders');
+      const entry=p.locator('#reminder-panel>summary'), body=p.locator('.reminder-panel-body');
+      for(const destination of ['title-left','upper-left']) {
+        await p.locator('#cal-prev').focus(); await p.mouse.move(20,160); await frames(p);
+        assert.equal(await body.isVisible(),false,'outside focus and mouse collapse the panel');
+        const before=await rect(p.locator('#calendar')), sidebar=await rect(p.locator('.reminder-sidebar'));
+        const gap={x:sidebar.x+8,y:sidebar.y+8};
+        assert.equal(await p.evaluate(({x,y})=>!!document.elementFromPoint(x,y)?.closest('.reminder-sidebar'),gap),false,'collapsed transparent entry area is click-through');
+        assert.equal(await p.evaluate(({x,y})=>!!document.elementFromPoint(x,y)?.closest('#calendar'),{x:before.x+before.width-45,y:before.y+90}),true,'collapsed sidebar does not block the calendar');
+        const tab=await rect(entry);
+        await p.mouse.move(tab.x+tab.width/2,tab.y+tab.height/2); await frames(p);
+        assert.equal(await p.locator('.reminder-sidebar').evaluate(n=>n.contains(document.activeElement)),false,'hover path has no focus safety net');
+        const firstButton=p.locator('#reminder-live .reminder-open').first(), first=await rect(firstButton);
+        const title={x:first.x+8,y:first.y+first.height/2};
+        if(destination==='upper-left') {
+          await hoverPath(p,gap,ids.length+' reminders: transparent upper-left');
+          assert.equal(await p.evaluate(({x,y})=>!!document.elementFromPoint(x,y)?.closest('.reminder-sidebar'),gap),true,'expanded container closes the hit-test gap');
+        }
+        await hoverPath(p,title,ids.length+' reminders: '+destination+' to title left edge');
+        assert.deepEqual(await rect(p.locator('#calendar')),before,'opening never changes calendar geometry');
+        await p.mouse.click(title.x,title.y);
+        assert.equal(await p.locator('.detail-reminder').getAttribute('data-id'),await firstButton.evaluate(n=>n.closest('[data-id]').dataset.id),'diagonal entry can really open the activity');
+        await p.locator('#detail-close').click(); await frames(p);
+        await p.mouse.move(20,160); await p.locator('#cal-prev').focus(); await frames(p);
+        assert.equal(await body.isVisible(),false,'mouse and focus both leaving still close the panel');
+        assert.deepEqual(await rect(p.locator('#calendar')),before,'closing never changes calendar geometry');
+        assert.equal(await p.evaluate(({x,y})=>!!document.elementFromPoint(x,y)?.closest('.reminder-sidebar'),gap),false,'transparent area becomes click-through again');
+      }
+      await isolated.close();
+    }
+  }
+  async function sidebarFocusRegressions() {
+    step='sidebar-focus-return';
+    const isolated=await fixtureContext(), p=await isolated.newPage(); p.setDefaultTimeout(10000);
+    await p.emulateMedia({reducedMotion:'reduce'});
+    await p.goto(origin); await ready(p); await tick(p,open+60000); await flag(p,'green');
+    const entry=p.locator('#reminder-panel>summary'), source=p.locator('.reminder-item[data-id="green"] .reminder-open');
+    const openFromSidebar=async()=>{
+      await p.mouse.move(20,160);
+      await p.locator('.cal-main').locator('button,a[href]').last().focus();
+      await p.keyboard.press('Tab');
+      assert.equal(await entry.evaluate(n=>n===document.activeElement),true,'Tab reaches the sidebar entry');
+      await p.keyboard.press('Tab');
+      assert.equal(await source.evaluate(n=>n===document.activeElement),true,'Tab reaches the original activity button');
+      await source.evaluate(n=>window.__returnButton=n);
+      await p.keyboard.press('Enter'); await frames(p);
+      assert.equal(await p.locator('#event-detail').evaluate(n=>!n.hidden && n.contains(document.activeElement)),true);
+      assert.equal(await p.locator('#reminder-panel').evaluate(n=>n.open),false,'focus entering detail collapses the sidebar');
+    };
+    const closeDetail=async method=>{
+      if(method==='Escape') await p.keyboard.press('Escape');
+      else await p.locator('#detail-close').click();
+      await frames(p);
+      assert.equal(await p.locator('#event-detail').isVisible(),false);
+    };
+    const assertReturned=async()=>{
+      assert.equal(await source.evaluate(n=>n===window.__returnButton && n===document.activeElement),true,'close restores the same sidebar activity button, not body');
+      assert.equal(await source.isVisible(),true,'returned button is visible');
+      assert.equal(await p.locator('#reminder-panel').evaluate(n=>n.open),true);
+      await p.keyboard.press('Tab');
+      assert.equal(await p.locator('.reminder-item[data-id="green"] .reminder-star').evaluate(n=>n===document.activeElement),true,'Tab continues through sidebar actions');
+    };
+    for(const method of ['Escape','button']) {
+      await openFromSidebar(); await closeDetail(method); await assertReturned();
+    }
+    await openFromSidebar();
+    await p.locator('.detail-reminder-actions .reminder-done').click(); await settle(p);
+    assert.equal(await p.locator('#reminder-completed').evaluate(n=>n.open),false,'completed group starts collapsed');
+    assert.equal(await p.locator('#reminder-completed .reminder-open').evaluate(n=>n===window.__returnButton),true,'completion moves rather than replaces the source');
+    await closeDetail('Escape'); await assertReturned();
+    assert.equal(await p.locator('#reminder-completed').evaluate(n=>n.open),true,'restore also opens the completed ancestor');
+    await p.evaluate(async()=>{await reminders.complete('green',false,reminders.get('green').token);await reminderScheduler.wake();});
+    for(const reason of ['unstar','storage','expiry']) {
+      step='sidebar-focus-fallback-'+reason;
+      await tick(p,open+60000); await flag(p,'green'); await openFromSidebar();
+      if(reason==='unstar') {
+        await p.locator('.detail-reminder-actions .reminder-star').click(); await settle(p);
+      } else if(reason==='storage') {
+        const other=await isolated.newPage(); await other.emulateMedia({reducedMotion:'reduce'});
+        await other.goto(origin); await ready(other); await tick(other,open+60000);
+        await other.evaluate(async()=>{await reminders.remove('green',reminders.get('green').token);await reminderScheduler.wake();});
+        await p.waitForFunction(()=>!document.querySelector('.reminder-item[data-id="green"]'));
+        await other.close();
+      } else await tick(p,close);
+      assert.equal(await source.count(),0,'the removed source is not retained in the sidebar');
+      await closeDetail(reason==='storage'?'button':'Escape');
+      assert.equal(await entry.evaluate(n=>n===document.activeElement),true,reason+' falls back to the visible entry');
+      assert.equal(await entry.isVisible(),true);
+      assert.equal(await p.evaluate(prefix=>localStorage.getItem(prefix+'green'),prefix),null,'focus recovery never recreates a record');
+      assert.equal(await source.count(),0);
+    }
+    step='calendar-focus-return'; await tick(p,open+60000);
+    await p.mouse.move(20,160); await p.locator('#cal-prev').focus();
+    const calendar=p.locator('.cal-bar[data-reminder-event="green"]');
+    await calendar.click(); await calendar.evaluate(n=>window.__calendarButton=n);
+    await closeDetail('Escape');
+    assert.equal(await calendar.evaluate(n=>n===window.__calendarButton && n===document.activeElement),true,'ordinary calendar return remains unchanged');
+    assert.equal(await p.locator('#reminder-panel').evaluate(n=>n.open),false,'calendar return does not expand reminders');
+    await flag(p,'green');
+    for(const origin of ['sidebar','calendar']) {
+      step='focus-return-after-view-switch-'+origin;
+      if(origin==='sidebar') await openFromSidebar(); else await calendar.click();
+      // A main-tab keyboard activation has no outside-mousedown dismissal.
+      const tab=p.locator('#main-tabs [data-view="todo"]');
+      await tab.focus(); await p.keyboard.press('Enter');
+      assert.equal(await p.locator('#event-detail').evaluate(n=>!n.hidden),true,'view switch leaves the drawer logically open inside the now-hidden calendar');
+      await closeDetail('Escape');
+      assert.equal(await p.locator('#view-todo').evaluate(n=>n.classList.contains('active')),true,'closing never switches back to the calendar');
+      assert.equal(await tab.evaluate(n=>n===document.activeElement),true,'hidden-view source falls back to the current main tab');
+      assert.equal(await entry.isVisible(),false);
+      await p.locator('#main-tabs [data-view="calendar"]').click();
+    }
+    await isolated.close();
+  }
+  await shortListHoverRegressions();
+  await sidebarFocusRegressions();
   await page.goto(origin); await ready(page);
   assert.equal(await page.locator('[data-init-error]').count(),0);
+  assert.equal(await page.locator('.reminder-panel-body').isVisible(),false,'desktop initially collapsed');
   const todoBefore = await page.evaluate(()=>localStorage.getItem('pogo-todo'));
   assert.deepEqual(JSON.parse(todoBefore),todoFixture,'existing multi-account TODO must not be reseeded');
   const zhRegionText = await page.locator('[data-ai-region]').allTextContents();
   await page.locator('.cal-bar[data-reminder-event="green"]').click();
-  await page.locator('.detail-reminder .reminder-star').click();
+  await detailGeometry(page);
+  assert.equal(await page.locator('.reminder-note-editor').isVisible(),false,'unstarred detail has no empty note card');
+  await page.locator('.detail-reminder-actions .reminder-star').hover();
+  assert.equal(await page.locator('#reminder-star-tip').innerText(),'标星');
+  assert.equal(await page.locator('#reminder-star-tip').isVisible(),true);
+  await page.locator('.detail-reminder-actions .reminder-star').focus(); await page.keyboard.press('Tab');
+  assert.equal(await page.locator('#reminder-done-tip').innerText(),'请先标星');
+  assert.equal(await page.locator('#reminder-done-tip').isVisible(),true,'disabled reason is focus-accessible');
+  assert.equal(await page.locator('#reminder-star-tip').isVisible(),false,'only one tooltip at a time');
+  await page.keyboard.press('Enter'); await settle(page);
+  assert.equal((await view(page,'green')).flagged,false,'unavailable completion cannot bypass the star gate');
+  await page.locator('.detail-reminder-actions .reminder-star').click();
   await settle(page);
-  assert.equal(await page.locator('.detail-reminder .reminder-done').isDisabled(),true);
+  assert.equal(await page.locator('.reminder-note-editor').isVisible(),true);
+  await page.locator('.detail-reminder-actions .reminder-star').focus(); await page.keyboard.press('Tab');
+  assert.equal(await page.locator('#reminder-done-tip').innerText(),'尚未开始');
+  await page.keyboard.press('Space'); await settle(page);
+  assert.equal((await view(page,'green')).completed,false,'focusable disabled control cannot bypass the time gate');
+  assert.equal(await page.locator('.detail-reminder-actions .reminder-done').isDisabled(),true);
   assert.equal(await activeCopies(page,'green'),0);
   assert.match(await page.locator('.detail-reminder .reminder-time').innerText(),/提醒开始后才能完成/);
   const input = page.locator('.detail-reminder textarea');
@@ -125,13 +358,17 @@ const deadline = setTimeout(async () => {
   await tick(page,open);
   assert((await activeCopies(page,'green'))>0);
   assert.equal(await page.locator('#reminder-live .reminder-item[data-id="green"].reminder-active').count(),1);
-  assert.equal(await page.locator('.detail-reminder .reminder-done').isDisabled(),false);
+  assert.equal(await page.locator('.detail-reminder-actions .reminder-done').isDisabled(),false);
   assert.match(await page.locator('.detail-reminder .reminder-time').innerText(),/全球已开始[\s\S]*本地还有[\s\S]*UTC−12[\s\S]*GMT\+8[\s\S]*Asia\/Hong_Kong/);
-  await page.locator('.detail-reminder .reminder-done').click();
+  await page.locator('.detail-reminder-actions .reminder-done').click();
   await settle(page);
   assert.equal(await activeCopies(page,'green'),0); assert.equal((await view(page,'green')).completed,true);
+  assert.equal(await page.locator('.detail-reminder-actions .reminder-done').getAttribute('aria-pressed'),'true');
+  assert.equal(await page.locator('.detail-reminder-actions .reminder-done').getAttribute('aria-label'),'撤销完成');
+  assert.equal(await input.inputValue(),note,'completion must not delete the note');
   await page.reload(); await ready(page); await tick(page,open+1);
   assert.equal((await view(page,'green')).completed,true); assert.equal(await activeCopies(page,'green'),0);
+  await page.locator('#reminder-panel>summary').hover();
   await page.locator('#reminder-completed>summary').click();
   await page.locator('#reminder-completed .reminder-done').click();
   await settle(page);
@@ -158,10 +395,58 @@ const deadline = setTimeout(async () => {
   await formsBadge.first().click();
   assert.equal(await page.locator('.detail-reminder').getAttribute('data-id'),'raid-forms');
   assert.equal(await page.locator('#detail-body .mon-row img').count(),2);
-  await page.locator('.detail-reminder .reminder-star').click();
+  await page.locator('.detail-reminder-actions .reminder-star').click();
   await settle(page);
   assert.equal((await view(page,'raid-forms')).flagged,true);
-  assert.equal(await page.locator('.detail-reminder .reminder-done').isDisabled(),true);
+  assert.equal(await page.locator('.detail-reminder-actions .reminder-done').isDisabled(),true);
+  await page.locator('#detail-close').click();
+  await desktopLayout(1440); await desktopLayout(1920);
+  await page.setViewportSize({width:1440,height:1050});
+  // Real device-capability changes must not leave a hover-only drawer on a touch desktop.
+  // Chromium's CDP cannot restore a fine pointer after disabling touch (it
+  // reports pointer:none), so isolate this real capability switch to its own page.
+  const touchPage=await context.newPage(); await touchPage.emulateMedia({reducedMotion:'reduce'});
+  await touchPage.goto(origin);await ready(touchPage);await tick(touchPage,open+1);
+  const touchSession=await context.newCDPSession(touchPage);
+  await touchPage.locator('#reminder-panel>summary').hover();
+  await touchSession.send('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:1});
+  await touchPage.waitForFunction(()=>matchMedia('(hover:none) and (pointer:coarse)').matches);
+  await touchPage.waitForFunction(()=>!document.querySelector('#reminder-panel').open);
+  assert.equal(await touchPage.locator('.reminder-panel-body').isVisible(),false,'capability switch resets open state');
+  const tap=async locator=>{const r=await rect(locator);await touchSession.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:r.x+r.width/2,y:r.y+r.height/2}]});await touchSession.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});};
+  await tap(touchPage.locator('#reminder-panel>summary')); assert.equal(await touchPage.locator('.reminder-panel-body').isVisible(),true,'large touch device can tap to expand');
+  await tap(touchPage.locator('#reminder-panel>summary')); assert.equal(await touchPage.locator('.reminder-panel-body').isVisible(),false,'touch device can tap to collapse');
+  await tap(touchPage.locator('#reminder-panel>summary'));
+  await touchPage.setViewportSize({width:390,height:844});
+  await touchPage.waitForFunction(()=>!document.querySelector('#reminder-panel').open);
+  await tap(touchPage.locator('#reminder-panel>summary'));
+  assert.equal(await touchPage.locator('.reminder-sidebar').evaluate(n=>getComputedStyle(n).position),'static');
+  const touchLayout=await touchPage.evaluate(()=>({panel:document.querySelector('.reminder-sidebar').getBoundingClientRect().bottom,calendar:document.querySelector('#calendar').getBoundingClientRect().top}));
+  assert(touchLayout.calendar>touchLayout.panel,'touch phone panel stays in flow');
+  await touchPage.screenshot({path:path.join(artifacts,'phone-touch-panel.png')});
+  await tap(touchPage.locator('.reminder-item[data-id="green"] .reminder-open'));
+  await detailGeometry(touchPage);
+  await tap(touchPage.locator('.detail-reminder-actions .reminder-done'));await settle(touchPage);
+  assert.equal((await view(touchPage,'green')).completed,true,'real touch completion works');
+  await tap(touchPage.locator('.detail-reminder-actions .reminder-done'));await settle(touchPage);
+  assert.equal((await view(touchPage,'green')).completed,false,'real touch undo works');
+  await tap(touchPage.locator('#detail-close'));
+  await touchPage.evaluate(()=>openDetail(state.events.find(e=>e.id==='unknown')));
+  await tap(touchPage.locator('.detail-reminder-actions .reminder-done'));
+  assert.equal(await touchPage.locator('#reminder-done-tip').isVisible(),true,'touch exposes the unavailable reason without hover');
+  assert.equal(await touchPage.locator('#reminder-done-tip').innerText(),'开始时间待确认');
+  assert.equal((await view(touchPage,'unknown')).completed,false);
+  await tap(touchPage.locator('#detail-close'));
+  await touchPage.setViewportSize({width:1440,height:1050});
+  await touchPage.waitForFunction(()=>!document.querySelector('#reminder-panel').open);
+  await touchPage.close();
+  await page.locator('#cal-prev').focus(); await page.mouse.move(20,160);
+  await page.evaluate(()=>openDetail(state.events.find(e=>e.id==='unknown')));
+  await page.locator('.detail-reminder-actions .reminder-star').focus(); await page.keyboard.press('Tab');
+  assert.equal(await page.locator('#reminder-done-tip').innerText(),'开始时间待确认');
+  assert.equal(await page.locator('#reminder-done-tip').isVisible(),true);
+  await page.keyboard.press('Enter');await settle(page);
+  assert.equal((await view(page,'unknown')).completed,false,'unknown start still cannot complete');
   await page.locator('#detail-close').click();
   const cardCount = await page.locator('.reminder-item').count();
   await page.locator('#cal-next').click(); assert.equal(await page.locator('.reminder-item').count(),cardCount);
@@ -185,10 +470,26 @@ const deadline = setTimeout(async () => {
   await page.locator('.cal-bar[data-reminder-event="green"]').click();
   await input.focus(); await input.fill('中文 composing');
   await input.dispatchEvent('compositionstart');
-  await page.evaluate(()=>window.__editorNode=document.querySelector('.detail-reminder textarea'));
+  await page.evaluate(()=>{window.__editorNode=document.querySelector('.detail-reminder textarea');window.__editorNode.setSelectionRange(2,4);});
+  for (const locale of ['en','zh-CN']) {
+    await page.evaluate(locale=>{state.locale=locale;applyLocale();},locale);
+    assert.equal(await input.evaluate(n=>n===window.__editorNode && n===document.activeElement),true,'locale reconstruction retains the focused IME editor');
+    assert.deepEqual(await input.evaluate(n=>[n.selectionStart,n.selectionEnd]),[2,4],'locale reconstruction retains caret/selection');
+    assert.equal(await input.inputValue(),'中文 composing');
+  }
   await page.locator('#lang-toggle').click();
   assert.equal(await page.evaluate(()=>window.__editorNode===document.querySelector('.detail-reminder textarea')),true);
   assert.equal(await input.inputValue(),'中文 composing');
+  await detailGeometry(page);
+  await page.locator('.detail-reminder-actions .reminder-star').hover();
+  assert.equal(await page.locator('#reminder-star-tip').innerText(),'Unstar');
+  await page.locator('.detail-reminder-actions .reminder-star').focus(); await page.keyboard.press('Tab');
+  assert.equal(await page.locator('#reminder-done-tip').innerText(),'Complete');
+  assert.equal(await page.locator('#reminder-done-tip').isVisible(),true);
+  assert.equal(await page.locator('#reminder-star-tip').isVisible(),false,'keyboard hint is not overlapped by a stale hover hint');
+  await page.screenshot({path:path.join(artifacts,'desktop-detail-icons.png')});
+  assert.equal(await page.evaluate(()=>Object.hasOwn(state.ui.en,'reminder.intro') || Object.hasOwn(state.ui['zh-CN'],'reminder.intro')),false);
+  assert.equal(await page.locator('.reminder-intro,.reminder-title').count(),0);
   await input.dispatchEvent('compositionend'); await input.blur(); await settle(page);
   assert.equal((await view(page,'green')).note,'中文 composing');
   assert.match(await page.locator('.detail-reminder .reminder-time').innerText(),/Started globally/);
@@ -206,12 +507,13 @@ const deadline = setTimeout(async () => {
   assert.deepEqual(await input.evaluate(n=>[n.selectionStart,n.selectionEnd]),[2,4]);
   assert.equal(await page.locator('#event-detail').evaluate(n=>n.scrollTop),scroll);
   // Explicit cancellation warns about note deletion; rejecting retains it.
-  page.once('dialog',d=>d.dismiss()); await page.locator('.detail-reminder .reminder-star').click();
+  page.once('dialog',d=>d.dismiss()); await page.locator('.detail-reminder-actions .reminder-star').click();
   await settle(page);
   assert.equal((await view(page,'green')).flagged,true);
   await page.locator('#detail-close').click();
   // Viewer IANA changes do not change reminder boundaries.
   await session.send('Emulation.setTimezoneOverride',{timezoneId:'America/Los_Angeles'}); await tick(page,open+1);
+  await page.locator('#reminder-panel>summary').hover();
   assert.match(await page.locator('.reminder-item[data-id="green"] .reminder-time').innerText(),/America\/Los_Angeles/);
   assert.equal((await view(page,'green')).active,true);
   await session.send('Emulation.setTimezoneOverride',{timezoneId:'Asia/Hong_Kong'});
@@ -222,8 +524,11 @@ const deadline = setTimeout(async () => {
   await page.screenshot({path:path.join(artifacts,'reduced-motion.png'),fullPage:true});
   await page.emulateMedia({reducedMotion:'no-preference'});
   // Narrow-screen panel expands in flow, track chooser/fallback remains safe, controls clickable.
+  await page.locator('#reminder-panel>summary').hover(); // cross breakpoint while actually expanded
   await page.setViewportSize({width:390,height:844});
-  await page.locator('#reminder-panel').evaluate(n=>n.open=false); await page.evaluate(()=>window.scrollTo(0,0));
+  await page.waitForFunction(()=>!document.querySelector('#reminder-panel').open);
+  assert.equal(await page.locator('.reminder-panel-body').isVisible(),false,'crossing to mobile resets the desktop panel');
+  await page.evaluate(()=>window.scrollTo(0,0));
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
   await page.screenshot({path:path.join(artifacts,'phone-calendar-0.png'),fullPage:true});
   await page.waitForTimeout(3200); await page.screenshot({path:path.join(artifacts,'phone-calendar-3.png'),fullPage:true});
@@ -236,9 +541,29 @@ const deadline = setTimeout(async () => {
   assert.equal(await page.locator('.detail-reminder').getAttribute('data-id'),'raid-forms');
   assert.equal(await page.locator('#detail-body .mon-row img').count(),2);
   await page.locator('#detail-close').click();
-  await page.evaluate(()=>window.scrollTo(0,0)); await page.locator('#reminder-panel>summary').click();
+  await page.locator('.cal-bar[data-reminder-event="green"]').click();
+  await detailGeometry(page);
+  await page.screenshot({path:path.join(artifacts,'phone-detail-icons.png')});
+  await page.locator('.detail-reminder-actions .reminder-done').click(); await settle(page);
+  assert.equal((await view(page,'green')).completed,true);
+  assert.equal(await input.inputValue(),'中文 composing','mobile completion retains notes');
+  await page.locator('.detail-reminder-actions .reminder-done').click(); await settle(page);
+  assert.equal((await view(page,'green')).completed,false,'mobile can undo');
+  await page.locator('#lang-toggle').click(); await detailGeometry(page);
+  assert.equal(await page.locator('.detail-reminder-actions .reminder-star').getAttribute('aria-label'),'取消标星');
+  await page.locator('#lang-toggle').click();
+  await input.focus(); await input.evaluate(n=>n.setSelectionRange(2,4));
+  await page.locator('#event-detail').evaluate(n=>n.scrollTop=180);
+  assert((await page.locator('#event-detail').evaluate(n=>n.scrollTop))>0,'phone detail still scrolls');
+  await page.screenshot({path:path.join(artifacts,'phone-detail-scrolled.png')});
+  await page.locator('#detail-close').click(); assert.equal(await page.locator('#event-detail').isVisible(),false,'phone close remains clickable after scrolling');
+  await page.evaluate(()=>window.scrollTo(0,0));
+  const collapsedCalendar=await rect(page.locator('#calendar'));
+  await page.locator('#reminder-panel>summary').click();
   const layout = await page.evaluate(()=>({panel:document.querySelector('.reminder-sidebar').getBoundingClientRect().bottom,calendar:document.querySelector('#calendar').getBoundingClientRect().top}));
   assert(layout.calendar>layout.panel,'expanded panel must push the dates down rather than cover them');
+  assert(layout.calendar>collapsedCalendar.y+100,'mobile expansion really changes document flow');
+  assert.equal(await page.locator('.reminder-panel-body').evaluate(n=>n.scrollWidth<=n.clientWidth),true,'mobile list has no horizontal scrollbar');
   await page.screenshot({path:path.join(artifacts,'phone-panel-0.png')});
   await page.evaluate(()=>window.scrollBy(0,250));
   assert.equal(await page.locator('.reminder-sidebar').evaluate(n=>getComputedStyle(n).position),'static','expanded mobile panel must not stick over dates');
@@ -267,14 +592,17 @@ const deadline = setTimeout(async () => {
   assert.equal(await page.evaluate(prefix=>localStorage.getItem(prefix+'green'),prefix),null);
   assert.equal(await page.locator('.reminder-item[data-id="green"]').count(),0);
   await page.locator('.cal-bar[data-reminder-event="green"]').click();
-  assert.equal(await page.locator('.detail-reminder .reminder-star').isDisabled(),true);
+  assert.equal(await page.locator('.detail-reminder-actions .reminder-star').isDisabled(),true);
   await page.locator('#detail-close').click();
   step = 'storage-sync';
   // Visual cycles above are already measured. Keep multi-page logic fixtures
   // static on the sandbox's single CPU; this does not change their active classes.
   await page.emulateMedia({reducedMotion:'reduce'});
   // Same-origin storage events: delete while another tab has a pending note, and no whole-table loss.
-  await page.setViewportSize({width:1440,height:1050}); await tick(page,open+1);
+  await page.setViewportSize({width:1440,height:1050});
+  await page.waitForFunction(()=>!document.querySelector('#reminder-panel').open);
+  assert.equal(await page.locator('.reminder-panel-body').isVisible(),false,'mobile-to-desktop transition resets the in-flow open state');
+  await tick(page,open+1);
   await flag(page,'green');
   const other = await context.newPage(); await other.emulateMedia({reducedMotion:'reduce'}); await other.goto(origin); await ready(other); await tick(other,open+1);
   assert.equal((await view(other,'green')).flagged,true);
@@ -363,6 +691,7 @@ const deadline = setTimeout(async () => {
   await unsupported.addInitScript(()=>Object.defineProperty(navigator,'locks',{value:undefined}));
   await unsupported.goto(origin); await ready(unsupported);
   assert.equal((await unsupported.evaluate(()=>reminders.star('green'))).ok,false);
+  await unsupported.locator('#reminder-panel>summary').hover();
   assert.match(await unsupported.locator('#reminder-notice').innerText(),/Web Locks/);
   assert.equal(await unsupported.evaluate(prefix=>localStorage.getItem(prefix+'green'),prefix),null);
   await unsupported.close();
@@ -405,10 +734,11 @@ const deadline = setTimeout(async () => {
           return manager.request(name,options,callback);
         }}});
       },prefix);
-      await a.locator(`.detail-reminder .reminder-${kind}`).click();
+      await a.locator(`.detail-reminder-actions .reminder-${kind}`).click();
       await a.waitForFunction(()=>window.__gateHeld && window.__mutationQueued);
       assert.equal(await a.evaluate(prefix=>{const r=JSON.parse(localStorage.getItem(prefix+'green'));return r?r.completedAt===null?'starred':'completed':'absent';},prefix),initial);
-      const selector=initial==='absent'?`.detail-reminder .reminder-${kind}`:`.reminder-item[data-id="green"] .reminder-${kind}`;
+      const selector=initial==='absent'?`.detail-reminder-actions .reminder-${kind}`:`.reminder-item[data-id="green"] .reminder-${kind}`;
+      if (initial!=='absent') await b.locator('#reminder-panel>summary').hover();
       await b.locator(selector).click(); await b.waitForFunction(()=>reminderActions.has('green'));
       await a.evaluate(()=>window.__releaseGate());
       for(const p of [a,b]) await p.waitForFunction(()=>reminderActions.size===0);
@@ -419,7 +749,7 @@ const deadline = setTimeout(async () => {
         assert.equal((await view(p,'green')).active,expected==='starred');
         assert.equal((await activeCopies(p,'green'))>0,expected==='starred');
         assert.equal(await p.locator('.reminder-item[data-id="green"].reminder-active').count(),expected==='starred'?1:0);
-        assert.equal(await p.locator('.detail-reminder .reminder-star').getAttribute('aria-pressed'),String(expected!=='absent'));
+        assert.equal(await p.locator('.detail-reminder-actions .reminder-star').getAttribute('aria-pressed'),String(expected!=='absent'));
       }
     }
     if(!process.env.REMINDER_BROWSER_CASE || process.env.REMINDER_BROWSER_CASE==='token') {
@@ -429,7 +759,7 @@ const deadline = setTimeout(async () => {
         await b.evaluate(prefix=>{window.__replaceHeld=false;window.__replaceGate=navigator.locks.request(prefix,async()=>{window.__replaceHeld=true;await new Promise(resolve=>window.__releaseReplace=resolve);});},prefix);
         await b.waitForFunction(()=>window.__replaceHeld);
         await b.evaluate(()=>{window.__removeOld=reminders.remove('green',reminders.get('green').token);window.__starNew=reminders.star('green');});
-        await a.locator(`.detail-reminder .reminder-${kind}`).click();await a.waitForFunction(()=>reminderActions.has('green'));
+        await a.locator(`.detail-reminder-actions .reminder-${kind}`).click();await a.waitForFunction(()=>reminderActions.has('green'));
         await b.evaluate(()=>window.__releaseReplace());await b.evaluate(()=>Promise.all([window.__removeOld,window.__starNew]));
         await a.waitForFunction(()=>reminderActions.size===0);await sync();
         const r=await a.evaluate(()=>reminders.get('green'));
@@ -440,11 +770,11 @@ const deadline = setTimeout(async () => {
       await a.evaluate(time=>{window.__testNow=time;return refreshReminderUi();},close-60000);
       await b.evaluate(prefix=>{window.__expiryHeld=false;window.__expiryGate=navigator.locks.request(prefix,async()=>{window.__expiryHeld=true;await new Promise(resolve=>window.__releaseExpiry=resolve);});},prefix);
       await b.waitForFunction(()=>window.__expiryHeld);
-      await a.locator('.detail-reminder .reminder-done').click();await a.waitForFunction(()=>reminderActions.has('green'));
+      await a.locator('.detail-reminder-actions .reminder-done').click();await a.waitForFunction(()=>reminderActions.has('green'));
       await a.evaluate(time=>window.__testNow=time,close);await b.evaluate(()=>window.__releaseExpiry());
       await a.waitForFunction(()=>reminderActions.size===0);await sync();
       assert.equal(await a.evaluate(prefix=>localStorage.getItem(prefix+'green'),prefix),null);
-      assert.equal(await a.locator('.detail-reminder .reminder-star').isDisabled(),true);
+      assert.equal(await a.locator('.detail-reminder-actions .reminder-star').isDisabled(),true);
       await a.evaluate(time=>window.__testNow=time,open+1);
     }
     if(!process.env.REMINDER_BROWSER_CASE || process.env.REMINDER_BROWSER_CASE==='draft') {
@@ -459,12 +789,12 @@ const deadline = setTimeout(async () => {
       assert.equal(await a.evaluate(prefix=>JSON.parse(localStorage.getItem(prefix+'green')).note,prefix),'saved note');
       await show(a,'blue'); await show(a,'green'); await a.evaluate(()=>reminderSaver.flushAll());
       assert.equal(await editor.inputValue(),'unsaved new draft','E→F→E must restore failed draft, not saved note');
-      await a.locator('.detail-reminder .reminder-star').click(); await a.waitForFunction(()=>reminderActions.size===0);
+      await a.locator('.detail-reminder-actions .reminder-star').click(); await a.waitForFunction(()=>reminderActions.size===0);
       assert.equal(await a.evaluate(()=>reminderSaver.pending('green').note),'unsaved new draft','rejected delete keeps draft');
       await a.evaluate(()=>Object.defineProperty(navigator,'locks',{configurable:true,value:window.__realUiLocks}));
       await editor.focus(); await editor.blur(); await a.evaluate(async()=>{await reminderSaver.flushAll();await refreshReminderUi();});
       assert.equal(await a.evaluate(prefix=>JSON.parse(localStorage.getItem(prefix+'green')).note,prefix),'unsaved new draft');
-      assert.match(await a.locator('.reminder-save').innerText(),/Autosaved/);
+      assert.match(await a.locator('.reminder-save').innerText(),/Saved/);
       // A real pending flight survives drawer reconstruction; blur must not create a second save.
       await a.evaluate(async()=>{await reminders.note('green','saved note',reminders.get('green').token);await refreshReminderUi();window.__noteCalls=0;const note=reminders.note;window.__baseNote=note;reminders.note=(...args)=>{window.__noteCalls++;return note(...args);};});
       await b.evaluate(prefix=>{window.__draftHeld=false;window.__draftGate=navigator.locks.request(prefix,async()=>{window.__draftHeld=true;await new Promise(resolve=>window.__releaseDraft=resolve);});},prefix);
@@ -474,7 +804,7 @@ const deadline = setTimeout(async () => {
       assert.equal(await editor.inputValue(),'flight new draft');
       await editor.focus(); await editor.blur();
       assert.equal(await a.evaluate(()=>window.__noteCalls),1,'drawer/blur reuses the single pending flight');
-      assert.doesNotMatch(await a.locator('.reminder-save').innerText(),/Autosaved/);
+      assert.doesNotMatch(await a.locator('.reminder-save').innerText(),/Saved/);
       await b.evaluate(()=>window.__releaseDraft());
       await a.evaluate(async()=>{await reminderSaver.flushAll();await refreshReminderUi();});
       assert.equal(await a.evaluate(prefix=>JSON.parse(localStorage.getItem(prefix+'green')).note,prefix),'flight new draft');
@@ -497,6 +827,7 @@ const deadline = setTimeout(async () => {
   await uiRegressions();
   await other.evaluate(async()=>{await reminders.note('blue','other-tab note',reminders.get('blue').token);await reminderScheduler.wake();});
   await page.waitForFunction(()=>reminders.get('blue')?.note==='other-tab note');
+  await page.locator('#reminder-panel>summary').hover();
   assert.equal(await page.locator('.reminder-item[data-id="blue"] .reminder-note-preview').innerText(),'other-tab note');
   await other.evaluate(()=>reminders.setEvents(state.events.map(e=>e.id==='blue' ? {...e,end:'2026-10-25T17:00:00'} : e),state.en.events));
   await page.waitForFunction(()=>reminders.get('blue')?.time.end==='2026-10-25T17:00:00');
@@ -521,6 +852,7 @@ const deadline = setTimeout(async () => {
     Storage.prototype.setItem=function(k,v){if(k.startsWith(prefix)) throw new DOMException('quota','QuotaExceededError');return real.call(this,k,v);};
   },prefix);
   await flag(page,'green'); assert.equal((await view(page,'green')).active,true);
+  await page.locator('#reminder-panel>summary').hover();
   assert.match(await page.locator('#reminder-notice').innerText(),/not persisted/);
   assert.equal(await page.evaluate(prefix=>localStorage.getItem(prefix+'green'),prefix),null);
   assert.equal(await page.evaluate(()=>localStorage.getItem('pogo-todo')),todoBefore);
@@ -528,6 +860,7 @@ const deadline = setTimeout(async () => {
   step = 'existing-views';
   // Existing TODO clicks, Atlas, World Clock and shiny/admin markers still operate.
   await page.locator('#main-tabs [data-view="todo"]').click();
+  assert.equal(await page.locator('.reminder-sidebar').isVisible(),false,'sidebar only exists in the calendar view');
   assert.equal(await page.locator('.todo-acct input').count(),2);
   assert.equal(await page.locator('.todo-acct input').nth(1).inputValue(),todoFixture.accounts[1].name);
   assert.equal(await page.locator('.todo-check').last().isChecked(),true);
@@ -542,6 +875,6 @@ const deadline = setTimeout(async () => {
   assert.equal(await page.locator('button button').count(),0);
   assert.deepEqual(errors,[]);
   assert.equal(JSON.stringify(events),originalEvents,'UI must not mutate canonical fixture');
-  fs.writeFileSync(path.join(artifacts,'result.json'),JSON.stringify({status:'PASS',viewports:['1440x1050','390x844'],cycles:'desktop >6s / mobile calendar+sidebar >6s',pageErrors:errors},null,2)+'\n');
-  console.log('test-event-reminders-browser: PASS (Chromium desktop/390px, aurora cycles+geometry, all calendar entrances, completion/reload/locale/IME/focus, hidden +N, fallback, same-direction UI clicks/stale commands, failed/in-flight drawer drafts, real same-origin Web Locks contention/holder-close/unsupported, storage sync, expiry/failure/retention, TODO/Atlas/Clock)');
+  fs.writeFileSync(path.join(artifacts,'result.json'),JSON.stringify({status:'PASS',viewports:['1440x1050','1920x1050','390x844'],cycles:'desktop >6s / mobile calendar+sidebar >6s',pageErrors:errors},null,2)+'\n');
+  console.log('test-event-reminders-browser: PASS (Chromium 1440/1920/390px, 1/3/long-list diagonal hover+hit-testing, sidebar focus return/completed/deleted/expired/view-switch fallback, full-width hover/keyboard/touch panel+breakpoints, compact accessible icons, aurora cycles+geometry, all calendar entrances, completion/reload/locale/IME/focus, hidden +N, fallback, same-direction UI clicks/stale commands, failed/in-flight drawer drafts, real same-origin Web Locks contention/holder-close/unsupported, storage sync, expiry/failure/retention, TODO/Atlas/Clock)');
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(async()=>{clearTimeout(deadline);if(browser) await browser.close();server.close();});

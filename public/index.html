@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title data-i18n="site.documentTitle">Pokémon GO 面板</title>
   <link rel="icon" type="image/x-icon" href="pokemongocalender.ico?v=14" />
-  <link rel="stylesheet" href="style.css?v=26" />
+  <link rel="stylesheet" href="style.css?v=28" />
 </head>
 <body>
   <!-- =====================================================================
@@ -79,10 +79,9 @@
 
       </div>
       <aside class="reminder-sidebar" aria-label="本地活动提醒" data-i18n-aria-label="reminder.title">
-        <details id="reminder-panel" open>
-          <summary><span data-i18n="reminder.title">本地活动提醒</span> <span id="reminder-count" class="badge">0</span></summary>
+        <details id="reminder-panel">
+          <summary aria-label="本地活动提醒" data-i18n-aria-label="reminder.title"><span class="reminder-entry-icon" aria-hidden="true">⭐</span><span class="reminder-entry-label" data-i18n="reminder.title">本地活动提醒</span> <span id="reminder-count" class="badge">0</span></summary>
           <div class="reminder-panel-body">
-            <p class="reminder-intro" data-i18n="reminder.intro">仅此浏览器保存，不上传、不按账号分组，无系统推送。已知截止时自动删除提醒和笔记。</p>
             <p id="reminder-notice" class="reminder-warning" role="status"></p>
             <p id="reminder-empty" class="muted" data-i18n="reminder.empty">在活动详情中点 ☆ 标星，跨月提醒都会留在这里。</p>
             <section id="reminder-live" hidden><h4></h4><div class="reminder-list"></div></section>
@@ -415,6 +414,6 @@
     <div class="muted">by: adonais·anabiosis</div>
   </footer>
 
-  <script src="app.js?v=25" defer></script>
+  <script src="app.js?v=27" defer></script>
 </body>
 </html>

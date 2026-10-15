@@ -865,16 +865,33 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
   .raid-ico .tg{opacity:1;}
 }
 
-/* ---------- Local reminders: sticky in-flow panel, shared aurora treatment ---------- */
-.cal-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:1.2rem;align-items:start;}
+/* ---------- Local reminders: desktop edge overlay / mobile in-flow panel ---------- */
+.cal-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:.8rem;align-items:start;}
 .cal-main{min-width:0;}
-.reminder-sidebar{position:sticky;top:12px;min-width:0;z-index:8;}
+.reminder-sidebar{position:sticky;grid-row:1;top:6px;min-width:0;z-index:8;}
+.reminder-sidebar:has(#reminder-panel[open]){position:static;}
 #reminder-panel{border:1px solid var(--gold-line);border-radius:12px;background:var(--bg);box-shadow:0 6px 20px rgba(0,0,0,.45);}
 #reminder-panel>summary{cursor:pointer;font-weight:700;color:var(--h1);padding:.65rem .8rem;}
 #reminder-panel>summary::marker{color:var(--gold-bright);}
+.reminder-entry-icon{margin-right:.3rem;}
 #reminder-count{font-size:.68rem;padding:.1rem .5rem;margin-left:.3rem;}
-.reminder-panel-body{padding:0 .8rem .85rem;max-height:calc(100dvh - 90px);overflow:auto;scrollbar-width:thin;}
-.reminder-intro{font-size:.7rem;color:var(--muted);margin:.2rem 0 .6rem;}
+.reminder-panel-body{padding:0 .8rem .85rem;max-height:55dvh;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;}
+@media (min-width:1001px){
+  /* No grid column or calendar gutter. The collapsed tab is click-through outside its entry.
+     Native details still supplies the clickable fallback on large touchscreens. */
+  .reminder-sidebar,.reminder-sidebar:has(#reminder-panel[open]){position:fixed;--reminder-top:max(80px,20dvh);top:var(--reminder-top);right:0;
+    width:340px;max-width:100vw;pointer-events:none;}
+  .reminder-sidebar:has(#reminder-panel[open]){pointer-events:auto;}
+  #reminder-panel{border:0;border-radius:0;background:none;box-shadow:none;}
+  #reminder-panel>summary{display:flex;align-items:center;justify-content:center;width:max-content;margin-left:auto;
+    padding:.55rem .65rem;border:1px solid var(--gold-line);border-right:0;border-radius:10px 0 0 10px;
+    background:var(--bg);box-shadow:0 4px 16px rgba(0,0,0,.4);list-style:none;pointer-events:auto;}
+  #reminder-panel>summary::-webkit-details-marker{display:none;}
+  .reminder-entry-icon{margin:0;}
+  .reminder-entry-label{display:none;}
+  .reminder-panel-body{max-height:calc(100dvh - var(--reminder-top) - 56px);border:1px solid var(--gold-line);border-right:0;
+    border-radius:10px 0 0 10px;background:var(--bg);box-shadow:-6px 6px 20px rgba(0,0,0,.45);pointer-events:auto;}
+}
 .reminder-warning{font-size:.76rem;color:#ffce82;white-space:pre-line;}
 .reminder-warning:empty{display:none;}
 .reminder-list{display:flex;flex-direction:column;gap:.8rem;padding:.35rem .1rem .7rem;}
@@ -890,12 +907,25 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 .reminder-actions .btn{font-size:.74rem;min-height:34px;line-height:1.2;background:rgba(12,11,16,.86);color:var(--aurora-white,var(--h1));}
 .reminder-actions .btn:disabled{opacity:.5;cursor:not-allowed;}
 #reminder-completed>summary{cursor:pointer;font-size:.83rem;color:var(--gold-bright);padding:.5rem 0;}
-.detail-reminder{border:1px solid var(--gold-line);border-radius:9px;padding:.7rem;margin:.65rem 0;}
+.detail-toolbar{display:flex;align-items:center;gap:.6rem;min-height:44px;margin-bottom:.65rem;}
+.detail-toolbar .detail-cat{min-width:0;margin:0;overflow-wrap:anywhere;}
+.detail-reminder-actions{flex-wrap:nowrap;flex:none;margin-left:auto;}
+.reminder-control{position:relative;}
+.detail-reminder-actions .btn{width:44px;min-height:44px;padding:0;font-size:1.15rem;color:var(--muted);filter:grayscale(1);}
+.detail-reminder-actions .btn[aria-pressed="true"]{filter:none;color:var(--h1);border-color:var(--gold-bright);background:rgba(var(--gold-rgb),.22);}
+.detail-reminder-actions .btn[aria-disabled="true"]{opacity:.45;border-style:dashed;cursor:not-allowed;}
+.reminder-tooltip{position:absolute;right:0;top:100%;z-index:1;width:max-content;max-width:210px;
+  margin-top:.35rem;padding:.3rem .5rem;border:1px solid var(--gold-line);border-radius:6px;
+  background:var(--bg);color:var(--h1);font-size:.75rem;pointer-events:none;visibility:hidden;}
+.reminder-control:is(:hover,:focus-within) .reminder-tooltip{visibility:visible;}
+/* Show one hint: keyboard focus wins, otherwise the hovered action wins. */
+.detail-reminder-actions:has(:focus-visible) .reminder-control:not(:focus-within) .reminder-tooltip,
+.detail-reminder-actions:not(:has(:focus-visible)):has(.reminder-control:hover) .reminder-control:not(:hover) .reminder-tooltip{visibility:hidden;}
+.detail-reminder:has(.reminder-note-editor:not([hidden])){border:1px solid var(--gold-line);border-radius:9px;padding:.7rem;margin:.65rem 0;}
 /* The header toggle lives above main's stacking context. Reserve separate
    toolbar space so it never intercepts the drawer's close target on phones. */
 body:has(#event-detail:not([hidden])) .lang-toggle{position:fixed;top:.6rem;right:3.5rem;}
 #event-detail{padding-top:3rem;}
-.detail-reminder h4{margin:0 0 .5rem;}
 .reminder-note-editor{display:flex;flex-direction:column;gap:.35rem;margin-top:.6rem;font-size:.76rem;}
 .reminder-note-editor[hidden]{display:none;}
 .reminder-note-editor textarea{width:100%;resize:vertical;min-height:5rem;border:1px solid var(--gold-line);border-radius:6px;padding:.5rem;
@@ -941,13 +971,9 @@ body:has(#event-detail:not([hidden])) .lang-toggle{position:fixed;top:.6rem;righ
 @keyframes reminder-spark-bloom{0%,100%{opacity:.15;transform:scale(.5) rotate(0deg);}50%{opacity:1;transform:scale(1.35) rotate(90deg);}}
 .reminders-paused .reminder-active,.reminders-paused .reminder-active *{animation-play-state:paused!important;}
 @media (max-width:1000px){
-  .cal-layout{grid-template-columns:minmax(0,1fr);gap:.8rem;}
-  .reminder-sidebar{grid-row:1;top:6px;}
-  .reminder-sidebar:has(#reminder-panel[open]){position:static;}
   /* Panel expansion is in normal flow and pushes dates down; never a fixed
      sheet over the calendar, bottom navigation, or z=60 drawer controls. */
-  .reminder-panel-body{max-height:55dvh;}
-  .reminder-actions .btn{min-height:40px;}
+  .reminder-item .reminder-actions .btn{min-height:40px;}
 }
 @media (max-width:560px){
   .cal-chip{gap:2px;padding:2px;}
