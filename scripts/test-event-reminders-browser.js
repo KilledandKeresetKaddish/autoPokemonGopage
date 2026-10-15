@@ -61,38 +61,43 @@ let browser, step = 'init';
 const deadline = setTimeout(async () => {
   console.error('test-event-reminders-browser: timed out at ' + step);
   process.exitCode = 1; if (browser) await browser.close(); server.close();
-}, 180000);
+}, 240000);
 (async () => {
   await new Promise(resolve => server.listen(0,'127.0.0.1',resolve));
   const origin = `http://127.0.0.1:${server.address().port}`;
   browser = await chromium.launch({executablePath:process.env.CHROMIUM_PATH || '/usr/bin/chromium',headless:true,args:['--no-sandbox']});
-  const context = await browser.newContext({viewport:{width:1440,height:1050}});
-  await context.route('**/*', async route => {
-    const url = new URL(route.request().url());
-    if (url.origin !== origin) return route.fulfill({contentType:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><circle cx="25" cy="25" r="15" fill="#e8cb8c"/></svg>'});
-    if (url.pathname === '/data/events.json') return route.fulfill({status:failEvents ? 503 : 200,json:failEvents ? {} : canonical});
-    if (url.pathname === '/data/rotations.json') return route.fulfill({json:rotations});
-    if (url.pathname === '/data/featured.json') return route.fulfill({json:['red']});
-    if (url.pathname === '/data/i18n/en.json') return route.fulfill({json:{events:overlays,regions:englishRegions,categories:{},rotations:{tracks:{}}}});
-    return route.continue();
-  });
-  await context.addInitScript(({start,todo}) => {
-    try { if (localStorage.getItem('pogo-todo') === null) localStorage.setItem('pogo-todo',JSON.stringify(todo)); } catch { /* opaque initial document */ }
-    window.__testNow = start;
-    const RealDate = Date;
-    window.Date = class extends RealDate {
-      constructor(...args) { super(...(args.length ? args : [window.__testNow])); }
-      static now() { return window.__testNow; }
-    };
-    window.__testHidden = false;
-    Object.defineProperty(document,'hidden',{get:()=>window.__testHidden});
-  // Hold a minute before open, not 1ms, so real timers don't spin against a
-  // frozen browser wall clock. The pure scheduler fixtures cover every ±1ms.
-  }, {start:open-60000,todo:todoFixture});
+  const errors = [];
+  async function fixtureContext() {
+    const context = await browser.newContext({viewport:{width:1440,height:1050}});
+    context.on('page',p=>p.on('pageerror',error=>errors.push(error.message)));
+    await context.route('**/*', async route => {
+      const url = new URL(route.request().url());
+      if (url.origin !== origin) return route.fulfill({contentType:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><circle cx="25" cy="25" r="15" fill="#e8cb8c"/></svg>'});
+      if (url.pathname === '/data/events.json') return route.fulfill({status:failEvents ? 503 : 200,json:failEvents ? {} : canonical});
+      if (url.pathname === '/data/rotations.json') return route.fulfill({json:rotations});
+      if (url.pathname === '/data/featured.json') return route.fulfill({json:['red']});
+      if (url.pathname === '/data/i18n/en.json') return route.fulfill({json:{events:overlays,regions:englishRegions,categories:{},rotations:{tracks:{}}}});
+      return route.continue();
+    });
+    await context.addInitScript(({start,todo}) => {
+      try { if (localStorage.getItem('pogo-todo') === null) localStorage.setItem('pogo-todo',JSON.stringify(todo)); } catch { /* opaque initial document */ }
+      window.__testNow = start;
+      const RealDate = Date;
+      window.Date = class extends RealDate {
+        constructor(...args) { super(...(args.length ? args : [window.__testNow])); }
+        static now() { return window.__testNow; }
+      };
+      window.__testHidden = false;
+      Object.defineProperty(document,'hidden',{get:()=>window.__testHidden});
+      // Hold a minute before open, not 1ms, so real timers don't spin against a
+      // frozen browser wall clock. The pure scheduler fixtures cover every ±1ms.
+    }, {start:open-60000,todo:todoFixture});
+    return context;
+  }
+  const context = await fixtureContext();
   const page = await context.newPage(); page.setDefaultTimeout(10000);
   const session = await context.newCDPSession(page);
   await session.send('Emulation.setTimezoneOverride',{timezoneId:'Asia/Hong_Kong'});
-  const errors = []; context.on('page',p=>p.on('pageerror',error=>errors.push(error.message)));
   const ready = async p => { await p.waitForSelector('#calendar .cal-week'); await p.waitForFunction(()=>typeof reminders!=='undefined' && !!reminders && !!todoState); };
   const tick = async (p, time, eventName='pageshow') => p.evaluate(({time,eventName}) => {
     window.__testNow = time;
@@ -147,8 +152,17 @@ const deadline = setTimeout(async () => {
     await page.screenshot({path:path.join(artifacts,`desktop-${width}-collapsed.png`)});
     await entry.hover(); assert.equal(await body.isVisible(),true,'entry hover opens panel');
     const panel=await rect(body); assert(panel.y+panel.height<=1050,'long list is bounded by viewport');
-    const first=await rect(page.locator('#reminder-live .reminder-open').first());
-    await page.mouse.move(first.x+first.width/2,first.y+first.height/2,{steps:12});
+    const firstButton=page.locator('#reminder-live .reminder-open').first(), first=await rect(firstButton);
+    await hoverPath(page,{x:first.x+8,y:first.y+first.height/2},'long list: title left edge');
+    await entry.hover();
+    const sidebar=await rect(page.locator('.reminder-sidebar'));
+    await hoverPath(page,{x:sidebar.x+8,y:sidebar.y+8},'long list: transparent upper-left');
+    await hoverPath(page,{x:first.x+8,y:first.y+first.height/2},'long list: upper-left to title');
+    await page.mouse.click(first.x+8,first.y+first.height/2);
+    assert.equal(await page.locator('.detail-reminder').getAttribute('data-id'),await firstButton.evaluate(n=>n.closest('[data-id]').dataset.id),'the activity is actually clickable');
+    await page.locator('#detail-close').click(); await frames(page);
+    await page.locator('#cal-prev').focus(); await page.mouse.move(20,160);
+    await entry.hover(); await hoverPath(page,{x:first.x+8,y:first.y+first.height/2},'long list: return for scrolling');
     assert.equal(await body.isVisible(),true,'crossing from entry to list must not collapse it');
     assert.deepEqual(await rect(page.locator('#calendar')),before,'hover expansion must not resize or move the calendar');
     assert.deepEqual(await columns(),columnsBefore,'all seven columns keep their widths and positions');
@@ -169,6 +183,144 @@ const deadline = setTimeout(async () => {
     await page.locator('#cal-prev').focus(); assert.equal(await body.isVisible(),false,'focus and mouse both leaving closes it');
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'no horizontal overflow');
   }
+  const frames = p => p.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  async function hoverPath(p, target, label) {
+    await p.evaluate(()=>{
+      window.__hoverPath=[];
+      window.__trackHover=()=>window.__hoverPath.push(document.querySelector('#reminder-panel').open);
+      document.addEventListener('pointermove',window.__trackHover);
+    });
+    await p.mouse.move(target.x,target.y,{steps:24}); await frames(p);
+    const samples=await p.evaluate(()=>{
+      document.removeEventListener('pointermove',window.__trackHover);return window.__hoverPath;
+    });
+    assert.equal(samples.length,24,label+': observe every real pointer step');
+    assert(samples.every(Boolean),label+': panel stays open throughout the diagonal path');
+    assert.equal(await p.locator('#reminder-panel').evaluate(n=>n.open),true,label+': stays open at destination');
+  }
+  async function shortListHoverRegressions() {
+    for(const ids of [['green'],['green','blue','red']]) {
+      step='short-list-hover-'+ids.length;
+      const isolated=await fixtureContext(), p=await isolated.newPage(); p.setDefaultTimeout(10000);
+      await p.emulateMedia({reducedMotion:'reduce'});
+      await p.goto(origin); await ready(p); await tick(p,open+60000);
+      for(const id of ids) await flag(p,id);
+      assert.equal(await p.locator('.reminder-item').count(),ids.length,'fresh context has only the intended reminders');
+      const entry=p.locator('#reminder-panel>summary'), body=p.locator('.reminder-panel-body');
+      for(const destination of ['title-left','upper-left']) {
+        await p.locator('#cal-prev').focus(); await p.mouse.move(20,160); await frames(p);
+        assert.equal(await body.isVisible(),false,'outside focus and mouse collapse the panel');
+        const before=await rect(p.locator('#calendar')), sidebar=await rect(p.locator('.reminder-sidebar'));
+        const gap={x:sidebar.x+8,y:sidebar.y+8};
+        assert.equal(await p.evaluate(({x,y})=>!!document.elementFromPoint(x,y)?.closest('.reminder-sidebar'),gap),false,'collapsed transparent entry area is click-through');
+        assert.equal(await p.evaluate(({x,y})=>!!document.elementFromPoint(x,y)?.closest('#calendar'),{x:before.x+before.width-45,y:before.y+90}),true,'collapsed sidebar does not block the calendar');
+        const tab=await rect(entry);
+        await p.mouse.move(tab.x+tab.width/2,tab.y+tab.height/2); await frames(p);
+        assert.equal(await p.locator('.reminder-sidebar').evaluate(n=>n.contains(document.activeElement)),false,'hover path has no focus safety net');
+        const firstButton=p.locator('#reminder-live .reminder-open').first(), first=await rect(firstButton);
+        const title={x:first.x+8,y:first.y+first.height/2};
+        if(destination==='upper-left') {
+          await hoverPath(p,gap,ids.length+' reminders: transparent upper-left');
+          assert.equal(await p.evaluate(({x,y})=>!!document.elementFromPoint(x,y)?.closest('.reminder-sidebar'),gap),true,'expanded container closes the hit-test gap');
+        }
+        await hoverPath(p,title,ids.length+' reminders: '+destination+' to title left edge');
+        assert.deepEqual(await rect(p.locator('#calendar')),before,'opening never changes calendar geometry');
+        await p.mouse.click(title.x,title.y);
+        assert.equal(await p.locator('.detail-reminder').getAttribute('data-id'),await firstButton.evaluate(n=>n.closest('[data-id]').dataset.id),'diagonal entry can really open the activity');
+        await p.locator('#detail-close').click(); await frames(p);
+        await p.mouse.move(20,160); await p.locator('#cal-prev').focus(); await frames(p);
+        assert.equal(await body.isVisible(),false,'mouse and focus both leaving still close the panel');
+        assert.deepEqual(await rect(p.locator('#calendar')),before,'closing never changes calendar geometry');
+        assert.equal(await p.evaluate(({x,y})=>!!document.elementFromPoint(x,y)?.closest('.reminder-sidebar'),gap),false,'transparent area becomes click-through again');
+      }
+      await isolated.close();
+    }
+  }
+  async function sidebarFocusRegressions() {
+    step='sidebar-focus-return';
+    const isolated=await fixtureContext(), p=await isolated.newPage(); p.setDefaultTimeout(10000);
+    await p.emulateMedia({reducedMotion:'reduce'});
+    await p.goto(origin); await ready(p); await tick(p,open+60000); await flag(p,'green');
+    const entry=p.locator('#reminder-panel>summary'), source=p.locator('.reminder-item[data-id="green"] .reminder-open');
+    const openFromSidebar=async()=>{
+      await p.mouse.move(20,160);
+      await p.locator('.cal-main').locator('button,a[href]').last().focus();
+      await p.keyboard.press('Tab');
+      assert.equal(await entry.evaluate(n=>n===document.activeElement),true,'Tab reaches the sidebar entry');
+      await p.keyboard.press('Tab');
+      assert.equal(await source.evaluate(n=>n===document.activeElement),true,'Tab reaches the original activity button');
+      await source.evaluate(n=>window.__returnButton=n);
+      await p.keyboard.press('Enter'); await frames(p);
+      assert.equal(await p.locator('#event-detail').evaluate(n=>!n.hidden && n.contains(document.activeElement)),true);
+      assert.equal(await p.locator('#reminder-panel').evaluate(n=>n.open),false,'focus entering detail collapses the sidebar');
+    };
+    const closeDetail=async method=>{
+      if(method==='Escape') await p.keyboard.press('Escape');
+      else await p.locator('#detail-close').click();
+      await frames(p);
+      assert.equal(await p.locator('#event-detail').isVisible(),false);
+    };
+    const assertReturned=async()=>{
+      assert.equal(await source.evaluate(n=>n===window.__returnButton && n===document.activeElement),true,'close restores the same sidebar activity button, not body');
+      assert.equal(await source.isVisible(),true,'returned button is visible');
+      assert.equal(await p.locator('#reminder-panel').evaluate(n=>n.open),true);
+      await p.keyboard.press('Tab');
+      assert.equal(await p.locator('.reminder-item[data-id="green"] .reminder-star').evaluate(n=>n===document.activeElement),true,'Tab continues through sidebar actions');
+    };
+    for(const method of ['Escape','button']) {
+      await openFromSidebar(); await closeDetail(method); await assertReturned();
+    }
+    await openFromSidebar();
+    await p.locator('.detail-reminder-actions .reminder-done').click(); await settle(p);
+    assert.equal(await p.locator('#reminder-completed').evaluate(n=>n.open),false,'completed group starts collapsed');
+    assert.equal(await p.locator('#reminder-completed .reminder-open').evaluate(n=>n===window.__returnButton),true,'completion moves rather than replaces the source');
+    await closeDetail('Escape'); await assertReturned();
+    assert.equal(await p.locator('#reminder-completed').evaluate(n=>n.open),true,'restore also opens the completed ancestor');
+    await p.evaluate(async()=>{await reminders.complete('green',false,reminders.get('green').token);await reminderScheduler.wake();});
+    for(const reason of ['unstar','storage','expiry']) {
+      step='sidebar-focus-fallback-'+reason;
+      await tick(p,open+60000); await flag(p,'green'); await openFromSidebar();
+      if(reason==='unstar') {
+        await p.locator('.detail-reminder-actions .reminder-star').click(); await settle(p);
+      } else if(reason==='storage') {
+        const other=await isolated.newPage(); await other.emulateMedia({reducedMotion:'reduce'});
+        await other.goto(origin); await ready(other); await tick(other,open+60000);
+        await other.evaluate(async()=>{await reminders.remove('green',reminders.get('green').token);await reminderScheduler.wake();});
+        await p.waitForFunction(()=>!document.querySelector('.reminder-item[data-id="green"]'));
+        await other.close();
+      } else await tick(p,close);
+      assert.equal(await source.count(),0,'the removed source is not retained in the sidebar');
+      await closeDetail(reason==='storage'?'button':'Escape');
+      assert.equal(await entry.evaluate(n=>n===document.activeElement),true,reason+' falls back to the visible entry');
+      assert.equal(await entry.isVisible(),true);
+      assert.equal(await p.evaluate(prefix=>localStorage.getItem(prefix+'green'),prefix),null,'focus recovery never recreates a record');
+      assert.equal(await source.count(),0);
+    }
+    step='calendar-focus-return'; await tick(p,open+60000);
+    await p.mouse.move(20,160); await p.locator('#cal-prev').focus();
+    const calendar=p.locator('.cal-bar[data-reminder-event="green"]');
+    await calendar.click(); await calendar.evaluate(n=>window.__calendarButton=n);
+    await closeDetail('Escape');
+    assert.equal(await calendar.evaluate(n=>n===window.__calendarButton && n===document.activeElement),true,'ordinary calendar return remains unchanged');
+    assert.equal(await p.locator('#reminder-panel').evaluate(n=>n.open),false,'calendar return does not expand reminders');
+    await flag(p,'green');
+    for(const origin of ['sidebar','calendar']) {
+      step='focus-return-after-view-switch-'+origin;
+      if(origin==='sidebar') await openFromSidebar(); else await calendar.click();
+      // A main-tab keyboard activation has no outside-mousedown dismissal.
+      const tab=p.locator('#main-tabs [data-view="todo"]');
+      await tab.focus(); await p.keyboard.press('Enter');
+      assert.equal(await p.locator('#event-detail').evaluate(n=>!n.hidden),true,'view switch leaves the drawer logically open inside the now-hidden calendar');
+      await closeDetail('Escape');
+      assert.equal(await p.locator('#view-todo').evaluate(n=>n.classList.contains('active')),true,'closing never switches back to the calendar');
+      assert.equal(await tab.evaluate(n=>n===document.activeElement),true,'hidden-view source falls back to the current main tab');
+      assert.equal(await entry.isVisible(),false);
+      await p.locator('#main-tabs [data-view="calendar"]').click();
+    }
+    await isolated.close();
+  }
+  await shortListHoverRegressions();
+  await sidebarFocusRegressions();
   await page.goto(origin); await ready(page);
   assert.equal(await page.locator('[data-init-error]').count(),0);
   assert.equal(await page.locator('.reminder-panel-body').isVisible(),false,'desktop initially collapsed');
@@ -724,5 +876,5 @@ const deadline = setTimeout(async () => {
   assert.deepEqual(errors,[]);
   assert.equal(JSON.stringify(events),originalEvents,'UI must not mutate canonical fixture');
   fs.writeFileSync(path.join(artifacts,'result.json'),JSON.stringify({status:'PASS',viewports:['1440x1050','1920x1050','390x844'],cycles:'desktop >6s / mobile calendar+sidebar >6s',pageErrors:errors},null,2)+'\n');
-  console.log('test-event-reminders-browser: PASS (Chromium 1440/1920/390px, full-width hover/keyboard/touch panel+breakpoints, compact accessible icons, aurora cycles+geometry, all calendar entrances, completion/reload/locale/IME/focus, hidden +N, fallback, same-direction UI clicks/stale commands, failed/in-flight drawer drafts, real same-origin Web Locks contention/holder-close/unsupported, storage sync, expiry/failure/retention, TODO/Atlas/Clock)');
+  console.log('test-event-reminders-browser: PASS (Chromium 1440/1920/390px, 1/3/long-list diagonal hover+hit-testing, sidebar focus return/completed/deleted/expired/view-switch fallback, full-width hover/keyboard/touch panel+breakpoints, compact accessible icons, aurora cycles+geometry, all calendar entrances, completion/reload/locale/IME/focus, hidden +N, fallback, same-direction UI clicks/stale commands, failed/in-flight drawer drafts, real same-origin Web Locks contention/holder-close/unsupported, storage sync, expiry/failure/retention, TODO/Atlas/Clock)');
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(async()=>{clearTimeout(deadline);if(browser) await browser.close();server.close();});

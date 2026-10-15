@@ -2915,8 +2915,18 @@ function setupDetail() {
     if (panel.hidden) return;
     flushReminderEditor(); detailEvent = null;
     panel.hidden = true;
-    const back = detailReturnFocus; detailReturnFocus = null;
-    if (back && back.isConnected && back.focus) back.focus();
+    let back = detailReturnFocus; detailReturnFocus = null;
+    if (back?.matches('.reminder-open')) {
+      const entry = $('#reminder-panel>summary');
+      if (entry.getClientRects().length) {
+        if (back.isConnected && entry.parentElement.contains(back)) {
+          // Focus cannot enter a closed panel (or its completed subgroup).
+          for (let group = back.closest('details'); group; group = group.parentElement.closest('details')) group.open = true;
+        } else back = entry; // Removed/expired records must stay removed.
+      }
+    }
+    if (back?.isConnected && back.focus && back.getClientRects().length) back.focus();
+    else $('#main-tabs button.active')?.focus();
   };
   $('#detail-close').addEventListener('click', close);
   document.addEventListener('keydown', e => {

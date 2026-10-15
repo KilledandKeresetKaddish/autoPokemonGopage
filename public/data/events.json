@@ -1,36 +1,5 @@
 [
   {
-    "id": "pokemonspotlighthour2026-07-16",
-    "name": "超音蝠聚焦时刻",
-    "type": "pokemon-spotlight-hour",
-    "heading": "Pokémon Spotlight Hour",
-    "start": "2026-07-16T18:00:00",
-    "end": "2026-07-16T19:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
-    "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
-    "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-16/",
-    "summary": "聚焦时刻 18:00–19:00 超音蝠 大量出现,并有 捕捉经验 ×2 加成;运气好可遇见闪光个体。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/pokemonspotlighthour2026-07-16/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/spotlight-raid-hours/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 41,
-        "name": "超音蝠"
-      }
-    ],
-    "bonuses": [
-      ":xp: 捕捉经验 ×2"
-    ]
-  },
-  {
     "id": "raichu-super-mega-raid-day-2026",
     "name": "雷丘 超级团战日",
     "type": "raid-day",

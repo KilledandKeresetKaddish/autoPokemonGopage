@@ -1,19 +1,6 @@
 {
   "version": 1,
   "events": {
-    "pokemonspotlighthour2026-07-16": {
-      "name": "Zubat Spotlight Hour",
-      "heading": "Pokémon Spotlight Hour",
-      "summary": "Zubat appears more frequently during Spotlight Hour from 18:00–19:00, with a ×2 Catch XP bonus; lucky Trainers may encounter a Shiny one.",
-      "bonuses": [
-        ":xp: Catch XP ×2"
-      ],
-      "pokemon": [
-        "Zubat"
-      ],
-      "counters": [],
-      "sections": []
-    },
     "raichu-super-mega-raid-day-2026": {
       "name": "Raichu Super Mega Raid Day",
       "heading": "Raid Day",
