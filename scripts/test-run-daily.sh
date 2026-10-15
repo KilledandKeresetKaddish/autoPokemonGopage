@@ -6,6 +6,8 @@ mkdir -p "$ROOT/.pi-tmp"
 TMP_ROOT=$(mktemp -d "$ROOT/.pi-tmp/run-daily-test.XXXXXX")
 trap '[ "${TEST_KEEP:-0}" = 1 ] && echo "test fixtures: $TMP_ROOT" || rm -rf "$TMP_ROOT"' EXIT
 
+python3 "$ROOT/scripts/test-daily-agent-run.py"
+
 fail() { echo "test-run-daily: FAIL: $*" >&2; exit 1; }
 assert_eq() { [ "$1" = "$2" ] || fail "expected [$2], got [$1]${3:+ ($3)}"; }
 assert_file() { [ -f "$1" ] || fail "missing file: $1"; }
@@ -106,6 +108,9 @@ case "${MOCK_MODE:-noop}" in
     bash -c 'trap "" TERM; while :; do printf "still-writing\\n" >> public/data/events.json; sleep .2; done' &
     sleep "${MOCK_SLEEP:-10}"
     ;;
+  lingering-writer)
+    bash -c 'for _ in {1..60}; do printf "still-writing\n" >> public/data/events.json; sleep .1; done' &
+    ;; # parent exits successfully; supervisor must still stop its descendant
   metrics)
     printf 'publish-draft\n' > public/data/events.json
     printf '{"kind":"request","network":true,"reused":false,"outcome":"success"}\n{"kind":"request","network":false,"reused":true,"outcome":"success"}\n{"kind":"request","network":true,"reused":false,"outcome":"failed"}\n{"kind":"retry","network":true,"outcome":"retry"}\n' > "$FETCH_METRICS_FILE"
@@ -554,6 +559,14 @@ assert_file "$f/logs/resume/pending.tar"
 assert_clean "$f"
 jq -e '.agent.timedOut == true and .agent.writerStopped == true and .gates.snapshot == 0' "$f/logs/runs"/*/summary.json >/dev/null || fail 'descendant not confirmed stopped before rollback'
 
+# A successful leader exit is not proof that its remaining writer has stopped.
+f=$(make_fixture lingering)
+run_daily "$f" lingering-writer '' "$f/run.out" AGENT_TIMEOUT_SECONDS=10 AGENT_DRAIN_SECONDS=1 AGENT_TERM_GRACE_SECONDS=1
+[ "$RUN_RC" -ne 0 ] || fail 'lingering writer published'
+assert_file "$f/logs/resume/pending.tar"
+assert_clean "$f"
+jq -e '.agent.reason == "lingering-writer" and .agent.writerStopped == true and .gates.snapshot == 0' "$f/logs/runs"/*/summary.json >/dev/null || fail 'leader exit bypassed descendant protection'
+
 for sig in TERM INT; do
   f=$(make_fixture "signal-$sig")
   (cd "$f"; exec env PATH="$f/bin:$PATH" AGENT_CLI=pi MOCK_MODE=slow-writer MOCK_SLEEP=12 \
@@ -569,8 +582,9 @@ for sig in TERM INT; do
   jq -e --arg sig "SIG$sig" '.agent.signal == $sig and .agent.writerStopped == true and .gates.snapshot == 0' "$f/logs/runs"/*/summary.json >/dev/null || fail "$sig did not wait for its group before snapshot"
 done
 
-# Supervisor status absent => do not run gates/snapshot/rollback on a possibly live writer.
-f=$(make_fixture unknown-writer)
+# Absent OR explicitly unknown status must not authorize gates/snapshot/rollback.
+for unknown_result in 0 1; do
+f=$(make_fixture "unknown-writer-$unknown_result")
 run_daily "$f" fail-initial same "$f/fail.out"
 old_snapshot=$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')
 mkdir -p "$f/logs/fail-bin"
@@ -578,12 +592,15 @@ cat > "$f/logs/fail-bin/python3" <<'SH'
 #!/usr/bin/env bash
 if [[ "${1:-}" == *daily-agent-run.py ]]; then
   printf 'unknown-writer\n' > public/data/events.json
+  if [ "${MOCK_UNKNOWN_RESULT:-0}" = 1 ]; then
+    printf '{"agentExitCode":null,"reason":"inspection-failed","writerStopped":false,"remainingPids":null}\n' > "$4"
+  fi
   exit 125
 fi
 exec /usr/bin/python3 "$@"
 SH
 chmod +x "$f/logs/fail-bin/python3"
-run_daily "$f" noop same "$f/unknown.out" PATH="$f/bin:$f/logs/fail-bin:$PATH"
+run_daily "$f" noop same "$f/unknown.out" PATH="$f/bin:$f/logs/fail-bin:$PATH" MOCK_UNKNOWN_RESULT="$unknown_result"
 [ "$RUN_RC" -ne 0 ] || fail 'unconfirmed writer published'
 assert_eq "$(cat "$f/public/data/events.json")" unknown-writer
 assert_eq "$(sha256sum "$f/logs/resume/pending.tar" | awk '{print $1}')" "$old_snapshot"
@@ -592,6 +609,7 @@ assert_file "$(find "$f/logs/runs" -name active | head -1)"
 run_daily "$f" noop same "$f/refused.out"
 [ "$RUN_RC" -ne 0 ] || fail 'next run accepted dirty unfinished tree'
 ! grep -q -- '--- invoking agent' "$f/refused.out" || fail 'next run invoked Pi over dirty tree'
+done
 
 # Same-day attempts remain separate; source facts are measured, not agent prose.
 f=$(make_fixture measured)
