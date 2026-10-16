@@ -1541,6 +1541,13 @@
           ],
           "start": "2026-10-28",
           "end": "2026-11-03"
+        },
+        {
+          "name": "Super Mega Chandelure Raid Day",
+          "cn": "Chandelure 超级团战日",
+          "pokemon": [{"id":609,"name":"Mega Chandelure","shiny":true,"sprite":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/10291.png","hub":"609-Mega"}],
+          "start": "2026-10-31",
+          "end": "2026-10-31"
         }
       ]
     },

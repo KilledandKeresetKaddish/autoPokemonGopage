@@ -810,10 +810,24 @@
       "fighting",
       "flying"
     ],
-    "initialCost": null,
+    "initialCost": 300,
     "superMax": true,
     "release": "2026-09-19",
     "sprite": "https://db.pokemongohub.net/images/official/full/398_mega_with_bg.webp",
     "hub": "398-Mega"
+  },
+  {
+    "id": 609,
+    "name": "超级 Chandelure",
+    "en": "Mega Chandelure",
+    "boostedTypes": [
+      "ghost",
+      "fire"
+    ],
+    "initialCost": null,
+    "superMax": true,
+    "release": "2026-10-31",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/10291.png",
+    "hub": "609-Mega"
   }
 ]

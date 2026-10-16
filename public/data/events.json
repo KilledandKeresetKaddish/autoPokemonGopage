@@ -338,7 +338,7 @@
     "heading": "Event",
     "start": "2026-07-28T16:00:00",
     "end": "2027-08-31T20:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {"scope":"regional","mode":"unknown","startPrecision":"exact","endPrecision":"exact"},
     "link": "https://pokemongo.com/news/2026_ana_red",
     "summary": "庆祝宝可梦 30 周年「红色宝可梦喷射机」启航,Pokémon GO 与全日空(ANA)在日本各地机场举办线下联动:参与机场的道馆中小火龙进驻团体战(带喷射机主题场景背景,每馆每日限 1 场),到场还可领取一次性限时调查。",
     "bonuses": [
@@ -2074,20 +2074,33 @@
     ],
     "highlight": false
   },
-  {
+    {
     "id": "pokemon-30th-anniversary-tour-pokexciting",
-    "name": "宝可梦 30 周年巡回 PokéXciting(亚洲多城线下)",
+    "name": "PokéXciting 宝可梦 30 周年亚太巡回与集章（多城线下）",
     "type": "event",
     "heading": "In-Person Event",
-    "start": "2026-09-12T10:00:00",
-    "end": "2027-02-14T20:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "start": "2026-09-12",
+    "end": "2029-09-11",
+    "timing": {
+      "scope": "regional",
+      "mode": "unknown",
+      "startPrecision": "date",
+      "endPrecision": "date"
+    },
     "link": "https://pokemongohub.net/post/event/pokexciting-pokemon-30th-anniversary-tour/",
-    "summary": "宝可梦 30 周年 PokéXciting 亚洲五城巡回每站举办两天,带来地区专属配色的 PokéXciting! Pikachu、集章、免费调查、主题遭遇与超极巨化对战。吉隆坡、台北、新加坡、马尼拉和曼谷各有指定活动区域。",
+    "summary": "PokéXciting 宝可梦 30 周年巡回覆盖亚太五城，各站两天提供地区装扮 Pikachu、调查、主题遭遇与超极巨化对战；同一项目的跨地区 GO 集章活动在首批四城持续至 2029 年 9 月 11 日。",
     "links": [
       {
-        "label": "Hub",
+        "label": "Hub·巡回",
         "url": "https://pokemongohub.net/post/event/pokexciting-pokemon-30th-anniversary-tour/"
+      },
+      {
+        "label": "Hub·跨地区集章",
+        "url": "https://pokemongohub.net/post/event/pokexciting-cross-region-go-stamp-rally/"
+      },
+      {
+        "label": "官方·跨地区集章",
+        "url": "https://pokemongo.com/news/event-apac-stamp-rally-2026"
       }
     ],
     "bonuses": [
@@ -2123,7 +2136,7 @@
         "items": [
           "吉隆坡:2026/9/12–9/13,KLCC 公园",
           "台北:2026/10/10–10/11,信义区指定区域(不含山区)",
-          "新加坡:2026/11/7–11/8,全市",
+          "新加坡:2026/11/7–11/8,每日当地 10:00–22:00；主会场为樟宜机场与星耀樟宜，游戏内容覆盖全市",
           "马尼拉:2027/1/23–1/24,SM 亚洲商城周边",
           "曼谷:2027/2/13–2/14,活动区域待公布"
         ]
@@ -2356,6 +2369,14 @@
       {
         "title": "超极巨化对战",
         "body": "活动期间将出现 Gigantamax Venusaur、Gigantamax Charizard 与 Gigantamax Blastoise;若运气好,还可能遇见闪光个体。"
+      },
+      {
+        "title": "跨地区 GO 集章（长期）",
+        "items": [
+          "2026 年 9 月 12 日至 2029 年 9 月 11 日，可在吉隆坡 KLCC Park Esplanade 前方、台北香堤大道、新加坡樟宜机场第三航站楼出发大厅、马尼拉 MOA Sky 收集城市印章。",
+          "每座城市提供一枚独立数字印章与带当地地点背景的 PokéXciting! Pikachu；这与巡回主活动期间的本地五枚印章路线不同。",
+          "曼谷的跨地区集章地点与开放日期仍待官方后续公布。"
+        ]
       }
     ],
     "longTerm": true
@@ -2420,15 +2441,19 @@
     "name": "PokéXciting：新加坡 2026（线下）",
     "type": "event",
     "heading": "In-Person Event",
-    "start": "2026-11-07",
-    "end": "2026-11-08",
-    "timing": {"scope":"regional","mode":"unknown","startPrecision":"date","endPrecision":"date"},
+    "start": "2026-11-07T10:00:00",
+    "end": "2026-11-08T22:00:00",
+    "timing": {"scope":"regional","mode":"unknown","startPrecision":"exact","endPrecision":"exact"},
     "link": "https://pokemongohub.net/post/event/pokexciting-singapore-2026/",
-    "summary": "11 月 7–8 日在新加坡樟宜机场与星耀樟宜举行免费线下活动；蓝色装扮 PokéXciting! Pikachu 首次登场，并开放城市集章、调查与超极巨化对战。",
+    "summary": "11 月 7–8 日每天当地 10–22 时，在新加坡樟宜机场与星耀樟宜举行免费线下活动，游戏内容覆盖全市；蓝色装扮 PokéXciting! Pikachu 首次登场，并开放城市集章、调查与超极巨化对战。",
     "links": [
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/event/pokexciting-singapore-2026/"
+      },
+      {
+        "label": "官方·新加坡",
+        "url": "https://pokemongo.com/news/event-singapore-30th-anniversary-2026"
       },
       {
         "label": "Hub·巡回总览",
@@ -2475,9 +2500,9 @@
     "name": "Pokémon RUN 30 路跑活动(亚洲多地线下)",
     "type": "event",
     "heading": "In-Person Event",
-    "start": "2026-10-03T06:00:00",
-    "end": "2027-01-24T20:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "start": "2026-10-03",
+    "end": "2027-01-24",
+    "timing": {"scope":"regional","mode":"unknown","startPrecision":"date","endPrecision":"date"},
     "link": "https://pokemongohub.net/post/event/pokemon-run-30-event/",
     "summary": "宝可梦 30 周年主题路跑活动登陆亚洲七地:菲律宾、台湾、新加坡、印尼、泰国、香港等,现场设免费入场的庆典区,Pokémon GO 同步推出场地限定活动与两次免费限时调查。",
     "links": [
@@ -2702,7 +2727,111 @@
     ],
     "highlight": true
   },
-  {
+    {
+    "id": "into-the-wild-2026",
+    "name": "深入荒野 2026",
+    "type": "event",
+    "heading": "Into the Wild",
+    "summary": "荒野地区前置活动聚焦钢与龙属性：极巨化 Regidrago 在 5★ Max 对战首秀，极巨化 Meltan 通过 GO Pass 登场，剑之王 Zacian 与盾之王 Zamazenta 进入 5★团战。",
+    "start": "2026-11-09T10:00:00",
+    "end": "2026-11-13T20:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-09-into-the-wild-2026/into-the-wild-2026.jpg",
+    "link": "https://leekduck.com/events/into-the-wild-2026/",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/into-the-wild-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/into-the-wild-2026-event/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/into-the-wild-2026"
+      },
+      {
+        "label": "Fandom",
+        "url": "https://pokemongo.fandom.com/wiki/Into_the_Wild"
+      }
+    ],
+    "bonuses": [
+      "远程团战上限在 11 月 9–13 日提高至 30",
+      "11 月 9 日 10:00 至 15 日 18:00 使用钱币袋可遇见闪光 Gimmighoul",
+      ":spawn: 同期神秘盒可遇见闪光 Meltan，且再次开启的等待时间缩短",
+      "完成全球挑战可强化剑之王 Zacian 的 Behemoth Blade 与盾之王 Zamazenta 的 Behemoth Bash 冒险效果，并加快 Max 对战能量槽累积"
+    ],
+    "pokemon": [
+      {
+        "id": 81,
+        "name": "Magnemite",
+        "shiny": true
+      },
+      {
+        "id": 714,
+        "name": "Noibat",
+        "shiny": true
+      },
+      {
+        "id": 777,
+        "name": "Togedemaru",
+        "shiny": true
+      },
+      {
+        "id": 999,
+        "name": "Gimmighoul",
+        "shiny": true
+      },
+      {
+        "id": 808,
+        "name": "Meltan",
+        "shiny": true
+      },
+      {
+        "id": 895,
+        "name": "Regidrago",
+        "shiny": true
+      },
+      {
+        "id": 888,
+        "name": "Zacian（剑之王）",
+        "shiny": true,
+        "hub": "888-Crowned_Sword",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10188.png"
+      },
+      {
+        "id": 889,
+        "name": "Zamazenta（盾之王）",
+        "shiny": true,
+        "hub": "889-Crowned_Shield",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10189.png"
+      }
+    ],
+    "sections": [
+      {
+        "title": "每日重点对战",
+        "items": [
+          "11 月 9 日 18–19 时：剑之王 Zacian 团战时刻",
+          "11 月 10 日 18–19 时：盾之王 Zamazenta 团战时刻",
+          "11 月 11 日 18–19 时：极巨化 Registeel 5★ Max 对战重点时段",
+          "11 月 12 日 18–19 时：极巨化 Regidrago 5★ Max 对战重点时段",
+          "11 月 13 日 18–19 时：极巨化 Latias 与 Latios 5★ Max 对战重点时段"
+        ]
+      },
+      {
+        "title": "GO Pass：深入荒野",
+        "body": "11 月 9 日 10:00 至 15 日 18:00 提供免费与 Deluxe 进度轨；免费轨包含极巨化 Meltan，Deluxe 轨可取得银色王冠。奖励须在 11 月 17 日 23:59 前领取，银色王冠须在 11 月 22 日 23:59 前使用。上述时间均为当地时间；11 月 14–15 日远程团战次数不限。"
+      }
+    ],
+    "highlight": false
+  },
+{
     "id": "pokemon-go-wild-area-2026-global",
     "name": "GO 荒野地区 2026：全球",
     "type": "wild-area",
@@ -2791,22 +2920,23 @@
     ],
     "highlight": true
   },
-  {
+    {
     "id": "city-safari-2026-sep",
-    "name": "城市狩猎 City Safari 2026（5 城线下；波士顿延期）",
+    "name": "城市狩猎 City Safari 2026（5 城线下）",
     "type": "event",
     "heading": "City Safari",
-    "summary": "线下购票活动于 9 月 26–27 日在慕尼黑、马赛、里斯本、布里斯班与里约热内卢举行；波士顿场因严重风暴预报延期，新日期与持票方案待公布。其余五城持票训练家可全城探索并享活动加成。",
+    "summary": "线下购票活动于 9 月 26–27 日在慕尼黑、马赛、里斯本、布里斯班与里约热内卢举行；原波士顿场的延期持票活动另列于 10 月 24–25 日。",
     "start": "2026-09-26T10:00:00",
     "end": "2026-09-27T18:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {
+      "scope": "unknown",
+      "mode": "unknown",
+      "startPrecision": "unknown",
+      "endPrecision": "unknown"
+    },
     "image": "https://pokemongohub.net/wp-content/uploads/2023/07/city-safari.jpg",
     "link": "https://pokemongohub.net/post/event/pokemon-go-city-safari-2026-boston-usa/",
     "links": [
-      {
-        "label": "Hub·波士顿",
-        "url": "https://pokemongohub.net/post/event/pokemon-go-city-safari-2026-boston-usa/"
-      },
       {
         "label": "Hub·慕尼黑",
         "url": "https://pokemongohub.net/post/event/pokemon-go-city-safari-2026-munich-germany/"
@@ -2826,10 +2956,6 @@
       {
         "label": "Hub·里约",
         "url": "https://pokemongohub.net/post/event/pokemon-go-city-safari-2026-rio-de-janeiro-brazil/"
-      },
-      {
-        "label": "官方·波士顿延期",
-        "url": "https://pokemongo.com/news/city-safari-boston-update"
       }
     ],
     "bonuses": [
@@ -2849,7 +2975,7 @@
         "title": "举办城市与时间",
         "items": [
           "时间：9 月 26 日（周六）、27 日（周日）10:00–18:00（慕尼黑、马赛、里斯本、布里斯班与里约当地时间）。",
-          "波士顿场已延期；官方尚未公布新日期。其余举办城市：慕尼黑（德国）· 马赛（法国）· 里斯本（葡萄牙）· 布里斯班（澳大利亚）· 里约热内卢（巴西）。"
+          "举办城市：慕尼黑（德国）· 马赛（法国）· 里斯本（葡萄牙）· 布里斯班（澳大利亚）· 里约热内卢（巴西）；波士顿延期持票活动另见 10 月 24–25 日条目。"
         ]
       },
       {
@@ -2863,6 +2989,76 @@
     ],
     "longTerm": false,
     "highlight": true
+  },
+  {
+    "id": "pokemon-go-city-safari-boston-2026-rescheduled",
+    "name": "城市狩猎：波士顿延期持票活动（全球）",
+    "type": "city-safari",
+    "heading": "City Safari",
+    "summary": "仅原波士顿 City Safari 持票训练家可在全球参加：10 月 24–25 日每天当地时间 10–18 时开放原定野外遭遇与活动加成，并以限时调查替代原探险帽伊布奖励调查。",
+    "start": "2026-10-24T10:00:00",
+    "end": "2026-10-25T18:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/city-safari-boston-2026.jpg",
+    "link": "https://leekduck.com/events/pokemon-go-city-safari-boston-2026-rescheduled/",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-go-city-safari-boston-2026-rescheduled/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/pokemon-go-city-safari-boston-rescheduled-as-a-global-event-for-ticket-holders/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/city-safari-boston-rescheduled"
+      },
+      {
+        "label": "Fandom",
+        "url": "https://pokemongo.fandom.com/wiki/Pok%C3%A9mon_GO_City_Safari%3A_Boston"
+      }
+    ],
+    "bonuses": [
+      "仅原波士顿场持票训练家可参加；不再发售新票",
+      "原定野外遭遇与活动加成改为全球开放给符合资格的持票者",
+      "限时调查奖励包含 Flabébé（橙色花）、Hawlucha、Mudbray 与 Komala 遭遇及分支周末加成"
+    ],
+    "pokemon": [
+      {
+        "id": 669,
+        "name": "Flabébé"
+      },
+      {
+        "id": 701,
+        "name": "Hawlucha"
+      },
+      {
+        "id": 749,
+        "name": "Mudbray"
+      },
+      {
+        "id": 775,
+        "name": "Komala"
+      }
+    ],
+    "sections": [
+      {
+        "title": "调查与资格",
+        "items": [
+          "每个购票日可获得一次补充特殊调查；在波士顿转动补给站，最多可遇见 9 只带波士顿地点背景、戴探险帽的 Eevee。",
+          "符合资格者可在 2026 年 10 月 24 日至 2028 年 10 月 23 日期间登录领取该特殊调查。",
+          "本次延期玩法不包含波士顿 GO 集章活动；退款申请截止为 10 月 20 日 23:59（EST）。"
+        ]
+      }
+    ],
+    "longTerm": false,
+    "highlight": false
   },
   {
     "id": "max-mondays-2026-08-03",
@@ -4652,51 +4848,7 @@
     ],
     "highlight": true
   },
-  {
-    "id": "pokexciting-cross-region-go-stamp-rally",
-    "name": "PokéXciting 亚太跨地区集章活动(吉隆坡/台北/新加坡/马尼拉线下)",
-    "type": "event",
-    "heading": "In-Person Event",
-    "start": "2026-09-12T00:00:00",
-    "end": "2029-09-11T23:59:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
-    "image": "https://pokemongohub.net/wp-content/uploads/2026/08/event-apac-stamp-rally-2026.jpg",
-    "link": "https://pokemongohub.net/post/event/pokexciting-cross-region-go-stamp-rally/",
-    "summary": "亚太长期线下集章活动在吉隆坡、台北、新加坡与马尼拉设置城市专属印章；到场转动指定补给站，可遇见穿当地配色服装并带地点背景的 PokéXciting 皮卡丘。曼谷地点与日期待公布。",
-    "links": [
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/pokexciting-cross-region-go-stamp-rally/"
-      },
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/news/event-apac-stamp-rally-2026"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 25,
-        "name": "皮卡丘"
-      }
-    ],
-    "sections": [
-      {
-        "title": "首批四处地点",
-        "items": [
-          "吉隆坡：KLCC Park Esplanade 前方",
-          "台北：香堤大道",
-          "新加坡：樟宜机场第三航站楼出发大厅",
-          "马尼拉：SM Mall of Asia 的 MOA Sky",
-          "首批地点开放期为 2026 年 9 月 12 日至 2029 年 9 月 11 日"
-        ]
-      },
-      {
-        "title": "跨地区规则",
-        "body": "每座城市提供一枚独立数字印章；收集对应印章即可获得该城市配色的 PokéXciting 皮卡丘与当地地点背景。此活动与各巡回城市在主活动期间开放的本地五枚印章路线不同。"
-      }
-    ],
-    "longTerm": true
-  },
+
   {
     "id": "raid-battles-20260831",
     "name": "超级进阶 8 月 31 日超级团战",
@@ -5495,7 +5647,7 @@
     "heading": "Season",
     "start": "2026-09-08T10:00:00",
     "end": "2026-12-01T10:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
     "link": "https://leekduck.com/events/season-24-twilight-trails/",
     "summary": "暮光小径赛季引入每日探索主题：周一 Max、周二选秀会、周三团战、周四对战与聚焦、周五友谊、周日风景探索。",
     "links": [
@@ -5526,7 +5678,7 @@
     "heading": "In-Person Event",
     "start": "2026-09-18T14:00:00",
     "end": "2027-08-31T20:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {"scope":"regional","mode":"unknown","startPrecision":"exact","endPrecision":"exact"},
     "link": "https://pokemongo.com/en/news/2026_ana_green",
     "summary": "庆祝绿色宝可梦喷射机启航，日本四国、九州与冲绳的参与机场开放线下联动；参与道馆每天各有 1 场妙蛙种子团战并可带绿色喷射机地点背景，到场还可领取一次限时调查。",
     "links": [
@@ -7044,29 +7196,100 @@
     ],
     "highlight": false
   },
-  {
-    "id": "super-mega-raid-day-october-2026",
-    "name": "10 月 31 日超级超级团战日",
+    {
+    "id": "chandelure-super-mega-raid-day-2026",
+    "name": "Chandelure 超级团战日",
     "type": "raid-day",
-    "heading": "Raid Day",
+    "heading": "Super Mega Raid Day",
     "start": "2026-10-31T14:00:00",
     "end": "2026-10-31T17:00:00",
-    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/super-mega-raid-day-october-2026/",
-    "summary": "超级超级团战日确定于 10 月 31 日当地时间 14–17 时举行；主角、团战奖励与完整加成尚未公布。",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/chandelure-super-mega-raid-day-2026.jpg",
+    "link": "https://leekduck.com/events/chandelure-super-mega-raid-day-2026/",
+    "summary": "Mega Chandelure 首次登场，并可解锁超级最高等级；团战捕获的 Chandelure 已解锁超级等级 1，闪光概率提升。",
     "links": [
       {
         "label": "LeekDuck",
-        "url": "https://leekduck.com/events/super-mega-raid-day-october-2026/"
+        "url": "https://leekduck.com/events/chandelure-super-mega-raid-day-2026/"
       },
       {
-        "label": "Hub·秋季日期",
-        "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/event/super-mega-chandelure-raid-day/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/chandelure-super-mega-raid-day-2026"
       }
     ],
     "bonuses": [
-      "✨ 团战日闪光概率提升；主角待公布"
+      "✨ 超级超级团战中的闪光 Chandelure 概率提升",
+      ":raid: 转动道馆转盘最多获得 6 张免费团战入场券",
+      "远程团战上限在指定全球挑战时段提高至 20",
+      "超级超级团战捕获的 Chandelure 已解锁超级等级 1"
+    ],
+    "pokemon": [
+      {
+        "id": 609,
+        "name": "Mega Chandelure",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/10291.png",
+        "hub": "609-Mega"
+      }
+    ],
+    "counters": [
+      {
+        "id": 229,
+        "name": "Mega Houndoom",
+        "fast": "Snarl",
+        "charged": "Dark Pulse+",
+        "hub": "229-Mega",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png"
+      },
+      {
+        "id": 658,
+        "name": "Mega Greninja",
+        "fast": "Water Shuriken",
+        "charged": "Surf+",
+        "hub": "658-Mega",
+        "sprite": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm658.fMEGA.icon.png"
+      },
+      {
+        "id": 248,
+        "name": "Mega Tyranitar",
+        "fast": "Bite",
+        "charged": "Brutal Swing",
+        "hub": "248-Mega",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png"
+      },
+      {
+        "id": 445,
+        "name": "Mega Garchomp",
+        "fast": "Mud Shot",
+        "charged": "Earth Power",
+        "hub": "445-Mega",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png"
+      }
+    ],
+    "sections": [
+      {
+        "title": "超级最高与全球挑战",
+        "items": [
+          "Chandelure 达到超级等级 3 后可继续提升至超级最高，并在超级进化时使用额外充能招式 Ominous Wind+。",
+          "10 月 30 日 17:00 至 10 月 31 日 20:00（PDT）完成团战推进全球挑战；完成层级决定 11 月 2 日 12:00 至 15 日 12:00（PST）的招式与 CP 加成强度。"
+        ]
+      },
+      {
+        "title": "限时调查与付费票",
+        "items": [
+          "免费限时调查奖励包含 1 张高级对战入场券和 Tyranitar 遭遇。",
+          "4.99 美元票券把免费团战入场券上限提高至 14，并提供神奇糖果 XL、额外 5000 XP 与 5000 星尘等奖励。"
+        ]
+      }
     ],
     "highlight": true
   },
@@ -7193,17 +7416,22 @@
       }
     ]
   },
-  {
+    {
     "id": "minior-showers-orionids-2026",
     "name": "Minior 流星雨：猎户座流星群",
     "type": "event",
     "heading": "Event",
     "start": "2026-10-19T17:00:00.000",
     "end": "2026-10-24T23:59:00.000",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
     "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
     "link": "https://leekduck.com/events/minior-showers-orionids-2026/",
-    "summary": "Minior 随猎户座流星群首次在野外登场；每天 17–21 时遭遇概率进一步提升，捕捉可获得更多星尘。核心颜色尚未公布。",
+    "summary": "Minior 随猎户座流星群首次在野外登场；活动为当地 10 月 19 日 17:00 至 24 日 23:59，每天 17–21 时遭遇概率进一步提升，捕捉可获得更多星尘。核心颜色尚未公布。",
     "links": [
       {
         "label": "LeekDuck",
@@ -7279,14 +7507,19 @@
       }
     ]
   },
-  {
+    {
     "id": "minior-showers-leonids-2026",
     "name": "Minior 流星雨：狮子座流星群",
     "type": "event",
     "heading": "Event",
     "start": "2026-11-14T17:00:00.000",
     "end": "2026-11-19T23:59:00.000",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
     "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
     "link": "https://leekduck.com/events/minior-showers-leonids-2026/",
     "summary": "Minior 在狮子座流星群期间现身野外，并将有一种核心颜色首次登场；每天 17–21 时遭遇概率提升。",
@@ -7316,14 +7549,19 @@
       }
     ]
   },
-  {
+    {
     "id": "minior-showers-geminids-2026",
     "name": "Minior 流星雨：双子座流星群",
     "type": "event",
     "heading": "Event",
     "start": "2026-12-11T17:00:00.000",
     "end": "2026-12-16T23:59:00.000",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
     "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
     "link": "https://leekduck.com/events/minior-showers-geminids-2026/",
     "summary": "Minior 在双子座流星群期间现身野外；南北半球将分别迎来一种核心颜色首次登场，每天 17–21 时遭遇概率提升。",
@@ -7353,14 +7591,19 @@
       }
     ]
   },
-  {
+    {
     "id": "minior-showers-eta-aquariids-2027",
     "name": "Minior 流星雨：宝瓶座 η 流星群",
     "type": "event",
     "heading": "Event",
     "start": "2027-05-03T17:00:00.000",
     "end": "2027-05-08T23:59:00.000",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
     "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
     "link": "https://leekduck.com/events/minior-showers-eta-aquariids-2027/",
     "summary": "Minior 在宝瓶座 η 流星群期间现身野外，并将有一种核心颜色首次登场；每天 17–21 时遭遇概率提升。",
@@ -7390,14 +7633,19 @@
       }
     ]
   },
-  {
+    {
     "id": "minior-showers-southern-delta-aquariids-2027",
     "name": "Minior 流星雨：南宝瓶座 δ 流星群",
     "type": "event",
     "heading": "Event",
     "start": "2027-07-28T17:00:00.000",
     "end": "2027-08-02T23:59:00.000",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
     "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
     "link": "https://leekduck.com/events/minior-showers-southern-delta-aquariids-2027/",
     "summary": "Minior 在南宝瓶座 δ 流星群期间现身野外，并将有一种核心颜色首次登场；每天 17–21 时遭遇概率提升。",
@@ -7427,14 +7675,19 @@
       }
     ]
   },
-  {
+    {
     "id": "minior-showers-perseids-2027",
     "name": "Minior 流星雨：英仙座流星群",
     "type": "event",
     "heading": "Event",
     "start": "2027-08-10T17:00:00.000",
     "end": "2027-08-15T23:59:00.000",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
     "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
     "link": "https://leekduck.com/events/minior-showers-perseids-2027/",
     "summary": "Minior 在英仙座流星群期间现身野外，并将有一种核心颜色首次登场；每天 17–21 时遭遇概率提升。",
@@ -7546,8 +7799,8 @@
     "name": "伊裴尔塔尔现身 5★团战",
     "type": "raid-battles",
     "heading": "Raid Battles",
-    "start": "2026-10-07T06:00:00",
-    "end": "2026-10-13T22:00:00",
+    "start": "2026-10-07",
+    "end": "2026-10-13",
     "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
     "image": "https://cdn.leekduck.com/assets/img/events/raids.jpg",
     "link": "https://leekduck.com/events/yveltal-in-5-star-raid-battles-october-2026/",
@@ -7749,7 +8002,7 @@
     "heading": "Event",
     "start": "2026-10-13T10:00:00",
     "end": "2026-10-19T20:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-10-13-fall-marathon-buddy-trek-2026/go-pass-fall-marathon.jpg",
     "link": "https://leekduck.com/events/fall-marathon-buddy-trek-2026/",
     "summary": "Bramblin 首次登场；活动全程提升闪光 Electrike 概率，10 月 16 日 10 时起熏香中的洗翠 Growlithe 闪光概率提升，并开放步行限时调查与秋季马拉松 GO Pass。",
@@ -7825,14 +8078,19 @@
     ],
     "highlight": true
   },
-  {
+    {
     "id": "dialga-in-5-star-raid-battles-october-2026",
     "name": "帝牙卢卡现身 5★团战",
     "type": "raid-battles",
     "heading": "Raid Battles",
     "start": "2026-10-14T06:00:00",
     "end": "2026-10-20T22:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
     "image": "https://cdn.leekduck.com/assets/img/events/raids.jpg",
     "link": "https://leekduck.com/events/dialga-in-5-star-raid-battles-october-2026/",
     "summary": "该 Boss 在公布日期内现身 5★团战，并可在对应周三团战时刻集中挑战。",
@@ -7840,6 +8098,10 @@
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/dialga-in-5-star-raid-battles-october-2026/"
+      },
+      {
+        "label": "Hub·团战指南",
+        "url": "https://pokemongohub.net/post/guide/dialga-raid-guide-best-dialga-counters-in-pokemon-go/"
       },
       {
         "label": "Hub·10月月历",
@@ -7852,16 +8114,55 @@
         "name": "帝牙卢卡",
         "shiny": true
       }
+    ],
+    "counters": [
+      {
+        "id": 150,
+        "name": "Mega Mewtwo X",
+        "fast": "Counter",
+        "charged": "Dynamic Punch+",
+        "hub": "150-Mega_X",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png"
+      },
+      {
+        "id": 448,
+        "name": "Mega Lucario",
+        "fast": "Force Palm",
+        "charged": "Aura Sphere",
+        "hub": "448-Mega",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png"
+      },
+      {
+        "id": 257,
+        "name": "Mega Blaziken",
+        "fast": "Counter",
+        "charged": "Aura Sphere",
+        "hub": "257-Mega",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png"
+      },
+      {
+        "id": 383,
+        "name": "Primal Groudon",
+        "fast": "Mud Shot",
+        "charged": "Precipice Blades",
+        "hub": "383-Primal",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png"
+      }
     ]
   },
-  {
+    {
     "id": "mega-dragonite-in-mega-raids-october-2026",
     "name": "超级快龙现身超级团战",
     "type": "raid-battles",
     "heading": "Raid Battles",
     "start": "2026-10-14T06:00:00",
     "end": "2026-10-20T22:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
     "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
     "link": "https://leekduck.com/events/mega-dragonite-in-mega-raids-october-2026/",
     "summary": "该超级进化 Boss 在公布日期内现身超级团战；击败后可取得对应超级能量。",
@@ -7869,6 +8170,10 @@
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/mega-dragonite-in-mega-raids-october-2026/"
+      },
+      {
+        "label": "Hub·团战指南",
+        "url": "https://pokemongohub.net/post/guide/mega-dragonite-raid-guide/"
       },
       {
         "label": "Hub·10月月历",
@@ -7882,6 +8187,37 @@
         "shiny": true,
         "sprite": "https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp",
         "hub": "149-Mega"
+      }
+    ],
+    "counters": [
+      {
+        "id": 646,
+        "name": "White Kyurem",
+        "fast": "Ice Fang",
+        "charged": "Ice Burn",
+        "hub": "646-White",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png"
+      },
+      {
+        "id": 646,
+        "name": "Black Kyurem",
+        "fast": "Dragon Tail",
+        "charged": "Freeze Shock",
+        "hub": "646-Black",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10022.png"
+      },
+      {
+        "id": 473,
+        "name": "Shadow Mamoswine",
+        "fast": "Powder Snow",
+        "charged": "Avalanche",
+        "hub": "473-Shadow"
+      },
+      {
+        "id": 890,
+        "name": "Eternatus",
+        "fast": "Dragon Tail",
+        "charged": "Dynamax Cannon"
       }
     ]
   },
@@ -7953,7 +8289,7 @@
     "heading": "Max Mondays",
     "start": "2026-10-19T06:00:00",
     "end": "2026-10-19T21:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
     "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
     "link": "https://leekduck.com/events/max-mondays-2026-10-19/",
     "summary": "当天 6–21 时由极巨化 狃拉 占领能量点；18–19 时为 Max 周一重点时段。",
@@ -7985,7 +8321,7 @@
     "heading": "Raid Battles",
     "start": "2026-10-21T06:00:00",
     "end": "2026-10-27T22:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
     "image": "https://cdn.leekduck.com/assets/img/events/raids.jpg",
     "link": "https://leekduck.com/events/palkia-in-5-star-raid-battles-october-2026/",
     "summary": "该 Boss 在公布日期内现身 5★团战，并可在对应周三团战时刻集中挑战。",
@@ -8014,7 +8350,7 @@
     "heading": "Raid Battles",
     "start": "2026-10-21T06:00:00",
     "end": "2026-10-27T22:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
     "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
     "link": "https://leekduck.com/events/mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026/",
     "summary": "该超级进化 Boss 在公布日期内现身超级团战；击败后可取得对应超级能量。",
@@ -8340,7 +8676,7 @@
     "heading": "Raid Battles",
     "start": "2026-10-07T06:00:00",
     "end": "2026-11-03T22:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
     "image": "https://cdn.leekduck.com/assets/img/events/raids-shadow.jpg",
     "link": "https://leekduck.com/events/shadow-landorus-incarnate-forme-in-shadow-raids-october-2026/",
     "summary": "活动日期范围内的每个周末，暗影 土地云（化身形态）现身 5★暗影团战；平日不开放。",
@@ -8395,7 +8731,7 @@
     "heading": "Event",
     "start": "2026-09-27T10:00:00",
     "end": "2026-10-20T22:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {"scope":"regional","mode":"unknown","startPrecision":"exact","endPrecision":"exact"},
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-27-pokemon-tcg-30th-celebration/pokemon-tcg-30th-celebration.jpg",
     "link": "https://leekduck.com/events/pokemon-tcg-30th-celebration/",
     "summary": "美国 Target、Best Buy 与 GameStop 指定门店活动：现场可挑战超级 Gengar 团战并领取三页限时调查；调查领取截止 10 月 20 日，完成与领奖截止 11 月 20 日。",
@@ -8468,7 +8804,7 @@
     "heading": "Research",
     "start": "2026-09-25T10:00:00",
     "end": "2027-01-15T20:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {"scope":"regional","mode":"unknown","startPrecision":"exact","endPrecision":"exact"},
     "image": "https://cdn.leekduck.com/assets/img/events/pokemon-x-adidas-2026.jpg",
     "link": "https://leekduck.com/events/pokemon-x-adidas-2026/",
     "summary": "前往全球参与活动的 adidas 或零售门店并打开游戏，可领取三页限时调查；领取截止 2027 年 1 月 15 日，完成与领奖截止 2 月 13 日。",
@@ -8915,6 +9251,95 @@
     "pvp": true,
     "bonuses": [
       ":stardust: 对战胜利奖励星尘 ×4（不含整组结算奖励）"
+    ]
+  },
+  {
+    "id": "pokemongo-iitdelhi-2026",
+    "name": "IIT Delhi 校园联动（新德里）",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-09-28T10:00:00",
+    "end": "2026-10-01T20:00:00",
+    "timing": {"scope":"regional","mode":"unknown","startPrecision":"exact","endPrecision":"exact"},
+    "link": "https://pokemongo.com/news/pokemongo-iitdelhi-2026",
+    "links": [{"label":"官方","url":"https://pokemongo.com/news/pokemongo-iitdelhi-2026"},{"label":"Hub","url":"https://pokemongohub.net/post/event/iit-delhi-x-pokemon-go-rendezvous-2026/"}],
+    "summary": "Rendezvous 2026 期间，印度新德里 IIT Delhi 校园开放限定野外、每日团战、限时调查与收藏家挑战。",
+    "pokemon": [{"id":1,"name":"Bulbasaur","shiny":true},{"id":4,"name":"Charmander","shiny":true},{"id":7,"name":"Squirtle","shiny":true},{"id":25,"name":"Pikachu","shiny":true},{"id":133,"name":"Eevee","shiny":true}],
+    "sections": [{"title":"每日团战","items":["9/28 Meowth；9/29 Psyduck；9/30 Snorlax；10/1 Lapras"]},{"title":"调查奖励","body":"限时调查奖励包括经验、精灵球、高级对战入场券、薰香、神奇糖果与主题宝可梦遭遇。收藏家挑战另奖薰香、精灵球与经验。"}]
+  },
+  {
+    "id": "celebrate-with-hawlucha-mexico-exclusive-event",
+    "name": "Hawlucha 庆典（墨西哥限定）",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-09-15T10:00:00",
+    "end": "2026-09-21T20:00:00",
+    "timing": {"scope":"regional","mode":"unknown","startPrecision":"exact","endPrecision":"exact"},
+    "link": "https://pokemongohub.net/post/event/celebrate-with-hawlucha-mexico-exclusive-event/",
+    "links": [{"label":"Hub","url":"https://pokemongohub.net/post/event/celebrate-with-hawlucha-mexico-exclusive-event/"}],
+    "summary": "墨西哥限定庆典增加 Hawlucha 野外遭遇，并提供主题田野调查、分支限时调查与小队挑战；Hawlucha 可为闪光。",
+    "bonuses": [":incense: 薰香持续 2 小时"],
+    "pokemon": [{"id":701,"name":"Hawlucha","shiny":true}],
+    "sections": [{"title":"分支调查与小队挑战","body":"可选择与 Candela 或 Arlo 训练，分支决定遭遇奖励，另有薰香、贴纸、经验与星尘；主题小队挑战可遇见 Hawlucha。"}]
+  },
+  {
+    "id": "festival-of-lights-2026",
+    "name": "光之祭典 2026（印度限定）",
+    "type": "event",
+    "heading": "Festival of Lights",
+    "start": "2026-11-06T10:00:00",
+    "end": "2026-11-08T20:00:00",
+    "timing": {"scope":"regional","mode":"unknown","startPrecision":"exact","endPrecision":"exact"},
+    "link": "https://pokemongo.com/news/festival-of-lights-2026",
+    "links": [
+      {"label":"官方","url":"https://pokemongo.com/news/festival-of-lights-2026"},
+      {"label":"Hub","url":"https://pokemongohub.net/post/event/pokemon-go-festival-of-lights-2026-india-exclusive-event/"}
+    ],
+    "summary": "印度限定活动迎回纱丽与库尔塔装扮 Pikachu，团战有机会获得闪光与特殊背景个体；每天傍晚四个五分钟时段增加主题野外遭遇。",
+    "bonuses": [":lure: 诱饵模组持续时间 ×3", "转动补给站可获得纱丽与库尔塔装扮 Pikachu 贴纸"],
+    "pokemon": [{"id":25,"name":"Pikachu（纱丽／库尔塔装扮）","shiny":true}],
+    "sections": [
+      {"title":"闪耀时段","body":"活动日当地 18:00、18:30、19:00、19:30 各开放 5 分钟主题野外遭遇，包含两种装扮 Pikachu 等；这是遭遇增加，不代表闪光概率提升。"},
+      {"title":"提前开放的调查","body":"分支限时调查从 11 月 1 日当地 06:00 开放，奖励经验、星尘、贴纸与带特殊背景的装扮 Pikachu。另有收藏家挑战。"}
+    ]
+  },
+  {
+    "id": "apac-mall-exploration-2026",
+    "name": "宝可梦 30 周年商场探索（亚太多地）",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-10-01",
+    "end": "2027-03-28",
+    "timing": {"scope":"regional","mode":"unknown","startPrecision":"date","endPrecision":"date"},
+    "longTerm": true,
+    "link": "https://pokemongo.com/news/apac-mall-exploration-2026",
+    "links": [{"label":"官方","url":"https://pokemongo.com/news/apac-mall-exploration-2026"}],
+    "summary": "亚太指定商场分期开放宝可梦 30 周年联动；到场可领取限时调查，主题包含派对帽 Pikachu。各站日期不同，不是全区连续开放的统一活动。",
+    "bonuses": [":lure: 指定区域内诱饵模组持续 4 小时"],
+    "pokemon": [{"id":25,"name":"Pikachu（派对帽）"}],
+    "sections": [
+      {"title":"调查规则","body":"每位训练家只能在任一参与商场领取一次调查；领取后 10 天到期。"},
+      {"title":"2026 年秋季站点","items":["马来西亚 Ombak KLCC：10/1–12/31", "菲律宾 SM Mall of Asia：10/1–2027/1/31；SM East Ortigas：10/23–11/8；SM Southmall：11/20–11/30", "新加坡樟宜机场：11/7–2027/2/28；星耀樟宜：11/7–2027/1/31", "香港又一城：11/9–2027/1/3；游戏内容早于 11/11 线下展览开幕"]},
+      {"title":"后续菲律宾站点","items":["SM North EDSA：12/10–2027/1/3；SM Marikina：2027/1/15–1/31", "SM Seaside Cebu：2027/2/5–2/14；SM Davao：2/20–3/7；SM CDO Downtown：3/13–3/28", "泰国站点与日期待公布"]}
+    ]
+  },
+  {
+    "id": "european-space-agency-event",
+    "name": "欧洲航天局联动（欧洲博物馆）",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-10-04",
+    "end": "2027-04-30",
+    "timing": {"scope":"regional","mode":"unknown","startPrecision":"date","endPrecision":"date"},
+    "longTerm": true,
+    "link": "https://pokemongohub.net/post/event/european-space-agency-event/",
+    "links": [{"label":"Hub","url":"https://pokemongohub.net/post/event/european-space-agency-event/"}],
+    "summary": "欧洲六家参与博物馆持续开放宇航员装扮 Pikachu 1★团战与限时调查，现场团战捕获可带地点背景；不要与仅持续到 10 月 10 日的开幕周野外及田野调查混淆。",
+    "bonuses": [":raid: 现场团战宇航员装扮 Pikachu 可带地点背景"],
+    "pokemon": [{"id":25,"name":"Pikachu（宇航员装扮）","shiny":true}],
+    "sections": [
+      {"title":"参与博物馆","items":["英国伦敦 Science Museum；法国图卢兹 Cité de l’espace", "德国纽伦堡 Deutsches Museum；西班牙瓦伦西亚 Museu de les Ciències", "荷兰 Noordwijk 的 Space Expo；比利时 Transinne 的 Euro Space Center"]},
+      {"title":"已结束的开幕周","body":"10/4–10/10 博物馆另有田野调查与主题野外；同期 ESA 办公地点也开放游戏内容，但 ESA 地点没有地点背景。上述短期内容不延续到 2027 年。"}
     ]
   },
   {
