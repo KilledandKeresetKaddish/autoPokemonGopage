@@ -2708,7 +2708,14 @@ function renderReminderSidebar() {
       if (list.children[index] !== card) list.insertBefore(card, list.children[index] || null);
     });
   }
-  $('#reminder-count').textContent = String(entries.length);
+  // Collapsed entry signals "something starred is live now" (CSS: .has-live glow/orbit/peek).
+  const liveCount = buckets.live.length, count = $('#reminder-count');
+  let peek = $('#reminder-panel>summary .reminder-peek');
+  if (!peek) { peek = document.createElement('span'); peek.className = 'reminder-peek'; peek.setAttribute('aria-hidden', 'true'); count.before(peek); }
+  const firstLive = liveCount ? $('#reminder-live .reminder-open')?.textContent || '' : '';
+  peek.textContent = firstLive ? firstLive + (liveCount > 1 ? ` +${liveCount - 1}` : '') : '';
+  $('.reminder-sidebar').classList.toggle('has-live', liveCount > 0);
+  count.textContent = String(entries.length);
   $('#reminder-panel>summary').setAttribute('aria-label', `${i18n('reminder.title')} (${entries.length})`);
   $('#reminder-empty').hidden = entries.length > 0;
   $('#reminder-notice').textContent = reminderNotice();

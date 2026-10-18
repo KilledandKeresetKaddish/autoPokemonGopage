@@ -452,20 +452,23 @@ const deadline = setTimeout(async () => {
   await page.locator('#cal-next').click(); assert.equal(await page.locator('.reminder-item').count(),cardCount);
   await page.locator('#cal-prev').click(); assert((await activeCopies(page,'blue'))>=2);
   const backgrounds = await page.locator('.cal-bar.reminder-active').evaluateAll(nodes=>nodes.map(n=>getComputedStyle(n).backgroundImage));
-  assert(backgrounds.every(bg=>bg.includes('152, 99, 255') && bg.includes('111, 255, 238')),'aurora not category dependent');
+  assert(backgrounds.every(bg=>!bg.includes('152, 99, 255')),'live treatment keeps the category fill (no rainbow overlay)');
+  assert(await page.locator('.cal-bar.reminder-active .reminder-sparks').evaluateAll(nodes=>nodes.every(n=>getComputedStyle(n).animationName==='reminder-march')),'every live copy gets the marching gold frame');
+  assert.equal(await page.locator('.reminder-sidebar.has-live').count(),1,'collapsed entry signals live reminders');
+  assert.notEqual(await page.locator('#reminder-panel>summary .reminder-peek').textContent(),'','peek names the live event');
   assert.equal(await page.locator('.cal-bar[data-reminder-event="red"]').evaluate(n=>n.classList.contains('ft')),true);
   await page.evaluate(()=>window.scrollTo(0,0));
   await page.screenshot({path:path.join(artifacts,'desktop-aurora-0.png'),fullPage:true});
   const animationTarget = page.locator('.cal-bar[data-reminder-event="red"]');
-  const animationBefore = await animationTarget.evaluate(n=>({pos:getComputedStyle(n).backgroundPosition,shadow:getComputedStyle(n).boxShadow,animation:getComputedStyle(n).animationName,box:n.getBoundingClientRect().toJSON()}));
+  const animationBefore = await animationTarget.evaluate(n=>({pos:getComputedStyle(n.querySelector('.reminder-sparks')).backgroundPosition,shadow:getComputedStyle(n).boxShadow,animation:getComputedStyle(n).animationName,box:n.getBoundingClientRect().toJSON()}));
   await page.waitForTimeout(1200);
-  const animationAfter = await animationTarget.evaluate(n=>({pos:getComputedStyle(n).backgroundPosition,shadow:getComputedStyle(n).boxShadow,box:n.getBoundingClientRect().toJSON()}));
+  const animationAfter = await animationTarget.evaluate(n=>({pos:getComputedStyle(n.querySelector('.reminder-sparks')).backgroundPosition,shadow:getComputedStyle(n).boxShadow,box:n.getBoundingClientRect().toJSON()}));
   assert.notEqual(animationBefore.pos,animationAfter.pos); assert.notEqual(animationBefore.shadow,animationAfter.shadow);
-  assert.match(animationBefore.animation,/aurora-flow, aurora-glow/); assert.deepEqual(animationBefore.box,animationAfter.box,'animation must not shift layout');
+  assert.match(animationBefore.animation,/reminder-glow/); assert.deepEqual(animationBefore.box,animationAfter.box,'animation must not shift layout');
   await page.screenshot({path:path.join(artifacts,'desktop-aurora-1.png'),fullPage:true});
   await page.waitForTimeout(5000); // >2 complete flow cycles, not a one-shot pulse
   await page.screenshot({path:path.join(artifacts,'desktop-aurora-6.png'),fullPage:true});
-  assert.equal(await page.locator('.reminder-item[data-id="red"]').evaluate(n=>getComputedStyle(n).animationName),'aurora-flow, aurora-glow');
+  assert.equal(await page.locator('.reminder-item[data-id="red"]').evaluate(n=>getComputedStyle(n).animationName),'reminder-glow');
   // IME and language preserve the actual editor node, text, focus/caret, and scroll on calibration.
   await page.locator('.cal-bar[data-reminder-event="green"]').click();
   await input.focus(); await input.fill('中文 composing');
@@ -520,7 +523,9 @@ const deadline = setTimeout(async () => {
   // Reduced motion remains loud/static, with no movement.
   await page.emulateMedia({reducedMotion:'reduce'});
   assert.equal(await animationTarget.evaluate(n=>getComputedStyle(n).animationName),'none');
-  assert.match(await animationTarget.evaluate(n=>getComputedStyle(n).backgroundImage),/linear-gradient/);
+  assert.match(await animationTarget.evaluate(n=>getComputedStyle(n.querySelector('.reminder-sparks')).backgroundImage),/linear-gradient/);
+  assert.notEqual(await animationTarget.evaluate(n=>getComputedStyle(n).boxShadow),'none','static gold ring stays loud');
+  assert.equal(await page.locator('.reminder-peek').evaluate(n=>getComputedStyle(n).animationName),'none','reduced motion stops the entry peek');
   await page.screenshot({path:path.join(artifacts,'reduced-motion.png'),fullPage:true});
   await page.emulateMedia({reducedMotion:'no-preference'});
   // Narrow-screen panel expands in flow, track chooser/fallback remains safe, controls clickable.
@@ -569,7 +574,7 @@ const deadline = setTimeout(async () => {
   assert.equal(await page.locator('.reminder-sidebar').evaluate(n=>getComputedStyle(n).position),'static','expanded mobile panel must not stick over dates');
   await page.evaluate(()=>window.scrollTo(0,0));
   await page.waitForTimeout(3200); await page.screenshot({path:path.join(artifacts,'phone-panel-3.png')});
-  assert.equal(await page.locator('#reminder-live .reminder-item').first().evaluate(n=>getComputedStyle(n).animationName),'aurora-flow, aurora-glow');
+  assert.equal(await page.locator('#reminder-live .reminder-item').first().evaluate(n=>getComputedStyle(n).animationName),'reminder-glow');
   await page.locator('#reminder-live .reminder-item[data-id="red"] .reminder-done').click();
   await settle(page);
   assert.equal((await view(page,'red')).completed,true); assert.equal(await activeCopies(page,'red'),0);
