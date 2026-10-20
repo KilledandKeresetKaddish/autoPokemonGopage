@@ -1,84 +1,5 @@
 [
-  {
-    "id": "raichu-super-mega-raid-day-2026",
-    "name": "雷丘 超级团战日",
-    "type": "raid-day",
-    "heading": "Raid Day",
-    "start": "2026-07-18T14:00:00",
-    "end": "2026-07-18T17:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-18-raichu-super-mega-raid-day-2026/raichu-super-mega-raid-day-2026.jpg",
-    "link": "https://leekduck.com/events/raichu-super-mega-raid-day-2026/",
-    "summary": "雷丘超级团战日:全天密集出现超级雷丘(电系),闪光概率提升。14:00–17:00 期间最多可获 5 张免费团战入场券。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/raichu-super-mega-raid-day-2026/"
-      },
-      {
-        "label": "官方",
-        "url": "https://pokemongo.com/news/raichu-super-mega-raid-day-2026"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/super-mega-raichu-raid-day/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 26,
-        "name": "超级雷丘 X",
-        "shiny": true,
-        "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp",
-        "hub": "26-Mega_X"
-      },
-      {
-        "id": 26,
-        "name": "超级雷丘 Y",
-        "shiny": true,
-        "sprite": "https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp",
-        "hub": "26-Mega_Y"
-      }
-    ],
-    "bonuses": [
-      "✨ 闪光概率提升",
-      ":raid: 最多 5 张免费团战入场券",
-      ":raid: 远程团战入场券上限提至 20(7/17 17:00 起)",
-      ":candy: 击败可获得超级雷丘能量(解锁 Mega 等级 1)"
-    ],
-    "counters": [
-      {
-        "id": 445,
-        "name": "超级烈咬陆鲨",
-        "fast": "泥巴射击",
-        "charged": "大地之力",
-        "hub": "445-Mega"
-      },
-      {
-        "id": 383,
-        "name": "原始固拉多",
-        "fast": "泥巴射击",
-        "charged": "地震",
-        "hub": "383-Primal"
-      },
-      {
-        "id": 530,
-        "name": "龙头地鼠",
-        "fast": "泥巴射击",
-        "charged": "十字镐"
-      }
-    ],
-    "sections": [
-      {
-        "title": "限时调查与攻略",
-        "items": [
-          "活动期间提供限时调查，完成可获高级战斗通行证与大钢蛇遭遇",
-          ":raid: 两种超级雷丘均弱地面系，优先凑齐地面攻手"
-        ]
-      }
-    ],
-    "highlight": true
-  },
+
   {
     "id": "ultra-unlock-10th-anniversary-edition",
     "name": "究极解锁:十周年纪念版",
@@ -1427,39 +1348,7 @@
     ],
     "highlight": false
   },
-  {
-    "id": "max-mondays-2026-07-20",
-    "name": "Max 周一:极巨化破破袋",
-    "type": "max-mondays",
-    "heading": "Max Mondays",
-    "start": "2026-07-20T06:00:00",
-    "end": "2026-07-20T21:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
-    "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
-    "link": "https://leekduck.com/events/max-mondays-2026-07-20/",
-    "summary": "Max 周一:Max 团战登场极巨化破破袋,击败可获得其极巨态与 Max 粒子。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/max-mondays-2026-07-20/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 568,
-        "name": "破破袋"
-      }
-    ],
-    "bonuses": [
-      ":raid: Max 团战登场",
-      ":stardust: 可获得 Max 粒子"
-    ],
-    "highlight": false
-  },
+
   {
     "id": "max-mondays-2026-07-27",
     "name": "Max 周一:极巨化丑丑鱼",
@@ -1493,114 +1382,8 @@
     ],
     "highlight": false
   },
-  {
-    "id": "kyogre-in-5-star-raid-battles-july-2026",
-    "name": "盖欧卡 现身 5★ 团战",
-    "type": "raid-battles",
-    "heading": "Raid Battles",
-    "start": "2026-07-15T06:00:00",
-    "end": "2026-07-21T22:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
-    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
-    "link": "https://leekduck.com/events/kyogre-in-5-star-raid-battles-july-2026/",
-    "summary": "7/15–7/21 传说宝可梦盖欧卡(水)现身 5★ 团战,可遇闪光。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/kyogre-in-5-star-raid-battles-july-2026/"
-      },
-      {
-        "label": "Hub 盖欧卡指南",
-        "url": "https://pokemongohub.net/post/guide/kyogre-raid-boss/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 382,
-        "name": "盖欧卡",
-        "shiny": true
-      }
-    ],
-    "counters": [
-      {
-        "id": 796,
-        "name": "电束木",
-        "fast": "电击",
-        "charged": "打雷"
-      },
-      {
-        "id": 644,
-        "name": "捷克罗姆",
-        "fast": "充电光束",
-        "charged": "疯狂伏特"
-      },
-      {
-        "id": 407,
-        "name": "罗丝雷朵",
-        "fast": "飞叶快刀",
-        "charged": "飞叶风暴"
-      }
-    ],
-    "bonuses": [
-      "✨ 盖欧卡可遇闪光"
-    ],
-    "highlight": false
-  },
-  {
-    "id": "mega-sceptile-in-mega-raids-july-2026",
-    "name": "超级蜥蜴王 现身超级团战",
-    "type": "raid-battles",
-    "heading": "Raid Battles",
-    "start": "2026-07-15T06:00:00",
-    "end": "2026-07-21T22:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
-    "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
-    "link": "https://leekduck.com/events/mega-sceptile-in-mega-raids-july-2026/",
-    "summary": "7/15–7/21 超级蜥蜴王(草/龙)现身超级团战,击败可获得超级能量,其原型可遇闪光。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/mega-sceptile-in-mega-raids-july-2026/"
-      },
-      {
-        "label": "Hub 超级蜥蜴王指南",
-        "url": "https://pokemongohub.net/post/guide/mega-sceptile-raid-guide/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 254,
-        "name": "超级蜥蜴王",
-        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png",
-        "hub": "254-Mega",
-        "shiny": true
-      }
-    ],
-    "counters": [
-      {
-        "id": 461,
-        "name": "玛狃拉",
-        "fast": "冰砾",
-        "charged": "雪崩"
-      },
-      {
-        "id": 473,
-        "name": "象牙猪",
-        "fast": "细雪",
-        "charged": "冰锥"
-      },
-      {
-        "id": 471,
-        "name": "冰伊布",
-        "fast": "冰息",
-        "charged": "冰冻光束"
-      }
-    ],
-    "bonuses": [
-      "✨ 蜥蜴王可遇闪光"
-    ],
-    "highlight": false
-  },
+
+
   {
     "id": "raidhour20260722",
     "name": "索尔迦雷欧 团战时刻",
@@ -1892,127 +1675,8 @@
     ],
     "highlight": false
   },
-  {
-    "id": "special-anniversary-pikachu-celebration-2026",
-    "name": "特别周年皮卡丘庆典",
-    "type": "event",
-    "heading": "Event",
-    "start": "2026-07-13T10:00:00",
-    "end": "2026-07-20T20:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-13-special-anniversary-pikachu-celebration-2026/special-anniversary-pikachu-celebration-2026.jpg",
-    "link": "https://leekduck.com/events/special-anniversary-pikachu-celebration-2026/",
-    "summary": "特别周年皮卡丘庆典带回多种换装皮卡丘:野外、1★团战与实地调查均有活动主题皮卡丘,并同步开放免费 GO 通行证与付费 Deluxe 轨道。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/special-anniversary-pikachu-celebration-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/special-anniversary-pikachu-celebration-event/"
-      },
-      {
-        "label": "Hub 月历",
-        "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
-      }
-    ],
-    "bonuses": [
-      ":spawn: 皮卡丘在野外更常出现",
-      ":pokeball: 皮卡丘更容易捕捉",
-      ":raid: 1★ 团战出现多种换装皮卡丘",
-      ":candy: 免费 GO 通行证与付费 Deluxe 轨道"
-    ],
-    "pokemon": [
-      {
-        "id": 25,
-        "name": "皮卡丘",
-        "shiny": true
-      }
-    ],
-    "sections": [
-      {
-        "title": "野外与调查主题",
-        "items": [
-          "野外可遇万圣节服装皮卡丘、冬季嘉年华皮卡丘、夏日风格皮卡丘等。",
-          "活动主题实地调查可奖励活动主题皮卡丘遭遇。"
-        ]
-      },
-      {
-        "title": "1★ 团战皮卡丘",
-        "items": [
-          "红色、黄色、蓝色点缀的礼服皮卡丘",
-          "狩猎帽皮卡丘、大学夹克皮卡丘、紫水晶王冠皮卡丘",
-          "世界锦标赛 2022 / 2023 / 2024 皮卡丘"
-        ]
-      },
-      {
-        "title": "GO 通行证",
-        "items": [
-          "7/13 10:00 自动获得 GO 通行证:特别周年皮卡丘庆典,可在 7/20 20:00 前收集 GO 点数提升 Rank。",
-          "GO 通行证豪华版售价 4.99 美元;豪华版 + 6 Rank 售价 6.99 美元。",
-          "已解锁奖励须在 7/22 20:00 前领取。"
-        ]
-      }
-    ],
-    "highlight": false
-  },
-  {
-    "id": "happy-birthday-professor-willow-2026",
-    "name": "威洛博士生日调查",
-    "type": "event",
-    "heading": "Event",
-    "start": "2026-07-21T10:00:00",
-    "end": "2026-07-21T20:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
-    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-07-21-happy-birthday-professor-willow-2026/happy-birthday-professor-willow-2026.jpg",
-    "link": "https://leekduck.com/events/happy-birthday-professor-willow-2026/",
-    "summary": "威洛博士生日调查限时一天登场,威洛博士助手皮卡丘首次亮相,可通过拍照惊喜、1★团战、实地调查与免费限时调查遇见。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/happy-birthday-professor-willow-2026/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/professor-willows-birthday-research/"
-      },
-      {
-        "label": "Hub 月历",
-        "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
-      }
-    ],
-    "bonuses": [
-      ":spawn: 拍照惊喜可遇威洛博士助手皮卡丘",
-      ":raid: 1★ 团战出现威洛博士助手皮卡丘",
-      "实地调查奖励含宝可币、幸运蛋与皮卡丘遭遇",
-      "免费限时调查奖励含皮卡丘遭遇、幸运蛋、星星碎片等"
-    ],
-    "pokemon": [
-      {
-        "id": 25,
-        "name": "皮卡丘",
-        "shiny": true
-      }
-    ],
-    "sections": [
-      {
-        "title": "首次登场",
-        "items": [
-          "威洛博士助手皮卡丘在实地调查、限时调查、拍照惊喜与团战中登场。",
-          "有机会遇见闪光个体,也可能带队长主题特殊背景。"
-        ]
-      },
-      {
-        "title": "调查期限",
-        "items": [
-          "活动本体为 7/21 10:00–20:00。",
-          "免费限时调查任务与奖励须在 7/27 20:00 前完成并领取。"
-        ]
-      }
-    ],
-    "highlight": false
-  },
+
+
   {
     "id": "ozone-ascent-2026",
     "name": "臭氧攀升:烈空坐限时调查",
@@ -8575,17 +8239,22 @@
       }
     ]
   },
-  {
+    {
     "id": "mega-sableye-in-mega-raids-october-2026",
     "name": "超级勾魂眼现身超级团战",
     "type": "raid-battles",
     "heading": "Raid Battles",
     "start": "2026-10-28T06:00:00",
-    "end": "2026-11-03T22:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "end": "2026-11-08T22:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
     "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
     "link": "https://leekduck.com/events/mega-sableye-in-mega-raids-october-2026/",
-    "summary": "该超级进化 Boss 在公布日期内现身超级团战；击败后可取得对应超级能量。",
+    "summary": "超级勾魂眼从 10 月 28 日至 11 月 8 日现身超级团战；击败后可取得勾魂眼超级能量。",
     "links": [
       {
         "label": "LeekDuck",
@@ -8594,6 +8263,10 @@
       {
         "label": "Hub·10月月历",
         "url": "https://pokemongohub.net/post/event/october-2026-events/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
       }
     ],
     "pokemon": [
@@ -9366,6 +9039,954 @@
     "pvp": true,
     "bonuses": [
       ":stardust: 对战胜利奖励星尘 ×4（不含整组结算奖励）"
+    ]
+  },
+  {
+    "id": "pokemon-night-out-los-angeles-2026",
+    "name": "Pokémon Night Out：洛杉矶（线下）",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-10-24T18:00:00",
+    "end": "2026-10-24",
+    "timing": {
+      "scope": "regional",
+      "mode": "local",
+      "startPrecision": "unknown",
+      "endPrecision": "unknown",
+      "timeZone": "America/Los_Angeles"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/pokemon-night-out-2026.jpg",
+    "link": "https://leekduck.com/events/pokemon-night-out-los-angeles-2026/",
+    "summary": "Los Angeles Pokémon Night Out 场馆限定联动：主题野外、地点背卡团战与最多两份限时调查同步开放。游戏时段未获单独确认，页面时间仅依演出安排。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-night-out-los-angeles-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/pokemon-night-out-location-backgrounds-toxtricity-and-unown/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/pokemon-night-out-irl-details2026"
+      }
+    ],
+    "bonuses": [
+      ":lure: 场馆内诱饵模组持续 1 小时（金色诱饵模组除外）"
+    ],
+    "pokemon": [
+      {
+        "id": 92,
+        "name": "鬼斯",
+        "shiny": true
+      },
+      {
+        "id": 100,
+        "name": "Voltorb",
+        "shiny": true
+      },
+      {
+        "id": 105,
+        "name": "Alolan Marowak",
+        "shiny": true,
+        "hub": "105-Alolan"
+      },
+      {
+        "id": 163,
+        "name": "Hoothoot",
+        "shiny": true
+      },
+      {
+        "id": 198,
+        "name": "Murkrow",
+        "shiny": true
+      },
+      {
+        "id": 228,
+        "name": "戴鲁比",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "团战与地点背卡",
+        "items": [
+          "Pikachu 1★团战与 Gengar 3★团战；捕获个体可带洛杉矶地点背景",
+          "两种团战宝可梦均可能闪光"
+        ]
+      },
+      {
+        "title": "场馆限时调查",
+        "body": "在场馆打开 Pokémon GO 最多可领取两份限时调查，奖励包含两种形态 Toxtricity 遭遇及 Pokémon Night Out 棒球衫；任务与截止时间尚未公布。"
+      }
+    ]
+  },
+  {
+    "id": "pokemon-night-out-london-2026",
+    "name": "Pokémon Night Out：伦敦（线下）",
+    "type": "event",
+    "heading": "In-Person Event",
+    "start": "2026-11-10",
+    "end": "2026-11-10",
+    "timing": {
+      "scope": "regional",
+      "mode": "local",
+      "startPrecision": "unknown",
+      "endPrecision": "unknown",
+      "timeZone": "Europe/London"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/pokemon-night-out-2026.jpg",
+    "link": "https://leekduck.com/events/pokemon-night-out-london-2026/",
+    "summary": "London Pokémon Night Out 场馆限定联动：主题野外、地点背卡团战与最多两份限时调查同步开放。游戏时段未获单独确认，页面时间仅依演出安排。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemon-night-out-london-2026/"
+      },
+      {
+        "label": "Hub",
+        "url": "https://pokemongohub.net/post/news/pokemon-night-out-location-backgrounds-toxtricity-and-unown/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/pokemon-night-out-irl-details2026"
+      }
+    ],
+    "bonuses": [
+      ":lure: 场馆内诱饵模组持续 1 小时（金色诱饵模组除外）"
+    ],
+    "pokemon": [
+      {
+        "id": 92,
+        "name": "鬼斯",
+        "shiny": true
+      },
+      {
+        "id": 100,
+        "name": "Voltorb",
+        "shiny": true
+      },
+      {
+        "id": 105,
+        "name": "Alolan Marowak",
+        "shiny": true,
+        "hub": "105-Alolan"
+      },
+      {
+        "id": 163,
+        "name": "Hoothoot",
+        "shiny": true
+      },
+      {
+        "id": 198,
+        "name": "Murkrow",
+        "shiny": true
+      },
+      {
+        "id": 228,
+        "name": "戴鲁比",
+        "shiny": true
+      }
+    ],
+    "sections": [
+      {
+        "title": "团战与地点背卡",
+        "items": [
+          "Pikachu 1★团战与 Gengar 3★团战；捕获个体可带伦敦地点背景",
+          "两种团战宝可梦均可能闪光"
+        ]
+      },
+      {
+        "title": "场馆限时调查",
+        "body": "在场馆打开 Pokémon GO 最多可领取两份限时调查，奖励包含两种形态 Toxtricity 遭遇及 Pokémon Night Out 棒球衫；任务与截止时间尚未公布。"
+      }
+    ]
+  },
+  {
+    "id": "max-mondays-2026-11-02",
+    "name": "Max周一·Machop",
+    "type": "max-mondays",
+    "heading": "Max Mondays",
+    "start": "2026-11-02T06:00:00",
+    "end": "2026-11-02T21:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+    "link": "https://leekduck.com/events/max-mondays-2026-11-02/",
+    "summary": "当地时间 6–21 时由极巨化 Machop 占领能量点；18–19 时为 Max 周一重点时段。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-mondays-2026-11-02/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 66,
+        "name": "Machop",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":xl-candy: 现场完成 Max 对战可获 1 颗神奇糖果 XL"
+    ]
+  },
+  {
+    "id": "giratina-altered-forme-in-5-star-raid-battles-november-2026",
+    "name": "骑拉帝纳（别种形态）现身 5★团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-11-04T06:00:00",
+    "end": "2026-11-08T22:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/giratina-altered-forme-in-5-star-raid-battles-november-2026/",
+    "summary": "骑拉帝纳（别种形态）在 11 月 4–8 日现身 5★团战，并于 11 月 4 日团战时刻集中出现。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/giratina-altered-forme-in-5-star-raid-battles-november-2026/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      },
+      {
+        "label": "Hub·团战指南",
+        "url": "https://pokemongohub.net/post/guide/giratina-altered-raid/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 487,
+        "name": "骑拉帝纳（别种形态）",
+        "shiny": true,
+        "hub": "487-Altered"
+      }
+    ],
+    "counters": [
+      {
+        "id": 890,
+        "name": "Eternatus",
+        "fast": "Dragon Tail",
+        "charged": "Dynamax Cannon"
+      },
+      {
+        "id": 384,
+        "name": "Mega Rayquaza",
+        "fast": "Dragon Tail",
+        "charged": "Breaking Swipe",
+        "hub": "384-Mega"
+      },
+      {
+        "id": 646,
+        "name": "Black Kyurem",
+        "fast": "Dragon Tail",
+        "charged": "Freeze Shock",
+        "hub": "646-Black"
+      }
+    ]
+  },
+  {
+    "id": "shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026",
+    "name": "暗影龙卷云（化身形态）现身暗影团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-11-04T06:00:00",
+    "end": "2026-11-08T22:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/raids-shadow.jpg",
+    "link": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026/",
+    "summary": "活动日期内的周末，暗影龙卷云（化身形态）现身 5★暗影团战。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 641,
+        "name": "暗影龙卷云（化身形态）",
+        "shiny": true,
+        "hub": "641-Incarnate_Shadow"
+      }
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "raidhour20261104",
+    "name": "骑拉帝纳（别种形态）团战时刻",
+    "type": "raid-hour",
+    "heading": "Raid Hour",
+    "start": "2026-11-04T18:00:00",
+    "end": "2026-11-04T19:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+    "link": "https://leekduck.com/events/raidhour20261104/",
+    "summary": "当地时间 18–19 时，骑拉帝纳（别种形态）5★团战大量出现。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/raidhour20261104/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 487,
+        "name": "骑拉帝纳（别种形态）",
+        "shiny": true,
+        "hub": "487-Altered"
+      }
+    ]
+  },
+  {
+    "id": "pokemonspotlighthour2026-11-05",
+    "name": "巫师帽 Teddiursa 聚焦时刻",
+    "type": "pokemon-spotlight-hour",
+    "heading": "Spotlight Hour",
+    "start": "2026-11-05T18:00:00",
+    "end": "2026-11-05T19:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/spotlight-hour.jpg",
+    "link": "https://leekduck.com/events/pokemonspotlighthour2026-11-05/",
+    "summary": "当地时间 18–19 时，戴巫师帽的 Teddiursa 大量出现，并开放进化经验双倍加成。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemonspotlighthour2026-11-05/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 216,
+        "name": "Teddiursa（巫师帽）",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":xp: 进化宝可梦经验值 ×2"
+    ]
+  },
+  {
+    "id": "cresselia-darkrai-in-5-star-raid-battles-november-2026",
+    "name": "克雷色利亚 / 达克莱伊现身 5★团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-11-09T06:00:00",
+    "end": "2026-11-24T22:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/cresselia-darkrai-in-5-star-raid-battles-november-2026/",
+    "summary": "Hub 11 月月历确认克雷色利亚与达克莱伊在 11 月 9–24 日轮值 5★团战；LeekDuck 详情仅列 11 月 16–24 日，采用覆盖更完整的月历区间。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/cresselia-darkrai-in-5-star-raid-battles-november-2026/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      },
+      {
+        "label": "Hub·克雷色利亚指南",
+        "url": "https://pokemongohub.net/post/guide/cresselia-raid/"
+      },
+      {
+        "label": "Hub·达克莱伊指南",
+        "url": "https://pokemongohub.net/post/guide/darkrai-raid-counters-guide/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 488,
+        "name": "克雷色利亚",
+        "shiny": true
+      },
+      {
+        "id": 491,
+        "name": "达克莱伊",
+        "shiny": true
+      }
+    ],
+    "counters": [
+      {
+        "id": 800,
+        "name": "Dawn Wings Necrozma",
+        "fast": "Shadow Claw",
+        "charged": "Moongeist Beam",
+        "hub": "800-Dawn_Wings"
+      },
+      {
+        "id": 94,
+        "name": "Mega Gengar",
+        "fast": "Lick",
+        "charged": "Shadow Ball",
+        "hub": "94-Mega"
+      },
+      {
+        "id": 257,
+        "name": "Mega Blaziken",
+        "fast": "Counter",
+        "charged": "Aura Sphere",
+        "hub": "257-Mega"
+      }
+    ]
+  },
+  {
+    "id": "mega-banette-in-mega-raids-november-2026",
+    "name": "超级诅咒娃娃现身超级团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-11-16T06:00:00",
+    "end": "2026-11-24T22:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+    "link": "https://leekduck.com/events/mega-banette-in-mega-raids-november-2026/",
+    "summary": "超级诅咒娃娃在 11 月 16–24 日现身超级团战；击败后可取得诅咒娃娃超级能量。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-banette-in-mega-raids-november-2026/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      },
+      {
+        "label": "Hub·团战指南",
+        "url": "https://pokemongohub.net/post/guide/mega-banette-raid-guide/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 354,
+        "name": "超级诅咒娃娃",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10056.png",
+        "hub": "354-Mega"
+      }
+    ],
+    "counters": [
+      {
+        "id": 229,
+        "name": "Mega Houndoom",
+        "fast": "Snarl",
+        "charged": "Dark Pulse+",
+        "hub": "229-Mega"
+      },
+      {
+        "id": 248,
+        "name": "Mega Tyranitar",
+        "fast": "Bite",
+        "charged": "Brutal Swing",
+        "hub": "248-Mega"
+      },
+      {
+        "id": 94,
+        "name": "Mega Gengar",
+        "fast": "Lick",
+        "charged": "Shadow Ball",
+        "hub": "94-Mega"
+      }
+    ]
+  },
+  {
+    "id": "shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026",
+    "name": "暗影龙卷云（化身形态）现身暗影团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-11-16T06:00:00",
+    "end": "2026-12-01T22:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/raids-shadow.jpg",
+    "link": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/",
+    "summary": "活动日期范围内的每个周末，暗影龙卷云（化身形态）现身 5★暗影团战；平日不开放。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 641,
+        "name": "暗影龙卷云（化身形态）",
+        "shiny": true,
+        "hub": "641-Incarnate_Shadow"
+      }
+    ],
+    "longTerm": true
+  },
+  {
+    "id": "max-mondays-2026-11-16",
+    "name": "Max周一·主角待公布",
+    "type": "max-mondays",
+    "heading": "Max Mondays",
+    "start": "2026-11-16T06:00:00",
+    "end": "2026-11-16T21:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+    "link": "https://leekduck.com/events/max-mondays-2026-11-16/",
+    "summary": "当地时间 6–21 时开放 Max 周一；本周极巨化主角尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-mondays-2026-11-16/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      }
+    ],
+    "bonuses": [
+      ":xl-candy: 现场完成 Max 对战可获 1 颗神奇糖果 XL"
+    ]
+  },
+  {
+    "id": "dynamax-trails-2026",
+    "name": "极巨化小径",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-11-16T10:00:00",
+    "end": "2026-11-23T20:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/dynamax-trails-2026/",
+    "summary": "极巨化小径活动确定于 11 月 16 日 10 时至 23 日 20 时举行；玩法、宝可梦与加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/dynamax-trails-2026/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      }
+    ]
+  },
+  {
+    "id": "raidhour20261118",
+    "name": "克雷色利亚 / 达克莱伊团战时刻",
+    "type": "raid-hour",
+    "heading": "Raid Hour",
+    "start": "2026-11-18T18:00:00",
+    "end": "2026-11-18T19:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+    "link": "https://leekduck.com/events/raidhour20261118/",
+    "summary": "当地时间 18–19 时，克雷色利亚与达克莱伊 5★团战大量出现。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/raidhour20261118/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 488,
+        "name": "克雷色利亚",
+        "shiny": true
+      },
+      {
+        "id": 491,
+        "name": "达克莱伊",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "max-mondays-2026-11-23",
+    "name": "Max周一·Espurr",
+    "type": "max-mondays",
+    "heading": "Max Mondays",
+    "start": "2026-11-23T06:00:00",
+    "end": "2026-11-23T21:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+    "link": "https://leekduck.com/events/max-mondays-2026-11-23/",
+    "summary": "当地时间 6–21 时由极巨化 Espurr 占领能量点；18–19 时为 Max 周一重点时段。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-mondays-2026-11-23/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 677,
+        "name": "Espurr",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":xl-candy: 现场完成 Max 对战可获 1 颗神奇糖果 XL"
+    ]
+  },
+  {
+    "id": "twilight-wishes-2026",
+    "name": "暮光心愿",
+    "type": "event",
+    "heading": "Event",
+    "start": "2026-11-24T10:00:00",
+    "end": "2026-11-30T20:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/twilight-wishes-2026/",
+    "summary": "暮光心愿活动确定于 11 月 24 日 10 时至 30 日 20 时举行；玩法、宝可梦与加成尚未公布。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/twilight-wishes-2026/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      }
+    ]
+  },
+  {
+    "id": "deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026",
+    "name": "代欧奇希斯四种形态现身 5★团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-11-25T06:00:00",
+    "end": "2026-12-01T22:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+    "link": "https://leekduck.com/events/deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026/",
+    "summary": "代欧奇希斯普通、防御、攻击与速度形态在 11 月 25 日至 12 月 1 日现身 5★团战。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      },
+      {
+        "label": "Hub·普通形态指南",
+        "url": "https://pokemongohub.net/post/guide/deoxys-raid-counters-guide/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 386,
+        "name": "代欧奇希斯（普通形态）",
+        "shiny": true,
+        "hub": "386-Normal"
+      },
+      {
+        "id": 386,
+        "name": "代欧奇希斯（防御形态）",
+        "shiny": true,
+        "hub": "386-Defense"
+      },
+      {
+        "id": 386,
+        "name": "代欧奇希斯（攻击形态）",
+        "shiny": true,
+        "hub": "386-Attack"
+      },
+      {
+        "id": 386,
+        "name": "代欧奇希斯（速度形态）",
+        "shiny": true,
+        "hub": "386-Speed"
+      }
+    ],
+    "counters": [
+      {
+        "id": 800,
+        "name": "Dawn Wings Necrozma",
+        "fast": "Shadow Claw",
+        "charged": "Moongeist Beam",
+        "hub": "800-Dawn_Wings"
+      },
+      {
+        "id": 94,
+        "name": "Mega Gengar",
+        "fast": "Lick",
+        "charged": "Shadow Ball",
+        "hub": "94-Mega"
+      },
+      {
+        "id": 248,
+        "name": "Mega Tyranitar",
+        "fast": "Bite",
+        "charged": "Brutal Swing",
+        "hub": "248-Mega"
+      }
+    ]
+  },
+  {
+    "id": "mega-metagross-in-mega-raids-november-2026",
+    "name": "超级巨金怪现身超级团战",
+    "type": "raid-battles",
+    "heading": "Raid Battles",
+    "start": "2026-11-25T06:00:00",
+    "end": "2026-12-01T22:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+    "link": "https://leekduck.com/events/mega-metagross-in-mega-raids-november-2026/",
+    "summary": "超级巨金怪在 11 月 25 日至 12 月 1 日现身超级团战；击败后可取得巨金怪超级能量。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/mega-metagross-in-mega-raids-november-2026/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      },
+      {
+        "label": "Hub·团战指南",
+        "url": "https://pokemongohub.net/post/guide/mega-metagross-raid-guide/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 376,
+        "name": "超级巨金怪",
+        "shiny": true,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10076.png",
+        "hub": "376-Mega"
+      }
+    ],
+    "counters": [
+      {
+        "id": 6,
+        "name": "Mega Charizard Y",
+        "fast": "Fire Spin",
+        "charged": "Blast Burn",
+        "hub": "6-Mega_Y"
+      },
+      {
+        "id": 383,
+        "name": "Primal Groudon",
+        "fast": "Mud Shot",
+        "charged": "Precipice Blades",
+        "hub": "383-Primal"
+      },
+      {
+        "id": 800,
+        "name": "Dawn Wings Necrozma",
+        "fast": "Shadow Claw",
+        "charged": "Moongeist Beam",
+        "hub": "800-Dawn_Wings"
+      }
+    ]
+  },
+  {
+    "id": "raidhour20261125",
+    "name": "代欧奇希斯四形态团战时刻",
+    "type": "raid-hour",
+    "heading": "Raid Hour",
+    "start": "2026-11-25T18:00:00",
+    "end": "2026-11-25T19:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+    "link": "https://leekduck.com/events/raidhour20261125/",
+    "summary": "当地时间 18–19 时，代欧奇希斯普通、防御、攻击与速度形态 5★团战大量出现。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/raidhour20261125/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 386,
+        "name": "代欧奇希斯",
+        "shiny": true
+      }
+    ]
+  },
+  {
+    "id": "pokemonspotlighthour2026-11-26",
+    "name": "Noibat 聚焦时刻",
+    "type": "pokemon-spotlight-hour",
+    "heading": "Spotlight Hour",
+    "start": "2026-11-26T18:00:00",
+    "end": "2026-11-26T19:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/spotlight-hour.jpg",
+    "link": "https://leekduck.com/events/pokemonspotlighthour2026-11-26/",
+    "summary": "当地时间 18–19 时，Noibat 大量出现，并开放捕捉糖果双倍加成。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/pokemonspotlighthour2026-11-26/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 714,
+        "name": "Noibat",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":candy: 捕捉宝可梦糖果 ×2"
+    ]
+  },
+  {
+    "id": "max-mondays-2026-11-30",
+    "name": "Max周一·Cryogonal",
+    "type": "max-mondays",
+    "heading": "Max Mondays",
+    "start": "2026-11-30T06:00:00",
+    "end": "2026-11-30T21:00:00",
+    "timing": {
+      "scope": "global",
+      "mode": "local",
+      "startPrecision": "exact",
+      "endPrecision": "exact"
+    },
+    "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+    "link": "https://leekduck.com/events/max-mondays-2026-11-30/",
+    "summary": "当地时间 6–21 时由极巨化 Cryogonal 占领能量点；18–19 时为 Max 周一重点时段。",
+    "links": [
+      {
+        "label": "LeekDuck",
+        "url": "https://leekduck.com/events/max-mondays-2026-11-30/"
+      },
+      {
+        "label": "Hub·11月月历",
+        "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+      }
+    ],
+    "pokemon": [
+      {
+        "id": 615,
+        "name": "Cryogonal",
+        "shiny": true
+      }
+    ],
+    "bonuses": [
+      ":xl-candy: 现场完成 Max 对战可获 1 颗神奇糖果 XL"
     ]
   }
 ]

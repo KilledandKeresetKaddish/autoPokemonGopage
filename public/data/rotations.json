@@ -751,6 +751,70 @@
           ],
           "start": "2026-10-28",
           "end": "2026-11-03"
+        },
+        {
+          "name": "Giratina (Altered Forme)",
+          "cn": "骑拉帝纳（别种形态）",
+          "pokemon": [
+            {
+              "id": 487,
+              "name": "骑拉帝纳",
+              "shiny": true,
+              "hub": "487-Altered"
+            }
+          ],
+          "start": "2026-11-04",
+          "end": "2026-11-08"
+        },
+        {
+          "name": "Cresselia / Darkrai",
+          "cn": "克雷色利亚 / 达克莱伊",
+          "pokemon": [
+            {
+              "id": 488,
+              "name": "克雷色利亚",
+              "shiny": true
+            },
+            {
+              "id": 491,
+              "name": "达克莱伊",
+              "shiny": true
+            }
+          ],
+          "start": "2026-11-09",
+          "end": "2026-11-24"
+        },
+        {
+          "name": "Deoxys (All Formes)",
+          "cn": "代欧奇希斯（四种形态）",
+          "pokemon": [
+            {
+              "id": 386,
+              "name": "代欧奇希斯（普通形态）",
+              "shiny": true,
+              "hub": "386-Normal"
+            },
+            {
+              "id": 386,
+              "name": "代欧奇希斯（防御形态）",
+              "shiny": true,
+              "hub": "386-Defense"
+            },
+            {
+              "id": 386,
+              "name": "代欧奇希斯（攻击形态）",
+              "shiny": true,
+              "hub": "386-Attack"
+            },
+            {
+              "id": 386,
+              "name": "代欧奇希斯（速度形态）",
+              "shiny": true,
+              "hub": "386-Speed"
+            }
+          ],
+          "start": "2026-11-25",
+          "end": "2026-12-01"
         }
       ]
     },
@@ -1540,14 +1604,52 @@
             }
           ],
           "start": "2026-10-28",
-          "end": "2026-11-03"
+          "end": "2026-11-08"
         },
         {
           "name": "Super Mega Chandelure Raid Day",
           "cn": "Chandelure 超级团战日",
-          "pokemon": [{"id":609,"name":"Mega Chandelure","shiny":true,"sprite":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/10291.png","hub":"609-Mega"}],
+          "pokemon": [
+            {
+              "id": 609,
+              "name": "Mega Chandelure",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/10291.png",
+              "hub": "609-Mega"
+            }
+          ],
           "start": "2026-10-31",
           "end": "2026-10-31"
+        },
+        {
+          "name": "Mega Banette",
+          "cn": "超级诅咒娃娃",
+          "pokemon": [
+            {
+              "id": 354,
+              "name": "超级诅咒娃娃",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10056.png",
+              "hub": "354-Mega"
+            }
+          ],
+          "start": "2026-11-16",
+          "end": "2026-11-24"
+        },
+        {
+          "name": "Mega Metagross",
+          "cn": "超级巨金怪",
+          "pokemon": [
+            {
+              "id": 376,
+              "name": "超级巨金怪",
+              "shiny": true,
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10076.png",
+              "hub": "376-Mega"
+            }
+          ],
+          "start": "2026-11-25",
+          "end": "2026-12-01"
         }
       ]
     },
@@ -1682,6 +1784,45 @@
           ],
           "start": "2026-10-26",
           "end": "2026-11-01"
+        },
+        {
+          "name": "Machop",
+          "cn": "Machop",
+          "pokemon": [
+            {
+              "id": 66,
+              "name": "Machop",
+              "shiny": true
+            }
+          ],
+          "start": "2026-11-02",
+          "end": "2026-11-08"
+        },
+        {
+          "name": "Espurr",
+          "cn": "Espurr",
+          "pokemon": [
+            {
+              "id": 677,
+              "name": "Espurr",
+              "shiny": true
+            }
+          ],
+          "start": "2026-11-23",
+          "end": "2026-11-29"
+        },
+        {
+          "name": "Cryogonal",
+          "cn": "Cryogonal",
+          "pokemon": [
+            {
+              "id": 615,
+              "name": "Cryogonal",
+              "shiny": true
+            }
+          ],
+          "start": "2026-11-30",
+          "end": "2026-12-06"
         }
       ],
       "tag": "MX"

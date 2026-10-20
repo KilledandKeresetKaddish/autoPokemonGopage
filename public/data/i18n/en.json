@@ -1,49 +1,6 @@
 {
   "version": 1,
   "events": {
-    "raichu-super-mega-raid-day-2026": {
-      "name": "Raichu Super Mega Raid Day",
-      "heading": "Raid Day",
-      "summary": "During Raichu Super Mega Raid Day, Mega Raichu (Electric type) appears frequently in raids with an increased Shiny chance. Earn up to 5 free Raid Passes from 14:00–17:00.",
-      "bonuses": [
-        "✨ Increased Shiny chance",
-        ":raid: Up to 5 free Raid Passes",
-        ":raid: Remote Raid Pass limit increased to 20 starting 7/17 17:00",
-        ":candy: Defeat Mega Raichu to earn Mega Energy (unlocking Mega Level 1)"
-      ],
-      "pokemon": [
-        "Mega Raichu X",
-        "Mega Raichu Y"
-      ],
-      "counters": [
-        {
-          "name": "Mega Garchomp",
-          "fast": "Mud Shot",
-          "charged": "Earth Power"
-        },
-        {
-          "name": "Primal Groudon",
-          "fast": "Mud Shot",
-          "charged": "Earthquake"
-        },
-        {
-          "name": "Excadrill",
-          "fast": "Mud Shot",
-          "charged": "Drill Run"
-        }
-      ],
-      "sections": [
-        {
-          "title": "Timed Research and Tips",
-          "items": [
-            "Timed Research is available during the event, rewarding a Premium Battle Pass and a Steelix encounter upon completion",
-            ":raid: Both Mega Raichu forms are weak to Ground-type attacks; prioritize building a team of Ground-type attackers"
-          ],
-          "body": "",
-          "mons": []
-        }
-      ]
-    },
     "ultra-unlock-10th-anniversary-edition": {
       "name": "Ultra Unlock: 10th Anniversary Edition",
       "heading": "Event",
@@ -869,20 +826,6 @@
         }
       ]
     },
-    "max-mondays-2026-07-20": {
-      "name": "Max Monday: Dynamax Trubbish",
-      "heading": "Max Mondays",
-      "summary": "Max Monday features Dynamax Trubbish in Max Battles; defeat it to obtain its Dynamax form and Max Particles.",
-      "bonuses": [
-        ":raid: Featured in Max Battles",
-        ":stardust: Max Particles available"
-      ],
-      "pokemon": [
-        "Trubbish"
-      ],
-      "counters": [],
-      "sections": []
-    },
     "max-mondays-2026-07-27": {
       "name": "Max Monday: Dynamax Feebas",
       "heading": "Max Mondays",
@@ -895,64 +838,6 @@
         "Feebas"
       ],
       "counters": [],
-      "sections": []
-    },
-    "kyogre-in-5-star-raid-battles-july-2026": {
-      "name": "Kyogre in 5★ Raids",
-      "heading": "Raid Battles",
-      "summary": "From 7/15–7/21, the Legendary Pokémon Kyogre (Water) appears in 5★ raids and can be Shiny.",
-      "bonuses": [
-        "✨ Kyogre can be Shiny"
-      ],
-      "pokemon": [
-        "Kyogre"
-      ],
-      "counters": [
-        {
-          "name": "Xurkitree",
-          "fast": "Thunder Shock",
-          "charged": "Thunder"
-        },
-        {
-          "name": "Zekrom",
-          "fast": "Charge Beam",
-          "charged": "Wild Charge"
-        },
-        {
-          "name": "Roserade",
-          "fast": "Razor Leaf",
-          "charged": "Leaf Storm"
-        }
-      ],
-      "sections": []
-    },
-    "mega-sceptile-in-mega-raids-july-2026": {
-      "name": "Mega Sceptile in Mega Raids",
-      "heading": "Raid Battles",
-      "summary": "Mega Sceptile (Grass/Dragon) appears in Mega Raids from 7/15–7/21. Defeat it to earn Mega Energy; Sceptile can be Shiny.",
-      "bonuses": [
-        "✨ Sceptile can be Shiny"
-      ],
-      "pokemon": [
-        "Mega Sceptile"
-      ],
-      "counters": [
-        {
-          "name": "Weavile",
-          "fast": "Ice Shard",
-          "charged": "Avalanche"
-        },
-        {
-          "name": "Mamoswine",
-          "fast": "Powder Snow",
-          "charged": "Icicle Spear"
-        },
-        {
-          "name": "Glaceon",
-          "fast": "Frost Breath",
-          "charged": "Ice Beam"
-        }
-      ],
       "sections": []
     },
     "raidhour20260722": {
@@ -1098,87 +983,6 @@
         }
       ],
       "sections": []
-    },
-    "special-anniversary-pikachu-celebration-2026": {
-      "name": "Special Anniversary Pikachu Celebration",
-      "heading": "Event",
-      "summary": "The Special Anniversary Pikachu Celebration brings back multiple costumed Pikachu. Event-themed Pikachu appear in the wild, 1★ raids, and Field Research, alongside a free GO Pass and paid Deluxe track.",
-      "bonuses": [
-        ":spawn: Pikachu appears more frequently in the wild",
-        ":pokeball: Pikachu is easier to catch",
-        ":raid: Multiple costumed Pikachu appear in 1★ raids",
-        ":candy: Free GO Pass and paid Deluxe track"
-      ],
-      "pokemon": [
-        "Pikachu"
-      ],
-      "counters": [],
-      "sections": [
-        {
-          "title": "Wild Encounters and Research",
-          "items": [
-            "Halloween Costume Pikachu, Winter Carnival Pikachu, Summer Style Pikachu, and more appear in the wild.",
-            "Event-themed Field Research rewards encounters with event-themed Pikachu."
-          ],
-          "body": "",
-          "mons": []
-        },
-        {
-          "title": "1★ Raid Pikachu",
-          "items": [
-            "Pikachu in red-, yellow-, and blue-accented formal attire",
-            "Pikachu wearing a safari hat, varsity jacket, or amethyst crown",
-            "2022 / 2023 / 2024 World Championships Pikachu"
-          ],
-          "body": "",
-          "mons": []
-        },
-        {
-          "title": "GO Pass",
-          "items": [
-            "Receive GO Pass: Special Anniversary Pikachu Celebration automatically on 7/13 at 10:00; earn GO Points and increase your Rank through 7/20 at 20:00.",
-            "GO Pass Deluxe costs US$4.99; Deluxe + 6 Ranks costs US$6.99.",
-            "Claim unlocked rewards by 7/22 at 20:00."
-          ],
-          "body": "",
-          "mons": []
-        }
-      ]
-    },
-    "happy-birthday-professor-willow-2026": {
-      "name": "Professor Willow's Birthday Research",
-      "heading": "Event",
-      "summary": "Professor Willow's Birthday Research runs for one day. Professor Willow's Assistant Pikachu debuts via surprise snapshots, 1★ raids, Field Research, and free Timed Research.",
-      "bonuses": [
-        ":spawn: Surprise snapshots may feature Professor Willow's Assistant Pikachu",
-        ":raid: Professor Willow's Assistant Pikachu appears in 1★ raids",
-        "Field Research rewards include PokéCoins, Lucky Eggs, and Pikachu encounters",
-        "Free Timed Research rewards include Pikachu encounters, Lucky Eggs, Star Pieces, and more"
-      ],
-      "pokemon": [
-        "Pikachu"
-      ],
-      "counters": [],
-      "sections": [
-        {
-          "title": "Debut",
-          "items": [
-            "Professor Willow's Assistant Pikachu debuts in Field Research, Timed Research, surprise snapshots, and raids.",
-            "You may encounter a Shiny one or one with a team leader-themed Special Background."
-          ],
-          "body": "",
-          "mons": []
-        },
-        {
-          "title": "Research Deadline",
-          "items": [
-            "The main event runs on 7/21 from 10:00–20:00.",
-            "Complete and claim the free Timed Research tasks and rewards by 7/27 at 20:00."
-          ],
-          "body": "",
-          "mons": []
-        }
-      ]
     },
     "ozone-ascent-2026": {
       "name": "Ozone Ascent: Rayquaza Timed Research",
@@ -4332,7 +4136,7 @@
     "mega-sableye-in-mega-raids-october-2026": {
       "name": "Mega Sableye in Mega Raids",
       "heading": "Raid Battles",
-      "summary": "This Mega Raid Boss appears during the announced rotation; defeating it awards the corresponding Mega Energy.",
+      "summary": "Mega Sableye appears in Mega Raids from October 28 through November 8, awarding Sableye Mega Energy when defeated.",
       "bonuses": [],
       "pokemon": [
         "Mega Sableye"
@@ -4794,6 +4598,363 @@
       "pokemon": [],
       "counters": [],
       "sections": []
+    },
+    "pokemon-night-out-los-angeles-2026": {
+      "name": "Pokémon Night Out: Los Angeles (in person)",
+      "heading": "In-Person Event",
+      "summary": "An in-venue Pokémon GO activation at Pokémon Night Out in Los Angeles, with themed wild encounters, Location Background raids, and up to two Timed Research opportunities. Pokémon GO hours are not separately confirmed; listed times follow the concert schedule.",
+      "bonuses": [
+        ":lure: Lure Modules activated at the venue last one hour, excluding Golden Lure Modules"
+      ],
+      "pokemon": [
+        "Gastly",
+        "Voltorb",
+        "Alolan Marowak",
+        "Hoothoot",
+        "Murkrow",
+        "Houndour"
+      ],
+      "counters": [],
+      "sections": [
+        {
+          "title": "Raids and Location Backgrounds",
+          "items": [
+            "Pikachu in one-star raids and Gengar in three-star raids; caught Pokémon may have a Los Angeles Location Background",
+            "Both raid Pokémon can be Shiny"
+          ],
+          "body": "",
+          "mons": []
+        },
+        {
+          "title": "Venue Timed Research",
+          "items": [],
+          "body": "Open Pokémon GO at the venue to receive up to two Timed Research opportunities, with Low Key and Amped Form Toxtricity encounters and a Pokémon Night Out baseball jersey. Tasks and deadlines are not yet announced.",
+          "mons": []
+        }
+      ]
+    },
+    "pokemon-night-out-london-2026": {
+      "name": "Pokémon Night Out: London (in person)",
+      "heading": "In-Person Event",
+      "summary": "An in-venue Pokémon GO activation at Pokémon Night Out in London, with themed wild encounters, Location Background raids, and up to two Timed Research opportunities. Pokémon GO hours are not separately confirmed; listed times follow the concert schedule.",
+      "bonuses": [
+        ":lure: Lure Modules activated at the venue last one hour, excluding Golden Lure Modules"
+      ],
+      "pokemon": [
+        "Gastly",
+        "Voltorb",
+        "Alolan Marowak",
+        "Hoothoot",
+        "Murkrow",
+        "Houndour"
+      ],
+      "counters": [],
+      "sections": [
+        {
+          "title": "Raids and Location Backgrounds",
+          "items": [
+            "Pikachu in one-star raids and Gengar in three-star raids; caught Pokémon may have a London Location Background",
+            "Both raid Pokémon can be Shiny"
+          ],
+          "body": "",
+          "mons": []
+        },
+        {
+          "title": "Venue Timed Research",
+          "items": [],
+          "body": "Open Pokémon GO at the venue to receive up to two Timed Research opportunities, with Low Key and Amped Form Toxtricity encounters and a Pokémon Night Out baseball jersey. Tasks and deadlines are not yet announced.",
+          "mons": []
+        }
+      ]
+    },
+    "max-mondays-2026-11-02": {
+      "name": "Max Monday: Machop",
+      "heading": "Max Mondays",
+      "summary": "Dynamax Machop takes over Power Spots from 6:00 a.m. to 9:00 p.m. local time, with the main Max Monday hour from 6:00 p.m. to 7:00 p.m.",
+      "bonuses": [
+        ":xl-candy: Earn one Rare Candy XL for completing an in-person Max Battle"
+      ],
+      "pokemon": [
+        "Machop"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "giratina-altered-forme-in-5-star-raid-battles-november-2026": {
+      "name": "Giratina (Altered Forme) in 5-Star Raids",
+      "heading": "Raid Battles",
+      "summary": "Giratina (Altered Forme) appears in five-star raids November 4–8 and is featured during the November 4 Raid Hour.",
+      "bonuses": [],
+      "pokemon": [
+        "Giratina (Altered Forme)"
+      ],
+      "counters": [
+        {
+          "name": "Eternatus",
+          "fast": "Dragon Tail",
+          "charged": "Dynamax Cannon"
+        },
+        {
+          "name": "Mega Rayquaza",
+          "fast": "Dragon Tail",
+          "charged": "Breaking Swipe"
+        },
+        {
+          "name": "Black Kyurem",
+          "fast": "Dragon Tail",
+          "charged": "Freeze Shock"
+        }
+      ],
+      "sections": []
+    },
+    "shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
+      "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
+      "heading": "Raid Battles",
+      "summary": "Shadow Tornadus (Incarnate Forme) appears in five-star Shadow Raids during the listed weekend; it is not available on weekdays.",
+      "bonuses": [],
+      "pokemon": [
+        "Shadow Tornadus (Incarnate Forme)"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026": {
+      "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
+      "heading": "Raid Battles",
+      "summary": "Shadow Tornadus (Incarnate Forme) appears in five-star Shadow Raids on each weekend in the listed date range; it is not available on weekdays.",
+      "bonuses": [],
+      "pokemon": [
+        "Shadow Tornadus (Incarnate Forme)"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "raidhour20261104": {
+      "name": "Giratina (Altered Forme) Raid Hour",
+      "heading": "Raid Hour",
+      "summary": "Giratina (Altered Forme) five-star raids appear in increased numbers from 6:00 p.m. to 7:00 p.m. local time.",
+      "bonuses": [],
+      "pokemon": [
+        "Giratina (Altered Forme)"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "pokemonspotlighthour2026-11-05": {
+      "name": "Witch Hat Teddiursa Spotlight Hour",
+      "heading": "Spotlight Hour",
+      "summary": "Witch Hat Teddiursa appears in increased numbers from 6:00 p.m. to 7:00 p.m. local time, with double Evolution XP.",
+      "bonuses": [
+        ":xp: 2× XP for evolving Pokémon"
+      ],
+      "pokemon": [
+        "Witch Hat Teddiursa"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "cresselia-darkrai-in-5-star-raid-battles-november-2026": {
+      "name": "Cresselia and Darkrai in 5-Star Raids",
+      "heading": "Raid Battles",
+      "summary": "The Hub November calendar confirms Cresselia and Darkrai for five-star raids from November 9–24; the LeekDuck detail currently lists only November 16–24, so the fuller monthly schedule is used.",
+      "bonuses": [],
+      "pokemon": [
+        "Cresselia",
+        "Darkrai"
+      ],
+      "counters": [
+        {
+          "name": "Dawn Wings Necrozma",
+          "fast": "Shadow Claw",
+          "charged": "Moongeist Beam"
+        },
+        {
+          "name": "Mega Gengar",
+          "fast": "Lick",
+          "charged": "Shadow Ball"
+        },
+        {
+          "name": "Mega Blaziken",
+          "fast": "Counter",
+          "charged": "Aura Sphere"
+        }
+      ],
+      "sections": []
+    },
+    "mega-banette-in-mega-raids-november-2026": {
+      "name": "Mega Banette in Mega Raids",
+      "heading": "Raid Battles",
+      "summary": "Mega Banette appears in Mega Raids November 16–24, awarding Banette Mega Energy when defeated.",
+      "bonuses": [],
+      "pokemon": [
+        "Mega Banette"
+      ],
+      "counters": [
+        {
+          "name": "Mega Houndoom",
+          "fast": "Snarl",
+          "charged": "Dark Pulse+"
+        },
+        {
+          "name": "Mega Tyranitar",
+          "fast": "Bite",
+          "charged": "Brutal Swing"
+        },
+        {
+          "name": "Mega Gengar",
+          "fast": "Lick",
+          "charged": "Shadow Ball"
+        }
+      ],
+      "sections": []
+    },
+    "max-mondays-2026-11-16": {
+      "name": "Max Monday: Featured Pokémon TBA",
+      "heading": "Max Mondays",
+      "summary": "Max Monday runs from 6:00 a.m. to 9:00 p.m. local time. This week’s Dynamax Pokémon has not yet been announced.",
+      "bonuses": [
+        ":xl-candy: Earn one Rare Candy XL for completing an in-person Max Battle"
+      ],
+      "pokemon": [],
+      "counters": [],
+      "sections": []
+    },
+    "dynamax-trails-2026": {
+      "name": "Dynamax Trails",
+      "heading": "Event",
+      "summary": "Dynamax Trails is confirmed for November 16 at 10:00 a.m. through November 23 at 8:00 p.m. local time. Gameplay, featured Pokémon, and bonuses have not yet been announced.",
+      "bonuses": [],
+      "pokemon": [],
+      "counters": [],
+      "sections": []
+    },
+    "raidhour20261118": {
+      "name": "Cresselia and Darkrai Raid Hour",
+      "heading": "Raid Hour",
+      "summary": "Cresselia and Darkrai five-star raids appear in increased numbers from 6:00 p.m. to 7:00 p.m. local time.",
+      "bonuses": [],
+      "pokemon": [
+        "Cresselia",
+        "Darkrai"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "max-mondays-2026-11-23": {
+      "name": "Max Monday: Espurr",
+      "heading": "Max Mondays",
+      "summary": "Dynamax Espurr takes over Power Spots from 6:00 a.m. to 9:00 p.m. local time, with the main Max Monday hour from 6:00 p.m. to 7:00 p.m.",
+      "bonuses": [
+        ":xl-candy: Earn one Rare Candy XL for completing an in-person Max Battle"
+      ],
+      "pokemon": [
+        "Espurr"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "twilight-wishes-2026": {
+      "name": "Twilight Wishes",
+      "heading": "Event",
+      "summary": "Twilight Wishes is confirmed for November 24 at 10:00 a.m. through November 30 at 8:00 p.m. local time. Gameplay, featured Pokémon, and bonuses have not yet been announced.",
+      "bonuses": [],
+      "pokemon": [],
+      "counters": [],
+      "sections": []
+    },
+    "deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
+      "name": "All Four Deoxys Formes in 5-Star Raids",
+      "heading": "Raid Battles",
+      "summary": "Normal, Defense, Attack, and Speed Forme Deoxys appear in five-star raids from November 25 through December 1.",
+      "bonuses": [],
+      "pokemon": [
+        "Deoxys (Normal Forme)",
+        "Deoxys (Defense Forme)",
+        "Deoxys (Attack Forme)",
+        "Deoxys (Speed Forme)"
+      ],
+      "counters": [
+        {
+          "name": "Dawn Wings Necrozma",
+          "fast": "Shadow Claw",
+          "charged": "Moongeist Beam"
+        },
+        {
+          "name": "Mega Gengar",
+          "fast": "Lick",
+          "charged": "Shadow Ball"
+        },
+        {
+          "name": "Mega Tyranitar",
+          "fast": "Bite",
+          "charged": "Brutal Swing"
+        }
+      ],
+      "sections": []
+    },
+    "mega-metagross-in-mega-raids-november-2026": {
+      "name": "Mega Metagross in Mega Raids",
+      "heading": "Raid Battles",
+      "summary": "Mega Metagross appears in Mega Raids from November 25 through December 1, awarding Metagross Mega Energy when defeated.",
+      "bonuses": [],
+      "pokemon": [
+        "Mega Metagross"
+      ],
+      "counters": [
+        {
+          "name": "Mega Charizard Y",
+          "fast": "Fire Spin",
+          "charged": "Blast Burn"
+        },
+        {
+          "name": "Primal Groudon",
+          "fast": "Mud Shot",
+          "charged": "Precipice Blades"
+        },
+        {
+          "name": "Dawn Wings Necrozma",
+          "fast": "Shadow Claw",
+          "charged": "Moongeist Beam"
+        }
+      ],
+      "sections": []
+    },
+    "raidhour20261125": {
+      "name": "All Four Deoxys Formes Raid Hour",
+      "heading": "Raid Hour",
+      "summary": "Normal, Defense, Attack, and Speed Forme Deoxys five-star raids appear in increased numbers from 6:00 p.m. to 7:00 p.m. local time.",
+      "bonuses": [],
+      "pokemon": [
+        "Deoxys"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "pokemonspotlighthour2026-11-26": {
+      "name": "Noibat Spotlight Hour",
+      "heading": "Spotlight Hour",
+      "summary": "Noibat appears in increased numbers from 6:00 p.m. to 7:00 p.m. local time, with double catch Candy.",
+      "bonuses": [
+        ":candy: 2× Candy for catching Pokémon"
+      ],
+      "pokemon": [
+        "Noibat"
+      ],
+      "counters": [],
+      "sections": []
+    },
+    "max-mondays-2026-11-30": {
+      "name": "Max Monday: Cryogonal",
+      "heading": "Max Mondays",
+      "summary": "Dynamax Cryogonal takes over Power Spots from 6:00 a.m. to 9:00 p.m. local time, with the main Max Monday hour from 6:00 p.m. to 7:00 p.m.",
+      "bonuses": [
+        ":xl-candy: Earn one Rare Candy XL for completing an in-person Max Battle"
+      ],
+      "pokemon": [
+        "Cryogonal"
+      ],
+      "counters": [],
+      "sections": []
     }
   },
   "rotations": {
@@ -5051,6 +5212,31 @@
             "cn": "Giratina (Origin Forme)",
             "pokemon": [
               "Giratina"
+            ]
+          },
+          {
+            "name": "Giratina (Altered Forme)",
+            "cn": "Giratina (Altered Forme)",
+            "pokemon": [
+              "Giratina"
+            ]
+          },
+          {
+            "name": "Cresselia / Darkrai",
+            "cn": "Cresselia / Darkrai",
+            "pokemon": [
+              "Cresselia",
+              "Darkrai"
+            ]
+          },
+          {
+            "name": "Deoxys (All Formes)",
+            "cn": "Deoxys (All Formes)",
+            "pokemon": [
+              "Deoxys (Normal Forme)",
+              "Deoxys (Defense Forme)",
+              "Deoxys (Attack Forme)",
+              "Deoxys (Speed Forme)"
             ]
           }
         ]
@@ -5348,6 +5534,20 @@
             "pokemon": [
               "Mega Chandelure"
             ]
+          },
+          {
+            "name": "Mega Banette",
+            "cn": "Mega Banette",
+            "pokemon": [
+              "Mega Banette"
+            ]
+          },
+          {
+            "name": "Mega Metagross",
+            "cn": "Mega Metagross",
+            "pokemon": [
+              "Mega Metagross"
+            ]
           }
         ]
       },
@@ -5418,14 +5618,35 @@
             "pokemon": [
               "Sableye"
             ]
+          },
+          {
+            "name": "Machop",
+            "cn": "Machop",
+            "pokemon": [
+              "Machop"
+            ]
+          },
+          {
+            "name": "Espurr",
+            "cn": "Espurr",
+            "pokemon": [
+              "Espurr"
+            ]
+          },
+          {
+            "name": "Cryogonal",
+            "cn": "Cryogonal",
+            "pokemon": [
+              "Cryogonal"
+            ]
           }
         ]
       }
     }
   },
   "regions": {
-    "calendar-notes": "<div class=\"callout\"><strong>Coming up: Hatch Day and Minior showers</strong><p><span class=\"event-link\" data-event-id=\"sandile-hatch-day-2026\">Sandile Hatch Day</span> runs October 17, 11:00 a.m.–5:00 p.m. local time; clear Egg slots ahead of time. <span class=\"event-link\" data-event-id=\"fall-marathon-buddy-trek-2026\">Fall Marathon: Buddy Trek</span> continues until October 19 at 8:00 p.m.</p></div><div class=\"note-grid\"><div class=\"panel\"><div class=\"panel-head\"><strong>Next week</strong><span class=\"badge\">10/19–10/25</span></div><p><span class=\"event-link\" data-event-id=\"minior-showers-orionids-2026\">Minior Showers: Orionids</span> is confirmed for October 19 at 5:00 p.m. through October 24 at 11:59 p.m. local time, with more encounters daily from 5:00–9:00 p.m. Sneasel Max Monday is on the 19th; Palkia and Mega Charizard X/Y arrive on the 21st. The <span class=\"event-link\" data-event-id=\"pokemon-go-city-safari-boston-2026-rescheduled\">rescheduled Boston event</span> runs globally on the 24th–25th for original ticket holders only.</p></div><div class=\"panel\"><div class=\"panel-head\"><strong>Late October and November</strong><span class=\"badge\">10/27–11/15</span></div><p><span class=\"event-link\" data-event-id=\"halloween-2026-part-1\">Halloween Part I</span> starts on the 27th; <span class=\"event-link\" data-event-id=\"chandelure-super-mega-raid-day-2026\">Chandelure Super Mega Raid Day</span> runs on the 31st, 2:00–5:00 p.m. local time. The November 6–8 Festival of Lights in India and November 7–8 PokéXciting! Singapore are regional events. <span class=\"event-link\" data-event-id=\"into-the-wild-2026\">Into the Wild</span> runs November 9–13, with separate extensions for some rewards and bonuses.</p></div></div>",
-    "rankings-current": "<div class=\"callout\"><strong>Priorities: Eggs, Ice attackers, and buddy tasks</strong><p>Sandile Hatch Day on October 17, 11:00 a.m.–5:00 p.m. local time, offers boosted Shiny odds, 2× Hatch Candy, and half Hatch Distance. Clear Egg slots in advance. Fall Marathon: Buddy Trek ends on the 19th at 8:00 p.m.; finish outstanding research first.</p></div><div class=\"note-grid\"><div class=\"panel\"><div class=\"panel-head\"><strong>Raid investment</strong><span class=\"badge\">through 10/20</span></div><p>Use Fighting or Ground attackers for Dialga. Mega Dragonite is double-weak to Ice, as is weekend Shadow Landorus, so existing Ice teams serve both. See Current Raid Counters for full teams and moves; ordinary 1-star raids do not justify expensive dedicated builds.</p></div><div class=\"panel\"><div class=\"panel-head\"><strong>Save resources and time</strong><span class=\"badge\">10/19–10/31</span></div><p>Sneasel Max Monday runs on the 19th from 6:00 a.m.–9:00 p.m. local time; Minior gameplay begins at 5:00 p.m. Palkia and Mega Charizard arrive on the 21st. Chandelure Raid Day on the 31st offers up to six free passes and boosted Shiny odds; reserve 2:00–5:00 p.m. local time.</p></div></div>",
+    "calendar-notes": "<div class=\"callout\"><strong>Near-term focus: rotations, Minior, and Boston</strong><p><span class=\"event-link\" data-event-id=\"minior-showers-orionids-2026\">Minior Showers: Orionids</span> runs through October 24 at 11:59 p.m., with boosted encounters daily from 5:00 p.m. to 9:00 p.m. Five-star and Mega Raids rotate to Palkia and Mega Charizard X/Y on October 21.</p></div><div class=\"note-grid\"><div class=\"panel\"><div class=\"panel-head\"><strong>This weekend</strong><span class=\"badge\">Oct 24–25</span></div><p><span class=\"event-link\" data-event-id=\"pokemon-go-city-safari-boston-2026-rescheduled\">Boston’s rescheduled ticket-holder event</span> is available globally on both days, while the Lake Trio Max Battle Day is October 24. <span class=\"event-link\" data-event-id=\"pokemon-night-out-los-angeles-2026\">Pokémon Night Out: Los Angeles</span> is venue-only, with Pokémon GO hours not separately confirmed.</p></div><div class=\"panel\"><div class=\"panel-head\"><strong>Month-end and November</strong><span class=\"badge\">Oct 27–Nov 30</span></div><p><span class=\"event-link\" data-event-id=\"halloween-2026-part-1\">Halloween Part I</span> starts October 27, followed by <span class=\"event-link\" data-event-id=\"chandelure-super-mega-raid-day-2026\">Chandelure Super Mega Raid Day</span> on October 31. November rotations now list Giratina, Cresselia/Darkrai, all four Deoxys Formes, Mega Banette, and Mega Metagross; <span class=\"event-link\" data-event-id=\"pokemon-night-out-london-2026\">Pokémon Night Out: London</span> is also registered.</p></div></div>",
+    "rankings-current": "<div class=\"callout\"><strong>Current priority: wrap up, then prepare for month-end</strong><p>Dialga and Mega Dragonite are at their local rotation boundary; Palkia and Mega Charizard X/Y take over starting October 21. Minior encounters are boosted daily from 5:00 p.m. to 9:00 p.m. through October 24 at 11:59 p.m.</p></div><div class=\"note-grid\"><div class=\"panel\"><div class=\"panel-head\"><strong>Team-building direction</strong><span class=\"badge\">Raids</span></div><p>Ice attackers cover both Mega Dragonite and weekend Shadow Landorus; switch toward Dragon/Fairy options for Palkia. Use the Current Raid Counters tab for detailed teams and moves rather than overinvesting in ordinary low-tier bosses.</p></div><div class=\"panel\"><div class=\"panel-head\"><strong>Save passes</strong><span class=\"badge\">Oct 24–31</span></div><p>The Lake Trio Max Battle Day overlaps Boston’s ticket-holder event on October 24, and October 26 Max Monday features Sableye. Chandelure Super Mega Raid Day on October 31 has boosted Shiny odds and up to six free Raid Passes, so reserve 2:00 p.m.–5:00 p.m. local time.</p></div></div>",
     "rankings-attackers": "<p class=\"muted\">Source: Pokémon GO Hub’s “Max Attackers Tier List (October 2026),” cross-checked against PokéBase’s overall rankings. The source currently has no S Tier entries; the complete A/B Tier tables follow.</p>\n<h4 class=\"muted\">A Tier</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"861-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/861.png\" alt=\"Gigantamax Grimmsnarl\"><div><strong>Gigantamax Grimmsnarl</strong><div class=\"meta\">Max Move type: Dark</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"849-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/849.png\" alt=\"Gigantamax Toxtricity\"><div><strong>Gigantamax Toxtricity</strong><div class=\"meta\">Max Move type: Electric</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"6-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png\" alt=\"Gigantamax Charizard\"><div><strong>Gigantamax Charizard</strong><div class=\"meta\">Max Move type: Fire</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"3-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png\" alt=\"Gigantamax Venusaur\"><div><strong>Gigantamax Venusaur</strong><div class=\"meta\">Max Move type: Grass</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"143-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png\" alt=\"Gigantamax Snorlax\"><div><strong>Gigantamax Snorlax</strong><div class=\"meta\">Max Move type: Normal</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"569-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/569.png\" alt=\"Gigantamax Garbodor\"><div><strong>Gigantamax Garbodor</strong><div class=\"meta\">Max Move type: Poison</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/890.png\" alt=\"Eternatus\"><div><strong>Eternatus</strong><div class=\"meta\">Max Move type: Dragon</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/65.png\" alt=\"Dynamax Alakazam\"><div><strong>Dynamax Alakazam</strong><div class=\"meta\">Max Move type: Psychic / Fighting</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"9-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png\" alt=\"Gigantamax Blastoise\"><div><strong>Gigantamax Blastoise</strong><div class=\"meta\">Max Move type: Water</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/381.png\" alt=\"Dynamax Latios\"><div><strong>Dynamax Latios</strong><div class=\"meta\">Max Move type: Dragon / Psychic</div></div></div>\n</div>\n<h4 class=\"muted\">B Tier (backup options)</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" data-hub=\"12-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/12.png\" alt=\"Gigantamax Butterfree\"><div><strong>Gigantamax Butterfree</strong><div class=\"meta\">Max Move type: Bug</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" data-hub=\"131-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/131.png\" alt=\"Gigantamax Lapras\"><div><strong>Gigantamax Lapras</strong><div class=\"meta\">Max Move type: Ice</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/555.png\" alt=\"Dynamax Darmanitan\"><div><strong>Dynamax Darmanitan</strong><div class=\"meta\">Max Move type: Fire / Normal</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/818.png\" alt=\"Dynamax Inteleon\"><div><strong>Dynamax Inteleon</strong><div class=\"meta\">Max Move type: Water / Normal</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png\" alt=\"Dynamax Gengar\"><div><strong>Dynamax Gengar</strong><div class=\"meta\">Max Move type: Dark / Ghost</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/196.png\" alt=\"Dynamax Espeon\"><div><strong>Dynamax Espeon</strong><div class=\"meta\">Max Move type: Psychic</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/376.png\" alt=\"Dynamax Metagross\"><div><strong>Dynamax Metagross</strong><div class=\"meta\">Max Move type: Psychic / Steel / Bug</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/635.png\" alt=\"Dynamax Hydreigon\"><div><strong>Dynamax Hydreigon</strong><div class=\"meta\">Max Move type: Dragon / Dark</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/530.png\" alt=\"Dynamax Excadrill\"><div><strong>Dynamax Excadrill</strong><div class=\"meta\">Max Move type: Steel / Ground</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" data-hub=\"892-Rapid_Strike\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/892.png\" alt=\"Dynamax Rapid Strike Urshifu\"><div><strong>Dynamax Rapid Strike Urshifu</strong><div class=\"meta\">Max Move type: Fighting / Water</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" data-hub=\"892-Single_Strike\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/892.png\" alt=\"Dynamax Single Strike Urshifu\"><div><strong>Dynamax Single Strike Urshifu</strong><div class=\"meta\">Max Move type: Fighting / Dark</div></div></div>\n</div><h4 class=\"muted\">Best by type (highest source tier)</h4><div class=\"rank-list\"><div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/849.png\" data-hub=\"849-Gigantamax\" alt=\"Gigantamax Toxtricity\"><div><strong>Electric: Gigantamax Toxtricity</strong><div class=\"meta\">Highest-tier Electric Max attacker</div></div></div><div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png\" data-hub=\"6-Gigantamax\" alt=\"Gigantamax Charizard\"><div><strong>Fire: Gigantamax Charizard</strong><div class=\"meta\">Highest-tier Fire Max attacker</div></div></div><div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png\" data-hub=\"3-Gigantamax\" alt=\"Gigantamax Venusaur\"><div><strong>Grass: Gigantamax Venusaur</strong><div class=\"meta\">Highest-tier Grass Max attacker</div></div></div><div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png\" data-hub=\"9-Gigantamax\" alt=\"Gigantamax Blastoise\"><div><strong>Water: Gigantamax Blastoise</strong><div class=\"meta\">Highest-tier Water Max attacker</div></div></div><div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/65.png\" alt=\"Dynamax Alakazam\"><div><strong>Psychic / Fighting: Dynamax Alakazam</strong><div class=\"meta\">One pick covers both types</div></div></div><div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/890.png\" alt=\"Eternatus\"><div><strong>Dragon: Eternatus</strong><div class=\"meta\">Highest-tier Dragon Max attacker</div></div></div><div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/131.png\" data-hub=\"131-Gigantamax\" alt=\"Gigantamax Lapras\"><div><strong>Ice: Gigantamax Lapras</strong><div class=\"meta\">Highest source tier for Ice</div></div></div><div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/376.png\" alt=\"Dynamax Metagross\"><div><strong>Steel: Dynamax Metagross</strong><div class=\"meta\">Highest source tier for Steel</div></div></div></div>",
     "rankings-defenders": "<p class=\"muted\">Source: Pokémon GO Hub’s “Max Defenders Tier List (October 2026).” S/A/B tiers and recommended Fast Moves come from the source table, with verified official English Pokémon names.</p>\n<h4 class=\"muted\">S Tier</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-S\">S</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/379.png\" alt=\"Registeel\"><div><strong>Registeel</strong><div class=\"meta\">Recommended Fast Moves: Lock-On / Metal Claw · broadest resistance coverage</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-S\">S</span><img class=\"mon-icon\" data-hub=\"889-Crowned_Shield\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/889.png\" alt=\"Crowned Shield Zamazenta\"><div><strong>Crowned Shield Zamazenta</strong><div class=\"meta\">Recommended Fast Move: Metal Claw · core Steel-type resistance profile</div></div></div>\n</div>\n<h4 class=\"muted\">A Tier</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"888-Crowned_Sword\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/888.png\" alt=\"Crowned Sword Zacian\"><div><strong>Crowned Sword Zacian</strong><div class=\"meta\">Recommended Fast Move: Metal Claw</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/377.png\" alt=\"Regirock\"><div><strong>Regirock</strong><div class=\"meta\">Recommended Fast Move: Lock-On</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/376.png\" alt=\"Metagross\"><div><strong>Metagross</strong><div class=\"meta\">Recommended Fast Moves: Fury Cutter / Shadow Claw</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/378.png\" alt=\"Regice\"><div><strong>Regice</strong><div class=\"meta\">Recommended Fast Move: Lock-On</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/380.png\" alt=\"Latias\"><div><strong>Latias</strong><div class=\"meta\">Recommended Fast Move: Dragon Breath</div></div></div>\n</div>\n<h4 class=\"muted\">B Tier</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/823.png\" alt=\"Corviknight\"><div><strong>Corviknight</strong><div class=\"meta\">Recommended Fast Move: Sand Attack</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/245.png\" alt=\"Suicune\"><div><strong>Suicune</strong><div class=\"meta\">Recommended Fast Move: Water Gun</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/884.png\" alt=\"Duraludon\"><div><strong>Duraludon</strong><div class=\"meta\">Recommended Fast Move: Metal Claw</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/139.png\" alt=\"Omastar\"><div><strong>Omastar</strong><div class=\"meta\">Recommended Fast Moves: Mud Shot / Water Gun</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/381.png\" alt=\"Latios\"><div><strong>Latios</strong><div class=\"meta\">Recommended Fast Move: Dragon Breath</div></div></div>\n</div>",
     "rankings-raid": "<p class=\"muted\">Current rotation: Dialga and Mega Dragonite through October 20; Shadow Landorus is a weekend boss. Ordinary 3-star, 1-star and daily Shadow pools are listed below. Header Megas share a type with the encounter for catch Candy; they are not automatically the best battle counters.</p><div class=\"raid-wall\"><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/483.png\" alt=\"Dialga\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">5★</span><strong>Dialga</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"> <img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> · Weak to <img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> <img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png\" data-hub=\"384-Mega\" title=\"Mega Rayquaza · shares Dragon\" alt=\"Mega Rayquaza\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png\" data-hub=\"445-Mega\" title=\"Mega Garchomp · shares Dragon\" alt=\"Mega Garchomp\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png\" data-hub=\"381-Mega\" title=\"Mega Latios · shares Dragon\" alt=\"Mega Latios\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png\" data-hub=\"254-Mega\" title=\"Mega Sceptile · shares Dragon\" alt=\"Mega Sceptile\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png\" data-hub=\"448-Mega\" title=\"Mega Lucario · shares Steel\" alt=\"Mega Lucario\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png\" data-hub=\"373-Mega\" title=\"Mega Salamence · shares Dragon\" alt=\"Mega Salamence\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10076.png\" data-hub=\"376-Mega\" title=\"Mega Metagross · shares Steel\" alt=\"Mega Metagross\"><img src=\"https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp\" data-hub=\"149-Mega\" title=\"Mega Dragonite · shares Dragon\" alt=\"Mega Dragonite\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png\" data-hub=\"150-Mega_X\" alt=\"Mega Mewtwo X\"><strong>Mega Mewtwo X</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Counter / Dynamic Punch+</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png\" data-hub=\"448-Mega\" alt=\"Mega Lucario\"><strong>Mega Lucario</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Force Palm / Aura Sphere</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png\" data-hub=\"257-Mega\" alt=\"Mega Blaziken\"><strong>Mega Blaziken</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Counter / Aura Sphere</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png\" data-hub=\"383-Primal\" alt=\"Primal Groudon\"><strong>Primal Groudon</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> Mud Shot / Precipice Blades</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png\" data-hub=\"150-Mega_Y\" alt=\"Mega Mewtwo Y\"><strong>Mega Mewtwo Y</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Counter / Focus Blast</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10024.png\" data-hub=\"647-Resolute\" alt=\"Resolute Keldeo\"><strong>Resolute Keldeo</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Low Kick / Secret Sword</div></div></div></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp\" data-hub=\"149-Mega\" alt=\"Mega Dragonite\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">Mega</span><strong>Mega Dragonite</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> <img class=\"ico\" src=\"assets/icons/flying.png\" alt=\"Flying\"> · Weak to <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> <img class=\"ico\" src=\"assets/icons/rock.webp\" alt=\"Rock\"> <img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> <img class=\"ico\" src=\"assets/icons/fairy.webp\" alt=\"Fairy\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png\" data-hub=\"384-Mega\" title=\"Mega Rayquaza · shares Flying / Dragon\" alt=\"Mega Rayquaza\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png\" data-hub=\"445-Mega\" title=\"Mega Garchomp · shares Dragon\" alt=\"Mega Garchomp\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png\" data-hub=\"381-Mega\" title=\"Mega Latios · shares Dragon\" alt=\"Mega Latios\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png\" data-hub=\"254-Mega\" title=\"Mega Sceptile · shares Dragon\" alt=\"Mega Sceptile\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png\" data-hub=\"6-Mega_Y\" title=\"Mega Charizard Y · shares Flying\" alt=\"Mega Charizard Y\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png\" data-hub=\"373-Mega\" title=\"Mega Salamence · shares Dragon / Flying\" alt=\"Mega Salamence\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10040.png\" data-hub=\"127-Mega\" title=\"Mega Pinsir · shares Flying\" alt=\"Mega Pinsir\"><img src=\"https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp\" data-hub=\"149-Mega\" title=\"Mega Dragonite · shares Dragon / Flying\" alt=\"Mega Dragonite\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png\" data-hub=\"646-White\" alt=\"White Kyurem\"><strong>White Kyurem</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Ice Fang / Ice Burn</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10022.png\" data-hub=\"646-Black\" alt=\"Black Kyurem\"><strong>Black Kyurem</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Dragon Tail / Freeze Shock</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/473.png\" data-hub=\"473-Shadow\" alt=\"Shadow Mamoswine\"><strong>Shadow Mamoswine</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Powder Snow / Avalanche</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/890.png\" alt=\"Eternatus\"><strong>Eternatus</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> Dragon Tail / Dynamax Cannon</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png\" data-hub=\"150-Shadow\" alt=\"Shadow Mewtwo\"><strong>Shadow Mewtwo</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Psycho Cut / Ice Beam</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/473.png\" alt=\"Mamoswine\"><strong>Mamoswine</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Powder Snow / Avalanche</div></div></div></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://cdn.leekduck.com/assets/img/pokemon_icons/pm59.fHISUIAN.icon.png\" data-hub=\"59-Hisuian\" alt=\"Hisuian Arcanine\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">3★</span><strong>Hisuian Arcanine</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fire.png\" alt=\"Fire\"> <img class=\"ico\" src=\"assets/icons/rock.webp\" alt=\"Rock\"> · Weak to <img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> <img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> <img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> <img class=\"ico\" src=\"assets/icons/rock.webp\" alt=\"Rock\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png\" data-hub=\"383-Primal\" title=\"Primal Groudon · shares Fire\" alt=\"Primal Groudon\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10075.png\" data-hub=\"719-Mega\" title=\"Mega Diancie · shares Rock\" alt=\"Mega Diancie\"><img src=\"https://cdn.leekduck.com/assets/img/pokemon_icons/pm655.fMEGA.icon.png\" data-hub=\"655-Mega\" title=\"Mega Delphox · shares Fire\" alt=\"Mega Delphox\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png\" data-hub=\"257-Mega\" title=\"Mega Blaziken · shares Fire\" alt=\"Mega Blaziken\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png\" data-hub=\"6-Mega_Y\" title=\"Mega Charizard Y · shares Fire\" alt=\"Mega Charizard Y\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png\" data-hub=\"248-Mega\" title=\"Mega Tyranitar · shares Rock\" alt=\"Mega Tyranitar\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10042.png\" data-hub=\"142-Mega\" title=\"Mega Aerodactyl · shares Rock\" alt=\"Mega Aerodactyl\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png\" data-hub=\"229-Mega\" title=\"Mega Houndoom · shares Fire\" alt=\"Mega Houndoom\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://cdn.leekduck.com/assets/img/pokemon_icons/pm658.fMEGA.icon.png\" data-hub=\"658-Mega\" alt=\"Mega Greninja\"><strong>Mega Greninja</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> Water Shuriken / Surf+</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png\" data-hub=\"382-Primal\" alt=\"Primal Kyogre\"><strong>Primal Kyogre</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> Waterfall / Origin Pulse</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://db.pokemongohub.net/images/official/full/121_mega_with_bg.webp\" data-hub=\"121-Mega\" alt=\"Mega Starmie\"><strong>Mega Starmie</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> Water Gun / Liquidation+</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png\" data-hub=\"383-Primal\" alt=\"Primal Groudon\"><strong>Primal Groudon</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> Mud Shot / Precipice Blades</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png\" data-hub=\"445-Mega\" alt=\"Mega Garchomp\"><strong>Mega Garchomp</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> Mud Shot / Earth Power</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/382.png\" data-hub=\"382-Shadow\" alt=\"Shadow Kyogre\"><strong>Shadow Kyogre</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> Waterfall / Origin Pulse</div></div></div></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png\" alt=\"Snorlax\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">3★</span><strong>Snorlax</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/normal.webp\" alt=\"Normal\"> · Weak to <img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10088.png\" data-hub=\"428-Mega\" title=\"Mega Lopunny · shares Normal\" alt=\"Mega Lopunny\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10073.png\" data-hub=\"18-Mega\" title=\"Mega Pidgeot · shares Normal\" alt=\"Mega Pidgeot\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10039.png\" data-hub=\"115-Mega\" title=\"Mega Kangaskhan · shares Normal\" alt=\"Mega Kangaskhan\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10069.png\" data-hub=\"531-Mega\" title=\"Mega Audino · shares Normal\" alt=\"Mega Audino\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png\" data-hub=\"150-Mega_X\" alt=\"Mega Mewtwo X\"><strong>Mega Mewtwo X</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Counter / Dynamic Punch+</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png\" data-hub=\"448-Mega\" alt=\"Mega Lucario\"><strong>Mega Lucario</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Force Palm / Aura Sphere</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png\" data-hub=\"257-Mega\" alt=\"Mega Blaziken\"><strong>Mega Blaziken</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Counter / Aura Sphere</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png\" data-hub=\"150-Mega_Y\" alt=\"Mega Mewtwo Y\"><strong>Mega Mewtwo Y</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> <img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> Counter / Future Sight+</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://db.pokemongohub.net/images/official/full/870_mega_with_bg.webp\" data-hub=\"870-Mega\" alt=\"Mega Falinks\"><strong>Mega Falinks</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Counter / Brick Break+</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10024.png\" data-hub=\"647-Resolute\" alt=\"Resolute Keldeo\"><strong>Resolute Keldeo</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Low Kick / Secret Sword</div></div></div></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/900.png\" alt=\"Kleavor\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">3★</span><strong>Kleavor</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/bug.png\" alt=\"Bug\"> <img class=\"ico\" src=\"assets/icons/rock.webp\" alt=\"Rock\"> · Weak to <img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> <img class=\"ico\" src=\"assets/icons/rock.webp\" alt=\"Rock\"> <img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png\" data-hub=\"382-Primal\" title=\"Primal Kyogre · shares Bug\" alt=\"Primal Kyogre\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10075.png\" data-hub=\"719-Mega\" title=\"Mega Diancie · shares Rock\" alt=\"Mega Diancie\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10047.png\" data-hub=\"214-Mega\" title=\"Mega Heracross · shares Bug\" alt=\"Mega Heracross\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png\" data-hub=\"248-Mega\" title=\"Mega Tyranitar · shares Rock\" alt=\"Mega Tyranitar\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10040.png\" data-hub=\"127-Mega\" title=\"Mega Pinsir · shares Bug\" alt=\"Mega Pinsir\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png\" data-hub=\"15-Mega\" title=\"Mega Beedrill · shares Bug\" alt=\"Mega Beedrill\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10042.png\" data-hub=\"142-Mega\" title=\"Mega Aerodactyl · shares Rock\" alt=\"Mega Aerodactyl\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10046.png\" data-hub=\"212-Mega\" title=\"Mega Scizor · shares Bug\" alt=\"Mega Scizor\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10188.png\" data-hub=\"888-Crowned_Sword\" alt=\"Crowned Sword Zacian\"><strong>Crowned Sword Zacian</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"> Metal Claw / Behemoth Blade</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10155.png\" data-hub=\"800-Dusk_Mane\" alt=\"Dusk Mane Necrozma\"><strong>Dusk Mane Necrozma</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"> Metal Claw / Sunsteel Strike</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10189.png\" data-hub=\"889-Crowned_Shield\" alt=\"Crowned Shield Zamazenta\"><strong>Crowned Shield Zamazenta</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"> Metal Claw / Behemoth Bash</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://cdn.leekduck.com/assets/img/pokemon_icons/pm658.fMEGA.icon.png\" data-hub=\"658-Mega\" alt=\"Mega Greninja\"><strong>Mega Greninja</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> Water Shuriken / Surf+</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://db.pokemongohub.net/images/official/full/121_mega_with_bg.webp\" data-hub=\"121-Mega\" alt=\"Mega Starmie\"><strong>Mega Starmie</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> <img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> Psywave / Liquidation+</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png\" data-hub=\"382-Primal\" alt=\"Primal Kyogre\"><strong>Primal Kyogre</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> Waterfall / Origin Pulse</div></div></div></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://cdn.leekduck.com/assets/img/pokemon_icons/pm79.fGALARIAN.icon.png\" data-hub=\"79-Galarian\" alt=\"Galarian Slowpoke\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">1★</span><strong>Galarian Slowpoke</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> · Weak to <img class=\"ico\" src=\"assets/icons/bug.png\" alt=\"Bug\"> <img class=\"ico\" src=\"assets/icons/ghost.webp\" alt=\"Ghost\"> <img class=\"ico\" src=\"assets/icons/dark.webp\" alt=\"Dark\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png\" data-hub=\"150-Mega_Y\" title=\"Mega Mewtwo Y · shares Psychic\" alt=\"Mega Mewtwo Y\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png\" data-hub=\"150-Mega_X\" title=\"Mega Mewtwo X · shares Psychic\" alt=\"Mega Mewtwo X\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png\" data-hub=\"384-Mega\" title=\"Mega Rayquaza · shares Psychic\" alt=\"Mega Rayquaza\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10037.png\" data-hub=\"65-Mega\" title=\"Mega Alakazam · shares Psychic\" alt=\"Mega Alakazam\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png\" data-hub=\"381-Mega\" title=\"Mega Latios · shares Psychic\" alt=\"Mega Latios\"><img src=\"https://cdn.leekduck.com/assets/img/pokemon_icons/pm655.fMEGA.icon.png\" data-hub=\"655-Mega\" title=\"Mega Delphox · shares Psychic\" alt=\"Mega Delphox\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10068.png\" data-hub=\"475-Mega\" title=\"Mega Gallade · shares Psychic\" alt=\"Mega Gallade\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10051.png\" data-hub=\"282-Mega\" title=\"Mega Gardevoir · shares Psychic\" alt=\"Mega Gardevoir\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png\" data-hub=\"94-Mega\" alt=\"Mega Gengar\"><strong>Mega Gengar</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ghost.webp\" alt=\"Ghost\"> Shadow Claw / Shadow Ball</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10056.png\" data-hub=\"354-Mega\" alt=\"Mega Banette\"><strong>Mega Banette</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ghost.webp\" alt=\"Ghost\"> Shadow Claw / Shadow Ball</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png\" data-hub=\"229-Mega\" alt=\"Mega Houndoom\"><strong>Mega Houndoom</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/dark.webp\" alt=\"Dark\"> Snarl / Foul Play</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10057.png\" data-hub=\"359-Mega\" alt=\"Mega Absol\"><strong>Mega Absol</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/dark.webp\" alt=\"Dark\"> Snarl / Dark Pulse</div></div></div></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://cdn.leekduck.com/assets/img/pokemon_icons/pm100.fHISUIAN.icon.png\" data-hub=\"100-Hisuian\" alt=\"Hisuian Voltorb\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">1★</span><strong>Hisuian Voltorb</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/electric.webp\" alt=\"Electric\"> <img class=\"ico\" src=\"assets/icons/grass.webp\" alt=\"Grass\"> · Weak to <img class=\"ico\" src=\"assets/icons/fire.png\" alt=\"Fire\"> <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> <img class=\"ico\" src=\"assets/icons/poison.webp\" alt=\"Poison\"> <img class=\"ico\" src=\"assets/icons/bug.png\" alt=\"Bug\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png\" data-hub=\"383-Primal\" title=\"Primal Groudon · shares Grass\" alt=\"Primal Groudon\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png\" data-hub=\"382-Primal\" title=\"Primal Kyogre · shares Electric\" alt=\"Primal Kyogre\"><img src=\"https://db.pokemongohub.net/images/official/full/026_mega_y_with_bg.webp\" data-hub=\"26-Mega_Y\" title=\"Mega Raichu Y · shares Electric\" alt=\"Mega Raichu Y\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png\" data-hub=\"254-Mega\" title=\"Mega Sceptile · shares Grass\" alt=\"Mega Sceptile\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10045.png\" data-hub=\"181-Mega\" title=\"Mega Ampharos · shares Electric\" alt=\"Mega Ampharos\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10055.png\" data-hub=\"310-Mega\" title=\"Mega Manectric · shares Electric\" alt=\"Mega Manectric\"><img src=\"https://db.pokemongohub.net/images/official/full/026_mega_x_with_bg.webp\" data-hub=\"26-Mega_X\" title=\"Mega Raichu X · shares Electric\" alt=\"Mega Raichu X\"><img src=\"https://db.pokemongohub.net/images/official/full/071_mega_with_bg.webp\" data-hub=\"71-Mega\" title=\"Mega Victreebel · shares Grass\" alt=\"Mega Victreebel\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png\" data-hub=\"15-Mega\" alt=\"Mega Beedrill\"><strong>Mega Beedrill</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/poison.webp\" alt=\"Poison\"> Poison Jab / Sludge Bomb</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png\" data-hub=\"6-Mega_Y\" alt=\"Mega Charizard Y\"><strong>Mega Charizard Y</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fire.png\" alt=\"Fire\"> Fire Spin / Blast Burn</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10034.png\" data-hub=\"6-Mega_X\" alt=\"Mega Charizard X\"><strong>Mega Charizard X</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fire.png\" alt=\"Fire\"> Fire Spin / Blast Burn</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png\" data-hub=\"257-Mega\" alt=\"Mega Blaziken\"><strong>Mega Blaziken</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fire.png\" alt=\"Fire\"> Fire Spin / Blast Burn</div></div></div></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/290.png\" alt=\"Nincada\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">1★</span><strong>Nincada</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/bug.png\" alt=\"Bug\"> <img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> · Weak to <img class=\"ico\" src=\"assets/icons/fire.png\" alt=\"Fire\"> <img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> <img class=\"ico\" src=\"assets/icons/flying.png\" alt=\"Flying\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png\" data-hub=\"383-Primal\" title=\"Primal Groudon · shares Ground\" alt=\"Primal Groudon\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png\" data-hub=\"382-Primal\" title=\"Primal Kyogre · shares Bug\" alt=\"Primal Kyogre\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png\" data-hub=\"445-Mega\" title=\"Mega Garchomp · shares Ground\" alt=\"Mega Garchomp\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10047.png\" data-hub=\"214-Mega\" title=\"Mega Heracross · shares Bug\" alt=\"Mega Heracross\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10040.png\" data-hub=\"127-Mega\" title=\"Mega Pinsir · shares Bug\" alt=\"Mega Pinsir\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png\" data-hub=\"15-Mega\" title=\"Mega Beedrill · shares Bug\" alt=\"Mega Beedrill\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10064.png\" data-hub=\"260-Mega\" title=\"Mega Swampert · shares Ground\" alt=\"Mega Swampert\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10046.png\" data-hub=\"212-Mega\" title=\"Mega Scizor · shares Bug\" alt=\"Mega Scizor\"></div></div><div class=\"rank-list mini\"></div><p class=\"muted\">Use Fire, Water, Ice or Flying attackers; no dedicated investment is needed for this 1-star raid.</p></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/374.png\" alt=\"Beldum\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">1★</span><strong>Beldum</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"> <img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> · Weak to <img class=\"ico\" src=\"assets/icons/fire.png\" alt=\"Fire\"> <img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> <img class=\"ico\" src=\"assets/icons/ghost.webp\" alt=\"Ghost\"> <img class=\"ico\" src=\"assets/icons/dark.webp\" alt=\"Dark\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png\" data-hub=\"150-Mega_Y\" title=\"Mega Mewtwo Y · shares Psychic\" alt=\"Mega Mewtwo Y\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png\" data-hub=\"150-Mega_X\" title=\"Mega Mewtwo X · shares Psychic\" alt=\"Mega Mewtwo X\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png\" data-hub=\"384-Mega\" title=\"Mega Rayquaza · shares Psychic\" alt=\"Mega Rayquaza\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10037.png\" data-hub=\"65-Mega\" title=\"Mega Alakazam · shares Psychic\" alt=\"Mega Alakazam\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png\" data-hub=\"381-Mega\" title=\"Mega Latios · shares Psychic\" alt=\"Mega Latios\"><img src=\"https://cdn.leekduck.com/assets/img/pokemon_icons/pm655.fMEGA.icon.png\" data-hub=\"655-Mega\" title=\"Mega Delphox · shares Psychic\" alt=\"Mega Delphox\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10068.png\" data-hub=\"475-Mega\" title=\"Mega Gallade · shares Psychic\" alt=\"Mega Gallade\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10051.png\" data-hub=\"282-Mega\" title=\"Mega Gardevoir · shares Psychic\" alt=\"Mega Gardevoir\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png\" data-hub=\"6-Mega_Y\" alt=\"Mega Charizard Y\"><strong>Mega Charizard Y</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fire.png\" alt=\"Fire\"> Ember / Blast Burn</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png\" data-hub=\"94-Mega\" alt=\"Mega Gengar\"><strong>Mega Gengar</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ghost.webp\" alt=\"Ghost\"> Lick / Shadow Ball</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10056.png\" data-hub=\"354-Mega\" alt=\"Mega Banette\"><strong>Mega Banette</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ghost.webp\" alt=\"Ghost\"> Shadow Claw / Shadow Ball</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png\" data-hub=\"257-Mega\" alt=\"Mega Blaziken\"><strong>Mega Blaziken</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fire.png\" alt=\"Fire\"> Fire Spin / Blast Burn</div></div></div></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/645.png\" data-hub=\"645-Incarnate_Shadow\" alt=\"Shadow Landorus (Incarnate)\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">Shadow 5★ · weekends</span><strong>Shadow Landorus (Incarnate)</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> <img class=\"ico\" src=\"assets/icons/flying.png\" alt=\"Flying\"> · Weak to <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> <img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png\" data-hub=\"384-Mega\" title=\"Mega Rayquaza · shares Flying\" alt=\"Mega Rayquaza\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png\" data-hub=\"383-Primal\" title=\"Primal Groudon · shares Ground\" alt=\"Primal Groudon\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png\" data-hub=\"445-Mega\" title=\"Mega Garchomp · shares Ground\" alt=\"Mega Garchomp\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png\" data-hub=\"6-Mega_Y\" title=\"Mega Charizard Y · shares Flying\" alt=\"Mega Charizard Y\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png\" data-hub=\"373-Mega\" title=\"Mega Salamence · shares Flying\" alt=\"Mega Salamence\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10040.png\" data-hub=\"127-Mega\" title=\"Mega Pinsir · shares Flying\" alt=\"Mega Pinsir\"><img src=\"https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp\" data-hub=\"149-Mega\" title=\"Mega Dragonite · shares Flying\" alt=\"Mega Dragonite\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10042.png\" data-hub=\"142-Mega\" title=\"Mega Aerodactyl · shares Flying\" alt=\"Mega Aerodactyl\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png\" data-hub=\"646-White\" alt=\"White Kyurem\"><strong>White Kyurem</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Ice Fang / Ice Burn</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png\" data-hub=\"150-Mega_Y\" alt=\"Mega Mewtwo Y\"><strong>Mega Mewtwo Y</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Psycho Cut / Ice Beam</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png\" data-hub=\"150-Mega_X\" alt=\"Mega Mewtwo X\"><strong>Mega Mewtwo X</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Psycho Cut / Ice Beam</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png\" data-hub=\"150-Shadow\" alt=\"Shadow Mewtwo\"><strong>Shadow Mewtwo</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Psycho Cut / Ice Beam</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/473.png\" data-hub=\"473-Shadow\" alt=\"Shadow Mamoswine\"><strong>Shadow Mamoswine</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Powder Snow / Avalanche</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10051.png\" data-hub=\"282-Mega\" alt=\"Mega Gardevoir\"><strong>Mega Gardevoir</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/grass.webp\" alt=\"Grass\"> <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Magical Leaf / Triple Axel</div></div></div><p class=\"muted\">Weekends only; double-weak to Ice. Bring Purified Gems and coordinate an in-person group.</p></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/57.png\" data-hub=\"57-Shadow\" alt=\"Shadow Primeape\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">Shadow 3★</span><strong>Shadow Primeape</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> · Weak to <img class=\"ico\" src=\"assets/icons/flying.png\" alt=\"Flying\"> <img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> <img class=\"ico\" src=\"assets/icons/fairy.webp\" alt=\"Fairy\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png\" data-hub=\"150-Mega_X\" title=\"Mega Mewtwo X · shares Fighting\" alt=\"Mega Mewtwo X\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10047.png\" data-hub=\"214-Mega\" title=\"Mega Heracross · shares Fighting\" alt=\"Mega Heracross\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10050.png\" data-hub=\"257-Mega\" title=\"Mega Blaziken · shares Fighting\" alt=\"Mega Blaziken\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10068.png\" data-hub=\"475-Mega\" title=\"Mega Gallade · shares Fighting\" alt=\"Mega Gallade\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png\" data-hub=\"448-Mega\" title=\"Mega Lucario · shares Fighting\" alt=\"Mega Lucario\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10088.png\" data-hub=\"428-Mega\" title=\"Mega Lopunny · shares Fighting\" alt=\"Mega Lopunny\"><img src=\"https://db.pokemongohub.net/images/official/full/398_mega_with_bg.webp\" data-hub=\"398-Mega\" title=\"Mega Staraptor · shares Fighting\" alt=\"Mega Staraptor\"><img src=\"https://db.pokemongohub.net/images/official/full/870_mega_with_bg.webp\" data-hub=\"870-Mega\" title=\"Mega Falinks · shares Fighting\" alt=\"Mega Falinks\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png\" data-hub=\"150-Mega_Y\" alt=\"Mega Mewtwo Y\"><strong>Mega Mewtwo Y</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> Psycho Cut / Future Sight+</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png\" data-hub=\"384-Mega\" alt=\"Mega Rayquaza\"><strong>Mega Rayquaza</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/flying.png\" alt=\"Flying\"> Air Slash / Dragon Ascent</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png\" data-hub=\"150-Mega_X\" alt=\"Mega Mewtwo X\"><strong>Mega Mewtwo X</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> Confusion / Psystrike</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png\" data-hub=\"150-Shadow\" alt=\"Shadow Mewtwo\"><strong>Shadow Mewtwo</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> Confusion / Psystrike</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://db.pokemongohub.net/images/official/full/398_mega_with_bg.webp\" data-hub=\"398-Mega\" alt=\"Mega Staraptor\"><strong>Mega Staraptor</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/flying.png\" alt=\"Flying\"> Gust / Brave Bird+</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10037.png\" data-hub=\"65-Mega\" alt=\"Mega Alakazam\"><strong>Mega Alakazam</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> Confusion / Psychic</div></div></div></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/281.png\" data-hub=\"281-Shadow\" alt=\"Shadow Kirlia\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">Shadow 3★</span><strong>Shadow Kirlia</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> <img class=\"ico\" src=\"assets/icons/fairy.webp\" alt=\"Fairy\"> · Weak to <img class=\"ico\" src=\"assets/icons/poison.webp\" alt=\"Poison\"> <img class=\"ico\" src=\"assets/icons/ghost.webp\" alt=\"Ghost\"> <img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10044.png\" data-hub=\"150-Mega_Y\" title=\"Mega Mewtwo Y · shares Psychic\" alt=\"Mega Mewtwo Y\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png\" data-hub=\"150-Mega_X\" title=\"Mega Mewtwo X · shares Psychic\" alt=\"Mega Mewtwo X\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png\" data-hub=\"384-Mega\" title=\"Mega Rayquaza · shares Psychic\" alt=\"Mega Rayquaza\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10037.png\" data-hub=\"65-Mega\" title=\"Mega Alakazam · shares Psychic\" alt=\"Mega Alakazam\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10075.png\" data-hub=\"719-Mega\" title=\"Mega Diancie · shares Fairy\" alt=\"Mega Diancie\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png\" data-hub=\"381-Mega\" title=\"Mega Latios · shares Psychic\" alt=\"Mega Latios\"><img src=\"https://cdn.leekduck.com/assets/img/pokemon_icons/pm655.fMEGA.icon.png\" data-hub=\"655-Mega\" title=\"Mega Delphox · shares Psychic\" alt=\"Mega Delphox\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10068.png\" data-hub=\"475-Mega\" title=\"Mega Gallade · shares Psychic\" alt=\"Mega Gallade\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10188.png\" data-hub=\"888-Crowned_Sword\" alt=\"Crowned Sword Zacian\"><strong>Crowned Sword Zacian</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"> Metal Claw / Behemoth Blade</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10155.png\" data-hub=\"800-Dusk_Mane\" alt=\"Dusk Mane Necrozma\"><strong>Dusk Mane Necrozma</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"> Metal Claw / Sunsteel Strike</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10189.png\" data-hub=\"889-Crowned_Shield\" alt=\"Crowned Shield Zamazenta\"><strong>Crowned Shield Zamazenta</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"> Metal Claw / Behemoth Bash</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10156.png\" data-hub=\"800-Dawn_Wings\" alt=\"Dawn Wings Necrozma\"><strong>Dawn Wings Necrozma</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"> <img class=\"ico\" src=\"assets/icons/ghost.webp\" alt=\"Ghost\"> Metal Claw / Moongeist Beam</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png\" data-hub=\"94-Mega\" alt=\"Mega Gengar\"><strong>Mega Gengar</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ghost.webp\" alt=\"Ghost\"> Lick / Shadow Ball</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/376.png\" data-hub=\"376-Shadow\" alt=\"Shadow Metagross\"><strong>Shadow Metagross</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"> Bullet Punch / Meteor Mash</div></div></div></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/452.png\" data-hub=\"452-Shadow\" alt=\"Shadow Drapion\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">Shadow 3★</span><strong>Shadow Drapion</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/poison.webp\" alt=\"Poison\"> <img class=\"ico\" src=\"assets/icons/dark.webp\" alt=\"Dark\"> · Weak to <img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png\" data-hub=\"94-Mega\" title=\"Mega Gengar · shares Poison\" alt=\"Mega Gengar\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10057.png\" data-hub=\"359-Mega\" title=\"Mega Absol · shares Dark\" alt=\"Mega Absol\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png\" data-hub=\"248-Mega\" title=\"Mega Tyranitar · shares Dark\" alt=\"Mega Tyranitar\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png\" data-hub=\"15-Mega\" title=\"Mega Beedrill · shares Poison\" alt=\"Mega Beedrill\"><img src=\"https://cdn.leekduck.com/assets/img/pokemon_icons/pm658.fMEGA.icon.png\" data-hub=\"658-Mega\" title=\"Mega Greninja · shares Dark\" alt=\"Mega Greninja\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10041.png\" data-hub=\"130-Mega\" title=\"Mega Gyarados · shares Dark\" alt=\"Mega Gyarados\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10048.png\" data-hub=\"229-Mega\" title=\"Mega Houndoom · shares Dark\" alt=\"Mega Houndoom\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10070.png\" data-hub=\"319-Mega\" title=\"Mega Sharpedo · shares Dark\" alt=\"Mega Sharpedo\"></div></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png\" data-hub=\"383-Primal\" alt=\"Primal Groudon\"><strong>Primal Groudon</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> Mud Shot / Precipice Blades</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png\" data-hub=\"445-Mega\" alt=\"Mega Garchomp\"><strong>Mega Garchomp</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> Mud Shot / Earth Power</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/383.png\" data-hub=\"383-Shadow\" alt=\"Shadow Groudon\"><strong>Shadow Groudon</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> Mud Shot / Precipice Blades</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10021.png\" data-hub=\"645-Therian\" alt=\"Therian Landorus\"><strong>Therian Landorus</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> Mud Shot / Sandsear Storm</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10043.png\" data-hub=\"150-Mega_X\" alt=\"Mega Mewtwo X\"><strong>Mega Mewtwo X</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> Counter / Dynamic Punch+</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png\" data-hub=\"384-Mega\" alt=\"Mega Rayquaza\"><strong>Mega Rayquaza</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> <img class=\"ico\" src=\"assets/icons/flying.png\" alt=\"Flying\"> Dragon Tail / Dragon Ascent</div></div></div></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/92.png\" data-hub=\"92-Shadow\" alt=\"Shadow Gastly\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">Shadow 1★</span><strong>Shadow Gastly</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ghost.webp\" alt=\"Ghost\"> <img class=\"ico\" src=\"assets/icons/poison.webp\" alt=\"Poison\"> · Weak to <img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> <img class=\"ico\" src=\"assets/icons/psychic.webp\" alt=\"Psychic\"> <img class=\"ico\" src=\"assets/icons/ghost.webp\" alt=\"Ghost\"> <img class=\"ico\" src=\"assets/icons/dark.webp\" alt=\"Dark\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10038.png\" data-hub=\"94-Mega\" title=\"Mega Gengar · shares Ghost / Poison\" alt=\"Mega Gengar\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10056.png\" data-hub=\"354-Mega\" title=\"Mega Banette · shares Ghost\" alt=\"Mega Banette\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png\" data-hub=\"15-Mega\" title=\"Mega Beedrill · shares Poison\" alt=\"Mega Beedrill\"><img src=\"https://db.pokemongohub.net/images/official/full/071_mega_with_bg.webp\" data-hub=\"71-Mega\" title=\"Mega Victreebel · shares Poison\" alt=\"Mega Victreebel\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10033.png\" data-hub=\"3-Mega\" title=\"Mega Venusaur · shares Poison\" alt=\"Mega Venusaur\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10066.png\" data-hub=\"302-Mega\" title=\"Mega Sableye · shares Ghost\" alt=\"Mega Sableye\"></div></div><div class=\"rank-list mini\"></div><p class=\"muted\">Use existing powered-up super-effective attackers; Shadow Raids require in-person participation.</p></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/158.png\" data-hub=\"158-Shadow\" alt=\"Shadow Totodile\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">Shadow 1★</span><strong>Shadow Totodile</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> · Weak to <img class=\"ico\" src=\"assets/icons/electric.webp\" alt=\"Electric\"> <img class=\"ico\" src=\"assets/icons/grass.webp\" alt=\"Grass\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10077.png\" data-hub=\"382-Primal\" title=\"Primal Kyogre · shares Water\" alt=\"Primal Kyogre\"><img src=\"https://cdn.leekduck.com/assets/img/pokemon_icons/pm658.fMEGA.icon.png\" data-hub=\"658-Mega\" title=\"Mega Greninja · shares Water\" alt=\"Mega Greninja\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10041.png\" data-hub=\"130-Mega\" title=\"Mega Gyarados · shares Water\" alt=\"Mega Gyarados\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10070.png\" data-hub=\"319-Mega\" title=\"Mega Sharpedo · shares Water\" alt=\"Mega Sharpedo\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10064.png\" data-hub=\"260-Mega\" title=\"Mega Swampert · shares Water\" alt=\"Mega Swampert\"><img src=\"https://db.pokemongohub.net/images/official/full/121_mega_with_bg.webp\" data-hub=\"121-Mega\" title=\"Mega Starmie · shares Water\" alt=\"Mega Starmie\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10036.png\" data-hub=\"9-Mega\" title=\"Mega Blastoise · shares Water\" alt=\"Mega Blastoise\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10071.png\" data-hub=\"80-Mega\" title=\"Mega Slowbro · shares Water\" alt=\"Mega Slowbro\"></div></div><div class=\"rank-list mini\"></div><p class=\"muted\">Use existing powered-up super-effective attackers; Shadow Raids require in-person participation.</p></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/410.png\" data-hub=\"410-Shadow\" alt=\"Shadow Shieldon\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">Shadow 1★</span><strong>Shadow Shieldon</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/rock.webp\" alt=\"Rock\"> <img class=\"ico\" src=\"assets/icons/steel.webp\" alt=\"Steel\"> · Weak to <img class=\"ico\" src=\"assets/icons/water.webp\" alt=\"Water\"> <img class=\"ico\" src=\"assets/icons/fighting.png\" alt=\"Fighting\"> <img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10075.png\" data-hub=\"719-Mega\" title=\"Mega Diancie · shares Rock\" alt=\"Mega Diancie\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10059.png\" data-hub=\"448-Mega\" title=\"Mega Lucario · shares Steel\" alt=\"Mega Lucario\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10049.png\" data-hub=\"248-Mega\" title=\"Mega Tyranitar · shares Rock\" alt=\"Mega Tyranitar\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10076.png\" data-hub=\"376-Mega\" title=\"Mega Metagross · shares Steel\" alt=\"Mega Metagross\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10042.png\" data-hub=\"142-Mega\" title=\"Mega Aerodactyl · shares Rock\" alt=\"Mega Aerodactyl\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10046.png\" data-hub=\"212-Mega\" title=\"Mega Scizor · shares Steel\" alt=\"Mega Scizor\"><img src=\"https://db.pokemongohub.net/images/official/full/227_mega_with_bg.webp\" data-hub=\"227-Mega\" title=\"Mega Skarmory · shares Steel\" alt=\"Mega Skarmory\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10053.png\" data-hub=\"306-Mega\" title=\"Mega Aggron · shares Steel\" alt=\"Mega Aggron\"></div></div><div class=\"rank-list mini\"></div><p class=\"muted\">Use existing powered-up super-effective attackers; Shadow Raids require in-person participation.</p></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/443.png\" data-hub=\"443-Shadow\" alt=\"Shadow Gible\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">Shadow 1★</span><strong>Shadow Gible</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> <img class=\"ico\" src=\"assets/icons/ground.webp\" alt=\"Ground\"> · Weak to <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> <img class=\"ico\" src=\"assets/icons/dragon.png\" alt=\"Dragon\"> <img class=\"ico\" src=\"assets/icons/fairy.webp\" alt=\"Fairy\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png\" data-hub=\"384-Mega\" title=\"Mega Rayquaza · shares Dragon\" alt=\"Mega Rayquaza\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10078.png\" data-hub=\"383-Primal\" title=\"Primal Groudon · shares Ground\" alt=\"Primal Groudon\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png\" data-hub=\"445-Mega\" title=\"Mega Garchomp · shares Dragon / Ground\" alt=\"Mega Garchomp\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png\" data-hub=\"381-Mega\" title=\"Mega Latios · shares Dragon\" alt=\"Mega Latios\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png\" data-hub=\"254-Mega\" title=\"Mega Sceptile · shares Dragon\" alt=\"Mega Sceptile\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png\" data-hub=\"373-Mega\" title=\"Mega Salamence · shares Dragon\" alt=\"Mega Salamence\"><img src=\"https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp\" data-hub=\"149-Mega\" title=\"Mega Dragonite · shares Dragon\" alt=\"Mega Dragonite\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10045.png\" data-hub=\"181-Mega\" title=\"Mega Ampharos · shares Dragon\" alt=\"Mega Ampharos\"></div></div><div class=\"rank-list mini\"></div><p class=\"muted\">Use existing powered-up super-effective attackers; Shadow Raids require in-person participation.</p></div><div class=\"raid-block\"><div class=\"raid-boss\"><img class=\"boss-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/821.png\" alt=\"Dynamax Rookidee\"><div class=\"binfo\"><div class=\"btop\"><span class=\"badge\">Max</span><strong>Dynamax Rookidee</strong></div><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/flying.png\" alt=\"Flying\"> · Weak to <img class=\"ico\" src=\"assets/icons/electric.webp\" alt=\"Electric\"> <img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> <img class=\"ico\" src=\"assets/icons/rock.webp\" alt=\"Rock\"></div></div><div class=\"raid-mega\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png\" data-hub=\"384-Mega\" title=\"Mega Rayquaza · shares Flying\" alt=\"Mega Rayquaza\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png\" data-hub=\"6-Mega_Y\" title=\"Mega Charizard Y · shares Flying\" alt=\"Mega Charizard Y\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10089.png\" data-hub=\"373-Mega\" title=\"Mega Salamence · shares Flying\" alt=\"Mega Salamence\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10040.png\" data-hub=\"127-Mega\" title=\"Mega Pinsir · shares Flying\" alt=\"Mega Pinsir\"><img src=\"https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp\" data-hub=\"149-Mega\" title=\"Mega Dragonite · shares Flying\" alt=\"Mega Dragonite\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10042.png\" data-hub=\"142-Mega\" title=\"Mega Aerodactyl · shares Flying\" alt=\"Mega Aerodactyl\"><img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10073.png\" data-hub=\"18-Mega\" title=\"Mega Pidgeot · shares Flying\" alt=\"Mega Pidgeot\"><img src=\"https://db.pokemongohub.net/images/official/full/398_mega_with_bg.webp\" data-hub=\"398-Mega\" title=\"Mega Staraptor · shares Flying\" alt=\"Mega Staraptor\"></div></div><div class=\"rank-list mini\"></div><div class=\"rank-list mini\"><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://db.pokemongohub.net/images/official/detail/849_gmax.png\" data-hub=\"849-Gigantamax\" alt=\"Gigantamax Toxtricity\"><strong>Gigantamax Toxtricity</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/electric.webp\" alt=\"Electric\"> Max attacker</div></div><div class=\"rank-item\"><img class=\"mon-icon\" src=\"https://db.pokemongohub.net/images/official/detail/131_gmax.png\" data-hub=\"131-Gigantamax\" alt=\"Gigantamax Lapras\"><strong>Gigantamax Lapras</strong><div class=\"meta\"><img class=\"ico\" src=\"assets/icons/ice.webp\" alt=\"Ice\"> Max attacker</div></div></div><p class=\"muted\">Featured October 12–18; use Max-capable Pokémon, not ordinary raid counters.</p></div></div>"
