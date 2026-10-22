@@ -1,57 +1,57 @@
 {
-  "lastUpdated": "2026-10-20T13:44:17Z",
+  "lastUpdated": "2026-10-22T01:23:29Z",
   "sources": {
     "events": {
-      "lastFetch": "2026-10-20T09:50:04Z",
-      "lastChecked": "2026-10-20T13:44:17Z",
+      "lastFetch": "2026-10-22T01:01:17Z",
+      "lastChecked": "2026-10-22T01:23:29Z",
       "status": "ok",
-      "bytes": 55002,
-      "sha256": "d54708dfd46e5a2d",
-      "note": "已处理新增 11 月活动、团战与两场 Pokémon Night Out 线下活动。"
+      "bytes": 67112,
+      "sha256": "18ddf0ea2f844834",
+      "note": "已处理本轮结构化变化：Pawniard 社区日详情、韩国地区活动及现有事件覆盖。"
     },
     "raids": {
-      "lastFetch": "2026-10-20T09:50:04Z",
-      "lastChecked": "2026-10-20T13:44:17Z",
+      "lastFetch": "2026-10-22T01:10:26Z",
+      "lastChecked": "2026-10-22T01:23:29Z",
       "status": "ok",
-      "bytes": 16478,
-      "sha256": "bc51180551a87874",
-      "note": "当前实时团战池字节未变；日期边界与现有团战面板已复核。"
+      "bytes": 17327,
+      "sha256": "1e9f7ff378488f88",
+      "note": "已处理 10/21 换班后的 Palkia、Mega Charizard X/Y、低星与暗影实时池并更新 Counter。"
     },
     "eggs": {
       "lastFetch": "2026-10-04T09:24:47Z",
-      "lastChecked": "2026-10-20T13:44:17Z",
+      "lastChecked": "2026-10-22T01:23:29Z",
       "status": "ok",
       "bytes": 30240,
       "sha256": "3bfd732424a92ce6",
-      "note": "本轮无全池刷新需求，复用已处理缓存。"
+      "note": "本轮无相关全池刷新需求，复用已处理缓存。"
     },
     "research": {
       "lastFetch": "2026-10-04T09:24:47Z",
-      "lastChecked": "2026-10-20T13:44:17Z",
+      "lastChecked": "2026-10-22T01:23:29Z",
       "status": "ok",
       "bytes": 65009,
       "sha256": "4d516b59db3d85fb",
-      "note": "本轮无全池刷新需求，复用已处理缓存。"
+      "note": "本轮无相关全池刷新需求，复用已处理缓存。"
     },
     "gamemaster": {
       "lastFetch": "2026-10-20T09:50:05Z",
-      "lastChecked": "2026-10-20T13:44:17Z",
+      "lastChecked": "2026-10-22T01:23:29Z",
       "status": "ok",
       "bytes": 935421,
       "sha256": "4c7411cf564592bc",
-      "note": "已处理稳定 dex、属性与招式事实；名称仍按专用名称查询与已验证资料。"
+      "note": "缓存仍在 7 日窗口内；已用于核对本期 dex、属性与招式类型，名称按专用查询或来源拼写。"
     },
     "tiers-attackers": {
       "lastFetch": "2026-10-20T09:50:07Z",
-      "lastChecked": "2026-10-20T13:44:17Z",
+      "lastChecked": "2026-10-22T01:23:29Z",
       "status": "ok",
       "bytes": 37232,
       "sha256": "c87ef5974d2355ef",
-      "note": "与提交基线一致，静态攻手榜保持不变。"
+      "note": "与提交基线一致，静态攻手榜保持不变；Max 当前推荐复用已处理分层。"
     },
     "tiers-defenders": {
       "lastFetch": "2026-10-20T09:50:08Z",
-      "lastChecked": "2026-10-20T13:44:17Z",
+      "lastChecked": "2026-10-22T01:23:29Z",
       "status": "ok",
       "bytes": 40685,
       "sha256": "d200e9f33f62fb12",
@@ -59,63 +59,63 @@
     },
     "tiers-pokebase": {
       "lastFetch": "2026-10-20T09:50:10Z",
-      "lastChecked": "2026-10-20T13:44:17Z",
+      "lastChecked": "2026-10-22T01:23:29Z",
       "status": "ok",
       "bytes": 130984,
       "sha256": "f063d9e6112204c0",
-      "note": "已复核交叉来源变化，未据此改写 Hub 静态榜。"
+      "note": "与提交基线一致；用于交叉核对本期低星与 Max 信息。"
     },
     "events-hub": {
-      "lastFetch": "2026-10-20T09:50:13Z",
-      "lastChecked": "2026-10-20T13:44:17Z",
+      "lastFetch": "2026-10-21T12:19:38Z",
+      "lastChecked": "2026-10-22T01:23:29Z",
       "status": "ok",
       "bytes": 31883,
-      "sha256": "83ddb37d233b2f8f",
-      "note": "已处理索引并读取 10 月、11 月月历正文及相关团战指南。"
+      "sha256": "defbb096073c8c2b",
+      "note": "已处理索引变化并按 24 小时规则复核 10 月月历正文、当前团战页与相关指南。"
     },
     "events-pokebase": {
-      "lastFetch": "2026-10-20T09:50:13Z",
-      "lastChecked": "2026-10-20T13:44:17Z",
+      "lastFetch": "2026-10-22T01:01:18Z",
+      "lastChecked": "2026-10-22T01:23:29Z",
       "status": "ok",
-      "bytes": 41362,
-      "sha256": "ae44cc9f7449e2a0",
-      "note": "已检查事件交叉覆盖，未发现需独立新增且可确认的遗漏。"
+      "bytes": 41271,
+      "sha256": "6c08886e0bb34305",
+      "note": "已处理事件与实时团战交叉覆盖，并读取本期低星与 Max 宝可梦页面。"
     },
     "events-official": {
-      "lastFetch": "2026-10-20T09:50:14Z",
-      "lastChecked": "2026-10-20T13:44:17Z",
+      "lastFetch": "2026-10-22T01:01:34Z",
+      "lastChecked": "2026-10-22T01:23:29Z",
       "status": "ok",
-      "bytes": 12526,
-      "sha256": "7df2423704aa84fc",
-      "note": "已处理官方索引变化并核对 Pokémon Night Out 官方详情。"
+      "bytes": 12476,
+      "sha256": "cf87e56a09e7047d",
+      "note": "已处理官方索引变化，核对 Pawniard 社区日、万圣节第二部分与韩国公告。"
     }
   },
   "notes": {
     "operator_review": {
-      "fact": "已按恢复块指定的提交基线完整执行来源准备、发现、详情、日期与双语检查。",
-      "decision": "新增 11 月已公布内容并登记洛杉矶、伦敦场馆活动；未改 Spot Atlas 或保护文件。"
+      "fact": "已专项搜索并核对韩国本地活动，新增 FC 首尔、韩文日、蚕室 Magikarp 与四期韩国每周接力调查；既有韩国皮卡丘活动时间亦以 Fandom 正文复核。",
+      "decision": "韩国单场与全境活动均按官方 KST 写为 Asia/Seoul；未把调查领奖截止误作现场玩法结束，也未改 Spot Atlas。"
     },
     "calendar": {
-      "fact": "新增 20 个来源 ID，含 2 场 Pokémon Night Out、本月末至 11 月的团战、Max 周一、聚焦与预告活动；淘汰 6 个超过 90 天事件。",
-      "decision": "未公布玩法保持待定，不虚构主角或奖励；洛杉矶／伦敦游戏时段按未知精度，不把演出时间冒充精确游戏时间。"
+      "fact": "补齐 GO Pass 11 月与 Pawniard 社区日详情，新增 8 条恢复草稿中来源支持的活动，并移除 2 条超过 90 天历史及其 featured/English 引用。",
+      "decision": "Palkia 与 Mega Charizard X/Y 的开始时间来源一致；LeekDuck 详情与 Hub 当前团战页对结束时刻存在冲突，因此 endPrecision 保持 unknown，不伪称精确。"
     },
     "rotations": {
-      "fact": "依据 Hub 11 月月历补入 Giratina、Cresselia/Darkrai、四形态 Deoxys、Mega Sableye/Banette/Metagross 与已公布 Max 周。",
-      "decision": "Hub 月历将 Cresselia/Darkrai 列为 11/9–24，覆盖 LeekDuck 详情较窄的 11/16–24；未公布的 11/16 Max 池不写入角标。"
+      "fact": "10 月 Hub 月历正文与最终团战抽屉复核后，5★、Mega、Max 轮值宝可梦和日期未发生结构变化。",
+      "decision": "rotations.json 保持字节不变；Palkia、Mega Charizard X/Y 与 Sneasel 当前段继续使用已确认完整池。"
     },
     "ranking_review": {
-      "fact": "更新本月看点与本期推荐以反映 10/20 日期边界、Minior、波士顿及月底安排。",
-      "decision": "实时 raids 字节与静态 tier 输入未变，保留当前 Counter 与攻防榜面板。"
+      "fact": "实时 raids 已由旧池切换为 Palkia、Mega Charizard X/Y、阿罗拉 3★与四只龙系 1★；Counter 与编辑推荐同步更新，并纳入极巨化 Sneasel。",
+      "decision": "攻手/防守 tier 字节未变，两个静态面板保持不变；糖果 Mega 配对从现有来源支持的 mega roster 按共享属性生成。"
     },
     "source_gaps": {
-      "fact": "11/16 Max 主角、Dynamax Trails、Twilight Wishes、11 月社区日及 11/28 团战日细节仍未公布。 Hub 11 月月历未列 11/9–15 的 Mega 池与 11/9–15 的 Max 池。",
-      "decision": "保留明确日期并将未公布内容标为待定；继续设置详情 pending，不猜测。 对这两个空档不补造角标。"
+      "fact": "11/16 Max 主角、Dynamax Trails、Twilight Wishes、11/28 超级超级团战日主角、GO Pass 完整逐级奖励及 Twitch 直播结束/兑换期限仍待公布；GO Tour 洛杉矶详情本轮刷新失败。",
+      "decision": "保留上次可验证内容与 pending 标记，不猜 Boss、奖励或结束时刻；发现报告的 4 条 date-pending 作为解析覆盖缺口记录。"
     }
   },
   "discovery": {
-    "lastChecked": "2026-10-20T13:44:17Z",
-    "status": "complete",
-    "note": "cached-new 完整覆盖；82 条候选中识别 20 个新 LeekDuck ID，20 个均已逐页核对并处置，0 日期待核、0 格式异常、0 覆盖缺口。"
+    "lastChecked": "2026-10-22T01:23:29Z",
+    "status": "partial",
+    "note": "cached-new 返回 partial：60 条候选中多数为导航/既有来源，4 条 date-pending 均已由详情或既有证据核对；LeekDuck 日期解析覆盖仍报告该缺口，未据此猜日期。"
   },
   "details": {
     "https://leekduck.com/events/catch-mastery-phantump-2026/": {
@@ -269,9 +269,9 @@
       "pending": false
     },
     "https://leekduck.com/events/minior-showers-orionids-2026/": {
-      "sha256": "3b02bccaa4c5a1af3d501a2b7766f5b4f8052a6091f79efb2c59aa50f475d02d",
-      "checkedAt": "2026-10-16T04:43:38Z",
-      "pending": true
+      "sha256": "d4613e84d2bfcfbec75766d713aa2d0b6fb7ac8f065ef9e9ec99bbf3d06a07c8",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
     },
     "https://leekduck.com/events/minior-showers-perseids-2027/": {
       "sha256": "26f1c8eeb1cf1f256105c2f46159dac803d231f0814b4d44da000984a6d47f2d",
@@ -284,9 +284,9 @@
       "pending": false
     },
     "https://leekduck.com/events/november-communityday2026/": {
-      "sha256": "9766e20283f6891a5e5979e24718301a2cd1b92428ecd375a05738c75a45a0e8",
-      "checkedAt": "2026-10-16T04:43:38Z",
-      "pending": true
+      "sha256": "68edb88aced280d1076928d0d92a8a0d201120ab27be5a62ae296ee6a88ea2f1",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
     },
     "https://leekduck.com/events/october-communityday2026/": {
       "sha256": "c4b08f78fea35332646e222abf75a381b625fb466dc49da2927140e4ceca3b99",
@@ -335,7 +335,7 @@
     },
     "https://leekduck.com/events/pokemon-night-out-2026-twitch-drops/": {
       "sha256": "71f2c6c92ed82b1dfa113bd61bad5cccab60c2ea03f5d0fb755cfc1d2d54702f",
-      "checkedAt": "2026-10-16T04:43:38Z",
+      "checkedAt": "2026-10-22T01:23:29Z",
       "pending": true
     },
     "https://leekduck.com/events/pokemon-tcg-30th-celebration/": {
@@ -495,7 +495,7 @@
     },
     "https://pokemongo.com/news/minior-meteor-showers-2026": {
       "sha256": "f7f4586ce474304267f01943ff2609eded2748b752e5b21201a549f7432344a3",
-      "checkedAt": "2026-10-16T04:43:38Z",
+      "checkedAt": "2026-10-22T01:23:29Z",
       "pending": true
     },
     "https://pokemongo.com/news/pokemon-horizons-celebration-event-2026": {
@@ -505,7 +505,7 @@
     },
     "https://pokemongo.com/news/pokemon-night-out-twitch-drops2026": {
       "sha256": "90d62210c7b6586c974efaf7a562dacd37da77eacd8ad13d6462b5fbe24a6253",
-      "checkedAt": "2026-10-16T04:43:38Z",
+      "checkedAt": "2026-10-22T01:23:29Z",
       "pending": true
     },
     "https://pokemongo.com/news/pokemon-x-adidas-2026": {
@@ -574,8 +574,8 @@
       "pending": false
     },
     "https://pokemongo.fandom.com/wiki/Pikachu%27s_Autumn_Excursion_2026": {
-      "sha256": "72b404eb9ff95fa83be327d4c1a70afc731b4873e745c35b4ee62d3dbf9f87ca",
-      "checkedAt": "2026-10-10T04:24:18Z",
+      "sha256": "6eb5e7dfb3d2a25f13d6f5d96c05d7fe2075603429b671284598c866eda7982d",
+      "checkedAt": "2026-10-22T01:23:29Z",
       "pending": false
     },
     "https://pokemongo.fandom.com/wiki/Pok%C3%A9mon_Jet_Collaboration_Events": {
@@ -629,8 +629,8 @@
       "pending": false
     },
     "https://pokemongohub.net/post/event/october-2026-events/": {
-      "sha256": "885ba90a216d71bc144143788017886d2f4cfb6a1f29b4406f3e63502b2f38e0",
-      "checkedAt": "2026-10-20T13:44:17Z",
+      "sha256": "2431e3165fd22bd056904f593be499d4f9ac2593e8a89175cd7e819641c2d801",
+      "checkedAt": "2026-10-22T01:23:29Z",
       "pending": false
     },
     "https://pokemongohub.net/post/event/patterns-of-the-wild-event-indonesia-exclusive-event/": {
@@ -729,8 +729,8 @@
       "pending": false
     },
     "https://pokemongohub.net/post/guide/current-go-raids/": {
-      "sha256": "d16d8ce413d76686bc378762945ec9a51462ca916cdd09251344b03c39ebda69",
-      "checkedAt": "2026-10-16T04:43:38Z",
+      "sha256": "562eb727fdcba089c880757e9c0bafa96c0127e2fb418560a285afa7f300a36c",
+      "checkedAt": "2026-10-22T01:23:29Z",
       "pending": false
     },
     "https://pokemongohub.net/post/guide/gmax-cinderace/": {
@@ -769,8 +769,8 @@
       "pending": false
     },
     "https://pokemongohub.net/post/guide/minior-showers/": {
-      "sha256": "ccc8a596c09023b6d76838baf33c496fb3089cbd3352fa366910cc905cccf3f4",
-      "checkedAt": "2026-10-16T04:43:38Z",
+      "sha256": "30a52685a7bb6cb00fd5c2705d17bb512f051c812bad41c4bcd401fd2fe965c4",
+      "checkedAt": "2026-10-22T01:23:29Z",
       "pending": true
     },
     "https://pokemongohub.net/post/guide/september-2026-events/": {
@@ -839,8 +839,8 @@
       "pending": false
     },
     "https://pokemongohub.net/post/news/pokemon-night-out-twitch-drop-timed-research/": {
-      "sha256": "83217e55cb79a86abb5da97bc53b9ea4ae03931aa9c47aaa2d49e73a5d3e6355",
-      "checkedAt": "2026-10-16T04:43:38Z",
+      "sha256": "64ed2fb64fc257c2134e11fea2c8b4daff14ad906aef9ef9e6641f5cca477869",
+      "checkedAt": "2026-10-22T01:23:29Z",
       "pending": true
     },
     "https://pokemongohub.net/post/pvp/go-battle-league-twilight-trails-schedule-cups-events/": {
@@ -855,7 +855,7 @@
     },
     "https://pokemongohub.net/post/event/pokemon-go-halloween-2026-part-two/": {
       "sha256": "25d88662660e3cc44dc876d26a9745dc6860901522d8586439efa151d8586b4f",
-      "checkedAt": "2026-10-10T04:24:18Z",
+      "checkedAt": "2026-10-22T01:23:29Z",
       "pending": false
     },
     "https://pokemongohub.net/post/event/pokexciting-singapore-2026/": {
@@ -1030,18 +1030,18 @@
     },
     "https://leekduck.com/events/chandelure-super-mega-raid-day-2026/": {
       "sha256": "ed7a0a7ad24d3d10588495993067b09560a511e775c08849b80bcdf9d50d07e5",
-      "checkedAt": "2026-10-16T04:43:38Z",
-      "pending": false
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": true
     },
     "https://pokemongohub.net/post/event/super-mega-chandelure-raid-day/": {
       "sha256": "5c4947ffdee95fb7868191de1ad154a3f570163a3251bf91b9bd6e0650dcc706",
-      "checkedAt": "2026-10-16T04:43:38Z",
-      "pending": false
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": true
     },
     "https://pokemongo.com/news/chandelure-super-mega-raid-day-2026": {
       "sha256": "b4e3ad286c4f233ca565d3d82f70fd1fdd95d8e42d20a579949f5cf055e67e2c",
-      "checkedAt": "2026-10-16T04:43:38Z",
-      "pending": false
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": true
     },
     "https://pokemongohub.net/post/guide/dialga-raid-guide-best-dialga-counters-in-pokemon-go/": {
       "sha256": "d890cb578b1649f508ed9a54200549762670b30859e06126302f2d5e26b1b260",
@@ -1079,8 +1079,8 @@
       "pending": false
     },
     "https://leekduck.com/events/max-mondays-2026-10-26/": {
-      "sha256": "4f98d41aba13bcc66d362f8ad5bf06152ccc69b9531d379ca02d7a60300a5ade",
-      "checkedAt": "2026-10-16T04:43:38Z",
+      "sha256": "847973d5638fc2ae27af405f47c80523990b9a8043568387e7b407d8eaa2016e",
+      "checkedAt": "2026-10-22T01:23:29Z",
       "pending": false
     },
     "https://leekduck.com/events/giratina-origin-forme-in-5-star-raid-battles-october-2026/": {
@@ -1257,6 +1257,131 @@
       "sha256": "5bfab7055a62cb724096137e72506710a06feab6ad3b4bfb750f2fcf8befa009",
       "checkedAt": "2026-10-20T13:44:17Z",
       "pending": false
+    },
+    "https://pokemongo.com/ko/news/fc-seoul-2026": {
+      "sha256": "f0ebcfeba63db8d0a4b646732fd1b8e884051e7f35ec4edae4a2f0e642388004",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokemongo.com/ko/news/hangul-nal-2026": {
+      "sha256": "ee32795f89032f4c6b32b3dba2bda2c80e3d7afb81663b30de3af62c9420a619",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokemongo.fandom.com/wiki/Hangul_Day_2026": {
+      "sha256": "f43d75ec784e5ae5db4ba713d33d08cdee82382b256fc019a42e9276560d7602",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokemongo.com/ko/news/jamsil-magikarp-2026": {
+      "sha256": "d13125a7734c8da42b8f2af6948d3bbbc7b42c3681f25f14b830f6fec4836b46",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokemongo.fandom.com/wiki/2026_Jamsil_Magikarp_Event": {
+      "sha256": "f4ce47bf13e276a772ea24b5b622b3f7df820f71299b65c63d24e36760020971",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokemongo.com/ko/news/weekly-branching-tr-korea-2026": {
+      "sha256": "a3b6a425cbb728d12e0e6715e857a042f263ac38a94abef17197bfe908e49b9c",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://leekduck.com/events/go-pass-november-2026/": {
+      "sha256": "274d89108ccd9397c34bf714e76a042100a0d746621f1f9280619cc1baaae798",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": true
+    },
+    "https://pokemongo.com/news/go-pass-november-2026": {
+      "sha256": "40c65a08fb866691cf5d34d7e66daeef8abdffb70539c3e9f9b6f43be6dcec51",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": true
+    },
+    "https://pokemongohub.net/post/guide/go-pass-november-2026/": {
+      "sha256": "7d072b84e173502bc5820ef354e5be2c114bc15b0811f0557b65966e52acd378",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": true
+    },
+    "https://pokemongo.com/news/communityday-november-2026-pawniard": {
+      "sha256": "60c0c0938a314bb65b0bb976a673cf93aae464757deceb91f711dd505e4c4266",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokemongo.com/news/halloween-part-2-2026": {
+      "sha256": "c267235328843e4479450308dd134aea902afaa0f0dfbd20a9cc4f266cfb6574",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokemongohub.net/post/guide/palkia-raid-guide/": {
+      "sha256": "473ebccf096f06e2d8e74c1974d0bade241f4eb3697877f97ab662d00aa6f741",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokemongohub.net/post/guide/mega-charizard-x-raid-guide/": {
+      "sha256": "5611d0fef59593dbc7f1b04e2bb5f8c7f14f526d913068640a5210108173b9aa",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokemongohub.net/post/guide/mega-charizard-y-raid-guide/": {
+      "sha256": "e9c64eb49b572f9ab8350e7ff5be737b80ec370912edf684c36628e6adf0d898",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokebase.app/pokemon-go/pokemon/axew": {
+      "sha256": "396936ef6f723f24332d89a09c2123cd85057867a685e4d7506ffbebb434434e",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokebase.app/pokemon-go/pokemon/goomy": {
+      "sha256": "5df32966497edb1a59652028455e1531b539439dac9a45227ebb826db1dcf717",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokebase.app/pokemon-go/pokemon/jangmo-o": {
+      "sha256": "783d044c1d125e2b57bc166761fb6a5bfd99c816183495daca18e684492f84b2",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokebase.app/pokemon-go/pokemon/frigibax": {
+      "sha256": "a1bebfcd7d3c6a1b0f726601443d166a4b54900f881cd30b2ec5d8f481db7a4b",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokebase.app/pokemon-go/pokemon/alolan-raichu": {
+      "sha256": "163c4889328e633dc604476f2661f29a3d7867ff770c4077dce57d9595e91c2e",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokebase.app/pokemon-go/pokemon/alolan-ninetales": {
+      "sha256": "221e372374278386384ff814e5868693633e8e5148643f2c35a0163f481032c9",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokebase.app/pokemon-go/pokemon/alolan-muk": {
+      "sha256": "27a0d4f03073189388b3c029506e6ec5f38bdea50db178d79d96b14c2b08da57",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokebase.app/pokemon-go/pokemon/dynamax-sneasel": {
+      "sha256": "927a5604564300105733c80f14ed3868e5e416793224fe4610d7e73c26ce4745",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokemongohub.net/post/guide/alolan-ninetales-raid-guide/": {
+      "sha256": "89f5bf202f645c35ab70ad23644d8ab81b21a899b9995e5f0b34bd3cdd1619da",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokemongohub.net/post/guide/alola-raichu-raid-boss-guide/": {
+      "sha256": "96cc0a030e74912227ec59c14014f900429fa5abf496dd1343bb66744b8feda9",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
+    },
+    "https://pokemongohub.net/post/guide/alolan-muk-raid-guide/": {
+      "sha256": "feb5e0a1a25f1380f3302dc5fae80238ece71cb74afbc2173bc0319b5523cf75",
+      "checkedAt": "2026-10-22T01:23:29Z",
+      "pending": false
     }
   },
   "timingEvidence": {
@@ -1273,12 +1398,12 @@
       "basis": "10/6 10:00 to 11/3 10:00 local; redemption has a different deadline"
     },
     "november-communityday2026": {
-      "url": "https://leekduck.com/events/november-communityday2026/",
-      "basis": "11/21 14:00–17:00 local"
+      "url": "https://pokemongo.com/news/communityday-november-2026-pawniard",
+      "basis": "Official announcement: November 21, 2026, 14:00–17:00 local; evolution and Lure extensions continue to 21:00."
     },
     "pokemon-night-out-2026-twitch-drops": {
       "url": "https://leekduck.com/events/pokemon-night-out-2026-twitch-drops/",
-      "basis": "10/24 19:30 PDT start; broadcast end explicitly unannounced"
+      "basis": "Broadcast begins October 24 at 19:30 PDT; source explicitly says the broadcast end and code/research expiry are unannounced."
     },
     "pokemonspotlighthour2026-10-15": {
       "url": "https://leekduck.com/events/pokemonspotlighthour2026-10-15/",
@@ -1382,11 +1507,11 @@
     },
     "palkia-in-5-star-raid-battles-october-2026": {
       "url": "https://leekduck.com/events/palkia-in-5-star-raid-battles-october-2026/",
-      "basis": "2026-10-21T06:00:00 → 2026-10-27T22:00:00; global/local; boundaries exact/exact; regional unknown mode does not establish a single timezone"
+      "basis": "LeekDuck gives October 21 06:00 to October 27 22:00 local; Hub current-raids page gives October 27 10:00, so end precision remains unknown."
     },
     "mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026": {
       "url": "https://leekduck.com/events/mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026/",
-      "basis": "2026-10-21T06:00:00 → 2026-10-27T22:00:00; global/local; boundaries exact/exact; regional unknown mode does not establish a single timezone"
+      "basis": "LeekDuck gives October 21 06:00 to October 27 22:00 local; Hub current-raids page gives October 27 10:00, so end precision remains unknown."
     },
     "shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
       "url": "https://leekduck.com/events/shadow-landorus-incarnate-forme-in-shadow-raids-october-2026/",
@@ -1491,6 +1616,42 @@
     "max-mondays-2026-11-30": {
       "url": "https://leekduck.com/events/max-mondays-2026-11-30/",
       "basis": "LeekDuck detail confirms local start/end; Hub November monthly calendar corroborates identity and schedule."
+    },
+    "fc-seoul-2026": {
+      "url": "https://pokemongo.com/ko/news/fc-seoul-2026",
+      "basis": "Official Korean announcement: 2026-10-24 09:00–20:00 KST around Seoul World Cup Stadium; research claim deadline is separate."
+    },
+    "hangul-nal-2026": {
+      "url": "https://pokemongo.com/ko/news/hangul-nal-2026",
+      "basis": "Official Korean announcement: 2026-10-06 10:00 through 2026-10-09 20:00 KST across South Korea."
+    },
+    "jamsil-magikarp-2026": {
+      "url": "https://pokemongo.com/ko/news/jamsil-magikarp-2026",
+      "basis": "Official Korean announcement: 2026-08-16 10:00 through 2026-08-31 20:00 KST around Jamsil Lotte World Tower and Mall."
+    },
+    "weekly-branching-tr-korea-2026-part-1": {
+      "url": "https://pokemongo.com/ko/news/weekly-branching-tr-korea-2026",
+      "basis": "Official Korean schedule: 2026-09-08 00:00 through 2026-09-14 23:59 KST; only selected Trainers receive each part."
+    },
+    "weekly-branching-tr-korea-2026-part-2": {
+      "url": "https://pokemongo.com/ko/news/weekly-branching-tr-korea-2026",
+      "basis": "Official Korean schedule: 2026-09-15 00:00 through 2026-09-21 23:59 KST; only selected Trainers receive each part."
+    },
+    "weekly-branching-tr-korea-2026-part-3": {
+      "url": "https://pokemongo.com/ko/news/weekly-branching-tr-korea-2026",
+      "basis": "Official Korean schedule: 2026-09-29 00:00 through 2026-10-05 23:59 KST; only selected Trainers receive each part."
+    },
+    "weekly-branching-tr-korea-2026-part-4": {
+      "url": "https://pokemongo.com/ko/news/weekly-branching-tr-korea-2026",
+      "basis": "Official Korean schedule: 2026-10-06 00:00 through 2026-10-12 23:59 KST; only selected Trainers receive each part."
+    },
+    "go-pass-november-2026": {
+      "url": "https://pokemongo.com/news/go-pass-november-2026",
+      "basis": "Official announcement: November 3 10:00 through December 1 10:00 local; rewards expire December 3 10:00 local."
+    },
+    "max-mondays-2026-10-26": {
+      "url": "https://leekduck.com/events/max-mondays-2026-10-26/",
+      "basis": "Detail page states October 26, 2026, 06:00–21:00 local for the global Max Monday window."
     }
   }
 }

@@ -1,6 +1,95 @@
 [
 
   {
+    "id": "fc-seoul-2026",
+    "name": "FC 首尔联动（首尔世界杯体育场）",
+    "type": "event", "heading": "In-Person Event",
+    "start": "2026-10-24T09:00:00", "end": "2026-10-24T20:00:00",
+    "timing": {"scope":"regional","mode":"local","timeZone":"Asia/Seoul","startPrecision":"exact","endPrecision":"exact"},
+    "link": "https://pokemongo.com/ko/news/fc-seoul-2026",
+    "summary": "仅限首尔世界杯体育场周边，火属性宝可梦增加；现场玩法于韩国时间 10 月 24 日 20 时结束，免费调查领奖截止另为 11 月 7 日 20 时。",
+    "links": [{"label":"官方·韩国","url":"https://pokemongo.com/ko/news/fc-seoul-2026"}],
+    "bonuses": [":lure: 诱饵模组持续 2 小时", ":candy: Nice 或更好的投球捕捉可获得更多糖果", "✨ Growlithe、Torchic、Houndour、Litleo、Litten 与团战 Charmander 闪光概率提升；Flareon 仅确认可闪光"],
+    "pokemon": [{"id":58,"name":"Growlithe","shiny":true},{"id":136,"name":"Flareon","shiny":true},{"id":255,"name":"Torchic","shiny":true},{"id":228,"name":"Houndour","shiny":true},{"id":667,"name":"Litleo","shiny":true},{"id":725,"name":"Litten","shiny":true},{"id":4,"name":"Charmander","shiny":true},{"id":6,"name":"Charizard","shiny":true}],
+    "sections": [{"title":"当地团战与免费调查","items":["1★ Charmander 团战闪光概率提升，带活动地点背景；不可使用远程团战入场券。","活动期间在场馆周边领取免费限时调查：8,042 经验、5,997 星尘、50 Charmander 糖果、1 张高级战斗入场券，以及带地点背景的 Charizard 遭遇（闪光概率提升）等。","调查须在韩国时间 2026 年 11 月 7 日 20:00 前完成并领取奖励；此期限不是现场活动结束时间。","实体摊位仅在 10 月 24 日 09:00–14:00 开放，游戏内容持续至 20:00。"]}],
+    "highlight": true
+  },
+  {
+    "id": "hangul-nal-2026", "name": "韩文日 2026（韩国全境）",
+    "type": "event", "heading": "Regional Event",
+    "start": "2026-10-06T10:00:00", "end": "2026-10-09T20:00:00",
+    "timing": {"scope":"regional","mode":"local","timeZone":"Asia/Seoul","startPrecision":"exact","endPrecision":"exact"},
+    "link": "https://pokemongo.com/ko/news/hangul-nal-2026",
+    "summary": "韩国全境韩文日活动，通过普通诱饵模组与熏香遇见主题宝可梦；收藏家挑战奖励 5,000 经验、5,000 星尘及 Unown H 遭遇（可闪光）。",
+    "links": [{"label":"官方·韩国","url":"https://pokemongo.com/ko/news/hangul-nal-2026"},{"label":"Fandom","url":"https://pokemongo.fandom.com/wiki/Hangul_Day_2026"}],
+    "pokemon": [{"id":444,"name":"Gabite","shiny":true},{"id":207,"name":"Gligar","shiny":true},{"id":78,"name":"Rapidash","shiny":true},{"id":58,"name":"Growlithe","shiny":true},{"id":304,"name":"Aron","shiny":true},{"id":52,"name":"Meowth","shiny":true},{"id":684,"name":"Swirlix","shiny":true},{"id":162,"name":"Furret","shiny":true},{"id":531,"name":"Audino","shiny":true},{"id":26,"name":"Raichu","shiny":true},{"id":131,"name":"Lapras","shiny":true},{"id":201,"name":"Unown H","shiny":true}],
+    "highlight": true,
+    "bonuses": [":lure: 诱饵模组持续 1 小时", ":incense: 熏香持续 2 小时；不含每日冒险熏香", "✨ 官方星标宝可梦的闪光概率提升"],
+    "sections": [{"title":"诱饵与熏香遭遇","body":"Gabite、Gligar、Rapidash、Growlithe、Aron、Meowth、Swirlix、Furret、Audino、Raichu、Lapras；不适用于每日冒险熏香。"}]
+  },
+  {
+    "id": "jamsil-magikarp-2026", "name": "蚕室 Magikarp 活动（首尔）",
+    "type": "event", "heading": "In-Person Event",
+    "start": "2026-08-16T10:00:00", "end": "2026-08-31T20:00:00",
+    "timing": {"scope":"regional","mode":"local","timeZone":"Asia/Seoul","startPrecision":"exact","endPrecision":"exact"},
+    "link": "https://pokemongo.com/ko/news/jamsil-magikarp-2026",
+    "summary": "首尔蚕室乐天世界塔与商场周边 Magikarp 大量出现，偶有 Gyarados；两种均可闪光。活动已于 8 月 31 日结束，调查完成与领奖截止另为 9 月 20 日 20 时。",
+    "links": [{"label":"官方·韩国","url":"https://pokemongo.com/ko/news/jamsil-magikarp-2026"},{"label":"Fandom","url":"https://pokemongo.fandom.com/wiki/2026_Jamsil_Magikarp_Event"}],
+    "longTerm": true,
+    "pokemon": [{"id":129,"name":"Magikarp","shiny":true},{"id":130,"name":"Gyarados","shiny":true}],
+    "bonuses": [":lure: 诱饵模组持续 3 小时", "每天额外 1 次特殊交换", "XXS 与 XXL Magikarp 出现机会增加"],
+    "sections": [{"title":"每日大量出现","body":"韩国时间每日 12:00–12:03、12:30–12:33、13:00–13:03、13:30–13:33 大量出现 Magikarp。"},{"title":"两条免费限时调查","items":["大量出现调查：4,000 经验、5,000 星尘与 Magikarp 遭遇。","通往 Gyarados 之路：400 Magikarp 糖果、10,000 星尘与 Magikarp 遭遇。","两条调查均须在韩国时间 2026 年 9 月 20 日 20:00 前完成并领取奖励。"]}]
+  },
+  {
+    "id":"weekly-branching-tr-korea-2026-part-1", "name":"韩国每周接力限时调查·第一期",
+    "type":"research", "heading":"Regional Research",
+    "start":"2026-09-08T00:00:00", "end":"2026-09-14T23:59:00",
+    "timing":{"scope":"regional","mode":"local","timeZone":"Asia/Seoul","startPrecision":"exact","endPrecision":"exact"},
+    "link":"https://pokemongo.com/ko/news/weekly-branching-tr-korea-2026",
+    "summary":"韩国限定的每周分支限时调查测试，仅向部分训练家随机发放；路线决定该周任务与奖励，不保证每位玩家均可领取，玩家收到的调查也可能不同。",
+    "links":[{"label":"官方·韩国","url":"https://pokemongo.com/ko/news/weekly-branching-tr-korea-2026"}]
+  },
+  {
+    "id":"weekly-branching-tr-korea-2026-part-2", "name":"韩国每周接力限时调查·第二期",
+    "type":"research", "heading":"Regional Research",
+    "start":"2026-09-15T00:00:00", "end":"2026-09-21T23:59:00",
+    "timing":{"scope":"regional","mode":"local","timeZone":"Asia/Seoul","startPrecision":"exact","endPrecision":"exact"},
+    "link":"https://pokemongo.com/ko/news/weekly-branching-tr-korea-2026",
+    "summary":"韩国限定的每周分支限时调查测试，仅向部分训练家随机发放；路线决定该周任务与奖励，不保证每位玩家均可领取，玩家收到的调查也可能不同。",
+    "links":[{"label":"官方·韩国","url":"https://pokemongo.com/ko/news/weekly-branching-tr-korea-2026"}]
+  },
+  {
+    "id":"weekly-branching-tr-korea-2026-part-3", "name":"韩国每周接力限时调查·第三期",
+    "type":"research", "heading":"Regional Research",
+    "start":"2026-09-29T00:00:00", "end":"2026-10-05T23:59:00",
+    "timing":{"scope":"regional","mode":"local","timeZone":"Asia/Seoul","startPrecision":"exact","endPrecision":"exact"},
+    "link":"https://pokemongo.com/ko/news/weekly-branching-tr-korea-2026",
+    "summary":"韩国限定的每周分支限时调查测试，仅向部分训练家随机发放；9 月 22–28 日并非公告中的一期，不将各期之间的空档误作连续活动。",
+    "links":[{"label":"官方·韩国","url":"https://pokemongo.com/ko/news/weekly-branching-tr-korea-2026"}]
+  },
+  {
+    "id":"weekly-branching-tr-korea-2026-part-4", "name":"韩国每周接力限时调查·第四期",
+    "type":"research", "heading":"Regional Research",
+    "start":"2026-10-06T00:00:00", "end":"2026-10-12T23:59:00",
+    "timing":{"scope":"regional","mode":"local","timeZone":"Asia/Seoul","startPrecision":"exact","endPrecision":"exact"},
+    "link":"https://pokemongo.com/ko/news/weekly-branching-tr-korea-2026",
+    "summary":"韩国限定的每周分支限时调查测试，仅向部分训练家随机发放；路线决定该周任务与奖励，不保证每位玩家均可领取，玩家收到的调查也可能不同。",
+    "links":[{"label":"官方·韩国","url":"https://pokemongo.com/ko/news/weekly-branching-tr-korea-2026"}]
+  },
+  {
+    "id":"go-pass-november-2026", "name":"GO Pass：11 月",
+    "type":"go-pass", "heading":"GO Pass",
+    "start":"2026-11-03T10:00:00", "end":"2026-12-01T10:00:00",
+    "timing":{"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
+    "link":"https://leekduck.com/events/go-pass-november-2026/",
+    "summary":"免费通行证自动发放，奖励含 Groudon 遭遇（可闪光）与 400 宝可币；Deluxe 另加 1,000 宝可币，总计 1,400。获取积分与升阶于当地 12 月 1 日 10 时结束，领奖截止 12 月 3 日 10 时。",
+    "links":[{"label":"LeekDuck","url":"https://leekduck.com/events/go-pass-november-2026/"},{"label":"官方","url":"https://pokemongo.com/news/go-pass-november-2026"},{"label":"Hub","url":"https://pokemongohub.net/post/guide/go-pass-november-2026/"}],
+    "pokemon":[{"id":383,"name":"Groudon","shiny":true}],
+    "bonuses":[":candy: Rank 1：交换额外 1 颗糖果；31 级以上保证获得 1 颗糖果 XL",":incense: Rank 50：每日冒险熏香持续时间 ×2",":xp: Rank 75：孵蛋经验与星尘增加"],
+    "sections":[{"title":"积分与领奖期限","items":["当地 11 月 28 日 00:00 至 29 日 23:59 不设每日 GO 积分上限。","免费奖励还含幸运蛋、神奇糖果 XL 与星尘；完整逐级奖励表尚未公布。","Deluxe 为 US$7.99，另含 1 个超级孵化器；Deluxe +10 Ranks 为 US$9.99，可达 Rank 11。","当地 12 月 3 日 10:00 前领取已解锁奖励。"]},{"title":"礼物里程碑（Rank 25）","body":"免费版每日可开 40 份礼物、转动补给站或道馆获得最多 125 份礼物，并额外存放 10 份；Deluxe 分别提高为 50、150 及额外 20 份。"}],
+    "longTerm":true
+  },
+  {
     "id": "ultra-unlock-10th-anniversary-edition",
     "name": "究极解锁:十周年纪念版",
     "type": "event",
@@ -115,37 +204,6 @@
       }
     ],
     "highlight": false
-  },
-  {
-    "id": "pokemonspotlighthour2026-07-23",
-    "name": "伊布聚焦时刻",
-    "type": "pokemon-spotlight-hour",
-    "heading": "Pokémon Spotlight Hour",
-    "start": "2026-07-23T18:00:00",
-    "end": "2026-07-23T19:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
-    "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
-    "link": "https://leekduck.com/events/pokemonspotlighthour2026-07-23/",
-    "summary": "聚焦时刻 18:00–19:00 伊布 大量出现,并有 捕捉糖果 ×2 加成;运气好可遇见闪光个体。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/pokemonspotlighthour2026-07-23/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/guide/spotlight-raid-hours/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 133,
-        "name": "伊布"
-      }
-    ],
-    "bonuses": [
-      ":candy: 捕捉糖果 ×2"
-    ]
   },
   {
     "id": "pokemon-go-fest-2026-global-sunday-raid-makeup",
@@ -1383,41 +1441,6 @@
     "highlight": false
   },
 
-
-  {
-    "id": "raidhour20260722",
-    "name": "索尔迦雷欧 团战时刻",
-    "type": "raid-hour",
-    "heading": "Raid Hour",
-    "start": "2026-07-22T18:00:00",
-    "end": "2026-07-22T19:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
-    "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
-    "link": "https://leekduck.com/events/raidhour20260722/",
-    "summary": "7/22 18:00–19:00 团战时刻,各处道馆集中刷出索尔迦雷欧(超能力/钢)的 5★ 团战;本轮开放闪光索尔迦雷欧。",
-    "links": [
-      {
-        "label": "LeekDuck",
-        "url": "https://leekduck.com/events/raidhour20260722/"
-      },
-      {
-        "label": "Hub",
-        "url": "https://pokemongohub.net/post/event/july-2026-pokemon-go-events/"
-      }
-    ],
-    "pokemon": [
-      {
-        "id": 791,
-        "name": "索尔迦雷欧",
-        "shiny": true
-      }
-    ],
-    "bonuses": [
-      ":raid: 18:00–19:00 团战集中刷新",
-      "✨ 闪光索尔迦雷欧首度登场"
-    ],
-    "highlight": false
-  },
   {
     "id": "solgaleo-in-5-star-raid-battles-july-2026",
     "name": "索尔迦雷欧 现身 5★ 团战",
@@ -6959,7 +6982,7 @@
   },
   {
     "id": "november-communityday2026",
-    "name": "11 月社区日",
+    "name": "Pawniard 社区日",
     "type": "community-day",
     "heading": "Community Day",
     "start": "2026-11-21T14:00:00",
@@ -6967,19 +6990,35 @@
     "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
     "image": "https://cdn.leekduck.com/assets/img/events/cd-default.jpg",
     "link": "https://leekduck.com/events/november-communityday2026/",
-    "summary": "11 月社区日确定于 11 月 21 日当地时间 14–17 时举行；主角、限定招式与完整加成尚未公布。",
+    "summary": "Pawniard 于当地 14–17 时大量出现，闪光概率提升并有机会带特殊背景；活动结束后 4 小时内进化 Bisharp，可让 Kingambit 学会 Kowtow Cleave。",
     "links": [
       {
         "label": "LeekDuck",
         "url": "https://leekduck.com/events/november-communityday2026/"
       },
       {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/communityday-november-2026-pawniard"
+      },
+      {
         "label": "Hub·秋季日期",
         "url": "https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/"
       }
     ],
+    "pokemon": [
+      {"id":624,"name":"Pawniard","shiny":true},
+      {"id":983,"name":"Kingambit","shiny":true}
+    ],
     "bonuses": [
-      "✨ 社区日闪光概率提升；主角待公布"
+      "✨ Pawniard 闪光概率提升，并可能带特殊背景",
+      ":incubator: 孵蛋距离缩短为 1/4",
+      ":candy: 捕捉宝可梦糖果 ×2；31 级以上获得糖果 XL 的概率 ×2",
+      ":incense: 熏香持续 3 小时；普通诱饵模组持续 1 小时",
+      ":trading: 当天可额外进行 1 次特殊交换，交换所需星尘减半"
+    ],
+    "sections": [
+      {"title":"限定招式与进化","items":["当地 14:00–21:00 进化 Bisharp，可让 Kingambit 学会充能招式 Kowtow Cleave。","同一时段内，进化条件临时改为击败 1 只恶或钢属性团战 Boss。","当地 14:00–21:00，普通诱饵模组有极高概率吸引 Pawniard，仍保有闪光提升与特殊背景机会。"]},
+      {"title":"付费特殊调查","body":"1.99 美元特殊调查包含 3 次带特殊背景的 Pawniard 遭遇、更多 Pawniard 遭遇、1 张高级对战入场券及 1 颗神奇糖果 XL 等。"}
     ],
     "highlight": true
   },
@@ -7095,7 +7134,7 @@
     },
     "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
     "link": "https://leekduck.com/events/minior-showers-orionids-2026/",
-    "summary": "Minior 随猎户座流星群首次在野外登场；活动为当地 10 月 19 日 17:00 至 24 日 23:59，每天 17–21 时遭遇概率进一步提升，捕捉可获得更多星尘。核心颜色尚未公布。",
+    "summary": "Minior 绿色核心随猎户座流星群首次登场，野外以流星形态出现；活动为当地 10 月 19 日 17:00 至 24 日 23:59，每天 17–21 时遭遇概率进一步提升，每次捕捉可获得 1,000 星尘。",
     "links": [
       {
         "label": "LeekDuck",
@@ -7138,7 +7177,7 @@
     "type": "twitch-drops",
     "heading": "Twitch Drops",
     "start": "2026-10-25T02:30:00.000Z",
-    "end": "2026-10-25T06:59:00.000Z",
+    "end": null,
     "timing": {"scope":"global","mode":"absolute","startPrecision":"exact","endPrecision":"unknown"},
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-10-24-pokemon-night-out-2026-twitch-drops/pokemon-night-out.jpg",
     "link": "https://leekduck.com/events/pokemon-night-out-2026-twitch-drops/",
@@ -7166,7 +7205,7 @@
         "items": [
           "完成限时调查可获得 Pokémon Night Out 棒球衫换装道具",
           "需绑定 Pokémon Trainer Central 与 Twitch，掉宝每位训练家限领一次",
-          "调查任务与兑换码尚未公布；已确认完成调查可获得 Pokémon Night Out 棒球衫换装道具"
+          "直播结束、兑换码及调查到期时间尚未公布；已确认调查奖励为 Pokémon Night Out 棒球衫换装道具"
         ]
       }
     ]
@@ -7985,7 +8024,7 @@
     "heading": "Raid Battles",
     "start": "2026-10-21T06:00:00",
     "end": "2026-10-27T22:00:00",
-    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"unknown"},
     "image": "https://cdn.leekduck.com/assets/img/events/raids.jpg",
     "link": "https://leekduck.com/events/palkia-in-5-star-raid-battles-october-2026/",
     "summary": "该 Boss 在公布日期内现身 5★团战，并可在对应周三团战时刻集中挑战。",
@@ -7997,6 +8036,10 @@
       {
         "label": "Hub·10月月历",
         "url": "https://pokemongohub.net/post/event/october-2026-events/"
+      },
+      {
+        "label": "Hub·Counter",
+        "url": "https://pokemongohub.net/post/guide/palkia-raid-guide/"
       }
     ],
     "pokemon": [
@@ -8005,6 +8048,12 @@
         "name": "帕路奇亚",
         "shiny": true
       }
+    ],
+    "counters": [
+      {"id":384,"name":"Mega Rayquaza","fast":"Dragon Tail","charged":"Breaking Swipe","hub":"384-Mega","sprite":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png"},
+      {"id":890,"name":"Eternatus","fast":"Dragon Tail","charged":"Dynamax Cannon"},
+      {"id":149,"name":"Mega Dragonite","fast":"Dragon Tail","charged":"Outrage+","hub":"149-Mega","sprite":"https://db.pokemongohub.net/images/official/full/149_mega_with_bg.webp"},
+      {"id":445,"name":"Mega Garchomp","fast":"Dragon Tail","charged":"Breaking Swipe","hub":"445-Mega","sprite":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10058.png"}
     ]
   },
   {
@@ -8014,7 +8063,7 @@
     "heading": "Raid Battles",
     "start": "2026-10-21T06:00:00",
     "end": "2026-10-27T22:00:00",
-    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"unknown"},
     "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
     "link": "https://leekduck.com/events/mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026/",
     "summary": "该超级进化 Boss 在公布日期内现身超级团战；击败后可取得对应超级能量。",
@@ -8026,6 +8075,14 @@
       {
         "label": "Hub·10月月历",
         "url": "https://pokemongohub.net/post/event/october-2026-events/"
+      },
+      {
+        "label": "Hub·X Counter",
+        "url": "https://pokemongohub.net/post/guide/mega-charizard-x-raid-guide/"
+      },
+      {
+        "label": "Hub·Y Counter",
+        "url": "https://pokemongohub.net/post/guide/mega-charizard-y-raid-guide/"
       }
     ],
     "pokemon": [
@@ -8043,6 +8100,15 @@
         "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png",
         "hub": "6-Mega_Y"
       }
+    ],
+    "counters": [
+      {"id":890,"name":"Eternatus","fast":"Dragon Tail","charged":"Dynamax Cannon"},
+      {"id":384,"name":"Mega Rayquaza","fast":"Dragon Tail","charged":"Breaking Swipe","hub":"384-Mega","sprite":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10079.png"},
+      {"id":719,"name":"Mega Diancie","fast":"Rock Throw","charged":"Rock Slide","hub":"719-Mega","sprite":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10075.png"},
+      {"id":464,"name":"Shadow Rhyperior","fast":"Smack Down","charged":"Rock Wrecker","hub":"464-Shadow"}
+    ],
+    "sections": [
+      {"title":"属性提示","body":"X 形态弱龙、地面、岩石；Y 形态双弱岩石，并弱电与水。按实际孵化形态切换队伍。"}
     ]
   },
   {
@@ -8113,10 +8179,10 @@
     "heading": "Max Mondays",
     "start": "2026-10-26T06:00:00",
     "end": "2026-10-26T21:00:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
     "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
     "link": "https://leekduck.com/events/max-mondays-2026-10-26/",
-    "summary": "当天 6–21 时由极巨化 勾魂眼 占领能量点；18–19 时为 Max 周一重点时段。",
+    "summary": "当天当地 6–21 时开放极巨化勾魂眼 Max 周一；能量点更频繁刷新，数量增加。该周可出现勾魂眼的日期为 10 月 26 日至 11 月 1 日。",
     "links": [
       {
         "label": "LeekDuck",
@@ -8542,6 +8608,10 @@
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/event/pokemon-go-halloween-2026-part-two/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/halloween-part-2-2026"
       }
     ],
     "bonuses": [
