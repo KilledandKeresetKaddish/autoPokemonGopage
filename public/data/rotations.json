@@ -767,6 +767,36 @@
           "end": "2026-11-08"
         },
         {
+          "name": "Crowned Sword Zacian Raid Hour",
+          "cn": "Crowned Sword Zacian 团战时刻",
+          "pokemon": [
+            {
+              "id": 888,
+              "name": "Crowned Sword Zacian",
+              "shiny": true,
+              "hub": "888-Crowned_Sword",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10188.png"
+            }
+          ],
+          "start": "2026-11-09",
+          "end": "2026-11-09"
+        },
+        {
+          "name": "Crowned Shield Zamazenta Raid Hour",
+          "cn": "Crowned Shield Zamazenta 团战时刻",
+          "pokemon": [
+            {
+              "id": 889,
+              "name": "Crowned Shield Zamazenta",
+              "shiny": true,
+              "hub": "889-Crowned_Shield",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10189.png"
+            }
+          ],
+          "start": "2026-11-10",
+          "end": "2026-11-10"
+        },
+        {
           "name": "Cresselia / Darkrai",
           "cn": "克雷色利亚 / 达克莱伊",
           "pokemon": [
@@ -781,7 +811,7 @@
               "shiny": true
             }
           ],
-          "start": "2026-11-09",
+          "start": "2026-11-16",
           "end": "2026-11-24"
         },
         {
@@ -1797,6 +1827,50 @@
           ],
           "start": "2026-11-02",
           "end": "2026-11-08"
+        },
+        {
+          "name": "Dynamax Registeel Max Battle Hour",
+          "cn": "Dynamax Registeel Max 对战时刻",
+          "pokemon": [
+            {
+              "id": 379,
+              "name": "Dynamax Registeel",
+              "shiny": true
+            }
+          ],
+          "start": "2026-11-11",
+          "end": "2026-11-11"
+        },
+        {
+          "name": "Dynamax Regidrago Max Battle Hour",
+          "cn": "Dynamax Regidrago Max 对战时刻",
+          "pokemon": [
+            {
+              "id": 895,
+              "name": "Dynamax Regidrago",
+              "shiny": true
+            }
+          ],
+          "start": "2026-11-12",
+          "end": "2026-11-12"
+        },
+        {
+          "name": "Dynamax Latias / Latios Max Battle Hour",
+          "cn": "Dynamax Latias / Latios Max 对战时刻",
+          "pokemon": [
+            {
+              "id": 380,
+              "name": "Dynamax Latias",
+              "shiny": true
+            },
+            {
+              "id": 381,
+              "name": "Dynamax Latios",
+              "shiny": true
+            }
+          ],
+          "start": "2026-11-13",
+          "end": "2026-11-13"
         },
         {
           "name": "Espurr",

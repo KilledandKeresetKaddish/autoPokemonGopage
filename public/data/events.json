@@ -2130,7 +2130,7 @@
     "heading": "In-Person Event",
     "start": "2026-11-07T10:00:00",
     "end": "2026-11-08T22:00:00",
-    "timing": {"scope":"regional","mode":"unknown","startPrecision":"exact","endPrecision":"exact"},
+    "timing": {"scope":"regional","mode":"local","startPrecision":"exact","endPrecision":"exact","timeZone":"Asia/Singapore"},
     "link": "https://pokemongohub.net/post/event/pokexciting-singapore-2026/",
     "summary": "11 月 7–8 日每天当地 10–22 时，在新加坡樟宜机场与星耀樟宜举行免费线下活动，游戏内容覆盖全市；蓝色装扮 PokéXciting! Pikachu 首次登场，并开放城市集章、调查与超极巨化对战。",
     "links": [
@@ -2452,6 +2452,7 @@
       "远程团战上限在 11 月 9–13 日提高至 30",
       "11 月 9 日 10:00 至 15 日 18:00 使用钱币袋可遇见闪光 Gimmighoul",
       ":spawn: 同期神秘盒可遇见闪光 Meltan，且再次开启的等待时间缩短",
+      "11 月 9–15 日暂停 Daily Discoveries",
       "完成全球挑战可强化剑之王 Zacian 的 Behemoth Blade 与盾之王 Zamazenta 的 Behemoth Bash 冒险效果，并加快 Max 对战能量槽累积"
     ],
     "pokemon": [
@@ -2517,6 +2518,98 @@
       }
     ],
     "highlight": false
+  },
+  {
+    "id": "raid-battles-20261109",
+    "name": "Crowned Sword Zacian 团战时刻",
+    "type": "raid-battles",
+    "heading": "Raid Hour",
+    "summary": "当地时间 18–19 时，Crowned Sword Zacian 在 5★团战集中出现；获胜可取得 Crowned Sword Energy。",
+    "start": "2026-11-09T18:00:00",
+    "end": "2026-11-09T19:00:00",
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
+    "link": "https://pokemongo.com/news/into-the-wild-2026",
+    "links": [
+      {"label":"官方","url":"https://pokemongo.com/news/into-the-wild-2026"},
+      {"label":"LeekDuck","url":"https://leekduck.com/events/into-the-wild-2026/"},
+      {"label":"Hub","url":"https://pokemongohub.net/post/event/into-the-wild-2026-event/"}
+    ],
+    "pokemon": [
+      {"id":888,"name":"Crowned Sword Zacian","shiny":true,"hub":"888-Crowned_Sword","sprite":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10188.png"}
+    ]
+  },
+  {
+    "id": "raid-battles-20261110",
+    "name": "Crowned Shield Zamazenta 团战时刻",
+    "type": "raid-battles",
+    "heading": "Raid Hour",
+    "summary": "当地时间 18–19 时，Crowned Shield Zamazenta 在 5★团战集中出现；获胜可取得 Crowned Shield Energy。",
+    "start": "2026-11-10T18:00:00",
+    "end": "2026-11-10T19:00:00",
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
+    "link": "https://pokemongo.com/news/into-the-wild-2026",
+    "links": [
+      {"label":"官方","url":"https://pokemongo.com/news/into-the-wild-2026"},
+      {"label":"LeekDuck","url":"https://leekduck.com/events/into-the-wild-2026/"},
+      {"label":"Hub","url":"https://pokemongohub.net/post/event/into-the-wild-2026-event/"}
+    ],
+    "pokemon": [
+      {"id":889,"name":"Crowned Shield Zamazenta","shiny":true,"hub":"889-Crowned_Shield","sprite":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10189.png"}
+    ]
+  },
+  {
+    "id": "raid-battles-20261111",
+    "name": "Dynamax Registeel Max 对战时刻",
+    "type": "raid-battles",
+    "heading": "Max Battle Hour",
+    "summary": "当地时间 18–19 时，Dynamax Registeel 在 5★ Max 对战集中出现。",
+    "start": "2026-11-11T18:00:00",
+    "end": "2026-11-11T19:00:00",
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
+    "link": "https://pokemongo.com/news/into-the-wild-2026",
+    "links": [
+      {"label":"官方","url":"https://pokemongo.com/news/into-the-wild-2026"},
+      {"label":"LeekDuck","url":"https://leekduck.com/events/into-the-wild-2026/"},
+      {"label":"Hub","url":"https://pokemongohub.net/post/event/into-the-wild-2026-event/"}
+    ],
+    "pokemon": [{"id":379,"name":"Dynamax Registeel","shiny":true}]
+  },
+  {
+    "id": "raid-battles-20261112",
+    "name": "Dynamax Regidrago Max 对战时刻",
+    "type": "raid-battles",
+    "heading": "Max Battle Hour",
+    "summary": "当地时间 18–19 时，Dynamax Regidrago 在 5★ Max 对战集中出现。",
+    "start": "2026-11-12T18:00:00",
+    "end": "2026-11-12T19:00:00",
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
+    "link": "https://pokemongo.com/news/into-the-wild-2026",
+    "links": [
+      {"label":"官方","url":"https://pokemongo.com/news/into-the-wild-2026"},
+      {"label":"LeekDuck","url":"https://leekduck.com/events/into-the-wild-2026/"},
+      {"label":"Hub","url":"https://pokemongohub.net/post/event/into-the-wild-2026-event/"}
+    ],
+    "pokemon": [{"id":895,"name":"Dynamax Regidrago","shiny":true}]
+  },
+  {
+    "id": "raid-battles-20261113",
+    "name": "Dynamax Latias / Latios Max 对战时刻",
+    "type": "raid-battles",
+    "heading": "Max Battle Hour",
+    "summary": "当地时间 18–19 时，Dynamax Latias 与 Dynamax Latios 在 5★ Max 对战集中出现。",
+    "start": "2026-11-13T18:00:00",
+    "end": "2026-11-13T19:00:00",
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
+    "link": "https://pokemongo.com/news/into-the-wild-2026",
+    "links": [
+      {"label":"官方","url":"https://pokemongo.com/news/into-the-wild-2026"},
+      {"label":"LeekDuck","url":"https://leekduck.com/events/into-the-wild-2026/"},
+      {"label":"Hub","url":"https://pokemongohub.net/post/event/into-the-wild-2026-event/"}
+    ],
+    "pokemon": [
+      {"id":380,"name":"Dynamax Latias","shiny":true},
+      {"id":381,"name":"Dynamax Latios","shiny":true}
+    ]
   },
 {
     "id": "pokemon-go-wild-area-2026-global",
@@ -7484,7 +7577,8 @@
     "bonuses": [
       ":candy: Rank 1 起交换额外获得 1 颗糖果；31 级以上交换必得 1 颗糖果 XL",
       ":incense: Rank 50 起每日探险熏香持续时间 ×2",
-      ":xp: Rank 75 起孵蛋经验与星尘提高"
+      ":xp: Rank 75 起孵蛋经验与星尘提高",
+      "10 月 31 日 00:00 至 11 月 1 日 23:59 取消每日 GO Points 上限"
     ],
     "sections": [
       {
@@ -9032,7 +9126,7 @@
     "heading": "Festival of Lights",
     "start": "2026-11-06T10:00:00",
     "end": "2026-11-08T20:00:00",
-    "timing": {"scope":"regional","mode":"unknown","startPrecision":"exact","endPrecision":"exact"},
+    "timing": {"scope":"regional","mode":"local","startPrecision":"exact","endPrecision":"exact","timeZone":"Asia/Kolkata"},
     "link": "https://pokemongo.com/news/festival-of-lights-2026",
     "links": [
       {"label":"官方","url":"https://pokemongo.com/news/festival-of-lights-2026"},
@@ -9127,7 +9221,7 @@
     },
     "image": "https://cdn.leekduck.com/assets/img/events/pokemon-night-out-2026.jpg",
     "link": "https://leekduck.com/events/pokemon-night-out-los-angeles-2026/",
-    "summary": "Los Angeles Pokémon Night Out 场馆限定联动：主题野外、地点背卡团战与最多两份限时调查同步开放。游戏时段未获单独确认，页面时间仅依演出安排。",
+    "summary": "Los Angeles Pokémon Night Out 场馆限定联动：10 月 24 日 18:00 开门、演出于 19:30 PDT 开始，主题野外、地点背卡团战与最多两份限时调查同步开放。Pokémon GO 玩法的独立开始与结束时刻仍未公布，不能把开门或演出时刻当作精确游戏边界。",
     "links": [
       {
         "label": "LeekDuck",
@@ -9484,7 +9578,7 @@
     "name": "克雷色利亚 / 达克莱伊现身 5★团战",
     "type": "raid-battles",
     "heading": "Raid Battles",
-    "start": "2026-11-09T06:00:00",
+    "start": "2026-11-16T06:00:00",
     "end": "2026-11-24T22:00:00",
     "timing": {
       "scope": "global",
@@ -9494,7 +9588,7 @@
     },
     "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
     "link": "https://leekduck.com/events/cresselia-darkrai-in-5-star-raid-battles-november-2026/",
-    "summary": "Hub 11 月月历确认克雷色利亚与达克莱伊在 11 月 9–24 日轮值 5★团战；LeekDuck 详情仅列 11 月 16–24 日，采用覆盖更完整的月历区间。",
+    "summary": "克雷色利亚与达克莱伊于当地时间 11 月 16 日 06:00 至 11 月 24 日 22:00 轮值 5★团战，11 月 18 日另有团战时刻；11 月 9–15 日则由深入荒野与 GO 荒野地区特别 Boss 接档。",
     "links": [
       {
         "label": "LeekDuck",

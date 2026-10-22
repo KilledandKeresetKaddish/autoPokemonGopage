@@ -1432,6 +1432,7 @@
         "The Remote Raid limit increases to 30 from November 9–13, then becomes unlimited November 14–15.",
         "Use a Coin Bag from November 9 at 10:00 a.m. through November 15 at 6:00 p.m. for a chance to encounter Shiny Gimmighoul.",
         ":spawn: The Mystery Box can yield Shiny Meltan during the same window, with a shorter wait before it can be opened again.",
+        "Daily Discoveries will be paused from November 9 through November 15.",
         "Completing the Global Challenge improves Crowned Sword Zacian’s Behemoth Blade and Crowned Shield Zamazenta’s Behemoth Bash Adventure Effects, and makes the Max Battle energy meter fill faster."
       ],
       "pokemon": [
@@ -1465,6 +1466,51 @@
           "mons": []
         }
       ]
+    },
+    "raid-battles-20261109": {
+      "name": "Crowned Sword Zacian Raid Hour",
+      "heading": "Raid Hour",
+      "summary": "Crowned Sword Zacian appears in increased numbers in five-star raids from 6:00 p.m. to 7:00 p.m. local time, awarding Crowned Sword Energy when defeated.",
+      "bonuses": [],
+      "pokemon": ["Crowned Sword Zacian"],
+      "counters": [],
+      "sections": []
+    },
+    "raid-battles-20261110": {
+      "name": "Crowned Shield Zamazenta Raid Hour",
+      "heading": "Raid Hour",
+      "summary": "Crowned Shield Zamazenta appears in increased numbers in five-star raids from 6:00 p.m. to 7:00 p.m. local time, awarding Crowned Shield Energy when defeated.",
+      "bonuses": [],
+      "pokemon": ["Crowned Shield Zamazenta"],
+      "counters": [],
+      "sections": []
+    },
+    "raid-battles-20261111": {
+      "name": "Dynamax Registeel Max Battle Hour",
+      "heading": "Max Battle Hour",
+      "summary": "Dynamax Registeel appears in increased numbers in five-star Max Battles from 6:00 p.m. to 7:00 p.m. local time.",
+      "bonuses": [],
+      "pokemon": ["Dynamax Registeel"],
+      "counters": [],
+      "sections": []
+    },
+    "raid-battles-20261112": {
+      "name": "Dynamax Regidrago Max Battle Hour",
+      "heading": "Max Battle Hour",
+      "summary": "Dynamax Regidrago appears in increased numbers in five-star Max Battles from 6:00 p.m. to 7:00 p.m. local time.",
+      "bonuses": [],
+      "pokemon": ["Dynamax Regidrago"],
+      "counters": [],
+      "sections": []
+    },
+    "raid-battles-20261113": {
+      "name": "Dynamax Latias and Latios Max Battle Hour",
+      "heading": "Max Battle Hour",
+      "summary": "Dynamax Latias and Dynamax Latios appear in increased numbers in five-star Max Battles from 6:00 p.m. to 7:00 p.m. local time.",
+      "bonuses": [],
+      "pokemon": ["Dynamax Latias", "Dynamax Latios"],
+      "counters": [],
+      "sections": []
     },
     "pokemon-go-wild-area-2026-global": {
       "name": "Pokémon GO Wild Area 2026: Global",
@@ -3840,7 +3886,8 @@
       "bonuses": [
         ":candy: Rank 1 grants one extra Candy from trades; Trainers level 31+ receive one guaranteed Candy XL from trades",
         ":incense: Rank 50 doubles Daily Adventure Incense duration",
-        ":xp: Rank 75 increases XP and Stardust from hatching Eggs"
+        ":xp: Rank 75 increases XP and Stardust from hatching Eggs",
+        "The daily GO Points cap is removed from October 31 at 12:00 a.m. through November 1 at 11:59 p.m. local time"
       ],
       "pokemon": [
         "Kyogre"
@@ -4679,7 +4726,7 @@
     "pokemon-night-out-los-angeles-2026": {
       "name": "Pokémon Night Out: Los Angeles (in person)",
       "heading": "In-Person Event",
-      "summary": "An in-venue Pokémon GO activation at Pokémon Night Out in Los Angeles, with themed wild encounters, Location Background raids, and up to two Timed Research opportunities. Pokémon GO hours are not separately confirmed; listed times follow the concert schedule.",
+      "summary": "This in-venue Pokémon GO activation at Pokémon Night Out in Los Angeles has doors at 6:00 p.m. and the show at 7:30 p.m. PDT on October 24, plus themed wild encounters, Location Background raids, and up to two Timed Research opportunities. Separate Pokémon GO start and end times remain unannounced, so the venue schedule is not an exact gameplay boundary.",
       "bonuses": [
         ":lure: Lure Modules activated at the venue last one hour, excluding Golden Lure Modules"
       ],
@@ -4833,7 +4880,7 @@
     "cresselia-darkrai-in-5-star-raid-battles-november-2026": {
       "name": "Cresselia and Darkrai in 5-Star Raids",
       "heading": "Raid Battles",
-      "summary": "The Hub November calendar confirms Cresselia and Darkrai for five-star raids from November 9–24; the LeekDuck detail currently lists only November 16–24, so the fuller monthly schedule is used.",
+      "summary": "Cresselia and Darkrai rotate through five-star raids from November 16 at 6:00 a.m. to November 24 at 10:00 p.m. local time, with a Raid Hour on November 18. Special Into the Wild and GO Wild Area bosses cover November 9–15.",
       "bonuses": [],
       "pokemon": [
         "Cresselia",
@@ -5299,6 +5346,20 @@
             ]
           },
           {
+            "name": "Crowned Sword Zacian Raid Hour",
+            "cn": "Crowned Sword Zacian Raid Hour",
+            "pokemon": [
+              "Crowned Sword Zacian"
+            ]
+          },
+          {
+            "name": "Crowned Shield Zamazenta Raid Hour",
+            "cn": "Crowned Shield Zamazenta Raid Hour",
+            "pokemon": [
+              "Crowned Shield Zamazenta"
+            ]
+          },
+          {
             "name": "Cresselia / Darkrai",
             "cn": "Cresselia / Darkrai",
             "pokemon": [
@@ -5704,6 +5765,28 @@
             ]
           },
           {
+            "name": "Dynamax Registeel Max Battle Hour",
+            "cn": "Dynamax Registeel Max Battle Hour",
+            "pokemon": [
+              "Dynamax Registeel"
+            ]
+          },
+          {
+            "name": "Dynamax Regidrago Max Battle Hour",
+            "cn": "Dynamax Regidrago Max Battle Hour",
+            "pokemon": [
+              "Dynamax Regidrago"
+            ]
+          },
+          {
+            "name": "Dynamax Latias / Latios Max Battle Hour",
+            "cn": "Dynamax Latias / Latios Max Battle Hour",
+            "pokemon": [
+              "Dynamax Latias",
+              "Dynamax Latios"
+            ]
+          },
+          {
             "name": "Espurr",
             "cn": "Espurr",
             "pokemon": [
@@ -5722,7 +5805,7 @@
     }
   },
   "regions": {
-    "calendar-notes": "<div class=\"callout\"><strong>Near-term focus: three tracks this weekend</strong><p><span class=\"event-link\" data-event-id=\"minior-showers-orionids-2026\">Minior Showers: Orionids</span> runs through October 24 at 11:59 p.m., with increased encounters daily from 5:00 p.m. to 9:00 p.m. The current five-star and Mega Raid bosses are Palkia and Mega Charizard X/Y.</p></div><div class=\"note-grid\"><div class=\"panel\"><div class=\"panel-head\"><strong>October 24</strong><span class=\"badge\">Global + in person</span></div><p><span class=\"event-link\" data-event-id=\"dynamax-uxie-mesprit-azelf-max-battle-day-2026\">Lake Trio Max Battle Day</span> runs from 2:00 p.m. to 5:00 p.m. local time. <span class=\"event-link\" data-event-id=\"fc-seoul-2026\">The FC Seoul collaboration</span> is limited to the Seoul World Cup Stadium area from 9:00 a.m. to 8:00 p.m., with boosted Shiny odds and free Timed Research.</p></div><div class=\"panel\"><div class=\"panel-head\"><strong>Month-end and November</strong><span class=\"badge\">Oct 27–Nov 30</span></div><p><span class=\"event-link\" data-event-id=\"halloween-2026-part-1\">Halloween Part I</span> starts October 27, followed by <span class=\"event-link\" data-event-id=\"chandelure-super-mega-raid-day-2026\">Chandelure Super Mega Raid Day</span> on October 31. <span class=\"event-link\" data-event-id=\"november-communityday2026\">Pawniard Community Day</span> is now confirmed for November 21.</p></div></div>",
+    "calendar-notes": "<div class=\"callout\"><strong>Near-term focus: three tracks this weekend</strong><p><span class=\"event-link\" data-event-id=\"minior-showers-orionids-2026\">Minior Showers: Orionids</span> runs through October 24 at 11:59 p.m., with increased encounters daily from 5:00 p.m. to 9:00 p.m. The current five-star and Mega Raid bosses are Palkia and Mega Charizard X/Y.</p></div><div class=\"note-grid\"><div class=\"panel\"><div class=\"panel-head\"><strong>October 24</strong><span class=\"badge\">Global + in person</span></div><p><span class=\"event-link\" data-event-id=\"dynamax-uxie-mesprit-azelf-max-battle-day-2026\">Lake Trio Max Battle Day</span> runs from 2:00 p.m. to 5:00 p.m. local time. <span class=\"event-link\" data-event-id=\"fc-seoul-2026\">The FC Seoul collaboration</span> is limited to the Seoul World Cup Stadium area from 9:00 a.m. to 8:00 p.m., with boosted Shiny odds and free Timed Research.</p></div><div class=\"panel\"><div class=\"panel-head\"><strong>Month-end and Wild week</strong><span class=\"badge\">Oct 27–Nov 15</span></div><p><span class=\"event-link\" data-event-id=\"halloween-2026-part-1\">Halloween Part I</span> starts October 27, followed by <span class=\"event-link\" data-event-id=\"chandelure-super-mega-raid-day-2026\">Chandelure Super Mega Raid Day</span> on October 31. <span class=\"event-link\" data-event-id=\"into-the-wild-2026\">Into the Wild</span> has a separate Raid or Max Battle hour each day from November 9–13, then leads into <span class=\"event-link\" data-event-id=\"pokemon-go-wild-area-2026-global\">Pokémon GO Wild Area: Global</span>.</p></div></div>",
     "rankings-current": "<div class=\"callout\"><strong>Current priorities: Spotlight Hour, then weekend preparation</strong><p>Morelull Spotlight Hour on October 22 from 6:00 p.m. to 7:00 p.m. local time offers 2× Catch Stardust. Minior Showers: Orionids has increased encounters daily from 5:00 p.m. to 9:00 p.m. through October 24 at 11:59 p.m.</p></div><div class=\"note-grid\"><div class=\"panel\"><div class=\"panel-head\"><strong>Training direction</strong><span class=\"badge\">Raids</span></div><p>Use Dragon or Fairy attackers against Palkia. Mega Charizard X calls for Dragon, Ground, or Rock; prioritize Rock against the Y form. See Current Raid Counters for exact teams and moves, while Dynamax Sneasel favors Fighting-type Max attackers.</p></div><div class=\"panel\"><div class=\"panel-head\"><strong>Save resources</strong><span class=\"badge\">Oct 24–31</span></div><p>Lake Trio Max Battle Day runs from 2:00 p.m. to 5:00 p.m. local time on October 24; October 26 Max Monday features Sableye. Chandelure Super Mega Raid Day on October 31 has boosted Shiny odds and up to six free Raid Passes, so reserve the local 2:00–5:00 p.m. window.</p></div></div>",
     "rankings-attackers": "<p class=\"muted\">Source: Pokémon GO Hub’s “Max Attackers Tier List (October 2026),” cross-checked against PokéBase’s overall rankings. The source currently has no S Tier entries; the complete A/B Tier tables follow.</p>\n<h4 class=\"muted\">A Tier</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"861-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/861.png\" alt=\"Gigantamax Grimmsnarl\"><div><strong>Gigantamax Grimmsnarl</strong><div class=\"meta\">Max Move type: Dark</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"849-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/849.png\" alt=\"Gigantamax Toxtricity\"><div><strong>Gigantamax Toxtricity</strong><div class=\"meta\">Max Move type: Electric</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"6-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png\" alt=\"Gigantamax Charizard\"><div><strong>Gigantamax Charizard</strong><div class=\"meta\">Max Move type: Fire</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"3-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png\" alt=\"Gigantamax Venusaur\"><div><strong>Gigantamax Venusaur</strong><div class=\"meta\">Max Move type: Grass</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"143-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png\" alt=\"Gigantamax Snorlax\"><div><strong>Gigantamax Snorlax</strong><div class=\"meta\">Max Move type: Normal</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"569-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/569.png\" alt=\"Gigantamax Garbodor\"><div><strong>Gigantamax Garbodor</strong><div class=\"meta\">Max Move type: Poison</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/890.png\" alt=\"Eternatus\"><div><strong>Eternatus</strong><div class=\"meta\">Max Move type: Dragon</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/65.png\" alt=\"Dynamax Alakazam\"><div><strong>Dynamax Alakazam</strong><div class=\"meta\">Max Move type: Psychic / Fighting</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"9-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png\" alt=\"Gigantamax Blastoise\"><div><strong>Gigantamax Blastoise</strong><div class=\"meta\">Max Move type: Water</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/381.png\" alt=\"Dynamax Latios\"><div><strong>Dynamax Latios</strong><div class=\"meta\">Max Move type: Dragon / Psychic</div></div></div>\n</div>\n<h4 class=\"muted\">B Tier (backup options)</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" data-hub=\"12-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/12.png\" alt=\"Gigantamax Butterfree\"><div><strong>Gigantamax Butterfree</strong><div class=\"meta\">Max Move type: Bug</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" data-hub=\"131-Gigantamax\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/131.png\" alt=\"Gigantamax Lapras\"><div><strong>Gigantamax Lapras</strong><div class=\"meta\">Max Move type: Ice</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/555.png\" alt=\"Dynamax Darmanitan\"><div><strong>Dynamax Darmanitan</strong><div class=\"meta\">Max Move type: Fire / Normal</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/818.png\" alt=\"Dynamax Inteleon\"><div><strong>Dynamax Inteleon</strong><div class=\"meta\">Max Move type: Water / Normal</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png\" alt=\"Dynamax Gengar\"><div><strong>Dynamax Gengar</strong><div class=\"meta\">Max Move type: Dark / Ghost</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/196.png\" alt=\"Dynamax Espeon\"><div><strong>Dynamax Espeon</strong><div class=\"meta\">Max Move type: Psychic</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/376.png\" alt=\"Dynamax Metagross\"><div><strong>Dynamax Metagross</strong><div class=\"meta\">Max Move type: Psychic / Steel / Bug</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/635.png\" alt=\"Dynamax Hydreigon\"><div><strong>Dynamax Hydreigon</strong><div class=\"meta\">Max Move type: Dragon / Dark</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/530.png\" alt=\"Dynamax Excadrill\"><div><strong>Dynamax Excadrill</strong><div class=\"meta\">Max Move type: Steel / Ground</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" data-hub=\"892-Rapid_Strike\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/892.png\" alt=\"Dynamax Rapid Strike Urshifu\"><div><strong>Dynamax Rapid Strike Urshifu</strong><div class=\"meta\">Max Move type: Fighting / Water</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" data-hub=\"892-Single_Strike\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/892.png\" alt=\"Dynamax Single Strike Urshifu\"><div><strong>Dynamax Single Strike Urshifu</strong><div class=\"meta\">Max Move type: Fighting / Dark</div></div></div>\n</div><h4 class=\"muted\">Best by type (highest source tier)</h4><div class=\"rank-list\"><div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/849.png\" data-hub=\"849-Gigantamax\" alt=\"Gigantamax Toxtricity\"><div><strong>Electric: Gigantamax Toxtricity</strong><div class=\"meta\">Highest-tier Electric Max attacker</div></div></div><div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png\" data-hub=\"6-Gigantamax\" alt=\"Gigantamax Charizard\"><div><strong>Fire: Gigantamax Charizard</strong><div class=\"meta\">Highest-tier Fire Max attacker</div></div></div><div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png\" data-hub=\"3-Gigantamax\" alt=\"Gigantamax Venusaur\"><div><strong>Grass: Gigantamax Venusaur</strong><div class=\"meta\">Highest-tier Grass Max attacker</div></div></div><div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png\" data-hub=\"9-Gigantamax\" alt=\"Gigantamax Blastoise\"><div><strong>Water: Gigantamax Blastoise</strong><div class=\"meta\">Highest-tier Water Max attacker</div></div></div><div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/65.png\" alt=\"Dynamax Alakazam\"><div><strong>Psychic / Fighting: Dynamax Alakazam</strong><div class=\"meta\">One pick covers both types</div></div></div><div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/890.png\" alt=\"Eternatus\"><div><strong>Dragon: Eternatus</strong><div class=\"meta\">Highest-tier Dragon Max attacker</div></div></div><div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/131.png\" data-hub=\"131-Gigantamax\" alt=\"Gigantamax Lapras\"><div><strong>Ice: Gigantamax Lapras</strong><div class=\"meta\">Highest source tier for Ice</div></div></div><div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/376.png\" alt=\"Dynamax Metagross\"><div><strong>Steel: Dynamax Metagross</strong><div class=\"meta\">Highest source tier for Steel</div></div></div></div>",
     "rankings-defenders": "<p class=\"muted\">Source: Pokémon GO Hub’s “Max Defenders Tier List (October 2026).” S/A/B tiers and recommended Fast Moves come from the source table, with verified official English Pokémon names.</p>\n<h4 class=\"muted\">S Tier</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-S\">S</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/379.png\" alt=\"Registeel\"><div><strong>Registeel</strong><div class=\"meta\">Recommended Fast Moves: Lock-On / Metal Claw · broadest resistance coverage</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-S\">S</span><img class=\"mon-icon\" data-hub=\"889-Crowned_Shield\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/889.png\" alt=\"Crowned Shield Zamazenta\"><div><strong>Crowned Shield Zamazenta</strong><div class=\"meta\">Recommended Fast Move: Metal Claw · core Steel-type resistance profile</div></div></div>\n</div>\n<h4 class=\"muted\">A Tier</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" data-hub=\"888-Crowned_Sword\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/888.png\" alt=\"Crowned Sword Zacian\"><div><strong>Crowned Sword Zacian</strong><div class=\"meta\">Recommended Fast Move: Metal Claw</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/377.png\" alt=\"Regirock\"><div><strong>Regirock</strong><div class=\"meta\">Recommended Fast Move: Lock-On</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/376.png\" alt=\"Metagross\"><div><strong>Metagross</strong><div class=\"meta\">Recommended Fast Moves: Fury Cutter / Shadow Claw</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/378.png\" alt=\"Regice\"><div><strong>Regice</strong><div class=\"meta\">Recommended Fast Move: Lock-On</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-A\">A</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/380.png\" alt=\"Latias\"><div><strong>Latias</strong><div class=\"meta\">Recommended Fast Move: Dragon Breath</div></div></div>\n</div>\n<h4 class=\"muted\">B Tier</h4>\n<div class=\"rank-list\">\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/823.png\" alt=\"Corviknight\"><div><strong>Corviknight</strong><div class=\"meta\">Recommended Fast Move: Sand Attack</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/245.png\" alt=\"Suicune\"><div><strong>Suicune</strong><div class=\"meta\">Recommended Fast Move: Water Gun</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/884.png\" alt=\"Duraludon\"><div><strong>Duraludon</strong><div class=\"meta\">Recommended Fast Move: Metal Claw</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/139.png\" alt=\"Omastar\"><div><strong>Omastar</strong><div class=\"meta\">Recommended Fast Moves: Mud Shot / Water Gun</div></div></div>\n  <div class=\"rank-item\"><span class=\"tier tier-B\">B</span><img class=\"mon-icon\" src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/381.png\" alt=\"Latios\"><div><strong>Latios</strong><div class=\"meta\">Recommended Fast Move: Dragon Breath</div></div></div>\n</div>",
