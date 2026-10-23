@@ -297,11 +297,40 @@ function fmtDateTime(s) {
   }).format(d);
   return `${d.getMonth() + 1}月${d.getDate()}日 ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 }
-function fmtRange(start, end) {
-  if (!start) return i18n('date.pending', null, '时间待定');
-  const s = fmtDateTime(start);
-  if (!end || end === start) return s;
-  return `${s} — ${fmtDateTime(end)}`;
+function fmtRange(start, end, timing) {
+  const en = isEnglish();
+  const pending = en ? 'Time TBD' : '时间待定';
+  const t = timing || {};
+  const format = (value, precision) => {
+    if (!value) return pending;
+    const exact = precision === 'exact' && ['local', 'absolute'].includes(t.mode);
+    const absolute = exact && t.mode === 'absolute';
+    const zone = absolute ? detectBrowserTimeZone().timeZone : 'UTC';
+    // Local event clocks are wall time: never convert through the viewer's DST.
+    const input = absolute ? value : String(value).slice(0, 10) + 'T00:00:00Z';
+    const d = new Date(input);
+    if (!Number.isFinite(d.getTime())) return pending;
+    const date = new Intl.DateTimeFormat(en ? 'en-GB' : 'zh-CN', {
+      timeZone: zone, year: 'numeric', month: '2-digit', day: '2-digit',
+    }).format(d);
+    if (!exact) return date + ' (' + pending + ')';
+    const clock = absolute
+      ? new Intl.DateTimeFormat('en-GB', {
+          timeZone: zone, hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+        }).format(d)
+      : String(value).slice(11, 16);
+    return date + ' ' + clock;
+  };
+  const s = format(start, t.startPrecision);
+  const e = format(end, t.endPrecision);
+  let label = s === e ? s : s + ' — ' + e;
+  if (t.mode === 'local' && t.scope === 'regional' && t.timeZone)
+    label += ' [' + t.timeZone + ']';
+  else if (t.mode === 'local' && t.scope === 'global')
+    label += en ? ' (local time)' : '（各地当地时间）';
+  else if (t.mode === 'absolute')
+    label += ' [' + detectBrowserTimeZone().timeZone + ']';
+  return label;
 }
 // Month/day only — the long-event band and rotation tracks don't need HH:MM.
 function fmtDateShort(s) {
@@ -728,7 +757,7 @@ function renderCalendar() {
           const chip = document.createElement('button');
           chip.className = 'cal-chip' + (ev._featured ? ' ft' : '') + (ev.highlight ? ' hl' : '');
           chip.style.setProperty('--c', cat.color);
-          chip.title = `${ev.name} · ${fmtRange(ev.start, ev.end)}`;
+          chip.title = `${ev.name} · ${fmtRange(ev.start, ev.end, ev.timing)}`;
           chip.innerHTML = `<i class="dot"></i>${sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}`
             + (ev.highlight ? '<span class="hl-star">✨</span>' : '')
             + `<span class="cn">${escapeHtml(ev.name)}</span>`;
@@ -772,7 +801,7 @@ function renderCalendar() {
         bar.style.color = b.cat.fg;
       }
       const sp = isL && !b.cat.bg ? firstSprite(b.ev) : '';
-      bar.title = `${b.ev.name} · ${fmtRange(b.ev.start, b.ev.end)}`;
+      bar.title = `${b.ev.name} · ${fmtRange(b.ev.start, b.ev.end, b.ev.timing)}`;
       bar.innerHTML = (sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
         + (isL && b.ev.highlight ? '<span class="hl-star">✨</span>' : '')
         + `<span class="bn">${escapeHtml(b.ev.name)}</span>`;
@@ -835,7 +864,7 @@ function renderBand(boxId, title, list) {
     const pill = document.createElement('button');
     pill.className = 'lt-pill';
     pill.style.setProperty('--c', cat.color);
-    pill.title = `${ev.name} · ${fmtRange(ev.start, ev.end)}`;
+    pill.title = `${ev.name} · ${fmtRange(ev.start, ev.end, ev.timing)}`;
     pill.innerHTML = (sp ? `<img class="spr" src="${escapeHtml(sp)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '')
       + `<span class="lt-name">${escapeHtml(ev.name)}</span>`
       + `<span class="lt-range">${escapeHtml(fmtDateShort(ev.start))}–${escapeHtml(fmtDateShort(ev.end))}</span>`;
@@ -991,7 +1020,7 @@ function openDetail(ev, opener, preserve = false) {
     <div class="detail-toolbar"><span class="detail-cat" style="--c:${cat.color}">${escapeHtml(cat.label)}</span></div>
     ${ev.image ? `<img class="detail-img" src="${escapeHtml(ev.image)}" alt="">` : ''}
     <h3>${escapeHtml(ev.name)}</h3>
-    <p class="muted">${escapeHtml(ev.heading || ev.type || '')} · ${escapeHtml(fmtRange(ev.start, ev.end))}</p>
+    <p class="muted">${escapeHtml(ev.heading || ev.type || '')} · ${escapeHtml(fmtRange(ev.start, ev.end, ev.timing))}</p>
     <div class="detail-reminder-mount"></div>
     ${ev.summary ? `<p class="detail-summary">${escapeHtml(ev.summary)}</p>` : ''}
     ${mons ? `<div class="mon-row">${mons}</div>` : ''}
