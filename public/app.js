@@ -1787,7 +1787,13 @@ function decodeReminder(raw, id) {
   } catch (e) { return null; }
 }
 function deriveEventReminder(record, canonical, now, viewerTimeZone) {
-  const event = canonical || record?.time;
+  let event = canonical || record?.time;
+  // Owner-set reminder window; independent of official gameplay boundaries.
+  if (event && (canonical?.id || record?.id) === 'pokemon-night-out-los-angeles-2026') {
+    event = { ...event, start:'2026-10-25T10:30:00', end:null,
+      timing:{ scope:'regional', mode:'local', timeZone:'America/Los_Angeles',
+        startPrecision:'exact', endPrecision:'unknown' } };
+  }
   const time = event ? resolveEventTiming(event, now, viewerTimeZone)
     : { openAt:null, closeAt:null, viewerWindow:{start:null,end:null}, status:'unknown' };
   const expired = time.status === 'expired';
