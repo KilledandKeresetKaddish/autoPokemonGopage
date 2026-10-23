@@ -2245,6 +2245,10 @@
         "url": "https://pokemongo.com/news/save-the-date-go-wild-area-2026"
       },
       {
+        "label": "官方·集章说明",
+        "url": "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026"
+      },
+      {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/news/pokemon-go-wild-area-2026-event-dates-announced/"
       },
@@ -2338,6 +2342,10 @@
       {
         "label": "官方",
         "url": "https://pokemongo.com/news/save-the-date-go-wild-area-2026"
+      },
+      {
+        "label": "官方·集章说明",
+        "url": "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026"
       },
       {
         "label": "Hub",
@@ -2715,8 +2723,16 @@
       "endPrecision": "unknown"
     },
     "image": "https://pokemongohub.net/wp-content/uploads/2023/07/city-safari.jpg",
-    "link": "https://pokemongohub.net/post/event/pokemon-go-city-safari-2026-boston-usa/",
+    "link": "https://pokemongo.com/news/city-safaris-europe-2026",
     "links": [
+      {
+        "label": "官方·欧洲三城",
+        "url": "https://pokemongo.com/news/city-safaris-europe-2026"
+      },
+      {
+        "label": "官方·布里斯班",
+        "url": "https://pokemongo.com/news/city-safari-brisbane-know-before-you-go"
+      },
       {
         "label": "Hub·慕尼黑",
         "url": "https://pokemongohub.net/post/event/pokemon-go-city-safari-2026-munich-germany/"
@@ -6300,6 +6316,10 @@
       {
         "label": "官方·玩法说明",
         "url": "https://pokemongo.com/news/choose-your-path-forever-forward-2026"
+      },
+      {
+        "label": "官方·暮光小径",
+        "url": "https://pokemongo.com/news/choose-your-path-twilight-trails-2026"
       }
     ],
     "bonuses": [
@@ -6809,6 +6829,10 @@
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/event/zorua-community-day-october-2026/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/communityday-october-2026-zorua"
       }
     ],
     "bonuses": [
@@ -7180,7 +7204,7 @@
     "heading": "Event",
     "start": "2026-10-04T00:00:00",
     "end": "2026-10-10T23:59:00",
-    "timing": {"scope":"unknown","mode":"unknown","startPrecision":"unknown","endPrecision":"unknown"},
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
     "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-10-04-world-space-week-2026/world-space-week-2026.jpg",
     "link": "https://leekduck.com/events/world-space-week-2026/",
     "summary": "宇航员 Pikachu 首次登场，可从 1★团战及免费限时调查遇见；这是欧洲空间局与宝可梦公司的全球合作活动。",
@@ -7192,6 +7216,10 @@
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/event/world-space-week-2026/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/world-space-week-2026"
       }
     ],
     "pokemon": [
@@ -7564,6 +7592,10 @@
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/news/october-2026-go-pass-tasks-rewards-bonuses/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/go-pass-october-2026"
       }
     ],
     "longTerm": true,
@@ -7814,7 +7846,7 @@
       },
       {
         "label": "官方",
-        "url": "https://pokemongo.com/en/news/fall-marathon-buddy-trek-2026"
+        "url": "https://pokemongo.com/news/fall-marathon-buddy-trek-2026"
       },
       {
         "label": "Hub·10月月历",
@@ -8118,7 +8150,7 @@
     "heading": "Raid Battles",
     "start": "2026-10-21T06:00:00",
     "end": "2026-10-27T22:00:00",
-    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"unknown"},
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
     "image": "https://cdn.leekduck.com/assets/img/events/raids.jpg",
     "link": "https://leekduck.com/events/palkia-in-5-star-raid-battles-october-2026/",
     "summary": "该 Boss 在公布日期内现身 5★团战，并可在对应周三团战时刻集中挑战。",
@@ -8157,7 +8189,7 @@
     "heading": "Raid Battles",
     "start": "2026-10-21T06:00:00",
     "end": "2026-10-27T22:00:00",
-    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"unknown"},
+    "timing": {"scope":"global","mode":"local","startPrecision":"exact","endPrecision":"exact"},
     "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
     "link": "https://leekduck.com/events/mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026/",
     "summary": "该超级进化 Boss 在公布日期内现身超级团战；击败后可取得对应超级能量。",
@@ -8324,7 +8356,7 @@
       },
       {
         "label": "官方",
-        "url": "https://pokemongo.com/en/news/halloween-part-1-2026"
+        "url": "https://pokemongo.com/news/halloween-part-1-2026"
       }
     ],
     "bonuses": [
@@ -8763,6 +8795,10 @@
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/news/go-tour-2027-alola-dates/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/save-the-date-go-tour-2027"
       }
     ],
     "longTerm": false
@@ -8786,6 +8822,10 @@
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/news/go-tour-2027-alola-dates/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/save-the-date-go-tour-2027"
       }
     ],
     "longTerm": false
@@ -8809,6 +8849,10 @@
       {
         "label": "Hub",
         "url": "https://pokemongohub.net/post/news/go-tour-2027-alola-dates/"
+      },
+      {
+        "label": "官方",
+        "url": "https://pokemongo.com/news/save-the-date-go-tour-2027"
       }
     ],
     "longTerm": false
@@ -9169,8 +9213,8 @@
     "end": "2027-04-30",
     "timing": {"scope":"regional","mode":"unknown","startPrecision":"date","endPrecision":"date"},
     "longTerm": true,
-    "link": "https://pokemongohub.net/post/event/european-space-agency-event/",
-    "links": [{"label":"Hub","url":"https://pokemongohub.net/post/event/european-space-agency-event/"}],
+    "link": "https://pokemongo.com/news/european-space-agency-event",
+    "links": [{"label":"官方","url":"https://pokemongo.com/news/european-space-agency-event"},{"label":"Hub","url":"https://pokemongohub.net/post/event/european-space-agency-event/"}],
     "summary": "欧洲六家参与博物馆持续开放宇航员装扮 Pikachu 1★团战与限时调查，现场团战捕获可带地点背景；不要与仅持续到 10 月 10 日的开幕周野外及田野调查混淆。",
     "bonuses": [":raid: 现场团战宇航员装扮 Pikachu 可带地点背景"],
     "pokemon": [{"id":25,"name":"Pikachu（宇航员装扮）","shiny":true}],
