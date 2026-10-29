@@ -1,6 +1,6 @@
 {
   "month": "2026-10",
-  "note": "5★/超级团战每周三轮换 · Max 团战每周轮换",
+  "note": "5★/超级团战每周三轮换 · Max 团战每周轮换 · 11/9–15 的 5★安排与 Hub 月历冲突，Mega Sableye 截止日亦有差异，暂按活动正文保留并标记待确认",
   "tracks": [
     {
       "key": "5star",
@@ -767,8 +767,8 @@
           "end": "2026-11-08"
         },
         {
-          "name": "Crowned Sword Zacian Raid Hour",
-          "cn": "Crowned Sword Zacian 团战时刻",
+          "name": "Crowned Sword Zacian / Crowned Shield Zamazenta",
+          "cn": "Crowned Sword Zacian / Crowned Shield Zamazenta（待确认）",
           "pokemon": [
             {
               "id": 888,
@@ -776,15 +776,7 @@
               "shiny": true,
               "hub": "888-Crowned_Sword",
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10188.png"
-            }
-          ],
-          "start": "2026-11-09",
-          "end": "2026-11-09"
-        },
-        {
-          "name": "Crowned Shield Zamazenta Raid Hour",
-          "cn": "Crowned Shield Zamazenta 团战时刻",
-          "pokemon": [
+            },
             {
               "id": 889,
               "name": "Crowned Shield Zamazenta",
@@ -793,8 +785,30 @@
               "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10189.png"
             }
           ],
-          "start": "2026-11-10",
-          "end": "2026-11-10"
+          "start": "2026-11-09",
+          "end": "2026-11-13"
+        },
+        {
+          "name": "White Kyurem / Black Kyurem",
+          "cn": "White Kyurem / Black Kyurem（待确认）",
+          "pokemon": [
+            {
+              "id": 646,
+              "name": "Black Kyurem",
+              "shiny": true,
+              "hub": "646-Black",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10022.png"
+            },
+            {
+              "id": 646,
+              "name": "White Kyurem",
+              "shiny": true,
+              "hub": "646-White",
+              "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10023.png"
+            }
+          ],
+          "start": "2026-11-14",
+          "end": "2026-11-15"
         },
         {
           "name": "Cresselia / Darkrai",
@@ -1871,6 +1885,46 @@
           ],
           "start": "2026-11-13",
           "end": "2026-11-13"
+        },
+        {
+          "name": "Dynamax Dialga / Gigantamax Duraludon",
+          "cn": "Dynamax Dialga / Gigantamax Duraludon",
+          "pokemon": [
+            {
+              "id": 483,
+              "name": "Dynamax Dialga",
+              "shiny": true
+            },
+            {
+              "id": 884,
+              "name": "Gigantamax Duraludon",
+              "shiny": true,
+              "sprite": "https://pokemongohub.net/wp-content/uploads/2026/10/PGO-MCS_GOWA_2026_GMAX_Duraludon_v2-16x9-1.jpg",
+              "hub": "884-Gigantamax"
+            }
+          ],
+          "start": "2026-11-14",
+          "end": "2026-11-14"
+        },
+        {
+          "name": "Dynamax Palkia / Gigantamax Duraludon",
+          "cn": "Dynamax Palkia / Gigantamax Duraludon",
+          "pokemon": [
+            {
+              "id": 484,
+              "name": "Dynamax Palkia",
+              "shiny": true
+            },
+            {
+              "id": 884,
+              "name": "Gigantamax Duraludon",
+              "shiny": true,
+              "sprite": "https://pokemongohub.net/wp-content/uploads/2026/10/PGO-MCS_GOWA_2026_GMAX_Duraludon_v2-16x9-1.jpg",
+              "hub": "884-Gigantamax"
+            }
+          ],
+          "start": "2026-11-15",
+          "end": "2026-11-15"
         },
         {
           "name": "Espurr",
