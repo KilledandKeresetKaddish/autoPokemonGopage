@@ -894,6 +894,18 @@ h4{font-family:var(--serif);letter-spacing:.05em;margin:.7rem 0 .3rem;color:var(
 }
 .reminder-warning{font-size:.76rem;color:#ffce82;white-space:pre-line;}
 .reminder-warning:empty{display:none;}
+.reminder-notify{border-bottom:1px solid var(--gold-line);padding:.6rem 0;font-size:.76rem;line-height:1.5;}
+.reminder-notify p{margin:.35rem 0;}
+.notify-status{color:var(--h1);}
+.notify-controls{display:flex;flex-direction:column;align-items:stretch;gap:.45rem;}
+.notify-controls[hidden],.notify-controls [hidden]{display:none;}
+.notify-controls .btn{font-size:inherit;min-height:34px;}
+.notify-toggle{display:flex;align-items:center;gap:.5rem;cursor:pointer;}
+.notify-toggle input{accent-color:var(--gold-bright);}
+.notify-moments{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;}
+.notify-moments select{min-width:0;max-width:100%;flex:1;min-height:34px;border:1px solid var(--gold-line);border-radius:6px;
+  padding:.3rem;background:var(--bg);color:var(--h1);font:inherit;}
+.notify-controls :is(button,input,select):focus-visible{outline:2px solid var(--gold-bright);outline-offset:2px;}
 .reminder-list{display:flex;flex-direction:column;gap:.8rem;padding:.35rem .1rem .7rem;}
 .reminder-item{position:relative;border:1px solid var(--c,var(--gold-line));border-radius:9px;padding:.65rem;
   background:color-mix(in srgb,var(--c,var(--gold)) 15%,var(--bg));}
