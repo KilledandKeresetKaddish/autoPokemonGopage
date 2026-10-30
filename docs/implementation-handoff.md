@@ -133,3 +133,11 @@
 - **浏览器 smoke**：现有 `/usr/bin/chromium` headless + 临时 localhost、mock Notification/事件，无额外 npm 包，真实生产 sidebar DOM 执行启用/静默基线、测试通知构造、开关、偏好持久化、语言切换及设置区不溢出（1440×1050，设置宽 313.40625、侧栏 340）PASS。截图实际读取；当前沙箱缺 CJK 字体，不能证明中文字形可读。脚本/profile/截图/日志只在忽略的 `.pi-tmp/notify-browser/`，不提交。
 - **完整性/缓存**：已按 `CLAUDE.md` 的完整 `sha256sum ... > scripts/protected.sha256` 命令重建（保留全部原条目并新增通知测试）。`public/index.html` 仅更新缓存参数：`app.js?v=291ba30c2b26`、`style.css?v=d8531b63bf94`。本轮只作一个本地提交，不推送/部署。
 - **未验证 / 机主验收**：真实 Firefox/Windows 权限、右下角原生横幅、保持至手动关闭、通知中心及点击聚焦仍须机主实测；Node/Chromium mock 不等于 Windows 验证。页面关闭/卸载、电脑关机期间没有代码运行，依下次打开/恢复且仍进行中的补发；后台节流会延迟，Windows 请勿打扰会直接送通知中心。刷新页面加载新缓存版本 → 侧栏「Enable system notifications」→ Allow →「Send test notification」确认右下角且不自动消失 → Windows 设置/系统/通知/Firefox 开横幅、关请勿打扰 → 标星精确开始的未来活动，切到别的标签等待（或参考自动边界测试）。
+
+## PR #40 通知 follow-up 修复（2026-10-30 UTC）
+
+- 在原 `feat/starred-event-system-notifications` 上追加一个修复提交，不改写已推送提交。迟到仅在 `now - instant > 5 * 60000` 时标记 catch-up；30 秒和恰好 5 分钟仍直接通知，5 分钟 +1ms / 6 分钟才带补发前缀。
+- `check()` / `configure()` 起始重置 `failed`，本轮错误仍可重新置位，下一次成功后消除旧警告。增加构造失败、存储读失败、配置 await 前重置和真实 sidebar 警告恢复回归。
+- 更改时刻偏好时，在原通知锁内先静默 baseline 新选中且已到的瞬间，再写设置；不会抑制原本已选的待通知开始，也不提前记录未来开始。复用同一选择谓词，保留 regional/absolute 单一实际开始始终可用的行为；enable 的全量已到基线不变，普通 check/重开仍不建基线。
+- 新增四种偏好转换、同锁/先记账后公布、另一标签去重、未来开始与原先已选待补发、regional/absolute 的回归；先红复现 +30 秒误标，再修复通过。`node scripts/test-reminder-notify.js`、`node scripts/test-event-reminders.js` 和 `scripts/preflight.sh` PASS（209 活动，原有 8 条 long-chip WARN）。`scripts/validate.sh` 仍仅因既有 `event-20260731` 越过 90 天 cutoff `2026-08-01` 而 FAIL；数据/门禁未改。
+- 按 CLAUDE 完整命令重建 `scripts/protected.sha256`，保留全部保护项；`app.js?v=e723e783e823`，CSS 及其 cache 值不变。五个 AI bodies、每日 JSON/state、AGENTS/tasks 不变，无依赖/运行时脚本增加。真实 Firefox/Windows 原生通知仍待机主手动验收，本次没有部署或合并。

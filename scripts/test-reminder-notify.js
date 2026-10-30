@@ -86,6 +86,7 @@ async function fixture(options = {}) {
   };
 }
 async function run() {
+  await followupTests();
   assert.equal(resolveEventTiming(event, open, zone).viewerWindow.start.instant.getTime(), local);
   const sentOpen = new Map([[event.id, { v:1, token:'pure', open, local:null }]]);
   for (const moments of ['both','open','local']) {
@@ -284,8 +285,81 @@ async function run() {
   await integration();
   for (const f of [h, catchup, ended, late, done, incarnation, mismatch, corrupt, correction, travel, tabs,
     waiting, futureEnable, enable, peer, enableAll, batch, pair, unknown, failure, noEnd, chinese, resume, deferred]) f.notifier.pause();
-  console.log('test-reminder-notify: PASS (±1ms global/local/regional/absolute, preferences, hidden read-only timer, catch-up/expiry, stars/completion/tokens, timing/travel corrections, multi-tab lock/tag dedupe, permission/enable baseline, batching, locale/options/clicks, production settings/lifecycle wiring)');
+  console.log('test-reminder-notify: PASS (±1ms global/local/regional/absolute, preferences, hidden read-only timer, catch-up grace/expiry, transient error recovery, preference baselines, stars/completion/tokens, timing/travel corrections, multi-tab lock/tag dedupe, permission/enable baseline, batching, locale/options/clicks, production settings/lifecycle wiring)');
 }
+async function followupTests() {
+  // Timer throttling within five minutes is still an on-time notification.
+  for (const [delay, catchUp] of [[30000, false], [5 * 60000, false], [5 * 60000 + 1, true], [6 * 60000, true]]) {
+    assert.equal(pure(open + delay).notify[0].catchUp, catchUp, `catch-up grace at +${delay}ms`);
+    const f = await fixture({ at:open + delay });
+    await f.notifier.wake(); assert.equal(f.constructed.length, 1);
+    assert.equal(/ago · still ongoing/.test(f.constructed[0].options.body), catchUp, 'catch-up prefix follows grace');
+    f.notifier.pause();
+  }
+  const recovery = await fixture(); recovery.throwConstructor(true);
+  await recovery.notifier.wake(); assert.equal(recovery.notifier.status().failed, true);
+  recovery.throwConstructor(false); await recovery.notifier.wake();
+  assert.equal(recovery.notifier.status().failed, false, 'successful check clears prior constructor error');
+  recovery.notifier.pause();
+
+  const configureRecovery = await fixture(); configureRecovery.throwConstructor(true);
+  await configureRecovery.notifier.wake(); assert.equal(configureRecovery.notifier.status().failed, true);
+  configureRecovery.throwConstructor(false);
+  const configuring = configureRecovery.notifier.configure({ moments:'open' });
+  assert.equal(configureRecovery.notifier.status().failed, false, 'configure clears error before awaiting its lock');
+  await configuring; assert.equal(configureRecovery.notifier.status().failed, false); configureRecovery.notifier.pause();
+
+  const storageRecovery = await fixture({ at:open - 1 });
+  const getItem = storageRecovery.storage.getItem.bind(storageRecovery.storage); let blocked = true;
+  storageRecovery.storage.getItem = key => {
+    if (blocked && key === NOTIFY_SETTINGS_KEY) throw Error('transient read failure');
+    return getItem(key);
+  };
+  await storageRecovery.notifier.wake(); assert.equal(storageRecovery.notifier.status().failed, true);
+  blocked = false; await storageRecovery.notifier.wake();
+  assert.equal(storageRecovery.notifier.status().failed, false, 'successful check clears prior storage error');
+  storageRecovery.notifier.pause();
+
+  // Only newly selected, already-due moments are baselined, before publishing settings.
+  for (const [from, to, added, at] of [
+    ['open','both','local',local + 360000], ['open','local','local',local + 360000],
+    ['local','both','open',open + 360000], ['local','open','open',open + 360000],
+  ]) {
+    const f = await fixture({ at, settings:{ ...config, moments:from } });
+    await f.notifier.wake(); const before = f.constructed.length;
+    let markedInsideLock = false;
+    f.storage.beforeWrite = () => {
+      assert.equal(f.locks.active, NOTIFY_PREFIX);
+      assert.equal(f.notifier.settings().moments, from, 'baseline precedes the new preference');
+      markedInsideLock = true;
+    };
+    await f.notifier.configure({ moments:to });
+    assert(markedInsideLock); assert.equal(f.constructed.length, before, `${from} → ${to} does not catch up old starts`);
+    assert.equal(f.sent()[added], added === 'open' ? open : local);
+    const peer = f.build(); await peer.wake(); assert.equal(f.constructed.length, before, 'peer sees the same baseline');
+    peer.pause(); f.notifier.pause();
+  }
+  const future = await fixture({ settings:{ ...config, moments:'open' } });
+  await future.notifier.wake(); await future.notifier.configure({ moments:'both' });
+  assert.equal(future.sent().local, null, 'newly selected future moment is not baselined');
+  future.now(local); await future.notifier.wake(); assert.equal(future.constructed.length, 2); future.notifier.pause();
+
+  for (const moments of ['both','open']) {
+    const pending = await fixture({ at:local + 360000, settings:{ ...config, moments:'open' } });
+    await pending.notifier.configure({ moments });
+    assert.equal(pending.constructed.length, 1, 'already-selected pending open still catches up');
+    assert.equal(pending.constructed[0].options.tag, 'pogo-event-notify:' + event.id + ':open');
+    assert.equal(pending.sent().local, moments === 'both' ? local : null); pending.notifier.pause();
+  }
+  // A regional/absolute open was already eligible under local-only; do not swallow it.
+  for (const source of [fixtures.valid[2], fixtures.valid[3]]) {
+    const start = Date.parse(source.openAt);
+    const single = await fixture({ events:[source], starredAt:start - 1, at:start + 360000, settings:{ ...config, moments:'local' } });
+    await single.notifier.configure({ moments:'both' }); assert.equal(single.constructed.length, 1);
+    assert.equal(single.sent(source.id).open, start); single.notifier.pause();
+  }
+}
+
 // Small DOM host for the production settings handlers, formatters and lifecycle wiring.
 // No browser permission is granted by the test runner; the native API is injected.
 async function integration() {
@@ -318,11 +392,15 @@ async function integration() {
   }
   class MockNotification {
     static permission = 'default';
+    static fail = false;
     static requestPermission() {
       assert(gesture, 'requestPermission must be called directly in the click handler');
       requests++; this.permission = 'granted'; return Promise.resolve('granted');
     }
-    constructor(title, options) { this.title = title; this.options = options; constructed.push(this); }
+    constructor(title, options) {
+      if (MockNotification.fail) throw Error('transient notification failure');
+      this.title = title; this.options = options; constructed.push(this);
+    }
     close() { actions.push('close'); }
   }
   const record = source => ({ v:1, id:source.id, token:'vm-' + source.id, starredAt:open - 1, completedAt:null, note:'',
@@ -364,9 +442,14 @@ async function integration() {
   assert.equal(box.querySelector('.notify-status').textContent, ui['zh-CN']['notify.on']);
   run("state.locale='en'");
   // Exercise real catch-up text with the production reminderRemaining, not the stub formatter.
-  storage.removeItem(firedKey(event.id)); current = open + 7200000;
   await run("reminderNotifier.configure({moments:'open'})");
+  storage.removeItem(firedKey(event.id)); current = open + 7200000;
+  await run('reminderNotifier.wake()');
   assert.match(constructed[2].options.body, /^Started 2h ago|^Started 2 hours ago/);
+  MockNotification.fail = true; box.querySelector('.notify-test').click();
+  assert.equal(box.querySelector('.notify-error').textContent, ui.en['notify.failed']);
+  MockNotification.fail = false; await run('reminderNotifier.wake();'); run('renderReminderNotificationSettings()');
+  assert.equal(box.querySelector('.notify-error').textContent, '', 'recovery clears the sidebar warning');
   MockNotification.permission = 'denied'; run('renderReminderNotificationSettings()');
   assert(box.querySelector('.notify-controls').hidden); assert.match(box.querySelector('.notify-status').textContent, /permissions icon/);
   MockNotification.permission = 'granted';

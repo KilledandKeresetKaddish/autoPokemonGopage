@@ -60,8 +60,8 @@
 
 - **唯一时间来源**仍是 `reminders.sync()` → 每个 `entries()` 的 `view(id)`；每次检查先重新检测浏览器 IANA 并更新 `reminderViewerZone`，旅行后本地开始会随之调整。不新增时间换算器，不写 `pogo-event-reminders:v1:*`，不获取其 writer 锁，不调用 `refresh()`，不在后台渲染 UI 或清理到期个人记录。原 `createReminderScheduler` 的后台暂停/动画契约不变。
 - `open` = `view.openAt`（全球 local 为 Kiritimati / UTC+14；regional / absolute 为真实开始）；全球 local 的 `local` = `view.viewerWindow.start.instant`。两者相同只发一次 `open`；只有一个实际开始的 regional / absolute 在任一时刻偏好下也仅发一次 `open`。开始未知/错误不发，完成不发，`now >= closeAt` 不发。截止未知不制造截止。
-- 边界为 `now >= moment`；重开、恢复、回前台、focus、storage、数据加载时补发错过但仍进行中的开始，正文含「多久前开始 · 仍在进行中」。`starredAt >= moment` 只静默记账，不补发；取消标星清除对应通知账本，新 token 重新评估。账本按实际 instant 判断，延期、提前等 canonical 更正和旅行带来的本地时刻更正会重新评估。
-- **启用基线**：首次通过按钮授权/从关闭切到开启，在通知锁内先静默记录所有已到的开始（包含未选的时刻），再公布开启设置，避免旧提醒爆发。普通已启用页面重开不建新基线，必须补发；另一标签晚观察到授权也不能重建基线吞掉较新的开始。之后修改时刻偏好不重新建基线。
+- 边界为 `now >= moment`；重开、恢复、回前台、focus、storage、数据加载时补发错过但仍进行中的开始，仅迟到超过 5 分钟才在正文加「多久前开始 · 仍在进行中」；迟到 ≤5 分钟仍正常发送，但不加补发前缀，避免后台 timer 节流被误标为补发。`starredAt >= moment` 只静默记账，不补发；取消标星清除对应通知账本，新 token 重新评估。账本按实际 instant 判断，延期、提前等 canonical 更正和旅行带来的本地时刻更正会重新评估。
+- **启用基线**：首次通过按钮授权/从关闭切到开启，在通知锁内先静默记录所有已到的开始（包含未选的时刻），再公布开启设置，避免旧提醒爆发。普通已启用页面重开不建新基线，必须补发；另一标签晚观察到授权也不能重建基线吞掉较新的开始。修改时刻偏好时，仅为新选中的那类开始静默记录已到瞬间（例如全球开始 → 两者时只处理已到的本地开始），同样在通知锁内先记账再公布设置；未来开始和原本已选但尚未通知的开始仍正常评估。
 - 同一检查有 ≥3 个待通知时只构造一个汇总，列前三个活动名称及 `+N`，记账涵盖全部候选；单条点击聚焦窗口、复用主标签切换到日历并打开 canonical 详情，已不在日历的记录/汇总/测试则展开提醒栏，最后关闭通知。语言跟随 `state.locale`，名称先用记录的对应语言，再退回 canonical / zh-CN / id；时间/时长复用 `reminderInstant()` / `reminderRemaining()`。
 
 ### 独立存储与跨标签协议
@@ -74,7 +74,7 @@ pogo-event-notify:v1:fired:<encodeURIComponent(id)>
   {v:1, token, open:epochMs|null, local:epochMs|null}
 ```
 
-专用 Web Lock **`pogo-event-notify:v1:`** 内重新读取设置、个人记录和 sent 账本，完成 decide → 构造 Notification → mark（同步临界区）。它不与个人 writer 共用锁，不阻塞笔记/完成操作。删除无对应记录或 token 已变的 sent；损坏 sent 按未发送处理并在需要时覆盖，绝不影响个人记录。构造失败不吞掉该次提醒。未授权、关闭、不支持或非安全上下文时不发送也不写 sent；清理在下次已启用检查完成。
+专用 Web Lock **`pogo-event-notify:v1:`** 内重新读取设置、个人记录和 sent 账本，完成 decide → 构造 Notification → mark（同步临界区）。它不与个人 writer 共用锁，不阻塞笔记/完成操作。删除无对应记录或 token 已变的 sent；损坏 sent 按未发送处理并在需要时覆盖，绝不影响个人记录。构造失败不吞掉该次提醒。每次 check/configure 开头清除旧的 failed 状态；本轮错误仍显示，后续成功检查/配置可清除侧栏警告，不必刷新页面。未授权、关闭、不支持或非安全上下文时不发送也不写 sent；清理在下次已启用检查完成。
 
 没有 Web Locks 或无法取得时，通知采用 read → notify → write 的尽力回退，并以 `pogo-event-notify:<id>:<open|local>` tag 作第二层去重，汇总 tag 固定为 `pogo-event-notify:summary`。这里不同于个人 writer 的 fail-closed：偶发重复通知成本低，错过通知恰好违背此功能目标。存储不可用时不能保证跨会话去重/设置保存。
 
@@ -86,7 +86,7 @@ pogo-event-notify:v1:fired:<encodeURIComponent(id)>
 
 所有通知（包括测试）使用 `requireInteraction:true`、tag 及站点图标，不设置 `silent:true`。Windows Firefox 117+ 支持保持显示与关闭按钮；实际呈现仍由浏览器/Windows 控制，须由机主实测。**Windows「请勿打扰」会直接送入通知中心而不弹横幅**；确认 Windows 设置 → 系统 → 通知 → Firefox 的横幅已开且请勿打扰已关。真实 Firefox/Windows 的权限、右下角弹出、保持显示及点击聚焦不能由 Node/Chromium fixtures 证明。
 
-接口均在 `app.js` 并 Node-exported：`dueReminderNotifications({entries,view,fired,settings,now,viewerTimeZone,baseline?})` 返回 `{notify,ledger}`（ledger 是 `{id,token,moment,instant,silent}` patch 数组），不修改输入；`createReminderNotifier({store,storage?,locks?,now?,setTimeout?,clearTimeout?,Notification?,isSecure?,getLocale?,getViewerTimeZone?,onViewerTimeZone?,translate?,formatInstant?,formatRemaining?,getCanonicalName?,onClick?})` 提供 `wake`（合并 flight）、`pause`、`configure`（开启时基线）、`settings`、`status` 和 `test`。注入项仅用于测试/适配，运行时无新增脚本、依赖或构建步骤。
+接口均在 `app.js` 并 Node-exported：`dueReminderNotifications({entries,view,fired,settings,now,viewerTimeZone,baseline?})` 返回 `{notify,ledger}`（ledger 是 `{id,token,moment,instant,silent}` patch 数组），不修改输入；`createReminderNotifier({store,storage?,locks?,now?,setTimeout?,clearTimeout?,Notification?,isSecure?,getLocale?,getViewerTimeZone?,onViewerTimeZone?,translate?,formatInstant?,formatRemaining?,getCanonicalName?,onClick?})` 提供 `wake`（合并 flight）、`pause`、`configure`（开启/新增时刻偏好时静默基线）、`settings`、`status` 和 `test`。注入项仅用于测试/适配，运行时无新增脚本、依赖或构建步骤。
 
 ## 测试
 

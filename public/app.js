@@ -2060,6 +2060,7 @@ const NOTIFY_PREFIX = 'pogo-event-notify:v1:';
 const NOTIFY_SETTINGS_KEY = NOTIFY_PREFIX + 'settings';
 const NOTIFY_FIRED_PREFIX = NOTIFY_PREFIX + 'fired:';
 const NOTIFY_DEFAULTS = { v:1, enabled:false, moments:'both' };
+const NOTIFY_CATCHUP_GRACE_MS = 5 * 60000;
 function validReminderFired(value) {
   const stamp = n => n === null || (Number.isFinite(n) && n >= 0 && n <= 8640000000000000);
   return value?.v === 1 && typeof value.token === 'string' && value.token
@@ -2074,6 +2075,9 @@ function reminderNotificationMoments(record, view) {
   return [{ moment:'open', instant:open, globalLocal, distinctLocal },
     ...(distinctLocal ? [{ moment:'local', instant:local, globalLocal, distinctLocal }] : [])];
 }
+function reminderNotificationSelected(item, settings) {
+  return !item.distinctLocal || settings.moments === 'both' || settings.moments === item.moment;
+}
 // Entries are store.entries() pairs; view is the injected read-only store.view.
 // Ledger patches are per concrete instant, never personal-record mutations.
 function dueReminderNotifications({ entries, view, fired, settings, now, viewerTimeZone, baseline = false }) {
@@ -2084,14 +2088,14 @@ function dueReminderNotifications({ entries, view, fired, settings, now, viewerT
     if (v.closeAt && now >= v.closeAt.getTime()) continue;
     const sent = validReminderFired(fired.get(id));
     for (const item of reminderNotificationMoments(record, v)) {
-      const { moment, instant, distinctLocal } = item;
+      const { moment, instant } = item;
       if (now < instant || (sent?.token === record.token && sent[moment] === instant)) continue;
       const silent = baseline || record.starredAt >= instant;
       // A single actual start (regional/absolute, or viewer in Kiritimati)
       // remains one open notification even with the local-only preference.
-      if (!silent && distinctLocal && settings.moments !== 'both' && settings.moments !== moment) continue;
+      if (!silent && !reminderNotificationSelected(item, settings)) continue;
       ledger.push({ id, token:record.token, moment, instant, silent });
-      if (!silent) notify.push({ ...item, id, record, view:v, catchUp:now > instant, ago:now - instant });
+      if (!silent) notify.push({ ...item, id, record, view:v, catchUp:now - instant > NOTIFY_CATCHUP_GRACE_MS, ago:now - instant });
     }
   }
   return { notify, ledger };
@@ -2185,10 +2189,20 @@ function createReminderNotifier(options) {
     if (item.catchUp) body = [catchUpText(item), body].filter(Boolean).join(' · ');
     return show(title, body, 'pogo-event-notify:' + item.id + ':' + item.moment, item.id);
   }
-  function evaluate(snap, config, baseline = false) {
+  function evaluate(snap, config, baselineFrom = null) {
     const current = now(), fired = readFired(snap.entries);
     const result = dueReminderNotifications({ entries:snap.entries, view:id => snap.views.get(id), fired,
-      settings:config, now:current, viewerTimeZone:snap.zone, baseline });
+      settings:config, now:current, viewerTimeZone:snap.zone, baseline:baselineFrom !== null });
+    if (baselineFrom) {
+      const records = new Map(snap.entries);
+      mark(result.ledger.filter(patch => {
+        if (!baselineFrom.enabled) return true; // enabling baselines all due moments, even deselected ones
+        const item = reminderNotificationMoments(records.get(patch.id), snap.views.get(patch.id))
+          .find(m => m.moment === patch.moment);
+        return reminderNotificationSelected(item, config) && !reminderNotificationSelected(item, baselineFrom);
+      }), fired);
+      return;
+    }
     let successful;
     if (result.notify.length >= 3) {
       const unique = [...new Map(result.notify.map(item => [item.id, item])).values()];
@@ -2202,11 +2216,12 @@ function createReminderNotifier(options) {
     mark(result.ledger.filter(p => p.silent || successful.some(n => n.id === p.id && n.moment === p.moment)), fired);
   }
   function check() {
+    failed = false;
     const snap = snapshot(), config = settings(), currentPermission = permission();
     future = snap.entries.flatMap(([id, record]) => reminderNotificationMoments(record, snap.views.get(id))
-      .filter(m => !m.distinctLocal || config.moments === 'both' || config.moments === m.moment).map(m => m.instant))
+      .filter(m => reminderNotificationSelected(m, config)).map(m => m.instant))
       .filter(t => t > now());
-    // Only the explicit enable/permission action establishes a baseline. A peer
+    // Baselines belong to explicit settings actions, not ordinary checks. A peer
     // tab observing that permission later must NOT baseline newer starts away.
     if (!paused && available() && config.enabled) evaluate(snap, config);
     if (currentPermission !== 'granted') lastPermission = currentPermission;
@@ -2229,14 +2244,17 @@ function createReminderNotifier(options) {
     return flight;
   }
   async function configure(patch) {
+    failed = false;
     await locked(() => {
       const previous = settings(), next = { ...previous,
         ...(typeof patch.enabled === 'boolean' ? { enabled:patch.enabled } : {}),
         ...(['both','open','local'].includes(patch.moments) ? { moments:patch.moments } : {}) };
-      // Baseline ALL already-due moments before publishing enabled=true, so another
-      // tab cannot race an enable into a burst. Ordinary enabled page loads catch up.
-      if (patch.enabled === true && next.enabled && available() && (!previous.enabled || lastPermission !== 'granted'))
-        evaluate(snapshot(), { ...next, moments:'both' }, true);
+      // Publish settings only after baselining: all due moments on enable, or just
+      // newly selected due moments on a preference change. Future/unchanged starts
+      // remain eligible, and a peer cannot race the change into a catch-up burst.
+      const enabling = patch.enabled === true && (!previous.enabled || lastPermission !== 'granted');
+      if (next.enabled && available() && (enabling || previous.moments !== next.moments))
+        evaluate(snapshot(), next, enabling ? { ...previous, enabled:false } : previous);
       lastPermission = permission();
       try { storage().setItem(NOTIFY_SETTINGS_KEY, JSON.stringify(next)); } catch (e) { failed = true; }
     });
