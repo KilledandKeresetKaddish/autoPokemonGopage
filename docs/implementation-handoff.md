@@ -122,3 +122,14 @@
 
 ### 未在本任务验证
 - 未对真实第三方站点发起日更、未发布、未改 cron/Caddy/VPS；真实源格式漂移仍应由运行时报告为 partial/failed 而非猜测内容。
+
+## Windows system notifications for starred events（2026-10-30 UTC）
+
+- **范围**：maintainer 功能开发，起点干净 `main` / `69019cc`；不是 daily 内容运行。新增独立、只读的 `dueReminderNotifications` / `createReminderNotifier`（仍仅在 `public/app.js` 运行），复用原 store 的 sync/entries/view 和任务 3 时间契约；每轮重查浏览器 IANA。不改个人记录 writer/锁、完成/笔记逻辑、`createReminderScheduler` 后台暂停语义或星轨动画；后台通知不触发 refresh/DOM。
+- **行为**：全球 Kiritimati 开始 + 浏览器本地开始偏好，regional/absolute/相同时刻单次；半开边界、进行中补发、完成/截止抑制、开始后标星静默、新 token 与具体 instant 更正重评估。显式启用在同一通知锁内先建全部已到时刻的静默基线，再公布开启设置；晚观察权限的其他标签不重建基线吞掉较新开始。≥3 候选合并汇总；包含 requireInteraction、稳定 tag、站点图标及聚焦/日历详情或清单点击路径。
+- **隔离/设置**：新增 `pogo-event-notify:v1:settings` / `fired:<encoded ID>`，专用 `pogo-event-notify:v1:` Web Lock 内重读、决定、构造、记账/清理；无锁/拒绝时尽力回退，原因已注释。独立 1–60 秒 timeout 在隐藏标签继续，visibility/pageshow/focus/相关 storage/数据加载合并唤醒，pagehide 暂停、恢复补发。JS 在侧栏顶部生成小设置区，双语文案进 `ui.json`，只由真实点击直接请求权限；原结构、五个 AI bodies、每日 JSON/en.json/state、AGENTS/tasks 未改。无新依赖、Service Worker、Push API、服务端或构建步骤。
+- **实际自动测试**：`node scripts/test-reminder-notify.js` PASS（纯函数 ±1ms、三种偏好、区域/绝对、隐藏只读、补发/截止/完成/标星/token、更正/旅行、两个独立 store + Web Locks 及无锁回退、延迟观察权限、启用基线/汇总/构造失败重试/选项/文案/点击、生产设置手势与 lifecycle/data-load VM）；`node scripts/test-event-reminders.js` PASS（含 concurrency/UI、14 timing fixtures，原 pause 测试未改）；`node scripts/test-event-timing.js` PASS（14 valid / 18 invalid）；`node scripts/test-spot-atlas-time.js` PASS（24 点契约、25 点扩展）。`bash scripts/test-daily-reuse.sh` PASS（含 candidates、fetch retries）；`bash scripts/test-run-daily.sh` PASS（26 Python fixtures + shell integration，全为隔离/mock，无真实 agent/发布）。`scripts/preflight.sh` PASS（209 活动，原有 8 条 long-chip WARN）。JS syntax、diff whitespace、完整保护哈希及五个 AI bodies/每日数据未变检查通过。
+- **真实日期门禁既有失败**：`scripts/validate.sh` 在 UTC 2026-10-30 FAIL，唯一原因是 1 条已结束 >90 天的历史活动：`event-20260731`，end `2026-07-31T23:59:00`，当天 cutoff `2026-08-01`。`git show HEAD:public/data/events.json` 同样含此行；没有更改数据、固定日期或放松门禁。其余校验及新的保护清单通过，不能声称 validate 全绿。
+- **浏览器 smoke**：现有 `/usr/bin/chromium` headless + 临时 localhost、mock Notification/事件，无额外 npm 包，真实生产 sidebar DOM 执行启用/静默基线、测试通知构造、开关、偏好持久化、语言切换及设置区不溢出（1440×1050，设置宽 313.40625、侧栏 340）PASS。截图实际读取；当前沙箱缺 CJK 字体，不能证明中文字形可读。脚本/profile/截图/日志只在忽略的 `.pi-tmp/notify-browser/`，不提交。
+- **完整性/缓存**：已按 `CLAUDE.md` 的完整 `sha256sum ... > scripts/protected.sha256` 命令重建（保留全部原条目并新增通知测试）。`public/index.html` 仅更新缓存参数：`app.js?v=291ba30c2b26`、`style.css?v=d8531b63bf94`。本轮只作一个本地提交，不推送/部署。
+- **未验证 / 机主验收**：真实 Firefox/Windows 权限、右下角原生横幅、保持至手动关闭、通知中心及点击聚焦仍须机主实测；Node/Chromium mock 不等于 Windows 验证。页面关闭/卸载、电脑关机期间没有代码运行，依下次打开/恢复且仍进行中的补发；后台节流会延迟，Windows 请勿打扰会直接送通知中心。刷新页面加载新缓存版本 → 侧栏「Enable system notifications」→ Allow →「Send test notification」确认右下角且不自动消失 → Windows 设置/系统/通知/Firefox 开横幅、关请勿打扰 → 标星精确开始的未来活动，切到别的标签等待（或参考自动边界测试）。

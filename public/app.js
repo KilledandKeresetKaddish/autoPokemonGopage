@@ -511,6 +511,7 @@ async function loadData() {
   }
   if (reminders && eventsLoadedThisTime) await reminders.setEvents(state.events, state.en?.events);
   reminderScheduler?.wake();
+  reminderNotifier?.wake();
 }
 
 /* ---------- calendar ---------- */
@@ -2054,6 +2055,199 @@ function createReminderScheduler(options) {
   return { wake, pause };
 }
 
+/* ---------- System notifications: read-only consumer of personal reminders ---------- */
+const NOTIFY_PREFIX = 'pogo-event-notify:v1:';
+const NOTIFY_SETTINGS_KEY = NOTIFY_PREFIX + 'settings';
+const NOTIFY_FIRED_PREFIX = NOTIFY_PREFIX + 'fired:';
+const NOTIFY_DEFAULTS = { v:1, enabled:false, moments:'both' };
+function validReminderFired(value) {
+  const stamp = n => n === null || (Number.isFinite(n) && n >= 0 && n <= 8640000000000000);
+  return value?.v === 1 && typeof value.token === 'string' && value.token
+    && stamp(value.open) && stamp(value.local) ? value : null;
+}
+function reminderNotificationMoments(record, view) {
+  if (!view.flagged || view.completed || view.expired || view.status === 'error' || !view.openAt) return [];
+  const open = view.openAt.getTime(), local = view.viewerWindow.start?.instant?.getTime();
+  if (!Number.isFinite(open)) return [];
+  const timing = record.time?.timing, globalLocal = timing?.scope === 'global' && timing.mode === 'local';
+  const distinctLocal = globalLocal && Number.isFinite(local) && local !== open;
+  return [{ moment:'open', instant:open, globalLocal, distinctLocal },
+    ...(distinctLocal ? [{ moment:'local', instant:local, globalLocal, distinctLocal }] : [])];
+}
+// Entries are store.entries() pairs; view is the injected read-only store.view.
+// Ledger patches are per concrete instant, never personal-record mutations.
+function dueReminderNotifications({ entries, view, fired, settings, now, viewerTimeZone, baseline = false }) {
+  const notify = [], ledger = [];
+  if (!settings.enabled) return { notify, ledger };
+  for (const [id, record] of entries) {
+    const v = view(id, viewerTimeZone);
+    if (v.closeAt && now >= v.closeAt.getTime()) continue;
+    const sent = validReminderFired(fired.get(id));
+    for (const item of reminderNotificationMoments(record, v)) {
+      const { moment, instant, distinctLocal } = item;
+      if (now < instant || (sent?.token === record.token && sent[moment] === instant)) continue;
+      const silent = baseline || record.starredAt >= instant;
+      // A single actual start (regional/absolute, or viewer in Kiritimati)
+      // remains one open notification even with the local-only preference.
+      if (!silent && distinctLocal && settings.moments !== 'both' && settings.moments !== moment) continue;
+      ledger.push({ id, token:record.token, moment, instant, silent });
+      if (!silent) notify.push({ ...item, id, record, view:v, catchUp:now > instant, ago:now - instant });
+    }
+  }
+  return { notify, ledger };
+}
+function createReminderNotifier(options) {
+  const store = options.store, now = options.now || Date.now;
+  const later = options.setTimeout || setTimeout, cancel = options.clearTimeout || clearTimeout;
+  const NotificationApi = Object.hasOwn(options, 'Notification') ? options.Notification : globalThis.Notification;
+  const storage = () => typeof options.storage === 'function' ? options.storage() : (options.storage || globalThis.localStorage);
+  const secure = () => typeof options.isSecure === 'function' ? options.isSecure() : (options.isSecure ?? globalThis.isSecureContext);
+  const locale = options.getLocale || (() => state.locale), text = options.translate || i18n;
+  const instantText = options.formatInstant || reminderInstant, remainingText = options.formatRemaining || reminderRemaining;
+  const permission = () => NotificationApi?.permission || 'unsupported';
+  const available = () => !!NotificationApi && secure() && permission() === 'granted';
+  let lastPermission = permission(), timer = null, flight = null, requested = false, paused = false, future = [], failed = false;
+  function settings() {
+    try {
+      const value = JSON.parse(storage().getItem(NOTIFY_SETTINGS_KEY));
+      if (value?.v === 1 && typeof value.enabled === 'boolean' && ['both','open','local'].includes(value.moments))
+        return { v:1, enabled:value.enabled, moments:value.moments };
+    } catch (e) { failed = true; }
+    return { ...NOTIFY_DEFAULTS };
+  }
+  async function locked(operation) {
+    const locks = Object.hasOwn(options, 'locks') ? options.locks : globalThis.navigator?.locks;
+    let entered = false;
+    if (locks?.request) {
+      try {
+        return await locks.request(NOTIFY_PREFIX, { mode:'exclusive', signal:new AbortController().signal }, () => {
+          entered = true; return operation(); // synchronous decide + construct + mark
+        });
+      } catch (error) { if (entered) throw error; }
+    }
+    // Unlike reminder writers' fail-closed policy, notifications are best effort:
+    // a duplicate costs little; a missed alert defeats the feature. Tags also dedupe.
+    return operation();
+  }
+  function snapshot() {
+    const zone = (options.getViewerTimeZone || (() => detectBrowserTimeZone().timeZone))();
+    options.onViewerTimeZone?.(zone); // update the store's viewer zone before view(), including while hidden
+    store.sync();
+    const entries = store.entries(), views = new Map(entries.map(([id]) => [id, store.view(id)]));
+    return { entries, views, zone };
+  }
+  function readFired(entries) {
+    const records = new Map(entries), fired = new Map();
+    try {
+      const s = storage(), keys = Array.from({ length:s.length }, (_, i) => s.key(i));
+      for (const key of keys) {
+        if (!key?.startsWith(NOTIFY_FIRED_PREFIX)) continue;
+        let id, value;
+        try { id = decodeURIComponent(key.slice(NOTIFY_FIRED_PREFIX.length)); value = validReminderFired(JSON.parse(s.getItem(key))); }
+        catch (e) { /* corrupt means not sent; no personal record is touched */ }
+        if (!records.has(id) || key !== NOTIFY_FIRED_PREFIX + encodeURIComponent(id)
+          || (value && value.token !== records.get(id).token)) s.removeItem(key);
+        else if (value) fired.set(id, value);
+      }
+    } catch (e) { failed = true; }
+    return fired;
+  }
+  function mark(ledger, fired) {
+    const updates = new Map();
+    for (const { id, token, moment, instant } of ledger) {
+      const previous = updates.get(id) || fired.get(id);
+      const value = previous?.token === token ? { ...previous } : { v:1, token, open:null, local:null };
+      value[moment] = instant; updates.set(id, value);
+    }
+    for (const [id, value] of updates) {
+      try { storage().setItem(NOTIFY_FIRED_PREFIX + encodeURIComponent(id), JSON.stringify(value)); }
+      catch (e) { failed = true; }
+    }
+  }
+  function name(item) {
+    return item.record.names[locale()] || options.getCanonicalName?.(item.id) || item.record.names['zh-CN'] || item.id;
+  }
+  function show(title, body, tag, id) {
+    try {
+      const notification = new NotificationApi(title, { body, requireInteraction:true, tag, icon:'pokemongocalender.ico' });
+      notification.onclick = () => {
+        try { options.onClick?.(id); } finally { notification.close(); }
+      };
+      return true;
+    } catch (e) { failed = true; return false; }
+  }
+  function catchUpText(item) { return text('notify.catchUp', { ago:remainingText(item.ago) }); }
+  function send(item) {
+    const title = text(item.moment === 'local' ? 'notify.titleLocal' : item.globalLocal ? 'notify.titleWorldwide' : 'notify.titleStart', { name:name(item) });
+    let body = item.moment === 'open' && item.globalLocal
+      ? text('notify.worldwideBody', { time:instantText(item.view.viewerWindow.start.instant) })
+      : item.view.closeAt ? text('notify.ends', { time:instantText(item.view.closeAt) }) : '';
+    if (item.catchUp) body = [catchUpText(item), body].filter(Boolean).join(' · ');
+    return show(title, body, 'pogo-event-notify:' + item.id + ':' + item.moment, item.id);
+  }
+  function evaluate(snap, config, baseline = false) {
+    const current = now(), fired = readFired(snap.entries);
+    const result = dueReminderNotifications({ entries:snap.entries, view:id => snap.views.get(id), fired,
+      settings:config, now:current, viewerTimeZone:snap.zone, baseline });
+    let successful;
+    if (result.notify.length >= 3) {
+      const unique = [...new Map(result.notify.map(item => [item.id, item])).values()];
+      const names = unique.slice(0, 3).map(item => (item.catchUp ? catchUpText(item) + ' · ' : '') + name(item));
+      if (unique.length > 3) names.push(text('notify.more', { count:unique.length - 3 }));
+      successful = show(text('notify.summaryTitle', { count:unique.length }), names.join('\n'), 'pogo-event-notify:summary', null)
+        ? result.notify : [];
+    } else successful = result.notify.filter(send);
+    // Constructor failure must not swallow the alert. Fallback order is read → notify → write;
+    // with Web Locks this entire section is exclusive, including a batched construction.
+    mark(result.ledger.filter(p => p.silent || successful.some(n => n.id === p.id && n.moment === p.moment)), fired);
+  }
+  function check() {
+    const snap = snapshot(), config = settings(), currentPermission = permission();
+    future = snap.entries.flatMap(([id, record]) => reminderNotificationMoments(record, snap.views.get(id))
+      .filter(m => !m.distinctLocal || config.moments === 'both' || config.moments === m.moment).map(m => m.instant))
+      .filter(t => t > now());
+    // Only the explicit enable/permission action establishes a baseline. A peer
+    // tab observing that permission later must NOT baseline newer starts away.
+    if (!paused && available() && config.enabled) evaluate(snap, config);
+    if (currentPermission !== 'granted') lastPermission = currentPermission;
+  }
+  function pause() { paused = true; requested = false; if (timer !== null) cancel(timer); timer = null; }
+  function wake() {
+    paused = false; requested = true;
+    if (timer !== null) cancel(timer); timer = null;
+    if (flight) return flight;
+    flight = Promise.resolve().then(async () => {
+      do {
+        requested = false;
+        if (available() && settings().enabled) await locked(check);
+        else check(); // still sync/read all views, but no sent writes or lock while disabled
+      } while (requested && !paused);
+    }).catch(error => { failed = true; console.error('Reminder notification check failed', error); }).finally(() => {
+      flight = null;
+      if (!paused) timer = later(wake, Math.max(1000, Math.min(60000, ...future.map(t => t - now()))));
+    });
+    return flight;
+  }
+  async function configure(patch) {
+    await locked(() => {
+      const previous = settings(), next = { ...previous,
+        ...(typeof patch.enabled === 'boolean' ? { enabled:patch.enabled } : {}),
+        ...(['both','open','local'].includes(patch.moments) ? { moments:patch.moments } : {}) };
+      // Baseline ALL already-due moments before publishing enabled=true, so another
+      // tab cannot race an enable into a burst. Ordinary enabled page loads catch up.
+      if (patch.enabled === true && next.enabled && available() && (!previous.enabled || lastPermission !== 'granted'))
+        evaluate(snapshot(), { ...next, moments:'both' }, true);
+      lastPermission = permission();
+      try { storage().setItem(NOTIFY_SETTINGS_KEY, JSON.stringify(next)); } catch (e) { failed = true; }
+    });
+    return wake();
+  }
+  return { wake, pause, configure, settings,
+    status:() => ({ settings:settings(), permission:permission(), supported:!!NotificationApi, secure:!!secure(), failed }),
+    test:() => available() && settings().enabled && show(text('notify.testTitle'), text('notify.testBody'), 'pogo-event-notify:test', null),
+  };
+}
+
 // Half-open [start, end) on a 24h clock, hour granularity: 「结束」exclusive
 // (end may be 24 = 当日结束). Wraps past midnight when start > end; start === end → empty.
 function wcInRange(h, start, end) {
@@ -2511,7 +2705,7 @@ function setupSpots() {
 }
 
 /* ---------- Reminder UI (notes stay plain text and keep their editor node) ---------- */
-let reminders = null, reminderSaver = null, reminderScheduler = null, detailEvent = null, reminderViewerZone = 'UTC';
+let reminders = null, reminderSaver = null, reminderScheduler = null, reminderNotifier = null, detailEvent = null, reminderViewerZone = 'UTC';
 const reminderActions = new Set();
 const reminderCards = new Map(), reminderDisplayFormatters = new Map();
 function reminderInstant(instant) {
@@ -2754,11 +2948,13 @@ function renderReminderSidebar() {
   $('#reminder-panel>summary').setAttribute('aria-label', `${i18n('reminder.title')} (${entries.length})`);
   $('#reminder-empty').hidden = entries.length > 0;
   $('#reminder-notice').textContent = reminderNotice();
+  renderReminderNotificationSettings();
 }
 async function refreshReminderUi() {
   reminderViewerZone = detectBrowserTimeZone().timeZone;
   await reminders.refresh(); reminderSaver.cancelMissing();
   syncReminderUi();
+  reminderNotifier?.wake();
 }
 function syncReminderUi() {
   document.querySelectorAll('[data-reminder-event]').forEach(syncCalendarReminder);
@@ -2786,6 +2982,61 @@ function setupReminderPanel() {
   });
   reset();
 }
+function renderReminderNotificationSettings() {
+  if (!reminderNotifier || document.hidden) return;
+  let box = $('.reminder-notify');
+  if (!box) {
+    box = document.createElement('section'); box.className = 'reminder-notify';
+    box.innerHTML = '<p class="notify-status"></p><div class="notify-controls">'
+      + '<button type="button" class="btn notify-enable"></button>'
+      + '<label class="notify-toggle"><input type="checkbox"><span></span></label>'
+      + '<label class="notify-moments"><span></span><select><option value="both"></option><option value="open"></option><option value="local"></option></select></label>'
+      + '<button type="button" class="btn notify-test"></button></div>'
+      + '<p class="muted notify-hint"></p><p class="reminder-warning notify-error" role="status"></p>';
+    $('.reminder-panel-body').prepend(box);
+    box.querySelector('.notify-enable').addEventListener('click', async () => {
+      try {
+        // This call must stay directly in the user-gesture handler (Firefox).
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') await reminderNotifier.configure({ enabled:true });
+      } catch (e) { if (!document.hidden) box.querySelector('.notify-error').textContent = i18n('notify.failed'); return; }
+      renderReminderNotificationSettings();
+    });
+    box.querySelector('.notify-toggle input').addEventListener('change', async e => {
+      await reminderNotifier.configure({ enabled:e.target.checked }); renderReminderNotificationSettings();
+    });
+    box.querySelector('select').addEventListener('change', async e => {
+      await reminderNotifier.configure({ moments:e.target.value }); renderReminderNotificationSettings();
+    });
+    box.querySelector('.notify-test').addEventListener('click', () => {
+      reminderNotifier.test(); renderReminderNotificationSettings();
+    });
+  }
+  const status = reminderNotifier.status(), config = status.settings;
+  const usable = status.supported && status.secure, granted = usable && status.permission === 'granted';
+  box.setAttribute('aria-label', i18n('notify.label'));
+  box.querySelector('.notify-status').textContent = i18n(!status.supported ? 'notify.unsupported' : !status.secure ? 'notify.insecure'
+    : status.permission === 'denied' ? 'notify.denied' : granted ? config.enabled ? 'notify.on' : 'notify.off' : 'notify.prompt');
+  box.querySelector('.notify-controls').hidden = !usable || status.permission === 'denied';
+  const enable = box.querySelector('.notify-enable'); enable.hidden = granted; enable.textContent = i18n('notify.enable');
+  box.querySelector('.notify-toggle').hidden = box.querySelector('.notify-moments').hidden = !granted;
+  box.querySelector('.notify-toggle span').textContent = i18n('notify.toggle');
+  box.querySelector('.notify-toggle input').checked = config.enabled;
+  box.querySelector('.notify-moments span').textContent = i18n('notify.moments');
+  box.querySelector('select').value = config.moments;
+  for (const moment of ['both','open','local']) box.querySelector(`option[value="${moment}"]`).textContent = i18n(`notify.moment.${moment}`);
+  const test = box.querySelector('.notify-test'); test.hidden = !granted; test.disabled = !config.enabled; test.textContent = i18n('notify.test');
+  const missing = reminders.entries().filter(([id]) => { const v = reminders.view(id); return v.flagged && !v.openAt; }).length;
+  const hint = box.querySelector('.notify-hint'); hint.hidden = !missing; hint.textContent = i18n('notify.noExactStart', { count:missing });
+  box.querySelector('.notify-error').textContent = status.failed ? i18n('notify.failed') : '';
+}
+function openReminderNotification(id) {
+  window.focus();
+  $('#main-tabs button[data-view="calendar"]').click(); // reuse the existing view switch and its hooks
+  const event = state.events.find(e => e.id === id);
+  if (event) openDetail(event);
+  else { $('#reminder-panel').open = true; $('#reminder-panel>summary').focus(); }
+}
 async function setupReminders() {
   reminderViewerZone = detectBrowserTimeZone().timeZone;
   reminders = createEventReminderStore({ viewerTimeZone:() => reminderViewerZone });
@@ -2802,26 +3053,38 @@ async function setupReminders() {
       return [v.openAt?.getTime(), v.closeAt?.getTime(), v.viewerWindow.start?.instant?.getTime()];
     }),
   });
+  reminderNotifier = createReminderNotifier({ store:reminders,
+    onViewerTimeZone:zone => { reminderViewerZone = zone; },
+    getCanonicalName:id => state.events.find(e => e.id === id)?.name,
+    onClick:openReminderNotification,
+  });
   setupReminderPanel();
+  renderReminderNotificationSettings();
   window.addEventListener('storage', e => {
     if (e.key === null || e.key === REMINDER_LEGACY_KEY || e.key.startsWith(REMINDER_PREFIX)) {
       reminders.sync(); reminderSaver.cancelMissing(); reminderScheduler.wake();
+    }
+    if (e.key === null || e.key === REMINDER_LEGACY_KEY || e.key.startsWith(REMINDER_PREFIX) || e.key.startsWith(NOTIFY_PREFIX)) {
+      reminderNotifier.wake();
+      if (!document.hidden) renderReminderNotificationSettings();
     }
   });
   document.addEventListener('visibilitychange', () => {
     document.body.classList.toggle('reminders-paused', document.hidden);
     if (document.hidden) { flushReminderEditor(); reminderScheduler.pause(); }
     else reminderScheduler.wake();
+    reminderNotifier.wake();
   });
   window.addEventListener('pagehide', () => {
-    flushReminderEditor(); reminderScheduler.pause(); document.body.classList.add('reminders-paused');
+    flushReminderEditor(); reminderScheduler.pause(); reminderNotifier.pause(); document.body.classList.add('reminders-paused');
   });
   const resume = () => {
-    document.body.classList.toggle('reminders-paused', document.hidden); reminderScheduler.wake();
+    document.body.classList.toggle('reminders-paused', document.hidden); reminderScheduler.wake(); reminderNotifier.wake();
   };
   window.addEventListener('pageshow', resume);
   window.addEventListener('focus', resume);
   reminderScheduler.wake();
+  reminderNotifier.wake();
 }
 function openChipDay(date, list, opener) {
   flushReminderEditor(); detailEvent = null; detailReturnFocus = opener;
@@ -2908,6 +3171,7 @@ function applyLocale() {
   renderSpots();
   if (opened && detailEvent) openDetail(detailEvent, detailReturnFocus, true);
   reminderScheduler?.wake();
+  renderReminderNotificationSettings();
   if (todoState) renderTodo();
   linkifySprites(document.body);
 }
@@ -3288,6 +3552,7 @@ if (typeof module === 'object' && module.exports) {
     parseEventTime, validateEventTiming, resolveEventTiming,
     REMINDER_PREFIX, REMINDER_NOTE_LIMIT, reminderNote, reminderTimeSnapshot, decodeReminder, deriveEventReminder,
     createEventReminderStore, createReminderNoteSaver, createReminderScheduler, findRaidEvent,
+    NOTIFY_PREFIX, NOTIFY_SETTINGS_KEY, NOTIFY_FIRED_PREFIX, dueReminderNotifications, createReminderNotifier,
     spotCountryFlag, spotCoordinates, spotMapUrl, spotMatches, sortSpotViews, spotRatingStars, spotNoteBlock,
     spotLoadPreferences, spotSavePreferences, SPOT_KIND_OPTIONS, SPOT_SORT_VALUES,
   };
